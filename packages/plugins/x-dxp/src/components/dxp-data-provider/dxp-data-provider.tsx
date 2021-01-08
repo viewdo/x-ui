@@ -11,7 +11,13 @@ export class DXPDataProvider {
 
   componentWillLoad() {
     const provider: IDataProvider = {
-      get: async (key) => (state.experience ? state.experience[key] : null),
+      get: async (key) => {
+        if (state.experience) {
+          const data = state.experience as { [index: string]: any }
+          return data[key]
+        }
+        return null
+      },
       set: async (key, value) => state.experience?.setData(key, value),
       changed: new EventEmitter(),
     }

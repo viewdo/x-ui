@@ -42,8 +42,8 @@ export class XInclude {
     await this.resolveContent()
   }
 
-  componentDidRender() {
-    resolveElementVisibility(this.el)
+  async componentDidRender() {
+    await resolveElementVisibility(this.el)
     if (this.router) {
       this.el.querySelectorAll('a[href^=http]').forEach((a) => {
         a.addEventListener('click', (e) => {

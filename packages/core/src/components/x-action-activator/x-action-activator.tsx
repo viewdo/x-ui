@@ -1,5 +1,5 @@
-import { Component, Element, Prop, h, Host, Method, State } from '@stencil/core'
-import { actionBus, ActionActivationStrategy, EventAction, warn, debugIf, IActionElement } from '../..'
+import { Component, Element, h, Host, Method, Prop, State } from '@stencil/core'
+import { ActionActivationStrategy, actionBus, debugIf, EventAction, IActionElement, warn } from '../..'
 
 /**
  * @system actions
@@ -10,7 +10,7 @@ import { actionBus, ActionActivationStrategy, EventAction, warn, debugIf, IActio
 })
 export class XActionActivator {
   @State() actions: Array<EventAction<unknown>> = []
-  @Element() el: HTMLXActionActivatorElement
+  @Element() el!: HTMLXActionActivatorElement
   @State() activated = false
 
   /**
@@ -37,7 +37,7 @@ export class XActionActivator {
    *
    * For use with activate="AtTime" Only!
    */
-  @Prop() time: number
+  @Prop() time?: number
 
   /**
    * Turn on debug statements for load, update and render events.
@@ -69,7 +69,7 @@ export class XActionActivator {
     return Promise.resolve()
   }
 
-  private get parent(): HTMLXViewDoElement | HTMLXViewElement {
+  private get parent(): HTMLXViewDoElement | HTMLXViewElement | null {
     return this.el.closest('x-view-do') || this.el.closest('x-view')
   }
 
@@ -92,22 +92,22 @@ export class XActionActivator {
 
     this.childActions.forEach(async (a) => {
       const action = await a.getAction()
-      // eslint-disable-next-line no-console
+      if (!action) return
+
       const dataString = JSON.stringify(action.data)
       debugIf(this.debug, `x-action-activator: ${this.parent?.url} registered [${this.activate}~{topic: ${action?.topic}, command:${action?.command}, data: ${dataString}}}] `)
       this.actions.push(action)
     })
 
     if (this.activate === ActionActivationStrategy.OnElementEvent) {
-      let element: ChildNode
-      element = this.targetElement ? this.el.querySelector(this.targetElement) : this.el.querySelector(':not(x-action):not(x-audio-music-action):not(x-audio-sound-action)')
+      let element = this.targetElement ? this.el.querySelector(this.targetElement) : this.el.querySelector(':not(x-action):not(x-audio-music-action):not(x-audio-sound-action)')
 
-      if (element === undefined) {
+      if (!element) {
         warn(`x-action-activator: ${this.parent?.url} no elements found for '${this.targetElement}'`)
       } else {
         debugIf(this.debug, `x-action-activator: element found ${element.nodeName}`)
         element.addEventListener(this.targetEvent, async () => {
-          debugIf(this.debug, `x-action-activator: ${this.parent?.url} received ${element.nodeName} ${this.targetEvent} event`)
+          debugIf(this.debug, `x-action-activator: ${this.parent?.url} received ${element?.nodeName} ${this.targetEvent} event`)
           await this.activateActions()
         })
       }

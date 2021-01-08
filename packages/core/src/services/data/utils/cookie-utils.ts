@@ -115,11 +115,10 @@ export function getCookie(document: HTMLDocument, key: string): string | undefin
 }
 
 export function setCookie(document: HTMLDocument, key: string, value: string, attributes?: CookieAttributes): void {
-  // eslint-disable-next-line no-param-reassign
   document.cookie = encode(key, value, { path: '/', ...attributes })
 }
 
-export function removeCookie(document, key: string, attributes?: CookieAttributes): void {
+export function removeCookie(document: HTMLDocument, key: string, attributes?: CookieAttributes): void {
   setCookie(document, key, '', { ...attributes, expires: -1 })
 }
 

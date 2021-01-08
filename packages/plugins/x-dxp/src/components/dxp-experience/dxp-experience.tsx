@@ -1,10 +1,10 @@
-import { Component, Prop, Event, EventEmitter, Host, h, State, Method, Element } from '@stencil/core'
-import { getXAPIUrlFromNamespace } from '../../services/api/conventions'
-import { onChange, logger, urlService as url, state } from '../../services'
-import { promiseTimeout } from '../../services/utils'
+import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, State } from '@stencil/core'
 import { Experience, ExperienceInformation } from '../..'
 import { Namespace } from '../../models/namespace'
+import { logger, onChange, state, urlService as url } from '../../services'
+import { getXAPIUrlFromNamespace } from '../../services/api/conventions'
 import { ExperienceController } from '../../services/experience-controller'
+import { promiseTimeout } from '../../services/utils'
 
 @Component({
   tag: 'dxp-experience',
@@ -115,10 +115,10 @@ export class DXPExperience {
   }
 
   /**
-   * This method gets waits for the experience.
+   * This method waits for the experience.
    */
   @Method()
-  async getExperience(timeout: number): Promise<Experience> {
+  async getExperience(timeout: number): Promise<Experience | void> {
     // Provide a way for components to wait for the experience
     return promiseTimeout(
       timeout,
@@ -126,7 +126,6 @@ export class DXPExperience {
         while (!this.experience) {
           // Do wait
         }
-
         res(this.experience)
       }),
     )

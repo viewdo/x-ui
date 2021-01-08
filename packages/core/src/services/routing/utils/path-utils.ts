@@ -63,7 +63,7 @@ export const parseQueryString = (query: string) => {
 
   return (/^[?#]/.test(query) ? query.slice(1) : query).split('&').reduce<Record<string, any>>((parameters, parameter) => {
     const [key, value] = parameter.split('=')
-    // eslint-disable-next-line no-param-reassign
+
     parameters[key] = value ? decodeURIComponent(value.replace(/\+/g, ' ')) : ''
     return parameters
   }, {})

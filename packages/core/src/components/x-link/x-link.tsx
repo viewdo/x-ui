@@ -10,11 +10,11 @@ import { eventBus, MatchResults, RouterService, ROUTE_EVENTS } from '../..'
   shadow: false,
 })
 export class XViewLink {
-  private subscription: () => void
+  private subscription!: () => void
   @Element() el!: HTMLXLinkElement
-  @State() match: MatchResults | null = null
+  @State() match?: MatchResults | null
 
-  private get router(): RouterService {
+  private get router(): RouterService | undefined {
     return this.el.closest('x-ui')?.router
   }
 

@@ -6,25 +6,26 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { ActionActivationStrategy, CookieConsent, DataProviderRegistration, DiscardStrategy, EventAction, LoadStrategy, VisitStrategy } from ".";
+import { AUDIO_COMMANDS } from "./services/audio/interfaces";
 import { HistoryType, RouterService } from "./services";
 export namespace Components {
     interface XAction {
         /**
           * The command to execute.
          */
-        "command": string;
+        "command"?: string;
         /**
           * The JSON serializable data payload the command requires.
          */
-        "data": string;
+        "data"?: string;
         /**
           * Get the underlying actionEvent instance. Used by the x-action-activator element.
          */
-        "getAction": () => Promise<EventAction<any>>;
+        "getAction": () => Promise<EventAction<any> | null>;
         /**
           * This is the topic this action-command is targeting.
          */
-        "topic": 'data' | 'routing' | 'document' | 'audio' | 'video';
+        "topic"?: 'data' | 'routing' | 'document' | 'audio' | 'video';
     }
     interface XActionActivator {
         /**
@@ -51,7 +52,7 @@ export namespace Components {
         /**
           * The time, in seconds at which the contained actions should be submitted.  For use with activate="AtTime" Only!
          */
-        "time": number;
+        "time"?: number;
     }
     interface XAudioMusicAction {
         /**
@@ -112,7 +113,7 @@ export namespace Components {
         /**
           * The command to execute.
          */
-        "command": 'start'|'pause'|'resume'|'mute'|'volume'|'seek';
+        "command": AUDIO_COMMANDS;
         /**
           * Get the underlying actionEvent instance. Used by the x-action-activator element.
          */
@@ -124,7 +125,7 @@ export namespace Components {
         /**
           * The value payload for the command.
          */
-        "value": string|boolean|number;
+        "value"?: string | boolean | number;
     }
     interface XAudioSoundLoad {
         /**
@@ -165,7 +166,7 @@ export namespace Components {
           * An expression that tells this component how to determine if the user has previously consented.
           * @example {storage:consented}
          */
-        "hideWhen": string;
+        "hideWhen"?: string;
         /**
           * When skipConsent is true, the accept-cookies banner will not be displayed before accessing cookie-data.
          */
@@ -232,7 +233,7 @@ export namespace Components {
         /**
           * Base Url for embedded links
          */
-        "baseUrl": string;
+        "baseUrl"?: string;
         /**
           * If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.
          */
@@ -240,7 +241,7 @@ export namespace Components {
         /**
           * Remote Template URL
          */
-        "src": string;
+        "src"?: string;
     }
     interface XUi {
         /**
@@ -310,7 +311,7 @@ export namespace Components {
         /**
           * Remote URL for this Route's content.
          */
-        "contentSrc": string;
+        "contentSrc"?: string;
         /**
           * Turn on debug statements for load, update and render events.
          */
@@ -326,7 +327,7 @@ export namespace Components {
         /**
           * Header height or offset for scroll-top on this view.
          */
-        "scrollTopOffset"?: number;
+        "scrollTopOffset": number;
         /**
           * Navigation transition between routes. This is a CSS animation class.
          */
@@ -340,7 +341,7 @@ export namespace Components {
         /**
           * Remote URL for this Route's content.
          */
-        "contentSrc": string;
+        "contentSrc"?: string;
         /**
           * To debug timed elements, set this value to true.
          */
@@ -609,7 +610,7 @@ declare namespace LocalJSX {
         /**
           * The command to execute.
          */
-        "command"?: 'start'|'pause'|'resume'|'mute'|'volume'|'seek';
+        "command"?: AUDIO_COMMANDS;
         /**
           * The track to target.
          */
@@ -617,7 +618,7 @@ declare namespace LocalJSX {
         /**
           * The value payload for the command.
          */
-        "value"?: string|boolean|number;
+        "value"?: string | boolean | number;
     }
     interface XAudioSoundLoad {
         /**
@@ -789,15 +790,15 @@ declare namespace LocalJSX {
         /**
           * When inline the link/script tags are rendered in-place rather than added to the head.
          */
-        "inline"?: boolean;
+        "inline": boolean;
         /**
           * Import the script file as a module.
          */
-        "module"?: boolean;
+        "module": boolean;
         /**
           * Declare the script only for use when modules aren't supported
          */
-        "noModule"?: boolean;
+        "noModule": boolean;
         /**
           * If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.
          */
@@ -805,7 +806,7 @@ declare namespace LocalJSX {
         /**
           * INTERNAL - disables the DOM onload await to finish rendering
          */
-        "nowait"?: boolean;
+        "nowait": boolean;
         /**
           * The script file to reference.
          */
@@ -827,7 +828,7 @@ declare namespace LocalJSX {
         /**
           * The url for this route should only be matched when it is exact.
          */
-        "exact"?: boolean;
+        "exact": boolean;
         /**
           * The title for this view. This is prefixed before the app title configured in x-ui
          */

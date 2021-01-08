@@ -1,6 +1,6 @@
 :root {
   .dark {
-    --dxp-logo-filter: brightness(0)  invert(1);
+    --dxp-logo-filter: brightness(0) invert(1);
     --dxp-background-color: #333;
   }
 }
@@ -59,7 +59,6 @@ a:link,
 a:hover {
   text-decoration: none;
 }
-
 
 button {
   float: right;

@@ -1,24 +1,24 @@
 # Data Providers
 
-> The Data Provider system is a way to normalize data access for use within  Data Expressions.
+> The Data Provider system is a way to normalize data access for use within Data Expressions.
 
-* Browser Session: **session**
-* Browser Storage: **storage**
-* Cookies: **cookie**
-* Route: **route**
-* Query: **query**
-* Inline Data: **data**
+- Browser Session: **session**
+- Browser Storage: **storage**
+- Cookies: **cookie**
+- Route: **route**
+- Query: **query**
+- Inline Data: **data**
 
 Data Providers _provide_ the underlying data-store for expressions to resolve using data from a variety of sources. Also, since custom providers can be added, you can extend your HTML with customizations, personalization and route-conditions with ANY data-set.
 
-**Expression Format:** ```{ provider : key ? default }```
+**Expression Format:** `{ provider : key ? default }`
 The provider is the name of the store and the key is the data-item key. There is an option 'default' value that can be provided after a question-mark.
 
 **Example:**
 
-````
+```
 {storage:name?Friend}
-````
+```
 
 ## Built-in Data Providers
 
@@ -30,15 +30,15 @@ This store is short-lived and used to track 'session visits' and other temporary
 
 Provider Key: '**session**'
 
- ```{session:(key)}```
+`{session:(key)}`
 
 #### Local Storage
 
-This store is long-lived from the same browser.  and used to track 'session visits' and other temporary values.
+This store is long-lived from the same browser. and used to track 'session visits' and other temporary values.
 
 Provider Key: '**storage**'
 
- ```{storage:(key)}```
+`{storage:(key)}`
 
 #### Cookie Storage
 
@@ -46,10 +46,9 @@ This store is long-lived from the same browser, but for very small data items.
 
 Provider Key: '**cookie**'
 
- ```{cookie:(key)}```
+`{cookie:(key)}`
 
 The cookie provider is registered using a special component **<x-data-provider-cookie>**.
-
 
 ## Custom Data Providers
 
@@ -61,7 +60,7 @@ To register a provider, provide a unique name and an instance that implements ID
 
 **Custom Event to Register a Provider:**
 
-````typescript
+```typescript
 new CustomEvent('actionEvent', {
   detail: {
     topic: 'data'
@@ -72,60 +71,58 @@ new CustomEvent('actionEvent', {
     }
   }
 })
-````
+```
 
-Then, assuming your instance has a data item with key **name**, your HTML can use this value in an the expression: ```{myprovider:name}```
-
+Then, assuming your instance has a data item with key **name**, your HTML can use this value in an the expression: `{myprovider:name}`
 
 **Data Provider Interface:**
 
-````typescript
+```typescript
 export interface IDataProvider {
-  get(key: string): Promise<string>;
-  set(key: string, value: string): Promise<void>;
+  get(key: string): Promise<string>
+  set(key: string, value: string): Promise<void>
   changed: EventEmitter
 }
-````
+```
 
 ### Data Changed Event
 
-To notify the system that your underlying data has changed, the interface includes a simple event emitter. Emit 'data-changed' from your __changed__ emitter and all elementsusing your value will re-render with the new data value.
+To notify the system that your underlying data has changed, the interface includes a simple event emitter. Emit 'data-changed' from your **changed** emitter and all elementsusing your value will re-render with the new data value.
 
 ### Sample Data Provider
 
-````typescript
-import { DATA_EVENTS, IDataProvider, EventEmitter } from '@viewdo/ui';
+```typescript
+import { DATA_EVENTS, IDataProvider, EventEmitter } from '@viewdo/ui'
 
 export class MyProvider implements IDataProvider {
-  data = {};
+  data = {}
   constructor() {
-    this.changed = new EventEmitter();
+    this.changed = new EventEmitter()
   }
 
-  async get(key: string): Promise<string|null> {
-    return this.data[key] || null;
+  async get(key: string): Promise<string | null> {
+    return this.data[key] || null
   }
   async set(key: string, value: string): Promise<void> {
-    this.data[key] = value.slice();
-    this.changed.emit(DATA_EVENTS.DataChanged);
+    this.data[key] = value.slice()
+    this.changed.emit(DATA_EVENTS.DataChanged)
   }
 
-  changed:EventEmitter;
+  changed: EventEmitter
 }
-
-````
+```
 
 ### Sample Registrations
 
 #### Native JS
 
-All that is needed by the data-system is a custom event with an instance of your provider in the details.data.provider property. *Note: be sure the event is composed, so it can reach shadow-dom listeners.*
+All that is needed by the data-system is a custom event with an instance of your provider in the details.data.provider property. _Note: be sure the event is composed, so it can reach shadow-dom listeners._
 
-````javascript
+```javascript
 
 const customProvider = new MyProvider(); // IDataProvider
-const event = new CustomEvent('xui:action-events:data', { 
-  detail: { 
+const event = new CustomEvent('xui:action-events:data', {
+  detail: {
     command: 'register-provider'
     data: {
       name: 'myprovder,
@@ -136,20 +133,19 @@ const event = new CustomEvent('xui:action-events:data', {
 
 document.body.dispatchEvent(event, { bubbles: true, composed: true})
 
-````
-
+```
 
 #### As Component [StencilJS]
 
-````typescript
-import { Component, Event, EventEmitter, Prop, State, h } from '@stencil/core';
+```typescript
+import { Component, Event, EventEmitter, Prop, State, h } from '@stencil/core'
 
 @Component({
   tag: 'my-data-provider',
   shadow: false,
 })
 export class MyDataProvider {
-  private customProvider = new MyProvider();
+  private customProvider = new MyProvider()
 
   /**
    * This event is raised when the component loads.
@@ -160,9 +156,10 @@ export class MyDataProvider {
     eventName: 'xui:action-events:data',
     bubbles: true,
     composed: true,
-  }) raiseAction: EventEmitter<any>;
+  })
+  raiseAction: EventEmitter<any>
 
-  @State() keys = [];
+  @State() keys = []
 
   componentDidLoad() {
     this.raiseAction.emit({
@@ -171,15 +168,16 @@ export class MyDataProvider {
         name: this.name,
         provider: this.customProvider,
       },
-    });
+    })
   }
 }
-````
+```
 
 Then just include your component somewhere on the page:
 
-````html
+```html
 <x-ui>
   ...
- <my-data-provider></my-data-provider>
-````
+  <my-data-provider></my-data-provider
+></x-ui>
+```

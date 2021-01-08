@@ -4,16 +4,15 @@ This tag renders a template for each item in the configured array. The item temp
 
 ## Usage
 
-````html
+```html
 <x-data-repeat items="{expression}">
   <template>
     <div>{data}</div>
   </template>
 </x-data-repeat>
-````
+```
 
 The **items** attribute can be any array-string or an [expression](/data/expressions) to pull data from a registered provider.
-
 
 ### Declarative Items Source
 
@@ -21,76 +20,74 @@ This component supports a three ways to express the collection or where it comes
 
 #### Items from Attribute (Simple Array)
 
-````html
+```html
 <x-data-repeat items="['one','two','three']">
   <template>
     <div>{data:item}</div>
   </template>
 </x-data-repeat>
-````
+```
 
 #### Items from Attribute (Provider Array)
 
-````html
+```html
 <x-data-repeat items="{storage:cart-items}">
   <template>
     <div>{data:productName}</div>
   </template>
 </x-data-repeat>
-````
+```
 
 #### Items from Inline Script (Object Array)
 
-````html
+```html
 <x-data-repeat>
   <script type="application/json">
     [
-      { "color":"blue", "name":"Bob" },
-      { "color":"red", "name":"Sally" }
+      { "color": "blue", "name": "Bob" },
+      { "color": "red", "name": "Sally" }
     ]
-  </script>  
+  </script>
   <template>
     <div style="color: {data:color};">{data:name}</div>
   </template>
 </x-data-repeat>
-````
+```
 
 #### Items from Remote URL (Remote Array)
 
-````html
+```html
 <x-data-repeat items-src="/data/items.json">
   <template>
     <div style="color: {data:color};">{data:name}</div>
   </template>
 </x-data-repeat>
-````
+```
 
 ### Template Interpolation
 
 This component supports HTML string interpolation within a child template tag. Each item from the configured collection will be rendered with this template.
 
-
-**Data Token Format:** ````{<provider>:<data-key>(?<default>)}````
+**Data Token Format:** `{<provider>:<data-key>(?<default>)}`
 
 **provider**: the data provider name
-**data-key**: the data value key within the provider *
+**data-key**: the data value key within the provider \*
 **default**: optional default value if the provider's key is empty.
 
-\* _If there are any dots in the key, the evaluator attempts to parse the base value as JSON, then uses the dot-notation to select a value from the object. For example, the expression ````{data:user.name}```` means the session value 'user' is a JSON object, parse it and replace with the 'name' property._
+\* _If there are any dots in the key, the evaluator attempts to parse the base value as JSON, then uses the dot-notation to select a value from the object. For example, the expression `{data:user.name}` means the session value 'user' is a JSON object, parse it and replace with the 'name' property._
 
 > See [data expressions](/data/expressions) for full documentation
 
 **Providers:**
 
-* Browser Session: **session**
-* Browser Storage: **storage**
-* Cookies: **cookie**
-* Route: **route**
-* Query: **query**
-* Data Item: **data**
+- Browser Session: **session**
+- Browser Storage: **storage**
+- Cookies: **cookie**
+- Route: **route**
+- Query: **query**
+- Data Item: **data**
 
 > See [data providers](/data/providers) to learn how to add custom data providers.
-
 
 <!-- Auto Generated Below -->
 
@@ -108,4 +105,4 @@ This component supports HTML string interpolation within a child template tag. E
 
 ----------------------------------------------
 
-*Built with [StencilJS](https://stenciljs.com/)*
+view.DO : Experience Platform

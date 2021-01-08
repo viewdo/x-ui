@@ -1,9 +1,8 @@
-
 :root {
   --x-background-color: #fff;
-  --x-background-color-rgb: 255,255,255;
+  --x-background-color-rgb: 255, 255, 255;
   --x-text-color: #000;
-  --x-text-color-rgb: 0,0,0;
+  --x-text-color-rgb: 0, 0, 0;
   --x-border-color: #525151;
   --x-item-background: #363636;
   --x-toolbar-background: #464646;
@@ -67,9 +66,9 @@
 
 :root(.dark) {
   --x-background-color: #2f2f2f;
-  --x-background-color-rgb: 18,18,18;
+  --x-background-color-rgb: 18, 18, 18;
   --x-text-color: #fff;
-  --x-text-color-rgb: 255,255,255;
+  --x-text-color-rgb: 255, 255, 255;
   --x-border-color: #525151;
   --x-item-background: #363636;
   --x-toolbar-background: #464646;
@@ -130,4 +129,3 @@
   --x-color-light-shade: #1e2023;
   --x-color-light-tint: #383a3e;
 }
-

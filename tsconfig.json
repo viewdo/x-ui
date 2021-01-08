@@ -17,10 +17,5 @@
     "stripInternal": true,
     "strict": true
   },
-  "exclude": [
-    "./packages/**/*.spec.ts?x",
-    "./packages/**/*.e2e.ts?x",
-    "__mocks__",
-    "test"
-  ]
+  "exclude": ["./packages/**/*.spec.ts?x", "./packages/**/*.e2e.ts?x", "__mocks__", "test"]
 }

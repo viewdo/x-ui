@@ -10,8 +10,8 @@ import { CookieConsent, CookieProvider, DataProviderRegistration, DATA_COMMANDS,
   shadow: true,
 })
 export class XDataProviderCookie {
-  private customProvider: IDataProvider
-  @Element() el: HTMLXDataProviderCookieElement
+  private customProvider!: IDataProvider
+  @Element() el!: HTMLXDataProviderCookieElement
   @State() hide = false
 
   /**
@@ -19,7 +19,7 @@ export class XDataProviderCookie {
    * the user has previously consented.
    * @example {storage:consented}
    */
-  @Prop() hideWhen: string
+  @Prop() hideWhen?: string
 
   /**
    * When skipConsent is true, the accept-cookies banner will not
@@ -39,7 +39,7 @@ export class XDataProviderCookie {
     composed: true,
     cancelable: true,
   })
-  register: EventEmitter<EventAction<DataProviderRegistration>>
+  register!: EventEmitter<EventAction<DataProviderRegistration>>
 
   /**
    * This event is raised when the consents to cookies.
@@ -50,7 +50,7 @@ export class XDataProviderCookie {
     composed: true,
     cancelable: true,
   })
-  didConsent: EventEmitter<CookieConsent>
+  didConsent!: EventEmitter<CookieConsent>
 
   private get consentKey() {
     return 'cookie-consent'

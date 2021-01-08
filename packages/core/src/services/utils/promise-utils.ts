@@ -19,7 +19,6 @@ export async function sleep(ms: number) {
  */
 export async function findAsyncSequential<T>(array: T[], predicate: (t: T) => Promise<boolean>): Promise<T | null> {
   for (const t of array) {
-    // eslint-disable-next-line no-await-in-loop
     if (await predicate(t)) {
       return t
     }

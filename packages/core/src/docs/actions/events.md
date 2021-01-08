@@ -6,7 +6,7 @@ Event Name: **actionEvent**
 
 **Custom Event**
 
-````typescript
+```typescript
 const action = new CustomEvent('actionEvent', {
   detail: {
     topic: "<topic",
@@ -23,11 +23,11 @@ xui.dispatchEvent(action, {
   composed: true,
 });
 
-````
+```
 
 ## Using the ActionBus
 
-````typescript
+```typescript
 
 import { ActionBus } from '@viewdo/ui';
 
@@ -38,4 +38,4 @@ ActionBus.emit('<topic>', {
   }
 })
 
-````
+```

@@ -1,9 +1,10 @@
-import { RafCallback } from '@stencil/core/internal'
-import { EventAction, IEventEmitter } from '../actions'
-import { addDataProvider } from '../data/providers/factory'
-import { RoutingDataProvider } from './data-provider'
-import { createBrowserHistory } from './factories/createBrowserHistory'
-import { createHashHistory } from './factories/createHashHistory'
+import { RafCallback } from '@stencil/core/internal';
+import { debugIf, interfaceState } from '..';
+import { EventAction, IEventEmitter } from '../actions';
+import { addDataProvider } from '../data/providers/factory';
+import { RoutingDataProvider } from './data-provider';
+import { createBrowserHistory } from './factories/createBrowserHistory';
+import { createHashHistory } from './factories/createHashHistory';
 import {
   HistoryType,
   LocationSegments,
@@ -14,13 +15,12 @@ import {
   RouterHistory,
   RouteViewOptions,
   ROUTE_COMMANDS,
-  ROUTE_TOPIC,
-  ROUTE_EVENTS,
-} from './interfaces'
-import { getLocation, getUrl } from './utils/location-utils'
-import { matchPath } from './utils/match-path'
-import { debugIf, interfaceState } from '..'
-import { Route } from './route'
+
+  ROUTE_EVENTS, ROUTE_TOPIC
+} from './interfaces';
+import { Route } from './route';
+import { getLocation, getUrl } from './utils/location-utils';
+import { matchPath } from './utils/match-path';
 
 const HISTORIES: { [key in HistoryType]: (win: Window) => RouterHistory } = {
   browser: createBrowserHistory,
@@ -158,7 +158,14 @@ export class RouterService {
     this.events.removeAllListeners()
   }
 
-  createRoute(routeElement: HTMLElement, path: string, exact: boolean, pageTitle: string, transition: string, scrollTopOffset: number, matchSetter: (m: MatchResults) => void) {
+  createRoute(
+    routeElement: HTMLElement,
+    path: string,
+    exact: boolean,
+    pageTitle: string,
+    transition: string|null,
+    scrollTopOffset: number,
+    matchSetter: (m: MatchResults|null) => void) {
     return new Route(this, routeElement, path, exact, pageTitle, transition, scrollTopOffset, matchSetter)
   }
 }

@@ -1,5 +1,5 @@
-import { Component, h, Host, State, Prop, Element } from '@stencil/core'
-import { resolveElementVisibility, RouterService, warn, resolveExpression, eventBus, DATA_EVENTS, ROUTE_EVENTS } from '../..'
+import { Component, Element, h, Host, Prop, State } from '@stencil/core'
+import { DATA_EVENTS, eventBus, resolveElementVisibility, resolveExpression, RouterService, ROUTE_EVENTS, warn } from '../..'
 
 /**
  *  @system content
@@ -10,32 +10,32 @@ import { resolveElementVisibility, RouterService, warn, resolveExpression, event
   shadow: false,
 })
 export class XMarkdown {
-  @Element() el: HTMLXMarkdownElement
-  @State() content: string
+  @Element() el!: HTMLXMarkdownElement
+  @State() content?: string
 
   /**
    * Remote Template URL
    */
-  @Prop() src: string
+  @Prop() src?: string
 
   /**
    * Base Url for embedded links
    */
-  @Prop() baseUrl: string
+  @Prop() baseUrl?: string
 
   /**
    * If set, disables auto-rendering of this instance.
    * To fetch the contents change to false or remove
    * attribute.
    */
-  // eslint-disable-next-line @stencil/strict-mutable
+
   @Prop({ mutable: true }) noRender = false
 
-  private get router(): RouterService {
-    return this.el.closest('x-ui')?.router
+  private get router(): RouterService | null {
+    return this.el.closest('x-ui')?.router || null
   }
 
-  private get childScript(): HTMLScriptElement {
+  private get childScript(): HTMLScriptElement | null {
     return this.el.querySelector('script')
   }
 
@@ -75,20 +75,25 @@ export class XMarkdown {
       this.el.querySelectorAll('a[href^=http]').forEach((a) => {
         a.addEventListener('click', (e) => {
           const href = a.getAttribute('href')
-          e.preventDefault()
-          this.router.history.push(href)
+          if (href) {
+            e.preventDefault()
+            this.router?.history.push(href)
+          }
         })
       })
     }
   }
 
   private async getContentFromSrc() {
+    if (!this.src) return
     try {
       const src = await resolveExpression(this.src)
       const response = await fetch(src)
       if (response.status === 200) {
         const data = await response.text()
-        return window.marked ? window.marked(data, { baseUrl: this.baseUrl }) : null
+        // eslint-disable-next-line 7015
+        const win = window as any
+        return win['marked'] ? win['marked'](data, { baseUrl: this.baseUrl }) : null
       }
 
       warn(`x-markdown: unable to retrieve from ${this.src}`)
@@ -99,8 +104,10 @@ export class XMarkdown {
 
   private getContentFromScript() {
     const element = this.childScript
+    if (!element?.textContent) return
     const md = this.dedent(element.textContent)
-    return window.marked ? window.marked(md) : null
+    const win = window as any
+    return win['marked'] ? win['marked'](md) : null
   }
 
   private dedent(innerText: string) {
@@ -111,14 +118,15 @@ export class XMarkdown {
 
   private highlight(container: { querySelectorAll: (arg0: string) => any }) {
     const unhinted = container.querySelectorAll('pre>code:not([class*="language-"])')
-    unhinted.forEach((n: { innerText: string; classList: { add: (arg0: string) => void } }) => {
+    unhinted.forEach((n: any) => {
       // Dead simple language detection :)
-      // eslint-disable-next-line no-nested-ternary
       const lang = n.textContent.match(/^\s*</) ? 'markup' : n.textContent.match(/^\s*(\$|#)/) ? 'bash' : 'js'
       n.classList.add(`language-${lang}`)
     })
-    if (window && window.Prism) {
-      window.Prism.highlightAllUnder(container)
+    const win = window as any
+    const prism = win['Prism']
+    if (prism && prism.highlightAllUnder) {
+      prism.highlightAllUnder(container)
     }
   }
 

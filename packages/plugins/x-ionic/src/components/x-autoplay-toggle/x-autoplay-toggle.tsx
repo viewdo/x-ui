@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop } from '@stencil/core'
+import { Component, h, Host, Prop } from '@stencil/core'
 
 @Component({
   tag: 'x-autoplay-toggle',
@@ -13,7 +13,6 @@ export class AutoplayToggle {
 
   componentWillLoad() {
     // This.autoplay = state.autoplay;
-    // // eslint-disable-next-line no-return-assign
     // onChange('autoplay', (m) => this.autoplay = m);
   }
 

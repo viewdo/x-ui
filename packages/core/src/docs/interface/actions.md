@@ -2,7 +2,6 @@
 
 The default Interface Action Listener is configured to handle commands raised to the [Event-Action Bus](/actions/event-bus).
 
-
 ---
 
 ## UI Commands

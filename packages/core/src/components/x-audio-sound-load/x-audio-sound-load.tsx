@@ -10,7 +10,7 @@ import { actionBus, AudioType, AUDIO_TOPIC, DiscardStrategy, LoadStrategy } from
   shadow: true,
 })
 export class XAudioSoundLoad {
-  @Element() el: HTMLXAudioSoundLoadElement
+  @Element() el!: HTMLXAudioSoundLoadElement
 
   /**
    * The path to the audio-file.
@@ -25,12 +25,12 @@ export class XAudioSoundLoad {
   /**
    * This is the topic this action-command is targeting.
    */
-  @Prop() mode: LoadStrategy
+  @Prop() mode: LoadStrategy = LoadStrategy.Load
 
   /**
    * The discard strategy the player should use for this file.
    */
-  @Prop() discard: DiscardStrategy
+  @Prop() discard: DiscardStrategy = DiscardStrategy.Route
 
   /**
    * Set this attribute to have the audio file tracked

@@ -1,6 +1,4 @@
-
 <div class="container container-fluid mx-auto">
-
   <x-data-show when="!{storage:name}">
     <h1>Introductions</h1>
     <p>The View.DO Experience UI system helps build a personalized, conversational UI for the modern web.</p>
@@ -13,17 +11,19 @@
   </x-data-show>
 
   <div class="form-floating mb-3">
-    <input id="name" type="text" required class="form-control"
+    <input
+      id="name"
+      type="text"
+      required
+      class="form-control"
       onblur="localStorage.setItem('name', this.value)"
       onchange="localStorage.setItem('name', this.value)"
-      x-value-from="{storage:name}"/>
+      x-value-from="{storage:name}"
+    />
     <label for="floatingInput">Nickname</label>
   </div>
 
   <div class="x-nav-bottom">
-    <button slot="end" x-next class="btn btn-primary btn-lg">
-      Continue
-      &#x2B9E;
-    </button>
+    <button slot="end" x-next class="btn btn-primary btn-lg">Continue &#x2B9E;</button>
   </div>
 </div>

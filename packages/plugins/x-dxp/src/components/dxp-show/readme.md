@@ -1,9 +1,6 @@
 # dxp-show
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -13,7 +10,6 @@
 | `is`              | `is`      | The optional comparison operator. If omitted, general ‘truthiness’ is used. | `"eq" \| "gt" \| "gte" \| "lt" \| "lte" \| "not" \| null` | `undefined` |
 | `to`              | `to`      | The optional value for comparison.                                          | `any`                                                     | `undefined` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

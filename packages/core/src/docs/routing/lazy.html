@@ -1,31 +1,21 @@
-<x-use
-  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
-  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
-</x-use>
-<x-use
-  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
-</x-use>
+<x-use script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js" style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css"> </x-use>
+<x-use script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js"> </x-use>
 <div class="container container-fluid mx-auto">
   <h1>Routing</h1>
   <p class="lead">
-    Content routing is a simple declarative approach for creating multi-page
-    applications from a single HTML file. The browsers URL path will
-    determine what content is be displayed.
+    Content routing is a simple declarative approach for creating multi-page applications from a single HTML file. The browsers URL path will determine what content is be
+    displayed.
   </p>
 
   <h2>Lazy Loaded HTML</h2>
 
   <p>
-    Route content could be inline or fetched from remote files, or "lazy-loaded" (as needed).
-    The home-page could be inline, while all other routes are lazy-loaded. This approach
-    gives you the best of both static sites and dynamic sites, keeping the initial page size
-    light-weight and progressively fetching HTML fragments only when needed.
+    Route content could be inline or fetched from remote files, or "lazy-loaded" (as needed). The home-page could be inline, while all other routes are lazy-loaded. This approach
+    gives you the best of both static sites and dynamic sites, keeping the initial page size light-weight and progressively fetching HTML fragments only when needed.
   </p>
 
   <p>
-    <button class="btn btn-light" type="button"
-      data-bs-toggle="collapse" data-bs-target="#loadRemoteSource"
-      aria-expanded="false" aria-controls="loadRemoteSource">
+    <button class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#loadRemoteSource" aria-expanded="false" aria-controls="loadRemoteSource">
       <i class="ri-code-s-slash-line"></i>
       Remote Routing Source
     </button>
@@ -33,52 +23,30 @@
   <div class="collapse" id="loadRemoteSource">
     <x-markdown>
       <script type="text/markdown">
-        ````html
-        <x-ui
-          app-title="My HTML App"
-          transition="fade-in"
-          start-url="/page-1">
+        ```html
+        <x-ui app-title="My HTML App" transition="fade-in" start-url="/page-1">
           <x-view url="/page-1" page-title="Page 1">
             <h1>Hello World!</h1>
             <h2>Now you have a basic content router.</h2>
-            <p>
-              It's a good idea to include the main page contents in-line for
-              ultra-fast rendering.
-            </p>
+            <p>It's a good idea to include the main page contents in-line for ultra-fast rendering.</p>
             <x-include src="/components/calendar.html"></x-include>
           </x-view>
-          <x-view url="/page-2" page-title="Page 2"
-            content-src="/pages/page-2">
-          </x-view>
+          <x-view url="/page-2" page-title="Page 2" content-src="/pages/page-2"> </x-view>
         </x-ui>
-        ````
-        </script>
+        ```
+      </script>
     </x-markdown>
   </div>
 
-
   <p>
     The <x-link href="/components/x-include"><b>&lt;x-include&gt;</b></x-link>
-    component fetches remote HTML and renders it safely and directly into the page when
-    when and where you tell it too.
+    component fetches remote HTML and renders it safely and directly into the page when when and where you tell it too.
   </p>
 
-  <blockquote>
-    You get the benefit of shared layouts and components without the need for a
-    application-server, client-side framework or static-site generation process.
-  </blockquote>
+  <blockquote>You get the benefit of shared layouts and components without the need for a application-server, client-side framework or static-site generation process.</blockquote>
 
   <div class="x-nav-bottom">
-    <x-link slot="start" href="/routing"
-      custom="button" anchor-class="btn btn-light btn-lg">
-      &#x2B9C;
-      Routing
-    </x-link>
-    <x-link slot="end" href="/routing/nesting"
-      custom="button" anchor-class="btn btn-primary btn-lg">
-      Next: Nested
-      &#x2B9E;
-    </x-link>
+    <x-link slot="start" href="/routing" custom="button" anchor-class="btn btn-light btn-lg"> &#x2B9C; Routing </x-link>
+    <x-link slot="end" href="/routing/nesting" custom="button" anchor-class="btn btn-primary btn-lg"> Next: Nested &#x2B9E; </x-link>
   </div>
-
 </div>

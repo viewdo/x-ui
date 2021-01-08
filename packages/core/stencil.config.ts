@@ -9,7 +9,6 @@ export const config: Config = {
     { components: ['x-ui', 'x-view', 'x-view-do', 'x-link'] },
     { components: ['x-audio-player', 'x-audio-music-load', 'x-audio-sound-load', 'x-audio-music-action', 'x-audio-sound-action'] },
   ],
-  buildEs5: true,
   preamble: 'view.DO 2021',
   devServer: {
     openBrowser: false,
@@ -27,6 +26,7 @@ export const config: Config = {
     },
     {
       type: 'docs-readme',
+      footer: 'view.DO : Experience Platform'
     },
     {
       type: 'docs-json',
@@ -40,7 +40,7 @@ export const config: Config = {
       type: 'www',
       dir: '../../www',
       buildDir: 'x-ui',
-      empty: false,
+      empty: true,
       serviceWorker: null, // Disable service workers
       copy: [
         { src: 'docs', dest: './', keepDirStructure: true },

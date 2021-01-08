@@ -1,12 +1,12 @@
 // Adapted from the https://github.com/ReactTraining/history and converted to TypeScript
 
-import { createLocation, locationsAreEqual, createKey } from '../utils/location-utils'
-import { RouterHistory, LocationSegments, Prompt } from '../interfaces'
-import { warnIf } from '../../logging'
-import { addLeadingSlash, stripLeadingSlash, stripTrailingSlash, hasBasename, stripBasename, createPath } from '../utils/path-utils'
-import { getConfirmation } from '../utils/browser-utils'
-import { supportsGoWithoutReloadUsingHash } from '../utils/nav-utils'
-import { createTransitionManager } from './createTransitionManager'
+import { warnIf } from '../../logging';
+import { LocationSegments, Prompt, RouterHistory } from '../interfaces';
+import { getConfirmation } from '../utils/browser-utils';
+import { createKey, createLocation, locationsAreEqual } from '../utils/location-utils';
+import { supportsGoWithoutReloadUsingHash } from '../utils/nav-utils';
+import { addLeadingSlash, createPath, hasBasename, stripBasename, stripLeadingSlash, stripTrailingSlash } from '../utils/path-utils';
+import { createTransitionManager } from './createTransitionManager';
 
 export interface CreateHashHistoryOptions {
   getUserConfirmation?: (message: string, callback: (confirmed: boolean) => Record<string, unknown>) => Record<string, unknown>
@@ -68,8 +68,7 @@ export function createHashHistory(win: Window, props: CreateHashHistoryOptions =
   const getDOMLocation = () => {
     let path = decodePath(getHashPath())
 
-    warnIf(
-      basename && !hasBasename(path, basename),
+    warnIf(!hasBasename(path, basename),
       `${'You are attempting to use a basename on a page whose URL path does not begin with the basename. Expected path "'}${path}" to begin with "${basename}".`,
     )
 
@@ -263,7 +262,7 @@ export function createHashHistory(win: Window, props: CreateHashHistoryOptions =
     }
   }
 
-  const block = (prompt: string | Prompt = '') => {
+  const block = (prompt: string | Prompt | null) => {
     const unblock = transitionManager.setPrompt(prompt)
 
     if (!isBlocked) {

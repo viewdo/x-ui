@@ -1,6 +1,6 @@
-import { IDataProvider, DATA_EVENTS } from '../interfaces'
-import { getCookie, setCookie, listenCookieChange } from '../utils/cookie-utils'
-import { EventEmitter } from '../../actions'
+import { EventEmitter } from '../../actions';
+import { DATA_EVENTS, IDataProvider } from '../interfaces';
+import { getCookie, listenCookieChange, setCookie } from '../utils/cookie-utils';
 
 export class CookieProvider implements IDataProvider {
   constructor(private readonly document = window.document) {
@@ -10,8 +10,8 @@ export class CookieProvider implements IDataProvider {
     })
   }
 
-  async get(key: string): Promise<string> {
-    return getCookie(this.document, key)
+  async get(key: string): Promise<string|null> {
+    return getCookie(this.document, key) || null
   }
 
   async set(key: string, value: any) {

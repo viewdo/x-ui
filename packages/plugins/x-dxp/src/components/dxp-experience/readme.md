@@ -8,32 +8,30 @@ This component encapsulated all experience interactions. From retrieving by XID,
 
 - Put a script tag in the head of your page:
 
-````html
-<script type='module' src='https://unpkg.com/@viewdo/dxp-experience-components/dist/dxp/dxp.esm.js'></script>
-````
+```html
+<script type="module" src="https://unpkg.com/@viewdo/dxp-experience-components/dist/dxp/dxp.esm.js"></script>
+```
 
 - Then you can use the element anywhere in your template, JSX, html etc
 
-````html
+```html
 <dxp-experience xapi-url="https://xapi.view.do/v4"></dxp-experience>
-````
+```
 
 - Attach to the 'initialized' event to get a handle on the experience data.
 
 ```html
 <script>
-  const body = document.querySelector('body');
-  experienceTag.addEventListener('initialized', async event => {
-    let experience = event.detail;
-    await experience.setData('color', 'red');
+  const body = document.querySelector('body')
+  experienceTag.addEventListener('initialized', async (event) => {
+    let experience = event.detail
+    await experience.setData('color', 'red')
     console.dir(experience)
   })
 </script>
-````
-
+```
 
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -49,7 +47,6 @@ This component encapsulated all experience interactions. From retrieving by XID,
 | `userKey`        | `user-key`        | User Key (falls back to ?userKey )                                                | `string`                                                 | `url.userKey`  |
 | `xapiUrl`        | `xapi-url`        | Experience API Url (optional)                                                     | `string`                                                 | `undefined`    |
 
-
 ## Events
 
 | Event             | Description                                                                                                                                            | Type                      |
@@ -57,7 +54,6 @@ This component encapsulated all experience interactions. From retrieving by XID,
 | `dxp:errored`     | When an experience is unable to be retrieved, this event fires with 'event.detail' = error message.                                                    | `CustomEvent<string>`     |
 | `dxp:initialized` | When an experience is retrieved, this event fires with 'event.detail' being the full experience, w/ data methods like 'setData()' and 'setComplete()'. | `CustomEvent<Experience>` |
 | `dxp:reset`       | This event is raised when reset() is called.                                                                                                           | `CustomEvent<void>`       |
-
 
 ## Methods
 
@@ -69,8 +65,6 @@ This method gets waits for the experience.
 
 Type: `Promise<Experience>`
 
-
-
 ### `reset() => Promise<void>`
 
 This method resets the stored session-id & experience-key,
@@ -81,29 +75,26 @@ or dynamically switching experiences in-page.
 
 Type: `Promise<void>`
 
-
-
-
 ## Shadow Parts
 
 | Part          | Description |
 | ------------- | ----------- |
 | `"container"` |             |
 
-
 ## Dependencies
 
 ### Used by
 
- - [dxp-experience-demo](../dxp-experience-demo)
+- [dxp-experience-demo](../dxp-experience-demo)
 
 ### Graph
+
 ```mermaid
 graph TD;
   dxp-experience-demo --> dxp-experience
   style dxp-experience fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

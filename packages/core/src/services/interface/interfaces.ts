@@ -1,9 +1,9 @@
 /* istanbul ignore file */
 
-import { OnChangeHandler } from '@stencil/store/dist/types'
+import { OnChangeHandler } from '@stencil/store/dist/types';
 
 export class InterfaceState {
-  theme?: 'light' | 'dark' | string
+  theme!:string;
   muted!: boolean
   autoplay!: boolean
 }

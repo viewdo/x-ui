@@ -1,39 +1,27 @@
-<x-use script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
-  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
-</x-use>
-<x-use
-  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
-</x-use>
+<x-use script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js" style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css"> </x-use>
+<x-use script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js"> </x-use>
 <div class="container container-fluid mx-auto">
   <h1>Routing</h1>
   <p class="lead">
-    Content routing is a simple declarative approach for creating multi-page
-    applications from a single HTML file. The browsers URL path will
-    determine what content is be displayed.
+    Content routing is a simple declarative approach for creating multi-page applications from a single HTML file. The browsers URL path will determine what content is be
+    displayed.
   </p>
   <h2>Nested Routes</h2>
   <p>
-    Nested routes - ir routes and sub-routes are defined statically.
-    You can choose to semantically nest
-    <x-link href="/components/x-view"><b>&lt;x-view&gt;</b></x-link> elements
-    and have their path's automatically inherited from the parent or declare
-    them in a flat, explicit format.
+    Nested routes - ir routes and sub-routes are defined statically. You can choose to semantically nest
+    <x-link href="/components/x-view"><b>&lt;x-view&gt;</b></x-link> elements and have their path's automatically inherited from the parent or declare them in a flat, explicit
+    format.
   </p>
   <h4>Deep Nested Example</h4>
-  <p>
-    Click the link below to see how deep nesting can go.
-  </p>
-  <x-link href="/routing/nesting/deep"
-    custom="button" anchor-class="btn btn-info text-white">
+  <p>Click the link below to see how deep nesting can go.</p>
+  <x-link href="/routing/nesting/deep" custom="button" anchor-class="btn btn-info text-white">
     <i class="ri-treasure-map-fill"></i>
     Click here to go deeper!
   </x-link>
   <h3>Nested Declaration</h3>
   <p>Routes can contain child-routes to semantically express nested routes using HTML.</p>
   <p>
-    <button class="btn btn-light" type="button"
-      data-bs-toggle="collapse" data-bs-target="#semanticSource"
-      aria-expanded="false" aria-controls="semanticSource">
+    <button class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#semanticSource" aria-expanded="false" aria-controls="semanticSource">
       <i class="ri-code-s-slash-line"></i>
       View Nested Example
     </button>
@@ -41,28 +29,19 @@
   <div class="collapse" id="semanticSource">
     <x-markdown>
       <script type="text/markdown">
-        ````html
-        <x-view url="/home"
-          page-title="Home">
-          <x-view url="/about"
-            page-title="About">
-          ... about content ...
-          </x-view>
-        ... home content ...
+        ```html
+        <x-view url="/home" page-title="Home">
+          <x-view url="/about" page-title="About"> ... about content ... </x-view>
+          ... home content ...
         </x-view>
-        ````
+        ```
       </script>
     </x-markdown>
   </div>
   <h3>Flat Declaration</h3>
+  <p>You can also declare routes without nesting the elements as long as the sub-routes are explicit.</p>
   <p>
-    You can also declare routes without nesting the elements
-    as long as the sub-routes are explicit.
-  </p>
-  <p>
-    <button class="btn btn-light" type="button"
-      data-bs-toggle="collapse" data-bs-target="#flatSource"
-      aria-expanded="false" aria-controls="flatSource">
+    <button class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#flatSource" aria-expanded="false" aria-controls="flatSource">
       <i class="ri-code-s-slash-line"></i>
       View Explicit Example
     </button>
@@ -70,34 +49,21 @@
   <div class="collapse" id="flatSource">
     <x-markdown>
       <script type="text/markdown">
-      ````html
-        <x-view url="/home"
-          page-title="Home">
-        ... home content ...
-        </x-view>
+        ```html
+        <x-view url="/home" page-title="Home"> ... home content ... </x-view>
 
-        <x-view url="/home/about"
-          page-title="About">
-        ... about content ...
-        </x-view>
-      ````
+        <x-view url="/home/about" page-title="About"> ... about content ... </x-view>
+        ```
       </script>
     </x-markdown>
   </div>
 
-
   <div class="x-nav-bottom">
     <x-link slot="start" href="/routing/lazy">
-      <button class="btn btn-light btn-lg ">
-        &#x2B9C;
-        Lazy Routing
-      </button>
+      <button class="btn btn-light btn-lg">&#x2B9C; Lazy Routing</button>
     </x-link>
     <x-link slot="end" href="/routing/data">
-      <button class="btn btn-primary btn-lg">
-        Next: Data Routes
-        &#x2B9E;
-      </button>
+      <button class="btn btn-primary btn-lg">Next: Data Routes &#x2B9E;</button>
     </x-link>
   </div>
 </div>

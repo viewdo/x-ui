@@ -4,23 +4,13 @@ The element should be used in-place of an **`a`** tag to navigate without refres
 
 ## Usage
 
-````html
-<x-link 
-  href="/route">
-  ...
-</x-link>
-````
+```html
+<x-link href="/route"> ... </x-link>
+```
 
-````html
-<x-link 
-  href="/route"
-  custom="div">
-  ...
-</x-link>
-````
-
-
-
+```html
+<x-link href="/route" custom="div"> ... </x-link>
+```
 
 <!-- Auto Generated Below -->
 
@@ -47,4 +37,4 @@ The element should be used in-place of an **`a`** tag to navigate without refres
 
 ----------------------------------------------
 
-*Built with [StencilJS](https://stenciljs.com/)*
+view.DO : Experience Platform

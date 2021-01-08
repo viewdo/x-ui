@@ -1,14 +1,14 @@
 // Adapted from the https://github.com/ReactTraining/history and converted to TypeScript
 
-import { createTransitionManager } from './createTransitionManager'
-import { createScrollHistory } from './createScrollHistory'
-import { createLocation, createKey } from '../utils/location-utils'
-import { RouterHistory, LocationSegments } from '../interfaces'
-import { warnIf } from '../../logging'
+import { warnIf } from '../../logging';
+import { LocationSegments, RouterHistory } from '../interfaces';
+import { getConfirmation, supportsHistory } from '../utils/browser-utils';
+import { createKey, createLocation } from '../utils/location-utils';
+import { isExtraneousPopstateEvent, supportsPopStateOnHashChange } from '../utils/nav-utils';
+import { addLeadingSlash, createPath, hasBasename, stripBasename, stripTrailingSlash } from '../utils/path-utils';
+import { createScrollHistory } from './createScrollHistory';
+import { createTransitionManager } from './createTransitionManager';
 
-import { addLeadingSlash, stripTrailingSlash, hasBasename, stripBasename, createPath } from '../utils/path-utils'
-import { supportsPopStateOnHashChange, isExtraneousPopstateEvent } from '../utils/nav-utils'
-import { getConfirmation, supportsHistory } from '../utils/browser-utils'
 
 export interface CreateBrowserHistoryOptions {
   getUserConfirmation?: (message: string, callback: (confirmed: boolean) => Record<string, unknown>) => Record<string, unknown>
@@ -60,8 +60,7 @@ export function createBrowserHistory(win: Window, props: CreateBrowserHistoryOpt
 
     let path = pathname + search + hash
 
-    warnIf(
-      basename && !hasBasename(path, basename),
+    warnIf((!hasBasename(path, basename)),
       `${'You are attempting to use a basename on a page whose URL path does not begin with the basename. Expected path "'}${path}" to begin with "${basename}".`,
     )
 

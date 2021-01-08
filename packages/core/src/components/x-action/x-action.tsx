@@ -12,29 +12,37 @@ import { EventAction, IActionElement, warn } from '../..'
   shadow: false,
 })
 export class XAction implements IActionElement {
-  private deserializedData: Record<string, any>
+  private deserializedData?: Record<string, any>
 
-  @Element() el: HTMLXActionElement
+  @Element() el!: HTMLXActionElement
   /**
    * This is the topic this action-command is targeting.
    */
-  @Prop() topic: 'data' | 'routing' | 'document' | 'audio' | 'video'
+  @Prop() topic?: 'data' | 'routing' | 'document' | 'audio' | 'video'
 
   /**
    * The command to execute.
    */
-  @Prop() command: string
+  @Prop() command?: string
 
   /**
    * The JSON serializable data payload the command requires.
    */
-  @Prop() data: string
+  @Prop() data?: string
 
   /**
    * Get the underlying actionEvent instance. Used by the x-action-activator element.
    */
   @Method()
-  async getAction(): Promise<EventAction<any>> {
+  async getAction(): Promise<EventAction<any> | null> {
+    if (!this.topic) {
+      warn(`x-action: unable to fire action, missing topic`)
+      return null
+    }
+    if (!this.command) {
+      warn(`x-action: unable to fire action, missing command`)
+      return null
+    }
     return {
       topic: this.topic,
       command: this.command,

@@ -1,6 +1,6 @@
-import { Component, Host, h, State, Element, Prop } from '@stencil/core'
+import { Component, Element, h, Host, Prop, State } from '@stencil/core'
+import { actionBus, audioState, eventBus, onInterfaceChange, warn } from '../..'
 import { AudioActionListener } from '../../services/audio/action-listener'
-import { audioState, warn, onInterfaceChange, eventBus, actionBus } from '../..'
 
 /**
  *
@@ -12,27 +12,27 @@ import { audioState, warn, onInterfaceChange, eventBus, actionBus } from '../..'
   shadow: true,
 })
 export class XAudioPlayer {
-  private listener: AudioActionListener
-  private listenerSubscription: () => void
-  private muteSubscription: () => void
+  private listener!: AudioActionListener
+  private listenerSubscription!: () => void
+  private muteSubscription!: () => void
 
-  @Element() el: HTMLXAudioPlayerElement
+  @Element() el!: HTMLXAudioPlayerElement
 
-  @State() hasAudio: boolean
-  @State() isPlaying: boolean
+  @State() hasAudio: boolean = false
+  @State() isPlaying: boolean = false
 
   /**
    * The display mode for this player. The display
    * is merely a facade to manage basic controls.
    * No track information or duration will be displayed.
    */
-  @Prop() display: boolean
+  @Prop() display: boolean = false
 
   /**
    * Use debug for verbose logging. Useful for figuring
    * thing out.
    */
-  @Prop() debug: boolean
+  @Prop() debug: boolean = false
 
   async componentWillLoad() {
     if (audioState.hasAudio) {

@@ -53,15 +53,15 @@ export class XUse {
 
   private async getStylePromise(element: HTMLHeadElement) {
     if (this.styleSrc && !hasReference(this.styleSrc)) {
+      const url = this.styleSrc
       return new Promise((resolve) => {
         const link = this.el.ownerDocument.createElement('link')
-        link.href = this.styleSrc
+        link.href = url
         link.rel = 'stylesheet'
         link.addEventListener('load', () => {
-          markReference(this.styleSrc)
+          markReference(url)
           resolve({})
         })
-
         element.append(link)
         if (this.nowait) {
           resolve({})
@@ -75,20 +75,19 @@ export class XUse {
   private async getScriptPromise(element: HTMLHeadElement) {
     // Make the style reference
     if (this.scriptSrc && !hasReference(this.scriptSrc)) {
+      const url = this.scriptSrc
       return new Promise((resolve) => {
         const script = this.el.ownerDocument.createElement('script')
-        script.src = this.scriptSrc
+        script.src = url
         if (this.module) {
           script.type = 'module'
         } else if (this.noModule) {
           script.noModule = true
         }
-
         script.addEventListener('load', () => {
-          markReference(this.scriptSrc)
+          markReference(url)
           resolve({})
         })
-
         element.append(script)
         if (this.nowait) {
           resolve({})

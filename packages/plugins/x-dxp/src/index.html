@@ -10,12 +10,9 @@
   <body>
     <dxp-experience display="none" namespace="local" story-key="tech-sample" width="100px"></dxp-experience>
 
-    <x-ui debug
-      app-title="{dxp:story.name}"
-      start-url="experience">
-
+    <x-ui debug app-title="{dxp:story.name}" start-url="experience">
       <x-view url="experience" page-title="{dxp:data.name}">
-        <div slot='content'>
+        <div slot="content">
           <h2>Experience</h2>
           <x-data-display text="{dxp:data.name}"></x-data-display>
         </div>
@@ -24,11 +21,10 @@
     </x-ui>
 
     <script>
-      const body = document.querySelector('body');
-      body.addEventListener('dxp:initialized', async e => {
-        window.experience = e.detail;
-      });
-
+      const body = document.querySelector('body')
+      body.addEventListener('dxp:initialized', async (e) => {
+        window.experience = e.detail
+      })
     </script>
   </body>
 </html>

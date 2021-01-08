@@ -49,19 +49,18 @@ You can pass in your markdown inline too.
 </x-markdown>
 ```
 
-
 <!-- Auto Generated Below -->
 
 
 ## Properties
 
-| Property   | Attribute   | Description                                                                                                  | Type      | Default     |
-| ---------- | ----------- | ------------------------------------------------------------------------------------------------------------ | --------- | ----------- |
-| `baseUrl`  | `base-url`  | Base Url for embedded links                                                                                  | `string`  | `undefined` |
-| `noRender` | `no-render` | If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute. | `boolean` | `false`     |
-| `src`      | `src`       | Remote Template URL                                                                                          | `string`  | `undefined` |
+| Property   | Attribute   | Description                                                                                                  | Type                  | Default     |
+| ---------- | ----------- | ------------------------------------------------------------------------------------------------------------ | --------------------- | ----------- |
+| `baseUrl`  | `base-url`  | Base Url for embedded links                                                                                  | `string \| undefined` | `undefined` |
+| `noRender` | `no-render` | If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute. | `boolean`             | `false`     |
+| `src`      | `src`       | Remote Template URL                                                                                          | `string \| undefined` | `undefined` |
 
 
 ----------------------------------------------
 
-*Built with [StencilJS](https://stenciljs.com/)*
+view.DO : Experience Platform

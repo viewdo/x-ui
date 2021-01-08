@@ -1,9 +1,9 @@
-import { Howl } from 'howler'
-import { AUDIO_EVENTS } from './interfaces'
-import { AudioInfo } from './audio-info'
-import { EventEmitter } from '../actions/event-emitter'
-import { debug, warn } from '../logging'
-import { trackPlayed } from './tracked'
+import { Howl } from 'howler';
+import { EventEmitter } from '../actions/event-emitter';
+import { debug, warn } from '../logging';
+import { AudioInfo } from './audio-info';
+import { AUDIO_EVENTS } from './interfaces';
+import { trackPlayed } from './tracked';
 
 export class AudioTrack extends AudioInfo {
   private readonly sound: Howl
@@ -98,6 +98,5 @@ export class AudioTrack extends AudioInfo {
     this.events.emit(AUDIO_EVENTS.Discarded, this.trackId)
     this.sound.unload()
     this.events.removeAllListeners()
-    this.events = null
   }
 }

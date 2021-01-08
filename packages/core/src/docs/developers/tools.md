@@ -10,14 +10,13 @@ This set of component help create app-based layouts that look great on mobile an
 
 ### [ui-js Menus](https://github.com/ui-js/web-components)
 
-* [Context Menu](http://uijs.io/guides/context-menu)
-* [Popup Menu](http://uijs.io/guides/popup-menu)
-* Nav Bar
+- [Context Menu](http://uijs.io/guides/context-menu)
+- [Popup Menu](http://uijs.io/guides/popup-menu)
+- Nav Bar
 
 ### [ui-js Code Playground](https://github.com/ui-js/code-playground)
 
-* Code Playground
-
+- Code Playground
 
 Site Tour:
 https://introjs.com/docs/intro/attributes

@@ -1,10 +1,10 @@
 import { Parser } from 'expr-eval'
-import { requireValue } from '../utils/misc-utils'
-import { getDataProvider, addDataProvider, removeDataProvider } from './providers/factory'
-import { ExpressionContext } from './interfaces'
 import { warn } from '../logging'
-import { toBoolean } from '../utils/string-utils'
 import { hasVisited } from '../routing/visits'
+import { requireValue } from '../utils/misc-utils'
+import { toBoolean } from '../utils/string-utils'
+import { ExpressionContext } from './interfaces'
+import { addDataProvider, getDataProvider, removeDataProvider } from './providers/factory'
 import { DataItemProvider } from './providers/item'
 
 const expressionRegEx = /{([\w-]*):([\w_]*)(?:\.([\w_.-]*))?(?:\?([\w_.-]*))?}/g
@@ -56,7 +56,7 @@ export async function resolveExpression(valueExpression: string, data?: any): Pr
     const defaultValue = match[4] || ''
 
     const provider = getDataProvider(providerKey)
-    // eslint-disable-next-line no-await-in-loop
+
     let value = (await provider?.get(dataKey)) || defaultValue
 
     if (propKey) {

@@ -1,13 +1,13 @@
-import { Howler } from 'howler'
-import { EventAction, EventEmitter } from '../actions'
-import { debugIf } from '../logging'
-import { ROUTE_EVENTS } from '../routing'
-import { AudioTrack } from './audio'
-import { AudioInfo } from './audio-info'
-import { AudioRequest } from './audio-request'
+import { Howler } from 'howler';
+import { EventAction, EventEmitter } from '../actions';
+import { debugIf } from '../logging';
+import { ROUTE_EVENTS } from '../routing';
+import { AudioTrack } from './audio';
+import { AudioInfo } from './audio-info';
+import { AudioRequest } from './audio-request';
+import { AudioType, AUDIO_COMMANDS, AUDIO_EVENTS, AUDIO_TOPIC, DiscardStrategy, LoadStrategy } from './interfaces';
+import { hasPlayed } from './tracked';
 
-import { AUDIO_TOPIC, AUDIO_COMMANDS, AUDIO_EVENTS, DiscardStrategy, AudioType, LoadStrategy } from './interfaces'
-import { hasPlayed } from './tracked'
 
 export class AudioActionListener {
   private readonly actionSubscription: () => void
@@ -58,7 +58,7 @@ export class AudioActionListener {
   public events: EventEmitter
 
   public pause() {
-    if (!this.isPlaying) {
+    if (!this.isPlaying()) {
       return
     }
 
@@ -67,7 +67,7 @@ export class AudioActionListener {
   }
 
   public resume() {
-    if (this.isPlaying) {
+    if (this.isPlaying()) {
       return
     }
 
@@ -134,7 +134,9 @@ export class AudioActionListener {
 
       case AUDIO_COMMANDS.Seek: {
         const request = data as AudioRequest
-        this.seek(request.type, request.trackId, request.value)
+        if (request.trackId) {
+          this.seek(request.type, request.trackId, request.value)
+        }
         break
       }
 

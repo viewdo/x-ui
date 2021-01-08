@@ -1,8 +1,8 @@
 /* istanbul ignore file */
 
-import { Key, Path, pathToRegexp } from './path-to-regex'
-import { LocationSegments, MatchOptions, MatchResults } from '../interfaces'
-import { valueEqual } from './location-utils'
+import { LocationSegments, MatchOptions, MatchResults } from '../interfaces';
+import { valueEqual } from './location-utils';
+import { Key, Path, pathToRegexp } from './path-to-regex';
 
 interface CompileOptions {
   end: boolean
@@ -38,7 +38,7 @@ const compilePath = (pattern: Path, options: CompileOptions): { re: RegExp; keys
 /**
  * Public API for matching a URL pathname to a path pattern.
  */
-export function matchPath(location: LocationSegments, options: MatchOptions = {}): MatchResults {
+export function matchPath(location: LocationSegments, options: MatchOptions = {}): MatchResults|null {
   if (typeof options === 'string') {
     options = { path: options }
   }

@@ -1,8 +1,6 @@
-import { AudioRequest, AudioType, AUDIO_EVENTS, EventEmitter } from '../..'
+import { AudioRequest, AudioType, EventEmitter } from '../..';
 
 export class AudioActionListener {
-  timer: NodeJS.Timeout
-
   constructor(public eventBus: EventEmitter, public actionBus: EventEmitter, public debug: boolean = false) {
     this.events = new EventEmitter()
   }
@@ -30,6 +28,5 @@ export class AudioActionListener {
   public volume(_request: AudioRequest) {}
 
   destroy() {
-    clearInterval(this.timer)
   }
 }

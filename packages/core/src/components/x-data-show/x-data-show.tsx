@@ -1,4 +1,4 @@
-import { Prop, State, Component, Host, h } from '@stencil/core'
+import { Component, h, Host, Prop, State } from '@stencil/core'
 import { DATA_EVENTS, evaluatePredicate, eventBus, ROUTE_EVENTS } from '../..'
 
 /**
@@ -10,8 +10,8 @@ import { DATA_EVENTS, evaluatePredicate, eventBus, ROUTE_EVENTS } from '../..'
   shadow: false,
 })
 export class XDataShow {
-  private subscriptionData: () => void
-  private subscriptionRoutes: () => void
+  private subscriptionData!: () => void
+  private subscriptionRoutes!: () => void
   @State() show = true
 
   /**

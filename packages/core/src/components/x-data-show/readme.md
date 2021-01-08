@@ -4,11 +4,9 @@ This tag conditionally renders child elements based on the configured predicate 
 
 ## Usage
 
-````html
-<x-data-show when="<expression>">
- ... contents ...
-</x-data-show>
-````
+```html
+<x-data-show when="<expression>"> ... contents ... </x-data-show>
+```
 
 <!-- Auto Generated Below -->
 
@@ -22,4 +20,4 @@ This tag conditionally renders child elements based on the configured predicate 
 
 ----------------------------------------------
 
-*Built with [StencilJS](https://stenciljs.com/)*
+view.DO : Experience Platform

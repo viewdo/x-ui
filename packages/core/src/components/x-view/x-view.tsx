@@ -1,6 +1,6 @@
-import { h, Component, Element, Host, Prop, State, Watch } from '@stencil/core'
+import { Component, Element, h, Host, Prop, State, Watch } from '@stencil/core'
+import { DATA_EVENTS, debugIf, eventBus, hasVisited, markVisit, MatchResults, resolveElementVisibility, resolveNext, Route, warn, wrapFragment } from '../..'
 import '../x-view-do/x-view-do'
-import { eventBus, DATA_EVENTS, debugIf, hasVisited, markVisit, resolveElementVisibility, resolveNext, Route, warn, wrapFragment, MatchResults } from '../..'
 
 /**
  *  @system routing
@@ -11,11 +11,11 @@ import { eventBus, DATA_EVENTS, debugIf, hasVisited, markVisit, resolveElementVi
   shadow: true,
 })
 export class XView {
-  private readonly subscription: () => void
-  private route: Route
+  private subscription!: () => void
+  private route!: Route
   @Element() el!: HTMLXViewElement
-  @State() match: MatchResults
-  @State() fetched: boolean
+  @State() match!: MatchResults | null
+  @State() fetched: boolean = false
 
   /**
    * The title for this view. This is prefixed
@@ -28,7 +28,7 @@ export class XView {
    * Header height or offset for scroll-top on this
    * view.
    */
-  @Prop() scrollTopOffset?: number
+  @Prop() scrollTopOffset: number = 0
 
   /**
    * Navigation transition between routes.
@@ -59,23 +59,20 @@ export class XView {
    * The url for this route should only be matched
    * when it is exact.
    */
-  @Prop() exact: boolean
+  @Prop() exact!: boolean
 
   /**
    * Remote URL for this Route's content.
    */
-  @Prop() contentSrc: string
+  @Prop() contentSrc?: string
 
   /**
    * Turn on debug statements for load, update and render events.
    */
   @Prop() debug = false
 
-  private get parent(): HTMLXViewElement {
-    const view = this.el.parentElement?.closest('x-view')!
-    if (view) {
-      return view
-    }
+  private get parent() {
+    return this.el.parentElement?.closest('x-view')
   }
 
   private get routeContainer() {
@@ -115,7 +112,7 @@ export class XView {
       this.url,
       this.exact,
       this.pageTitle,
-      this.transition || this.parent?.transition,
+      this.transition || this.parent?.transition || null,
       this.scrollTopOffset,
       async (match) => {
         this.match = match
@@ -188,7 +185,6 @@ export class XView {
 
         const nextDo = await resolveNext(viewDos)
         if (nextDo) {
-          // eslint-disable-next-line no-console
           this.route.router?.history.push(nextDo.url)
         } else {
           markVisit(this.match.url)

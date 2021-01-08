@@ -4,43 +4,25 @@ This component declares audio used within this **`<x-view-do>`** route. The **`<
 
 ## Usage
 
-````html
+```html
 <x-view-do>
-  <x-audio-music-load
-    mode="play|load" 
-    track-id="<unique-id>"
-    src="<url>"    
-    discard="route|video|next|none"
-    loop
-    track
-    ></x-audio-music-load>
-    
+  <x-audio-music-load mode="play|load" track-id="<unique-id>" src="<url>" discard="route|video|next|none" loop track></x-audio-music-load>
 </x-view-do>
-````
+```
 
 ### Simple
 
-````html
+```html
 <x-view-do>
-  <x-audio-music-load    
-    track-id="<unique-id>"
-    src="<url>"></x-audio-music-load>
-    
+  <x-audio-music-load track-id="<unique-id>" src="<url>"></x-audio-music-load>
 </x-view-do>
-````
+```
 
-
-````html
+```html
 <x-view-do>
-  <x-audio
-    load="queue"
-    id="<unique-id>"
-    src="<url>"    
-    discard="none"
-    loop></x-audio>
-    
+  <x-audio load="queue" id="<unique-id>" src="<url>" discard="none" loop></x-audio>
 </x-view-do>
-````
+```
 
 #### Mode
 
@@ -76,4 +58,4 @@ If audio has replay set to true, re-entry to the originating state will re-activ
 
 ----------------------------------------------
 
-*Built with [StencilJS](https://stenciljs.com/)*
+view.DO : Experience Platform

@@ -1,9 +1,13 @@
-h1 { font-size: 2rem; }
-h2 { font-size: 1.5rem; }
+h1 {
+  font-size: 2rem;
+}
+h2 {
+  font-size: 1.5rem;
+}
 h3 {
   font-size: 1.2rem;
   border-bottom: 1px dotted var(--primary);
-  padding-bottom: .2em;
+  padding-bottom: 0.2em;
 }
 
 h2,
@@ -12,16 +16,17 @@ h4 {
   color: var(--primary);
 }
 
-h2, h3, h4 {
-  margin: .75em 0 .25em 0;
+h2,
+h3,
+h4 {
+  margin: 0.75em 0 0.25em 0;
 }
 
 a,
 a:link,
 a:visited,
-a:active
-{
-  color: #3e3f3e ;
+a:active {
+  color: #3e3f3e;
   text-decoration: none;
 }
 a:hover {
@@ -41,29 +46,27 @@ blockquote > p {
 
 table {
   width: 100%;
-  border: solid 1px var(--primary);;
+  border: solid 1px var(--primary);
   border-collapse: collapse;
   border-spacing: 0;
   overflow-x: scroll;
 }
 table thead th {
-  background-color:var(--primary);;
-  border: solid 1px var(--primary);;
+  background-color: var(--primary);
+  border: solid 1px var(--primary);
   color: #fff;
   padding: 10px;
   text-align: left;
 }
 table tbody td {
-  border: solid 1px #DDEEEE;
+  border: solid 1px #ddeeee;
   color: #333;
   padding: 10px;
 }
 
-
 #viewdo-logo {
   padding: 1em 0 1em 1em;
 }
-
 
 h1.brand {
   font-family: 'Nunito', sans-serif;
@@ -90,7 +93,6 @@ b.brand {
   font-size: (100% + 1.3vm);
 }
 
-
 .x-nav-bottom {
   background-image: linear-gradient(to bottom, transparent, #fff);
   background-size: fill;
@@ -102,19 +104,17 @@ b.brand {
   overflow: auto;
 }
 .x-nav-bottom::after {
-  content: "";
+  content: '';
   clear: both;
   display: table;
 }
-.x-nav-bottom  [slot='end'] {
+.x-nav-bottom [slot='end'] {
   float: right;
   right: 0;
 }
-.x-nav-bottom  [slot='start'] {
+.x-nav-bottom [slot='start'] {
   float: left;
 }
-
-
 
 .hero {
   width: 100vw;
@@ -144,7 +144,6 @@ figure + figure figcaption {
   float: right;
   margin: -1rem -1rem 1rem 0;
 }
-
 
 /* Bootsrap */
 

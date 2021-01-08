@@ -1,5 +1,6 @@
-import { Component, Host, h, Method, Prop, Element } from '@stencil/core'
-import { EventAction, warn, AUDIO_TOPIC, AudioType, IActionElement } from '../..'
+import { Component, Element, h, Host, Method, Prop } from '@stencil/core'
+import { AudioType, AUDIO_TOPIC, EventAction, IActionElement, warn } from '../..'
+import { AUDIO_COMMANDS } from '../../services/audio/interfaces'
 
 /**
  * This element just holds data to express the actionEvent to fire. This element
@@ -13,12 +14,12 @@ import { EventAction, warn, AUDIO_TOPIC, AudioType, IActionElement } from '../..
   shadow: true,
 })
 export class XAudioSoundAction implements IActionElement {
-  @Element() el: HTMLXAudioSoundActionElement
+  @Element() el!: HTMLXAudioSoundActionElement
 
   /**
    * The command to execute.
    */
-  @Prop() command: 'start' | 'pause' | 'resume' | 'mute' | 'volume' | 'seek'
+  @Prop() command: AUDIO_COMMANDS = AUDIO_COMMANDS.Play
 
   /**
    * The track to target.
@@ -28,7 +29,7 @@ export class XAudioSoundAction implements IActionElement {
   /**
    * The value payload for the command.
    */
-  @Prop() value: string | boolean | number
+  @Prop() value?: string | boolean | number
 
   /**
    * Get the underlying actionEvent instance. Used by the x-action-activator element.

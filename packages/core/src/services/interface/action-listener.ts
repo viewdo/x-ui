@@ -1,14 +1,14 @@
-import { MockWindow } from '@stencil/core/mock-doc'
-import { EventAction, IEventActionListener, IEventEmitter } from '../actions'
-import { debugIf } from '../logging'
-import { kebabToCamelCase } from '../utils/string-utils'
-import { InterfaceProvider, INTERFACE_COMMANDS, INTERFACE_EVENTS, INTERFACE_TOPIC } from './interfaces'
-import { DefaultInterfaceProvider } from './providers/default'
-import { getInterfaceProvider, setInterfaceProvider } from './providers/factory'
-import { interfaceState } from './state'
+import { MockWindow } from '@stencil/core/mock-doc';
+import { EventAction, IEventActionListener, IEventEmitter } from '../actions';
+import { debugIf } from '../logging';
+import { kebabToCamelCase } from '../utils/string-utils';
+import { InterfaceProvider, INTERFACE_COMMANDS, INTERFACE_EVENTS, INTERFACE_TOPIC } from './interfaces';
+import { DefaultInterfaceProvider } from './providers/default';
+import { getInterfaceProvider, setInterfaceProvider } from './providers/factory';
+import { interfaceState } from './state';
 
 export class InterfaceListener implements IEventActionListener {
-  defaultProvider!: DefaultInterfaceProvider
+  defaultProvider!: any
   eventBus!: IEventEmitter
 
   initialize(window: Window | MockWindow, actionBus: IEventEmitter, eventBus: IEventEmitter): void {
@@ -54,7 +54,7 @@ export class InterfaceListener implements IEventActionListener {
         this.setProvider(name, provider)
       }
     } else {
-      const currentProvider = getInterfaceProvider()
+      const currentProvider = getInterfaceProvider() as any
       const commandFuncKey = kebabToCamelCase(actionEvent.command)
 
       // Use the registered provider unless it doesn't implement this command

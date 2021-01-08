@@ -53,4 +53,4 @@ For more information on routing, check out the [routing](/routing) documentation
 
 ----------------------------------------------
 
-*Built with [StencilJS](https://stenciljs.com/)*
+view.DO : Experience Platform

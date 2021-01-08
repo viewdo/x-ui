@@ -65,7 +65,7 @@ export interface RouterHistory {
   go: (n: number) => void
   goBack: () => void
   goForward: () => void
-  block: (prompt?: string | Prompt) => () => void
+  block: any
   listen: (listener: any) => () => void
   win: Window
 }

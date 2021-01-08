@@ -1,9 +1,9 @@
-import { Experience } from '../models'
-import { createStore } from '@stencil/store'
+import { createStore } from '@stencil/store';
+import { Experience } from '../models';
 
 class StateModel {
-  debug: boolean
-  experience: Experience
+  debug!: boolean
+  experience!: Experience|null
 }
 
 const { state, onChange } = createStore<StateModel>({
@@ -11,4 +11,5 @@ const { state, onChange } = createStore<StateModel>({
   experience: null,
 })
 
-export { state, onChange }
+export { state, onChange };
+

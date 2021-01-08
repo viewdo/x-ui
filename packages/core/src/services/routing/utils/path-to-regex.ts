@@ -73,7 +73,6 @@ export const parse = (string: string, options?: ParseOptions): Token[] => {
   let pathEscaped = false
   let res
 
-  // eslint-disable-next-line no-cond-assign
   while ((res = PATH_REGEXP.exec(string)) !== null) {
     const m = res[0]
     const escaped = res[1]
@@ -286,7 +285,6 @@ const stringToRegexp = (path: string, keys: Key[], options: RegExpOptions): RegE
  * Expose a function for taking tokens and returning a RegExp.
  */
 export const tokensToRegExp = (tokens: Token[], keys?: Key[], options?: RegExpOptions): RegExp => {
-  // eslint-disable-next-line no-param-reassign
   options = options || {}
 
   const { strict } = options

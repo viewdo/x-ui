@@ -4,11 +4,9 @@ Render data directly into HTML using declarative expressions. This element rende
 
 ## Usage
 
-````html
-<x-data-display
-  text="{expression}">
-</x-data-display>
-````
+```html
+<x-data-display text="{expression}"> </x-data-display>
+```
 
 The expression can be any string or an expression with tokens from a registered provider.
 
@@ -16,13 +14,13 @@ The expression can be any string or an expression with tokens from a registered 
 
 This component supports HTML string interpolation within a child template tag. The values get resolved, just like the expression. The values in the attributes replace the tokens in the content.
 
-````html
+```html
 <x-data-display>
   <template>
     <h1>Hello {expression}!</h1>
   </template>
 </x-data-display>
-````
+```
 
 > This component only supports template interpolation within the **\<template\>** tag.
 
@@ -30,36 +28,34 @@ This component supports HTML string interpolation within a child template tag. T
 
 This component supports HTML string interpolation within a child template tag. The values get resolved, just like the expression. The values in the attributes replace the tokens in the content.
 
-````html
-<x-data-display>    
+```html
+<x-data-display>
   <template>
-    <h1>Hello {session:name}!</h1>      
+    <h1>Hello {session:name}!</h1>
   </template>
 </x-data-display>
-````
+```
 
-
-**Data Token Format:** ````{<provider>:<data-key>(?<default>)}````
+**Data Token Format:** `{<provider>:<data-key>(?<default>)}`
 
 **provider**: the data provider name
-**data-key**: the data value key within the provider *
+**data-key**: the data value key within the provider \*
 **default**: optional default value if the provider's key is empty.
 
-\* _If there are any dots in the key, the evaluator attempts to parse the base value as JSON, then uses the dot-notation to select a value from the object. For example, the expression ````{session:user.name}```` means the session value 'user' is a JSON object, parse it and replace with the 'name' property._
+\* _If there are any dots in the key, the evaluator attempts to parse the base value as JSON, then uses the dot-notation to select a value from the object. For example, the expression `{session:user.name}` means the session value 'user' is a JSON object, parse it and replace with the 'name' property._
 
 > See [data expressions](/data/expressions) for full documentation
 
 **Providers:**
 
-* Browser Session: **session**
-* Browser Storage: **storage**
-* Cookies: **cookie**
-* Route: **route**
-* Query: **query**
-* Inline Data: **data**
+- Browser Session: **session**
+- Browser Storage: **storage**
+- Cookies: **cookie**
+- Route: **route**
+- Query: **query**
+- Inline Data: **data**
 
 > See [data providers](/data/providers) to learn how to add custom data providers.
-
 
 <!-- Auto Generated Below -->
 
@@ -74,4 +70,4 @@ This component supports HTML string interpolation within a child template tag. T
 
 ----------------------------------------------
 
-*Built with [StencilJS](https://stenciljs.com/)*
+view.DO : Experience Platform

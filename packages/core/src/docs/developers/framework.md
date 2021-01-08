@@ -9,15 +9,15 @@ Using `x-ui` elementswithin an Angular project:
 Including the `CUSTOM_ELEMENTS_SCHEMA` in the module allows the use of Web Components in the HTML files. Here is an example of adding it to `AppModule`:
 
 ```ts
-import { BrowserModule } from '@angular/platform-browser';
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { AppComponent } from './app.component';
+import { BrowserModule } from '@angular/platform-browser'
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core'
+import { AppComponent } from './app.component'
 
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule],
   bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}
 ```
@@ -29,20 +29,21 @@ The `CUSTOM_ELEMENTS_SCHEMA` needs to be included in any module that uses **x-ui
 **x-ui** component includes a function used to load itself in the application window object. That function is called `defineCustomElements()` and needs to be executed once during the bootstrapping of your application. One convenient place to add it is in the `main.ts` file as follows:
 
 ```tsx
-import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { defineCustomElements as defineXui } from '@viewdo/x-ui/loader';
+import { enableProdMode } from '@angular/core'
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic'
+import { defineCustomElements as defineXui } from '@viewdo/x-ui/loader'
 
-import { AppModule } from './app/app.module';
-import { environment } from './environments/environment';
+import { AppModule } from './app/app.module'
+import { environment } from './environments/environment'
 
 if (environment.production) {
-  enableProdMode();
+  enableProdMode()
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.log(err));
-defineXui(window);
+platformBrowserDynamic()
+  .bootstrapModule(AppModule)
+  .catch((err) => console.log(err))
+defineXui(window)
 ```
 
 [_from stencil documentation_](https://github.com/ionic-team/stencil-site/blob/master/src/docs/framework-integration/angular.md)
@@ -54,20 +55,16 @@ defineXui(window);
 When using a wrapper component, It's not necessary to access the reference directly to attach events, etc. More details [here](./react/README.md).
 
 ```tsx
-
-
 const App = () => {
   return (
-    <x-ui
-      
-    >
+    <x-ui>
       <div>
         <p>HELLO WORLD</p>
       </div>
     </x-ui>
-  );
-};
-export default App;
+  )
+}
+export default App
 ```
 
 - Web Component
@@ -78,34 +75,34 @@ Other option is using the web component directly:
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { defineCustomElements as defineXui } from '@viewdo/x-ui/loader'
-import App from './App';
+import App from './App'
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'))
 
-defineXui(window);
+defineXui(window)
 ```
 
 [_from stencil documentation_](https://github.com/ionic-team/stencil-site/blob/master/src/docs/framework-integration/react.md)
 
 ### Vue
 
-In order to use the `x-ui`  Web Component inside of a Vue application, it should be modified to define the custom elements and to inform the Vue compiler which elements to ignore during compilation. This can all be done within the `main.js` file as follows:
+In order to use the `x-ui` Web Component inside of a Vue application, it should be modified to define the custom elements and to inform the Vue compiler which elements to ignore during compilation. This can all be done within the `main.js` file as follows:
 
 ```tsx
-import Vue from 'vue';
+import Vue from 'vue'
 import { defineCustomElements as defineXui } from '@viewdo/x-ui/loader'
 
-import App from './App.vue';
+import App from './App.vue'
 
-Vue.config.productionTip = false;
-Vue.config.ignoredElements = [/x-\w*/];
+Vue.config.productionTip = false
+Vue.config.ignoredElements = [/x-\w*/]
 
 // Bind the custom element to the window object
-defineXui(window);
+defineXui(window)
 
 new Vue({
-  render: h => h(App)
-}).$mount('#app');
+  render: (h) => h(App),
+}).$mount('#app')
 ```
 
 [_from stencil documentation_](https://github.com/ionic-team/stencil-site/blob/master/src/docs/framework-integration/vue.md)
@@ -157,8 +154,9 @@ export class MyComponent {
   render() {
     return (
       <x-ui
-        
+
       />
     )
   }
 }
+```

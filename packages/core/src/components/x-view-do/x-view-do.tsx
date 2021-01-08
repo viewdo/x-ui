@@ -1,28 +1,28 @@
-import { Component, h, Prop, Element, State, Host, Watch } from '@stencil/core'
-import '../x-view/x-view'
+import { Component, Element, h, Host, Prop, State, Watch } from '@stencil/core'
 import {
-  EventAction,
-  EventEmitter,
-  Route,
-  VisitStrategy,
-  debugIf,
-  resolveElementVisibility,
-  resolveElementValues,
-  TimedNode,
-  DATA_EVENTS,
-  markVisit,
-  storeVisit,
   ActionActivationStrategy,
-  warn,
-  wrapFragment,
-  eventBus,
-  MatchResults,
-  interfaceState,
   actionBus,
-  VIDEO_TOPIC,
+  DATA_EVENTS,
+  debugIf,
+  EventAction,
+  eventBus,
+  EventEmitter,
+  interfaceState,
+  markVisit,
+  MatchResults,
+  resolveElementValues,
+  resolveElementVisibility,
+  Route,
+  storeVisit,
+  TimedNode,
   VIDEO_COMMANDS,
   VIDEO_EVENTS,
+  VIDEO_TOPIC,
+  VisitStrategy,
+  warn,
+  wrapFragment,
 } from '../..'
+import '../x-view/x-view'
 
 /**
  *  @system routing
@@ -33,16 +33,16 @@ import {
   shadow: true,
 })
 export class XViewDo {
-  private subscription: () => void
-  private subscriptionVideoActions: () => void
+  private subscription!: () => void
+  private subscriptionVideoActions!: () => void
   private timedNodes: TimedNode[] = []
   private timer: any
-  private timeEvent: EventEmitter
-  private lastTime: number
-  private route: Route
-  @Element() el: HTMLXViewDoElement
-  @State() match: MatchResults
-  @State() fetched: boolean
+  private timeEvent!: EventEmitter
+  private lastTime = 0
+  private route!: Route
+  @Element() el!: HTMLXViewDoElement
+  @State() match: MatchResults | null = null
+  @State() fetched!: boolean
 
   /**
    * The title for this view. This is prefixed
@@ -115,7 +115,7 @@ export class XViewDo {
   /**
    * Remote URL for this Route's content.
    */
-  @Prop() contentSrc: string
+  @Prop() contentSrc?: string
 
   /**
    *  How should this page be presented
@@ -136,7 +136,7 @@ export class XViewDo {
     return this.el.closest('x-ui')
   }
 
-  private get childVideo(): HTMLVideoElement {
+  private get childVideo(): HTMLVideoElement | null {
     return this.el.querySelector('vm-player,video')
   }
 
@@ -157,8 +157,8 @@ export class XViewDo {
       this.url,
       this.exact,
       this.pageTitle,
-      this.transition || this.routeContainer?.transition,
-      this.scrollTopOffset,
+      this.transition || this.routeContainer?.transition || null,
+      this.scrollTopOffset || 0,
       async (match) => {
         this.match = match
         await this.resolveView()
@@ -251,7 +251,7 @@ export class XViewDo {
     }
   }
 
-  private next(element: string, eventName: string, route?: string) {
+  private next(element: string, eventName: string, route?: string | null) {
     debugIf(this.debug, `x-view-do: next fired from ${element}:${eventName}`)
 
     if (this.beforeExit()) {
@@ -298,11 +298,13 @@ export class XViewDo {
 
     // Attach routes
     this.el.querySelectorAll('[x-link]').forEach((element) => {
-      element.addEventListener('click', (e) => {
-        e.preventDefault()
-        const route = element.getAttribute('x-link')
-        this.next(element.localName, 'clicked', route)
-      })
+      const route = element.getAttribute('x-link')
+      if (route) {
+        element.addEventListener('click', (e) => {
+          e.preventDefault()
+          this.next(element.localName, 'clicked', route)
+        })
+      }
       element.removeAttribute('x-link')
     })
 
@@ -366,7 +368,7 @@ export class XViewDo {
     } else {
       const time = 0
       const started = performance.now()
-      const emitTime = (time?: number) => {
+      const emitTime = (time: number) => {
         time = (performance.now() - started) / 1000
         debugIf(this.debug, `x-view-do: ${this.lastTime} - ${time}`)
         this.timeEvent.emit(timeUpdateEvent, time)
@@ -394,12 +396,12 @@ export class XViewDo {
       })
     }
 
-    this.timeEvent.on(timeUpdateEvent, (time) => {
+    this.timeEvent.on(timeUpdateEvent, (time: number) => {
       const { debug, el, timedNodes, duration } = this
 
       this.actionActivators
         .filter((activator) => activator.activate === ActionActivationStrategy.AtTime)
-        .filter((activator) => time >= activator.time)
+        .filter((activator) => (activator.time ? time >= activator.time : false))
         .forEach((activator) => {
           activator.activateActions()
         })
@@ -436,7 +438,7 @@ export class XViewDo {
     eventBus.emit(VIDEO_EVENTS.Resumed)
   }
 
-  private commandReceived(command: string, data) {
+  private commandReceived(command: string, data: any) {
     switch (command) {
       case VIDEO_COMMANDS.Play: {
         this.play()
@@ -572,10 +574,14 @@ export class XViewDo {
 
   private captureElementChildTimedNodes(element: HTMLElement, defaultDuration: number) {
     const timedNodes: TimedNode[] = []
-    element.querySelectorAll('[x-in-time], [x-out-time]').forEach((element: HTMLElement) => {
+    element.querySelectorAll('[x-in-time], [x-out-time]').forEach((element) => {
+      const startAttribute = element.getAttribute('x-in-time')
+      const start = startAttribute ? Number.parseFloat(startAttribute) : 0
+      const endAttribute = element.getAttribute('x-out-time')
+      const end = endAttribute ? Number.parseFloat(endAttribute) : defaultDuration
       timedNodes.push({
-        start: Number.parseFloat(element.getAttribute('x-in-time')) || 0,
-        end: Number.parseFloat(element.getAttribute('x-out-time')) || defaultDuration,
+        start,
+        end,
         classIn: element.getAttribute('x-in-class'),
         classOut: element.getAttribute('x-out-class'),
         element,
@@ -586,7 +592,7 @@ export class XViewDo {
 
   disconnectedCallback() {
     clearInterval(this.timer)
-    this.timeEvent = null
+    this.timeEvent.removeAllListeners()
     this.subscription()
     this.route.destroy()
   }
@@ -595,7 +601,7 @@ export class XViewDo {
     debugIf(this.debug, `x-view-do: ${this.url} render`)
 
     return (
-      <Host hidden={!this.match?.isExact} class={this.route?.transition}>
+      <Host hidden={!this.match?.isExact} className={this.route?.transition}>
         <slot />
         <slot name="content" />
       </Host>

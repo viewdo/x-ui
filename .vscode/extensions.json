@@ -1,12 +1,12 @@
 {
-    "recommendations": [
-        "formulahendry.github-actions",
-        "wibblemonkey.markdown-auto-toc",
-        "stylelint.vscode-stylelint",
-        "editorconfig.editorconfig",
-        "streetsidesoftware.code-spell-checker",
-        "orta.vscode-jest",
-        "samverschueren.linter-xo",
-        "bryan-chen.linter-xo-2"
-    ]
+  "recommendations": [
+    "formulahendry.github-actions",
+    "wibblemonkey.markdown-auto-toc",
+    "stylelint.vscode-stylelint",
+    "editorconfig.editorconfig",
+    "streetsidesoftware.code-spell-checker",
+    "orta.vscode-jest",
+    "samverschueren.linter-xo",
+    "bryan-chen.linter-xo-2"
+  ]
 }

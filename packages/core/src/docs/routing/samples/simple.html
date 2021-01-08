@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
   <head>
@@ -6,50 +5,36 @@
 
     <!-- Bootstrap   -->
     <script async src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
-      />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" />
 
     <!-- Page Styles -->
-    <link rel="icon" type="image/ico"
-      href="https://storage.googleapis.com/viewdo-static/view-do/fav-touch-icons/storyplayer/favicon.ico"/>
-    <link rel="apple-touch-icon" sizes="180x180"
-      href="/assets/icon/apple-touch-icon.png"/>
-    <link rel="stylesheet"
-      href="/docs/assets/styles.css"
-      />
+    <link rel="icon" type="image/ico" href="https://storage.googleapis.com/viewdo-static/view-do/fav-touch-icons/storyplayer/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/icon/apple-touch-icon.png" />
+    <link rel="stylesheet" href="/docs/assets/styles.css" />
 
     <!-- Experience UI -->
     <script type="module" src="/x-ui/x-ui.esm.js"></script>
 
     <!-- Markdown -->
     <script async src="https://cdn.jsdelivr.net/gh/markedjs/marked@1/marked.min.js"></script>
-
   </head>
 
   <body>
-
-    <x-ui start-url="/"
-      mode="hash" class="container"
-      app-title="Simple Routing">
-
-      <x-view url="/"
-        page-title="Home">
+    <x-ui start-url="/" mode="hash" class="container" app-title="Simple Routing">
+      <x-view url="/" page-title="Home">
         <x-link href="/"><h1>Simple Routing</h1></x-link>
         <div slot="content">
           <h2>Home Page</h2>
           <x-link href="page-1">Page 1</x-link>
           <x-link href="page-2">Page 2</x-link>
         </div>
-        <x-view url="page-1"
-          page-title="Page 1">
+        <x-view url="page-1" page-title="Page 1">
           <div slot="content">
             <h2>Page 1</h2>
             <x-link href="page-2">Page 2</x-link>
           </div>
         </x-view>
-        <x-view url="page-2"
-          page-title="Page 2">
+        <x-view url="page-2" page-title="Page 2">
           <div slot="content">
             <h2>Page 2</h2>
             <x-link href="page-1">Page 1</x-link>
@@ -57,7 +42,5 @@
         </x-view>
       </x-view>
     </x-ui>
-
   </body>
-
 </html>

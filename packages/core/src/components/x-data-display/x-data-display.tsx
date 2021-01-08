@@ -1,5 +1,5 @@
-import { Host, Element, Component, h, Prop, State, Fragment } from '@stencil/core'
-import { DATA_EVENTS, eventBus, resolveExpression, ROUTE_EVENTS, warn, removeAllChildNodes } from '../../services'
+import { Component, Element, Fragment, h, Host, Prop, State } from '@stencil/core'
+import { DATA_EVENTS, eventBus, removeAllChildNodes, resolveExpression, ROUTE_EVENTS, warn } from '../../services'
 
 /**
  *  @system data
@@ -11,13 +11,13 @@ import { DATA_EVENTS, eventBus, resolveExpression, ROUTE_EVENTS, warn, removeAll
   shadow: false,
 })
 export class XDataDisplay {
-  private subscriptionData: () => void
-  private subscriptionRoutes: () => void
-  @Element() el: HTMLXDataDisplayElement
-  @State() innerTemplate: string
-  @State() resolvedTemplate: string
+  private subscriptionData!: () => void
+  private subscriptionRoutes!: () => void
+  @Element() el!: HTMLXDataDisplayElement
+  @State() innerTemplate!: string
+  @State() resolvedTemplate?: string
   @State() innerData: any
-  @State() value: string
+  @State() value?: string
 
   /**
    The data expression to obtain a value for rendering as inner-text for this element.
@@ -31,10 +31,10 @@ export class XDataDisplay {
    * To fetch the contents change to false or remove
    * attribute.
    */
-  // eslint-disable-next-line @stencil/strict-mutable
+
   @Prop({ mutable: true }) noRender = false
 
-  get childTemplate(): HTMLTemplateElement {
+  get childTemplate(): HTMLTemplateElement | null {
     if (!this.el.hasChildNodes()) {
       return null
     }
@@ -50,7 +50,7 @@ export class XDataDisplay {
     return null
   }
 
-  private get childScript(): HTMLScriptElement {
+  private get childScript(): HTMLScriptElement | null {
     if (!this.el.hasChildNodes()) {
       return null
     }
@@ -81,7 +81,7 @@ export class XDataDisplay {
 
     if (this.childScript !== null) {
       try {
-        this.innerData = JSON.parse(this.childScript.textContent)
+        this.innerData = JSON.parse(this.childScript.textContent || '')
       } catch (error) {
         warn(`x-data-display: unable to deserialize JSON: ${error}`)
       }

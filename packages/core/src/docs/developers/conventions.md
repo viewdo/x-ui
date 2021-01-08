@@ -1,5 +1,4 @@
-Markup
-------
+## Markup
 
 The properties of a X-HTML object are **reflected** as attributes of the corresponding tag.
 
@@ -26,4 +25,3 @@ The presence of a boolean attribute indicate the value of its property is `true
 <!-- !! "no-render" is true -->
 
 ```
-

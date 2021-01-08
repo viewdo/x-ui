@@ -10,12 +10,9 @@ This player can be configured to display in full or minimal mode. When displayed
 
 ## Usage
 
-````html
-<x-audio-player
-  display
-  debug>
-</x-audio-player>
-````
+```html
+<x-audio-player display debug> </x-audio-player>
+```
 
 While it can be placed anywhere, only ONE player is allowed within an HTML document. Loading a second element will have no effect.
 
@@ -27,21 +24,14 @@ Once in-place, the **`<x-audio-player>`** listens on the **audio** topic for com
 
 To operate the player, it is easiest to just use the **`<x-audio-load-*>`** components to pre-load the audio. Then declare the actions using the [**`<x-action-activator>`**](/components/x-action-activator) component.
 
-
-````html
+```html
 <x-view-do>
-  <x-audio-sound-load
-    track-id="<unique-id>"
-    src="<url>">
-  </x-audio-sound-load>   
+  <x-audio-sound-load track-id="<unique-id>" src="<url>"> </x-audio-sound-load>
   <x-action-activator ...>
-    <x-audio-sound-action
-      command="<command>"
-      track-id="<id>"
-      value="<value>"></x-audio-sound-action>
+    <x-audio-sound-action command="<command>" track-id="<id>" value="<value>"></x-audio-sound-action>
   </x-action-activator>
 </x-view-do>
-````
+```
 
 ### Commands
 
@@ -51,11 +41,11 @@ This command instructs the player to immediately play the given pre-loaded track
 
 **Data**:
 
-````json
+```json
 {
-  "id": "<id>",
+  "id": "<id>"
 }
-````
+```
 
 #### pause
 
@@ -71,11 +61,11 @@ This command instructs the player to set its own 'muted' property to the value i
 
 **Data**:
 
-````json
+```json
 {
-  "mute": true|false,
+  "mute": true | false
 }
-````
+```
 
 #### volume
 
@@ -83,24 +73,24 @@ Set the audio player volume at a level 0 to 100.
 
 **Data**:
 
-````json
+```json
 {
-  "id": "<id>",
+  "id": "<id>"
 }
-````
+```
 
-#### seek *
+#### seek \*
 
 Set the audio track to to the given time in seconds, but only if the **id** matches the that of the active track. Otherwise, it is ignored. If the current track is paused, it will remain paused, at the requested time. Otherwise, the track is changed audibly.
 
 **Data**:
 
-````json
+```json
 {
   "id": "<id>",
   "time": <time>
 }
-````
+```
 
 #### Other Commands
 
@@ -110,7 +100,7 @@ This command instructs the player to immediately play this audio clip. If a trac
 
 **Data**:
 
-````json
+```json
 {
   "id": "<id>",
   "type": "music|sound",
@@ -119,7 +109,7 @@ This command instructs the player to immediately play this audio clip. If a trac
   "loop": false,
   "track": false
 }
-````
+```
 
 #### queue
 
@@ -127,7 +117,7 @@ This is the primary method for loading audio-tracks to the player. It instructs 
 
 **Data**:
 
-````json
+```json
 {
   "id": "<id>",
   "type": "music|sound",
@@ -136,7 +126,7 @@ This is the primary method for loading audio-tracks to the player. It instructs 
   "loop": false,
   "track": false
 }
-````
+```
 
 #### load
 
@@ -144,7 +134,7 @@ This command instructs the player to pre-load the file with the browser but do n
 
 **Data**:
 
-````json
+```json
 {
   "id": "<id>",
   "type": "music|sound",
@@ -153,7 +143,7 @@ This command instructs the player to pre-load the file with the browser but do n
   "loop": false,
   "track": false
 }
-````
+```
 
 ### Looping
 
@@ -163,12 +153,12 @@ If audio is set to loop with no deactivation, any new configuration will end it.
 
 ### Discard Strategy
 
-Each audio track-request defines when it should be stopped and removed from the queue. This allows for music music to  plays between routes. By default, a route-change will empty the queue of any unplayed audio.
+Each audio track-request defines when it should be stopped and removed from the queue. This allows for music music to plays between routes. By default, a route-change will empty the queue of any unplayed audio.
 
-* **route**: When the route changes (default for unmarked)
-* **video**: When a video plays
-* **next**: Play/queue until route or another audio is queued.
-* **none**: Play until a new track is played (default for music)
+- **route**: When the route changes (default for unmarked)
+- **video**: When a video plays
+- **next**: Play/queue until route or another audio is queued.
+- **none**: Play until a new track is played (default for music)
 
 ### Track
 
@@ -183,12 +173,12 @@ Hard discards or play-src should ease out the audio with a .5 second fade-out be
 
 ## Properties
 
-| Property  | Attribute | Description                                                                                                                                    | Type      | Default     |
-| --------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ----------- |
-| `debug`   | `debug`   | Use debug for verbose logging. Useful for figuring thing out.                                                                                  | `boolean` | `undefined` |
-| `display` | `display` | The display mode for this player. The display is merely a facade to manage basic controls. No track information or duration will be displayed. | `boolean` | `undefined` |
+| Property  | Attribute | Description                                                                                                                                    | Type      | Default |
+| --------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ------- |
+| `debug`   | `debug`   | Use debug for verbose logging. Useful for figuring thing out.                                                                                  | `boolean` | `false` |
+| `display` | `display` | The display mode for this player. The display is merely a facade to manage basic controls. No track information or duration will be displayed. | `boolean` | `false` |
 
 
 ----------------------------------------------
 
-*Built with [StencilJS](https://stenciljs.com/)*
+view.DO : Experience Platform

@@ -1,16 +1,17 @@
 <!-- markdownlint-disable MD029 -->
+
 # Contributing
 
 Interested in contributing? Wonderful!
 
 As a contributor, here are the guidelines we would like you to follow:
 
-* [Code of conduct](#code-of-conduct)
-* [How can I contribute?](#how-can-i-contribute)
-* [Using the issue tracker](#using-the-issue-tracker)
-* [Submitting a Pull Request](#submitting-a-pull-request)
-* [Coding rules](#coding-rules)
-* [Working with the code](#working-with-the-code)
+- [Code of conduct](#code-of-conduct)
+- [How can I contribute?](#how-can-i-contribute)
+- [Using the issue tracker](#using-the-issue-tracker)
+- [Submitting a Pull Request](#submitting-a-pull-request)
+- [Coding rules](#coding-rules)
+- [Working with the code](#working-with-the-code)
 
 We also recommend that you read [How to Contribute to Open Source](https://opensource.guide/how-to-contribute).
 
@@ -91,8 +92,8 @@ git push origin <topic-branch-name>
 
 **Tips**:
 
-* For ambitious tasks, open a Pull Request as soon as possible with the `[WIP]` prefix in the title, in order to get feedback and help from the community.
-* [Allow semantic-release maintainers to make changes to your Pull Request branch](https://help.github.com/articles/allowing-changes-to-a-pull-request-branch-created-from-a-fork). This way, we can rebase it and make some minor changes if necessary. All changes we make will be done in new commit and we'll ask for your approval before merging them.
+- For ambitious tasks, open a Pull Request as soon as possible with the `[WIP]` prefix in the title, in order to get feedback and help from the community.
+- [Allow semantic-release maintainers to make changes to your Pull Request branch](https://help.github.com/articles/allowing-changes-to-a-pull-request-branch-created-from-a-fork). This way, we can rebase it and make some minor changes if necessary. All changes we make will be done in new commit and we'll ask for your approval before merging them.
 
 ## Coding rules
 
@@ -100,32 +101,32 @@ git push origin <topic-branch-name>
 
 To ensure consistency and quality throughout the source code, all code modifications must have:
 
-* No [linting](#lint) errors
-* A [test](#tests) for every possible case introduced by your code change
-* **100%** test coverage
-* [Valid commit message(s)](#commit-message-guidelines)
-* Documentation for new features
-* Updated documentation for modified features
+- No [linting](#lint) errors
+- A [test](#tests) for every possible case introduced by your code change
+- **100%** test coverage
+- [Valid commit message(s)](#commit-message-guidelines)
+- Documentation for new features
+- Updated documentation for modified features
 
 ### Documentation
 
 To ensure consistency and quality, all documentation modifications must:
 
-* Refer to brand in [bold](https://help.github.com/articles/basic-writing-and-formatting-syntax/#styling-text) with proper capitalization, i.e. **GitHub**, **`<x-ui/>`**, **npm**
-* Prefer [tables](https://help.github.com/articles/organizing-information-with-tables) over [lists](https://help.github.com/articles/basic-writing-and-formatting-syntax/#lists) when listing key values, i.e. List of options with their description
-* Use [links](https://help.github.com/articles/basic-writing-and-formatting-syntax/#links) when you are referring to:
-  * a **`<x-ui/>`** concept described somewhere else in the documentation, i.e. How to [contribute](CONTRIBUTING.md)
-  * a third-party product/brand/service, i.e. Integrate with [GitHub](https://github.com)
-  * an external concept or feature, i.e. Create a [GitHub release](https://help.github.com/articles/creating-releases)
-  * a package or module, i.e. The [`@semantic-release/github`](https://github.com/semantic-release/github) module
-* Use the [single backtick `code` quoting](https://help.github.com/articles/basic-writing-and-formatting-syntax/#quoting-code) for:
-  * commands inside sentences, i.e. the `semantic-release` command
-  * programming language keywords, i.e. `function`, `async`, `String`
-  * packages or modules, i.e. The [`@semantic-release/github`](https://github.com/semantic-release/github) module
-* Use the [triple backtick `code` formatting](https://help.github.com/articles/creating-and-highlighting-code-blocks) for:
-  * code examples
-  * configuration examples
-  * sequence of command lines
+- Refer to brand in [bold](https://help.github.com/articles/basic-writing-and-formatting-syntax/#styling-text) with proper capitalization, i.e. **GitHub**, **`<x-ui/>`**, **npm**
+- Prefer [tables](https://help.github.com/articles/organizing-information-with-tables) over [lists](https://help.github.com/articles/basic-writing-and-formatting-syntax/#lists) when listing key values, i.e. List of options with their description
+- Use [links](https://help.github.com/articles/basic-writing-and-formatting-syntax/#links) when you are referring to:
+  - a **`<x-ui/>`** concept described somewhere else in the documentation, i.e. How to [contribute](CONTRIBUTING.md)
+  - a third-party product/brand/service, i.e. Integrate with [GitHub](https://github.com)
+  - an external concept or feature, i.e. Create a [GitHub release](https://help.github.com/articles/creating-releases)
+  - a package or module, i.e. The [`@semantic-release/github`](https://github.com/semantic-release/github) module
+- Use the [single backtick `code` quoting](https://help.github.com/articles/basic-writing-and-formatting-syntax/#quoting-code) for:
+  - commands inside sentences, i.e. the `semantic-release` command
+  - programming language keywords, i.e. `function`, `async`, `String`
+  - packages or modules, i.e. The [`@semantic-release/github`](https://github.com/semantic-release/github) module
+- Use the [triple backtick `code` formatting](https://help.github.com/articles/creating-and-highlighting-code-blocks) for:
+  - code examples
+  - configuration examples
+  - sequence of command lines
 
 ### Commit message guidelines
 
@@ -133,9 +134,9 @@ To ensure consistency and quality, all documentation modifications must:
 
 If possible, make [atomic commits](https://en.wikipedia.org/wiki/Atomic_commit), which means:
 
-* a commit should contain exactly one self-contained functional change
-* a functional change should be contained in exactly one commit
-* a commit should not create an inconsistent state (such as test errors, linting errors, partial fix, feature with documentation etc...)
+- a commit should contain exactly one self-contained functional change
+- a functional change should be contained in exactly one commit
+- a commit should not create an inconsistent state (such as test errors, linting errors, partial fix, feature with documentation etc...)
 
 A complex feature can be broken down into multiple commits as long as each one maintains a consistent state and consists of a self-contained change.
 
@@ -164,7 +165,7 @@ If the commit reverts a previous commit, it should begin with `revert:`, followe
 The type must be one of the following:
 
 | Type         | Description                                                                                                 |
-|--------------|-------------------------------------------------------------------------------------------------------------|
+| ------------ | ----------------------------------------------------------------------------------------------------------- |
 | **build**    | Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)         |
 | **ci**       | Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs) |
 | **docs**     | Documentation only changes                                                                                  |
@@ -179,9 +180,9 @@ The type must be one of the following:
 
 The subject contains succinct description of the change:
 
-* use the imperative, present tense: "change" not "changed" nor "changes"
-* don't capitalize first letter
-* no dot (.) at the end
+- use the imperative, present tense: "change" not "changed" nor "changes"
+- don't capitalize first letter
+- no dot (.) at the end
 
 #### Body
 
@@ -239,8 +240,8 @@ Before pushing your code changes make sure there are no linting errors with `npm
 
 **Tips**:
 
-* Most linting errors can be automatically fixed with `npm run lint -* --fix`.
-* Install the [XO plugin](https://github.com/sindresorhus/xo#editor-plugins) for your editor to see linting errors directly in your editor and automatically fix them on save.
+- Most linting errors can be automatically fixed with `npm run lint -* --fix`.
+- Install the [XO plugin](https://github.com/sindresorhus/xo#editor-plugins) for your editor to see linting errors directly in your editor and automatically fix them on save.
 
 ### Tests
 

@@ -1,8 +1,8 @@
 /* eslint-disable no-mixed-operators */
 /* istanbul ignore file */
 
-import { parsePath, parseQueryString } from './path-utils'
-import { LocationSegments } from '../interfaces'
+import { LocationSegments } from '../interfaces';
+import { parsePath, parseQueryString } from './path-utils';
 
 const isAbsolute = (pathname: string) => pathname.startsWith('/')
 
@@ -30,7 +30,6 @@ export const getLocation = (location: LocationSegments, root: string): LocationS
 // About 1.5x faster than the two-arg version of Array#splice()
 const spliceOne = (list: string[], index: number) => {
   for (let i = index, k = i + 1, n = list.length; k < n; i += 1, k += 1) {
-    // eslint-disable-next-line no-param-reassign
     list[i] = list[k]
   }
 
@@ -157,8 +156,7 @@ export const createLocation = (path: string | LocationSegments, state: any, key:
   } else {
     // One-arg form: push(location)
     location = {
-      pathname: '',
-      ...path,
+      ...path
     }
 
     if (location.search && !location.search.startsWith('?')) {
@@ -198,6 +196,6 @@ export const createLocation = (path: string | LocationSegments, state: any, key:
 
   location.query = parseQueryString(location.search || '')
   location.pathParts = location.pathname.split('/')
-  location.hashParts = location.hash.split('/')
+  location.hashParts = location.hash?.split('/')
   return location
 }

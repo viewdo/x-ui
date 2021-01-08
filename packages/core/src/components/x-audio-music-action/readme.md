@@ -1,10 +1,6 @@
 # X-AUDIO-MUSIC-ACTION
 
-
-
 ## Usage
-
-
 
 <!-- Auto Generated Below -->
 
@@ -33,4 +29,4 @@ Type: `Promise<EventAction<any>>`
 
 ----------------------------------------------
 
-*Built with [StencilJS](https://stenciljs.com/)*
+view.DO : Experience Platform
