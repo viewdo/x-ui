@@ -1,6 +1,6 @@
 # view.DO Experience UI
 
-![MIT](https://img.shields.io/github/license/viewdo/experience-ui) ![Built With View.DO](https://img.shields.io/badge/view.DO_UI-v0.1-1c6d9a) [![NPM](https://img.shields.io/npm/v/@viewdo/x-ui)](https://www.npmjs.com/package/@viewdo/x-ui) ![Main CI](https://github.com/viewdo/x-ui/workflows/Main%20CI/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/viewdo/x-ui/badge.svg)](https://coveralls.io/github/viewdo/x-ui) ![size](https://img.shields.io/bundlephobia/min/@viewdo/x-ui)
+![MIT](https://img.shields.io/github/license/viewdo/experience-ui) ![Built With View.DO](https://img.shields.io/badge/view.DO_UI-v0.1-1c6d9a) [![NPM](https://img.shields.io/npm/v/@viewdo/x-ui)](https://www.npmjs.com/package/@viewdo/x-ui) ![Main CI](https://github.com/viewdo/x-ui/workflows/Main%20CI/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/viewdo/x-ui/badge.svg)](https://coveralls.io/github/viewdo/x-ui) [![Join the chat at https://gitter.im/viewdo/x-ui](https://badges.gitter.im/viewdo/x-ui.svg)](https://gitter.im/viewdo/x-ui?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) ![size](https://img.shields.io/bundlephobia/min/@viewdo/x-ui)
 
 Experience UI is a suite of custom HTML elements that turns a static HTML file into single-page web-experiences.
 
