@@ -1,2 +1,1 @@
-
-export type Namespace = ('local' | 'develop' | 'stage' | 'master' | 'other');
+export type Namespace = 'local' | 'develop' | 'stage' | 'master' | 'other'

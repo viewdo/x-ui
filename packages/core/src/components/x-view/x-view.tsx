@@ -1,6 +1,6 @@
-import { h, Component, Element, Host, Prop, State, Watch } from '@stencil/core';
-import '../x-view-do/x-view-do';
-import { eventBus, DATA_EVENTS, debugIf, hasVisited, markVisit, resolveElementVisibility, resolveNext, Route, warn, wrapFragment, MatchResults } from '../..';
+import { h, Component, Element, Host, Prop, State, Watch } from '@stencil/core'
+import '../x-view-do/x-view-do'
+import { eventBus, DATA_EVENTS, debugIf, hasVisited, markVisit, resolveElementVisibility, resolveNext, Route, warn, wrapFragment, MatchResults } from '../..'
 
 /**
  *  @system routing
@@ -11,46 +11,47 @@ import { eventBus, DATA_EVENTS, debugIf, hasVisited, markVisit, resolveElementVi
   shadow: true,
 })
 export class XView {
-  private subscription: () => void;
-  private route: Route;
-  @Element() el!: HTMLXViewElement;
-  @State() match: MatchResults;
-  @State() fetched: boolean;
+  private readonly subscription: () => void
+  private route: Route
+  @Element() el!: HTMLXViewElement
+  @State() match: MatchResults
+  @State() fetched: boolean
 
   /**
    * The title for this view. This is prefixed
    * before the app title configured in x-ui
    *
    */
-  @Prop() pageTitle: string = '';
+  @Prop() pageTitle = ''
 
   /**
    * Header height or offset for scroll-top on this
    * view.
    */
-  @Prop() scrollTopOffset?: number;
+  @Prop() scrollTopOffset?: number
 
   /**
    * Navigation transition between routes.
    * This is a CSS animation class.
    */
-  @Prop() transition?: string;
+  @Prop() transition?: string
 
   /**
    * The url for this route, including the parent's
    * routes.
    */
-  @Prop() url!: string;
+  @Prop() url!: string
 
   @Watch('url')
   validatePath(newValue: string, _oldValue: string) {
-    const isBlank = typeof newValue !== 'string' || newValue === '';
-    const has2chars = typeof newValue === 'string' && newValue.length >= 2;
+    const isBlank = typeof newValue !== 'string' || newValue === ''
+    const has2chars = typeof newValue === 'string' && newValue.length >= 2
     if (isBlank) {
-      throw new Error('url: required');
+      throw new Error('url: required')
     }
+
     if (!has2chars) {
-      throw new Error('url: too short');
+      throw new Error('url: too short')
     }
   }
 
@@ -58,49 +59,55 @@ export class XView {
    * The url for this route should only be matched
    * when it is exact.
    */
-  @Prop() exact: boolean;
+  @Prop() exact: boolean
 
   /**
    * Remote URL for this Route's content.
    */
-  @Prop() contentSrc: string;
+  @Prop() contentSrc: string
 
   /**
    * Turn on debug statements for load, update and render events.
    */
-  @Prop() debug: boolean = false;
+  @Prop() debug = false
 
   private get parent(): HTMLXViewElement {
-    const view = this.el.parentElement?.closest('x-view') as HTMLXViewElement;
+    const view = this.el.parentElement?.closest('x-view')!
     if (view) {
-      return view;
+      return view
     }
   }
 
   private get routeContainer() {
-    return this.el.closest('x-ui');
+    return this.el.closest('x-ui')
   }
 
-  private get childViewDos(): Array<HTMLXViewDoElement> {
-    if (!this.el.hasChildNodes()) return [];
+  private get childViewDos(): HTMLXViewDoElement[] {
+    if (!this.el.hasChildNodes()) {
+      return []
+    }
+
     return Array.from(this.el.childNodes)
-      .filter(c => c.nodeName === 'X-VIEW-DO')
-      .map(v => v as HTMLXViewDoElement);
+      .filter((c) => c.nodeName === 'X-VIEW-DO')
+      .map((v) => v as HTMLXViewDoElement)
   }
 
-  private get childViews(): Array<HTMLXViewElement> {
-    if (!this.el.hasChildNodes()) return [];
+  private get childViews(): HTMLXViewElement[] {
+    if (!this.el.hasChildNodes()) {
+      return []
+    }
+
     return Array.from(this.el.childNodes)
-      .filter(c => c.nodeName === 'X-VIEW')
-      .map(v => v as HTMLXViewElement);
+      .filter((c) => c.nodeName === 'X-VIEW')
+      .map((v) => v as HTMLXViewElement)
   }
 
   async componentWillLoad() {
-    debugIf(this.debug, `x-view: ${this.url} loading`);
+    debugIf(this.debug, `x-view: ${this.url} loading`)
 
     if (!this.routeContainer || !this.routeContainer.router) {
-      warn(`x-view: ${this.url} cannot load outside of an x-ui element`);
-      return;
+      warn(`x-view: ${this.url} cannot load outside of an x-ui element`)
+      return
     }
 
     this.route = this.routeContainer.router.createRoute(
@@ -110,107 +117,111 @@ export class XView {
       this.pageTitle,
       this.transition || this.parent?.transition,
       this.scrollTopOffset,
-      async match => {
-        this.match = match;
-        await this.resolveView();
+      async (match) => {
+        this.match = match
+        await this.resolveView()
       },
-    );
+    )
 
-    this.childViews.forEach(v => {
-      v.url = this.route.normalizeChildUrl(v.url);
-      v.transition = v.transition || this.transition;
-    });
+    this.childViews.forEach((v) => {
+      v.url = this.route.normalizeChildUrl(v.url)
+      v.transition = v.transition || this.transition
+    })
 
-    this.childViewDos.forEach(v => {
-      v.url = this.route.normalizeChildUrl(v.url);
-      v.transition = v.transition || this.transition;
-    });
+    this.childViewDos.forEach((v) => {
+      v.url = this.route.normalizeChildUrl(v.url)
+      v.transition = v.transition || this.transition
+    })
 
     this.match = this.route.router?.matchPath({
       path: this.url,
       exact: this.exact,
       strict: true,
-    });
-    await this.resolveView();
+    })
+    await this.resolveView()
 
     eventBus.on(DATA_EVENTS.DataChanged, async () => {
-      debugIf(this.debug, `x-view: ${this.url} data changed `);
-      await this.resolveView();
-    });
+      debugIf(this.debug, `x-view: ${this.url} data changed `)
+      await this.resolveView()
+    })
   }
 
   componentDidRender() {
-    debugIf(this.debug, `x-view: ${this.url} did render`);
-    resolveElementVisibility(this.el);
+    debugIf(this.debug, `x-view: ${this.url} did render`)
+    resolveElementVisibility(this.el)
   }
 
   private async fetchHtml() {
-    if (!this.contentSrc || this.fetched) return;
+    if (!this.contentSrc || this.fetched) {
+      return
+    }
+
     try {
-      debugIf(this.debug, `x-view: ${this.url} fetching content from ${this.contentSrc}`);
-      const response = await fetch(this.contentSrc);
+      debugIf(this.debug, `x-view: ${this.url} fetching content from ${this.contentSrc}`)
+      const response = await fetch(this.contentSrc)
       if (response.status === 200) {
-        const data = await response.text();
-        this.el.appendChild(wrapFragment(data, 'content', 'content'));
-        this.fetched = true;
-        this.el.querySelectorAll('a[href]');
+        const data = await response.text()
+        this.el.append(wrapFragment(data, 'content', 'content'))
+        this.fetched = true
+        this.el.querySelectorAll('a[href]')
       } else {
-        warn(`x-view: ${this.url} Unable to retrieve from ${this.contentSrc}`);
+        warn(`x-view: ${this.url} Unable to retrieve from ${this.contentSrc}`)
       }
-    } catch (error) {
-      warn(`x-view: ${this.url} Unable to retrieve from ${this.contentSrc}`);
+    } catch {
+      warn(`x-view: ${this.url} Unable to retrieve from ${this.contentSrc}`)
     }
   }
 
   private async resolveView() {
-    debugIf(this.debug, `x-view: ${this.url} resolve view called`);
+    debugIf(this.debug, `x-view: ${this.url} resolve view called`)
 
     if (this.match) {
-      this.el.classList.add('active-route');
+      this.el.classList.add('active-route')
       if (this.match.isExact) {
-        debugIf(this.debug, `x-view: ${this.url} route is matched `);
+        debugIf(this.debug, `x-view: ${this.url} route is matched `)
 
-        const viewDos = this.childViewDos.map(viewDo => {
-          const { when, visit, url } = viewDo;
-          const visited = hasVisited(url);
-          return { when, visit, visited, url };
-        });
+        const viewDos = this.childViewDos.map((viewDo) => {
+          const { when, visit, url } = viewDo
+          const visited = hasVisited(url)
+          return { when, visit, visited, url }
+        })
 
-        const nextDo = await resolveNext(viewDos);
+        const nextDo = await resolveNext(viewDos)
         if (nextDo) {
           // eslint-disable-next-line no-console
-          this.route.router?.history.push(nextDo.url);
+          this.route.router?.history.push(nextDo.url)
         } else {
-          markVisit(this.match.url);
-          await this.fetchHtml();
-          this.el.classList.add('active-route-exact');
+          markVisit(this.match.url)
+          await this.fetchHtml()
+          this.el.classList.add('active-route-exact')
           if (this.route.transition) {
-            this.route.transition.split(' ').forEach(c => {
-              this.el.classList.add(c);
-            });
+            this.route.transition.split(' ').forEach((c) => {
+              this.el.classList.add(c)
+            })
           }
-          await this.route.loadCompleted();
+
+          await this.route.loadCompleted()
         }
       } else {
-        this.el.classList.remove('active-route-exact');
+        this.el.classList.remove('active-route-exact')
       }
     } else {
-      this.el.classList.remove('active-route');
+      this.el.classList.remove('active-route')
     }
   }
 
   disconnectedCallback() {
-    this.subscription();
-    this.route.destroy();
+    this.subscription()
+    this.route.destroy()
   }
 
   render() {
-    debugIf(this.debug, `x-view: ${this.url} render`);
+    debugIf(this.debug, `x-view: ${this.url} render`)
     return (
       <Host>
         <slot />
         <slot name="content" />
       </Host>
-    );
+    )
   }
 }

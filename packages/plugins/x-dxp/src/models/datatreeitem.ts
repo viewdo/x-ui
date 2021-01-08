@@ -1,4 +1,3 @@
-
 export class DataTreeItem {
   /**
    * The data key for this segment of the composite input.
@@ -9,5 +8,5 @@ export class DataTreeItem {
   /** The value of this element */
   public name: string
 
-  public items: Array<DataTreeItem> = new Array<DataTreeItem>()
+  public items: DataTreeItem[] = new Array<DataTreeItem>()
 }

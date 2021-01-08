@@ -1,20 +1,20 @@
-import { Parser } from 'expr-eval';
-import { requireValue } from '../utils/misc-utils';
-import { getDataProvider, addDataProvider, removeDataProvider } from './providers/factory';
-import { ExpressionContext } from './interfaces';
-import { warn } from '../logging';
-import { toBoolean } from '../utils/string-utils';
-import { hasVisited } from '../routing/visits';
-import { DataItemProvider } from './providers/item';
+import { Parser } from 'expr-eval'
+import { requireValue } from '../utils/misc-utils'
+import { getDataProvider, addDataProvider, removeDataProvider } from './providers/factory'
+import { ExpressionContext } from './interfaces'
+import { warn } from '../logging'
+import { toBoolean } from '../utils/string-utils'
+import { hasVisited } from '../routing/visits'
+import { DataItemProvider } from './providers/item'
 
-const expressionRegEx = /{([\w-]*):([\w_]*)(?:\.([\w_.-]*))?(?:\?([\w_.-]*))?}/g;
-const expressionEvaluator = new Parser();
+const expressionRegEx = /{([\w-]*):([\w_]*)(?:\.([\w_.-]*))?(?:\?([\w_.-]*))?}/g
+const expressionEvaluator = new Parser()
 
-expressionEvaluator.functions.didVisit = (url: string) => hasVisited(url);
+expressionEvaluator.functions.didVisit = (url: string) => hasVisited(url)
 
 export function hasExpression(valueExpression: string) {
-  requireValue(valueExpression, 'valueExpression');
-  return valueExpression.match(expressionRegEx);
+  requireValue(valueExpression, 'valueExpression')
+  return valueExpression.match(expressionRegEx)
 }
 
 /**
@@ -26,51 +26,57 @@ export function hasExpression(valueExpression: string) {
  * @param {string} valueExpression
  * @return {*}  {(Promise<string|null>)}
  */
-export async function resolveExpression(valueExpression: string, data?: any): Promise<string|null> {
-  requireValue(valueExpression, 'valueExpression');
+export async function resolveExpression(valueExpression: string, data?: any): Promise<string> {
+  requireValue(valueExpression, 'valueExpression')
 
-  if (valueExpression == null || valueExpression === '') return valueExpression;
-
-  // if this expression doesn't match, leave it alone
-  if (!valueExpression.match(expressionRegEx)) {
-    return valueExpression;
+  if (valueExpression == null || valueExpression === '') {
+    return valueExpression
   }
 
-  // make a copy to avoid side effects
-  let result = valueExpression.slice();
+  // If this expression doesn't match, leave it alone
+  if (!valueExpression.match(expressionRegEx)) {
+    return valueExpression
+  }
 
-  if (data) addDataProvider('data', new DataItemProvider(data));
+  // Make a copy to avoid side effects
+  let result = valueExpression.slice()
 
-  // replace each match
-  let match: string | RegExpExecArray;
-  // eslint-disable-next-line no-cond-assign
-  while (match = expressionRegEx.exec(valueExpression)) {
-    const expression = match[0];
-    const providerKey = match[1];
-    const dataKey = match[2];
-    const propKey = match[3] || '';
-    const defaultValue = match[4] || '';
+  if (data) {
+    addDataProvider('data', new DataItemProvider(data))
+  }
 
-    const provider = getDataProvider(providerKey);
+  // Replace each match
+  let match: string | RegExpExecArray | null
+
+  while ((match = expressionRegEx.exec(valueExpression))) {
+    const expression = match[0]
+    const providerKey = match[1]
+    const dataKey = match[2]
+    const propKey = match[3] || ''
+    const defaultValue = match[4] || ''
+
+    const provider = getDataProvider(providerKey)
     // eslint-disable-next-line no-await-in-loop
-    let value = (await provider?.get(dataKey)) || defaultValue;
+    let value = (await provider?.get(dataKey)) || defaultValue
 
     if (propKey) {
-      const obj = (typeof value === 'string') ? JSON.parse(value || '{}') : value;
-      const propSegments = propKey.split('.');
-      let node = obj;
+      const object = typeof value === 'string' ? JSON.parse(value || '{}') : value
+      const propSegments = propKey.split('.')
+      let node = object
       propSegments.forEach((property) => {
-        node = node[property];
-      });
-      value = (typeof node === 'object') ? JSON.stringify(node) : `${node}`;
+        node = node[property]
+      })
+      value = typeof node === 'object' ? JSON.stringify(node) : `${node}`
     }
 
-    result = result.replace(expression, value);
+    result = result.replace(expression, value)
   }
 
-  if (data) removeDataProvider('data');
+  if (data) {
+    removeDataProvider('data')
+  }
 
-  return result;
+  return result
 }
 
 /**
@@ -81,15 +87,15 @@ export async function resolveExpression(valueExpression: string, data?: any): Pr
  * @param {string} expression A js-based expression for value comparisons or calculations
  * @param {object} context An object holding any variables for the expression.
  */
-export function evaluate(expression: string, context:ExpressionContext = {}): number|boolean|string {
-  requireValue(expression, 'expression');
+export function evaluate(expression: string, context: ExpressionContext = {}): number | boolean | string {
+  requireValue(expression, 'expression')
   try {
-    context.null = null;
-    context.empty = '';
-    return expressionEvaluator.evaluate(expression.toLowerCase(), context);
-  } catch (err) {
-    warn(`An exception was raised evaluating expression '${expression}': ${err}`);
-    return expression;
+    context.null = null
+    context.empty = ''
+    return expressionEvaluator.evaluate(expression.toLowerCase(), context)
+  } catch (error) {
+    warn(`An exception was raised evaluating expression '${expression}': ${error}`)
+    return expression
   }
 }
 
@@ -103,9 +109,9 @@ export function evaluate(expression: string, context:ExpressionContext = {}): nu
  * @return {*}  {Promise<any>}
  */
 export async function evaluateExpression(expression: string, context: ExpressionContext = {}): Promise<any> {
-  requireValue(expression, 'expression');
-  const detokenizedExpression = await resolveExpression(expression);
-  return evaluate(detokenizedExpression, context);
+  requireValue(expression, 'expression')
+  const detokenizedExpression = await resolveExpression(expression)
+  return evaluate(detokenizedExpression, context)
 }
 
 /**
@@ -117,24 +123,31 @@ export async function evaluateExpression(expression: string, context: Expression
  * @param {ExpressionContext} [context={}]
  * @return {*}  {Promise<boolean>}
  */
-export async function evaluatePredicate(expression: string, context:ExpressionContext = {}): Promise<boolean> {
-  requireValue(expression, 'expression');
-  let negation = false;
-  let workingExpression = expression.slice();
-  if (workingExpression[0] === '!') {
-    negation = true;
-    workingExpression = workingExpression.slice(1, workingExpression.length);
+export async function evaluatePredicate(expression: string, context: ExpressionContext = {}): Promise<boolean> {
+  requireValue(expression, 'expression')
+  let negation = false
+  let workingExpression = expression.slice()
+  if (workingExpression.startsWith('!')) {
+    negation = true
+    workingExpression = workingExpression.slice(1, workingExpression.length)
   }
-  const detokenizedExpression = await resolveExpression(workingExpression);
+
+  const detokenizedExpression = await resolveExpression(workingExpression)
   try {
-    context.null = null;
-    context.empty = '';
-    const result = expressionEvaluator.evaluate(detokenizedExpression, context);
-    if (typeof result === 'boolean') return result;
-    if (typeof result === 'number') return result > 0;
-    return toBoolean(result);
-  } catch (error) {
-    const result = toBoolean(detokenizedExpression);
-    return negation ? !result : result;
+    context.null = null
+    context.empty = ''
+    const result = expressionEvaluator.evaluate(detokenizedExpression, context)
+    if (typeof result === 'boolean') {
+      return result
+    }
+
+    if (typeof result === 'number') {
+      return result > 0
+    }
+
+    return toBoolean(result)
+  } catch {
+    const result = toBoolean(detokenizedExpression)
+    return negation ? !result : result
   }
 }

@@ -1,6 +1,6 @@
-## Submitting Event-Actions:
+## Submitting Event-Actions
 
-### Using Element Event:
+### Using Element Event
 
 Event Name: **actionEvent**
 
@@ -25,7 +25,7 @@ xui.dispatchEvent(action, {
 
 ````
 
-## Using the ActionBus:
+## Using the ActionBus
 
 ````typescript
 

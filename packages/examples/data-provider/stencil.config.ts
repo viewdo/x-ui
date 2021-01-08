@@ -1,11 +1,11 @@
-import { Config } from '@stencil/core';
+import { Config } from '@stencil/core'
 
 export const config: Config = {
   namespace: 'sample-data-provider',
   outputTargets: [
     {
       type: 'dist',
-      esmLoaderPath: '../loader',
+      esmLoaderPath: 'loader',
     },
     {
       type: 'dist-custom-elements-bundle',
@@ -15,7 +15,7 @@ export const config: Config = {
     },
     {
       type: 'www',
-      serviceWorker: null, // disable service workers
+      serviceWorker: null, // Disable service workers
     },
   ],
-};
+}

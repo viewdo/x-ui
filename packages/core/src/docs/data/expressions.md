@@ -1,6 +1,6 @@
 # Data Expressions
 
-**Expression Format:** ````{<provider>:<data-key>(?<default>)} ````
+**Expression Format:** ````{<provider>:<data-key>(?<default>)}````
 
 **provider**: the data provider name
 **data-key**: the data value key within the provider *

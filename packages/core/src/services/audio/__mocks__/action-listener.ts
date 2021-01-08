@@ -1,54 +1,35 @@
-import { AudioRequest, AudioType, AUDIO_EVENTS, EventEmitter } from './../..';
-
+import { AudioRequest, AudioType, AUDIO_EVENTS, EventEmitter } from '../..'
 
 export class AudioActionListener {
-  timer: NodeJS.Timeout;
+  timer: NodeJS.Timeout
 
-
-  constructor(
-    public eventBus: EventEmitter,
-    public actionBus: EventEmitter,
-    public debug: boolean = false)
-  {
-
-    this.events = new EventEmitter();
-
-    this.timer = setInterval(() => {
-      this.events.emit(AUDIO_EVENTS.Loaded);
-    }, 300);
+  constructor(public eventBus: EventEmitter, public actionBus: EventEmitter, public debug: boolean = false) {
+    this.events = new EventEmitter()
   }
 
   // Public Members
 
   public isPlaying(): boolean {
-    return true;
+    return true
   }
 
   public hasAudio(): boolean {
-    return true;
+    return true
   }
 
-  public events: EventEmitter;
+  public events: EventEmitter
 
-  public pause() {
+  public pause() {}
 
-  }
+  public resume() {}
 
-  public resume() {
-  }
+  public mute(_mute = false) {}
 
-  public mute(_mute: boolean = false) {
-  }
+  public seek(_type: AudioType, _trackId: string, _seek: number) {}
 
-  public seek(_type: AudioType, _trackId: string, _seek: number) {
-
-  }
-
-  public volume(_request: AudioRequest) {
-  }
-
+  public volume(_request: AudioRequest) {}
 
   destroy() {
-    clearInterval(this.timer);
+    clearInterval(this.timer)
   }
 }

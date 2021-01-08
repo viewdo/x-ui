@@ -1,5 +1,5 @@
-import { Host, Component, h, State, Prop, Element } from '@stencil/core';
-import { resolveElementVisibility, RouterService, warn, resolveExpression, eventBus, ROUTE_EVENTS, DATA_EVENTS } from '../..';
+import { Component, Element, h, Host, Prop, State } from '@stencil/core'
+import { DATA_EVENTS, eventBus, resolveElementVisibility, resolveExpression, RouterService, ROUTE_EVENTS, warn } from '../..'
 
 /**
  *  @system content
@@ -9,66 +9,70 @@ import { resolveElementVisibility, RouterService, warn, resolveExpression, event
   shadow: false,
 })
 export class XInclude {
-  @Element() el: HTMLXIncludeElement;
-  @State() content: string;
+  @Element() el!: HTMLXIncludeElement
+  @State() content?: string
 
   /**
    * Remote Template URL
    */
-  @Prop() src!: string;
+  @Prop() src!: string
 
   /**
    * If set, disables auto-rendering of this instance.
    * To fetch the contents change to false or remove
    * attribute.
    */
-  // eslint-disable-next-line @stencil/strict-mutable
-  @Prop({ mutable: true}) noRender: boolean = false;
+  @Prop({ mutable: true }) noRender = false
 
-  private get router(): RouterService {
-    return this.el.closest('x-ui')?.router;
+  private get router(): RouterService | undefined {
+    return this.el.closest('x-ui')?.router
   }
 
   async componentWillLoad() {
     eventBus.on(DATA_EVENTS.DataChanged, async () => {
-      await this.resolveContent();
-    });
+      await this.resolveContent()
+    })
 
     eventBus.on(ROUTE_EVENTS.RouteChanged, async () => {
-      await this.resolveContent();
-    });
+      await this.resolveContent()
+    })
   }
 
   async componentWillRender() {
-    await this.resolveContent();
+    await this.resolveContent()
   }
 
   componentDidRender() {
-    resolveElementVisibility(this.el);
+    resolveElementVisibility(this.el)
     if (this.router) {
-      this.el.querySelectorAll('a[href^=http]').forEach(a => {
+      this.el.querySelectorAll('a[href^=http]').forEach((a) => {
         a.addEventListener('click', (e) => {
-          const href = a.getAttribute('href');
-          e.preventDefault();
-          this.router.history.push(href);
+          const href = a.getAttribute('href')
+          if (href) {
+            e.preventDefault()
+            this.router?.history.push(href)
+          }
         })
-      });
+      })
     }
   }
 
   private async resolveContent() {
-    if (this.noRender) return;
+    if (this.noRender) {
+      return
+    }
+
     try {
-      const src = await resolveExpression(this.src);
-      const response = await fetch(src);
+      const src = await resolveExpression(this.src)
+      const response = await fetch(src)
       if (response.status === 200) {
-        const data = await response.text();
-        this.content = data;
+        const data = await response.text()
+        this.content = data
       } else {
-        warn(`x-include: Unable to retrieve from ${this.src}`);
+        warn(`x-include: Unable to retrieve from ${this.src}`)
       }
-    } catch (error) {
-      warn(`x-include: Unable to retrieve from ${this.src}`);
+    } catch {
+      warn(`x-include: Unable to retrieve from ${this.src}`)
     }
   }
 
@@ -78,8 +82,9 @@ export class XInclude {
         <Host>
           <div innerHTML={this.content}></div>
         </Host>
-      );
+      )
     }
-    return (<Host hidden></Host>);
+
+    return <Host hidden></Host>
   }
 }

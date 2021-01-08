@@ -1,4 +1,4 @@
-{
+module.exports = {
   "parserOptions": {
     "project": "./tsconfig.json"
   },
@@ -10,6 +10,7 @@
     "@stencil/strict-boolean-conditions": 0,
     "@typescript-eslint/naming-convention": 0,
     "@typescript-eslint/lines-between-class-members": 0,
+
     "react/react-in-jsx-scope": 0,
     "react/self-closing-comp": 0,
     "react/no-unescaped-entities": 0,

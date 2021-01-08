@@ -6,9 +6,9 @@ Static content has no end and leaves the user to decide what to do.
 
 Experiences have static content, but it is typically found at the end or as an informational page offshoot. In most cases, revisiting an experience shows this static page, with links to revisit the presentation, re-watch a video, or update data that was collected.
 
-Navigation can be categorized into two distinct strategies: **static** and **guided**. Static is simple; the link doesn’t change. Guided navigation takes the user to the next route of content dynamically in sequence with regard to certain rules. 
+Navigation can be categorized into two distinct strategies: **static** and **guided**. Static is simple; the link doesn’t change. Guided navigation takes the user to the next route of content dynamically in sequence with regard to certain rules.
 
-Guided navigation gets complex. Expressing rules for where to go next can quickly get unruly, especially considering a user can drop out of an experience and return at any time. 
+Guided navigation gets complex. Expressing rules for where to go next can quickly get unruly, especially considering a user can drop out of an experience and return at any time.
 
 
 ## Guided Navigation by Convention
@@ -23,9 +23,9 @@ Content: static html
 Navigation: static
 ````
 
-Let’s also assume presentation content must live as sub-routes under their declaring static route and presentation content uses a guided navigation strategy. 
+Let’s also assume presentation content must live as sub-routes under their declaring static route and presentation content uses a guided navigation strategy.
 
-Let also say before we present our static content, the user must first visit each of the sub-routes defined in the order they are listed. 
+Let also say before we present our static content, the user must first visit each of the sub-routes defined in the order they are listed.
 
 ````
 Path: /home/step-1
@@ -47,7 +47,7 @@ Navigation: static
 
 With these two assumptions our router can make a global rule: before we present our static content, the user must first visit each of the sub-routes defined in the order they are listed.
 
-If we create a list of must-visit sub-routes, the navigation strategy becomes simple: 
+If we create a list of must-visit sub-routes, the navigation strategy becomes simple:
 
 **Static Route Rules:**
 
@@ -57,6 +57,7 @@ If we create a list of must-visit sub-routes, the navigation strategy becomes si
 
 
 **Guided Route Rules:**
+
 1. Store Visit
 1. Display content
 2. Next always returns to parent route
@@ -71,9 +72,9 @@ That’s great, but we still need to solve for content routes that should only b
 
 Let’s add a new property to each sub-route to describe the visit strategy for the parent route to determine if a sub-route should be visited before displaying the home route.  
 
-Our visit requirements are: 
+Our visit requirements are:
 
-__Always__ visit this state every time a user re-enters the experience.  The tracking is done in-memory. 
+__Always__ visit this state every time a user re-enters the experience.  The tracking is done in-memory.
 
 __Once__ ensures the route is visited at least once before showing the static view. The visit is tracked in a persistent way
 
@@ -92,13 +93,14 @@ This changes our routing rules to be:
 
 
 **Guided Route Rules:**
+
 1. If **Once**, store Visit
 1. Display content
-2. Next always returns to parent route
+1. Next always returns to parent route
 
 Now we can express a navigated routing system like this:
 
-````
+````yaml
 Path: /home/welcome
 Visit: always
 
@@ -113,37 +115,41 @@ Visit: optional
 
 Path: /home
 ````
+
 > In this example, the sub-route “choose-favorite” displays a list of choices, each with its own direct links to its corresponding optional sub-routes. If Next() was clicked, the user would return home.
 
 Now we have sub-routes that won’t automatically be visited if they are optional. They could only be visited by explicit navigation.
 
 ## Convention with Conditional Routes & Visit-tracking
 
-The above strategies account for most experience navigation rules, but we are still missing the ability to have navigation conditioned on existing data, collected in previous steps or part of the starting data set. 
+The above strategies account for most experience navigation rules, but we are still missing the ability to have navigation conditioned on existing data, collected in previous steps or part of the starting data set.
 
 Let’s first assume the data context is established and there is a persistent data store providing data to the view engine.  
 
 > The data store is left generic on purpose, however, for our purposes, this would be experience data.
 
-We are going to add a new  strategy called **When**. The **When** visit strategy informs the navigation system to derive the strategy from the expression contained in the  **When** property. The  **When** expression evaluates to true or false. 
+We are going to add a new  strategy called **When**. The **When** visit strategy informs the navigation system to derive the strategy from the expression contained in the  **When** property. The  **When** expression evaluates to true or false.
 
 * When true, the visit strategy is **Once**
 * When false, the visit strategy is **Optional**
 
 **Example:  Sub Route Required w/Data equal to a Value**
-````
+
+````yaml
 Path: /home/choice-red
 When: color = red
 ````
 
 **Example:  Sub Route Required w/Data is set**
-````
+
+````yaml
 Path: /home/answer-exists
 When: answer != null
 ````
 
 **Example:  Sub Route Required w/Multiple Data Conditions**
-````
+
+````yaml
 Path: /home/complex-example
 When: (answer != null && age > 21) || verified = false
 ````
@@ -210,6 +216,7 @@ These tags are explained in detail within their own component requirements, but 
   </x-view>
 </x-ui>
 ````
+
 This structure would first ask the newcomer’s name, then use it with a welcome message. It would offer a link to our intro video, but would just go home when they clicked __next__.
 
 There is a sub-route “/about” that walks the user through a presentation of each person at the company ending with static content about the company.

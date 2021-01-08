@@ -1,4 +1,4 @@
 export class StoryEvent {
-  key: string;
-  name: string;
+  key: string
+  name: string
 }

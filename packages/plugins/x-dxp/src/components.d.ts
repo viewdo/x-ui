@@ -23,17 +23,17 @@ export namespace Components {
         /**
           * A default value to display if the data in get is not found.
          */
-        "default": string;
+        "default"?: string;
         /**
           * The JS-based expression to capture data from the above model.
           * @example experience.data.color
          */
         "get": string;
         /**
-          * A pipe separated list of modifier expressions to modify the captured data. clip:<length>    truncate:<length>   date   format:<expression>   lowercase   uppercase   capitalize   size   encode   currency
+          * A pipe separated list of modifier expressions to modify the captured data. clip: length    truncate: length   date   format: expression   lowercase   uppercase   capitalize   size   encode   currency
           * @example clip:5|capitalize
          */
-        "modify": string;
+        "modify"?: string;
     }
     interface DxpDataProvider {
     }
@@ -175,7 +175,7 @@ declare namespace LocalJSX {
          */
         "get": string;
         /**
-          * A pipe separated list of modifier expressions to modify the captured data. clip:<length>    truncate:<length>   date   format:<expression>   lowercase   uppercase   capitalize   size   encode   currency
+          * A pipe separated list of modifier expressions to modify the captured data. clip: length    truncate: length   date   format: expression   lowercase   uppercase   capitalize   size   encode   currency
           * @example clip:5|capitalize
          */
         "modify"?: string;

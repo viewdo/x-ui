@@ -1,18 +1,15 @@
 /* istanbul ignore file */
 
-export interface IEventEmitter  {
-  on(event: string, listener: Listener): () => void;
-  removeListener(event: string, listener: Listener): void;
-  removeAllListeners(): void;
-  emit(event: string, ...args: any[]): void;
-  once(event: string, listener: Listener): () => void;
+export interface IEventEmitter {
+  on(event: string, listener: Listener): () => void
+  removeListener(event: string, listener: Listener): void
+  removeAllListeners(): void
+  emit(event: string, ...args: any[]): void
+  once(event: string, listener: Listener): () => void
 }
 
 export interface IEventActionListener {
-  initialize(
-    win: Window,
-    actions: IEventEmitter,
-    events: IEventEmitter): void;
+  initialize(win: Window, actions: IEventEmitter, events: IEventEmitter): void
 }
 
 export enum ActionActivationStrategy {
@@ -23,19 +20,18 @@ export enum ActionActivationStrategy {
 }
 
 export interface EventAction<T> {
-  topic: string;
-  command: string;
-  data: T;
+  topic: string
+  command: string
+  data: T
 }
 
-export type Listener = (...args: any[]) => void;
+export const ACTIONS_DOM_EVENT = 'x:actions'
+export const EVENTS_DOM_EVENT = 'x:events'
 
+export type Listener = (...args: any[]) => void
 
-export interface IEvents {
-  [event: string]: Listener[]
-}
-
+export type IEvents = Record<string, Listener[]>
 
 export interface IActionElement {
-  getAction(): Promise<EventAction<any>>;
+  getAction(): Promise<EventAction<any>>
 }

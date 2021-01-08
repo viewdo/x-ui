@@ -1,5 +1,5 @@
-import { Component, Host, h, Method, Prop, Element } from '@stencil/core';
-import { EventAction, IActionElement, warn } from '../..';
+import { Component, Element, h, Host, Method, Prop } from '@stencil/core'
+import { EventAction, IActionElement, warn } from '../..'
 
 /**
  * This element just holds data to express the actionEvent to fire. This element
@@ -12,23 +12,23 @@ import { EventAction, IActionElement, warn } from '../..';
   shadow: false,
 })
 export class XAction implements IActionElement {
-  private deserializedData: { [key: string]: any };
+  private deserializedData: Record<string, any>
 
-  @Element() el: HTMLXActionElement;
+  @Element() el: HTMLXActionElement
   /**
    * This is the topic this action-command is targeting.
    */
-  @Prop() topic: 'data' | 'routing' | 'document' | 'audio' | 'video';
+  @Prop() topic: 'data' | 'routing' | 'document' | 'audio' | 'video'
 
   /**
    * The command to execute.
    */
-  @Prop() command: string;
+  @Prop() command: string
 
   /**
    * The JSON serializable data payload the command requires.
    */
-  @Prop() data: string;
+  @Prop() data: string
 
   /**
    * Get the underlying actionEvent instance. Used by the x-action-activator element.
@@ -39,36 +39,40 @@ export class XAction implements IActionElement {
       topic: this.topic,
       command: this.command,
       data: this.deserializedData,
-    };
+    }
   }
 
   private get parent(): HTMLXActionActivatorElement {
-    return this.el.closest('x-action-activator') as HTMLXActionActivatorElement;
+    return this.el.closest('x-action-activator')!
   }
 
-  private get childScript(): HTMLScriptElement {
-    if (!this.el.hasChildNodes()) return null;
+  private get childScript(): HTMLScriptElement | null {
+    if (!this.el.hasChildNodes()) {
+      return null
+    }
+
     const childScripts = Array.from(this.el.childNodes)
-      .filter(c => c.nodeName === 'SCRIPT')
-      .map(v => v as HTMLScriptElement);
+      .filter((c) => c.nodeName === 'SCRIPT')
+      .map((v) => v as HTMLScriptElement)
 
     if (childScripts.length > 0) {
-      return childScripts[0];
+      return childScripts[0]
     }
-    return null;
+
+    return null
   }
 
   componentWillLoad() {
     if (this.parent === undefined) {
-      warn('The x-action component must be wrapped with an x-action-activator component to work.');
+      warn('The x-action component must be wrapped with an x-action-activator component to work.')
     } else if (this.childScript) {
-      this.deserializedData = JSON.parse(this.childScript.innerText);
-    } else {``
-      this.deserializedData = JSON.parse(this.data || '{}');
+      this.deserializedData = JSON.parse(this.childScript?.textContent || '{}')
+    } else {
+      this.deserializedData = JSON.parse(this.data || '{}')
     }
   }
 
   render() {
-    return <Host hidden></Host>;
+    return <Host hidden></Host>
   }
 }

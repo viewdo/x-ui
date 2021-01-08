@@ -1,7 +1,3 @@
-
-describe('match-path: ', () => {
-  it('renders', async () => {
-
-  });
-
-});
+describe('match-path:', () => {
+  it('renders', async () => {})
+})

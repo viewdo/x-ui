@@ -1,7 +1,7 @@
-import { Component, h, Host, Prop, State } from '@stencil/core';
-import { Experience } from '../../models';
-import { state, onChange } from '../../services';
-import { ExperienceDataParser } from '../../services/data/parser';
+import { Component, h, Host, Prop, State } from '@stencil/core'
+import { Experience } from '../../models'
+import { onChange, state } from '../../services'
+import { ExperienceDataParser } from '../../services/data/parser'
 
 /**
  * This tag renders the values from the current experience to the page. It supports optional modifiers for formatting.
@@ -14,27 +14,26 @@ import { ExperienceDataParser } from '../../services/data/parser';
   shadow: false,
 })
 export class Data {
-
-  @State()  experience: Experience;
+  @State() experience?: Experience
 
   /**
    * The JS-based expression to capture data from the above model.
    * @example experience.data.color
    */
-  @Prop() get!: string;
+  @Prop() get!: string
 
   /**
    * A default value to display if the data in get is not found.
    */
-  @Prop() default: string;
+  @Prop() default?: string
 
   /**
    * A pipe separated list of modifier expressions to modify the captured data.
-   * clip:<length>
+   * clip: length
    *
-   *  truncate:<length>
+   *  truncate: length
    *  date
-   *  format:<expression>
+   *  format: expression
    *  lowercase
    *  uppercase
    *  capitalize
@@ -44,25 +43,24 @@ export class Data {
    *
    * @example clip:5|capitalize
    */
-  @Prop()  modify: string;
+  @Prop() modify?: string
 
-  private tokens: ExperienceDataParser;
+  private tokens!: ExperienceDataParser
 
   componentWillLoad() {
     if (state.experience) {
-      this.experience = state.experience;
-      this.tokens = new ExperienceDataParser(state.experience);
+      this.experience = state.experience
+      this.tokens = new ExperienceDataParser(state.experience)
     } else {
-      onChange('experience', e => {
-        this.experience = e;
-        this.tokens = new ExperienceDataParser(e);
-      });
+      onChange('experience', (e) => {
+        this.experience = e
+        this.tokens = new ExperienceDataParser(e)
+      })
     }
   }
 
   render() {
-    let value = this.tokens.getValue(this.get, this.modify);
-    return (<Host>{`${value}` || this.default}</Host>);
+    const value = this.tokens.getValue(this.get, this.modify)
+    return <Host>{value || this.default}</Host>
   }
-
 }

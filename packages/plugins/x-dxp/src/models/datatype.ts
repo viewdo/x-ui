@@ -4,5 +4,5 @@ export enum DataType {
   Boolean = 'Boolean',
   Object = 'Object',
   DateTime = 'DateTime',
-  Date = 'Date'
+  Date = 'Date',
 }

@@ -1,1 +1,1 @@
-[ ] Add doc search: https://docsearch.algolia.com/
+[ ] Add doc search: <https://docsearch.algolia.com/>

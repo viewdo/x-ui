@@ -1,13 +1,5 @@
-import { Element, Host, Component, Event, EventEmitter, Prop, State, h } from '@stencil/core';
-import {
-  EventAction,
-  DATA_TOPIC,
-  DATA_COMMANDS,
-  DataProviderRegistration,
-  CookieConsent,
-  CookieProvider,
-  evaluatePredicate,
-  IDataProvider } from '../..';
+import { Component, Element, Event, EventEmitter, h, Host, Prop, State } from '@stencil/core'
+import { CookieConsent, CookieProvider, DataProviderRegistration, DATA_COMMANDS, DATA_TOPIC, evaluatePredicate, EventAction, IDataProvider } from '../..'
 
 /**
  *  @system providers
@@ -18,22 +10,22 @@ import {
   shadow: true,
 })
 export class XDataProviderCookie {
-  private customProvider: IDataProvider;
-  @Element() el: HTMLXDataProviderCookieElement;
-  @State() hide = false;
+  private customProvider: IDataProvider
+  @Element() el: HTMLXDataProviderCookieElement
+  @State() hide = false
 
   /**
    * An expression that tells this component how to determine if
    * the user has previously consented.
    * @example {storage:consented}
    */
-  @Prop() hideWhen: string;
+  @Prop() hideWhen: string
 
   /**
    * When skipConsent is true, the accept-cookies banner will not
    * be displayed before accessing cookie-data.
    */
-  @Prop() skipConsent = false;
+  @Prop() skipConsent = false
 
   /**
    * This event is raised when the component obtains
@@ -46,7 +38,8 @@ export class XDataProviderCookie {
     bubbles: true,
     composed: true,
     cancelable: true,
-  }) register: EventEmitter<EventAction<DataProviderRegistration>>;
+  })
+  register: EventEmitter<EventAction<DataProviderRegistration>>
 
   /**
    * This event is raised when the consents to cookies.
@@ -56,15 +49,18 @@ export class XDataProviderCookie {
     bubbles: true,
     composed: true,
     cancelable: true,
-  }) didConsent: EventEmitter<CookieConsent>;
+  })
+  didConsent: EventEmitter<CookieConsent>
 
-  private consentKey = 'cookie-consent';
+  private get consentKey() {
+    return 'cookie-consent'
+  }
 
   async componentWillLoad() {
-    this.customProvider = new CookieProvider();
-    const consented = await this.customProvider.get(this.consentKey);
+    this.customProvider = new CookieProvider()
+    const consented = await this.customProvider.get(this.consentKey)
     if (consented) {
-      this.hide = true;
+      this.hide = true
       this.register.emit({
         topic: DATA_TOPIC,
         command: DATA_COMMANDS.RegisterDataProvider,
@@ -72,32 +68,34 @@ export class XDataProviderCookie {
           name: 'cookie',
           provider: this.customProvider,
         },
-      });
-      return;
+      })
+      return
     }
+
     if (this.hideWhen) {
-      this.hide = await evaluatePredicate(this.hideWhen);
+      this.hide = await evaluatePredicate(this.hideWhen)
     }
+
     if (this.skipConsent) {
-      this.hide = true;
+      this.hide = true
     }
   }
 
   componentDidLoad() {
-    const acceptElement = this.el.querySelector('[x-accept]');
-    acceptElement?.addEventListener('click', e => {
-      e.preventDefault();
-      this.handleConsentResponse(true);
-    });
+    const acceptElement = this.el.querySelector('[x-accept]')
+    acceptElement?.addEventListener('click', (e) => {
+      e.preventDefault()
+      this.handleConsentResponse(true)
+    })
 
-    const rejectElement = this.el.querySelector('[x-reject]');
-    rejectElement?.addEventListener('click', e => {
-      e.preventDefault();
-      this.handleConsentResponse(false);
-    });
+    const rejectElement = this.el.querySelector('[x-reject]')
+    rejectElement?.addEventListener('click', (e) => {
+      e.preventDefault()
+      this.handleConsentResponse(false)
+    })
   }
 
-  private handleConsentResponse(consented: boolean) {
+  private async handleConsentResponse(consented: boolean) {
     if (consented) {
       this.register.emit({
         topic: DATA_TOPIC,
@@ -106,11 +104,12 @@ export class XDataProviderCookie {
           name: 'cookie',
           provider: this.customProvider,
         },
-      });
-      this.customProvider.set(this.consentKey, 'true');
+      })
+      await this.customProvider.set(this.consentKey, 'true')
     }
-    this.didConsent.emit({ consented });
-    this.hide = true;
+
+    this.didConsent.emit({ consented })
+    this.hide = true
   }
 
   render() {
@@ -118,6 +117,6 @@ export class XDataProviderCookie {
       <Host hidden={this.hide}>
         <slot />
       </Host>
-    );
+    )
   }
 }

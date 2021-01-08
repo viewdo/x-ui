@@ -8,7 +8,7 @@ This store is long-lived from the same browser, but for very small data items. T
 
 Provider Key: '**cookie**'
 
- ```{cookie:(key)} ```
+ ```{cookie:(key)}```
 
 When included on the page, this component automatically shows a banner to collect consent from the user. You MUST supply clickable elements and decorate them with **x-accept** and **x-reject** attributes, respecting the the user's decision.
 

@@ -1,4 +1,3 @@
-
 export enum DisplayType {
   TextShort = 'TextShort',
   TextMedium = 'TextMedium',
@@ -19,5 +18,5 @@ export enum DisplayType {
   Email = 'Email',
   Checkbox = 'Checkbox',
   Cascading = 'CascadingOptions',
-  Unknown = 'Unknown'
+  Unknown = 'Unknown',
 }

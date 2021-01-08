@@ -1,37 +1,35 @@
-import { storageAvailable } from '../utils/browser-utils';
+import { storageAvailable } from '../utils/browser-utils'
 
-export function createScrollHistory(win: Window, applicationScrollKey: string = 'scrollPositions') {
-  let scrollPositions = new Map<string, [number, number]>();
+export function createScrollHistory(win: Window, appScrollKey = 'scrollPositions') {
+  let scrollPositions = new Map<string, [number, number]>()
 
   const set = (key: string, value: [number, number]) => {
-    scrollPositions.set(key, value);
+    scrollPositions.set(key, value)
     if (storageAvailable(win, 'sessionStorage')) {
-      const arrayData: [string, [number, number]][] = [];
+      const arrayData: Array<[string, [number, number]]> = []
 
       scrollPositions.forEach((v, k) => {
-        arrayData.push([k, v]);
-      });
-      win.sessionStorage.setItem('scrollPositions', JSON.stringify(arrayData));
+        arrayData.push([k, v])
+      })
+      win.sessionStorage.setItem('scrollPositions', JSON.stringify(arrayData))
     }
-  };
+  }
 
-  const get = (key: string) => scrollPositions.get(key);
+  const get = (key: string) => scrollPositions.get(key)
 
-  const has = (key: string) => scrollPositions.has(key);
+  const has = (key: string) => scrollPositions.has(key)
 
   const capture = (key: string) => {
-    set(key, [win.scrollX, win.scrollY]);
-  };
+    set(key, [win.scrollX, win.scrollY])
+  }
 
   if (storageAvailable(win, 'sessionStorage')) {
-    const scrollData = win.sessionStorage.getItem(applicationScrollKey);
-    scrollPositions = scrollData
-      ? new Map(JSON.parse(scrollData))
-      : scrollPositions;
+    const scrollData = win.sessionStorage.getItem(appScrollKey)
+    scrollPositions = scrollData ? new Map(JSON.parse(scrollData)) : scrollPositions
   }
 
   if ('scrollRestoration' in win?.history) {
-    window.history.scrollRestoration = 'manual';
+    window.history.scrollRestoration = 'manual'
   }
 
   return {
@@ -39,5 +37,5 @@ export function createScrollHistory(win: Window, applicationScrollKey: string = 
     get,
     has,
     capture,
-  };
+  }
 }

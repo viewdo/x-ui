@@ -1,6 +1,3 @@
 export class ApiResponse {
-  success: boolean;
+  success: boolean
 }
-
-
-

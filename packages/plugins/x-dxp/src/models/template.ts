@@ -1,3 +1,1 @@
-export interface Template {
-  [key: string]: string;
-}
+export type Template = Record<string, string>

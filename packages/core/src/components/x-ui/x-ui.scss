@@ -1,22 +1,12 @@
 :root {
   .hide,
-  [hidden] {
+  [hidden],
+  [x-cloak] {
     display: none;
-    visibility: hidden;
   }
 }
 
 :host {
-  /* Component styles go here */
   display: block;
-
-
-
 }
 
-:host([full-page]) {
-  display: flex;
-  flex-flow: column;
-  height: 100%;
-  overflow: auto;
-}

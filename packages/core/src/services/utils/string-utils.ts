@@ -4,11 +4,20 @@
  * @return {boolean}
  */
 export function toBoolean(value: string) {
-  if (!value) return false;
-  const stringResult = value.slice();
-  if (['false', 'no', 'off', '!'].includes(stringResult.toLocaleLowerCase().trim())) return false;
-  if (['true', 'yes', 'on'].includes(stringResult.toLocaleLowerCase().trim())) return true;
-  return value !== '';
+  if (!value) {
+    return false
+  }
+
+  const stringResult = value.slice()
+  if (['false', 'no', 'off', '!'].includes(stringResult.toLocaleLowerCase().trim())) {
+    return false
+  }
+
+  if (['true', 'yes', 'on'].includes(stringResult.toLocaleLowerCase().trim())) {
+    return true
+  }
+
+  return value !== ''
 }
 
 /**
@@ -20,5 +29,5 @@ export function toBoolean(value: string) {
  * @return {string}
  */
 export function kebabToCamelCase(kebabString: string) {
-  return kebabString.replace(/-./g, (x) => x[1].toUpperCase());
+  return kebabString.replace(/-./g, (x) => x[1].toUpperCase())
 }

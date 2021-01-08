@@ -1,11 +1,4 @@
 {
-  "exclude": [
-    "**/node_modules/**",
-    "**/dist/**",
-    "**/www/**",
-    ".scratch/**",
-    "**/__mocks__/**"
-  ],
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "allowUnreachableCode": false,
@@ -21,6 +14,13 @@
     "jsxFactory": "h",
     "preserveConstEnums": true,
     "resolveJsonModule": true,
-    "stripInternal": true
-  }
+    "stripInternal": true,
+    "strict": true
+  },
+  "exclude": [
+    "./packages/**/*.spec.ts?x",
+    "./packages/**/*.e2e.ts?x",
+    "__mocks__",
+    "test"
+  ]
 }

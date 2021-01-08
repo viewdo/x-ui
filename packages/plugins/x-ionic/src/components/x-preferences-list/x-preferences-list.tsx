@@ -1,4 +1,4 @@
-import { Component, h } from '@stencil/core';
+import { Component, h } from '@stencil/core'
 
 @Component({
   tag: 'x-preferences-list',
@@ -22,6 +22,6 @@ export class PreferencesList {
           <x-autoplay-toggle></x-autoplay-toggle>
         </ion-item>
       </ion-list>
-    );
+    )
   }
 }

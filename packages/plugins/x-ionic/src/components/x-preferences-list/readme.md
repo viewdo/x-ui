@@ -17,6 +17,7 @@
 - [x-autoplay-toggle](../x-autoplay-toggle)
 
 ### Graph
+
 ```mermaid
 graph TD;
   x-preferences-list --> ion-list

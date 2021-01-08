@@ -3,8 +3,8 @@
  * @param {number} ms time in milliseconds to wait
  * @return {void}
  */
-export function sleep(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+export async function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
 /**
@@ -17,12 +17,13 @@ export function sleep(ms: number) {
  * @param {(t: T) => Promise<boolean>} predicate
  * @return {*}  {(Promise<T | undefined>)}
  */
-export async function findAsyncSequential<T>(array: T[], predicate: (t: T) => Promise<boolean>): Promise<T | undefined> {
+export async function findAsyncSequential<T>(array: T[], predicate: (t: T) => Promise<boolean>): Promise<T | null> {
   for (const t of array) {
     // eslint-disable-next-line no-await-in-loop
     if (await predicate(t)) {
-      return t;
+      return t
     }
   }
-  return null;
+
+  return null
 }

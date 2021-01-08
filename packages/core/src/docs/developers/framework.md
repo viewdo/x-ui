@@ -1,6 +1,7 @@
 ## Framework integrations 👨‍💻
 
 ### Angular
+
 Using `x-ui` elementswithin an Angular project:
 
 #### Including the Custom Elements Schema
@@ -51,6 +52,7 @@ defineXui(window);
 - Specific Wrapper
 
 When using a wrapper component, It's not necessary to access the reference directly to attach events, etc. More details [here](./react/README.md).
+
 ```tsx
 
 
@@ -70,7 +72,8 @@ export default App;
 
 - Web Component
 
-Other option is using the web component directly: 
+Other option is using the web component directly:
+
 ```tsx
 import React from 'react'
 import ReactDOM from 'react-dom'
@@ -110,7 +113,9 @@ new Vue({
 ### Stencil
 
 To animate [Functional Components](https://stenciljs.com/docs/functional-components) you can use the `createx-uiComponent` utility, e.g:
+
 - `utils.tsx`
+
 ```tsx
 import {
   createx-uiComponent
@@ -137,7 +142,9 @@ export const optionsSendMessage: KeyframeAnimationOptions = {
   easing: 'ease-in-out'
 };
 ```
+
 - `my-component.tsx`
+
 ```tsx
 import { Component, Host, h } from '@stencil/core';
 import { x-uiSendMessageButton, keyFramesSendMessage, optionsSendMessage } from './utils'

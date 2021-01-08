@@ -1,6 +1,6 @@
 # X-AUDIO-LOAD-MUSIC
 
-This component declares audio used within this **`<x-view-do>`** route. The **`<x-audio-music-load>`** represents audio files and play behaviors. They are all sent to the global-audio player to pre-load or play when the route is active. The player manages them according to their settings. 
+This component declares audio used within this **`<x-view-do>`** route. The **`<x-audio-music-load>`** represents audio files and play behaviors. They are all sent to the global-audio player to pre-load or play when the route is active. The player manages them according to their settings.
 
 ## Usage
 
@@ -42,18 +42,20 @@ This component declares audio used within this **`<x-view-do>`** route. The **`<
 </x-view-do>
 ````
 
-#### Mode:
+#### Mode
+
 - **queue**: (default) plays after the previous audio is complete or when it's requested.
 - **play**: stop any playing audio and play now, buffering be-damned.
 - **wait**: wait for an event action before playing, any currently playing audio continues.
 
-#### Discard:
+#### Discard
+
 - video: when any video plays (default for sound)
 - state: state changes
 - event: wait for a stop event (or any other activation)
 - none: loop until stopped or updated by new state (default for music)
 
-#### Track:
+#### Track
 
 If audio has replay set to true, re-entry to the originating state will re-activate the audio if the previous audio has been deactivated. The default is false.
 
@@ -62,14 +64,14 @@ If audio has replay set to true, re-entry to the originating state will re-activ
 
 ## Properties
 
-| Property           | Attribute  | Description                                                                                                 | Type                                                                    | Default                 |
-| ------------------ | ---------- | ----------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------- |
-| `discard`          | `discard`  | The discard strategy the player should use for this file.                                                   | `DiscardStrategy.Next \| DiscardStrategy.None \| DiscardStrategy.Route` | `DiscardStrategy.Route` |
-| `loop`             | `loop`     | Set this to true to have the audio file loop.                                                               | `boolean`                                                               | `false`                 |
-| `mode`             | `mode`     | This is the topic this action-command is targeting.                                                         | `LoadStrategy.Load \| LoadStrategy.Play \| LoadStrategy.Queue`          | `LoadStrategy.Queue`    |
-| `src` _(required)_ | `src`      | The path to the audio-file.                                                                                 | `string`                                                                | `undefined`             |
-| `track`            | `track`    | Set this attribute to have the audio file tracked in session effectively preventing it from playing again.. | `boolean`                                                               | `false`                 |
-| `trackId`          | `track-id` | The identifier for this music track                                                                         | `string`                                                                | `undefined`             |
+| Property               | Attribute  | Description                                                                                                 | Type                                                                    | Default                 |
+| ---------------------- | ---------- | ----------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------- |
+| `discard`              | `discard`  | The discard strategy the player should use for this file.                                                   | `DiscardStrategy.Next \| DiscardStrategy.None \| DiscardStrategy.Route` | `DiscardStrategy.Route` |
+| `loop`                 | `loop`     | Set this to true to have the audio file loop.                                                               | `boolean`                                                               | `false`                 |
+| `mode`                 | `mode`     | This is the topic this action-command is targeting.                                                         | `LoadStrategy.Load \| LoadStrategy.Play \| LoadStrategy.Queue`          | `LoadStrategy.Queue`    |
+| `src` _(required)_     | `src`      | The path to the audio-file.                                                                                 | `string`                                                                | `undefined`             |
+| `track`                | `track`    | Set this attribute to have the audio file tracked in session effectively preventing it from playing again.. | `boolean`                                                               | `false`                 |
+| `trackId` _(required)_ | `track-id` | The identifier for this music track                                                                         | `string`                                                                | `undefined`             |
 
 
 ----------------------------------------------

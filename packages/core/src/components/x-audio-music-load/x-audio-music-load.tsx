@@ -1,11 +1,5 @@
-import { Component, Element, h, Host, Prop } from '@stencil/core';
-import {
-  actionBus,
-  AudioType,
-  AUDIO_TOPIC,
-  DiscardStrategy,
-  LoadStrategy
-} from '../..';
+import { Component, Element, h, Host, Prop } from '@stencil/core'
+import { actionBus, AudioType, AUDIO_TOPIC, DiscardStrategy, LoadStrategy } from '../..'
 
 /**
  *
@@ -16,42 +10,40 @@ import {
   shadow: true,
 })
 export class XAudioMusicLoad {
-  @Element() el: HTMLXAudioMusicLoadElement;
+  @Element() el!: HTMLXAudioMusicLoadElement
 
   /**
-  * The path to the audio-file.
-  * @required
-  */
-  @Prop() src!: string;
+   * The path to the audio-file.
+   * @required
+   */
+  @Prop() src!: string
 
   /**
-  * The identifier for this music track
-  */
-  @Prop() trackId: string;
+   * The identifier for this music track
+   */
+  @Prop() trackId!: string
 
   /**
-  * This is the topic this action-command is targeting.
-  */
-  @Prop() mode: LoadStrategy = LoadStrategy.Queue;
+   * This is the topic this action-command is targeting.
+   */
+  @Prop() mode: LoadStrategy = LoadStrategy.Queue
 
   /**
-  * The discard strategy the player should use for this file.
-  */
-  @Prop() discard: DiscardStrategy = DiscardStrategy.Route;
-
-
+   * The discard strategy the player should use for this file.
+   */
+  @Prop() discard: DiscardStrategy = DiscardStrategy.Route
 
   /**
-  * Set this to true to have the audio file loop.
-  */
-  @Prop() loop: boolean = false;
+   * Set this to true to have the audio file loop.
+   */
+  @Prop() loop = false
 
   /**
-  * Set this attribute to have the audio file tracked
-  * in session effectively preventing it from playing
-  * again..
-  */
-  @Prop() track: boolean = false;
+   * Set this attribute to have the audio file tracked
+   * in session effectively preventing it from playing
+   * again..
+   */
+  @Prop() track = false
 
   private getAction() {
     return {
@@ -66,18 +58,14 @@ export class XAudioMusicLoad {
         type: AudioType.Music,
         mode: this.mode,
       },
-    };
+    }
   }
 
   componentDidLoad() {
-    actionBus.emit(AUDIO_TOPIC, this.getAction());
+    actionBus.emit(AUDIO_TOPIC, this.getAction())
   }
-
 
   render() {
-    return (
-      <Host hidden></Host>
-    );
+    return <Host hidden></Host>
   }
-
 }

@@ -5,12 +5,14 @@
 The Interface Provider listens for actions sent through the action-bus and performs those commands.
 
 ## Built-in Provider
+
 The built-in providers provides basic functionality by handling the following commands:
 
 
 
 
 ## Custom Interface Provider
+
 You can extend this system by adding your own provider, using a Register Interface Provider Event Action.
 
 The system listens for custom events in the action topic: **interface**
@@ -59,7 +61,8 @@ class InterfaceState {
 ````
 
 ### On Changed Event
-To notify the system that the underlying ui-data has changed, the interface includes a simple event emitter with the name of the property that changed: theme, muted, or autoplay 
+
+To notify the system that the underlying ui-data has changed, the interface includes a simple event emitter with the name of the property that changed: theme, muted, or autoplay
 
 
 ### Sample Registrations
@@ -71,7 +74,8 @@ To notify the system that the underlying ui-data has changed, the interface incl
 
 ````
 
-#### Native JS 
+#### Native JS
+
 All that is needed by the data-system is a custom event with an instance of your provider in the details.data.provider property. *Note: be sure the event is composed, so it can reach shadow-dom listeners.*
 
 ````javascript

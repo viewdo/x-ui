@@ -1,3 +1,3 @@
 export class Attributes {
-  [key: string]: string;
+  [key: string]: string
 }

@@ -16,7 +16,7 @@
 
 ### Used by
 
- - [x-preferences-list](../x-preferences-list)
+- [x-preferences-list](../x-preferences-list)
 
 ### Depends on
 
@@ -25,6 +25,7 @@
 - ion-toggle
 
 ### Graph
+
 ```mermaid
 graph TD;
   x-autoplay-toggle --> ion-buttons

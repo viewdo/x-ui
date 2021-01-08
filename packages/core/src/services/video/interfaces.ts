@@ -1,4 +1,4 @@
-export const VIDEO_TOPIC ='video';
+export const VIDEO_TOPIC = 'video'
 
 export enum VIDEO_COMMANDS {
   Play = 'play',
@@ -13,9 +13,9 @@ export enum VIDEO_EVENTS {
   Resumed = 'resumed',
   Muted = 'muted',
   Unmuted = 'muted',
-  Ended = 'ended'
+  Ended = 'ended',
 }
 
 export class VideoRequest {
-  value: any;
+  value: any
 }

@@ -1,7 +1,7 @@
-{
-  "*.{ts,tsx,js,jsx}": [
+module.exports =  {
+  "*.{ts,tsx}": [
     "prettier --write",
-    "eslint '**/src/**/*{.ts,.tsx,.js,.jsx}' --fix",
+    "xo --fix",
     "git add"
   ],
   "*.json": [

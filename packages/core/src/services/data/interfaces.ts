@@ -1,45 +1,43 @@
 /* istanbul ignore file */
 
-import { EventEmitter } from '../actions/event-emitter';
+import { EventEmitter } from '../actions/event-emitter'
 
 export interface IDataProvider {
-  get(key: string): Promise<string>;
-  set(key: string, value: string): Promise<void>;
   changed: EventEmitter
+  get(key: string): Promise<string | null>
+  set(key: string, value: string): Promise<void>
 }
 
-export type ExpressionContext = {
-  [key: string]: any;
-};
+export type ExpressionContext = Record<string, any>
 
-export const DATA_TOPIC = 'data';
+export const DATA_TOPIC = 'data'
 
 export enum DATA_PROVIDER {
   SESSION = 'session',
   STORAGE = 'storage',
-  COOKIE = 'cookie'
+  COOKIE = 'cookie',
 }
 
 export enum DATA_COMMANDS {
   RegisterDataProvider = 'register-provider',
-  SetData = 'set-data'
+  SetData = 'set-data',
 }
 
 export enum DATA_EVENTS {
   CookieConsentResponse = 'cookie-consent',
-  DataChanged = 'data-changed'
+  DataChanged = 'data-changed',
 }
 
 export type DataProviderRegistration = {
-  name: string;
+  name: string
   provider: IDataProvider
-};
+}
 
 export type SetData = {
-  provider: string;
-  values: { [index: string]: any }
-};
+  provider: string
+  values: Record<string, any>
+}
 
 export type CookieConsent = {
   consented: boolean
-};
+}

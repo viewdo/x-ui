@@ -7,7 +7,7 @@ This component fetches remote HTML as defined in the src attribute and renders i
 </x-include>
 ````
 
-### Delayed Rendering
+## Delayed Rendering
 
 When using this component, you may want to delay the fetch until the content is needed. The **no-render** attribute will prevent the HTML from being fetched until that attribute is removed.
 
@@ -23,7 +23,7 @@ const include = document.querySelector("#include);
 include.removeAttribute('no-render');
 ````
 
-Or, just include it in one of the components **\<x-view\>** or  **\<x-view-do\>**. These components remove any 'no-render' attributes on child elements once their route is activated, giving us lazy-loaded routes with this component.
+Or, just include it in one of the components [**`<x-view>`**](/components/x-view) or  [**`<x-view-do>`**](/components/x-view-do). These components remove any **no-render** attributes on child elements once their route is activated, giving us lazy-loaded routes with this component.
 
 
 <!-- Auto Generated Below -->

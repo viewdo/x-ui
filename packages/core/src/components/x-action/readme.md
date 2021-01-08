@@ -6,7 +6,7 @@ This element holds the data that __is__ the Event Action submitted to the [Actio
 
 This element should only ever exists within a parent **`<x-action-activator>`** tag. The parent tag defines how and when the child actions are submitted to the [Action Bus](/actions).
 
-#### In-Attribute Data
+### In-Attribute Data
 
 ````html
 <x-action-activator ...>

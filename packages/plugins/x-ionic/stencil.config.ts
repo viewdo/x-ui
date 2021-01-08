@@ -1,11 +1,9 @@
-import { Config } from '@stencil/core';
-import { sass } from '@stencil/sass';
+import { Config } from '@stencil/core'
+import { sass } from '@stencil/sass'
 
 export const config: Config = {
   namespace: 'x-ionic',
-  plugins: [
-    sass(),
-  ],
+  plugins: [sass()],
   outputTargets: [
     {
       type: 'dist',
@@ -19,15 +17,13 @@ export const config: Config = {
     },
     {
       type: 'docs-json',
-      file: `../../../www/data/x-ionic-components.json`,
+      file: '../../../www/data/x-ionic-components.json',
     },
     {
       type: 'www',
       buildDir: 'x-ionic',
-      serviceWorker: null, // disable service workers
-      copy: [
-        { src: '**/*.md' },
-      ],
+      serviceWorker: null, // Disable service workers
+      copy: [{ src: '**/*.md' }],
     },
   ],
-};
+}

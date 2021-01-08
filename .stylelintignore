@@ -2,3 +2,6 @@ dist
 docs
 ig-*
 *.md
+www
+dist
+.scratch

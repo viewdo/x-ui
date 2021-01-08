@@ -1,8 +1,7 @@
-import { DataTree } from './datatree';
-import { DataType } from './datatype';
-import { DisplayType } from './displaytype';
-import { OptionItem } from './optionitem';
-
+import { DataTree } from './datatree'
+import { DataType } from './datatype'
+import { DisplayType } from './displaytype'
+import { OptionItem } from './optionitem'
 
 export class DataPoint {
   constructor(dataPoint: any) {
@@ -50,7 +49,7 @@ export class DataPoint {
   /**
    * If the display-type is Options, these are the list of values the user will select from.
    */
-  public options?: Array<OptionItem>
+  public options?: OptionItem[]
 
   /**
    * An object that describes a set of cascading options.
@@ -62,12 +61,11 @@ export class DataPoint {
    * An whose name and values are assigned to the underlying HTML input.
    *
    */
-  public attributes?: { [Key:string] : string}
+  public attributes?: Record<string, string>
 
   /**
    * This is the default value if no other value is input.
    *
    */
   public value?: string | boolean | number
-
 }

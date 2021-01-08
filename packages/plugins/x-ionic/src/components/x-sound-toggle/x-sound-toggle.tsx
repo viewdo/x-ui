@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop } from '@stencil/core';
+import { Component, Host, h, Prop } from '@stencil/core'
 
 @Component({
   tag: 'x-sound-toggle',
@@ -9,14 +9,14 @@ export class ThemeToggle {
   /**
    *
    */
-  @Prop() muted: boolean;
+  @Prop() muted: boolean
 
   componentDidLoad() {
-    // this.muted = state.muted;
+    // This.muted = state.muted;
   }
 
   private toggleSound(_muted: boolean) {
-    // state.muted = muted;
+    // State.muted = muted;
   }
 
   render() {
@@ -26,11 +26,13 @@ export class ThemeToggle {
           <ion-icon name="volume-mute-outline"></ion-icon>
           <ion-toggle
             checked={!this.muted}
-            onIonChange={(e) => this.toggleSound(e.detail.checked)}>
-          </ion-toggle>
+            onIonChange={(e) => {
+              this.toggleSound(e.detail.checked)
+            }}
+          ></ion-toggle>
           <ion-icon name="volume-medium-outline"></ion-icon>
         </ion-buttons>
       </Host>
-    );
+    )
   }
 }

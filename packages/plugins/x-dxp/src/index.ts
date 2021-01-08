@@ -1,3 +1,3 @@
-export * from './services';
-export * from './models';
-export { Components, JSX } from './components';
+export { Components, JSX } from './components.d'
+export * from './models'
+export * from './services'

@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-export const AUDIO_TOPIC = 'audio';
+export const AUDIO_TOPIC = 'audio'
 
 export enum AUDIO_COMMANDS {
   Play = 'play',

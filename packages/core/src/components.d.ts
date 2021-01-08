@@ -57,7 +57,7 @@ export namespace Components {
         /**
           * The command to execute.
          */
-        "command": 'start'|'pause'|'resume'|'mute'|'volume'|'seek';
+        "command": 'start' | 'pause' | 'resume' | 'mute' | 'volume' | 'seek';
         /**
           * Get the underlying actionEvent instance. Used by the x-action-activator element.
          */
@@ -69,7 +69,7 @@ export namespace Components {
         /**
           * The value payload for the command.
          */
-        "value": string|boolean|number;
+        "value"?: string | boolean | number;
     }
     interface XAudioMusicLoad {
         /**
@@ -177,7 +177,7 @@ export namespace Components {
          */
         "debug": boolean;
         /**
-          * The JSONata query to filter the json items see https://try.jsonata.org/ for more info.
+          * The JSONata query to filter the json items see <https://try.jsonata.org> for more info.
          */
         "filter"?: string;
         /**
@@ -246,15 +246,11 @@ export namespace Components {
         /**
           * This is the application / site title. If the views or dos have titles, this is added as a suffix.
          */
-        "appTitle": string;
+        "appTitle"?: string;
         /**
           * Turn on debugging to get helpful messages from the routing, data and action systems.
          */
         "debug": boolean;
-        /**
-          * Set this to false if you don't want the UI component to take up the full page size.   *
-         */
-        "fullPage": boolean;
         /**
           * Browser (paths) or Hash (#) routing. To support browser history, the HTTP server must be setup for a PWA
          */
@@ -278,7 +274,7 @@ export namespace Components {
         /**
           * Navigation transition between routes. This is a CSS animation class.
          */
-        "transition": string;
+        "transition"?: string;
     }
     interface XUse {
         /**
@@ -293,6 +289,13 @@ export namespace Components {
           * Declare the script only for use when modules aren't supported
          */
         "noModule": boolean;
+        /**
+          * If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.
+         */
+        "noRender": boolean;
+        /**
+          * INTERNAL - disables the DOM onload await to finish rendering
+         */
         "nowait": boolean;
         /**
           * The script file to reference.
@@ -555,7 +558,7 @@ declare namespace LocalJSX {
         /**
           * The command to execute.
          */
-        "command"?: 'start'|'pause'|'resume'|'mute'|'volume'|'seek';
+        "command": 'start' | 'pause' | 'resume' | 'mute' | 'volume' | 'seek';
         /**
           * The track to target.
          */
@@ -563,7 +566,7 @@ declare namespace LocalJSX {
         /**
           * The value payload for the command.
          */
-        "value"?: string|boolean|number;
+        "value"?: string | boolean | number;
     }
     interface XAudioMusicLoad {
         /**
@@ -590,7 +593,7 @@ declare namespace LocalJSX {
         /**
           * The identifier for this music track
          */
-        "trackId"?: string;
+        "trackId": string;
     }
     interface XAudioPlayer {
         /**
@@ -675,7 +678,7 @@ declare namespace LocalJSX {
          */
         "debug"?: boolean;
         /**
-          * The JSONata query to filter the json items see https://try.jsonata.org/ for more info.
+          * The JSONata query to filter the json items see <https://try.jsonata.org> for more info.
          */
         "filter"?: string;
         /**
@@ -750,21 +753,17 @@ declare namespace LocalJSX {
          */
         "debug"?: boolean;
         /**
-          * Set this to false if you don't want the UI component to take up the full page size.   *
-         */
-        "fullPage"?: boolean;
-        /**
           * Browser (paths) or Hash (#) routing. To support browser history, the HTTP server must be setup for a PWA
          */
         "mode"?: HistoryType;
         /**
-          * Listen for actionBus events.
+          * These events are **`<x-ui/>`** command-requests for action handlers to perform tasks. Any handles should cancel the event.
          */
-        "onActions"?: (event: CustomEvent<any>) => void;
+        "onX:actions"?: (event: CustomEvent<any>) => void;
         /**
-          * Listen for eventBus events.
+          * Listen for events that occurred within the **`<x-ui/>`** system.
          */
-        "onEvents"?: (event: CustomEvent<any>) => void;
+        "onX:events"?: (event: CustomEvent<any>) => void;
         /**
           * This is the root path that the actual page is, if it isn't '/', then the router needs to know where to begin creating paths.
          */
@@ -772,7 +771,7 @@ declare namespace LocalJSX {
         /**
           * This is the router service instantiated with this component.
          */
-        "router"?: RouterService;
+        "router": RouterService;
         /**
           * Header height or offset for scroll-top on this and all views.
          */
@@ -799,6 +798,13 @@ declare namespace LocalJSX {
           * Declare the script only for use when modules aren't supported
          */
         "noModule"?: boolean;
+        /**
+          * If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.
+         */
+        "noRender"?: boolean;
+        /**
+          * INTERNAL - disables the DOM onload await to finish rendering
+         */
         "nowait"?: boolean;
         /**
           * The script file to reference.

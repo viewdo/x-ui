@@ -1,21 +1,21 @@
 /* istanbul ignore file */
 
-import { OnChangeHandler } from '@stencil/store/dist/types';
+import { OnChangeHandler } from '@stencil/store/dist/types'
 
 export class InterfaceState {
-  theme: 'light' | 'dark' | string;
-  muted: boolean;
-  autoplay: boolean;
+  theme?: 'light' | 'dark' | string
+  muted!: boolean
+  autoplay!: boolean
 }
 
 export type InterfaceProvider = {
-  setTheme(theme: 'dark'| 'light'): void;
-  setAutoPlay(autoPlay: boolean): void;
-  setMute(muted: boolean): void;
   onChange: OnChangeHandler<InterfaceState>
-};
+  setTheme(theme: 'dark' | 'light'): void
+  setAutoPlay(autoPlay: boolean): void
+  setMute(muted: boolean): void
+}
 
-export const INTERFACE_TOPIC = 'interface';
+export const INTERFACE_TOPIC = 'interface'
 
 export enum INTERFACE_COMMANDS {
   RegisterProvider = 'register-provider',
@@ -32,18 +32,16 @@ export enum INTERFACE_COMMANDS {
   ElementRemoveClasses = 'element-remove-classes',
   ElementSetAttribute = 'element-set-attribute',
   ElementRemoveAttribute = 'element-remove-attribute',
-  ElementCallMethod = 'element-call-method'
+  ElementCallMethod = 'element-call-method',
 }
 
 export enum INTERFACE_EVENTS {
   ThemeChanged = 'theme',
   AutoPlayChanged = 'autoplay',
-  SoundChanged = 'muted'
+  SoundChanged = 'muted',
 }
 
 export type InterfaceProviderRegistration = {
-  name: string;
+  name: string
   provider: InterfaceProvider
-};
-
-
+}

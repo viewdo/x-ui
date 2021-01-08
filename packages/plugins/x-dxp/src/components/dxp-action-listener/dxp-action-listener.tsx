@@ -1,36 +1,35 @@
-/* eslint-disable @stencil/own-methods-must-be-private */
-/* eslint-disable @stencil/own-props-must-be-private */
-
-import { Element, Component, h, Prop } from '@stencil/core';
-import { Experience, onChange, state, EventEmitter as Emitter } from '../..';
+import { Component, Element, h, Prop } from '@stencil/core'
+import { EventEmitter as Emitter, Experience, onChange, state } from '../..'
 
 @Component({
   tag: 'dxp-action-listener',
   shadow: true,
 })
 export class DxpActionListener {
-  @Element() el: HTMLDxpActionListenerElement;
-  private experience: Experience;
+  changed!: Emitter
+  @Element() el!: HTMLDxpActionListenerElement
+  private experience?: Experience
 
   /**
    * When debug is true, a reactive table of values is displayed.
    */
-  @Prop() debug = false;
+  @Prop() debug = false
 
   /**
    *Customize the name used for this sample data provider.
    */
-  @Prop() name = 'dxp';
+  @Prop() name = 'dxp'
 
   async componentWillLoad() {
-    this.changed = new Emitter();
+    this.changed = new Emitter()
     if (state.experience) {
-      this.experience = state.experience;
+      this.experience = state.experience
     }
-    onChange('experience', e => {
-      this.experience = e;
-      this.changed.emit('data-changed');
-    });
+
+    onChange('experience', (e) => {
+      this.experience = e
+      this.changed.emit('data-changed')
+    })
   }
 
   componentDidLoad() {
@@ -42,23 +41,20 @@ export class DxpActionListener {
           name: this.name,
           provider: this,
         },
-      }
+      },
     })
-    this.el.parentElement.closest('x-ui')?.dispatchEvent(registerAction);
+    this.el.parentElement?.closest('x-ui')?.dispatchEvent(registerAction)
   }
 
-  changed: Emitter;
-
   async get(key: string): Promise<string> {
-    return this.experience.data[key] as string;
+    return this.experience?.data[key] as string
   }
 
   async set(key: string, value: any) {
-    await this.experience.setData(key, value);
+    await this.experience?.setData(key, value)
   }
 
   render() {
-    return (<slot></slot>);
+    return <slot></slot>
   }
-
 }

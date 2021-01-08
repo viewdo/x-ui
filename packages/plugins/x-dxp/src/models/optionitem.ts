@@ -1,4 +1,3 @@
-
 export class OptionItem {
   /** Option value  */
 

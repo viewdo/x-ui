@@ -8,47 +8,17 @@
     <meta http-equiv="x-ua-compatible"                  content="IE=Edge">
     <meta name="description"                            content="New web components to put some do in your view">
     <meta name="og:title"                               content="" />
-    <meta name="og:description"                         content="" />
+    <meta name="og:description"                         content="New web components to put some do in your view" />
     <meta name="og:image"                               content="" />
-    <meta name="format-detection"                       content="telephone=no"/>
     <meta name="msapplication-tap-highlight"            content="no"/>
     <meta name="apple-mobile-web-app-capable"           content="yes"/>
-    <meta name="apple-mobile-web-app-title"             content="View.DO Experience Player"/>
+    <meta name="apple-mobile-web-app-title"             content="New web components to put some do in your view"/>
     <meta name="apple-mobile-web-app-status-bar-style"  content="black"/>
     <meta name="theme-color"                            content="#16161d"/>
 
-    <!-- Bootstrap   -->
-    <script async src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
-      media="print" onload="this.media='all'"/>
-    <link rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
-      media="print" onload="this.media='all'"/>
-
-    <!-- Page Styles -->
-    <link rel="icon" type="image/ico"
-      href="https://storage.googleapis.com/viewdo-static/view-do/fav-touch-icons/storyplayer/favicon.ico"/>
-    <link rel="stylesheet"
-      href="/docs/assets/styles.css"
-      media="print" onload="this.media='all'"/>
-
-    <!-- Default theme. ~960B -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@vime/core@^5/themes/default.css"
-      />
-    <!-- Library and all of its components are lazy loaded, so nothing to sweat about here. ~3kB -->
-    <script type="module"
-      src="https://cdn.jsdelivr.net/npm/@vime/core@^5/dist/vime/vime.esm.js"
-      ></script>
-
-    <!-- Experience UI -->
-    <script type="module" src="/x-ui/x-ui.esm.js"></script>
-    <link rel="stylesheet"
-      href="/x-ui/x-ui.css"/>
-
-    <link rel="preload" as="script" crossorigin="anonymous" href="/x-ui/x-data-repeat.entry.js" />
+    <link rel="preconnect" href="https://static.view.do" />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
     <link rel="preload" as="script" crossorigin="anonymous" href="/x-ui/x-ui.entry.js" />
     <link rel="preload" as="script" crossorigin="anonymous" href="/x-ui/x-include.entry.js" />
     <link rel="preload" as="script" crossorigin="anonymous" href="/x-ui/x-use.entry.js" />
@@ -57,9 +27,14 @@
     <link rel="preload" as="script" crossorigin="anonymous" href="/x-ui/x-link.entry.js" />
     <link rel="preload" as="script" crossorigin="anonymous" href="/x-ui/x-data-repeat.entry.js" />
     <link rel="preload" as="script" crossorigin="anonymous" href="/x-ui/x-data-display.entry.js" />
-    <link rel="preload" as="script" crossorigin="anonymous" href="/x-ui/x-audio-player.entry.js" />
-    <link rel="preload" as="script" crossorigin="anonymous" href="/x-ui/x-action.entry.js" />
-    <link rel="preload" as="script" crossorigin="anonymous" href="/x-ui/x-action-activator.entry.js" />
+
+    <link rel="icon" type="image/ico"
+      href="/docs/assets/favicon.ico"/>
+
+
+    <!-- Experience UI -->
+    <script async type="module" src="/x-ui/x-ui.esm.js"></script>
+
 
     <!-- Animate.css -->
     <link rel="stylesheet"
@@ -67,8 +42,36 @@
       media="print" onload="this.media='all'"
       />
 
-    <!-- Markdown -->
-    <script async src="https://cdn.jsdelivr.net/gh/markedjs/marked@1/marked.min.js"></script>
+    <link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+      media="print" onload="this.media='all'"/>
+
+    <!-- Page Styles -->
+    <style>
+      html {
+        --primary: #620686;
+        --primary-shadow: #5f45a7;
+        --text-color: #000;
+        --content-max-width: 1100px;
+      }
+      body, x-ui {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+      }
+      *[x-cloak] { visibility: hidden; }
+    </style>
+    <link rel="stylesheet"
+      href="/docs/assets/styles.css"
+      media="print" onload="this.media='all'"/>
+
+    <!-- Bootstrap   -->
+    <script async src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+      media="print" onload="this.media='all'"/>
 
   </head>
 
@@ -100,8 +103,7 @@
           </div>
           <x-include src="/docs/header.html"></x-include>
           <div>
-            <x-audio-player title="Audio" display debug>
-            </x-audio-player>
+
             <a href="https://github.com/viewdo/x-ui"
               title="Check out the source on GitHub"
               target="_blank" rel="noopener">
@@ -110,7 +112,7 @@
             <x-data-display
               data-intro="Click this to see a <b>x-view-do</b> component in action. It creates a special sub-route with automated navigation. It's conditioned using data expressions. <br/><br/> Check out the <a href='documentation/components/x-view-do'>documentation</a> to see what else you can do.">
               <template>
-                <x-link href="/home/name"
+                <x-link href="/home/name" anchor-title="Your profile"
                   title="{storage:name}">
                   <i class="ri-user-5-line fs-2"></i>
                 </x-link>
@@ -141,7 +143,7 @@
       <x-view url="start"
         page-title="Get Started"
         content-src="/docs/start/index.html">
-
+        <x-use script-src="https://cdn.jsdelivr.net/gh/markedjs/marked@1/marked.min.js"></x-use>
         <x-view-do url="select"
           when="!{storage:installed}"
           page-title="Select Installation"
@@ -178,7 +180,7 @@
         page-title="Static Routing"
         content-src="/docs/routing/index.html"
         transition="animate__animated animate__fadeIn">
-
+        <x-use script-src="https://cdn.jsdelivr.net/gh/markedjs/marked@1/marked.min.js"></x-use>
         <x-view url="navigation"
           page-title="Navigation System"
           content-src="/docs/routing/navigation.html">
@@ -215,6 +217,7 @@
       <x-view url="content"
         page-title="Dynamic Content"
         content-src="/docs/content/index.html">
+        <x-use script-src="https://cdn.jsdelivr.net/gh/markedjs/marked@1/marked.min.js"></x-use>
         <x-view url="include"
           page-title="Remote HTML"
           content-src="/docs/content/include.html">
@@ -236,7 +239,7 @@
       <x-view url="presentations"
         page-title="Guided Routing"
         content-src="/docs/presentations/index.html">
-
+        <x-use script-src="https://cdn.jsdelivr.net/gh/markedjs/marked@1/marked.min.js"></x-use>
         <x-view url="/guided"
           page-title="Guided Navigation"
           content-src="/docs/presentations/guided.html">
@@ -427,6 +430,7 @@
       <x-view url="use-data"
         page-title="Data System"
         content-src="/docs/data/index.html">
+        <x-use script-src="https://cdn.jsdelivr.net/gh/markedjs/marked@1/marked.min.js"></x-use>
         <x-view url="expressions"
           page-title="Data Expressions"
           content-src="/docs/data/expressions.html">
@@ -461,7 +465,7 @@
       <x-view url="actions"
         page-title="Action"
         content-src="/docs/actions/index.html">
-
+        <x-use script-src="https://cdn.jsdelivr.net/gh/markedjs/marked@1/marked.min.js"></x-use>
         <x-view-do url="events"
           visit="optional"
           content-src="/docs/actions/events.html">
@@ -498,6 +502,8 @@
       <x-view url="audio"
         page-title="Audio Systems"
         content-src="/docs/audio/index.html">
+        <x-use script-src="https://cdn.jsdelivr.net/gh/markedjs/marked@1/marked.min.js"></x-use>
+        <x-audio-player title="Audio"></x-audio-player>
         <x-view-do url="/music" page-title="Music"
           visit="optional"
           content-src="/docs/audio/music.html">
@@ -519,11 +525,13 @@
       <x-view url="animations"
         page-title="Animations"
         content-src="/docs/animations/index.html">
+        <x-use script-src="https://cdn.jsdelivr.net/gh/markedjs/marked@1/marked.min.js"></x-use>
       </x-view>
 
       <x-view url="components/:component"
         page-title="Component: <{route:component}>"
         content-src="/docs/components/index.html">
+        <x-use script-src="https://cdn.jsdelivr.net/gh/markedjs/marked@1/marked.min.js"></x-use>
       </x-view>
 
       <!-- Not Found Route -->

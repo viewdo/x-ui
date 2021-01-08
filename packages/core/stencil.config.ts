@@ -1,7 +1,7 @@
 import { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
 
-// const scssVariables = 'src/scss/variables.scss';
+// Const scssVariables = 'src/scss/variables.scss';
 export const config: Config = {
   namespace: 'x-ui',
   plugins: [sass()],
@@ -15,9 +15,6 @@ export const config: Config = {
     openBrowser: false,
     reloadStrategy: 'pageReload',
     port: 3333,
-  },
-  testing: {
-
   },
   outputTargets: [
     {
@@ -33,18 +30,18 @@ export const config: Config = {
     },
     {
       type: 'docs-json',
-      file: `dist/collection/components.json`,
+      file: 'dist/collection/components.json',
     },
     {
       type: 'docs-json',
-      file: `../../www/data/x-components.json`,
+      file: '../../www/data/x-components.json',
     },
     {
       type: 'www',
       dir: '../../www',
       buildDir: 'x-ui',
       empty: false,
-      serviceWorker: null, // disable service workers
+      serviceWorker: null, // Disable service workers
       copy: [
         { src: 'docs', dest: './', keepDirStructure: true },
         {
@@ -64,4 +61,4 @@ export const config: Config = {
       ],
     },
   ],
-};
+}

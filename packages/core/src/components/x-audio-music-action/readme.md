@@ -1,4 +1,8 @@
-# x-audio-music-action
+# X-AUDIO-MUSIC-ACTION
+
+
+
+## Usage
 
 
 
@@ -7,11 +11,11 @@
 
 ## Properties
 
-| Property  | Attribute  | Description                        | Type                                                             | Default     |
-| --------- | ---------- | ---------------------------------- | ---------------------------------------------------------------- | ----------- |
-| `command` | `command`  | The command to execute.            | `"mute" \| "pause" \| "resume" \| "seek" \| "start" \| "volume"` | `undefined` |
-| `trackId` | `track-id` | The track to target.               | `string`                                                         | `undefined` |
-| `value`   | `value`    | The value payload for the command. | `boolean \| number \| string`                                    | `undefined` |
+| Property               | Attribute  | Description                        | Type                                                             | Default     |
+| ---------------------- | ---------- | ---------------------------------- | ---------------------------------------------------------------- | ----------- |
+| `command` _(required)_ | `command`  | The command to execute.            | `"mute" \| "pause" \| "resume" \| "seek" \| "start" \| "volume"` | `undefined` |
+| `trackId`              | `track-id` | The track to target.               | `string \| undefined`                                            | `undefined` |
+| `value`                | `value`    | The value payload for the command. | `boolean \| number \| string \| undefined`                       | `undefined` |
 
 
 ## Methods

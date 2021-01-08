@@ -1,0 +1,13 @@
+coverage
+dist
+node_modules
+package-lock.json
+www
+dist
+*.js
+*.d.ts
+*.e2e.tsx
+*.spec.tsx
+*.spec.ts
+test
+__mock__

@@ -1,7 +1,6 @@
-import { clearDataProviders } from '../../services/data/providers/factory';
-import { Component, h, Host, Element, Event, EventEmitter, Listen, Prop, State, writeTask } from '@stencil/core';
+import { Component, h, Host, Element, Event, EventEmitter, Listen, Prop, State, writeTask } from '@stencil/core'
+import { clearDataProviders } from '../../services/data/providers/factory'
 import {
-  ROUTE_EVENTS,
   HistoryType,
   IEventActionListener,
   LocationSegments,
@@ -14,8 +13,7 @@ import {
   InterfaceListener,
   EventAction,
   eventBus,
-  resolveElementVisibility,
-} from '../../services';
+} from '../../services'
 
 /**
  *  @set routing
@@ -26,159 +24,172 @@ import {
   shadow: true,
 })
 export class XUI {
-  private eventSubscription: () => void;
-  private actionsSubscription: () => void;
-  private listeners: Array<IEventActionListener> = [];
+  private eventSubscription!: () => void
+  private actionsSubscription!: () => void
+  private readonly listeners: IEventActionListener[] = []
 
-  @Element() el: HTMLXUiElement;
-  @State() location: LocationSegments;
+  @Element() el!: HTMLXUiElement
+  @State() location!: LocationSegments
 
   /**
    * This is the router service instantiated with this
    * component.
    */
-  @Prop() router: RouterService;
+  @Prop() router!: RouterService
 
   /**
    * This is the root path that the actual page is,
    * if it isn't '/', then the router needs to know
    * where to begin creating paths.
    */
-  @Prop() root: string = '/';
+  @Prop() root = '/'
 
   /**
    * Browser (paths) or Hash (#) routing.
    * To support browser history, the HTTP server
    * must be setup for a PWA
    */
-  @Prop() mode: HistoryType = 'browser';
-
-  /**
-   * Header height or offset for scroll-top on this
-   * and all views.
-   */
-  @Prop() scrollTopOffset?: number;
+  @Prop() mode: HistoryType = 'browser'
 
   /**
    * Navigation transition between routes.
    * This is a CSS animation class.
    */
-  @Prop() transition = 'fade-in';
+  @Prop() transition?: string
 
   /**
    * This is the application / site title.
    * If the views or dos have titles,
    * this is added as a suffix.
    */
-  @Prop() appTitle: string;
+  @Prop() appTitle?: string
 
   /**
    * This is the start path a user should
    * land on when they first land on this app.
    */
-  @Prop() startUrl: string = '/';
-
-  /**
-   * Set this to false if you don't want the UI component
-   * to take up the full page size.   *
-   */
-  @Prop() fullPage: boolean = true;
+  @Prop() startUrl = '/'
 
   /**
    * Turn on debugging to get helpful messages from the
    * routing, data and action systems.
    */
-  @Prop() debug: boolean = false;
+  @Prop() debug = false
 
-  @Listen('eventAction', {
+  /**
+   * Header height or offset for scroll-top on this
+   * and all views.
+   */
+  @Prop() scrollTopOffset?: number
+
+  @Listen('x:actions', {
     passive: true,
     target: 'body',
-    capture: true,
   })
   delegateActionEventFromDOM(ev: CustomEvent<EventAction<any>>) {
-    const action = ev.detail as EventAction<any>;
-    actionBus.emit(action.topic, action);
+    const action = ev.detail
+    actionBus.emit(action.topic, action)
   }
 
   /**
-   * Listen for actionBus events.
+   * These events are **`<x-ui/>`** command-requests for action handlers
+   * to perform tasks. Any handles should cancel the event.
    */
-  @Event() actions: EventEmitter<any>;
+  @Event({
+    eventName: 'x:actions',
+    composed: true,
+    cancelable: true,
+    bubbles: true,
+  })
+  actions!: EventEmitter
 
   /**
-   * Listen for eventBus events.
+   * Listen for events that occurred within the **`<x-ui/>`**
+   * system.
    */
-  @Event() events: EventEmitter<any>;
+  @Event({
+    eventName: 'x:events',
+    composed: true,
+    cancelable: false,
+    bubbles: true,
+  })
+  events!: EventEmitter
 
-  private get childViews(): Array<HTMLXViewElement> {
-    if (!this.el.hasChildNodes()) return [];
+  private get childViews(): HTMLXViewElement[] {
+    if (!this.el.hasChildNodes()) {
+      return []
+    }
+
     return Array.from(this.el.childNodes)
-      .filter(c => c.nodeName === 'X-VIEW')
-      .map(v => v as HTMLXViewElement);
+      .filter((c) => c.nodeName === 'X-VIEW')
+      .map((v) => v as HTMLXViewElement)
   }
 
   componentWillLoad() {
-    interfaceState.debug = this.debug;
+    interfaceState.debug = this.debug
 
-    if (this.debug) log('x-ui: initializing <debug>');
-    else log('x-ui: initializing');
-
-    this.actionsSubscription = actionBus.on('*', (_topic, args) => {
-      this.actions.emit(args);
-    });
-
-    this.eventSubscription = eventBus.on('*', (topic, args) => {
-      this.events.emit(args);
-      if (topic == ROUTE_EVENTS.RouteChanged) {
-        this.el.querySelectorAll('.active-route-exact [no-render], .active-route [no-render]').forEach(async el => {
-          el.removeAttribute('no-render');
-        });
-      }
-    });
-
-    this.router = new RouterService(writeTask, eventBus, actionBus, this.el, this.mode, this.root, this.appTitle, this.transition, this.scrollTopOffset);
-
-    this.childViews.forEach(v => {
-      if (v.url) v.url = this.router.normalizeChildUrl(v.url, this.root);
-      v.transition = v.transition || this.transition;
-    });
-
-    if (this.startUrl !== '/' && this.router.location.pathname === this.root) {
-      const startUrl = this.router.normalizeChildUrl(this.startUrl, this.root);
-      this.router.history.push(this.router.getUrl(startUrl, this.root));
+    if (this.debug) {
+      log('x-ui: initializing <debug>')
+    } else {
+      log('x-ui: initializing')
     }
 
-    const dataListener = new DataListener();
-    this.addListener('data', dataListener);
+    this.actionsSubscription = actionBus.on('*', (_topic, args) => {
+      this.actions.emit(args)
+    })
 
-    const documentListener = new InterfaceListener();
-    this.addListener('document', documentListener);
+    this.eventSubscription = eventBus.on('*', (args) => {
+      this.events.emit(args)
+    })
+
+    this.router = new RouterService(writeTask, eventBus, actionBus, this.el, this.mode, this.root, this.appTitle, this.transition, this.scrollTopOffset)
+
+    this.childViews.forEach((v) => {
+      if (v.url) {
+        v.url = this.router.normalizeChildUrl(v.url, this.root)
+      }
+
+      v.transition = v.transition || this.transition
+    })
+
+    if (this.startUrl !== '/' && this.router.location?.pathname === this.root) {
+      const startUrl = this.router.normalizeChildUrl(this.startUrl, this.root)
+      this.router.history.push(this.router.getUrl(startUrl, this.root))
+    }
+
+    const dataListener = new DataListener()
+    this.addListener('data', dataListener)
+
+    const documentListener = new InterfaceListener()
+    this.addListener('document', documentListener)
   }
 
   private addListener(name: string, listener: IEventActionListener) {
-    debugIf(interfaceState.debug, `x-ui: ${name}-listener registered`);
-    listener.initialize(window, actionBus, eventBus);
-    this.listeners.push(listener);
+    debugIf(interfaceState.debug, `x-ui: ${name}-listener registered`)
+    listener.initialize(window, actionBus, eventBus)
+    this.listeners.push(listener)
   }
 
   componentDidLoad() {
-    log('x-ui: initialized');
-    resolveElementVisibility(this.el);
+    log('x-ui: initialized')
+    this.el.querySelectorAll('[x-cloak]').forEach((element) => {
+      element.removeAttribute('x-cloak')
+    })
   }
 
   disconnectedCallback() {
-    clearDataProviders();
-    this.actionsSubscription();
-    this.eventSubscription();
-    eventBus.removeAllListeners();
-    actionBus.removeAllListeners();
+    clearDataProviders()
+    this.actionsSubscription()
+    this.eventSubscription()
+    eventBus.removeAllListeners()
+    actionBus.removeAllListeners()
   }
 
   render() {
     return (
       <Host>
-        <slot></slot>
+        <slot />
       </Host>
-    );
+    )
   }
 }

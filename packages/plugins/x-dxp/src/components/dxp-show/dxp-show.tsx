@@ -1,8 +1,7 @@
-import { Component, h, State, Prop, Element } from '@stencil/core';
-import { Experience } from '../../models';
-import { state, onChange } from '../../services';
-import { ExperienceDataParser, Comparison } from '../../services/data/parser';
-
+import { Component, h, State, Prop, Element } from '@stencil/core'
+import { Experience } from '../../models'
+import { state, onChange } from '../../services'
+import { ExperienceDataParser, Comparison } from '../../services/data/parser'
 
 /**
  * This tag conditionally renders child elements based on the configured
@@ -16,20 +15,20 @@ import { ExperienceDataParser, Comparison } from '../../services/data/parser';
   shadow: false,
 })
 export class Show {
-  @Element() element: HTMLDxpShowElement;
-  @State() experience: Experience;
+  @Element() element: HTMLDxpShowElement
+  @State() experience: Experience
 
   /**
    * A JS-based expression to capture data from the the data model.
    * @example: experience.data.color
    */
-  @Prop() if!: string;
+  @Prop() if!: string
 
   /**
    * The optional comparison operator. If omitted, general ‘truthiness’ is used.
    * @requires to
    */
-  @Prop() is: Comparison;
+  @Prop() is: Comparison
 
   /**
    * The optional value for comparison.
@@ -37,26 +36,24 @@ export class Show {
    */
   @Prop() to: any
 
-  private tokens: ExperienceDataParser;
+  private tokens: ExperienceDataParser
 
   componentWillLoad() {
-    if(state.experience){
-      this.experience = state.experience;
-      this.tokens = new ExperienceDataParser(state.experience);
+    if (state.experience) {
+      this.experience = state.experience
+      this.tokens = new ExperienceDataParser(state.experience)
     } else {
-      onChange('experience', e => {
-        this.experience = e;
-        this.tokens = new ExperienceDataParser(e);
-      });
+      onChange('experience', (e) => {
+        this.experience = e
+        this.tokens = new ExperienceDataParser(e)
+      })
     }
   }
 
-
   render() {
-    let show = this.tokens.getShow(this.if, this.is, this.to);
+    const show = this.tokens.getShow(this.if, this.is, this.to)
 
-    this.element.style.display = show ? '' : 'none';
-    return (<slot></slot>);
+    this.element.style.display = show ? '' : 'none'
+    return <slot></slot>
   }
-
 }

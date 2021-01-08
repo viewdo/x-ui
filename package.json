@@ -1,7 +1,7 @@
 {
-  "name": "@viewdo/x",
+  "name": "viewdo",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.0.0-development",
   "license": "MIT",
   "homepage": "https://github.com/viewdo/x-ui#readme",
   "bugs": {
@@ -14,28 +14,42 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint && npm run test"
+      "pre-commit": "npm run test:core"
     }
   },
   "scripts": {
     "npm:install": "npx yarn",
-    "build": "yarn workspace @viewdo/x-ui build",
-    "start": "yarn workspace @viewdo/x-ui start",
-    "test": "yarn workspace @viewdo/x-ui test",
+    "build:core": "yarn workspace @viewdo/x-ui run build",
+    "start:core": "yarn workspace @viewdo/x-ui run start",
+    "test:core": "yarn workspace @viewdo/x-ui run test --cwd packages/core",
+    "--- dev ---": "---------------",
+    "display-browser-support": "browserslist --stats && echo '' && browserslist --coverage && echo '' && echo 'See more at https://browserl.ist/'",
+    "--- format ---": "---------------",
+    "format": "run-s format:doctoc format:imports format:prettier format:eslint",
+    "format:doctoc": "doctoc --maxlevel 3 --notitle ./README.md ./CONTRIBUTING.md",
+    "format:eslint": "xo --fix ./ >/dev/null 2>&1 || true",
+    "format:imports": "import-sort --write '**/*.{ts,tsx}'",
+    "format:prettier": "prettier --write '**/*.{css,html,json,md,mdx,scss,ts,tsx,yaml,yml}'",
     "--- lint ---": "---------------",
-    "lint": "npm run lint:js && npm run lint:css",
-    "lint:js": "eslint './packages/core/src/**/*{.ts,.tsx}'",
-    "lint:css": "stylelint '/packages/core/*.scss' --allow-empty-input",
-    "lint:husky": "lint-staged",
-    "--- misc ---": "---------------",
+    "lint": "run-p lint:es lint:markdown",
+    "lint:watch": "onchange '**/src/**/*' --initial --kill --delay 1000  -- npm run lint",
+    "lint:es": "xo ",
+    "lint:markdown": "markdownlint  '**/*.md'",
+    "--- publish ---": "---------------",
     "gs:push": "gsutil cp -r ./www gs://viewdo-static/x-ui",
+    "--- docker ---": "---------------",
     "docker:build": "docker build -t viewdo/x-ui-docs .",
-    "docker:push": "docker push viewdo/x-ui-docs"
+    "docker:push": "docker push viewdo/x-ui-docs",
+    "semantic-release": "semantic-release",
+    "pre:commit": "run-p lint test:core"
   },
   "devDependencies": {
     "@babel/core": "7.12.10",
+    "@babel/preset-typescript": "^7.12.7",
     "@stencil/core": "2.3.0",
     "@stencil/eslint-plugin": "0.3.1",
+    "@stencil/sass": "1.4.1",
+    "@stencil/store": "1.3.0",
     "@types/howler": "2.2.1",
     "@types/jest": "26.0.20",
     "@types/node": "14.14.20",
@@ -43,22 +57,35 @@
     "@typescript-eslint/eslint-plugin": "4.12.0",
     "@typescript-eslint/parser": "4.12.0",
     "chalk": "4.1.0",
+    "doctoc": "^2.0.0",
     "eslint": "7.17.0",
+    "eslint-config-airbnb-typescript": "^12.0.0",
+    "eslint-config-xo-typescript": "^0.37.0",
+    "eslint-formatter-pretty": "^4.0.0",
+    "eslint-plugin-eslint-comments": "^3.2.0",
     "eslint-plugin-import": "2.22.1",
+    "eslint-plugin-jest": "^24.1.3",
     "eslint-plugin-jsx-a11y": "6.4.1",
     "eslint-plugin-react": "7.22.0",
     "http-proxy-middleware": "1.0.6",
     "husky": "4.3.7",
+    "import-sort-cli": "^6.0.0",
+    "import-sort-parser-typescript": "^6.0.0",
+    "import-sort-style-module": "^6.0.0",
     "jest": "26.6.3",
     "jest-cli": "26.6.3",
     "lint-staged": "10.5.3",
+    "markdownlint-cli": "^0.26.0",
     "node-fetch": "2.6.1",
     "npm-run-all": "4.1.5",
-    "prettier": "2.2.1",
+    "onchange": "^7.1.0",
     "puppeteer": "5.5.0",
+    "rimraf": "^3.0.2",
+    "semantic-release": "^17.3.1",
     "stylelint": "13.8.0",
     "stylelint-config-sass-guidelines": "7.1.0",
     "typescript": "4.1.3",
+    "xo": "^0.37.1",
     "yargs": "16.2.0"
   },
   "resolutions": {
@@ -66,9 +93,27 @@
     "**/@typescript-eslint/parser": "4.12.0"
   },
   "jest": {
-    "preset": "@stencil/core/testing",
-    "maxConcurrency": 1,
-    "detectOpenHandles": true
+    "preset": "@stencil/core/testing"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "prettier --write",
+      "xo --fix",
+      "git add"
+    ],
+    "*.json": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.{md,mdx}": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.scss": [
+      "prettier --write",
+      "stylelint '**/src/**/*.scss' --fix",
+      "git add"
+    ]
   },
   "browserslist": [
     ">0.2%",
@@ -81,5 +126,32 @@
     "packages/plugins/*",
     "packages/examples/*"
   ],
-  "dependencies": {}
+  "dependencies": {
+    "prettier": "^2.2.1"
+  },
+  "xo": {
+    "space": 2,
+    "prettier": true,
+    "rules": {
+      "import/extensions": [
+        "error",
+        "ignorePackages",
+        {
+          "js": "never",
+          "jsx": "never",
+          "ts": "never",
+          "tsx": "never"
+        }
+      ],
+      "unicorn/no-abusive-eslint-disable": "off",
+      "unicorn/prevent-abbreviations": "off",
+      "@typescript-eslint/no-extraneous-class": "off",
+      "@typescript-eslint/member-ordering": "off",
+      "@typescript-eslint/no-dynamic-delete": "off",
+      "@typescript-eslint/prefer-nullish-coalescing": "off",
+      "@typescript-eslint/no-confusing-void-expression": "off",
+      "new-cap": "off",
+      "no-useless-call": "off"
+    }
+  }
 }

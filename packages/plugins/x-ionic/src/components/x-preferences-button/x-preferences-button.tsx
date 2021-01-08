@@ -1,5 +1,5 @@
-import { Component, h, Prop, Host, Element } from '@stencil/core';
-import { popoverController } from '@ionic/core';
+import { Component, h, Prop, Host, Element } from '@stencil/core'
+import { popoverController } from '@ionic/core'
 
 @Component({
   tag: 'x-preferences-button',
@@ -7,16 +7,16 @@ import { popoverController } from '@ionic/core';
   shadow: true,
 })
 export class XPreferencesButton {
-  @Element() el: HTMLXPreferencesButtonElement;
-  private popover: HTMLIonPopoverElement;
+  @Element() el: HTMLXPreferencesButtonElement
+  private popover: HTMLIonPopoverElement
   /**
    *
    *
    */
-  @Prop() icon: string = 'settings-outline';
+  @Prop() icon = 'settings-outline'
 
   componentWillLoad() {
-    // if (!state.theme) {
+    // If (!state.theme) {
     //   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
     //   document.body.classList.toggle('dark', prefersDark.matches);
     //   this.presentToast('Dark mode preference was detected. Use the preferences icon to change modes.');
@@ -25,14 +25,14 @@ export class XPreferencesButton {
     // }
   }
 
-  //private async presentToast(message) {
+  // Private async presentToast(message) {
   //  const toast = await toastController.create({
   //    message,
   //    duration: 3000,
   //    position: 'middle',
   //  });
   //  toast.present();
-  //}
+  // }
 
   private async presentPopover(ev: Event, component: string) {
     this.popover = await popoverController.create({
@@ -40,18 +40,17 @@ export class XPreferencesButton {
       cssClass: 'popover',
       event: ev,
       translucent: true,
-    });
-    await this.popover.present();
+    })
+    await this.popover.present()
   }
 
   render() {
     return (
       <Host>
-        <ion-button
-          onClick={(e) => this.presentPopover(e, 'x-preferences-list')}>
+        <ion-button onClick={async (e) => this.presentPopover(e, 'x-preferences-list')}>
           <ion-icon name={this.icon}></ion-icon>
         </ion-button>
       </Host>
-    );
+    )
   }
 }

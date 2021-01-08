@@ -20,6 +20,7 @@
 - ion-icon
 
 ### Graph
+
 ```mermaid
 graph TD;
   x-preferences-button --> ion-button

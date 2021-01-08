@@ -1,5 +1,4 @@
-# x-audio-sound-action
-
+# X-AUDIO-SOUND-ACTION
 
 
 <!-- Auto Generated Below -->
@@ -10,7 +9,7 @@
 | Property  | Attribute  | Description                        | Type                                                             | Default     |
 | --------- | ---------- | ---------------------------------- | ---------------------------------------------------------------- | ----------- |
 | `command` | `command`  | The command to execute.            | `"mute" \| "pause" \| "resume" \| "seek" \| "start" \| "volume"` | `undefined` |
-| `trackId` | `track-id` | The track to target.               | `string`                                                         | `undefined` |
+| `trackId` | `track-id` | The track to target.               | `string \| undefined`                                            | `undefined` |
 | `value`   | `value`    | The value payload for the command. | `boolean \| number \| string`                                    | `undefined` |
 
 

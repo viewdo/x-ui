@@ -1,19 +1,18 @@
-import { EventEmitter } from '../../actions';
-import { IDataProvider, DATA_EVENTS } from '../interfaces';
+import { EventEmitter } from '../../actions'
+import { DATA_EVENTS, IDataProvider } from '../interfaces'
 
 export class SessionProvider implements IDataProvider {
-  constructor(private sessionStorage = window.sessionStorage) {
-    this.changed = new EventEmitter();
+  changed: EventEmitter
+  constructor(private readonly sessionStorage = window.sessionStorage) {
+    this.changed = new EventEmitter()
   }
 
-  async get(key: string): Promise<string> {
-    return this.sessionStorage?.getItem(key);
+  async get(key: string): Promise<string | null> {
+    return this.sessionStorage?.getItem(key)
   }
 
-  async set(key: string, value: any) {
-    this.sessionStorage?.setItem(key, value);
+  async set(key: string, value: any): Promise<void> {
+    this.sessionStorage?.setItem(key, value)
     this.changed.emit(DATA_EVENTS.DataChanged)
   }
-
-  changed:EventEmitter;
 }

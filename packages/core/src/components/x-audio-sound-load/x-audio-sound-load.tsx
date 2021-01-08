@@ -1,11 +1,5 @@
-import { Component, Element, h, Host, Prop } from '@stencil/core';
-import {
-  actionBus,
-  AudioType,
-  AUDIO_TOPIC,
-  DiscardStrategy,
-  LoadStrategy
-} from '../..';
+import { Component, Element, h, Host, Prop } from '@stencil/core'
+import { actionBus, AudioType, AUDIO_TOPIC, DiscardStrategy, LoadStrategy } from '../..'
 
 /**
  *
@@ -16,35 +10,34 @@ import {
   shadow: true,
 })
 export class XAudioSoundLoad {
-  @Element() el: HTMLXAudioSoundLoadElement;
+  @Element() el: HTMLXAudioSoundLoadElement
 
   /**
    * The path to the audio-file.
    */
-  @Prop() src!: string;
+  @Prop() src!: string
 
   /**
    * The identifier for this music track
    */
-  @Prop() trackId!: string;
+  @Prop() trackId!: string
 
-   /**
+  /**
    * This is the topic this action-command is targeting.
    */
-  @Prop() mode: LoadStrategy;
+  @Prop() mode: LoadStrategy
 
-   /**
+  /**
    * The discard strategy the player should use for this file.
    */
-  @Prop() discard: DiscardStrategy;
+  @Prop() discard: DiscardStrategy
 
-
-   /**
+  /**
    * Set this attribute to have the audio file tracked
    * in session effectively preventing it from playing
    * again..
    */
-  @Prop() track: boolean = false;
+  @Prop() track = false
 
   private getAction() {
     return {
@@ -59,14 +52,14 @@ export class XAudioSoundLoad {
         type: AudioType.Sound,
         mode: this.mode || LoadStrategy.Load,
       },
-    };
+    }
   }
 
   componentDidLoad() {
-    actionBus.emit(AUDIO_TOPIC, this.getAction());
+    actionBus.emit(AUDIO_TOPIC, this.getAction())
   }
 
   render() {
-    return <Host hidden></Host>;
+    return <Host hidden></Host>
   }
 }

@@ -1,6 +1,6 @@
 # X-USE
 
-This component makes a single reference to script and css sources. It can be used by HTML fragment to ensure a reference is made, without worry that it will create duplicate references. 
+This component makes a single reference to script and css sources. It can be used by HTML fragment to ensure a reference is made, without worry that it will create duplicate references.
 
 If inline is present, the source would be nested inside this element, otherwise it is appended to the head.
 
@@ -15,7 +15,8 @@ If inline is present, the source would be nested inside this element, otherwise 
 
 ## Examples
 
-### Ensure Reference
+### Ensure Style Reference
+
 ````html
 <html>
 <head></head>
@@ -24,7 +25,9 @@ If inline is present, the source would be nested inside this element, otherwise 
 </body>
 </html>
 ````
+
 **Results**:
+
 ````html
 <html>
 <head>
@@ -37,6 +40,7 @@ If inline is present, the source would be nested inside this element, otherwise 
 ````
 
 ### Ensure Inline Reference
+
 ````html
 <html>
 <head></head>
@@ -45,7 +49,9 @@ If inline is present, the source would be nested inside this element, otherwise 
 </body>
 </html>
 ````
+
 **Results**:
+
 ````html
 <html>
 <head></head>
@@ -57,7 +63,8 @@ If inline is present, the source would be nested inside this element, otherwise 
 </html>
 ````
 
-### Ensure Reference
+### Ensure Script References
+
 ````html
 <html>
 <head></head>
@@ -71,7 +78,9 @@ If inline is present, the source would be nested inside this element, otherwise 
 </body>
 </html>
 ````
+
 **Results**:
+
 ````html
 <html>
 <head>
@@ -93,14 +102,15 @@ If inline is present, the source would be nested inside this element, otherwise 
 
 ## Properties
 
-| Property    | Attribute    | Description                                                                           | Type      | Default     |
-| ----------- | ------------ | ------------------------------------------------------------------------------------- | --------- | ----------- |
-| `inline`    | `inline`     | When inline the link/script tags are rendered in-place rather than added to the head. | `boolean` | `undefined` |
-| `module`    | `module`     | Import the script file as a module.                                                   | `boolean` | `undefined` |
-| `noModule`  | `no-module`  | Declare the script only for use when modules aren't supported                         | `boolean` | `undefined` |
-| `nowait`    | `nowait`     |                                                                                       | `boolean` | `undefined` |
-| `scriptSrc` | `script-src` | The script file to reference.                                                         | `string`  | `undefined` |
-| `styleSrc`  | `style-src`  | The css file to reference                                                             | `string`  | `undefined` |
+| Property    | Attribute    | Description                                                                                                  | Type                  | Default     |
+| ----------- | ------------ | ------------------------------------------------------------------------------------------------------------ | --------------------- | ----------- |
+| `inline`    | `inline`     | When inline the link/script tags are rendered in-place rather than added to the head.                        | `boolean`             | `undefined` |
+| `module`    | `module`     | Import the script file as a module.                                                                          | `boolean`             | `undefined` |
+| `noModule`  | `no-module`  | Declare the script only for use when modules aren't supported                                                | `boolean`             | `undefined` |
+| `noRender`  | `no-render`  | If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute. | `boolean`             | `false`     |
+| `nowait`    | `nowait`     | INTERNAL - disables the DOM onload await to finish rendering                                                 | `boolean`             | `undefined` |
+| `scriptSrc` | `script-src` | The script file to reference.                                                                                | `string \| undefined` | `undefined` |
+| `styleSrc`  | `style-src`  | The css file to reference                                                                                    | `string \| undefined` | `undefined` |
 
 
 ----------------------------------------------

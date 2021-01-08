@@ -1,7 +1,7 @@
-import { AudioType } from './interfaces';
+import { AudioType } from './interfaces'
 
 export class AudioRequest {
-  trackId: string;
-  type: AudioType;
-  value: any;
+  trackId: string
+  type: AudioType
+  value: any
 }

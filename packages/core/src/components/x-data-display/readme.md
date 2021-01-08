@@ -26,7 +26,7 @@ This component supports HTML string interpolation within a child template tag. T
 
 > This component only supports template interpolation within the **\<template\>** tag.
 
-### Template Interpolation
+### Template Sample
 
 This component supports HTML string interpolation within a child template tag. The values get resolved, just like the expression. The values in the attributes replace the tokens in the content.
 
@@ -39,7 +39,7 @@ This component supports HTML string interpolation within a child template tag. T
 ````
 
 
-**Data Token Format:** ````{<provider>:<data-key>(?<default>)} ````
+**Data Token Format:** ````{<provider>:<data-key>(?<default>)}````
 
 **provider**: the data provider name
 **data-key**: the data value key within the provider *
@@ -66,10 +66,10 @@ This component supports HTML string interpolation within a child template tag. T
 
 ## Properties
 
-| Property   | Attribute   | Description                                                                                                  | Type      | Default     |
-| ---------- | ----------- | ------------------------------------------------------------------------------------------------------------ | --------- | ----------- |
-| `noRender` | `no-render` | If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute. | `boolean` | `false`     |
-| `text`     | `text`      | The data expression to obtain a value for rendering as inner-text for this element.                          | `string`  | `undefined` |
+| Property   | Attribute   | Description                                                                                                  | Type                  | Default     |
+| ---------- | ----------- | ------------------------------------------------------------------------------------------------------------ | --------------------- | ----------- |
+| `noRender` | `no-render` | If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute. | `boolean`             | `false`     |
+| `text`     | `text`      | The data expression to obtain a value for rendering as inner-text for this element.                          | `string \| undefined` | `undefined` |
 
 
 ----------------------------------------------

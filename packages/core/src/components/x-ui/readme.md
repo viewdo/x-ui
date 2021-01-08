@@ -31,25 +31,24 @@ For more information on routing, check out the [routing](/routing) documentation
 
 ## Properties
 
-| Property          | Attribute           | Description                                                                                                                  | Type                  | Default     |
-| ----------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------- | --------------------- | ----------- |
-| `appTitle`        | `app-title`         | This is the application / site title. If the views or dos have titles, this is added as a suffix.                            | `string`              | `undefined` |
-| `debug`           | `debug`             | Turn on debugging to get helpful messages from the routing, data and action systems.                                         | `boolean`             | `false`     |
-| `fullPage`        | `full-page`         | Set this to false if you don't want the UI component to take up the full page size.   *                                      | `boolean`             | `true`      |
-| `mode`            | `mode`              | Browser (paths) or Hash (#) routing. To support browser history, the HTTP server must be setup for a PWA                     | `"browser" \| "hash"` | `'browser'` |
-| `root`            | `root`              | This is the root path that the actual page is, if it isn't '/', then the router needs to know where to begin creating paths. | `string`              | `'/'`       |
-| `router`          | --                  | This is the router service instantiated with this component.                                                                 | `RouterService`       | `undefined` |
-| `scrollTopOffset` | `scroll-top-offset` | Header height or offset for scroll-top on this and all views.                                                                | `number`              | `undefined` |
-| `startUrl`        | `start-url`         | This is the start path a user should land on when they first land on this app.                                               | `string`              | `'/'`       |
-| `transition`      | `transition`        | Navigation transition between routes. This is a CSS animation class.                                                         | `string`              | `'fade-in'` |
+| Property              | Attribute           | Description                                                                                                                  | Type                  | Default     |
+| --------------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------- | --------------------- | ----------- |
+| `appTitle`            | `app-title`         | This is the application / site title. If the views or dos have titles, this is added as a suffix.                            | `string \| undefined` | `undefined` |
+| `debug`               | `debug`             | Turn on debugging to get helpful messages from the routing, data and action systems.                                         | `boolean`             | `false`     |
+| `mode`                | `mode`              | Browser (paths) or Hash (#) routing. To support browser history, the HTTP server must be setup for a PWA                     | `"browser" \| "hash"` | `'browser'` |
+| `root`                | `root`              | This is the root path that the actual page is, if it isn't '/', then the router needs to know where to begin creating paths. | `string`              | `'/'`       |
+| `router` _(required)_ | --                  | This is the router service instantiated with this component.                                                                 | `RouterService`       | `undefined` |
+| `scrollTopOffset`     | `scroll-top-offset` | Header height or offset for scroll-top on this and all views.                                                                | `number \| undefined` | `undefined` |
+| `startUrl`            | `start-url`         | This is the start path a user should land on when they first land on this app.                                               | `string`              | `'/'`       |
+| `transition`          | `transition`        | Navigation transition between routes. This is a CSS animation class.                                                         | `string \| undefined` | `undefined` |
 
 
 ## Events
 
-| Event     | Description                  | Type               |
-| --------- | ---------------------------- | ------------------ |
-| `actions` | Listen for actionBus events. | `CustomEvent<any>` |
-| `events`  | Listen for eventBus events.  | `CustomEvent<any>` |
+| Event       | Description                                                                                                                | Type               |
+| ----------- | -------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| `x:actions` | These events are **`<x-ui/>`** command-requests for action handlers to perform tasks. Any handles should cancel the event. | `CustomEvent<any>` |
+| `x:events`  | Listen for events that occurred within the **`<x-ui/>`** system.                                                           | `CustomEvent<any>` |
 
 
 ----------------------------------------------

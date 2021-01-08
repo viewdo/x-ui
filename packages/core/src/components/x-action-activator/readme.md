@@ -1,6 +1,6 @@
 # X-ACTION-ACTIVATOR
 
-This element defines how and when a group of Actions, defined with the **\<x-action\>** element, are submitted to the [Action Bus](/actions).
+This element defines how and when a group of Actions, defined with the  **`<x-action>`** element, are submitted to the [Action Bus](/actions).
 
 ## Usage
 
@@ -19,10 +19,12 @@ This element should only ever contain child  **`<x-action>`** tags. The attribut
 ````
 
 ### Activation Strategies
+
 The **activate** attribute define the strategy for activating all child actions, in the order they appear.
 
 #### OnEnter
-The **OnEnter** activation-strategy only works when this element is a child of **\<x-view-do\>**. The child actions will fire when the parent route is activated and the contents are displayed.
+
+The **OnEnter** activation-strategy only works when this element is a child of  [**`<x-view-do>`**](/components/x-view-do) . The child actions will fire when the parent route is activated and the contents are displayed.
 
 ````html
 <x-view-do ...>
@@ -37,6 +39,7 @@ The **OnEnter** activation-strategy only works when this element is a child of *
 ````
 
 #### OnExit
+
 The **OnEnter** activation-strategy only works when this element is a child of **`<x-view-do>`**. The child actions will fire when the parent route is de-activated and the next route is displayed.
 
 ````html
@@ -52,7 +55,8 @@ The **OnEnter** activation-strategy only works when this element is a child of *
 ````
 
 #### AtTime
-The **AtTime** activation-strategy only work when this element is a child of **\<x-view-do\>**. The child actions will fire when the parent route has been activated for the given time within the **time** attribute.
+
+The **AtTime** activation-strategy only work when this element is a child of  [**`<x-view-do>`**](/components/x-view-do) . The child actions will fire when the parent route has been activated for the given time within the **time** attribute.
 
 
 ````html
@@ -70,7 +74,7 @@ The **AtTime** activation-strategy only work when this element is a child of **\
 
 #### OnElementEvent
 
-The **OnElementEvent** activation-strategy can be used anywhere within the **\<x-ui\>** container. The child actions will fire when the target element raises the target event. 
+The **OnElementEvent** activation-strategy can be used anywhere within the **\<x-ui\>** container. The child actions will fire when the target element raises the target event.
 
 ````html
 <x-action-activator
@@ -105,7 +109,7 @@ The **OnElementEvent** activation-strategy can be used anywhere within the **\<x
 | `activate` _(required)_ | `activate`       | The activation strategy to use for the contained actions.                                                                                                                                                       | `ActionActivationStrategy.AtTime \| ActionActivationStrategy.OnElementEvent \| ActionActivationStrategy.OnEnter \| ActionActivationStrategy.OnExit` | `undefined` |
 | `debug`                 | `debug`          | Turn on debug statements for load, update and render events.                                                                                                                                                    | `boolean`                                                                                                                                           | `false`     |
 | `multiple`              | `multiple`       | Allow the actions to fire more than once per the event.                                                                                                                                                         | `boolean`                                                                                                                                           | `false`     |
-| `targetElement`         | `target-element` | The element to watch for events when using the OnElementEvent activation strategy. This element uses the HTML Element querySelector function to find the element.  For use with activate="OnElementEvent" Only! | `string`                                                                                                                                            | `undefined` |
+| `targetElement`         | `target-element` | The element to watch for events when using the OnElementEvent activation strategy. This element uses the HTML Element querySelector function to find the element.  For use with activate="OnElementEvent" Only! | `string \| undefined`                                                                                                                               | `undefined` |
 | `targetEvent`           | `target-event`   | This is the name of the event to listen to on the target element.                                                                                                                                               | `string`                                                                                                                                            | `'click'`   |
 | `time`                  | `time`           | The time, in seconds at which the contained actions should be submitted.  For use with activate="AtTime" Only!                                                                                                  | `number`                                                                                                                                            | `undefined` |
 
