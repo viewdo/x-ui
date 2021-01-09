@@ -115,7 +115,7 @@ To ensure consistency and quality, all documentation modifications must:
 - Use the [single backtick `code` quoting](https://help.github.com/articles/basic-writing-and-formatting-syntax/#quoting-code) for:
   - commands inside sentences, i.e. the `semantic-release` command
   - programming language keywords, i.e. `function`, `async`, `String`
-  - packages or modules, i.e. The [`@semantic-release/github`](https://github.com/semantic-release/github) module
+  - packages or modules, i.e. The [`@viewdo/x-ui`](https://github.com/viewdo/x-ui) module
 - Use the [triple backtick `code` formatting](https://help.github.com/articles/creating-and-highlighting-code-blocks) for:
   - code examples
   - configuration examples
