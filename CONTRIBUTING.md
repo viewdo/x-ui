@@ -35,7 +35,7 @@ Issues with the [design label](https://github.com/issues?q=is%3Aopen+is%3Aissue+
 
 ### Fix bugs and implement features
 
-Confirmed bugs and ready-to-implement features are marked with the [help wanted label](https://github.com/issues?utf8=%E2%9C%93&q=is%3Aopen+is%3Aissue+user%3Aviewdo+repo%3Ax-ui+archived%3Afalse+label%3A%22help+wanted%22). Post a comment on an issue to indicate you would like to work on it and to request help from the [@semantic-release/maintainers](https://github.com/orgs/semantic-release/teams/contributors) and the community.
+Confirmed bugs and ready-to-implement features are marked with the [help wanted label](https://github.com/issues?utf8=%E2%9C%93&q=is%3Aopen+is%3Aissue+user%3Aviewdo+repo%3Ax-ui+archived%3Afalse+label%3A%22help+wanted%22). Post a comment on an issue to indicate you would like to work on it.
 
 ## Using the issue tracker
 
