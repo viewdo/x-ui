@@ -9,7 +9,6 @@ const supportsStorage = storageAvailable(window, 'localStorage')
 warnIf(!supportsStorage, 'local-storage is not supported')
 
 const visitKey = 'visits'
-let memoryState: string | any[] = []
 
 function parseVisits(visits: string | null) {
   return JSON.parse(visits || '[]')
@@ -21,7 +20,7 @@ function stringifyVisits(visits: string[]) {
 
 export async function getSessionVisits() {
   if (!supportsSession) {
-    return memoryState
+    return []
   }
 
   const visits = sessionStorage.getItem(visitKey)
@@ -31,14 +30,12 @@ export async function getSessionVisits() {
 export async function setSessionVisits(visits: string[]) {
   if (supportsSession) {
     sessionStorage.setItem(visitKey, stringifyVisits(visits))
-  } else {
-    memoryState = [...new Set([...visits, memoryState])]
   }
 }
 
 export async function getStoredVisits() {
   if (!supportsStorage) {
-    return memoryState
+    return []
   }
 
   const storage = localStorage.getItem(visitKey)
@@ -48,19 +45,17 @@ export async function getStoredVisits() {
 export async function setStoredVisits(visits: string[]) {
   if (supportsStorage) {
     localStorage.setItem(visitKey, stringifyVisits(visits))
-  } else {
-    memoryState = [...new Set([...visits, memoryState])]
   }
 }
 
 onRoutingStateChange('storedVisits', async (a) => setStoredVisits(a))
 onRoutingStateChange('sessionVisits', async (a) => setSessionVisits(a))
 
-getStoredVisits().then((v) => {
+void getStoredVisits().then((v) => {
   routingState.storedVisits = v
 })
 
-getSessionVisits().then((v) => {
+void getSessionVisits().then((v) => {
   routingState.sessionVisits = v
 })
 

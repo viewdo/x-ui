@@ -1,15 +1,20 @@
 <!-- Tour -->
-<x-use script-src="https://unpkg.com/intro.js/minified/intro.min.js" style-src="https://unpkg.com/intro.js/minified/introjs.min.css"> </x-use>
+<x-use script-src="https://unpkg.com/intro.js/minified/intro.min.js"
+       style-src="https://unpkg.com/intro.js/minified/introjs.min.css"> </x-use>
 <div class="container container-fluid container-md mx-auto">
   <h1>Modern web-application functionality without leaving the comfort of HTML.</h1>
 
-  <h2>What is it?</h2>
-  <p class="lead">Experience UI is a suite of custom HTML elements that turns a static HTML file into single-page web-applications experiences.</p>
+  <h2>Turbo-charged HTML</h2>
+  <p class="lead">
+    Add multi-page routing, guided navigation, data-binding, dynamic content, and even event-based actions
+    to any HTML file with little scripting and no framework.
+  </p>
 
   <p class="p-2 lead bg-info bg-gradient text-white" style="display: flex; flex-direction: row; gap: 1ch">
     <i class="ri-play-line fs-1"></i>
     <span>
-      This documentation was created with these experience elements. View-source or <a onclick="introJs().start()">take the tour</a> to see how complex routing, guided navigation,
+      This documentation was created with these experience elements. View-source or <a onclick="introJs().start()">take
+        the tour</a> to see how complex routing, guided navigation,
       automatic presentations, data-binding and more is made possible!
     </span>
   </p>
@@ -18,42 +23,56 @@
     <x-include src="/docs/guides.html"></x-include>
   </div>
 
-  <h2>The Problem</h2>
-  <p>Frameworks exist to minimize the effort to create and maintain web pages. They do that well, but at a high costs and long-term commitment not suited for simple use-cases.</p>
+  <p class="lead">
+    <b class="brand">&lt;x-ui/&gt;</b> is a suite of custom HTML elements that
+    enable non-developers to turn static HTML files into single-page
+    web-applications, with many features to make rich web-based experiences, easily.
+  </p>
+
+  <h2>Not every site needs a framework.</h2>
   <p>
-    To get these time-saving features, developers must choose e framework or static site generation tool. These tools are often complex and time-consuming to learn, set up and
+    Frameworks exist out of necessity. You need them to minimize the effort
+    to efficiently create and maintain web pages.
+  </p>
+  <p>
+    Coding skills, framework expertise, build systems and app servers can
+    cost a lot or are often complex and time-consuming to learn, set up and
     operate.
   </p>
-  <p>Once a framework is adopted, you are locked-in and it's difficult to change direction, without a costly endeavor.</p>
-
-  <h3 style="clear: right">No Framework Necessary</h3>
   <p>
-    <b class="brand">&lt;x-ui/&gt;</b> is different. Without transpilation, a framework or even a build-process, developers get the same time-saving techniques (layouts, routing,
+    Once a framework is adopted, you are locked-in and it's difficult to change direction, without a costly endeavor.
+  </p>
+  <h3 style="clear: right">No Framework, No Problems.</h3>
+  <p>
+    <b class="brand">&lt;x-ui/&gt;</b> is different. Without transpilation, a framework or even a build-process,
+    developers get the same time-saving techniques (layouts, routing,
     data-binding, etc) using specialized elements directly in the HTML.
   </p>
   <p>
-    There is no need to check if your site is compatible -- if you can include a <b>&lt;script&gt;</b> tag, you can start turn your static HTML site into developer-friend
-    web-application today.
+    There is no need to check compatibility -- if you can include a <b>&lt;script&gt;</b> tag, you can
+    start turn your static HTML into a web-experience previously only possible with JavaScript.
+    Host it on your favorite static server -- there is no run-time and no server dependencies.
   </p>
-
-  <h3>Turbo-charged HTML</h3>
+  <h2>What it is not.</h2>
   <p>
-    Content routing, guided navigation, data-binding, dynamic content, and even event-based actions are simple to add to any page with little scripting an no framework.
-    <b>PLUS</b>, our convention-over-configuration approach dramatically simplifies complex functionality.
+    <b class="brand">&lt;x-ui/&gt;</b> experience elements add functionality, NOT design.
+    These elements work with your design and since it is just HTML, you can use it with
+    any component or UI library you want.
   </p>
 
-  <blockquote>These elements offer application functionality for websites built without a web-application.</blockquote>
 
   <h4>Features:</h4>
   <div class="accordion accordion-flush" id="specialFeatures">
     <div class="accordion-item">
       <h5 class="accordion-header" id="headingOne">
-        <button class="accordion-button collapsed fs-5" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+        <button class="accordion-button collapsed fs-5" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
           <i class="ri-route-line me-5"></i>
           Content Routing
         </button>
       </h5>
-      <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#specialFeatures">
+      <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+           data-bs-parent="#specialFeatures">
         <div class="accordion-body">
           <ul>
             <li>Application-like Routes w/Lazy Loaded HTML</li>
@@ -65,12 +84,14 @@
     </div>
     <div class="accordion-item">
       <h5 class="accordion-header" id="headingTwo">
-        <button class="accordion-button collapsed fs-5" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        <button class="accordion-button collapsed fs-5" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
           <i class="ri-direction-line me-5"></i>
           Guided Navigation
         </button>
       </h5>
-      <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#specialFeatures">
+      <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+           data-bs-parent="#specialFeatures">
         <div class="accordion-body">
           <ul>
             <li>Automatic Back & Forward Resolution</li>
@@ -85,12 +106,14 @@
     </div>
     <div class="accordion-item">
       <h5 class="accordion-header" id="headingThree">
-        <button class="accordion-button collapsed fs-5" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+        <button class="accordion-button collapsed fs-5" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
           <i class="ri-empathize-line me-5"></i>
           Embedded Data
         </button>
       </h5>
-      <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#specialFeatures">
+      <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+           data-bs-parent="#specialFeatures">
         <div class="accordion-body">
           <ul>
             <li>Data Tags to render personalized data from a variety of sources</li>
@@ -103,12 +126,14 @@
     </div>
     <div hidden class="accordion-item">
       <h5 class="accordion-header" id="headingFour">
-        <button class="accordion-button collapsed fs-5" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
+        <button class="accordion-button collapsed fs-5" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
           <i class="ri-slideshow-line me-5"></i>
           Made for Presentations
         </button>
       </h5>
-      <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#specialFeatures">
+      <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+           data-bs-parent="#specialFeatures">
         <div class="accordion-body">
           <ul>
             <li>Interactive Videos</li>
@@ -122,17 +147,14 @@
     </div>
   </div>
 
-  <h4>What it is not.</h4>
-  <p>
-    <b class="brand">&lt;x-ui/&gt;</b> experience elements are not a UI Framework. These elements work with the UI framework of your choice and offer no opinions on how your
-    content should look.
-  </p>
+
 
   <h4>Built with Love</h4>
   <ul>
     <li>
       <b>Fast:</b> Lightweight and
-      <a href="https://developers.google.com/speed/pagespeed/insights/?url=https://demo.x-ui.dev" rel="noreferrer" target="_blank"> lightening fast</a>: No Framework & Lazy Loaded
+      <a href="https://developers.google.com/speed/pagespeed/insights/?url=https://demo.x-ui.dev" rel="noreferrer"
+         target="_blank"> lightening fast</a>: No Framework & Lazy Loaded
     </li>
     <li><b>Themeable:</b> BYO UI and themes. <b class="brand">&lt;x-ui/&gt;</b> stays out of the way.</li>
     <li><b>Extensible:</b> BYO Data with a plugin system to easily connect your data</li>
@@ -149,7 +171,9 @@
   </x-data-display>
 
   <a href="https://view.do" target="_blank" rel="noopener" title="view.DO Homepage">
-    <img id="viewdo-logo" loading="lazy" alt="view.DO Logo" src="https://static.view.do/view-do/viewdo-logo-color.svg" width="200vw" height="100" />
+    <img id="viewdo-logo" loading="lazy" alt="view.DO Logo"
+         src="https://static.view.do/view-do/viewdo-logo-color.svg"
+         width="200vw" height="100" />
   </a>
 
   <div class="x-nav-bottom">
