@@ -1,0 +1,28 @@
+:host {
+  display: block;
+  width: 85vw;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+
+.background-box {
+  background: gray;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  padding: 1rem 2rem;
+}
+
+.title-banner {
+ background: #2b2b2b;
+ color: white;
+ padding: 1rem 2rem;
+}
+
+blockquote {
+  background: black;
+  border-radius: 5px;
+  color: white;
+  padding: 1rem;
+}

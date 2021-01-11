@@ -1,0 +1,34 @@
+<x-spacer height="5rem"></x-spacer>
+
+<section class="grid grid-cols-1 max-w-screen-lg m-auto">
+  <div class="text-center">
+    <h1 class="text-3xl font-bold mb-3">Alright, <x-data-display text="{storage:name}"></x-data-display>.</h1>
+    <h2>Since you're all about <b><x-data-display text="{storage:animal}"></x-data-display>s...</b>
+
+      <!-- VERSION 1 -->
+      <x-data-display hidden x-show-when="'{storage:speed}' == 'fast'">
+        <template>
+          and evidently you're the <em>fastest human on the planet</em>, lets find some activities to slow you down a bit:
+        </template>
+      </x-data-display>
+
+      <x-data-display hidden x-show-when="'{storage:speed}' == 'slow'">
+        <template>
+          but could use some help with your fitness, check out these sources for reaching your potential:
+        </template>
+      </x-data-display>
+    </h2>
+  </div>
+
+  <x-spacer height="3rem"></x-spacer>
+
+  <!-- Insert TOC Component -->
+  <dxp-direct-scene></dxp-direct-scene>
+
+  <div class="x-nav-bottom">
+    <button slot="start" x-back class="btn btn-light">
+      <i class="ri-arrow-left-s-line"></i>
+      Back
+    </button>
+  </div>
+</section>

@@ -1,0 +1,45 @@
+<x-spacer height="5rem"></x-spacer>
+
+<section class="grid grid-cols-1 max-w-screen-lg m-auto">
+  <div class="text-center">
+    <h1 class="text-3xl font-bold mb-3">Welcome to Video Scene 3</h1>
+    <h2>Watch the video or click continue to proceed to the next scene.</h2>
+  </div>
+
+  <x-spacer height="3rem"></x-spacer>
+
+  <vm-player class="">
+    <vm-video cross-origin="true" poster="https://media.vimejs.com/poster.png">
+      <source
+        data-src="https://media.vimejs.com/720p.mp4"
+        type="video/mp4"
+      />
+      <track
+        default
+        kind="subtitles"
+        src="https://media.vimejs.com/subs/english.vtt"
+        srclang="en"
+        label="English"
+      />
+    </vm-video>
+
+    <vm-default-ui></vm-default-ui>
+  </vm-player>
+
+  <x-spacer height="3rem"></x-spacer>
+
+  <button x-next class="m-auto w-1/4 flex items-center justify-center rounded-md bg-black text-white" type="submit">
+    Next: Form Scene
+  </button>
+
+  <div class="x-nav-bottom">
+    <button slot="start" x-back class="btn btn-light">
+      <i class="ri-arrow-left-s-line"></i>
+      Back
+    </button>
+    <button slot="end" x-next class="btn btn-primary">
+      Next
+      <i class="ri-arrow-right-s-line"></i>
+    </button>
+  </div>
+</section>

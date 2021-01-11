@@ -1,0 +1,13 @@
+@import "../../../../../../node_modules/@vime/core/themes/default.css";
+
+dxp-toc-scene {
+  display: block;
+  width: 85vw;
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+button {
+  margin-top: 2rem;
+}

@@ -1,0 +1,48 @@
+// THEMATIC COLOR VARIBLES
+
+// Testing SASS variables
+$color1:                    #0f5a89;
+$color2:                    #8eb978;
+$color3:                    #fdd657;
+
+$color-tagline-text:        white;
+$color-tagline-bg:            darken( $color1, 10% );;
+
+$background-image:      url('https://storage.googleapis.com/viewdo-static/viewdo-testing/bg-animated3.svg');
+// Testing vanilla CSS variables
+:root{
+  --color1:                 #0f5a89;
+  --color2:                 #8eb978;
+  --color3:                 #fdd657;
+}
+
+
+body {
+  background: $background-image;
+  background-repeat: no-repeat;
+  background-position-y: 500px;
+}
+
+.bg-color1 {
+  background-color: $color1;
+}
+
+.text-color1 {
+  color: $color1;
+}
+
+.color-tagline-text {
+  color: $color-tagline-text;
+}
+
+.color-tagline-bg {
+  background-color: $color-tagline-bg;
+}
+
+.bg-color2 {
+  background-color: var(--color2);
+}
+
+.bg-color3 {
+  background-color: var(--color3);
+}

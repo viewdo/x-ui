@@ -1,0 +1,93 @@
+<x-spacer height="5rem"></x-spacer>
+
+<section class="flex justify-center">
+  <form class="flex-1 max-w-screen-lg px-5">
+    <div class="grid grid-cols-2 mb-8">
+      <div class="form-group pr-2">
+        <label>First Name</label>
+        <input type="text"
+          class="form-control"
+          id="input-firstname"
+          placeholder="Tobias"
+          required
+          onblur="localStorage.setItem('name', this.value)"
+          onchange="localStorage.setItem('name', this.value)"
+          value-from="{storage:name}">
+      </div>
+      <div class="form-group pl-2">
+        <label>Last Name</label>
+        <input type="text" class="form-control" id="input-lastname" placeholder="Funke" />
+      </div>
+    </div>
+    <div class="grid grid-cols-2 mb-8">
+      <div class="form-group pr-2">
+        <label>Email address</label>
+        <input type="email" class="form-control" id="input-email" aria-describedby="emailHelp" placeholder="Enter email" />
+      </div>
+      <div class="form-group pl-2">
+        <label>Phone</label>
+        <input type="number" class="form-control" id="input-password" placeholder="111-111-1111" />
+      </div>
+    </div>
+
+
+    <div class="form-check mb-8">
+      <input type="checkbox" class="form-check-input" id="input-checkbox1" />
+      <label class="form-check-label">Do you like checkboxes?</label>
+    </div>
+
+    <div>
+      <label>How about some radio options?</label>
+      <div class="grid grid-cols-3 mb-8">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="input-radio1">
+          <label class="form-check-label" for="input-radio1">
+            Option 1
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="input-radio2">
+          <label class="form-check-label" for="input-radio2">
+            Option 2
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="input-radio3" checked>
+          <label class="form-check-label" for="input-radio3">
+            Default Checked Option
+          </label>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="form-check form-switch mb-8">
+      <input type="checkbox" class="form-check-input" id="input-checkbox3" />
+      <label class="form-check-label">Do you prefer switches?</label>
+    </div>
+
+    <div class="form-group mb-8">
+      <label>What is your age range?</label>
+      <select class="form-control" id="input-dropdown">
+        <option>18-24</option>
+        <option>25-30</option>
+        <option>31-39</option>
+        <option>40-49</option>
+        <option>50+</option>
+      </select>
+    </div>
+
+    <div class="form-group mb-8">
+      <label>Hit us with some thoughts:</label>
+      <textarea class="form-control" id="exampleFormControlTextarea1"></textarea>
+    </div>
+
+    <button x-next type="submit" class="bg-color1 text-white p-3 rounded-md">
+      Submit
+    </button>
+
+  </form>
+
+  <x-spacer height="3rem"></x-spacer>
+
+</section>

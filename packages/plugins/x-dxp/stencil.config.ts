@@ -1,10 +1,11 @@
-import { Config } from '@stencil/core'
-import { sass } from '@stencil/sass'
+import { Config } from '@stencil/core';
+import { sass } from '@stencil/sass';
 
 export const config: Config = {
   namespace: 'x-dxp',
-  testing: {},
-  plugins: [sass()],
+  plugins: [
+    sass(),
+  ],
   outputTargets: [
     {
       type: 'dist',
@@ -18,19 +19,16 @@ export const config: Config = {
     },
     {
       type: 'docs-json',
-      file: '../../../www/data/x-dxp-components.json',
+      file: `../../../www/data/x-dxp-components.json`,
     },
     {
       type: 'www',
       buildDir: 'x-dxp',
-      serviceWorker: null, // Disable service workers
+      serviceWorker: null, // disable service workers
       copy: [
-        {
-          src: '**/*.md',
-          dest: 'docs',
-          keepDirStructure: true,
-        },
+        { src: 'demo' },
+        { src: '**/*.md' }
       ],
     },
   ],
-}
+};

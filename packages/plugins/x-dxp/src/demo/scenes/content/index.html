@@ -1,0 +1,65 @@
+<!-- <ion-content slot="content" id="main" class="ion-padding"> -->
+  <!-- <zero-md src="/docs/_scenes/content/index.md"></zero-md> -->
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <div class="ion-text-uppercase">
+          <h2>Glad you are here <x-data-display text="{storage:name?Friend}"></x-data-display>!</h2>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-align-items-center">
+      <ion-col size="6" class="ion-text-center">
+        <ion-button>
+          Get Started
+        </ion-button>
+      </ion-col>
+      <ion-col size="6" class="ion-text-center">
+        <ion-button>
+          Explore Now
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12" class="ion-text-center">
+        <div class="background-box">
+          <ion-img width="150" height="150" src="https://via.placeholder.com/150"></ion-img>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          </p>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12" class="ion-text-center">
+        <div class="background-box">
+          <h1>Is view.DO for you?</h1>
+          <h2 color="primary">Trusted by clients in 7 different countries</h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          </p>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <!-- Footer Navigation -->
+    <ion-toolbar class="x-nav-bottom">
+      <x-link slot="start" href="/home">
+        <ion-button color="light">
+          <ion-icon slot="start" name="caret-back-outline"></ion-icon>
+          Home
+        </ion-button>
+      </x-link>
+      <x-link slot="end" href="/video">
+        <ion-button>
+          Next: Video Scene
+          <ion-icon slot="end" name="caret-forward-outline"></ion-icon>
+        </ion-button>
+      </x-link>
+    </ion-toolbar>
+
+  </ion-grid>

@@ -1,0 +1,69 @@
+// @import "../../../../node_modules/tailwindcss/tailwind.css";
+// @import "../../../../node_modules/tailwindcss/components";
+// @import "../../../../node_modules/tailwindcss/utilities";
+
+@import '../tailwind.css';
+@import './base.scss'; // shorthand notations for the compounded styles (button on video scene). Keep it minimal.
+@import './theme.scss'; // adds school-specific colors & imagery (bg, etc.).
+
+/*
+  Global App CSS
+  ----------------------
+  Use this file for styles that should be applied to all components.
+  For example, "font-family" within the "body" selector is a CSS property
+  most apps will want applied to all components.
+  Any global CSS variables should also be applied here.
+*/
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  margin: 0;
+  padding: 0;
+}
+
+.hide,
+[hidden] {
+  display: none;
+  visibility: hidden;
+}
+
+x-view,
+x-view-do {
+  #content {
+    min-height: 90%;
+    padding-bottom: 10ch;
+  }
+}
+
+.x-nav-bottom {
+
+  background-image: linear-gradient(to bottom, transparent, #fff);
+  bottom: 0;
+  height: 10ch;
+  left: 0;
+  position: fixed;
+  width: 100%;
+
+  [slot='end'] {
+    bottom: 2ch;
+    opacity: 1;
+    position: fixed;
+    right: 3ch;
+  }
+
+  [slot='start'] {
+    bottom: 2ch;
+    left: 3ch;
+    position: fixed;
+  }
+}
+
+
+h1 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+h3 {
+  font-weight: 300;
+}

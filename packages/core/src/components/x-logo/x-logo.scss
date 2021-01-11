@@ -1,0 +1,33 @@
+:host {
+  display: block;
+  --max-component-width: 250px;
+  --background-color: white;
+  --border: 2px solid pink;
+}
+
+div {
+  max-width: var(--max-component-width);
+  margin: 1rem auto;
+  padding: 0px 5%;
+  text-align: center;
+  background-color: var(--background-color);
+  border: var(--border);
+  border-radius: 4px;
+  a {
+    height: auto;
+    img {
+      position: relative;
+      padding: 1rem 0;
+      max-width: 100%;
+      min-width: 50px;
+      max-height: 3rem;
+    }
+  }
+}
+
+:host-context(body.dark) {
+  img {
+    filter: brightness(0) invert(1);
+  }
+}
+

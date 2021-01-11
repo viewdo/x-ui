@@ -1,0 +1,29 @@
+<x-spacer height="5rem"></x-spacer>
+
+<section class="grid grid-cols-1 max-w-screen-lg m-auto">
+  <div class="text-center">
+    <h1 class="text-3xl font-bold mb-3">We agree, <x-data-display text="{storage:animal}"></x-data-display>s RULE!</h1>
+    <h2>But could you outrun one?</h2>
+  </div>
+
+  <x-spacer height="3rem"></x-spacer>
+
+  <button x-next
+    class="m-auto my-2 p-2 w-1/4 flex items-center justify-center rounded-md bg-black text-white"
+    onclick="localStorage.setItem('speed', 'fast')">
+    Yeah, duh.
+  </button>
+
+  <button x-next
+    class="m-auto my-2 p-2 w-1/4 flex items-center justify-center rounded-md bg-black text-white"
+    onclick="localStorage.setItem('speed', 'slow')">
+    Absolutely not!
+  </button>
+
+  <div class="x-nav-bottom">
+    <button slot="start" x-back class="btn btn-light">
+      <i class="ri-arrow-left-s-line"></i>
+      Back
+    </button>
+  </div>
+</section>

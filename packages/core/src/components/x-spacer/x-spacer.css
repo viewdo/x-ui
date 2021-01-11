@@ -1,0 +1,9 @@
+:host {
+  --spacer-height: 3rem;
+}
+
+div {
+  width: 100%;
+  height: var(--spacer-height);
+  display: block;
+}

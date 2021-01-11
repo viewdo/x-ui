@@ -9,6 +9,8 @@ import { Namespace } from "./models/namespace";
 import { Experience } from ".";
 import { Comparison } from "./services/data/parser";
 export namespace Components {
+    interface ContentScene {
+    }
     interface DxpActionListener {
         /**
           * When debug is true, a reactive table of values is displayed.
@@ -37,6 +39,9 @@ export namespace Components {
     }
     interface DxpDataProvider {
     }
+    interface DxpDirectScene {
+        "tocOptions": object;
+    }
     interface DxpExperience {
         /**
           * Enable Debug mode to prevent API calls. (falls back to ?debug )
@@ -53,9 +58,9 @@ export namespace Components {
          */
         "experienceData": string;
         /**
-          * This method gets waits for the experience.
+          * This method waits for the experience.
          */
-        "getExperience": (timeout: number) => Promise<Experience>;
+        "getExperience": (timeout: number) => Promise<Experience | void>;
         /**
           * Enable Debug mode to prevent API calls.
           * @default false
@@ -89,6 +94,8 @@ export namespace Components {
     }
     interface DxpExperienceDemo {
     }
+    interface DxpFormScene {
+    }
     interface DxpShow {
         /**
           * A JS-based expression to capture data from the the data model.
@@ -106,8 +113,28 @@ export namespace Components {
          */
         "to": any;
     }
+    interface DxpTocScene {
+        "tocOptions": object;
+    }
+    interface DxpVideoPlayer {
+        "youtubeId": string;
+    }
+    interface DxpVideoScene {
+        "buttonLabel": string;
+        "ccUrl": string;
+        "mainTitle": string;
+        "posterUrl": string;
+        "subtitle": string;
+        "videoUrl": string;
+    }
 }
 declare global {
+    interface HTMLContentSceneElement extends Components.ContentScene, HTMLStencilElement {
+    }
+    var HTMLContentSceneElement: {
+        prototype: HTMLContentSceneElement;
+        new (): HTMLContentSceneElement;
+    };
     interface HTMLDxpActionListenerElement extends Components.DxpActionListener, HTMLStencilElement {
     }
     var HTMLDxpActionListenerElement: {
@@ -126,6 +153,12 @@ declare global {
         prototype: HTMLDxpDataProviderElement;
         new (): HTMLDxpDataProviderElement;
     };
+    interface HTMLDxpDirectSceneElement extends Components.DxpDirectScene, HTMLStencilElement {
+    }
+    var HTMLDxpDirectSceneElement: {
+        prototype: HTMLDxpDirectSceneElement;
+        new (): HTMLDxpDirectSceneElement;
+    };
     interface HTMLDxpExperienceElement extends Components.DxpExperience, HTMLStencilElement {
     }
     var HTMLDxpExperienceElement: {
@@ -138,22 +171,54 @@ declare global {
         prototype: HTMLDxpExperienceDemoElement;
         new (): HTMLDxpExperienceDemoElement;
     };
+    interface HTMLDxpFormSceneElement extends Components.DxpFormScene, HTMLStencilElement {
+    }
+    var HTMLDxpFormSceneElement: {
+        prototype: HTMLDxpFormSceneElement;
+        new (): HTMLDxpFormSceneElement;
+    };
     interface HTMLDxpShowElement extends Components.DxpShow, HTMLStencilElement {
     }
     var HTMLDxpShowElement: {
         prototype: HTMLDxpShowElement;
         new (): HTMLDxpShowElement;
     };
+    interface HTMLDxpTocSceneElement extends Components.DxpTocScene, HTMLStencilElement {
+    }
+    var HTMLDxpTocSceneElement: {
+        prototype: HTMLDxpTocSceneElement;
+        new (): HTMLDxpTocSceneElement;
+    };
+    interface HTMLDxpVideoPlayerElement extends Components.DxpVideoPlayer, HTMLStencilElement {
+    }
+    var HTMLDxpVideoPlayerElement: {
+        prototype: HTMLDxpVideoPlayerElement;
+        new (): HTMLDxpVideoPlayerElement;
+    };
+    interface HTMLDxpVideoSceneElement extends Components.DxpVideoScene, HTMLStencilElement {
+    }
+    var HTMLDxpVideoSceneElement: {
+        prototype: HTMLDxpVideoSceneElement;
+        new (): HTMLDxpVideoSceneElement;
+    };
     interface HTMLElementTagNameMap {
+        "content-scene": HTMLContentSceneElement;
         "dxp-action-listener": HTMLDxpActionListenerElement;
         "dxp-data": HTMLDxpDataElement;
         "dxp-data-provider": HTMLDxpDataProviderElement;
+        "dxp-direct-scene": HTMLDxpDirectSceneElement;
         "dxp-experience": HTMLDxpExperienceElement;
         "dxp-experience-demo": HTMLDxpExperienceDemoElement;
+        "dxp-form-scene": HTMLDxpFormSceneElement;
         "dxp-show": HTMLDxpShowElement;
+        "dxp-toc-scene": HTMLDxpTocSceneElement;
+        "dxp-video-player": HTMLDxpVideoPlayerElement;
+        "dxp-video-scene": HTMLDxpVideoSceneElement;
     }
 }
 declare namespace LocalJSX {
+    interface ContentScene {
+    }
     interface DxpActionListener {
         /**
           * When debug is true, a reactive table of values is displayed.
@@ -181,6 +246,9 @@ declare namespace LocalJSX {
         "modify"?: string;
     }
     interface DxpDataProvider {
+    }
+    interface DxpDirectScene {
+        "tocOptions"?: object;
     }
     interface DxpExperience {
         /**
@@ -238,6 +306,8 @@ declare namespace LocalJSX {
     }
     interface DxpExperienceDemo {
     }
+    interface DxpFormScene {
+    }
     interface DxpShow {
         /**
           * A JS-based expression to capture data from the the data model.
@@ -255,25 +325,51 @@ declare namespace LocalJSX {
          */
         "to"?: any;
     }
+    interface DxpTocScene {
+        "tocOptions"?: object;
+    }
+    interface DxpVideoPlayer {
+        "youtubeId"?: string;
+    }
+    interface DxpVideoScene {
+        "buttonLabel"?: string;
+        "ccUrl"?: string;
+        "mainTitle"?: string;
+        "posterUrl"?: string;
+        "subtitle"?: string;
+        "videoUrl"?: string;
+    }
     interface IntrinsicElements {
+        "content-scene": ContentScene;
         "dxp-action-listener": DxpActionListener;
         "dxp-data": DxpData;
         "dxp-data-provider": DxpDataProvider;
+        "dxp-direct-scene": DxpDirectScene;
         "dxp-experience": DxpExperience;
         "dxp-experience-demo": DxpExperienceDemo;
+        "dxp-form-scene": DxpFormScene;
         "dxp-show": DxpShow;
+        "dxp-toc-scene": DxpTocScene;
+        "dxp-video-player": DxpVideoPlayer;
+        "dxp-video-scene": DxpVideoScene;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "content-scene": LocalJSX.ContentScene & JSXBase.HTMLAttributes<HTMLContentSceneElement>;
             "dxp-action-listener": LocalJSX.DxpActionListener & JSXBase.HTMLAttributes<HTMLDxpActionListenerElement>;
             "dxp-data": LocalJSX.DxpData & JSXBase.HTMLAttributes<HTMLDxpDataElement>;
             "dxp-data-provider": LocalJSX.DxpDataProvider & JSXBase.HTMLAttributes<HTMLDxpDataProviderElement>;
+            "dxp-direct-scene": LocalJSX.DxpDirectScene & JSXBase.HTMLAttributes<HTMLDxpDirectSceneElement>;
             "dxp-experience": LocalJSX.DxpExperience & JSXBase.HTMLAttributes<HTMLDxpExperienceElement>;
             "dxp-experience-demo": LocalJSX.DxpExperienceDemo & JSXBase.HTMLAttributes<HTMLDxpExperienceDemoElement>;
+            "dxp-form-scene": LocalJSX.DxpFormScene & JSXBase.HTMLAttributes<HTMLDxpFormSceneElement>;
             "dxp-show": LocalJSX.DxpShow & JSXBase.HTMLAttributes<HTMLDxpShowElement>;
+            "dxp-toc-scene": LocalJSX.DxpTocScene & JSXBase.HTMLAttributes<HTMLDxpTocSceneElement>;
+            "dxp-video-player": LocalJSX.DxpVideoPlayer & JSXBase.HTMLAttributes<HTMLDxpVideoPlayerElement>;
+            "dxp-video-scene": LocalJSX.DxpVideoScene & JSXBase.HTMLAttributes<HTMLDxpVideoSceneElement>;
         }
     }
 }

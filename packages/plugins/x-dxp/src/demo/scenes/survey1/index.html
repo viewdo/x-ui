@@ -1,0 +1,52 @@
+<x-spacer height="5rem"></x-spacer>
+
+<section class="grid grid-cols-1 max-w-screen-lg m-auto">
+  <div class="text-center">
+    <h1 class="text-3xl font-bold mb-3">Which animal do you think is the coolest?</h1>
+    <h2>All animals rule, of course. But we need a single selection.</h2>
+  </div>
+
+  <x-spacer height="3rem"></x-spacer>
+
+
+  <!-- DATA REPEAT -->
+  <x-data-repeat items="['one','two','three']">
+    <template>
+      <button x-next
+        class="m-auto my-2 p-2 w-1/4 flex items-center justify-center rounded-md bg-black text-white"
+        onclick="localStorage.setItem('animal', '{data:item}')">
+        {data:item}
+      </button>
+    </template>
+  </x-data-repeat>
+
+
+  <!-- INDIVUDUALLY LISTED BUTTONS -->
+  <button x-next
+    class="m-auto my-2 p-2 w-1/4 flex items-center justify-center rounded-md bg-black text-white"
+    onclick="localStorage.setItem('animal', 'giraffe')">
+    Giraffe
+  </button>
+  <button x-next
+    class="m-auto my-2 p-2 w-1/4 flex items-center justify-center rounded-md bg-black text-white"
+    onclick="localStorage.setItem('animal', 'snow leopard')">
+    Snow Leopard
+  </button>
+  <button x-next
+    class="m-auto my-2 p-2 w-1/4 flex items-center justify-center rounded-md bg-black text-white"
+    onclick="localStorage.setItem('animal', 'peregrine falcon')">
+    Peregrine falcon
+  </button>
+  <button x-next
+    class="m-auto my-2 p-2 w-1/4 flex items-center justify-center rounded-md bg-black text-white"
+    onclick="localStorage.setItem('animal', 'dinosaurs')">
+    Screw animals, dinosaurs rule!
+  </button>
+
+  <div class="x-nav-bottom">
+    <button slot="start" x-back class="btn btn-light">
+      <i class="ri-arrow-left-s-line"></i>
+      Back
+    </button>
+  </div>
+</section>
