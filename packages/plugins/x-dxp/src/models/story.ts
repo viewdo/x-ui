@@ -1,8 +1,8 @@
-import { Episode } from './episode'
-import { ProgressMap } from './progressmap'
-import { StoryEvent } from './storyevent'
-import { StoryInput } from './storyinput'
-import { Template } from './template'
+import { Episode } from './episode';
+import { ProgressMap } from './progressmap';
+import { StoryEvent } from './storyevent';
+import { StoryInput } from './storyinput';
+import { Template } from './template';
 
 export class Story {
   public key: string

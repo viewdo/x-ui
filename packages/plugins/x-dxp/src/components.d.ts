@@ -53,9 +53,9 @@ export namespace Components {
          */
         "experienceData": string;
         /**
-          * This method gets waits for the experience.
+          * This method waits for the experience.
          */
-        "getExperience": (timeout: number) => Promise<Experience>;
+        "getExperience": (timeout: number) => Promise<Experience | void>;
         /**
           * Enable Debug mode to prevent API calls.
           * @default false

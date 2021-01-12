@@ -1,4 +1,4 @@
-import { LoggingService } from './logging'
+import { LoggingService } from './logging';
 
 export function requireValue(value: string, name: string): void {
   if (value == undefined || value == '') {
@@ -19,6 +19,7 @@ export function getLocalDate(utcDateString: string, justDate = false): string {
 
     return localDate.toISOString().replace('Z', '')
   }
+  return utcDateString;
 }
 
 export const formatter = new Intl.NumberFormat('en-US', {
@@ -90,12 +91,18 @@ export function stringToHash(value: string): string {
  * @param {boolean} debug - logs retry count to console if true
  * @returns {Promise} executes .then if successful otherwise .catch
  */
-export async function fetchRetry(url, options, retries, retryDelay, debug, logger: LoggingService) {
+export async function fetchRetry(
+  url: RequestInfo,
+  options: RequestInit | undefined,
+  retries: number,
+  retryDelay: number | undefined,
+  debug: boolean | undefined,
+  logger: LoggingService) {
   retries = retries || 3
   retryDelay = retryDelay || 1000
 
   return new Promise((resolve, reject) => {
-    const wrappedFetch = (n) => {
+    const wrappedFetch = (n: number) => {
       if (debug) {
         logger.debug('offlineFetch[retrying] (' + n + ' of ' + retries + '): ' + url)
       }
