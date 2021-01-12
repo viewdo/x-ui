@@ -1,1 +1,1 @@
-export { Components, JSX } from './components.d'
+export { Components, JSX } from './components'

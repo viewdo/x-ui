@@ -1,5 +1,5 @@
-import { Config } from '@stencil/core';
-import { sass } from '@stencil/sass';
+import { Config } from '@stencil/core'
+import { sass } from '@stencil/sass'
 
 // Const scssVariables = 'src/scss/variables.scss';
 export const config: Config = {
@@ -26,7 +26,7 @@ export const config: Config = {
     },
     {
       type: 'docs-readme',
-      footer: 'view.DO : Experience Platform'
+      footer: 'view.DO : Experience Platform',
     },
     {
       type: 'docs-json',
