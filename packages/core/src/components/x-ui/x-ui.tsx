@@ -1,19 +1,19 @@
-import { Component, h, Host, Element, Event, EventEmitter, Listen, Prop, State, writeTask } from '@stencil/core'
-import { clearDataProviders } from '../../services/data/providers/factory'
+import { Component, Element, Event, EventEmitter, h, Host, Listen, Prop, State, writeTask } from '@stencil/core'
 import {
-  HistoryType,
-  IEventActionListener,
-  LocationSegments,
-  log,
-  debugIf,
-  RouterService,
-  interfaceState,
   actionBus,
   DataListener,
-  InterfaceListener,
+  debugIf,
   EventAction,
   eventBus,
+  HistoryType,
+  IEventActionListener,
+  InterfaceListener,
+  interfaceState,
+  LocationSegments,
+  log,
+  RouterService,
 } from '../../services'
+import { clearDataProviders } from '../../services/data/providers/factory'
 
 /**
  *  @set routing
@@ -99,7 +99,7 @@ export class XUI {
     eventName: 'x:actions',
     composed: true,
     cancelable: true,
-    bubbles: true,
+    bubbles: false,
   })
   actions!: EventEmitter
 

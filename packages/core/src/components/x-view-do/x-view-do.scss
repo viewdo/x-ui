@@ -1,8 +1,7 @@
 :host {
-  display: inherit;
-  flex: 0 1 auto;
+  display: block;
 }
 
-:host(.active-route-exact) {
-  display: block;
+:host([hidden]) {
+  display: none;
 }
