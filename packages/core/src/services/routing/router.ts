@@ -97,7 +97,7 @@ export class RouterService {
       return
     }
 
-    const parentSegments = history.location?.pathParts?.slice(0, history.location?.pathParts.length || 1 - 1)
+    const parentSegments = history.location?.pathParts?.slice(0, -1)
     if (parentSegments) {
       history.push(parentSegments.join('/'))
     } else {
