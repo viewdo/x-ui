@@ -1,5 +1,6 @@
 import { Component, Element, h, Host, Prop, State, Watch } from '@stencil/core'
 import { DATA_EVENTS, debugIf, eventBus, hasVisited, markVisit, MatchResults, resolveElementVisibility, resolveNext, Route, warn, wrapFragment } from '../..'
+import { resolveElementValues } from '../../services'
 import '../x-view-do/x-view-do'
 
 /**
@@ -146,6 +147,7 @@ export class XView {
   async componentDidRender() {
     debugIf(this.debug, `x-view: ${this.url} did render`)
     await resolveElementVisibility(this.el)
+    await resolveElementValues(this.el)
   }
 
   private async fetchHtml() {

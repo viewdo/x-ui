@@ -62,7 +62,7 @@
           app-title="view.DO :: <x-ui/>"
           transition="animate__animated animate__fadeIn"
           mode="hash">
-      <nav x-cloak class="navbar navbar-expand-sm sticky-lg-top">
+      <nav x-cloak class="navbar navbar-expand-sm sticky-md-top">
         <div class="container-fluid">
           <button
                   slot="start"
@@ -133,9 +133,9 @@
                    transition="animate__animated animate__rubberBand">
         </x-view-do>
 
-        <x-view-do url="profile" page-title="Profile" visit="optional">
+        <x-view url="profile" page-title="Profile">
           <x-include src="/docs/home/profile.html"></x-include>
-        </x-view-do>
+        </x-view>
 
 
       </x-view>

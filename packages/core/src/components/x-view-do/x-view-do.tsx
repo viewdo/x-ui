@@ -194,8 +194,9 @@ export class XViewDo {
     debugIf(this.debug, `x-view-do: ${this.url} will render`)
   }
 
-  componentDidRender() {
+  async componentDidRender() {
     debugIf(this.debug, `x-view-do: ${this.url} did render`)
+    await resolveElementValues(this.el)
   }
 
   private async fetchHtml() {
@@ -397,7 +398,9 @@ export class XViewDo {
           debugIf(debug, `x-view-do: presentation ended at ${time} [not redirecting]`)
           cancelAnimationFrame(this.timer)
           clearInterval(this.timer)
-          this.next('timer', timeUpdateEvent)
+          if (interfaceState.autoplay) {
+            this.next('timer', timeUpdateEvent)
+          }
         }
       }
 
