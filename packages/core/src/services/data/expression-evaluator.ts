@@ -29,7 +29,7 @@ export function hasExpression(valueExpression: string) {
 export async function resolveExpression(valueExpression: string, data?: any): Promise<string> {
   requireValue(valueExpression, 'valueExpression')
 
-  if (valueExpression == null || valueExpression === '') {
+  if (valueExpression === null || valueExpression === '') {
     return valueExpression
   }
 

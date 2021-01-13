@@ -117,21 +117,3 @@ export function getCookie(document: HTMLDocument, key: string): string | undefin
 export function setCookie(document: HTMLDocument, key: string, value: string, attributes?: CookieAttributes): void {
   document.cookie = encode(key, value, { path: '/', ...attributes })
 }
-
-export function removeCookie(document: HTMLDocument, key: string, attributes?: CookieAttributes): void {
-  setCookie(document, key, '', { ...attributes, expires: -1 })
-}
-
-export function listenCookieChange(callback: (res: { oldValue: string; newValue: string }) => void, interval = 1000) {
-  let lastCookie = document.cookie
-  setInterval(() => {
-    const { cookie } = document
-    if (cookie !== lastCookie) {
-      try {
-        callback({ oldValue: lastCookie, newValue: cookie })
-      } finally {
-        lastCookie = cookie
-      }
-    }
-  }, interval)
-}

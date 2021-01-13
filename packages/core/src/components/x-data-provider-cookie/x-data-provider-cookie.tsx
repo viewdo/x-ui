@@ -6,8 +6,7 @@ import { CookieConsent, CookieProvider, DataProviderRegistration, DATA_COMMANDS,
  */
 @Component({
   tag: 'x-data-provider-cookie',
-  styleUrl: 'x-data-provider-cookie.scss',
-  shadow: true,
+  shadow: false,
 })
 export class XDataProviderCookie {
   private customProvider!: IDataProvider
@@ -28,20 +27,6 @@ export class XDataProviderCookie {
   @Prop() skipConsent = false
 
   /**
-   * This event is raised when the component obtains
-   * consent from the user to use cookies.
-   * The data-provider system should capture this event
-   * and register the provider for use in expressions.
-   */
-  @Event({
-    eventName: 'actionEvent',
-    bubbles: true,
-    composed: true,
-    cancelable: true,
-  })
-  register!: EventEmitter<EventAction<DataProviderRegistration>>
-
-  /**
    * This event is raised when the consents to cookies.
    */
   @Event({
@@ -53,7 +38,21 @@ export class XDataProviderCookie {
   didConsent!: EventEmitter<CookieConsent>
 
   private get consentKey() {
-    return 'cookie-consent'
+    return 'consent'
+  }
+
+  private registerProvider() {
+    const customEvent = new CustomEvent<EventAction<DataProviderRegistration>>('x:actions', {
+      detail: {
+        topic: DATA_TOPIC,
+        command: DATA_COMMANDS.RegisterDataProvider,
+        data: {
+          name: 'cookie',
+          provider: this.customProvider,
+        },
+      },
+    })
+    this.el.ownerDocument.body.dispatchEvent(customEvent)
   }
 
   async componentWillLoad() {
@@ -61,51 +60,34 @@ export class XDataProviderCookie {
     const consented = await this.customProvider.get(this.consentKey)
     if (consented) {
       this.hide = true
-      this.register.emit({
-        topic: DATA_TOPIC,
-        command: DATA_COMMANDS.RegisterDataProvider,
-        data: {
-          name: 'cookie',
-          provider: this.customProvider,
-        },
-      })
-      return
-    }
-
-    if (this.hideWhen) {
+      this.registerProvider()
+    } else if (this.hideWhen) {
       this.hide = await evaluatePredicate(this.hideWhen)
-    }
-
-    if (this.skipConsent) {
+    } else if (this.skipConsent) {
       this.hide = true
     }
   }
 
   componentDidLoad() {
-    const acceptElement = this.el.querySelector('[x-accept]')
-    acceptElement?.addEventListener('click', (e) => {
-      e.preventDefault()
-      this.handleConsentResponse(true)
-    })
+    if (!this.hide) {
+      const acceptElement = this.el.querySelector('[x-accept]')
+      acceptElement?.addEventListener('click', async (e) => {
+        e.preventDefault()
+        await this.handleConsentResponse(true)
+      })
 
-    const rejectElement = this.el.querySelector('[x-reject]')
-    rejectElement?.addEventListener('click', (e) => {
-      e.preventDefault()
-      this.handleConsentResponse(false)
-    })
+      const rejectElement = this.el.querySelector('[x-reject]')
+      rejectElement?.addEventListener('click', async (e) => {
+        e.preventDefault()
+        await this.handleConsentResponse(false)
+      })
+    }
   }
 
   private async handleConsentResponse(consented: boolean) {
     if (consented) {
-      this.register.emit({
-        topic: DATA_TOPIC,
-        command: DATA_COMMANDS.RegisterDataProvider,
-        data: {
-          name: 'cookie',
-          provider: this.customProvider,
-        },
-      })
-      await this.customProvider.set(this.consentKey, 'true')
+      this.registerProvider()
+      await this.customProvider.set(this.consentKey, consented.toString())
     }
 
     this.didConsent.emit({ consented })

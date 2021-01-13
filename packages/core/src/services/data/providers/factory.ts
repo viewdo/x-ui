@@ -1,7 +1,7 @@
-import { IDataProvider } from '../interfaces'
-import { requireValue } from '../../utils/misc-utils'
-import { debugIf } from '../../logging'
 import { interfaceState } from '../../interface'
+import { debugIf } from '../../logging'
+import { requireValue } from '../../utils/misc-utils'
+import { IDataProvider } from '../interfaces'
 
 type DataProviders = Record<string, IDataProvider>
 
@@ -18,7 +18,8 @@ export function addDataProvider(name: string, provider: IDataProvider) {
   }
 
   providers[name.toLowerCase()] = provider
-  debugIf(interfaceState.debug, `data-provider: ${name} registered`)
+
+  debugIf(interfaceState.debug && name !== 'data', `data-provider: ${name} registered`)
 }
 
 export function getDataProvider(name: string): IDataProvider {
