@@ -14,14 +14,15 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run test:core"
+      "pre-commit": "npm run pre:commit"
     }
   },
   "scripts": {
     "npm:install": "npx yarn",
-    "build:core": "yarn workspace @viewdo/x-ui run build",
+    "build": "yarn workspace @viewdo/x-ui run build",
     "start:core": "yarn workspace @viewdo/x-ui run start",
-    "test:core": "yarn workspace @viewdo/x-ui run test --cwd packages/core",
+    "watch:core": "yarn workspace @viewdo/x-ui run build:watch",
+    "test": "yarn workspace @viewdo/x-ui run test --cwd packages/core",
     "--- dev ---": "---------------",
     "display-browser-support": "browserslist --stats && echo '' && browserslist --coverage && echo '' && echo 'See more at https://browserl.ist/'",
     "--- format ---": "---------------",
@@ -41,7 +42,7 @@
     "docker:build": "docker build -t viewdo/x-ui-docs .",
     "docker:push": "docker push viewdo/x-ui-docs",
     "semantic-release": "semantic-release",
-    "pre:commit": "run-p lint test:core"
+    "pre:commit": "run-p lint test"
   },
   "devDependencies": {
     "@babel/core": "7.12.10",
@@ -90,7 +91,11 @@
     "yargs": "16.2.0"
   },
   "jest": {
-    "preset": "@stencil/core/testing"
+    "preset": "@stencil/core/testing",
+    "testPathIgnorePatterns": [
+      "<rootDir>/.scratch/",
+      "dist"
+    ]
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
@@ -130,26 +135,25 @@
     "space": 2,
     "prettier": true,
     "rules": {
-      "import/extensions": [
-        "error",
-        "ignorePackages",
-        {
-          "js": "never",
-          "jsx": "never",
-          "ts": "never",
-          "tsx": "never"
-        }
-      ],
-      "unicorn/no-abusive-eslint-disable": "off",
-      "unicorn/prevent-abbreviations": "off",
+      "new-cap": "off",
+      "no-useless-call": "off",
+      "import/no-unassigned-import": "off",
+      "import/extensions": "off",
+      "no-await-in-loop": "off",
+      "no-alert": "off",
+      "max-params": "off",
+      "complexity": "off",
       "@typescript-eslint/no-extraneous-class": "off",
       "@typescript-eslint/member-ordering": "off",
       "@typescript-eslint/no-dynamic-delete": "off",
       "@typescript-eslint/prefer-nullish-coalescing": "off",
       "@typescript-eslint/no-confusing-void-expression": "off",
-      "new-cap": "off",
-      "no-useless-call": "off",
-      "import/no-unassigned-import": "off"
+      "@typescript-eslint/restrict-template-expressions": "off",
+      "@typescript-eslint/no-implicit-any-catch": "off",
+      "@typescript-eslint/prefer-regexp-exec": "off",
+      "unicorn/no-abusive-eslint-disable": "off",
+      "unicorn/prevent-abbreviations": "off",
+      "unicorn/no-array-reduce": "off"
     }
   }
 }

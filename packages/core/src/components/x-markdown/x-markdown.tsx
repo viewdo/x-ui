@@ -69,8 +69,8 @@ export class XMarkdown {
     this.content = div.innerHTML
   }
 
-  componentDidRender() {
-    resolveElementVisibility(this.el)
+  async componentDidRender() {
+    await resolveElementVisibility(this.el)
     if (this.router) {
       this.el.querySelectorAll('a[href^=http]').forEach((a) => {
         a.addEventListener('click', (e) => {
@@ -91,9 +91,8 @@ export class XMarkdown {
       const response = await fetch(src)
       if (response.status === 200) {
         const data = await response.text()
-        // eslint-disable-next-line 7015
         const win = window as any
-        return win['marked'] ? win['marked'](data, { baseUrl: this.baseUrl }) : null
+        return win.marked ? win.marked(data, { baseUrl: this.baseUrl }) : null
       }
 
       warn(`x-markdown: unable to retrieve from ${this.src}`)
@@ -107,7 +106,7 @@ export class XMarkdown {
     if (!element?.textContent) return
     const md = this.dedent(element.textContent)
     const win = window as any
-    return win['marked'] ? win['marked'](md) : null
+    return win.marked ? win.marked(md) : null
   }
 
   private dedent(innerText: string) {
@@ -124,8 +123,8 @@ export class XMarkdown {
       n.classList.add(`language-${lang}`)
     })
     const win = window as any
-    const prism = win['Prism']
-    if (prism && prism.highlightAllUnder) {
+    const prism = win.Prism
+    if (prism?.highlightAllUnder) {
       prism.highlightAllUnder(container)
     }
   }

@@ -33,5 +33,5 @@ module.exports = {
     "class-methods-use-this": 0,
     "no-undef": 0
   },
-  "ignorePatterns": "__mocks__"
+  "ignorePatterns": ["__mocks__"]
 }

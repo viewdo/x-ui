@@ -1,8 +1,8 @@
 /* istanbul ignore file */
 
-import { LocationSegments, MatchOptions, MatchResults } from '../interfaces';
-import { valueEqual } from './location-utils';
-import { Key, Path, pathToRegexp } from './path-to-regex';
+import { LocationSegments, MatchOptions, MatchResults } from '../interfaces'
+import { valueEqual } from './location-utils'
+import { Key, Path, pathToRegexp } from './path-to-regex'
 
 interface CompileOptions {
   end: boolean
@@ -38,7 +38,7 @@ const compilePath = (pattern: Path, options: CompileOptions): { re: RegExp; keys
 /**
  * Public API for matching a URL pathname to a path pattern.
  */
-export function matchPath(location: LocationSegments, options: MatchOptions = {}): MatchResults|null {
+export function matchPath(location: LocationSegments, options: MatchOptions = {}): MatchResults | null {
   if (typeof options === 'string') {
     options = { path: options }
   }
@@ -60,7 +60,7 @@ export function matchPath(location: LocationSegments, options: MatchOptions = {}
     return null
   }
 
-  const result = <MatchResults>{
+  const result: MatchResults = {
     path, // The path pattern used to match
     url: path === '/' && url === '' ? '/' : url, // The matched portion of the URL
     isExact, // Whether or not we matched exactly
@@ -78,11 +78,11 @@ export function matchPath(location: LocationSegments, options: MatchOptions = {}
 }
 
 export const matchesAreEqual = (a: MatchResults | null, b: MatchResults | null) => {
-  if (a == null && b == null) {
+  if (a === null && b === null) {
     return true
   }
 
-  if (b == null) {
+  if (b === null) {
     return false
   }
 

@@ -1,12 +1,13 @@
 // Adapted from the https://github.com/ReactTraining/history and converted to TypeScript
 
-import { warnIf } from '../../logging';
-import { LocationSegments, Prompt, RouterHistory } from '../interfaces';
-import { getConfirmation } from '../utils/browser-utils';
-import { createKey, createLocation, locationsAreEqual } from '../utils/location-utils';
-import { supportsGoWithoutReloadUsingHash } from '../utils/nav-utils';
-import { addLeadingSlash, createPath, hasBasename, stripBasename, stripLeadingSlash, stripTrailingSlash } from '../utils/path-utils';
-import { createTransitionManager } from './createTransitionManager';
+import { Listener } from '../../actions/interfaces'
+import { warnIf } from '../../logging'
+import { LocationSegments, Prompt, RouterHistory } from '../interfaces'
+import { getConfirmation } from '../utils/browser-utils'
+import { createKey, createLocation, locationsAreEqual } from '../utils/location-utils'
+import { supportsGoWithoutReloadUsingHash } from '../utils/nav-utils'
+import { addLeadingSlash, createPath, hasBasename, stripBasename, stripLeadingSlash, stripTrailingSlash } from '../utils/path-utils'
+import { createTransitionManager } from './transition-manager'
 
 export interface CreateHashHistoryOptions {
   getUserConfirmation?: (message: string, callback: (confirmed: boolean) => Record<string, unknown>) => Record<string, unknown>
@@ -40,7 +41,7 @@ export function createHashHistory(win: Window, props: CreateHashHistoryOptions =
   const globalLocation = win.location
   const globalHistory = win.history
   const canGoWithoutReload = supportsGoWithoutReloadUsingHash(win.navigator)
-  const keyLength = props.keyLength != null ? props.keyLength : 6
+  const keyLength = props.keyLength ? props.keyLength : 6
 
   const { getUserConfirmation = getConfirmation, hashType = 'slash' } = props
   const basename = props.basename ? stripTrailingSlash(addLeadingSlash(props.basename)) : ''
@@ -68,7 +69,8 @@ export function createHashHistory(win: Window, props: CreateHashHistoryOptions =
   const getDOMLocation = () => {
     let path = decodePath(getHashPath())
 
-    warnIf(!hasBasename(path, basename),
+    warnIf(
+      !hasBasename(path, basename),
       `${'You are attempting to use a basename on a page whose URL path does not begin with the basename. Expected path "'}${path}" to begin with "${basename}".`,
     )
 
@@ -93,10 +95,7 @@ export function createHashHistory(win: Window, props: CreateHashHistoryOptions =
     const path = getHashPath()
     const encodedPath = encodePath(path)
 
-    if (path !== encodedPath) {
-      // Ensure we always have a properly-encoded hash.
-      replaceHashPath(encodedPath)
-    } else {
+    if (path === encodedPath) {
       const location = getDOMLocation()
       const previousLocation = history.location
 
@@ -111,6 +110,9 @@ export function createHashHistory(win: Window, props: CreateHashHistoryOptions =
       ignorePath = null
 
       handlePop(location)
+    } else {
+      // Ensure we always have a properly-encoded hash.
+      replaceHashPath(encodedPath)
     }
   }
 
@@ -280,7 +282,7 @@ export function createHashHistory(win: Window, props: CreateHashHistoryOptions =
     }
   }
 
-  const listen = (listener: Function) => {
+  const listen = (listener: Listener) => {
     const unlisten = transitionManager.appendListener(listener)
     checkDOMListeners(win, 1)
 

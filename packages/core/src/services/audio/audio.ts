@@ -1,9 +1,9 @@
-import { Howl } from 'howler';
-import { EventEmitter } from '../actions/event-emitter';
-import { debug, warn } from '../logging';
-import { AudioInfo } from './audio-info';
-import { AUDIO_EVENTS } from './interfaces';
-import { trackPlayed } from './tracked';
+import { Howl } from 'howler'
+import { EventEmitter } from '../actions/event-emitter'
+import { debug, warn } from '../logging'
+import { AudioInfo } from './audio-info'
+import { AUDIO_EVENTS } from './interfaces'
+import { trackPlayed } from './tracked'
 
 export class AudioTrack extends AudioInfo {
   private readonly sound: Howl
@@ -14,7 +14,7 @@ export class AudioTrack extends AudioInfo {
     debug(`Loading howl: ${src}`)
     return new Howl({
       src,
-      loop: type == 'music' ? loop : false,
+      loop: type === 'music' ? loop : false,
       onload,
       onend,
       onloaderror: onerror,
@@ -36,7 +36,8 @@ export class AudioTrack extends AudioInfo {
         events.emit(AUDIO_EVENTS.Loaded, trackId)
       },
       () => {
-        this.loop ? events.emit(AUDIO_EVENTS.Looped, trackId) : events.emit(AUDIO_EVENTS.Ended, trackId)
+        if (this.loop) events.emit(AUDIO_EVENTS.Looped, trackId)
+        else events.emit(AUDIO_EVENTS.Ended, trackId)
       },
       (_id, error) => {
         warn(`x-audio: An error occurred for audio track ${trackId}: ${error}`)
@@ -81,9 +82,9 @@ export class AudioTrack extends AudioInfo {
   }
 
   start() {
-    if (this.state == 'loaded') {
+    if (this.state === 'loaded') {
       this.play()
-    } else if (this.state == 'loading') {
+    } else if (this.state === 'loading') {
       this.events.once(AUDIO_EVENTS.Loaded, () => {
         this.play()
       })

@@ -1,6 +1,6 @@
-import { debugIf } from '../../logging';
-import { InterfaceProvider } from '../interfaces';
-import { interfaceState } from '../state';
+import { debugIf } from '../../logging'
+import { InterfaceProvider } from '../interfaces'
+import { interfaceState } from '../state'
 
 let provider: InterfaceProvider
 

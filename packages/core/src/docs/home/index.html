@@ -1,6 +1,7 @@
 <!-- Tour -->
 <x-use script-src="https://unpkg.com/intro.js/minified/intro.min.js"
-       style-src="https://unpkg.com/intro.js/minified/introjs.min.css"> </x-use>
+       style-src="https://unpkg.com/intro.js/minified/introjs.min.css">
+</x-use>
 <div class="container container-fluid container-md mx-auto">
   <h1>Modern web-application functionality without leaving the comfort of HTML.</h1>
 
@@ -10,16 +11,19 @@
     to any HTML file with little scripting and no framework.
   </p>
 
-  <p class="p-2 lead bg-info bg-gradient text-white" style="display: flex; flex-direction: row; gap: 1ch">
+  <p class="p-2 lead bg-info bg-gradient text-white" style="display: flex; flex-direction: row; gap: 1ch"
+     data-intro="This intro script was referenced conditionally, keeping the page weight down if this exact page isn't rendered. Check out the <b>x-use</b> element. <br/><br/> <a href='components/x-use?group=content'>Learn more</a>. ">
     <i class="ri-play-line fs-1"></i>
     <span>
-      This documentation was created with these experience elements. View-source or <a onclick="introJs().start()">take
+      This documentation was created with these experience elements. View-source or <a class="fw-300" href
+         onclick="introJs().start();return false">take
         the tour</a> to see how complex routing, guided navigation,
       automatic presentations, data-binding and more is made possible!
     </span>
   </p>
 
-  <div class="float-end ms-3 mt-2 d-none d-sm-block">
+  <div class="float-end ms-3 mt-2 d-none d-sm-block"
+       data-intro="This content was fetched asynchronously from a separate file using 'content-src' with the parent <b>x-include</b> element. <br/><br/> <a href='components/x-include?group=navigation'>Learn more</a>.">
     <x-include src="/docs/guides.html"></x-include>
   </div>
 

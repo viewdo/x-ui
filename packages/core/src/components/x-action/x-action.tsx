@@ -39,10 +39,12 @@ export class XAction implements IActionElement {
       warn(`x-action: unable to fire action, missing topic`)
       return null
     }
+
     if (!this.command) {
       warn(`x-action: unable to fire action, missing command`)
       return null
     }
+
     return {
       topic: this.topic,
       command: this.command,

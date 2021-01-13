@@ -1,4 +1,4 @@
-import { AudioRequest, AudioType, EventEmitter } from '../..';
+import { AudioRequest, AudioType, EventEmitter } from '../..'
 
 export class AudioActionListener {
   constructor(public eventBus: EventEmitter, public actionBus: EventEmitter, public debug: boolean = false) {
@@ -17,16 +17,27 @@ export class AudioActionListener {
 
   public events: EventEmitter
 
-  public pause() {}
+  public pause() {
+    //
+  }
 
-  public resume() {}
+  public resume() {
+    //
+  }
 
-  public mute(_mute = false) {}
+  public mute(_mute = false) {
+    //
+  }
 
-  public seek(_type: AudioType, _trackId: string, _seek: number) {}
+  public seek(_type: AudioType, _trackId: string, _seek: number) {
+    //
+  }
 
-  public volume(_request: AudioRequest) {}
+  public volume(_request: AudioRequest) {
+    //
+  }
 
   destroy() {
+    //
   }
 }

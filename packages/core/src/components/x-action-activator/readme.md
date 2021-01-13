@@ -70,10 +70,15 @@ The **OnElementEvent** activation-strategy can be used anywhere within the **\<x
   <x-action ...></x-action>
   <x-action ...></x-action>
 </x-action-activator>
+<button id="submit">Enter</button>
 ```
 
+#### OnElementEvent: Default Element and Event
+
+The default activation is OnElementEvent and the default event is click. Also, if no target-element is supplied, it looks for the first element that isn't an action or script and attaches to its event.
+
 ```html
-<x-action-activator activate="OnElementEvent" target-event="click">
+<x-action-activator>
   <x-action ...></x-action>
   <x-action ...></x-action>
   <x-action ...></x-action>
@@ -86,14 +91,14 @@ The **OnElementEvent** activation-strategy can be used anywhere within the **\<x
 
 ## Properties
 
-| Property                | Attribute        | Description                                                                                                                                                                                                     | Type                                                                                                                                                | Default     |
-| ----------------------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `activate` _(required)_ | `activate`       | The activation strategy to use for the contained actions.                                                                                                                                                       | `ActionActivationStrategy.AtTime \| ActionActivationStrategy.OnElementEvent \| ActionActivationStrategy.OnEnter \| ActionActivationStrategy.OnExit` | `undefined` |
-| `debug`                 | `debug`          | Turn on debug statements for load, update and render events.                                                                                                                                                    | `boolean`                                                                                                                                           | `false`     |
-| `multiple`              | `multiple`       | Allow the actions to fire more than once per the event.                                                                                                                                                         | `boolean`                                                                                                                                           | `false`     |
-| `targetElement`         | `target-element` | The element to watch for events when using the OnElementEvent activation strategy. This element uses the HTML Element querySelector function to find the element.  For use with activate="OnElementEvent" Only! | `string \| undefined`                                                                                                                               | `undefined` |
-| `targetEvent`           | `target-event`   | This is the name of the event to listen to on the target element.                                                                                                                                               | `string`                                                                                                                                            | `'click'`   |
-| `time`                  | `time`           | The time, in seconds at which the contained actions should be submitted.  For use with activate="AtTime" Only!                                                                                                  | `number \| undefined`                                                                                                                               | `undefined` |
+| Property        | Attribute        | Description                                                                                                                                                                                                     | Type                                                                                                                                                | Default                                   |
+| --------------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
+| `activate`      | `activate`       | The activation strategy to use for the contained actions.                                                                                                                                                       | `ActionActivationStrategy.AtTime \| ActionActivationStrategy.OnElementEvent \| ActionActivationStrategy.OnEnter \| ActionActivationStrategy.OnExit` | `ActionActivationStrategy.OnElementEvent` |
+| `debug`         | `debug`          | Turn on debug statements for load, update and render events.                                                                                                                                                    | `boolean`                                                                                                                                           | `false`                                   |
+| `multiple`      | `multiple`       | Allow the actions to fire more than once per the event.                                                                                                                                                         | `boolean`                                                                                                                                           | `false`                                   |
+| `targetElement` | `target-element` | The element to watch for events when using the OnElementEvent activation strategy. This element uses the HTML Element querySelector function to find the element.  For use with activate="OnElementEvent" Only! | `string \| undefined`                                                                                                                               | `undefined`                               |
+| `targetEvent`   | `target-event`   | This is the name of the event to listen to on the target element.                                                                                                                                               | `string`                                                                                                                                            | `'click'`                                 |
+| `time`          | `time`           | The time, in seconds at which the contained actions should be submitted.  For use with activate="AtTime" Only!                                                                                                  | `number \| undefined`                                                                                                                               | `undefined`                               |
 
 
 ## Methods

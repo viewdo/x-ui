@@ -77,7 +77,7 @@ export interface MatchOptions {
 }
 
 export interface MatchResults {
-  path: string
+  path: Path
   url: string
   isExact: boolean
   params: Record<string, string>

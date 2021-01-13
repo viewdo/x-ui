@@ -30,4 +30,7 @@ export const supportsHistory = (win: Window) => {
   return win.history && 'pushState' in win.history
 }
 
-export const getConfirmation = (win: Window, message: string, callback: (confirmed: boolean) => Record<string, unknown>) => callback(win.confirm(message))
+export const getConfirmation = (message: string, callback: (confirmed: boolean) => Record<string, unknown>) => {
+  if (window) callback(window.confirm(message))
+  else callback(true)
+}

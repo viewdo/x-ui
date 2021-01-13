@@ -3,8 +3,10 @@
  * @param {number} ms time in milliseconds to wait
  * @return {void}
  */
-export async function sleep(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms))
+export async function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms)
+  })
 }
 
 /**

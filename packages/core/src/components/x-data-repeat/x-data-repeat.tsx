@@ -1,8 +1,7 @@
-import { Element, Component, h, Prop, State, Host } from '@stencil/core'
-import { arrify } from '../../services/utils/misc-utils'
+import { Component, Element, h, Host, Prop, State } from '@stencil/core'
 import jsonata from 'jsonata'
-
-import { eventBus, ROUTE_EVENTS, DATA_EVENTS, resolveExpression, hasExpression, warnIf, debugIf } from '../../services'
+import { DATA_EVENTS, debugIf, eventBus, hasExpression, resolveExpression, ROUTE_EVENTS, warnIf } from '../../services'
+import { arrify } from '../../services/utils/misc-utils'
 
 /**
  *  @system data
@@ -93,10 +92,10 @@ export class XDataRepeat {
       await this.resolveHtml()
     })
 
-    if (this.childTemplate !== null) {
-      this.innerTemplate = this.childTemplate.innerHTML.slice()
-    } else {
+    if (this.childTemplate === null) {
       warnIf(this.debug, 'x-data-repeat: missing child <template> tag')
+    } else {
+      this.innerTemplate = this.childTemplate.innerHTML.slice()
     }
 
     await this.resolveHtml()
@@ -177,7 +176,8 @@ export class XDataRepeat {
         (previousPromise, item) =>
           previousPromise.then(async () =>
             resolveExpression(this.innerTemplate.slice(), item).then((html) => {
-              return (resolvedTemplate += html)
+              resolvedTemplate += html
+              return resolvedTemplate
             }),
           ),
         Promise.resolve(),

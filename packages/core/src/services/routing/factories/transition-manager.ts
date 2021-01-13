@@ -1,14 +1,15 @@
 // Adapted from the https://github.com/ReactTraining/history and converted to TypeScript
 
+import { Listener } from '../../actions/interfaces'
 import { warnIf } from '../../logging'
 import { LocationSegments, Prompt } from '../interfaces'
 
 export function createTransitionManager() {
   let prompt: Prompt | string | null
-  let listeners: Function[] = []
+  let listeners: Listener[] = []
 
   const setPrompt = (nextPrompt: Prompt | string | null) => {
-    warnIf(prompt == null, 'A history supports only one prompt at a time')
+    warnIf(prompt === null, 'A history supports only one prompt at a time')
 
     prompt = nextPrompt
 
@@ -19,8 +20,15 @@ export function createTransitionManager() {
     }
   }
 
-  const confirmTransitionTo = (location: LocationSegments, action: string, getUserConfirmation: Function, callback: Function) => {
-    if (prompt != null) {
+  const confirmTransitionTo = (
+    location: LocationSegments,
+    action: string,
+    getUserConfirmation: (message: string, callback: (confirmed: boolean) => Record<string, unknown>) => void,
+    callback: (confirmed: boolean) => any,
+  ) => {
+    if (prompt === null) {
+      callback(true)
+    } else {
       const result = typeof prompt === 'function' ? prompt(location, action) : prompt
 
       if (typeof result === 'string') {
@@ -35,12 +43,10 @@ export function createTransitionManager() {
         // Return false from a transition hook to cancel the transition.
         callback(result !== false)
       }
-    } else {
-      callback(true)
     }
   }
 
-  const appendListener = (fn: Function) => {
+  const appendListener = (fn: Listener) => {
     let isActive = true
 
     const listener = (...args: any[]) => {

@@ -1,12 +1,12 @@
-import { eventBus } from '..';
-import { hasExpression, resolveExpression } from '../data/expression-evaluator';
-import { MatchResults, RouteViewOptions, ROUTE_EVENTS } from './interfaces';
-import { RouterService } from './router';
-import { matchesAreEqual } from './utils/match-path';
+import { eventBus } from '..'
+import { hasExpression, resolveExpression } from '../data/expression-evaluator'
+import { MatchResults, RouteViewOptions, ROUTE_EVENTS } from './interfaces'
+import { RouterService } from './router'
+import { matchesAreEqual } from './utils/match-path'
 
 export class Route {
   private readonly subscription: () => void
-  public match: MatchResults|null = null
+  public match: MatchResults | null = null
   public scrollOnNextRender = false
   public previousMatch: MatchResults | null = null
 
@@ -16,9 +16,9 @@ export class Route {
     public path: string,
     exact: boolean,
     public pageTitle: string,
-    public transition: string|null,
+    public transition: string | null,
     public scrollTopOffset: number,
-    matchSetter: (m: MatchResults|null) => void,
+    matchSetter: (m: MatchResults | null) => void,
   ) {
     this.subscription = eventBus.on(ROUTE_EVENTS.RouteChanged, async () => {
       this.previousMatch = this.match

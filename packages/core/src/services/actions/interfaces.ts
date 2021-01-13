@@ -33,5 +33,5 @@ export type Listener = (...args: any[]) => void
 export type IEvents = Record<string, Listener[]>
 
 export interface IActionElement {
-  getAction(): Promise<EventAction<any>|null>
+  getAction(): Promise<EventAction<any> | null>
 }

@@ -1,13 +1,13 @@
-import { EventEmitter } from '../../actions/event-emitter';
-import { DATA_EVENTS, IDataProvider } from '../interfaces';
+import { EventEmitter } from '../../actions/event-emitter'
+import { DATA_EVENTS, IDataProvider } from '../interfaces'
 
 export class InMemoryProvider implements IDataProvider {
-  data: {[index: string]: any } = {}
+  data: Record<string, any> = {}
   constructor() {
     this.changed = new EventEmitter()
   }
 
-  async get(key: string): Promise<string|null> {
+  async get(key: string): Promise<string | null> {
     return this.data[key] || null
   }
 

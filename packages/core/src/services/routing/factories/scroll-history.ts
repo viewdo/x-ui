@@ -28,7 +28,7 @@ export function createScrollHistory(win: Window, appScrollKey = 'scrollPositions
     scrollPositions = scrollData ? new Map(JSON.parse(scrollData)) : scrollPositions
   }
 
-  if ('scrollRestoration' in win?.history) {
+  if (win && 'scrollRestoration' in win.history) {
     window.history.scrollRestoration = 'manual'
   }
 

@@ -14,8 +14,8 @@ export const stripLeadingSlash = (path: string) => (path.startsWith('/') ? path.
 
 export const stripPrefix = (path: string, prefix: string) => (path.startsWith(prefix) ? path.slice(prefix.length) : path)
 
-export const parsePath = (path: string): LocationSegments => {
-  let pathname = path || '/'
+export const parsePath = (path = '/'): LocationSegments => {
+  let pathname = path
   let search = ''
   let hash = ''
 

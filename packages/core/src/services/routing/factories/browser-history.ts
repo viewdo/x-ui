@@ -1,14 +1,14 @@
 // Adapted from the https://github.com/ReactTraining/history and converted to TypeScript
 
-import { warnIf } from '../../logging';
-import { LocationSegments, RouterHistory } from '../interfaces';
-import { getConfirmation, supportsHistory } from '../utils/browser-utils';
-import { createKey, createLocation } from '../utils/location-utils';
-import { isExtraneousPopstateEvent, supportsPopStateOnHashChange } from '../utils/nav-utils';
-import { addLeadingSlash, createPath, hasBasename, stripBasename, stripTrailingSlash } from '../utils/path-utils';
-import { createScrollHistory } from './createScrollHistory';
-import { createTransitionManager } from './createTransitionManager';
-
+import { Listener } from '../../actions/interfaces'
+import { warnIf } from '../../logging'
+import { LocationSegments, RouterHistory } from '../interfaces'
+import { getConfirmation, supportsHistory } from '../utils/browser-utils'
+import { createKey, createLocation } from '../utils/location-utils'
+import { isExtraneousPopstateEvent, supportsPopStateOnHashChange } from '../utils/nav-utils'
+import { addLeadingSlash, createPath, hasBasename, stripBasename, stripTrailingSlash } from '../utils/path-utils'
+import { createScrollHistory } from './scroll-history'
+import { createTransitionManager } from './transition-manager'
 
 export interface CreateBrowserHistoryOptions {
   getUserConfirmation?: (message: string, callback: (confirmed: boolean) => Record<string, unknown>) => Record<string, unknown>
@@ -39,9 +39,9 @@ export function createBrowserHistory(win: Window, props: CreateBrowserHistoryOpt
   const needsHashChangeListener = !supportsPopStateOnHashChange(globalNavigator)
   const scrollHistory = createScrollHistory(win)
 
-  const forceRefresh = props.forceRefresh != null ? props.forceRefresh : false
-  const getUserConfirmation = props.getUserConfirmation != null ? props.getUserConfirmation : getConfirmation
-  const keyLength = props.keyLength != null ? props.keyLength : 6
+  const forceRefresh = props.forceRefresh ? props.forceRefresh : false
+  const getUserConfirmation = props.getUserConfirmation ? props.getUserConfirmation : getConfirmation
+  const keyLength = props.keyLength ? props.keyLength : 6
   const basename = props.basename ? stripTrailingSlash(addLeadingSlash(props.basename)) : ''
 
   const getHistoryState = () => {
@@ -60,7 +60,8 @@ export function createBrowserHistory(win: Window, props: CreateBrowserHistoryOpt
 
     let path = pathname + search + hash
 
-    warnIf((!hasBasename(path, basename)),
+    warnIf(
+      !hasBasename(path, basename),
       `${'You are attempting to use a basename on a page whose URL path does not begin with the basename. Expected path "'}${path}" to begin with "${basename}".`,
     )
 
@@ -147,7 +148,7 @@ export function createBrowserHistory(win: Window, props: CreateBrowserHistoryOpt
   const push = (path: string | LocationSegments, state?: any) => {
     warnIf(
       typeof path === 'object' && path.state !== undefined && state !== undefined,
-      'You should avoid providing a 2nd state argument to push when the 1st ' + 'argument is a location-like object that already has state; it is ignored',
+      'You should avoid providing a 2nd state argument to push when the 1st argument is a location-like object that already has state; it is ignored',
     )
 
     const action = 'PUSH'
@@ -186,7 +187,7 @@ export function createBrowserHistory(win: Window, props: CreateBrowserHistoryOpt
   const replace = (path: string | LocationSegments, state: any) => {
     warnIf(
       typeof path !== 'object' && state !== undefined,
-      'You should avoid providing a 2nd state argument to replace when the 1st ' + 'argument is a location-like object that already has state; it is ignored',
+      'You should avoid providing a 2nd state argument to replace when the 1st argument is a location-like object that already has state; it is ignored',
     )
 
     const action = 'REPLACE'
@@ -270,7 +271,7 @@ export function createBrowserHistory(win: Window, props: CreateBrowserHistoryOpt
     }
   }
 
-  const listen = (listener: Function) => {
+  const listen = (listener: Listener) => {
     const unlisten = transitionManager.appendListener(listener)
     checkDOMListeners(1)
 

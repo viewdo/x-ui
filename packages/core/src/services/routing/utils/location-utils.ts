@@ -1,12 +1,11 @@
-/* eslint-disable no-mixed-operators */
 /* istanbul ignore file */
 
-import { LocationSegments } from '../interfaces';
-import { parsePath, parseQueryString } from './path-utils';
+import { LocationSegments } from '../interfaces'
+import { parsePath, parseQueryString } from './path-utils'
 
 const isAbsolute = (pathname: string) => pathname.startsWith('/')
 
-export const createKey = (keyLength: number) => Math.random().toString(36).substr(2, keyLength)
+export const createKey = (keyLength: number) => Math.random().toString(36).slice(2, keyLength)
 
 export const getUrl = (url: string, root: string) => {
   // Don't allow double slashes
@@ -37,12 +36,12 @@ const spliceOne = (list: string[], index: number) => {
 }
 
 // This implementation is based heavily on node's url.parse
-export const resolvePathname = (to: string, from = '') => {
-  let fromParts = (from && from.split('/')) || []
+export function resolvePathname(to: string, from = '') {
+  let fromParts = from?.split('/') || []
   let hasTrailingSlash: boolean
   let up = 0
 
-  const toParts = (to && to.split('/')) || []
+  const toParts = to?.split('/') || []
   const isToAbs = to && isAbsolute(to)
   const isFromAbs = from && isAbsolute(from)
   const mustEndAbs = isToAbs || isFromAbs
@@ -105,7 +104,7 @@ export const valueEqual = (a: any, b: any): boolean => {
     return true
   }
 
-  if (a == null || b == null) {
+  if (a === null || b === null) {
     return false
   }
 
@@ -156,7 +155,7 @@ export const createLocation = (path: string | LocationSegments, state: any, key:
   } else {
     // One-arg form: push(location)
     location = {
-      ...path
+      ...path,
     }
 
     if (location.search && !location.search.startsWith('?')) {
@@ -175,8 +174,7 @@ export const createLocation = (path: string | LocationSegments, state: any, key:
   try {
     location.pathname = decodeURI(location.pathname)
   } catch (error_) {
-    const error =
-      error_ instanceof URIError ? new URIError(`Pathname "${location.pathname}" could not be decoded. ` + 'This is likely caused by an invalid percent-encoding.') : error_
+    const error = error_ instanceof URIError ? new URIError(`Pathname "${location.pathname}" could not be decoded. This is likely caused by an invalid percent-encoding.`) : error_
     throw error
   }
 

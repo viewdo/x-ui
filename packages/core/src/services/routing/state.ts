@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-import { createStore } from '@stencil/store';
+import { createStore } from '@stencil/store'
 
 class StateModel {
   storedVisits!: string[]
@@ -11,5 +11,4 @@ const { state, onChange } = createStore<StateModel>({
   sessionVisits: [],
 })
 
-export { state as routingState, onChange as onRoutingStateChange };
-
+export { state as routingState, onChange as onRoutingStateChange }

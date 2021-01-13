@@ -1,7 +1,7 @@
-import { MockWindow } from '@stencil/core/mock-doc';
-import { createStore } from '@stencil/store';
-import { OnChangeHandler } from '@stencil/store/dist/types';
-import { InterfaceProvider, InterfaceState } from '../interfaces';
+import { MockWindow } from '@stencil/core/mock-doc'
+import { createStore } from '@stencil/store'
+import { OnChangeHandler } from '@stencil/store/dist/types'
+import { InterfaceProvider, InterfaceState } from '../interfaces'
 
 export class DefaultInterfaceProvider implements InterfaceProvider {
   state: InterfaceState
@@ -35,48 +35,48 @@ export class DefaultInterfaceProvider implements InterfaceProvider {
     this.state.muted = muted
   }
 
-  elementToggleClass(args:any) {
-    const {selector, className} = args
-    if (!className) return;
+  elementToggleClass(args: any) {
+    const { selector, className } = args
+    if (!className) return
     const element = this.body.querySelector(selector) as HTMLElement
     element?.classList.toggle(className)
   }
 
-  elementAddClasses(args:any) {
-    const {selector, classes} = args
-    if (!classes) return;
+  elementAddClasses(args: any) {
+    const { selector, classes } = args
+    if (!classes) return
     const element = this.body.querySelector(selector) as HTMLElement
     classes?.split(' ').forEach((c: string) => {
       element?.classList.add(c)
     })
   }
 
-  elementRemoveClasses(args:any) {
-    const {selector, classes} = args
+  elementRemoveClasses(args: any) {
+    const { selector, classes } = args
     const element = this.body.querySelector(selector) as HTMLElement
     classes?.split(' ').forEach((c: string) => {
       element?.classList.remove(c)
     })
   }
 
-  elementSetAttribute(args:any) {
-    const {selector, attribute, value} = args
+  elementSetAttribute(args: any) {
+    const { selector, attribute, value } = args
     if (!attribute) return
     const element = this.body.querySelector(selector) as HTMLElement
     element?.setAttribute(attribute, value || '')
   }
 
-  elementRemoveAttribute(args:any) {
-    const {selector, attribute} = args
+  elementRemoveAttribute(args: any) {
+    const { selector, attribute } = args
     if (!attribute) return
     const element = this.body.querySelector(selector) as HTMLElement
     element?.removeAttribute(attribute)
   }
 
-  elementCallMethod(args:any) {
-    const {selector, method, data} = args
+  elementCallMethod(args: any) {
+    const { selector, method, data } = args
     if (!method) return
-    const element = this.body.querySelector(selector) as any
+    const element = this.body.querySelector(selector)
     if (element) {
       const elementMethod = element[method]
       if (elementMethod && typeof element === 'function') {

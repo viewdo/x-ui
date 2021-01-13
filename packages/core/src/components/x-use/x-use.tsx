@@ -84,6 +84,7 @@ export class XUse {
         } else if (this.noModule) {
           script.noModule = true
         }
+
         script.addEventListener('load', () => {
           markReference(url)
           resolve({})

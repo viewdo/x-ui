@@ -1,10 +1,10 @@
-import { RafCallback } from '@stencil/core/internal';
-import { debugIf, interfaceState } from '..';
-import { EventAction, IEventEmitter } from '../actions';
-import { addDataProvider } from '../data/providers/factory';
-import { RoutingDataProvider } from './data-provider';
-import { createBrowserHistory } from './factories/createBrowserHistory';
-import { createHashHistory } from './factories/createHashHistory';
+import { RafCallback } from '@stencil/core/internal'
+import { debugIf, interfaceState } from '..'
+import { EventAction, IEventEmitter } from '../actions'
+import { addDataProvider } from '../data/providers/factory'
+import { RoutingDataProvider } from './data-provider'
+import { createBrowserHistory } from './factories/browser-history'
+import { createHashHistory } from './factories/hash-history'
 import {
   HistoryType,
   LocationSegments,
@@ -15,12 +15,12 @@ import {
   RouterHistory,
   RouteViewOptions,
   ROUTE_COMMANDS,
-
-  ROUTE_EVENTS, ROUTE_TOPIC
-} from './interfaces';
-import { Route } from './route';
-import { getLocation, getUrl } from './utils/location-utils';
-import { matchPath } from './utils/match-path';
+  ROUTE_EVENTS,
+  ROUTE_TOPIC,
+} from './interfaces'
+import { Route } from './route'
+import { getLocation, getUrl } from './utils/location-utils'
+import { matchPath } from './utils/match-path'
 
 const HISTORIES: { [key in HistoryType]: (win: Window) => RouterHistory } = {
   browser: createBrowserHistory,
@@ -81,7 +81,7 @@ export class RouterService {
 
   viewsUpdated = (options: RouteViewOptions = {}) => {
     if (this.history && options.scrollToId && this.historyType === 'browser') {
-      const elm = this.history?.win.document.getElementById(options.scrollToId)
+      const elm = this.history?.win.document.querySelector('#' + options.scrollToId)
       if (elm) {
         elm.scrollIntoView()
         return
@@ -97,11 +97,11 @@ export class RouterService {
       return
     }
 
-    const parentSegments = history.location?.pathParts?.slice(0, history.location?.pathParts.length - 1)
-    if (parentSegments == null) {
-      history.goBack()
-    } else {
+    const parentSegments = history.location?.pathParts?.slice(0, history.location?.pathParts.length || 1 - 1)
+    if (parentSegments) {
       history.push(parentSegments.join('/'))
+    } else {
+      history.goBack()
     }
   }
 
@@ -111,12 +111,12 @@ export class RouterService {
       return
     }
 
-    if (scrollToLocation == null || !history) {
+    if (scrollToLocation === null || !history) {
       return
     }
 
     if (history.action === 'POP' && Array.isArray(history.location.scrollPosition)) {
-      if (history && history.location && Array.isArray(history.location.scrollPosition)) {
+      if (history?.location && Array.isArray(history.location.scrollPosition)) {
         history.win.scrollTo(history.location.scrollPosition[0], history.location.scrollPosition[1])
       }
 
@@ -125,7 +125,7 @@ export class RouterService {
 
     // Okay, the frame has passed. Go ahead and render now
     this.writeTask(() => {
-      history.win.scrollTo(0, scrollToLocation)
+      history.win.scrollTo(0, scrollToLocation || 0)
     })
   }
 
@@ -163,9 +163,10 @@ export class RouterService {
     path: string,
     exact: boolean,
     pageTitle: string,
-    transition: string|null,
+    transition: string | null,
     scrollTopOffset: number,
-    matchSetter: (m: MatchResults|null) => void) {
+    matchSetter: (m: MatchResults | null) => void,
+  ) {
     return new Route(this, routeElement, path, exact, pageTitle, transition, scrollTopOffset, matchSetter)
   }
 }

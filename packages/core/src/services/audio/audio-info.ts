@@ -1,4 +1,4 @@
-import { AudioType, DiscardStrategy, LoadStrategy } from './interfaces';
+import { AudioType, DiscardStrategy, LoadStrategy } from './interfaces'
 
 export class AudioInfo {
   trackId!: string
@@ -7,5 +7,5 @@ export class AudioInfo {
   mode!: LoadStrategy
   discard!: DiscardStrategy
   track!: boolean
-  loop!: boolean;
+  loop!: boolean
 }

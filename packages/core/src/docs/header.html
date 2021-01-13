@@ -6,7 +6,8 @@
       </x-link>
     </li>
     <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" href="#" id="navbarGuidesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Guides </a>
+      <a class="nav-link dropdown-toggle" href="#" id="navbarGuidesDropdown" role="button" data-bs-toggle="dropdown"
+         aria-expanded="false"> Guides </a>
       <ul class="dropdown-menu" aria-labelledby="navbarGuidesDropdown">
         <li class="dropdown-item d-sm-block d-md-none">
           <x-link href="/routing">
@@ -66,10 +67,10 @@
       </ul>
     </li>
     <li
-      class="nav-item dropdown"
-      data-intro="The <b>x-data-repeat</b> element rendered this list from a remote JSON data-source. <br/><br/> Check out the <a href='documentation/components/x-data-repeat'>documentation</a> to see what else you can do."
-    >
-      <a class="nav-link dropdown-toggle" href="#" id="navbarComponentsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Components </a>
+        class="nav-item dropdown"
+        data-intro="The <b>x-data-repeat</b> element rendered this list from a remote JSON data-source. <br/><br/> Check out the <a href='components/x-data-repeat'>documentation</a> to see what else you can do.">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarComponentsDropdown" role="button" data-bs-toggle="dropdown"
+         aria-expanded="false"> Components </a>
       <ul class="dropdown-menu" aria-labelledby="navbarComponentsDropdown">
         <li class="dropdown-item-text fw-bold">Routing</li>
         <x-data-repeat items-src="/data/x-components.json" filter="components[docsTags[text='routing']]">
@@ -79,7 +80,9 @@
             </li>
           </template>
         </x-data-repeat>
-        <li><hr class="dropdown-divider" /></li>
+        <li>
+          <hr class="dropdown-divider" />
+        </li>
         <li class="dropdown-item-text fw-bold">Content</li>
         <x-data-repeat items-src="/data/x-components.json" filter="components[docsTags[text='content']]">
           <template>
@@ -88,7 +91,9 @@
             </li>
           </template>
         </x-data-repeat>
-        <li><hr class="dropdown-divider" /></li>
+        <li>
+          <hr class="dropdown-divider" />
+        </li>
         <li class="dropdown-item-text fw-bold">Embedded Data</li>
         <x-data-repeat items-src="/data/x-components.json" filter="components[docsTags[text='data']]">
           <template>
@@ -97,7 +102,9 @@
             </li>
           </template>
         </x-data-repeat>
-        <li><hr class="dropdown-divider" /></li>
+        <li>
+          <hr class="dropdown-divider" />
+        </li>
         <li class="dropdown-item-text fw-bold">Event Actions</li>
         <x-data-repeat items-src="/data/x-components.json" filter="components[docsTags[text='actions']]">
           <template>
@@ -106,7 +113,9 @@
             </li>
           </template>
         </x-data-repeat>
-        <li><hr class="dropdown-divider" /></li>
+        <li>
+          <hr class="dropdown-divider" />
+        </li>
         <li class="dropdown-item-text fw-bold">Audio</li>
         <x-data-repeat items-src="/data/x-components.json" filter="components[docsTags[text='audio']]">
           <template>

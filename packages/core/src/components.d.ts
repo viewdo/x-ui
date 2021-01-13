@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { ActionActivationStrategy, CookieConsent, DataProviderRegistration, DiscardStrategy, EventAction, LoadStrategy, VisitStrategy } from ".";
+import { ActionActivationStrategy, CookieConsent, DiscardStrategy, EventAction, LoadStrategy, VisitStrategy } from ".";
 import { AUDIO_COMMANDS } from "./services/audio/interfaces";
 import { HistoryType, RouterService } from "./services";
 export namespace Components {
@@ -533,7 +533,7 @@ declare namespace LocalJSX {
         /**
           * The activation strategy to use for the contained actions.
          */
-        "activate": ActionActivationStrategy;
+        "activate"?: ActionActivationStrategy;
         /**
           * Turn on debug statements for load, update and render events.
          */
@@ -660,10 +660,6 @@ declare namespace LocalJSX {
           * @example {storage:consented}
          */
         "hideWhen"?: string;
-        /**
-          * This event is raised when the component obtains consent from the user to use cookies. The data-provider system should capture this event and register the provider for use in expressions.
-         */
-        "onActionEvent"?: (event: CustomEvent<EventAction<DataProviderRegistration>>) => void;
         /**
           * This event is raised when the consents to cookies.
          */

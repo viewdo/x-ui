@@ -1,13 +1,12 @@
-import { Howler } from 'howler';
-import { EventAction, EventEmitter } from '../actions';
-import { debugIf } from '../logging';
-import { ROUTE_EVENTS } from '../routing';
-import { AudioTrack } from './audio';
-import { AudioInfo } from './audio-info';
-import { AudioRequest } from './audio-request';
-import { AudioType, AUDIO_COMMANDS, AUDIO_EVENTS, AUDIO_TOPIC, DiscardStrategy, LoadStrategy } from './interfaces';
-import { hasPlayed } from './tracked';
-
+import { Howler } from 'howler'
+import { EventAction, EventEmitter } from '../actions'
+import { debugIf } from '../logging'
+import { ROUTE_EVENTS } from '../routing'
+import { AudioTrack } from './audio'
+import { AudioInfo } from './audio-info'
+import { AudioRequest } from './audio-request'
+import { AudioType, AUDIO_COMMANDS, AUDIO_EVENTS, AUDIO_TOPIC, DiscardStrategy, LoadStrategy } from './interfaces'
+import { hasPlayed } from './tracked'
 
 export class AudioActionListener {
   private readonly actionSubscription: () => void
@@ -81,7 +80,7 @@ export class AudioActionListener {
 
   public seek(type: AudioType, trackId: string, seek: number) {
     const current = this.onDeck[type]
-    if (current && current.trackId == trackId) {
+    if (current && current.trackId === trackId) {
       current.seek(seek)
     }
   }
@@ -137,6 +136,7 @@ export class AudioActionListener {
         if (request.trackId) {
           this.seek(request.type, request.trackId, request.value)
         }
+
         break
       }
 
@@ -144,6 +144,8 @@ export class AudioActionListener {
         this.volume(data as AudioRequest)
         break
       }
+
+      default:
     }
   }
 
@@ -156,7 +158,7 @@ export class AudioActionListener {
 
     audio.events.on('*', (...args) => {
       const [event, trackId] = args
-      if (event == 'undefined') {
+      if (event === 'undefined') {
         console.dir(args)
       }
 
@@ -173,16 +175,16 @@ export class AudioActionListener {
 
   private soundEnded(audio: AudioTrack) {
     const { type, discard, mode } = audio
-    if (mode == LoadStrategy.Load) {
+    if (mode === LoadStrategy.Load) {
       return
     }
 
-    if (discard == DiscardStrategy.None) {
+    if (discard === DiscardStrategy.None) {
       // If this track shouldn't be discarded, requeue it
       this.addTrackToQueue(audio)
     }
 
-    if (mode == LoadStrategy.Queue) {
+    if (mode === LoadStrategy.Queue) {
       this.playNextTrackFromQueue(type)
     }
   }
@@ -228,13 +230,13 @@ export class AudioActionListener {
 
   private discardTracksFromQueue(type: AudioType, ...reasons: DiscardStrategy[]) {
     const eligibleAudio = (audio: AudioTrack) => !reasons.includes(audio.discard)
-    this.queued[type] = this.queued[type].filter(eligibleAudio)
+    this.queued[type] = this.queued[type].filter((i) => eligibleAudio(i))
   }
 
   // AudioTrack workflow
 
   private startLoadedTrack(startRequest: AudioRequest) {
-    const audio = this.loaded[startRequest.type]?.find((a) => a.trackId == startRequest.trackId)
+    const audio = this.loaded[startRequest.type]?.find((a) => a.trackId === startRequest.trackId)
     if (audio) {
       this.replaceActiveTrack(audio)
       this.events.emit(AUDIO_EVENTS.Started, audio.trackId)
@@ -269,7 +271,7 @@ export class AudioActionListener {
 
   private discardActive(type: AudioType, reason: DiscardStrategy) {
     const audio = this.onDeck[type]
-    if (audio && audio.discard == reason) {
+    if (audio && audio.discard === reason) {
       audio.stop()
       audio.destroy()
       this.onDeck[type] = null

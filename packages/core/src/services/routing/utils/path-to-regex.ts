@@ -1,4 +1,3 @@
-/* eslint-disable no-continue */
 /* istanbul ignore file */
 /**
  * TS adaption of https://github.com/pillarjs/path-to-regexp/blob/master/index.js
@@ -68,8 +67,8 @@ export const parse = (string: string, options?: ParseOptions): Token[] => {
   let key = 0
   let index = 0
   let path = ''
-  const defaultDelimiter = (options && options.delimiter) || DEFAULT_DELIMITER
-  const delimiters = (options && options.delimiters) || DEFAULT_DELIMITERS
+  const defaultDelimiter = options?.delimiter || DEFAULT_DELIMITER
+  const delimiters = options?.delimiters || DEFAULT_DELIMITERS
   let pathEscaped = false
   let res
 
@@ -156,7 +155,7 @@ export const tokensToFunction = (tokens: Token[]): PathFunction => {
 
   return (data?: Record<string, any>, options?: PathFunctionOptions): string => {
     let path = ''
-    const encode = (options && options.encode) || encodeURIComponent
+    const encode = options?.encode || encodeURIComponent
 
     for (const [i, token] of tokens.entries()) {
       if (typeof token === 'string') {
@@ -187,7 +186,7 @@ export const tokensToFunction = (tokens: Token[]): PathFunction => {
             throw new TypeError(`Expected all "${token.name}" to match "${token.pattern}"`)
           }
 
-          path += (j === 0 ? token.prefix : token.delimiter) + segment
+          path += `${j === 0 ? token.prefix : token.delimiter}${segment}`
         }
 
         continue
@@ -200,7 +199,7 @@ export const tokensToFunction = (tokens: Token[]): PathFunction => {
           throw new TypeError(`Expected "${token.name}" to match "${token.pattern}", but got "${segment}"`)
         }
 
-        path += token.prefix + segment
+        path += `${token.prefix}${segment}`
         continue
       }
 
@@ -233,7 +232,7 @@ const escapeGroup = (group: string) => group.replace(/([=!:$/()])/g, '\\$1')
 /**
  * Get the flags for a regexp from the options.
  */
-const flags = (options: RegExpOptions): string => (options && options.sensitive ? '' : 'i')
+const flags = (options: RegExpOptions): string => (options?.sensitive ? '' : 'i')
 
 /**
  * Pull out keys from a regexp.
@@ -291,9 +290,8 @@ export const tokensToRegExp = (tokens: Token[], keys?: Key[], options?: RegExpOp
   const end = options.end !== false
   const delimiter = escapeString(options.delimiter || DEFAULT_DELIMITER)
   const delimiters = options.delimiters || DEFAULT_DELIMITERS
-  const endsWith = (<string[]>[])
-    .concat(options.endsWith || [])
-    .map(escapeString)
+  const endsWith = (options.endsWith?.length ? [...options.endsWith] : options.endsWith ? [options.endsWith] : [])
+    .map((i) => escapeString(i as string))
     .concat('$')
     .join('|')
   let route = ''

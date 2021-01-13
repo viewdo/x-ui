@@ -73,7 +73,7 @@
   </head>
 
   <body>
-    <x-ui start-url="home" app-title="view.DO :: <x-ui/>" transition="animate__animated animate__fadeIn">
+    <x-ui start-url="home" app-title="view.DO :: <x-ui/>" transition="animate__animated animate__fadeIn" debug>
       <nav class="navbar navbar-expand-sm navbar-light bg-light sticky-lg-top">
         <div class="container-fluid">
           <button
@@ -90,7 +90,7 @@
           <div
                slot="start"
                class="navbar-brand"
-               data-intro="This page uses the <b>x-view</b> component. This component display content for a given route.<br/><br/> Check out the <a href='documentation/components/x-view'>documentation</a> to see what else you can do.">
+               data-intro="This page uses the <b>x-view</b> component. This component display content for a given route.<br/><br/> Check out the <a href='components/x-view'>documentation</a> to see what else you can do.">
             <x-link href="/home">
               <h1 class="tag-line" title="view.DO Experience UI HTML">&lt;x-ui/&gt;</h1>
             </x-link>
@@ -102,7 +102,7 @@
               <i class="ri-github-line fs-2"></i>
             </a>
             <x-data-display
-                            data-intro="Click this to see a <b>x-view-do</b> component in action. It creates a special sub-route with automated navigation. It's conditioned using data expressions. <br/><br/> Check out the <a href='documentation/components/x-view-do'>documentation</a> to see what else you can do.">
+                            data-intro="Click this to see a <b>x-view-do</b> component in action. It creates a special sub-route with automated navigation. It's conditioned using data expressions. <br/><br/> Check out the <a href='components/x-view-do'>documentation</a> to see what else you can do.">
               <template>
                 <x-link href="/home/name" anchor-title="Your profile" title="{storage:name}">
                   <i class="ri-user-5-line fs-2"></i>
@@ -115,9 +115,23 @@
 
       <x-view url="home" page-title="Home" content-src="/docs/home/index.html">
         <x-view-do url="name" page-title="Introductions" when="!{storage:name}" content-src="/docs/home/intro.html">
+          <x-data-provider-cookie x-cloak class="card" slot="content">
+            <h5 class="card-header">Cookies</h5>
+            <div class="card-content p-3">
+              <p>This (fake) site uses cookies for non-nefarious reasons.</p>
+              <p>You okay with that or what?</p>
+            </div>
+            <div class="card-footer">
+              <button type="button" class="btn btn-info text-white" x-accept>Yes</button>
+              <button type="button" class="btn btn-light" x-reject>Nope</button>
+            </div>
+          </x-data-provider-cookie>
         </x-view-do>
         <x-view-do url="welcome" page-title="Welcome" visit="always" content-src="/docs/home/welcome.html"
-                   transition="animate__animated animate__rubberBand"> </x-view-do>
+                   transition="animate__animated animate__rubberBand">
+        </x-view-do>
+
+
       </x-view>
 
       <x-view url="start" page-title="Get Started" content-src="/docs/start/index.html">
@@ -315,6 +329,7 @@
       <!-- Not Found Route -->
       <x-view page-title="Page not Found" content-src="/docs/not-found.html"> </x-view>
     </x-ui>
+
   </body>
 
 </html>

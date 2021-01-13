@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-import { createStore } from '@stencil/store';
+import { createStore } from '@stencil/store'
 
 class StateModel {
   debug!: boolean
@@ -28,5 +28,4 @@ onChange('theme', (t) => localStorage?.setItem('theme', t?.toString()))
 onChange('muted', (m) => localStorage?.setItem('muted', m?.toString()))
 onChange('autoplay', (a) => localStorage?.setItem('autoplay', a?.toString()))
 
-export { store as interfaceStore, state as interfaceState, onChange as onInterfaceChange };
-
+export { store as interfaceStore, state as interfaceState, onChange as onInterfaceChange }

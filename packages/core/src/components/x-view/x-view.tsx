@@ -11,11 +11,11 @@ import '../x-view-do/x-view-do'
   shadow: true,
 })
 export class XView {
-  private subscription!: () => void
+  private readonly subscription!: () => void
   private route!: Route
   @Element() el!: HTMLXViewElement
   @State() match!: MatchResults | null
-  @State() fetched: boolean = false
+  @State() fetched!: boolean
 
   /**
    * The title for this view. This is prefixed
@@ -28,7 +28,7 @@ export class XView {
    * Header height or offset for scroll-top on this
    * view.
    */
-  @Prop() scrollTopOffset: number = 0
+  @Prop() scrollTopOffset = 0
 
   /**
    * Navigation transition between routes.
@@ -143,9 +143,9 @@ export class XView {
     })
   }
 
-  componentDidRender() {
+  async componentDidRender() {
     debugIf(this.debug, `x-view: ${this.url} did render`)
-    resolveElementVisibility(this.el)
+    await resolveElementVisibility(this.el)
   }
 
   private async fetchHtml() {
@@ -158,7 +158,9 @@ export class XView {
       const response = await fetch(this.contentSrc)
       if (response.status === 200) {
         const data = await response.text()
-        this.el.append(wrapFragment(data, 'content', 'content'))
+        const content = wrapFragment(data, 'content', 'content')
+        if (this.route.transition) content.className = this.route.transition
+        this.el.append(content)
         this.fetched = true
         this.el.querySelectorAll('a[href]')
       } else {

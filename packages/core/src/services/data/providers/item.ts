@@ -1,5 +1,5 @@
-import { EventEmitter } from '../../actions/event-emitter';
-import { DATA_EVENTS, IDataProvider } from '../interfaces';
+import { EventEmitter } from '../../actions/event-emitter'
+import { DATA_EVENTS, IDataProvider } from '../interfaces'
 
 export class DataItemProvider implements IDataProvider {
   constructor(private data: any, private readonly setter?: (key: string, value: any) => Promise<void>) {

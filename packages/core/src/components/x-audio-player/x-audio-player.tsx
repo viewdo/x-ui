@@ -18,21 +18,21 @@ export class XAudioPlayer {
 
   @Element() el!: HTMLXAudioPlayerElement
 
-  @State() hasAudio: boolean = false
-  @State() isPlaying: boolean = false
+  @State() hasAudio = false
+  @State() isPlaying = false
 
   /**
    * The display mode for this player. The display
    * is merely a facade to manage basic controls.
    * No track information or duration will be displayed.
    */
-  @Prop() display: boolean = false
+  @Prop() display = false
 
   /**
    * Use debug for verbose logging. Useful for figuring
    * thing out.
    */
-  @Prop() debug: boolean = false
+  @Prop() debug = false
 
   async componentWillLoad() {
     if (audioState.hasAudio) {
