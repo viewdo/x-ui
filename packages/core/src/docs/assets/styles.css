@@ -162,6 +162,7 @@ figure + figure figcaption {
 }
 .container-fluid {
   max-width: var(--content-max-width);
+  padding-bottom: 1em;
 }
 .list-group {
   margin-bottom: 1em;

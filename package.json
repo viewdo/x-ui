@@ -41,7 +41,9 @@
     "--- docker ---": "---------------",
     "docker:build": "yarn build && docker build -t viewdo/x-ui-docs .",
     "docker:push": "docker push viewdo/x-ui-docs",
-    "pre:commit": "run-p lint test"
+    "pre:commit": "run-p lint test",
+    "--- workspace shortcuts ---": "---------------",
+    "ws:core": "yarn workspace @viewdo/x-ui "
   },
   "devDependencies": {
     "@babel/core": "7.12.10",

@@ -22,9 +22,9 @@
     <label for="floatingInput">Nickname</label>
   </div>
 
-  <x-data-show when="'{cookie:consent}' == 'true'" debug>
+  <x-data-show when="'{cookie:consent}' == 'true'">
     <h4>You gave us consent to set a cookie.</h4>
-    <x-action-activator debug>
+    <x-action-activator>
       <x-action topic="data" command="set-data">
         <script lang="JSON" type="application/json">
           {

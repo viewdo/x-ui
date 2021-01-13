@@ -41,7 +41,10 @@ export const config: Config = {
       dir: '../../www',
       buildDir: 'x-ui',
       empty: true,
-      serviceWorker: null, // Disable service workers
+      indexHtml: 'index.html',
+      serviceWorker: {
+        globPatterns: ['**/*.{js,css,json,html,md,mdx,wav,ico,mp3}'],
+      },
       copy: [
         { src: 'docs', dest: './', keepDirStructure: true },
         {

@@ -18,17 +18,10 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="theme-color" content="#16161d" />
 
+    <link rel="dns-prefetch" href="https://static.view.do" />
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
     <link rel="preconnect" href="https://static.view.do" />
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
-    <link rel="preload" as="script" crossorigin="anonymous" href="/x-ui/x-ui.entry.js" />
-    <link rel="preload" as="script" crossorigin="anonymous" href="/x-ui/x-include.entry.js" />
-    <link rel="preload" as="script" crossorigin="anonymous" href="/x-ui/x-use.entry.js" />
-    <link rel="preload" as="script" crossorigin="anonymous" href="/x-ui/x-view.entry.js" />
-    <link rel="preload" as="script" crossorigin="anonymous" href="/x-ui/x-view-do.entry.js" />
-    <link rel="preload" as="script" crossorigin="anonymous" href="/x-ui/x-link.entry.js" />
-    <link rel="preload" as="script" crossorigin="anonymous" href="/x-ui/x-data-repeat.entry.js" />
-    <link rel="preload" as="script" crossorigin="anonymous" href="/x-ui/x-data-display.entry.js" />
 
     <link rel="icon" type="image/ico" href="/docs/assets/favicon.ico" />
 
@@ -63,19 +56,23 @@
         visibility: hidden;
       }
     </style>
-    <link rel="stylesheet" href="/docs/assets/styles.css" media="print" onload="this.media='all'" />
+    <link rel="stylesheet" href="/docs/assets/styles.css"
+          media="print" onload="this.media='all'" />
 
     <!-- Bootstrap   -->
     <script async src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" media="print"
-          onload="this.media='all'" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+          media="print" onload="this.media='all'" />
+
+    <link rel="manifest" href="/manifest.json">
   </head>
 
   <body>
     <x-ui start-url="home"
           app-title="view.DO :: <x-ui/>"
-          transition="animate__animated animate__fadeIn">
+          transition="animate__animated animate__fadeIn"
+          mode="hash">
       <nav class="navbar navbar-expand-sm navbar-light bg-light sticky-lg-top">
         <div class="container-fluid">
           <button
@@ -117,17 +114,19 @@
 
       <x-view url="home" page-title="Home" content-src="/docs/home/index.html">
         <x-view-do url="name" page-title="Introductions" when="!{storage:name}" content-src="/docs/home/intro.html">
-          <x-data-provider-cookie x-cloak class="card" slot="content">
-            <h5 class="card-header">Cookies</h5>
-            <div class="card-content p-3">
-              <p>This (fake) site uses cookies for non-nefarious reasons.</p>
-              <p>You okay with that or what?</p>
-            </div>
-            <div class="card-footer">
-              <button type="button" class="btn btn-info text-white" x-accept>Yes</button>
-              <button type="button" class="btn btn-light" x-reject>Nope</button>
-            </div>
-          </x-data-provider-cookie>
+          <div class="container container-fluid" slot="content">
+            <x-data-provider-cookie x-cloak class="card">
+              <h5 class="card-header">Cookies</h5>
+              <div class="card-content p-3">
+                <p>This (fake) site uses cookies for non-nefarious reasons.</p>
+                <p>You okay with that or what?</p>
+              </div>
+              <div class="card-footer">
+                <button type="button" class="btn btn-info text-white" x-accept>Yes</button>
+                <button type="button" class="btn btn-light" x-reject>Nope</button>
+              </div>
+            </x-data-provider-cookie>
+          </div>
         </x-view-do>
         <x-view-do url="welcome" page-title="Welcome" visit="always" content-src="/docs/home/welcome.html"
                    transition="animate__animated animate__rubberBand">
