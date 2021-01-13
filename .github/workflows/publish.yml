@@ -29,7 +29,9 @@ jobs:
           node-version: 12
           registry-url: https://registry.npmjs.org/
       - run: yarn version patch
+        working-directory: packages/core
       - run: npm publish
+        working-directory: packages/core
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_PUBLISH}}
 

@@ -39,9 +39,8 @@
     "--- publish ---": "---------------",
     "gs:push": "gsutil cp -r ./www gs://viewdo-static/x-ui",
     "--- docker ---": "---------------",
-    "docker:build": "docker build -t viewdo/x-ui-docs .",
+    "docker:build": "yarn build && docker build -t viewdo/x-ui-docs .",
     "docker:push": "docker push viewdo/x-ui-docs",
-    "semantic-release": "semantic-release",
     "pre:commit": "run-p lint test"
   },
   "devDependencies": {
@@ -83,7 +82,6 @@
     "prettier": "^2.2.1",
     "puppeteer": "5.5.0",
     "rimraf": "^3.0.2",
-    "semantic-release": "^17.3.1",
     "stylelint": "13.8.0",
     "stylelint-config-sass-guidelines": "7.1.0",
     "typescript": "4.1.3",
@@ -128,8 +126,11 @@
     "packages/plugins/*",
     "packages/examples/*"
   ],
-  "dependencies": {
-
+  "dependencies": {},
+  "resolutions": {
+    "**/@typescript-eslint/eslint-plugin": "4.12.0",
+    "**/@typescript-eslint/parser": "4.12.0",
+    "**/typescript": "4.1.3"
   },
   "xo": {
     "space": 2,

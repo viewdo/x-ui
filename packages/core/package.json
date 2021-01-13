@@ -41,10 +41,6 @@
     "test:e2e": "stencil test --e2e",
     "test:watch": "stencil test --spec --watch"
   },
-  "resolutions": {
-    "**/@typescript-eslint/eslint-plugin": "4.12.0",
-    "**/@typescript-eslint/parser": "4.12.0"
-  },
   "dependencies": {
     "@stencil/store": "1.3.0",
     "expr-eval": "^2.0.2",
