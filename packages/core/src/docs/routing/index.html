@@ -3,11 +3,11 @@
 <x-use script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js"> </x-use>
 <div class="container container-fluid mx-auto">
   <ul class="list-group btn-group-xl float-end ms-3 mt-2 d-none d-sm-block">
-    <li class="list-group-item fw-bold">Routing Components</li>
+    <li class="list-group-item fw-bold  text-capitalize">Routing Components</li>
     <x-data-repeat items-src="/data/x-components.json" filter="components[docsTags[text='routing']]">
       <template>
         <li class="list-group-item">
-          <x-link href="/components/{data:tag}"> &lt;{data:tag}&gt; </x-link>
+          <x-link href="/components/{data:tag}?group=routing"> &lt;{data:tag}&gt; </x-link>
         </li>
       </template>
     </x-data-repeat>

@@ -2,12 +2,14 @@
   <ul class="navbar-nav me-auto mb-2 mb-lg-0">
     <li class="nav-item d-none d-md-block">
       <x-link class="nav-link" active-class="hide" href="/start">
-        <b>Get Started</b>
+        <h3>Get Started</h3>
       </x-link>
     </li>
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbarGuidesDropdown" role="button" data-bs-toggle="dropdown"
-         aria-expanded="false"> Guides </a>
+         aria-expanded="false">
+        <h3>Guides</h3>
+      </a>
       <ul class="dropdown-menu" aria-labelledby="navbarGuidesDropdown">
         <li class="dropdown-item d-sm-block d-md-none">
           <x-link href="/start">
@@ -76,7 +78,9 @@
         class="nav-item dropdown"
         data-intro="The <b>x-data-repeat</b> element rendered this list from a remote JSON data-source. <br/><br/> Check out the <a href='components/x-data-repeat'>documentation</a> to see what else you can do.">
       <a class="nav-link dropdown-toggle" href="#" id="navbarComponentsDropdown" role="button" data-bs-toggle="dropdown"
-         aria-expanded="false"> Components </a>
+         aria-expanded="false">
+        <h3>Components</h3>
+      </a>
       <ul class="dropdown-menu" aria-labelledby="navbarComponentsDropdown">
         <li class="dropdown-item-text fw-bold">Routing</li>
         <x-data-repeat items-src="/data/x-components.json" filter="components[docsTags[text='routing']]">

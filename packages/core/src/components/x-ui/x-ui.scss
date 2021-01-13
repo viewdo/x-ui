@@ -1,7 +1,7 @@
 :root {
-  .hide,
   [hidden],
-  [x-cloak] {
+  [x-cloak],
+  .hide {
     display: none;
   }
 }
