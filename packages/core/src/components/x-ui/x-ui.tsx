@@ -91,6 +91,23 @@ export class XUI {
     actionBus.emit(action.topic, action)
   }
 
+  @Listen('swUpdate', { target: 'window' })
+  async onServiceWorkerUpdate() {
+    const registration = await navigator.serviceWorker.getRegistration()
+
+    if (!registration?.waiting) {
+      // If there is no waiting registration, this is the first service
+      // worker being installed.
+      return
+    }
+
+    const refresh = confirm('New Version Available. Reload?')
+
+    if (refresh) {
+      registration.waiting.postMessage('skipWaiting')
+    }
+  }
+
   /**
    * These events are **`<x-ui/>`** command-requests for action handlers
    * to perform tasks. Any handles should cancel the event.
@@ -181,6 +198,7 @@ export class XUI {
     clearDataProviders()
     this.actionsSubscription()
     this.eventSubscription()
+    this.router.destroy()
     eventBus.removeAllListeners()
     actionBus.removeAllListeners()
   }

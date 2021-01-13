@@ -7,7 +7,6 @@ import { DATA_EVENTS, eventBus, removeAllChildNodes, resolveExpression, ROUTE_EV
  */
 @Component({
   tag: 'x-data-display',
-  styleUrl: 'x-data-display.scss',
   shadow: false,
 })
 export class XDataDisplay {

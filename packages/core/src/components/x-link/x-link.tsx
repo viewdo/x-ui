@@ -6,7 +6,6 @@ import { eventBus, MatchResults, RouterService, ROUTE_EVENTS } from '../..'
  */
 @Component({
   tag: 'x-link',
-  styleUrl: 'x-link.scss',
   shadow: false,
 })
 export class XViewLink {

@@ -207,7 +207,7 @@ export class XViewDo {
       const response = await fetch(this.contentSrc)
       if (response.status === 200) {
         const data = await response.text()
-        this.el.append(wrapFragment(data, 'content', 'content'))
+        this.el.append(wrapFragment(data, 'content', 'content-remote'))
         this.fetched = true
       } else {
         warn(`x-view-do: ${this.url} Unable to retrieve from ${this.contentSrc}`)
@@ -284,6 +284,11 @@ export class XViewDo {
       await this.resolveChildren()
       await this.setupTimer()
       await this.route.loadCompleted()
+    } else {
+      this.el.classList.remove('active-route')
+      const remoteContent = this.el.querySelector('#content-remote')
+      remoteContent?.remove()
+      this.fetched = false
     }
   }
 

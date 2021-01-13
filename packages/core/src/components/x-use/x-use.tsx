@@ -42,7 +42,7 @@ export class XUse {
    * INTERNAL - disables the DOM onload await to finish
    * rendering
    */
-  @Prop() nowait!: boolean
+  @Prop() noWait!: boolean
 
   /**
    * If set, disables auto-rendering of this instance.
@@ -63,7 +63,7 @@ export class XUse {
           resolve({})
         })
         element.append(link)
-        if (this.nowait) {
+        if (this.noWait) {
           resolve({})
         }
       })
@@ -90,7 +90,7 @@ export class XUse {
           resolve({})
         })
         element.append(script)
-        if (this.nowait) {
+        if (this.noWait) {
           resolve({})
         }
       })

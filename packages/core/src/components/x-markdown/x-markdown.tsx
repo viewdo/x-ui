@@ -6,7 +6,6 @@ import { DATA_EVENTS, eventBus, resolveElementVisibility, resolveExpression, Rou
  */
 @Component({
   tag: 'x-markdown',
-  styleUrl: 'x-markdown.scss',
   shadow: false,
 })
 export class XMarkdown {

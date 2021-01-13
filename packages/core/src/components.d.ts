@@ -297,7 +297,7 @@ export namespace Components {
         /**
           * INTERNAL - disables the DOM onload await to finish rendering
          */
-        "nowait": boolean;
+        "noWait": boolean;
         /**
           * The script file to reference.
          */
@@ -802,7 +802,7 @@ declare namespace LocalJSX {
         /**
           * INTERNAL - disables the DOM onload await to finish rendering
          */
-        "nowait": boolean;
+        "noWait": boolean;
         /**
           * The script file to reference.
          */

@@ -30,6 +30,8 @@ const HISTORIES: { [key in HistoryType]: (win: Window) => RouterHistory } = {
 export class RouterService {
   location?: LocationSegments
   history: RouterHistory
+  private readonly removeHandler!: () => void
+  private readonly removeSubscription!: () => void
 
   constructor(
     private readonly writeTask: (t: RafCallback) => void,
@@ -47,7 +49,7 @@ export class RouterService {
       return
     }
 
-    this.history.listen((location: LocationSegments) => {
+    this.removeHandler = this.history.listen((location: LocationSegments) => {
       const newLocation = getLocation(location, root)
       this.history.location = newLocation
       this.location = newLocation
@@ -55,7 +57,7 @@ export class RouterService {
       this.events.emit(ROUTE_EVENTS.RouteChanged, newLocation)
     })
 
-    this.actions.on(ROUTE_TOPIC, (e) => {
+    this.removeSubscription = this.actions.on(ROUTE_TOPIC, (e) => {
       this.handleEvent(e)
     })
 
@@ -156,6 +158,8 @@ export class RouterService {
 
   destroy() {
     this.events.removeAllListeners()
+    this.removeHandler()
+    this.removeSubscription()
   }
 
   createRoute(

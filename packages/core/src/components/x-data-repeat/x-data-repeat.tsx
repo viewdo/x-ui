@@ -9,7 +9,6 @@ import { arrify } from '../../services/utils/misc-utils'
  */
 @Component({
   tag: 'x-data-repeat',
-  styleUrl: 'x-data-repeat.scss',
   shadow: false,
 })
 export class XDataRepeat {

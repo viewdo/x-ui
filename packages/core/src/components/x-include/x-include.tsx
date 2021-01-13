@@ -9,6 +9,9 @@ import { DATA_EVENTS, eventBus, resolveElementVisibility, resolveExpression, Rou
   shadow: false,
 })
 export class XInclude {
+  private dataSubscription!: () => void
+  private routeSubscription!: () => void
+
   @Element() el!: HTMLXIncludeElement
   @State() content?: string
 
@@ -29,11 +32,11 @@ export class XInclude {
   }
 
   async componentWillLoad() {
-    eventBus.on(DATA_EVENTS.DataChanged, async () => {
+    this.dataSubscription = eventBus.on(DATA_EVENTS.DataChanged, async () => {
       await this.resolveContent()
     })
 
-    eventBus.on(ROUTE_EVENTS.RouteChanged, async () => {
+    this.routeSubscription = eventBus.on(ROUTE_EVENTS.RouteChanged, async () => {
       await this.resolveContent()
     })
   }
@@ -46,13 +49,13 @@ export class XInclude {
     await resolveElementVisibility(this.el)
     if (this.router) {
       this.el.querySelectorAll('a[href^=http]').forEach((a) => {
-        a.addEventListener('click', (e) => {
-          const href = a.getAttribute('href')
-          if (href) {
+        const href = a.getAttribute('href')
+        if (href) {
+          a.addEventListener('click', (e) => {
             e.preventDefault()
             this.router?.history.push(href)
-          }
-        })
+          })
+        }
       })
     }
   }
@@ -74,6 +77,11 @@ export class XInclude {
     } catch {
       warn(`x-include: Unable to retrieve from ${this.src}`)
     }
+  }
+
+  disconnectedCallback() {
+    this.dataSubscription()
+    this.routeSubscription()
   }
 
   render() {

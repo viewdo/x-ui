@@ -158,7 +158,7 @@ export class XView {
       const response = await fetch(this.contentSrc)
       if (response.status === 200) {
         const data = await response.text()
-        const content = wrapFragment(data, 'content', 'content')
+        const content = wrapFragment(data, 'content', `content-remote`)
         if (this.route.transition) content.className = this.route.transition
         this.el.append(content)
         this.fetched = true
@@ -205,6 +205,9 @@ export class XView {
       }
     } else {
       this.el.classList.remove('active-route')
+      const remoteContent = this.el.querySelector('#content-remote')
+      remoteContent?.remove()
+      this.fetched = false
     }
   }
 
