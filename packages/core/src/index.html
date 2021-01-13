@@ -35,32 +35,21 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
           media="print" onload="this.media='all'" />
 
+    <!-- Bootstrap   -->
+    <script async src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+
+
     <!-- Page Styles -->
     <style>
-      html {
-        --primary: #620686;
-        --primary-shadow: #5f45a7;
-        --text-color: #000;
-        --content-max-width: 1100px;
-      }
-
-      body,
-      x-ui {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
-        margin: 0;
-        padding: 0;
-        height: 100vh;
-      }
-
-      *[x-cloak] {
-        visibility: hidden;
+      [x-cloak],
+      [hidden],
+      .hide {
+        display: none;
       }
     </style>
     <link rel="stylesheet" href="/docs/assets/styles.css"
           media="print" onload="this.media='all'" />
 
-    <!-- Bootstrap   -->
-    <script async src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
           media="print" onload="this.media='all'" />
@@ -73,7 +62,7 @@
           app-title="view.DO :: <x-ui/>"
           transition="animate__animated animate__fadeIn"
           mode="hash">
-      <nav class="navbar navbar-expand-sm navbar-light bg-light sticky-lg-top">
+      <nav x-cloak class="navbar navbar-expand-sm sticky-lg-top">
         <div class="container-fluid">
           <button
                   slot="start"
@@ -84,36 +73,45 @@
                   aria-controls="navbarSupportedContent"
                   aria-expanded="false"
                   aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+            <i class="ri-menu-line fs-2"></i>
           </button>
-          <div
-               slot="start"
+          <div slot="start"
                class="navbar-brand"
                data-intro="This page uses the <b>x-view</b> component. This component display content for a given route.<br/><br/> Check out the <a href='components/x-view'>documentation</a> to see what else you can do.">
             <x-link href="/home">
               <h1 class="tag-line" title="view.DO Experience UI HTML">&lt;x-ui/&gt;</h1>
             </x-link>
           </div>
-          <x-include src="/docs/header.html"></x-include>
-          <div>
+          <div class="d-sm-inline-flex d-flex p-2">
+            <x-include src="/docs/header.html"></x-include>
+          </div>
+          <div slot="end" class="d-flex p-2">
             <a href="https://github.com/viewdo/x-ui" title="Check out the source on GitHub" target="_blank"
                rel="noopener">
-              <i class="ri-github-line fs-2"></i>
+              <button class="btn">
+                <i class="ri-github-line fs-1"></i>
+              </button>
             </a>
-            <x-data-display
-                            data-intro="Click this to see a <b>x-view-do</b> component in action. It creates a special sub-route with automated navigation. It's conditioned using data expressions. <br/><br/> Check out the <a href='components/x-view-do'>documentation</a> to see what else you can do.">
-              <template>
-                <x-link href="/home/name" anchor-title="Your profile" title="{storage:name}">
-                  <i class="ri-user-5-line fs-2"></i>
-                </x-link>
-              </template>
-            </x-data-display>
+            <x-link href="/home/profile" anchor-title="Your profile"
+                    data-intro="Click this to see a <b>x-view-do</b> component in action. It creates a special sub-route with automated navigation. It's conditioned using data expressions. <br/><br/> Check out the <a href='components/x-view-do'>documentation</a> to see what else you can do.">
+              <button class="btn">
+                <i class="ri-user-5-line fs-1"></i>
+              </button>
+            </x-link>
           </div>
         </div>
       </nav>
+      <div class="container container-fluid">
+        <div class="float-end m-3" style="z-index: 2;">
+          <x-ui-theme></x-ui-theme>
+        </div>
+      </div>
+
 
       <x-view url="home" page-title="Home" content-src="/docs/home/index.html">
-        <x-view-do url="name" page-title="Introductions" when="!{storage:name}" content-src="/docs/home/intro.html">
+
+        <x-view-do url="name" page-title="Introductions"
+                   when="!{storage:name}" content-src="/docs/home/intro.html">
           <div class="container container-fluid" slot="content">
             <x-data-provider-cookie x-cloak class="card">
               <h5 class="card-header">Cookies</h5>
@@ -128,8 +126,15 @@
             </x-data-provider-cookie>
           </div>
         </x-view-do>
-        <x-view-do url="welcome" page-title="Welcome" visit="always" content-src="/docs/home/welcome.html"
+
+        <x-view-do url="welcome" page-title="Welcome"
+                   visit="always"
+                   content-src="/docs/home/welcome.html"
                    transition="animate__animated animate__rubberBand">
+        </x-view-do>
+
+        <x-view-do url="profile" page-title="Profile" visit="optional">
+          <x-include src="/docs/home/profile.html"></x-include>
         </x-view-do>
 
 

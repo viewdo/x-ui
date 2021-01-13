@@ -277,6 +277,16 @@ export namespace Components {
          */
         "transition"?: string;
     }
+    interface XUiAudio {
+        "classes"?: string;
+        "inputId"?: string;
+    }
+    interface XUiAutoplay {
+        "classes"?: string;
+        "inputId"?: string;
+    }
+    interface XUiTheme {
+    }
     interface XUse {
         /**
           * When inline the link/script tags are rendered in-place rather than added to the head.
@@ -475,6 +485,24 @@ declare global {
         prototype: HTMLXUiElement;
         new (): HTMLXUiElement;
     };
+    interface HTMLXUiAudioElement extends Components.XUiAudio, HTMLStencilElement {
+    }
+    var HTMLXUiAudioElement: {
+        prototype: HTMLXUiAudioElement;
+        new (): HTMLXUiAudioElement;
+    };
+    interface HTMLXUiAutoplayElement extends Components.XUiAutoplay, HTMLStencilElement {
+    }
+    var HTMLXUiAutoplayElement: {
+        prototype: HTMLXUiAutoplayElement;
+        new (): HTMLXUiAutoplayElement;
+    };
+    interface HTMLXUiThemeElement extends Components.XUiTheme, HTMLStencilElement {
+    }
+    var HTMLXUiThemeElement: {
+        prototype: HTMLXUiThemeElement;
+        new (): HTMLXUiThemeElement;
+    };
     interface HTMLXUseElement extends Components.XUse, HTMLStencilElement {
     }
     var HTMLXUseElement: {
@@ -509,6 +537,9 @@ declare global {
         "x-link": HTMLXLinkElement;
         "x-markdown": HTMLXMarkdownElement;
         "x-ui": HTMLXUiElement;
+        "x-ui-audio": HTMLXUiAudioElement;
+        "x-ui-autoplay": HTMLXUiAutoplayElement;
+        "x-ui-theme": HTMLXUiThemeElement;
         "x-use": HTMLXUseElement;
         "x-view": HTMLXViewElement;
         "x-view-do": HTMLXViewDoElement;
@@ -782,6 +813,16 @@ declare namespace LocalJSX {
          */
         "transition"?: string;
     }
+    interface XUiAudio {
+        "classes"?: string;
+        "inputId"?: string;
+    }
+    interface XUiAutoplay {
+        "classes"?: string;
+        "inputId"?: string;
+    }
+    interface XUiTheme {
+    }
     interface XUse {
         /**
           * When inline the link/script tags are rendered in-place rather than added to the head.
@@ -904,6 +945,9 @@ declare namespace LocalJSX {
         "x-link": XLink;
         "x-markdown": XMarkdown;
         "x-ui": XUi;
+        "x-ui-audio": XUiAudio;
+        "x-ui-autoplay": XUiAutoplay;
+        "x-ui-theme": XUiTheme;
         "x-use": XUse;
         "x-view": XView;
         "x-view-do": XViewDo;
@@ -928,6 +972,9 @@ declare module "@stencil/core" {
             "x-link": LocalJSX.XLink & JSXBase.HTMLAttributes<HTMLXLinkElement>;
             "x-markdown": LocalJSX.XMarkdown & JSXBase.HTMLAttributes<HTMLXMarkdownElement>;
             "x-ui": LocalJSX.XUi & JSXBase.HTMLAttributes<HTMLXUiElement>;
+            "x-ui-audio": LocalJSX.XUiAudio & JSXBase.HTMLAttributes<HTMLXUiAudioElement>;
+            "x-ui-autoplay": LocalJSX.XUiAutoplay & JSXBase.HTMLAttributes<HTMLXUiAutoplayElement>;
+            "x-ui-theme": LocalJSX.XUiTheme & JSXBase.HTMLAttributes<HTMLXUiThemeElement>;
             "x-use": LocalJSX.XUse & JSXBase.HTMLAttributes<HTMLXUseElement>;
             "x-view": LocalJSX.XView & JSXBase.HTMLAttributes<HTMLXViewElement>;
             "x-view-do": LocalJSX.XViewDo & JSXBase.HTMLAttributes<HTMLXViewDoElement>;

@@ -1,7 +1,7 @@
 {
   "name": "viewdo",
   "private": true,
-  "version": "0.0.0-development",
+  "version": "0.1.6",
   "license": "MIT",
   "homepage": "https://github.com/viewdo/x-ui#readme",
   "bugs": {

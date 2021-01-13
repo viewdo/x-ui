@@ -4,7 +4,7 @@ import { createStore } from '@stencil/store'
 
 class StateModel {
   debug!: boolean
-  theme!: 'light' | 'dark' | string
+  theme!: 'light' | 'dark' | string | null
   muted!: boolean
   autoplay!: boolean
   storedVisits!: string[]
@@ -14,7 +14,7 @@ class StateModel {
 
 const store = createStore<StateModel>({
   debug: false,
-  theme: localStorage.getItem('theme') || 'light',
+  theme: localStorage.getItem('theme') || null,
   muted: localStorage.getItem('muted') === 'true',
   autoplay: localStorage.getItem('autoplay') === 'true',
   storedVisits: [],
@@ -24,7 +24,9 @@ const store = createStore<StateModel>({
 
 const { state, onChange } = store
 
-onChange('theme', (t) => localStorage?.setItem('theme', t?.toString()))
+onChange('theme', (t) => {
+  if (t) localStorage?.setItem('theme', t?.toString())
+})
 onChange('muted', (m) => localStorage?.setItem('muted', m?.toString()))
 onChange('autoplay', (a) => localStorage?.setItem('autoplay', a?.toString()))
 
