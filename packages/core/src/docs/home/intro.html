@@ -1,15 +1,8 @@
 <div class="container container-fluid mx-auto">
 
-  <x-data-show when="!{storage:name}">
-    <h1>Introductions</h1>
-    <p>The View.DO Experience UI system helps build a personalized, conversational UI for the modern web.</p>
-    <p>To demonstrate these capabilities, tell us what to call you and your name will show up in surprising ways.</p>
-  </x-data-show>
-
-  <x-data-show when="{storage:name}">
-    <h1>Your Profile</h1>
-    <p>This data does not leave your browser. It is only for demonstration purposes.</p>
-  </x-data-show>
+  <h1>Introductions</h1>
+  <p>The View.DO Experience UI system helps build a personalized, conversational UI for the modern web.</p>
+  <p>To demonstrate these capabilities, tell us what to call you and your name will show up in surprising ways.</p>
 
   <div class="form-floating mb-3">
     <input
@@ -22,32 +15,7 @@
            x-value-from="{storage:name}" />
     <label for="floatingInput">Nickname</label>
   </div>
-  <div class="form-check form-switch">
-    <input class="form-check-input" type="checkbox" id="audioSwitch">
-    <label class="form-check-label" for="audioSwitch">Audio Enabled</label>
-  </div>
-  <div class="form-check form-switch">
-    <input class="form-check-input" type="checkbox" id="autoPlaySwitch">
-    <label class="form-check-label" for="autoPlaySwitch">Auto-play Enabled</label>
-  </div>
 
-
-  <x-data-show when="'{cookie:consent}' == 'true'">
-    <h4>You gave us consent to set a cookie.</h4>
-    <x-action-activator>
-      <x-action topic="data" command="set-data">
-        <script lang="JSON" type="application/json">
-          {
-            "provider" : "cookie",
-            "values": {
-              "consent": "false"
-            }
-          }
-        </script>
-      </x-action>
-      <button class="btn btn-light">Revoke Consent</button>
-    </x-action-activator>
-  </x-data-show>
 
   <div class="x-nav-bottom">
     <button slot="end" x-next class="btn btn-primary btn-lg">Continue &#x2B9E;</button>

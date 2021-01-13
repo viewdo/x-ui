@@ -1,0 +1,52 @@
+<div class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+
+        <h1>Your Profile</h1>
+        <p>This data does not leave your browser. It is only for demonstration purposes.</p>
+
+        <div class="form-floating mb-3">
+          <input
+                 id="name"
+                 type="text"
+                 required
+                 class="form-control"
+                 onblur="localStorage.setItem('name', this.value)"
+                 onchange="localStorage.setItem('name', this.value)"
+                 x-value-from="{storage:name}" />
+          <label for="floatingInput">Nickname</label>
+        </div>
+        <div class="form-check form-switch">
+          <x-ui-audio classes="form-check-input" input-id="audioSwitch"></x-ui-audio>
+          <label class="form-check-label" for="audioSwitch">Mute Audio</label>
+        </div>
+        <div class="form-check form-switch">
+          <x-ui-autoplay classes="form-check-input" input-id="autoPlaySwitch"></x-ui-autoplay>
+          <label class="form-check-label" for="autoPlaySwitch">Auto-play</label>
+        </div>
+        <x-data-show when="'{cookie:consent}' == 'true'">
+          <h4>You gave us consent to set a cookie.</h4>
+          <x-action-activator>
+            <x-action topic="data" command="set-data">
+              <script lang="JSON" type="application/json">
+                {
+                  "provider" : "cookie",
+                  "values": {
+                    "consent": "false"
+                  }
+                }
+              </script>
+            </x-action>
+            <button class="btn btn-light">Revoke Consent</button>
+          </x-action-activator>
+        </x-data-show>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                onclick="window.history.back()">Close</button>
+        <button type="button" class="btn btn-primary" x-back onclick="window.history.back()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

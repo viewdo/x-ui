@@ -6,7 +6,7 @@ body {
   --background-color: #fff;
 
   --light: #d1d4d4;
-  --dark: #28334a;
+  --dark: #475b86;
   --success: #44883e;
   --info: #1a658f;
 
@@ -53,6 +53,7 @@ h3 {
   font-size: 1.2rem;
   border-bottom: 1px dotted var(--secondary);
   padding-bottom: 0.2em;
+  display: flex;
 }
 
 h2,
@@ -198,6 +199,11 @@ x-link {
   cursor: pointer;
 }
 
+.active-route-exact .modal,
+x-view-do .modal {
+  display: block;
+}
+
 /* Bootstrap */
 
 .btn-primary {
@@ -251,6 +257,7 @@ x-link {
 }
 
 .list-group {
+  clear: both;
   margin-bottom: 1em;
   border-color: var(--primary);
   background-color: var(--background-color);
@@ -263,12 +270,11 @@ x-link {
 }
 
 .list-group-item a {
-  color: var(--light);
+  color: (var(--secondary);
   font-weight: 400;
 }
 
 .accordion-button:not(.collapsed) {
   color: var(--accent);
   background-color: var(--dark);
-  font-weight: 400;
 }
