@@ -1,14 +1,11 @@
 import { Config } from '@stencil/core'
 import { sass } from '@stencil/sass'
+import { version } from './package.json'
 
 // Const scssVariables = 'src/scss/variables.scss';
 export const config: Config = {
   namespace: 'x-ui',
   plugins: [sass()],
-  bundles: [
-    { components: ['x-ui', 'x-view', 'x-view-do', 'x-link'] },
-    { components: ['x-audio-player', 'x-audio-music-load', 'x-audio-sound-load', 'x-audio-music-action', 'x-audio-sound-action'] },
-  ],
   preamble: 'view.DO 2021',
   devServer: {
     openBrowser: false,
@@ -16,6 +13,10 @@ export const config: Config = {
     port: 3333,
   },
   outputTargets: [
+    {
+      type: 'docs-vscode',
+      file: './dist/custom-elements.html-data.json',
+    },
     {
       type: 'dist',
       esmLoaderPath: 'loader',
@@ -27,6 +28,12 @@ export const config: Config = {
     {
       type: 'docs-readme',
       footer: 'view.DO : Experience Platform',
+    },
+    {
+      type: 'docs-custom',
+      generator: (docs: any) => {
+        docs = Object.assign(docs, { version })
+      },
     },
     {
       type: 'docs-json',

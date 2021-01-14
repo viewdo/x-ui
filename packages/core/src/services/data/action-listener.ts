@@ -9,12 +9,13 @@ import { StorageProvider } from './providers/storage'
 
 export class DataListener implements IEventActionListener {
   private eventBus!: IEventEmitter
-
+  disposeHandles: Array<() => void> = []
   public initialize(window: Window, actionBus: IEventEmitter, eventBus: IEventEmitter) {
     this.eventBus = eventBus
-    actionBus.on(DATA_TOPIC, (e) => {
+    const handle = actionBus.on(DATA_TOPIC, (e) => {
       this.handleAction(e)
     })
+    this.disposeHandles.push(handle)
 
     this.registerBrowserProviders(window)
   }
@@ -34,10 +35,11 @@ export class DataListener implements IEventActionListener {
   }
 
   registerProvider(name: string, provider: IDataProvider) {
-    provider.changed.on(DATA_EVENTS.DataChanged, () => {
+    const handle = provider.changed.on(DATA_EVENTS.DataChanged, () => {
       debugIf(interfaceState.debug, `data-provider: ${name} changed`)
       this.eventBus.emit(DATA_EVENTS.DataChanged, {})
     })
+    this.disposeHandles.push(handle)
     addDataProvider(name, provider)
   }
 
@@ -60,5 +62,9 @@ export class DataListener implements IEventActionListener {
         }
       }
     }
+  }
+
+  destroy() {
+    this.disposeHandles.forEach((h) => h?.call(this))
   }
 }

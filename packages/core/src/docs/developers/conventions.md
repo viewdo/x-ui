@@ -25,3 +25,22 @@ The presence of a boolean attribute indicate the value of its property is `true
 <!-- !! "no-render" is true -->
 
 ```
+
+## Code Completion
+
+Shoelace ships with a `custom-elements.json` file that can be used to describe its components to supportive editors, providing code completion (also known as "code hinting" or "IntelliSense"). To enable this, you need to tell your editor where this file is.
+
+### VS Code
+
+1. [Install Shoelace locally](/getting-started/installation.md#local-installation)
+2. Create a folder called `.vscode` at the root of your project
+3. Create a file inside the folder called `settings.json`
+4. Add the following to the file
+
+```js
+{
+  "html.customData": ["./node_modules/@viewdo/x-ui/dist/custom-elements.html-data.json"]
+}
+```
+
+If `settings.json` already exists in your project, simply add the `html.customData` line to the root of the object.

@@ -8,12 +8,16 @@ import { getInterfaceProvider, setInterfaceProvider } from './providers/factory'
 import { interfaceState } from './state'
 
 export class InterfaceListener implements IEventActionListener {
+  actionsSubscription!: () => void
+  themeSubscription!: () => void
+  muteSubscription!: () => void
+  autoplaySubscription!: () => void
   defaultProvider!: any
   eventBus!: IEventEmitter
 
   initialize(window: Window | MockWindow, actionBus: IEventEmitter, eventBus: IEventEmitter): void {
     this.eventBus = eventBus
-    actionBus.on(INTERFACE_TOPIC, async (e) => {
+    this.actionsSubscription = actionBus.on(INTERFACE_TOPIC, async (e) => {
       await this.handleAction(e)
     })
     this.registerBrowserProviders(window)
@@ -27,17 +31,17 @@ export class InterfaceListener implements IEventActionListener {
   setProvider(name: string, provider: InterfaceProvider) {
     debugIf(interfaceState.debug, `interface-provider: ${name} changed`)
 
-    provider?.onChange('theme', (theme) => {
+    this.themeSubscription = provider?.onChange('theme', (theme) => {
       this.defaultProvider.state.theme = theme
       this.eventBus.emit(INTERFACE_EVENTS.ThemeChanged)
     })
 
-    provider?.onChange('muted', (muted) => {
+    this.muteSubscription = provider?.onChange('muted', (muted) => {
       this.defaultProvider.state.muted = muted
       this.eventBus.emit(INTERFACE_EVENTS.SoundChanged)
     })
 
-    provider?.onChange('autoplay', (autoplay) => {
+    this.autoplaySubscription = provider?.onChange('autoplay', (autoplay) => {
       this.defaultProvider.state.autoplay = autoplay
       this.eventBus.emit(INTERFACE_EVENTS.AutoPlayChanged)
     })
@@ -66,5 +70,12 @@ export class InterfaceListener implements IEventActionListener {
         commandFunc.call(this.defaultProvider, actionEvent.data)
       }
     }
+  }
+
+  destroy() {
+    this.actionsSubscription()
+    this.muteSubscription()
+    this.autoplaySubscription()
+    this.themeSubscription()
   }
 }

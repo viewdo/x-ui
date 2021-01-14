@@ -3,15 +3,14 @@
   "private": true,
   "version": "0.1.6",
   "license": "MIT",
+  "main": "index.js",
+  "author": "Jason Wicker <jason.wicker@view.do>",
   "homepage": "https://github.com/viewdo/x-ui#readme",
   "bugs": {
     "url": "https://github.com/viewdo/x-ui/issues",
     "email": "tech@view.dp"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/viewdo/x-ui.git"
-  },
+  "repository": "https://github.com/viewdo/x-ui.git",
   "husky": {
     "hooks": {
       "pre-commit": "npm run pre:commit"
@@ -158,5 +157,11 @@
       "unicorn/prevent-abbreviations": "off",
       "unicorn/no-array-reduce": "off"
     }
+  },
+
+  "bolt": {
+    "workspaces": [
+      "packages/*"
+    ]
   }
 }

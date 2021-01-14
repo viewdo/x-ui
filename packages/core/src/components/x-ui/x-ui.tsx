@@ -169,11 +169,6 @@ export class XUI {
       v.transition = v.transition || this.transition
     })
 
-    if (this.startUrl !== '/' && this.router.location?.pathname === this.root) {
-      const startUrl = this.router.normalizeChildUrl(this.startUrl, this.root)
-      this.router.history.push(this.router.getUrl(startUrl, this.root))
-    }
-
     const dataListener = new DataListener()
     this.addListener('data', dataListener)
 
@@ -192,6 +187,10 @@ export class XUI {
     this.el.querySelectorAll('[x-cloak]').forEach((element) => {
       element.removeAttribute('x-cloak')
     })
+    if (this.startUrl !== '/' && this.router.location?.pathname === this.root) {
+      const startUrl = this.router.normalizeChildUrl(this.startUrl, this.root)
+      this.router.history.push(this.router.getUrl(startUrl, this.root))
+    }
   }
 
   disconnectedCallback() {
@@ -199,6 +198,7 @@ export class XUI {
     this.actionsSubscription()
     this.eventSubscription()
     this.router.destroy()
+    this.listeners.forEach((l) => l.destroy())
     eventBus.removeAllListeners()
     actionBus.removeAllListeners()
   }

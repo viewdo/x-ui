@@ -10,6 +10,7 @@ export interface IEventEmitter {
 
 export interface IEventActionListener {
   initialize(win: Window, actions: IEventEmitter, events: IEventEmitter): void
+  destroy(): void
 }
 
 export enum ActionActivationStrategy {
