@@ -20,4 +20,4 @@ Add application-like features to static HTML: partial-includes, routing, guided 
 - **Stencil.js**: [SDK](https://stenciljs.com) for the best way to create web-components
 - **howler.js**: [howler-js](https://github.com/goldfire/howler.js) best audio player on the market
 - **SilentMatt**: [expression evaluator](https://github.com/silentmatt/expr-eval) for view condition expressions
-- **JSONata**: [expression evaluator](https://github.com/silentmatt/expr-eval) for view condition expressions
+- **JSONata**: [JSONata](https://jsonata.org/) for querying JSON! Very nice.

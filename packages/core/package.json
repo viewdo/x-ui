@@ -51,7 +51,7 @@
     "@stencil/core": "2.3.0",
     "@stencil/sass": "1.4.1",
     "@types/howler": "2.2.1",
-    "workbox-build": "^6.0.2"
+    "workbox-build": "6.0.2"
   },
   "peerDependencies": {
     "@types/howler": "2.2.1"
