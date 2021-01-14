@@ -11,7 +11,7 @@ describe('x-ui-theme', () => {
       <x-ui-theme>
         <mock:shadow-root>
           <label class="switch" id="switch">
-            <input checked="" id="slider" type="checkbox">
+            <input aria-label="Change Theme" checked="" id="slider" type="checkbox">
             <span class="round slider"></span>
           </label>
         </mock:shadow-root>

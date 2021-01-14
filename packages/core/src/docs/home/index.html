@@ -5,24 +5,18 @@
 </x-use>
 <div class="container container-fluid container-md mx-auto">
   <div class="hero">
-    <h1>Modern web-application functionality without leaving the comfort of HTML.</h1>
+    <h1>Turbo-charge your HTML</h1>
+    <h2>Modern web-application functionality without leaving the comfort of HTML.</h2>
   </div>
-
-
-  <h2>Turbo-charged HTML</h2>
-  <p class="lead">
-    Add multi-page routing, guided navigation, data-binding, dynamic content, and even event-based actions
-    to any HTML file with little scripting and no framework.
-  </p>
 
   <p class="p-2 lead accent" style="display: flex; flex-direction: row; gap: 1ch"
      data-intro="This intro script was referenced conditionally, keeping the page weight down if this exact page isn't rendered. Check out the <b>x-use</b> element. <br/><br/> <a href='components/x-use?group=content'>Learn more</a>. ">
     <i class="ri-play-line fs-1"></i>
     <span>
-      This documentation was created with these experience elements. View-source or <a class="fw-300" href
-         onclick="introJs().start();return false">take
-        the tour</a> to see how complex routing, guided navigation,
-      automatic presentations, data-binding and more is made possible!
+      This app was created using <b>&lt;x-ui/&gt;</b>.
+      View-source or <a class="fw-300" href onclick="introJs().start();return false">
+        take the tour</a> to see how complex routing, guided navigation, automatic
+      presentations, data-binding and more is made possible!
     </span>
   </p>
 
@@ -31,33 +25,21 @@
     <x-include src="/docs/guides.html"></x-include>
   </div>
 
+  <h2>What is it?</h2>
   <p class="lead">
-    <b class="brand">&lt;x-ui/&gt;</b> is a suite of custom HTML elements that
-    enable non-developers to turn static HTML files into single-page
-    web-applications, with many features to make rich web-based experiences, easily.
+    <b class="brand">&lt;x-ui/&gt;</b> is a set of custom HTML elements (Web Components, made
+    with <a href="https://stenciljs.com">Stencil JS</a>). They add features typically only
+    available in JavaScript frameworks, to static HTML, with many features
+    focused on creating web experiences without a build-process.
   </p>
 
-  <h2>Not every web-site needs a web-framework.</h2>
+  <h3>No Framework Necessary</h3>
   <p>
-    Frameworks minimize the effort to efficiently create and maintain web pages.
+    Without transpilation or a framework or even a build-process, you get the same time-saving
+    techniques like shared-layouts, URL-based routing, data-binding, partials and much more,
+    using elements directly in HTML.
   </p>
-  <p>
-    However, not everyone has the coding skills, framework expertise, or the patience for
-    build systems, app servers, etc. These components were made to bring web-application efficiencies
-    without
-  </p>
-  <h3>No Framework, No Problem</h3>
-  <p>
-    <b class="brand">&lt;x-ui/&gt;</b> is different. Without transpilation, a framework or even a build-process,
-    designers and developers get the same time-saving techniques (layouts, routing,
-    data-binding, etc) using specialized elements directly in the HTML.
-  </p>
-  <h3>Nothing to clear with IT</h3>
-  <p>
-    YES. If you can include a <b>&lt;script&gt;</b> tag in the header, you can
-    turn your static HTML into a full-fledged web application.
-    Host it on your favorite static server -- there is no run-time and no server dependencies.
-  </p>
+
   <h2>What it is not.</h2>
   <p>
     <b class="brand">&lt;x-ui/&gt;</b> experience elements add functionality, NOT design.
@@ -66,16 +48,16 @@
   </p>
 
 
-  <h4>Features:</h4>
+  <h3>Features:</h3>
   <div class="accordion accordion-flush" id="specialFeatures">
     <div class="accordion-item">
-      <h5 class="accordion-header" id="headingOne">
+      <h4 class="accordion-header" id="headingOne">
         <button class="accordion-button collapsed fs-5" type="button" data-bs-toggle="collapse"
                 data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
           <i class="ri-route-line me-5"></i>
           Content Routing
         </button>
-      </h5>
+      </h4>
       <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
            data-bs-parent="#specialFeatures">
         <div class="accordion-body">
@@ -88,13 +70,13 @@
       </div>
     </div>
     <div class="accordion-item">
-      <h5 class="accordion-header" id="headingTwo">
+      <h4 class="accordion-header" id="headingTwo">
         <button class="accordion-button collapsed fs-5" type="button" data-bs-toggle="collapse"
                 data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
           <i class="ri-direction-line me-5"></i>
           Guided Navigation
         </button>
-      </h5>
+      </h4>
       <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
            data-bs-parent="#specialFeatures">
         <div class="accordion-body">
@@ -110,13 +92,13 @@
       </div>
     </div>
     <div class="accordion-item">
-      <h5 class="accordion-header" id="headingThree">
+      <h4 class="accordion-header" id="headingThree">
         <button class="accordion-button collapsed fs-5" type="button" data-bs-toggle="collapse"
                 data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
           <i class="ri-empathize-line me-5"></i>
           Embedded Data
         </button>
-      </h5>
+      </h4>
       <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
            data-bs-parent="#specialFeatures">
         <div class="accordion-body">
@@ -130,13 +112,13 @@
       </div>
     </div>
     <div hidden class="accordion-item">
-      <h5 class="accordion-header" id="headingFour">
+      <h4 class="accordion-header" id="headingFour">
         <button class="accordion-button collapsed fs-5" type="button" data-bs-toggle="collapse"
                 data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
           <i class="ri-slideshow-line me-5"></i>
           Made for Presentations
         </button>
-      </h5>
+      </h4>
       <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
            data-bs-parent="#specialFeatures">
         <div class="accordion-body">
@@ -152,13 +134,12 @@
     </div>
   </div>
 
-
-
-  <h4>Built with Love</h4>
+  <h2>Built with Love</h2>
   <ul>
     <li>
       <b>Fast:</b> Lightweight and
-      <a href="https://developers.google.com/speed/pagespeed/insights/?url=https://demo.x-ui.dev" rel="noreferrer"
+      <a href="https://developers.google.com/speed/pagespeed/insights/?url=https://demo.x-ui.dev&tab=desktop"
+         rel="noreferrer"
          target="_blank"> lightening fast</a>: No Framework & Lazy Loaded
     </li>
     <li><b>Themeable:</b> BYO UI and themes. <b class="brand">&lt;x-ui/&gt;</b> stays out of the way.</li>
@@ -171,7 +152,7 @@
 
   <x-data-display>
     <template>
-      <h5 class="mt-5">It's not magic {storage:name}, it's view.DO!</h5>
+      <h3 class="mt-5">It's not magic {storage:name}, it's view.DO!</h3>
     </template>
   </x-data-display>
 

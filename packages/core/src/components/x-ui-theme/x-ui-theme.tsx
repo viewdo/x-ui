@@ -37,6 +37,7 @@ export class XUiTheme {
       <Host>
         <label id="switch" class="switch">
           <input
+            aria-label="Change Theme"
             type="checkbox"
             ref={(e) => {
               this.slider = e

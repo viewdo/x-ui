@@ -55,6 +55,10 @@ export class XUse {
     if (this.styleSrc && !hasReference(this.styleSrc)) {
       const url = this.styleSrc
       return new Promise((resolve) => {
+        if (this.noWait) {
+          resolve({})
+        }
+
         const link = this.el.ownerDocument.createElement('link')
         link.href = url
         link.rel = 'stylesheet'
@@ -62,9 +66,10 @@ export class XUse {
           markReference(url)
           resolve({})
         })
-        element.append(link)
-        if (this.noWait) {
-          resolve({})
+        try {
+          element.append(link)
+        } catch (error) {
+          resolve(error)
         }
       })
     }
@@ -77,6 +82,10 @@ export class XUse {
     if (this.scriptSrc && !hasReference(this.scriptSrc)) {
       const url = this.scriptSrc
       return new Promise((resolve) => {
+        if (this.noWait) {
+          resolve({})
+        }
+
         const script = this.el.ownerDocument.createElement('script')
         script.src = url
         if (this.module) {
@@ -89,9 +98,11 @@ export class XUse {
           markReference(url)
           resolve({})
         })
-        element.append(script)
-        if (this.noWait) {
-          resolve({})
+
+        try {
+          element.append(script)
+        } catch (error) {
+          resolve(error)
         }
       })
     }

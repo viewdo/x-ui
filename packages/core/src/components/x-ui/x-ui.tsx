@@ -187,6 +187,10 @@ export class XUI {
     this.el.querySelectorAll('[x-cloak]').forEach((element) => {
       element.removeAttribute('x-cloak')
     })
+    this.el.querySelectorAll('[x-hide]').forEach((element) => {
+      element.removeAttribute('x-hide')
+      element.setAttribute('hidden', '')
+    })
     if (this.startUrl !== '/' && this.router.location?.pathname === this.root) {
       const startUrl = this.router.normalizeChildUrl(this.startUrl, this.root)
       this.router.history.push(this.router.getUrl(startUrl, this.root))

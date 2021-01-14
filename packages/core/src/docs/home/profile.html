@@ -8,7 +8,6 @@
 
         <div class="form-floating mb-3">
           <input
-                 id="name"
                  type="text"
                  required
                  class="form-control"
@@ -26,7 +25,8 @@
           <label class="form-check-label" for="autoPlaySwitch">Auto-play</label>
         </div>
         <x-data-show when="'{cookie:consent}' == 'true'">
-          <h4>You gave us consent to set a cookie.</h4>
+          <h3>You gave us consent to set a cookie.</h3>
+          <p>This is just an example and not meant to be taken seriously.</p>
           <x-action-activator>
             <x-action topic="data" command="set-data">
               <script lang="JSON" type="application/json">
@@ -43,9 +43,7 @@
         </x-data-show>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                onclick="window.history.back()">Close</button>
-        <button type="button" class="btn btn-primary" x-back onclick="window.history.back()">Save changes</button>
+        <button type="button" class="btn btn-primary" x-back onclick="window.history.back()">OK</button>
       </div>
     </div>
   </div>

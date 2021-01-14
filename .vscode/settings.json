@@ -56,5 +56,11 @@
     "source.organizeImports": true
   },
   "xo.enable": true,
-  "xo.format.enable": true
+  "xo.format.enable": true,
+  "vsicons.associations.files": [
+    { "icon": "markdownlint", "extensions": [".markdownlintignore"], "format": "svg" },
+    { "icon": "node", "extensions": [".rc"], "format": "svg" },
+    { "icon": "stencil", "extensions": [".config.ts"], "format": "svg" },
+    { "icon": "config", "extensions": [".config.js"], "format": "svg" },
+  ]
 }

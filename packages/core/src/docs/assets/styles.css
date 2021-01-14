@@ -12,21 +12,28 @@ body {
 
   --nav-bg: #5b7f95;
 
-  --content-max-width: 1100px;
+  --primary-bg: #483f61;
+
+  --content-max-width: 750px;
+
+  font-family: 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  background-color: var(--background-color);
+  color: var(--text-color);
+  text-shadow: 0 0 0.5px var(--dark);
 }
 body.dark {
-  --primary: #9185b3;
-  --secondary: #5b7f95;
+  --primary: #ae9ae4;
+  --secondary: #347fad;
   --accent: #fdd757;
-  --text-color: #dee5ea;
-  --background-color: #5f6161;
+  --text-color: #ffffff;
+  --background-color: #2f3030;
 
   --light: #6f7070;
-  --dark: #0f131b;
+  --dark: #3f4f6e;
   --success: #23461f;
   --info: #0c3349;
 
-  --nav-bg: #0f131b;
+  --nav-bg: #374663;
 
   --bs-primary: var(--primary);
   --bs-secondary: var(--secondary);
@@ -34,11 +41,68 @@ body.dark {
   --bs-info: var(--info);
 }
 
-body {
-  font-family: 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
-  background-color: var(--background-color);
-  color: var(--text-color);
-  text-shadow: 0 0 0.1px var(--dark);
+nav {
+  background-color: var(--nav-bg);
+}
+nav h2 {
+  color: white;
+  font-size: large;
+}
+nav button i {
+  color: white;
+}
+nav button:focus {
+  border-color: var(--accent);
+  box-shadow: none;
+}
+
+.hero {
+  margin-bottom: 2em;
+  text-justify: auto;
+}
+
+h1.brand {
+  font-family: 'Nunito', sans-serif, 'Ubuntu Mono', monospace;
+  font-size: calc(100% + 2vw);
+}
+.brand {
+  font-family: 'Nunito', sans-serif;
+  font-family: 'Ubuntu Mono', monospace;
+}
+b.brand {
+  color: var(--primary);
+  font-size: (100% + 1.3vm);
+}
+
+.accent {
+  border: solid 2px var(--dark);
+  border-radius: 5px;
+  color: white;
+  background: var(--dark);
+}
+
+.accent a,
+.accent a:hover,
+.accent a:visited,
+.accent a:link,
+.accent a:hover {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.tag-line {
+  color: white;
+  font-family: 'Nunito', sans-serif, 'Ubuntu Mono', monospace;
+  font-size: calc(100% + 3rem);
+  position: relative;
+  margin: 0;
+}
+
+#viewdo-logo {
+  padding: 1em 0 1em 1em;
+}
+.dark #viewdo-logo {
+  filter: brightness(0) invert(1);
 }
 
 h1 {
@@ -72,12 +136,12 @@ a,
 a:link,
 a:visited,
 a:active {
-  color: var(--accent);
+  color: var(--primary);
   text-decoration: none;
   font-weight: 400;
 }
 a:hover {
-  color: var(--secondary);
+  color: var(--accent);
   text-decoration: underline;
 }
 
@@ -111,66 +175,27 @@ table tbody td {
   padding: 10px;
 }
 
-#viewdo-logo {
-  padding: 1em 0 1em 1em;
-}
-
-h1.brand {
-  font-family: 'Nunito', sans-serif, 'Ubuntu Mono', monospace;
-  font-size: calc(100% + 2vw);
-}
-
-.tag-line {
-  color: var(--accent);
-  font-family: 'Nunito', sans-serif, 'Ubuntu Mono', monospace;
-  font-size: calc(100% + 3rem);
-  position: relative;
-  margin: 0;
-}
-
 code {
   color: var(--text-color);
   font-family: 'Courier New', Courier, monospace;
 }
 
-.brand {
-  font-family: 'Nunito', sans-serif;
-  font-family: 'Ubuntu Mono', monospace;
-}
-
-b.brand {
-  color: var(--primary);
-  font-size: (100% + 1.3vm);
-}
-
-.accent {
-  border: solid 2px var(--dark);
-  border-radius: 5px;
-  color: var(--text-color);
-  background: var(--light);
-}
-.accent a {
-  color: var(--primary);
-  font-weight: 600;
-}
 x-ui {
   margin: 0;
   padding: 0;
   height: 100vh;
 }
+x-link {
+  cursor: pointer;
+}
 
-nav {
-  background-color: var(--nav-bg);
+x-markdown pre {
+  clear: both;
 }
-nav h3 {
-  color: var(--accent);
-}
-nav button i {
-  color: var(--accent);
-}
-nav button:focus {
-  border-color: var(--accent);
-  box-shadow: none;
+
+.active-route-exact .modal,
+x-view-do .modal {
+  display: block;
 }
 
 .x-nav-bottom {
@@ -195,15 +220,7 @@ nav button:focus {
 .x-nav-bottom [slot='start'] {
   float: left;
 }
-x-link {
-  cursor: pointer;
-}
 
-.active-route-exact .modal,
-x-view-do .modal {
-  display: block;
-
-}
 .modal-dialog {
   margin: 10em auto;
 }
@@ -212,13 +229,17 @@ x-view-do .modal {
 }
 
 /* Bootstrap */
-
+.container {
+  max-width: var(--content-max-width);
+}
 .btn-primary {
-  background-color: var(--primary);
+  background-color: var(--primary-bg);
+  border-color: white;
 }
 .btn-primary:hover {
-  background-color: var(--primary);
+  background-color: var(--primary-bg);
   color: var(--accent);
+  border-color: white;
 }
 
 .btn-secondary {
@@ -226,16 +247,17 @@ x-view-do .modal {
 }
 .btn-secondary:hover {
   background-color: var(--secondary);
-  color: var(--accent);
 }
 
 .btn-light {
-  background-color: var(--info);
-  color: #fff;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  border-color: var(--text-color);
 }
 .btn-light:hover {
-  background-color: var(--info);
-  color: var(--accent);
+  background-color: var(--background-color);
+  color: var(--text-color);
+  border-color: var(--text-color);
 }
 
 .container-fluid {
@@ -266,22 +288,33 @@ x-view-do .modal {
 .list-group {
   clear: both;
   margin-bottom: 1em;
+  color: white;
   border-color: var(--primary);
+  background-color: var(--background-color);
+}
+
+.card {
+  clear: right;
   background-color: var(--background-color);
 }
 
 .accordion-button,
 .list-group-item {
-  color: var(--light);
+  color: white;
   background-color: var(--dark);
 }
 
+.list-group-item i,
 .list-group-item a {
-  color: (var(--secondary);
+  color: white;
   font-weight: 400;
 }
 
 .accordion-button:not(.collapsed) {
   color: var(--accent);
   background-color: var(--dark);
+}
+
+.form-floating > label {
+  color: #000;
 }
