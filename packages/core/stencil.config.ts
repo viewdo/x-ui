@@ -16,7 +16,7 @@ const config: Config = {
   outputTargets: [
     {
       type: 'docs-vscode',
-      file: './dist/custom-elements.html-data.json',
+      file: './dist/custom-elements/custom-elements.json',
     },
     {
       type: 'dist',

@@ -20,7 +20,7 @@ export class Route {
     public scrollTopOffset: number,
     matchSetter: (m: MatchResults | null) => void,
   ) {
-    this.subscription = eventBus.on(ROUTE_EVENTS.RouteChanged, async () => {
+    this.subscription = eventBus.on(ROUTE_EVENTS.RouteChanged, () => {
       this.previousMatch = this.match
       this.match = this.router?.matchPath({
         path,
@@ -28,6 +28,11 @@ export class Route {
         strict: true,
       })
       matchSetter(this.match)
+    })
+    this.match = this.router?.matchPath({
+      path,
+      exact,
+      strict: true,
     })
   }
 
