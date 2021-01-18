@@ -1,5 +1,9 @@
-<x-use script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js" style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css"> </x-use>
-<x-use script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js"> </x-use>
+<x-use script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
+       style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
+</x-use>
+<x-use
+       script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
+</x-use>
 <div class="container container-fluid mx-auto">
   <x-data-display x-show-when="{storage:name}">
     <template>
@@ -9,24 +13,29 @@
 
   <x-data-display when="{session:favorite}">
     <template>
-      <h2>Favorite thing: <x-link href="/use-data/session-data">{session:favorite}</x-link></h2>
+      <h2>Favorite thing: <x-link href="/use-data/session-data">
+          {session:favorite}</x-link>
+      </h2>
     </template>
   </x-data-display>
 
   <x-data-display>
     <template>
-      <h2>Spirit Animal: <x-link href="/use-data/storage-data">{storage:animal}</x-link></h2>
+      <h2>Spirit Animal: <x-link href="/use-data/storage-data">{storage:animal}
+        </x-link>
+      </h2>
     </template>
   </x-data-display>
 
-  <h2 hidden x-show-when="'{storage:animal}' == 'dog'">I only show up when your spirit-animal is 'dog'</h2>
+  <h2 hidden x-show-when="'{storage:animal}' == 'dog'">I only show up when your
+    spirit-animal is 'dog'</h2>
 
   <div class="x-nav-bottom">
     <x-link slot="start" href="/use-data">
-      <button class="btn btn-light btn-lg">&#x2B9C; Data</button>
+      <button class="btn btn-light btn-lg">&lt; Data</button>
     </x-link>
     <x-link slot="end" href="/actions">
-      <button class="btn btn-primary btn-lg">Next: Actions &#x2B9E;</button>
+      <button class="btn btn-primary btn-lg">Next: Actions &gt;</button>
     </x-link>
   </div>
 </div>

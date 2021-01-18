@@ -1,7 +1,7 @@
 jest.mock('../../../services/logging')
 
-import { newSpecPage } from '@stencil/core/testing'
-import { XViewLink } from '../x-link'
+import { newSpecPage } from '@stencil/core/testing';
+import { XViewLink } from '../x-link';
 
 describe('x-link', () => {
   it('renders', async () => {
@@ -11,7 +11,7 @@ describe('x-link', () => {
     })
     expect(page.root).toEqualHtml(`
       <x-link>
-        <a class="link-active"></a>
+        <a class="link-active" x-link-attached></a>
       </x-link>
     `)
   })

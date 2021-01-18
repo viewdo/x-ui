@@ -1,5 +1,9 @@
-<x-use script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js" style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css"> </x-use>
-<x-use script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js"> </x-use>
+<x-use script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
+       style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
+</x-use>
+<x-use
+       script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
+</x-use>
 <div class="container container-fluid mx-auto">
   <h1>Routing</h1>
   <p class="lead">This page uses route and URL data within the content!</p>
@@ -7,21 +11,25 @@
 
   <x-data-display>
     <template>
-      <img style="width: 100%" src="https://source.unsplash.com/random/500x200?{route:item}" />
+      <img style="width: 100%"
+           src="https://source.unsplash.com/random/500x200?{route:item}" />
     </template>
   </x-data-display>
 
-  <h3>Learn about <x-data-display text="{route:item}"></x-data-display></h3>
+  <h3>Learn about <x-data-display text="{route:item}"></x-data-display>
+  </h3>
   <p>
-    <x-data-display text="{storage:name}"></x-data-display>, you picked one of my favorite things
-    <span x-hide-when="!{query:with}"> AND you want a side of <x-data-display text="{query:with}"></x-data-display> </span>
+    <x-data-display text="{storage:name}"></x-data-display>, you picked one of
+    my favorite things
+    <span x-hide-when="!{query:with}"> AND you want a side of <x-data-display
+                      text="{query:with}"></x-data-display> </span>
   </p>
 
   <x-markdown src="/docs/routing/data/child.md"></x-markdown>
 
   <div class="x-nav-bottom">
     <x-link slot="start" href="/routing/data">
-      <button class="btn btn-light btn-lg">&#x2B9C; Data Routing</button>
+      <button class="btn btn-light btn-lg">&lt; Data Routing</button>
     </x-link>
   </div>
 </div>

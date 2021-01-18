@@ -1,10 +1,14 @@
 <x-use script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
-       style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css"> </x-use>
-<x-use script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js"> </x-use>
+       style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
+</x-use>
+<x-use
+       script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
+</x-use>
 <div class="container container-fluid mx-auto">
   <ul class="list-group btn-group-xl float-end ms-3 mt-2 d-none d-sm-block">
     <li class="list-group-item fw-bold">Audio Components</li>
-    <x-data-repeat items-src="/data/x-components.json" filter="components[docsTags[text='audio']]">
+    <x-data-repeat items-src="/data/x-components.json"
+                   filter="components[docsTags[text='audio']]">
       <template>
         <li class="list-group-item">
           <x-link href="/components/{data:tag}">
@@ -17,7 +21,8 @@
 
   <h1>Audio</h1>
   <p class="lead">
-    The audio player component is a set of two HTML Audio players designed to allow two layers of sound to play during
+    The audio player component is a set of two HTML Audio players designed to
+    allow two layers of sound to play during
     an experience. There is an music and a sound layer for audio
     timed with the experience through route-changes and event actions.
   </p>
@@ -26,11 +31,13 @@
 
   <h2 class="mt-3">How it works</h2>
   <p>
-    The <strong>Music</strong> layer is meant to play background sounds or music. It should never hold audio with
+    The <strong>Music</strong> layer is meant to play background sounds or
+    music. It should never hold audio with
     singing, talking, or any annoying sounds. These clips can loop.
   </p>
 
-  <p>The <strong>Sound</strong> layer is meant for short clips. The sound layer should never have music or background
+  <p>The <strong>Sound</strong> layer is meant for short clips. The sound layer
+    should never have music or background
     sounds.</p>
 
   <h5 class="mt-5">Audio Rules:</h5>
@@ -40,21 +47,26 @@
     <li>Only the music audio can loop.</li>
     <li>Looping audio loops until its deactivation event.</li>
     <li>
-      If audio is set to loop with no deactivation, any new configuration will end it. For instance, if new audio is
+      If audio is set to loop with no deactivation, any new configuration will
+      end it. For instance, if new audio is
       configured to activate in a queued fashion, the looping audio
       should stop and allowing the queued audio to play when it ends.
     </li>
-    <li>Hard deactivations ease out the audio with a .5 second fade-out before playing the next clip.</li>
-    <li>Queued audio that doesn't get a chance to play before the next state change is removed from the queue.</li>
+    <li>Hard deactivations ease out the audio with a .5 second fade-out before
+      playing the next clip.</li>
+    <li>Queued audio that doesn't get a chance to play before the next state
+      change is removed from the queue.</li>
   </ul>
 
   <h3>Enable Audio</h3>
   <p>
     To enable audio, you must first add the
-    <x-link href="/components/x-audio-player"><b>&lt;x-audio-player&gt;</b></x-link> to the page.
+    <x-link href="/components/x-audio-player"><b>&lt;x-audio-player&gt;</b>
+    </x-link> to the page.
   </p>
-  <button class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#loadSource"
-          aria-expanded="false" aria-controls="loadSource">
+  <button class="btn btn-light" type="button" data-bs-toggle="collapse"
+          data-bs-target="#loadSource" aria-expanded="false"
+          aria-controls="loadSource">
     <i class="ri-code-s-slash-line"></i>
     View Source
   </button>
@@ -73,36 +85,42 @@
 
   <h4 class="mt-3">Audio Examples</h4>
   <p>
-    Since audio only plays on <x-link href="/components/x-view-do"><b>&lt;x-view-do&gt;</b></x-link>
+    Since audio only plays on <x-link href="/components/x-view-do">
+      <b>&lt;x-view-do&gt;</b>
+    </x-link>
     routes, we set some up here for you to check out:
   </p>
 
-  <x-link href="/audio/music" custom="button" anchor-class="btn btn-info text-white">
+  <x-link href="/audio/music" custom="button"
+          anchor-class="btn btn-info text-white">
     <i class="ri-music-line"></i>
     Music
   </x-link>
 
-  <x-link href="/audio/sound" custom="button" anchor-class="btn btn-info text-white">
+  <x-link href="/audio/sound" custom="button"
+          anchor-class="btn btn-info text-white">
     <i class="ri-surround-sound-line"></i>
     Sounds
   </x-link>
 
-  <x-link href="/audio/both" custom="button" anchor-class="btn btn-info text-white">
+  <x-link href="/audio/both" custom="button"
+          anchor-class="btn btn-info text-white">
     <i class="ri-sound-module-fill"></i>
     Music & Sounds
   </x-link>
 
-  <x-link href="/audio/timed" custom="button" anchor-class="btn btn-info text-white">
+  <x-link href="/audio/timed" custom="button"
+          anchor-class="btn btn-info text-white">
     <i class="ri-timer-flash-line"></i>
     Timed Sounds
   </x-link>
 
   <div class="x-nav-bottom">
     <x-link slot="start" href="/actions">
-      <button class="btn btn-light btn-lg">&#x2B9C; Actions</button>
+      <button class="btn btn-light btn-lg">&lt; Actions</button>
     </x-link>
     <x-link hidden slot="end" href="/video">
-      <button class="btn btn-primary btn-lg">Next: Video &#x2B9E;</button>
+      <button class="btn btn-primary btn-lg">Next: Video &gt;</button>
     </x-link>
   </div>
 </div>

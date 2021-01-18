@@ -1,5 +1,4 @@
 import { warnIf } from '../logging'
-import { onRoutingStateChange, routingState } from './state'
 import { storageAvailable } from './utils/browser-utils'
 
 const supportsSession = storageAvailable(window, 'sessionStorage')
@@ -10,7 +9,7 @@ warnIf(!supportsStorage, 'local-storage is not supported')
 
 const visitKey = 'visits'
 
-function parseVisits(visits: string | null) {
+function parseVisits(visits: string | null): string[] {
   return JSON.parse(visits || '[]')
 }
 
@@ -18,7 +17,7 @@ function stringifyVisits(visits: string[]) {
   return JSON.stringify(visits || '[]')
 }
 
-export async function getSessionVisits() {
+export function getSessionVisits() {
   if (!supportsSession) {
     return []
   }
@@ -27,13 +26,13 @@ export async function getSessionVisits() {
   return parseVisits(visits)
 }
 
-export async function setSessionVisits(visits: string[]) {
+export function setSessionVisits(visits: string[]) {
   if (supportsSession) {
     sessionStorage.setItem(visitKey, stringifyVisits(visits))
   }
 }
 
-export async function getStoredVisits() {
+export function getStoredVisits() {
   if (!supportsStorage) {
     return []
   }
@@ -42,36 +41,29 @@ export async function getStoredVisits() {
   return parseVisits(storage)
 }
 
-export async function setStoredVisits(visits: string[]) {
+export function setStoredVisits(visits: string[]) {
   if (supportsStorage) {
     localStorage.setItem(visitKey, stringifyVisits(visits))
   }
 }
 
-onRoutingStateChange('storedVisits', async (a) => setStoredVisits(a))
-onRoutingStateChange('sessionVisits', async (a) => setSessionVisits(a))
-
-void getStoredVisits().then((v) => {
-  routingState.storedVisits = v
-})
-
-void getSessionVisits().then((v) => {
-  routingState.sessionVisits = v
-})
-
 export function hasVisited(url: string) {
-  return routingState.sessionVisits.includes(url) || routingState.storedVisits.includes(url)
+  return getSessionVisits().includes(url) || getStoredVisits().includes(url)
 }
 
 export function markVisit(url: string) {
-  routingState.sessionVisits = [...new Set([...routingState.sessionVisits, url])]
+  const sessionVisits = getSessionVisits()
+  if (sessionVisits.includes(url)) return
+  setSessionVisits([...new Set([...sessionVisits, url])])
 }
 
 export function storeVisit(url: string) {
-  routingState.storedVisits = [...new Set([...routingState.storedVisits, url])]
+  const storedVisits = getStoredVisits()
+  if (storedVisits.includes(url)) return
+  setStoredVisits([...new Set([...storedVisits, url])])
 }
 
 export function clearVisits() {
-  routingState.sessionVisits = []
-  routingState.storedVisits = []
+  setSessionVisits([])
+  setStoredVisits([])
 }

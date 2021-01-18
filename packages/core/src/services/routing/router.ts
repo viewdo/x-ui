@@ -19,7 +19,7 @@ import {
   ROUTE_TOPIC,
 } from './interfaces'
 import { Route } from './route'
-import { getLocation, getUrl } from './utils/location-utils'
+import { getLocation, getUrl, isAbsolute, resolvePathname } from './utils/location-utils'
 import { matchPath } from './utils/match-path'
 
 const HISTORIES: { [key in HistoryType]: (win: Window) => RouterHistory } = {
@@ -141,6 +141,11 @@ export class RouterService {
 
   getUrl(url: string, root?: string) {
     return getUrl(url, root || this.root)
+  }
+
+  resolvePathname(url: string, parentUrl?: string) {
+    if (isAbsolute(url) || url.startsWith('http')) return url
+    return resolvePathname(url, parentUrl || this.root)
   }
 
   normalizeChildUrl(childUrl: string, parentUrl: string) {

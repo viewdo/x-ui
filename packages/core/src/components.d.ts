@@ -8,6 +8,7 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { ActionActivationStrategy, CookieConsent, DiscardStrategy, EventAction, LoadStrategy, VisitStrategy } from ".";
 import { AUDIO_COMMANDS } from "./services/audio/interfaces";
 import { HistoryType, RouterService } from "./services";
+import { RouterService as RouterService1 } from "./services/routing/router";
 export namespace Components {
     interface XAction {
         /**
@@ -334,6 +335,7 @@ export namespace Components {
           * The title for this view. This is prefixed before the app title configured in x-ui
          */
         "pageTitle": string;
+        "router": RouterService;
         /**
           * Header height or offset for scroll-top on this view.
          */
@@ -870,6 +872,7 @@ declare namespace LocalJSX {
           * The title for this view. This is prefixed before the app title configured in x-ui
          */
         "pageTitle"?: string;
+        "router": RouterService;
         /**
           * Header height or offset for scroll-top on this view.
          */

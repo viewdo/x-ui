@@ -1,8 +1,8 @@
 <x-use script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
-  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
+       style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
 </x-use>
 <x-use
-  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
+       script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
 </x-use>
 <div class="container container-fluid mx-auto">
   <h1>Get Started</h1>
@@ -19,17 +19,13 @@
         Install Package Instead
       </x-link>
     </p>
-    <button class="btn btn-light"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#loadCDNSource"
-      aria-expanded="false"
-      aria-controls="loadCDNSource">
+    <button class="btn btn-light" type="button" data-bs-toggle="collapse"
+            data-bs-target="#loadCDNSource" aria-expanded="false"
+            aria-controls="loadCDNSource">
       <i class="ri-code-s-slash-line"></i>
       View CDN Reference
     </button>
-    <div class="collapse"
-      id="loadCDNSource">
+    <div class="collapse" id="loadCDNSource">
       <x-markdown src="/docs/start/ref-cdn.md"> </x-markdown>
     </div>
 
@@ -43,17 +39,13 @@
         Reference CDN Instead
       </x-link>
     </p>
-    <button class="btn btn-light"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#loadCDNSource"
-      aria-expanded="false"
-      aria-controls="loadCDNSource">
+    <button class="btn btn-light" type="button" data-bs-toggle="collapse"
+            data-bs-target="#loadCDNSource" aria-expanded="false"
+            aria-controls="loadCDNSource">
       <i class="ri-code-s-slash-line"></i>
       View NPM Reference
     </button>
-    <div class="collapse"
-      id="loadCDNSource">
+    <div class="collapse" id="loadCDNSource">
       <x-markdown src="/docs/start/ref-npm.md">
       </x-markdown>
     </div>
@@ -63,33 +55,31 @@
   <h4>Once Referenced</h4>
   <b class="lead">
     Include the elements of your choice in your HTML. <b>That's it!</b>
-  </p>
-  <p>
-    You can use most of these elements independently, but some only work
-    as children of other elements. Read on to learn more.
-  </p>
-  <p>This guide will walk you
-    through the core systems and their components.
-  </p>
+    </p>
+    <p>
+      You can use most of these elements independently, but some only work
+      as children of other elements. Read on to learn more.
+    </p>
+    <p>This guide will walk you
+      through the core systems and their components.
+    </p>
 
-  <h5>Jump To:</h5>
-  <x-include src="/docs/guides.html"></x-include>
+    <h5>Jump To:</h5>
+    <x-include src="/docs/guides.html"></x-include>
 
 
-  <div class="x-nav-bottom">
-    <x-link slot="start"
-      href="/home">
-      <button class="btn btn-light btn-lg">
-        &#x2B9C;
-        Home
-      </button>
-    </x-link>
-    <x-link slot="end"
-      href="/routing">
-      <button class="btn btn-primary btn-lg">
-        Next: Routing
-        &#x2B9E;
-      </button>
-    </x-link>
-  </div>
+    <div class="x-nav-bottom">
+      <x-link slot="start" href="/home">
+        <button class="btn btn-light btn-lg">
+          &lt;
+          Home
+        </button>
+      </x-link>
+      <x-link slot="end" href="/routing">
+        <button class="btn btn-primary btn-lg">
+          Next: Routing
+          &gt;
+        </button>
+      </x-link>
+    </div>
 </div>

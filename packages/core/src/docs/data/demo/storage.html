@@ -1,7 +1,8 @@
 <x-use script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
-  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
+       style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
 </x-use>
-<x-use script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
+<x-use
+       script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
 </x-use>
 <div class="container container-fluid mx-auto">
   <div class="card">
@@ -12,20 +13,20 @@
       <li>
         <label>Animal</label>
         <input type="text" required
-          onblur="localStorage.setItem('animal', this.value)"
-          onchange="localStorage.setItem('animal', this.value)"
-          value-from="{storage:animal}"></input>
+               onblur="localStorage.setItem('animal', this.value)"
+               onchange="localStorage.setItem('animal', this.value)"
+               value-from="{storage:animal}"></input>
       </li>
     </div>
   </div>
   <div class="x-nav-bottom">
     <button slot="start" x-back class="btn btn-light btn-lg">
-      &#x2B9C;
+      &lt;
       Back
     </button>
     <button slot="end" x-next class="btn btn-primary btn-lg">
       Next
-      &#x2B9E;
+      &gt;
     </button>
   </div>
 </div>

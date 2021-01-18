@@ -1,6 +1,7 @@
 import { Component, Element, h, Host, Prop, State, Watch } from '@stencil/core'
-import { DATA_EVENTS, debugIf, eventBus, hasVisited, markVisit, MatchResults, resolveElementVisibility, resolveNext, Route, warn, wrapFragment } from '../..'
-import { resolveElementValues } from '../../services'
+import { DATA_EVENTS, debugIf, eventBus, hasVisited, markVisit, MatchResults, resolveChildElements, resolveNext, Route, warn, wrapFragment } from '../..'
+import { RouterService } from '../../services/routing/router'
+import { createKey } from '../../services/routing/utils/location-utils'
 import '../x-view-do/x-view-do'
 
 /**
@@ -13,10 +14,11 @@ import '../x-view-do/x-view-do'
 })
 export class XView {
   private readonly subscription!: () => void
-  private route!: Route
+  route!: Route
+  @Prop() router!: RouterService
   @Element() el!: HTMLXViewElement
   @State() match!: MatchResults | null
-  @State() fetched!: boolean
+  @State() contentKey?: string
 
   /**
    * The title for this view. This is prefixed
@@ -80,14 +82,12 @@ export class XView {
     return this.el.closest('x-ui')
   }
 
-  private get childViewDos(): HTMLXViewDoElement[] {
-    if (!this.el.hasChildNodes()) {
-      return []
-    }
+  isChild(element: HTMLXViewDoElement) {
+    return element.closest('x-view') === this.el
+  }
 
-    return Array.from(this.el.childNodes)
-      .filter((c) => c.nodeName === 'X-VIEW-DO')
-      .map((v) => v as HTMLXViewDoElement)
+  private get childViewDos(): HTMLXViewDoElement[] {
+    return Array.from(this.el.querySelectorAll('x-view-do')).filter((e) => this.isChild(e))
   }
 
   private get childViews(): HTMLXViewElement[] {
@@ -108,18 +108,13 @@ export class XView {
       return
     }
 
-    this.route = this.routeContainer.router.createRoute(
-      this.el,
-      this.url,
-      this.exact,
-      this.pageTitle,
-      this.transition || this.parent?.transition || null,
-      this.scrollTopOffset,
-      async (match) => {
-        this.match = match
-        await this.resolveView()
-      },
-    )
+    this.router = this.routeContainer.router
+
+    if (!this.router) return
+
+    this.route = this.router.createRoute(this.el, this.url, this.exact, this.pageTitle, this.transition || this.parent?.transition || null, this.scrollTopOffset, async (match) => {
+      this.match = match
+    })
 
     this.childViews.forEach((v) => {
       v.url = this.route.normalizeChildUrl(v.url)
@@ -136,47 +131,22 @@ export class XView {
       exact: this.exact,
       strict: true,
     })
-    await this.resolveView()
 
     eventBus.on(DATA_EVENTS.DataChanged, async () => {
       debugIf(this.debug, `x-view: ${this.url} data changed `)
-      await this.resolveView()
+      await resolveChildElements(this.el, this.route?.router, this.url)
     })
   }
 
-  async componentDidRender() {
-    debugIf(this.debug, `x-view: ${this.url} did render`)
-    await resolveElementVisibility(this.el)
-    await resolveElementValues(this.el)
-  }
-
-  private async fetchHtml() {
-    if (!this.contentSrc || this.fetched) {
-      return
-    }
-
-    try {
-      debugIf(this.debug, `x-view: ${this.url} fetching content from ${this.contentSrc}`)
-      const response = await fetch(this.contentSrc)
-      if (response.status === 200) {
-        const data = await response.text()
-        const content = wrapFragment(data, 'content', `content-remote`)
-        if (this.route.transition) content.className = this.route.transition
-        this.el.append(content)
-        this.fetched = true
-        this.el.querySelectorAll('a[href]')
-      } else {
-        warn(`x-view: ${this.url} Unable to retrieve from ${this.contentSrc}`)
-      }
-    } catch {
-      warn(`x-view: ${this.url} Unable to retrieve from ${this.contentSrc}`)
-    }
+  async componentWillRender() {
+    debugIf(this.debug, `x-view: ${this.url} will render`)
+    await this.resolveView()
   }
 
   private async resolveView() {
     debugIf(this.debug, `x-view: ${this.url} resolve view called`)
 
-    if (this.match) {
+    if (this.route && this.match) {
       this.el.classList.add('active-route')
       if (this.match.isExact) {
         debugIf(this.debug, `x-view: ${this.url} route is matched `)
@@ -191,9 +161,12 @@ export class XView {
         if (nextDo) {
           this.route.router?.history.push(nextDo.url)
         } else {
+          this.el.querySelectorAll('[no-render]').forEach(async (el) => {
+            el.removeAttribute('no-render')
+          })
+          this.el.classList.add('active-route-exact')
           markVisit(this.match.url)
           await this.fetchHtml()
-          this.el.classList.add('active-route-exact')
           if (this.route.transition) {
             this.route.transition.split(' ').forEach((c) => {
               this.el.classList.add(c)
@@ -207,9 +180,38 @@ export class XView {
       }
     } else {
       this.el.classList.remove('active-route')
-      const remoteContent = this.el.querySelector('#content-remote')
-      remoteContent?.remove()
-      this.fetched = false
+      this.resetContent()
+    }
+
+    await resolveChildElements(this.el, this.route?.router, this.url)
+  }
+
+  private resetContent() {
+    const remoteContent = this.el.querySelector(`#${this.contentKey}`)
+    remoteContent?.remove()
+  }
+
+  private async fetchHtml() {
+    if (!this.contentSrc || this.contentKey) {
+      return
+    }
+
+    try {
+      debugIf(this.debug, `x-view: ${this.url} fetching content from ${this.contentSrc}`)
+      this.resetContent()
+      const response = await fetch(this.contentSrc)
+      if (response.status === 200) {
+        const data = await response.text()
+        const content = wrapFragment(data, 'content', this.contentKey)
+        if (this.route.transition) content.className = this.route.transition
+
+        this.el.append(content)
+        this.contentKey = `remote-content-${createKey(10)}`
+      } else {
+        warn(`x-view: ${this.url} Unable to retrieve from ${this.contentSrc}`)
+      }
+    } catch {
+      warn(`x-view: ${this.url} Unable to retrieve from ${this.contentSrc}`)
     }
   }
 

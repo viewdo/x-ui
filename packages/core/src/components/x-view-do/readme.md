@@ -126,6 +126,8 @@ To make guided-navigation easy, you can add attributes to set-up event-handlers 
 
 ```html
 <any x-next />
+or
+<any x-next="route" />
 ```
 
 #### [x-back]
@@ -150,7 +152,23 @@ For each child element with this attribute, the value of the attribute is evalua
 <any x-show-when="predicate" hidden />
 ```
 
-> ℹ️) To initially hide the element, be sure to include the ‘hidden’ attribute.
+> To initially hide the element, be sure to include the ‘hidden’ attribute.
+
+#### Conditioned Classes: [x-class-when] && [x-class]
+
+This pair of attributes conditionally toggle the class specified in the `x-class` attribute using the `x-class-where` expression.
+
+```html
+<any x-class="class" x-class-when="predicate"></any>
+```
+
+#### Value From: [x-value-from]
+
+Input-type elements (input, textarea and select) can specify a data expression for its value. This informs the route container to update this value when it changes.
+
+```html
+<any x-class="class" x-class-when="predicate"></any>
+```
 
 ### Time-Presentation Child Attribute Resolution
 
@@ -166,7 +184,7 @@ This attribute removes the 'hidden' attribute if present at the specified time i
 <any hidden x-in-time="1" />
 ```
 
-> ℹ️) To initially hide the element, be sure to include the ‘hidden’ attribute.
+> To initially hide the element, be sure to include the ‘hidden’ attribute.
 
 When used with x-in-class, this attribute adds the specified class and removes the 'hidden' attribute if present at the specified time in seconds.
 
@@ -208,7 +226,6 @@ This attribute instructs [**`<x-view-do>`**](/components/x-view-do) to inject th
 
 <!-- Auto Generated Below -->
 
-
 ## Properties
 
 | Property           | Attribute           | Description                                                                                                                                                                                                          | Type                                                                   | Default              |
@@ -225,7 +242,6 @@ This attribute instructs [**`<x-view-do>`**](/components/x-view-do) to inject th
 | `visit`            | `visit`             | The visit strategy for this do. once: persist the visit and never force it again always: do not persist, but don't don't show again in-session optional: do not force this view-do ever. It will be available by URL | `VisitStrategy.always \| VisitStrategy.once \| VisitStrategy.optional` | `VisitStrategy.once` |
 | `when`             | `when`              | If present, the expression must evaluate to true for this route to be sequenced by the parent view. The existence of this value overrides the visit strategy                                                         | `string \| undefined`                                                  | `undefined`          |
 
-
-----------------------------------------------
+---
 
 view.DO : Experience Platform

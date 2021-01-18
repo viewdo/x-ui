@@ -11,6 +11,7 @@ import {
   interfaceState,
   LocationSegments,
   log,
+  resolveChildElements,
   RouterService,
 } from '../../services'
 import { clearDataProviders } from '../../services/data/providers/factory'
@@ -182,14 +183,17 @@ export class XUI {
     this.listeners.push(listener)
   }
 
-  componentDidLoad() {
+  async componentDidLoad() {
     log('x-ui: initialized')
-    this.el.querySelectorAll('[x-cloak]').forEach((element) => {
-      element.removeAttribute('x-cloak')
+
+    await resolveChildElements(this.el, this.router, this.root)
+
+    this.el.querySelectorAll('[x-hide]').forEach((el) => {
+      el.setAttribute('hidden', '')
+      el.removeAttribute('x-hide')
     })
-    this.el.querySelectorAll('[x-hide]').forEach((element) => {
-      element.removeAttribute('x-hide')
-      element.setAttribute('hidden', '')
+    this.el.querySelectorAll('[x-cloak]').forEach((el) => {
+      el.removeAttribute('x-cloak')
     })
     if (this.startUrl !== '/' && this.router.location?.pathname === this.root) {
       const startUrl = this.router.normalizeChildUrl(this.startUrl, this.root)

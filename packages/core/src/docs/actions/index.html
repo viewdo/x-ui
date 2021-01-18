@@ -1,9 +1,14 @@
-<x-use script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js" style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css"> </x-use>
-<x-use script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js"> </x-use>
+<x-use script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
+       style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
+</x-use>
+<x-use
+       script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
+</x-use>
 <div class="container container-fluid mx-auto">
   <ul class="list-group btn-group-xl float-end ms-3 mt-2 d-none d-sm-block">
     <li class="list-group-item fw-bold">Action Components</li>
-    <x-data-repeat items-src="/data/x-components.json" filter="components[docsTags[text='actions']]">
+    <x-data-repeat items-src="/data/x-components.json"
+                   filter="components[docsTags[text='actions']]">
       <template>
         <li class="list-group-item">
           <x-link href="/components/{data:tag}">
@@ -16,21 +21,25 @@
 
   <x-markdown src="/docs/actions/index.md"></x-markdown>
 
-  <x-link href="/actions/events" custom="button" anchor-class="btn btn-info text-white"> Event-based Actions </x-link>
+  <x-link href="/actions/events" custom="button"
+          anchor-class="btn btn-info text-white"> Event-based Actions </x-link>
 
-  <x-link href="/actions/timed" custom="button" anchor-class="btn btn-info text-white"> Timed Actions </x-link>
+  <x-link href="/actions/timed" custom="button"
+          anchor-class="btn btn-info text-white"> Timed Actions </x-link>
 
-  <x-link href="/actions/elements" custom="button" anchor-class="btn btn-info text-white"> Element Event Actions </x-link>
+  <x-link href="/actions/elements" custom="button"
+          anchor-class="btn btn-info text-white"> Element Event Actions
+  </x-link>
 
   <h5>Learn More:</h5>
   <x-include src="/docs/guides.html"></x-include>
 
   <div class="x-nav-bottom">
     <x-link slot="start" href="/use-data">
-      <button class="btn btn-light btn-lg">&#x2B9C; Data</button>
+      <button class="btn btn-light btn-lg">&lt; Data</button>
     </x-link>
     <x-link slot="end" href="/audio">
-      <button class="btn btn-primary btn-lg">Next: Audio &#x2B9E;</button>
+      <button class="btn btn-primary btn-lg">Next: Audio &gt;</button>
     </x-link>
   </div>
 </div>

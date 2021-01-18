@@ -63,24 +63,39 @@ For each child element with this attribute, the value of the attribute is evalua
 <any x-show-when="predicate" hidden />
 ```
 
-> ℹ️) To initially hide the element, be sure to include the ‘hidden’ attribute.
+> To initially hide the element, be sure to include the ‘hidden’ attribute.
+
+#### Conditioned Classes: [x-class-when] && [x-class]
+
+This pair of attributes conditionally toggle the class specified in the `x-class` attribute using the `x-class-where` expression.
+
+```html
+<any x-class="class" x-class-when="predicate"></any>
+```
+
+#### Value From: [x-value-from]
+
+Input-type elements (input, textarea and select) can specify a data expression for its value. This informs the route container to update this value when it changes.
+
+```html
+<any x-class="class" x-class-when="predicate"></any>
+```
 
 <!-- Auto Generated Below -->
 
-
 ## Properties
 
-| Property             | Attribute           | Description                                                                       | Type                  | Default     |
-| -------------------- | ------------------- | --------------------------------------------------------------------------------- | --------------------- | ----------- |
-| `contentSrc`         | `content-src`       | Remote URL for this Route's content.                                              | `string \| undefined` | `undefined` |
-| `debug`              | `debug`             | Turn on debug statements for load, update and render events.                      | `boolean`             | `false`     |
-| `exact` _(required)_ | `exact`             | The url for this route should only be matched when it is exact.                   | `boolean`             | `undefined` |
-| `pageTitle`          | `page-title`        | The title for this view. This is prefixed before the app title configured in x-ui | `string`              | `''`        |
-| `scrollTopOffset`    | `scroll-top-offset` | Header height or offset for scroll-top on this view.                              | `number`              | `0`         |
-| `transition`         | `transition`        | Navigation transition between routes. This is a CSS animation class.              | `string \| undefined` | `undefined` |
-| `url` _(required)_   | `url`               | The url for this route, including the parent's routes.                            | `string`              | `undefined` |
+| Property              | Attribute           | Description                                                                       | Type                  | Default     |
+| --------------------- | ------------------- | --------------------------------------------------------------------------------- | --------------------- | ----------- |
+| `contentSrc`          | `content-src`       | Remote URL for this Route's content.                                              | `string \| undefined` | `undefined` |
+| `debug`               | `debug`             | Turn on debug statements for load, update and render events.                      | `boolean`             | `false`     |
+| `exact` _(required)_  | `exact`             | The url for this route should only be matched when it is exact.                   | `boolean`             | `undefined` |
+| `pageTitle`           | `page-title`        | The title for this view. This is prefixed before the app title configured in x-ui | `string`              | `''`        |
+| `router` _(required)_ | --                  |                                                                                   | `RouterService`       | `undefined` |
+| `scrollTopOffset`     | `scroll-top-offset` | Header height or offset for scroll-top on this view.                              | `number`              | `0`         |
+| `transition`          | `transition`        | Navigation transition between routes. This is a CSS animation class.              | `string \| undefined` | `undefined` |
+| `url` _(required)_    | `url`               | The url for this route, including the parent's routes.                            | `string`              | `undefined` |
 
-
-----------------------------------------------
+---
 
 view.DO : Experience Platform

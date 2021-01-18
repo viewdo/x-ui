@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 
 import { evaluatePredicate, hasExpression, resolveExpression } from '..'
+import { RouterService } from '../routing/router'
 
 export type TimedNode = {
   start: number
@@ -30,23 +31,23 @@ export function wrapFragment(html: string, slot?: string, id?: string): HTMLDivE
   return wrapper
 }
 
-export async function resolveElementVisibility(element: HTMLElement) {
-  element.querySelectorAll('[x-hide-when]').forEach(async (element_) => {
-    const expression = element_.getAttribute('x-hide-when')
+export async function resolveChildElements(element: HTMLElement, router?: RouterService, url?: string) {
+  element.querySelectorAll('[x-hide-when]').forEach(async (el) => {
+    const expression = el.getAttribute('x-hide-when')
     if (!expression) {
       return
     }
 
     const hide = await evaluatePredicate(expression)
     if (hide) {
-      element_.setAttribute('hidden', '')
+      el.setAttribute('hidden', '')
     } else {
-      element_.removeAttribute('hidden')
+      el.removeAttribute('hidden')
     }
   })
 
-  element.querySelectorAll('[x-show-when]').forEach(async (element_) => {
-    const expression = element_.getAttribute('x-show-when')
+  element.querySelectorAll('[x-show-when]').forEach(async (el) => {
+    const expression = el.getAttribute('x-show-when')
     if (!expression) {
       return
     }
@@ -54,27 +55,44 @@ export async function resolveElementVisibility(element: HTMLElement) {
     const show = await evaluatePredicate(expression)
 
     if (show) {
-      element_.removeAttribute('hidden')
+      el.removeAttribute('hidden')
     } else {
-      element_.setAttribute('hidden', '')
+      el.setAttribute('hidden', '')
     }
   })
 
-  element.querySelectorAll('[no-render]').forEach(async (element_) => {
-    element_.removeAttribute('no-render')
-  })
-}
+  element.querySelectorAll('[x-class-when]').forEach(async (el) => {
+    const expression = el.getAttribute('x-class-when')
+    const className = el.getAttribute('x-class')
+    if (!expression || !className) {
+      return
+    }
 
-export async function resolveElementValues(element: HTMLElement) {
-  element.querySelectorAll('[x-value-from]').forEach(async (element_) => {
-    const expression = element_.getAttribute('x-value-from')
+    const when = await evaluatePredicate(expression)
+    el.classList.toggle(className, when)
+  })
+
+  element.querySelectorAll('[x-value-from]').forEach(async (el) => {
+    const expression = el.getAttribute('x-value-from')
     if (expression && hasExpression(expression)) {
       const value = await resolveExpression(expression)
       if (value) {
-        element_.setAttribute('value', value)
+        el.setAttribute('value', value)
       }
     }
   })
+
+  if (router)
+    element.querySelectorAll('a[href]').forEach((el) => {
+      const href = el.getAttribute('href')
+      if (!router || !href || el.hasAttribute('x-link-attached')) return
+      el.addEventListener('click', (e) => {
+        e.preventDefault()
+        const path = router.resolvePathname(href, url)
+        router.history.push(path)
+      })
+      el.setAttribute('x-link-attached', '')
+    })
 }
 
 export function removeAllChildNodes(parent: HTMLElement) {

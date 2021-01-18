@@ -10,8 +10,7 @@ import {
   interfaceState,
   markVisit,
   MatchResults,
-  resolveElementValues,
-  resolveElementVisibility,
+  resolveChildElements,
   Route,
   storeVisit,
   TimedNode,
@@ -22,6 +21,7 @@ import {
   warn,
   wrapFragment,
 } from '../..'
+import { createKey } from '../../services/routing/utils/location-utils'
 import '../x-view/x-view'
 
 /**
@@ -42,7 +42,7 @@ export class XViewDo {
   private route!: Route
   @Element() el!: HTMLXViewDoElement
   @State() match: MatchResults | null = null
-  @State() fetched!: boolean
+  @State() contentKey?: string
 
   /**
    * The title for this view. This is prefixed
@@ -156,16 +156,21 @@ export class XViewDo {
       return
     }
 
+    if (!this.parentView) {
+      warn(`x-view-do: ${this.url} cannot load outside of an x-ui element`)
+      return
+    }
+
     this.route = this.routeContainer.router.createRoute(
       this.el,
       this.url,
       this.exact,
       this.pageTitle,
-      this.transition || this.parentView?.transition || null,
+      this.transition || this.parentView.transition || null,
       this.scrollTopOffset || 0,
       async (match) => {
+        if (match === null) this.cleanup()
         this.match = match
-        await this.resolveView()
       },
     )
 
@@ -175,11 +180,9 @@ export class XViewDo {
       strict: true,
     })
 
-    await this.resolveView()
-
     this.subscription = eventBus.on(DATA_EVENTS.DataChanged, async () => {
       debugIf(this.debug, 'x-view-do: data changed ')
-      await this.resolveView()
+      await resolveChildElements(this.el, this.routeContainer?.router, this.url)
     })
 
     // Attach enter-key for next
@@ -192,24 +195,43 @@ export class XViewDo {
 
   async componentWillRender() {
     debugIf(this.debug, `x-view-do: ${this.url} will render`)
+    await this.resolveView()
   }
 
   async componentDidRender() {
     debugIf(this.debug, `x-view-do: ${this.url} did render`)
-    await resolveElementValues(this.el)
+  }
+
+  private async resolveView() {
+    debugIf(this.debug, `x-view-do: ${this.url} resolve view called`)
+
+    if (this.match?.isExact) {
+      debugIf(this.debug, `x-view-do: ${this.url} on-enter`)
+      this.el.removeAttribute('hidden')
+      await this.fetchHtml()
+      await this.resolveChildren()
+      await this.setupTimer()
+      await this.route.loadCompleted()
+    } else {
+      this.el.setAttribute('hidden', '')
+      this.cleanup()
+    }
+
+    await resolveChildElements(this.el, this.routeContainer?.router, this.url)
   }
 
   private async fetchHtml() {
-    if (!this.contentSrc || this.fetched) {
+    if (!this.contentSrc || this.contentKey) {
       return
     }
 
     try {
+      this.resetContent()
       const response = await fetch(this.contentSrc)
       if (response.status === 200) {
         const data = await response.text()
-        this.el.append(wrapFragment(data, 'content', 'content-remote'))
-        this.fetched = true
+        this.contentKey = `remote-content-${createKey(10)}`
+        this.el.append(wrapFragment(data, 'content', this.contentKey))
       } else {
         warn(`x-view-do: ${this.url} Unable to retrieve from ${this.contentSrc}`)
       }
@@ -218,14 +240,29 @@ export class XViewDo {
     }
   }
 
-  private beforeExit() {
-    const inputElements = this.el.querySelectorAll('input')
-    let valid = true
+  private resetContent() {
+    const remoteContent = this.el.querySelector(`#${this.contentKey}`)
+    remoteContent?.remove()
+  }
+
+  private cleanup() {
+    clearInterval(this.timer)
     this.childVideo?.pause()
+    this.subscriptionVideoActions?.call(this)
+    this.restoreElementChildTimedNodes()
+    this.timer = null
+    this.lastTime = 0
+  }
+
+  private beforeExit() {
+    this.cleanup()
+    const inputElements = this.el.querySelectorAll('*:enabled')
+    let valid = true
 
     inputElements.forEach((i) => {
-      i.blur()
-      if (!i.reportValidity()) {
+      const input = i as HTMLInputElement
+      input.blur?.call(i)
+      if (!input.reportValidity()) {
         valid = false
       }
     })
@@ -235,15 +272,6 @@ export class XViewDo {
         .forEach(async (activator) => {
           await activator.activateActions()
         })
-
-      if (this.subscriptionVideoActions) {
-        this.subscriptionVideoActions()
-      }
-
-      this.restoreElementChildTimedNodes()
-      clearInterval(this.timer)
-      this.timer = null
-      this.lastTime = 0
     }
 
     return valid
@@ -251,45 +279,24 @@ export class XViewDo {
 
   private back(element: string, eventName: string) {
     debugIf(this.debug, `x-view-do: back fired from ${element}:${eventName}`)
-    if (this.beforeExit()) {
-      this.route.router?.history.goBack()
-    }
+    this.beforeExit()
+    this.route.router?.history.goBack()
   }
 
   private next(element: string, eventName: string, route?: string | null) {
     debugIf(this.debug, `x-view-do: next fired from ${element}:${eventName}`)
 
     if (this.beforeExit()) {
+      markVisit(this.url)
       if (this.visit === VisitStrategy.once) {
         storeVisit(this.url)
       }
 
-      markVisit(this.url)
       if (route) {
         this.route.router?.history.push(route)
       } else {
         this.route.router?.goToParentRoute()
       }
-    }
-  }
-
-  private async resolveView() {
-    debugIf(this.debug, `x-view-do: ${this.url} resolve view called`)
-    clearInterval(this.timer)
-    this.childVideo?.pause()
-    if (this.match?.isExact) {
-      debugIf(this.debug, `x-view-do: ${this.url} on-enter`)
-      await this.fetchHtml()
-      await resolveElementValues(this.el)
-      await resolveElementVisibility(this.el)
-      await this.resolveChildren()
-      await this.setupTimer()
-      await this.route.loadCompleted()
-    } else {
-      this.el.classList.remove('active-route')
-      const remoteContent = this.el.querySelector('#content-remote')
-      remoteContent?.remove()
-      this.fetched = false
     }
   }
 
@@ -616,7 +623,7 @@ export class XViewDo {
     debugIf(this.debug, `x-view-do: ${this.url} render`)
 
     return (
-      <Host hidden={!this.match?.isExact} class={this.route?.transition || ''}>
+      <Host class={this.route?.transition || ''}>
         <slot />
         <slot name="content" />
       </Host>

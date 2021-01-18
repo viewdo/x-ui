@@ -1,5 +1,5 @@
 import { Component, Element, h, Host, Prop, State } from '@stencil/core'
-import { DATA_EVENTS, eventBus, resolveElementVisibility, resolveExpression, RouterService, ROUTE_EVENTS, warn } from '../..'
+import { DATA_EVENTS, eventBus, resolveChildElements, resolveExpression, RouterService, ROUTE_EVENTS, warn } from '../..'
 
 /**
  *  @system content
@@ -69,17 +69,8 @@ export class XMarkdown {
   }
 
   async componentDidRender() {
-    await resolveElementVisibility(this.el)
     if (this.router) {
-      this.el.querySelectorAll('a[href^=http]').forEach((a) => {
-        a.addEventListener('click', (e) => {
-          const href = a.getAttribute('href')
-          if (href) {
-            e.preventDefault()
-            this.router?.history.push(href)
-          }
-        })
-      })
+      await resolveChildElements(this.el, this.router, this.baseUrl || location.href)
     }
   }
 

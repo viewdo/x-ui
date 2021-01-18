@@ -26,8 +26,65 @@ This component is the root container for all routing. It provides an entry-point
 
 For more information on routing, check out the [routing](/routing) documentation. Also, check out the [**`<x-view>`**](/components/x-view) and [**`<x-view-do>`**](/components/x-view-do) components.
 
-<!-- Auto Generated Below -->
+### Child Attribute Detection & Resolution
 
+The following attributes are queried to resolve certain data-values or show/hide conditions for all child elements.
+
+#### Cloak: [x-cloak]
+
+For each child element with this attribute, the value of the attribute is removed when the XUI component is fully loaded. This
+attribute is target in css for `display:none`.
+
+```html
+<any x-hide-when="predicate" />
+```
+
+#### Hide: [x-hide]
+
+For each child element with this attribute, the value of the attribute is removed when the XUI component is fully loaded
+and replaced with `hidden`. The hidden
+attribute is also a target in css for `display:none`. This
+is used to hide content once the components have loaded.
+
+```html
+<any x-hide-when="predicate" />
+```
+
+#### Hide When: [x-hide-when]
+
+For each child element with this attribute, the value of the attribute is evaluated for a predicate – and if TRUE, the element is hidden. This evaluation occurs whenever data-changes.
+
+```html
+<any x-hide-when="predicate" />
+```
+
+#### Show When: [x-show-when]
+
+For each child element with this attribute, the value of the attribute is evaluated for a predicate – and if FALSE, the element is shown. This evaluation occurs whenever data-changes.
+
+```html
+<any x-show-when="predicate" hidden />
+```
+
+> To initially hide the element, be sure to include the ‘hidden’ attribute.
+
+#### Conditioned Classes: [x-class-when] && [x-class]
+
+This pair of attributes conditionally toggle the class specified in the `x-class` attribute using the `x-class-where` expression.
+
+```html
+<any x-class="class" x-class-when="predicate"></any>
+```
+
+#### Value From: [x-value-from]
+
+Input-type elements (input, textarea and select) can specify a data expression for its value. This informs the route container to update this value when it changes.
+
+```html
+<any x-class="class" x-class-when="predicate"></any>
+```
+
+<!-- Auto Generated Below -->
 
 ## Properties
 
@@ -42,7 +99,6 @@ For more information on routing, check out the [routing](/routing) documentation
 | `startUrl`            | `start-url`         | This is the start path a user should land on when they first land on this app.                                               | `string`              | `'/'`       |
 | `transition`          | `transition`        | Navigation transition between routes. This is a CSS animation class.                                                         | `string \| undefined` | `undefined` |
 
-
 ## Events
 
 | Event       | Description                                                                                                                | Type               |
@@ -50,7 +106,6 @@ For more information on routing, check out the [routing](/routing) documentation
 | `x:actions` | These events are **`<x-ui/>`** command-requests for action handlers to perform tasks. Any handles should cancel the event. | `CustomEvent<any>` |
 | `x:events`  | Listen for events that occurred within the **`<x-ui/>`** system.                                                           | `CustomEvent<any>` |
 
-
-----------------------------------------------
+---
 
 view.DO : Experience Platform

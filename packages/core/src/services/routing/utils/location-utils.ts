@@ -3,7 +3,7 @@
 import { LocationSegments } from '../interfaces'
 import { parsePath, parseQueryString } from './path-utils'
 
-const isAbsolute = (pathname: string) => pathname.startsWith('/')
+export const isAbsolute = (pathname: string) => pathname.startsWith('/')
 
 export const createKey = (keyLength: number) => Math.random().toString(36).slice(2, keyLength)
 

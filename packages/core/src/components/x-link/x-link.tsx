@@ -20,7 +20,7 @@ export class XViewLink {
   /**
    *
    */
-  @Prop() href!: string
+  @Prop({ mutable: true }) href!: string
 
   /**
    *
@@ -87,6 +87,10 @@ export class XViewLink {
    */
   @Prop() ariaLabel?: string
 
+  get parentUrl() {
+    return this.el.closest('x-view-do')?.url || this.el.closest('x-view')?.url
+  }
+
   componentWillLoad() {
     this.subscription = eventBus.on(ROUTE_EVENTS.RouteChanged, () => {
       this.match = this.router?.matchPath({
@@ -109,11 +113,12 @@ export class XViewLink {
     }
 
     e.preventDefault()
-    router.history?.push(this.href)
+    const path = router.resolvePathname(this.href, this.parentUrl)
+    router.history.push(path)
   }
 
   disconnectedCallback() {
-    this.subscription()
+    this.subscription?.call(this)
   }
 
   // Get the URL for this route link without the root from the router
@@ -141,6 +146,7 @@ export class XViewLink {
         'aria-posinset': this.ariaPosinset,
         'aria-setsize': this.ariaSetsize,
         'aria-label': this.ariaLabel,
+        'x-link-attached': '',
       }
     }
 

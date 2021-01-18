@@ -47,7 +47,7 @@ const config: Config = {
   ],
 }
 
-const wwwOutput = {
+const wwwOutput: any = {
   type: 'www',
   dir: '../../www',
   buildDir: 'x-ui',
