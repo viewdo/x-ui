@@ -15,9 +15,9 @@
     <h3>CDN Reference</h3>
     <p>
       You opted for the CDN reference.
-      <x-link href="/start/npm">
+      <a href="/start/npm">
         Install Package Instead
-      </x-link>
+      </a>
     </p>
     <button class="btn btn-light" type="button" data-bs-toggle="collapse"
             data-bs-target="#loadCDNSource" aria-expanded="false"
@@ -35,9 +35,9 @@
     <h3>NPM Reference</h3>
     <p>
       You opted for a local reference.
-      <x-link href="/start/cdn">
+      <a href="/start/cdn">
         Reference CDN Instead
-      </x-link>
+      </a>
     </p>
     <button class="btn btn-light" type="button" data-bs-toggle="collapse"
             data-bs-target="#loadCDNSource" aria-expanded="false"
@@ -69,17 +69,13 @@
 
 
     <div class="x-nav-bottom">
-      <x-link slot="start" href="/home">
-        <button class="btn btn-light btn-lg">
-          &lt;
-          Home
-        </button>
-      </x-link>
-      <x-link slot="end" href="/routing">
-        <button class="btn btn-primary btn-lg">
-          Next: Routing
-          &gt;
-        </button>
-      </x-link>
+      <a slot="start" href="/home" class="btn btn-light btn-lg">
+        &lt;
+        Home
+      </a>
+      <a slot="end" href="/routing" class="btn btn-primary btn-lg">
+        Routing
+        &gt;
+      </a>
     </div>
 </div>

@@ -241,12 +241,19 @@ x-view-do .modal {
   color: var(--accent);
   border-color: white;
 }
+a.btn-primary:any-link {
+  color: white;
+}
 
 .btn-secondary {
   background-color: var(--secondary);
+  color: white;
 }
 .btn-secondary:hover {
   background-color: var(--secondary);
+}
+a.btn-secondary:any-link {
+  color: white;
 }
 
 .btn-light {

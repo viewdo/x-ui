@@ -86,6 +86,12 @@ export async function resolveChildElements(element: HTMLElement, router?: Router
     element.querySelectorAll('a[href]').forEach((el) => {
       const href = el.getAttribute('href')
       if (!router || !href || el.hasAttribute('x-link-attached')) return
+      const path = router.resolvePathname(href, url)
+      if (el.hasAttribute('target')) {
+        el.setAttribute('href', path)
+        return
+      }
+
       el.addEventListener('click', (e) => {
         e.preventDefault()
         const path = router.resolvePathname(href, url)

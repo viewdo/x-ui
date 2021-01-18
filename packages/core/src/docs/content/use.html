@@ -11,9 +11,9 @@
                    filter="components[docsTags[text='content']]">
       <template>
         <li class="list-group-item">
-          <x-link href="/components/{data:tag}?group=content">
+          <a href="/components/{data:tag}?group=content">
             <h5>&lt;{data:tag}&gt;</h5>
-          </x-link>
+          </a>
         </li>
       </template>
     </x-data-repeat>
@@ -27,11 +27,11 @@
   <p></p>
 
   <div class="x-nav-bottom">
-    <x-link slot="start" href="/content/markdown">
+    <a slot="start" href="/content/markdown">
       <button class="btn btn-light btn-lg">&lt; Content</button>
-    </x-link>
-    <x-link slot="end" href="/content/data">
-      <button class="btn btn-primary btn-lg">Next: Markdown &gt;</button>
-    </x-link>
+    </a>
+    <a slot="end" href="/content/data">
+      <button class="btn btn-primary btn-lg">Markdown &gt;</button>
+    </a>
   </div>
 </div>

@@ -83,6 +83,7 @@ Input-type elements (input, textarea and select) can specify a data expression f
 
 <!-- Auto Generated Below -->
 
+
 ## Properties
 
 | Property              | Attribute           | Description                                                                       | Type                  | Default     |
@@ -96,6 +97,7 @@ Input-type elements (input, textarea and select) can specify a data expression f
 | `transition`          | `transition`        | Navigation transition between routes. This is a CSS animation class.              | `string \| undefined` | `undefined` |
 | `url` _(required)_    | `url`               | The url for this route, including the parent's routes.                            | `string`              | `undefined` |
 
----
+
+----------------------------------------------
 
 view.DO : Experience Platform

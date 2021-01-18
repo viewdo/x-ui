@@ -16,7 +16,7 @@
   <p>
     Nested routes - ir routes and sub-routes are defined statically. You can
     choose to semantically nest
-    <x-link href="/components/x-view"><b>&lt;x-view&gt;</b></x-link> elements
+    <a href="/components/x-view"><b>&lt;x-view&gt;</b></a> elements
     and have their path's automatically
     inherited from the parent or declare them in a flat, explicit
     format.
@@ -70,18 +70,17 @@
 
   <h4>Deep Nested Example</h4>
   <p>Click the link below to see how deep nesting can go.</p>
-  <x-link href="/routing/nesting/deep" custom="button"
-          anchor-class="btn btn-info text-white">
+  <a href="/routing/nesting/deep" class="btn btn-info text-white">
     <i class="ri-treasure-map-fill"></i>
     Click here to go deeper!
-  </x-link>
+  </a>
 
   <div class="x-nav-bottom">
-    <x-link slot="start" href="/routing/lazy">
+    <a slot="start" href="/routing/lazy">
       <button class="btn btn-light btn-lg">&lt; Lazy Routing</button>
-    </x-link>
-    <x-link slot="end" href="/routing/data">
-      <button class="btn btn-primary btn-lg">Next: Data Routes &gt;</button>
-    </x-link>
+    </a>
+    <a slot="end" href="/routing/data">
+      <button class="btn btn-primary btn-lg">Data Routes &gt;</button>
+    </a>
   </div>
 </div>

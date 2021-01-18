@@ -226,6 +226,7 @@ This attribute instructs [**`<x-view-do>`**](/components/x-view-do) to inject th
 
 <!-- Auto Generated Below -->
 
+
 ## Properties
 
 | Property           | Attribute           | Description                                                                                                                                                                                                          | Type                                                                   | Default              |
@@ -242,6 +243,7 @@ This attribute instructs [**`<x-view-do>`**](/components/x-view-do) to inject th
 | `visit`            | `visit`             | The visit strategy for this do. once: persist the visit and never force it again always: do not persist, but don't don't show again in-session optional: do not force this view-do ever. It will be available by URL | `VisitStrategy.always \| VisitStrategy.once \| VisitStrategy.optional` | `VisitStrategy.once` |
 | `when`             | `when`              | If present, the expression must evaluate to true for this route to be sequenced by the parent view. The existence of this value overrides the visit strategy                                                         | `string \| undefined`                                                  | `undefined`          |
 
----
+
+----------------------------------------------
 
 view.DO : Experience Platform

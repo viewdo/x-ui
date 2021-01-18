@@ -11,9 +11,9 @@
                    filter="components[docsTags[text='actions']]">
       <template>
         <li class="list-group-item">
-          <x-link href="/components/{data:tag}">
+          <a href="/components/{data:tag}">
             <h5>&lt;{data:tag}&gt;</h5>
-          </x-link>
+          </a>
         </li>
       </template>
     </x-data-repeat>
@@ -21,25 +21,25 @@
 
   <x-markdown src="/docs/actions/index.md"></x-markdown>
 
-  <x-link href="/actions/events" custom="button"
-          anchor-class="btn btn-info text-white"> Event-based Actions </x-link>
+  <a href="/actions/events" class="btn btn-info text-white">
+    Event-based Actions </a>
 
-  <x-link href="/actions/timed" custom="button"
-          anchor-class="btn btn-info text-white"> Timed Actions </x-link>
+  <a href="/actions/timed" class="btn btn-info text-white">
+    Timed Actions </a>
 
-  <x-link href="/actions/elements" custom="button"
-          anchor-class="btn btn-info text-white"> Element Event Actions
-  </x-link>
+  <a href="/actions/elements" class="btn btn-info text-white">
+    Element Event Actions
+  </a>
 
   <h5>Learn More:</h5>
   <x-include src="/docs/guides.html"></x-include>
 
   <div class="x-nav-bottom">
-    <x-link slot="start" href="/use-data">
+    <a slot="start" href="/use-data">
       <button class="btn btn-light btn-lg">&lt; Data</button>
-    </x-link>
-    <x-link slot="end" href="/audio">
-      <button class="btn btn-primary btn-lg">Next: Audio &gt;</button>
-    </x-link>
+    </a>
+    <a slot="end" href="/audio">
+      <button class="btn btn-primary btn-lg">Audio &gt;</button>
+    </a>
   </div>
 </div>

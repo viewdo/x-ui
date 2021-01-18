@@ -11,9 +11,9 @@
                    filter="components[docsTags[text='content']]">
       <template>
         <li class="list-group-item">
-          <x-link href="/components/{data:tag}?group=content">
+          <a href="/components/{data:tag}?group=content">
             <h5>&lt;{data:tag}&gt;</h5>
-          </x-link>
+          </a>
         </li>
       </template>
     </x-data-repeat>
@@ -25,31 +25,32 @@
 
   <h3>Displaying HTML Fragments</h3>
   <p></p>
-  <x-link href="/content/include" custom="button"
-          anchor-class="btn btn-info text-white "> Include Remote HTML </x-link>
+  <a href="/content/include" class="btn btn-info text-white ">
+    Include Remote HTML </a>
 
   <h3>Displaying Markdown</h3>
   <p></p>
-  <x-link href="/content/markdown" custom="button"
-          anchor-class="btn btn-info text-white "> Include Markdown </x-link>
+  <a href="/content/markdown" class="btn btn-info text-white ">
+    Include Markdown </a>
 
   <h3>Declaring Dependencies</h3>
   <p></p>
-  <x-link href="/content/use" custom="button"
-          anchor-class="btn btn-info text-white "> Data Expressions & Predicates
-  </x-link>
+  <a href="/content/use" class="btn btn-info text-white "> Data
+    Expressions & Predicates
+  </a>
 
   <h3>Displaying Data</h3>
   <p></p>
-  <x-link href="/content/data" custom="button"
-          anchor-class="btn btn-info text-white "> Data Templates </x-link>
+  <a href="/content/data" class="btn btn-info text-white "> Data
+    Templates </a>
 
   <div class="x-nav-bottom">
-    <x-link slot="start" href="/routing">
+    <a slot="start" href="/routing">
       <button class="btn btn-light btn-lg">&lt; Routing</button>
-    </x-link>
-    <x-link slot="end" href="/presentations">
-      <button class="btn btn-primary btn-lg">Next: Presentations &gt;</button>
-    </x-link>
+    </a>
+    <a slot="end" href="/presentations">
+      <button class="btn btn-primary btn-lg">Presentations
+        &gt;</button>
+    </a>
   </div>
 </div>

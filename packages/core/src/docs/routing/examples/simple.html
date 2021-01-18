@@ -4,7 +4,7 @@
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <base href="sample.html" />
+    <base href="/docs/routing/examples/simple.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Bootstrap CSS -->
@@ -21,24 +21,21 @@
     </style>
     <script type="module"
             src="https://unpkg.com/@viewdo/x-ui/dist/x-ui/x-ui.esm.js"></script>
-    <!--
-      HIYA! Right-click to save this file locally. Then open it in you favorite HTML editor to make changes
-      You can preview it through a local dev-server, like this one: 
-    -->
+
   </head>
 
-  <body>
+  <body class="container">
 
-    <x-ui app-title="My HTML App" start-url="home" mode="hash">
-      <x-view url="home" page-title="Home">
-        <div class="container" slot="content">
+    <x-ui app-title="My HTML App" start-url="home" mode="hash" root="/" debug>
+      <x-view url="home" page-title="Home" debug>
+        <div slot="content">
           <h1>Home</h1>
           <hr />
           <h2>Hello World!</h2>
           <p>Now you have a basic content router.</p>
 
-          <x-link href="home/nested">Nested Page</x-link>
-          <x-link href="about">Sibling Page</x-link>
+          <a href="nested" class="btn btn-light">Nested Page</a>
+          <a href="/about" class="btn btn-light">Sibling Page</a>
         </div>
         <x-view url="nested" page-title="Nested" x-cloak>
           <div class="container" slot="content">
@@ -46,7 +43,7 @@
             <hr />
             <h2>A child page</h2>
 
-            <x-link href="">Back to Home</x-link>
+            <a href="/home" class="btn btn-light">Back to Home</a>
           </div>
         </x-view>
       </x-view>
@@ -54,7 +51,7 @@
         <div class="container" slot="content">
           <h1>Sibling Page</h1>
           <h2>You now have a multi-page app!</h2>
-          <x-link href="">Back to Home</x-link>
+          <a href="/home" class="btn btn-light">Back to Home</a>
         </div>
       </x-view>
     </x-ui>

@@ -11,8 +11,8 @@
                    filter="components[docsTags[text='navigation']]">
       <template>
         <li class="list-group-item">
-          <x-link href="/components/{data:tag}?group=navigation">
-            &lt;{data:tag}&gt; </x-link>
+          <a href="/components/{data:tag}?group=navigation">
+            &lt;{data:tag}&gt; </a>
         </li>
       </template>
     </x-data-repeat>
@@ -20,19 +20,26 @@
 
   <h1>Navigation</h1>
   <p class="lead">Getting around without page refreshes!</p>
+
   <h2>Simple Navigation</h2>
   <p>
-    Regular anchor <b>&lt;a&gt;</b> tags always work, but you can speed page
+    Regular anchor <b>&lt;a&gt;</b> tags inside the <b>x-ui</b> tag will
+    have their click event intercepted for use fast
+    in-place content updates without refreshing the page.
     rendering by using special
-    <x-link href="/components/x-link?group=navigation"> <b>&lt;x-link&gt;</b>
-    </x-link> elements.
+    <a href="/components/x-link?group=navigation"> <b>&lt;x-link&gt;</b>
+    </a> elements.
   </p>
   <p>
+    <a href="/docs/routing/examples/simple.html" target="_blank"
+       class="btn btn-secondary float-end">
+      <i class="ri-external-link-line"></i>
+      Visit Demo</a>
     <button class="btn btn-light" type="button" data-bs-toggle="collapse"
             data-bs-target="#loadSource" aria-expanded="false"
             aria-controls="loadSource">
       <i class="ri-code-s-slash-line"></i>
-      View Simple Navigation Source
+      View Source
     </button>
   </p>
 
@@ -42,33 +49,47 @@
         ```html
         <x-view url="page-1" page-title="Page 1">
           <h1>Hello World!</h1>
-          <x-link href="page-2">Page 2</x-link>
+          <x-link href="page-2">Page 2</a>
         </x-view>
         <x-view url="page-2" page-title="Page 2">
           <h1>Another Page</h1>
-          <x-link href="page-1">Page 1</x-link>
+          <x-link href="page-1">Page 1</a>
         </x-view>
         ```
       </script>
     </x-markdown>
   </div>
 
+  <h2 class="mt-3">Advanced Examples</h2>
+  <p>These elements support most real-world routing needs. Check out how
+    easy it
+    is to handle advanced routing needs.
+  </p>
+
   <h2>Guided Navigation</h2>
   <p>Guided navigation is for presentation-based content. This creates a
     back/next format with a convention-based next route automatically determined
     by the router.</p>
-  <x-link href="/presentations" custom="button"
-          anchor-class="btn btn-info text-white">
-    <i class="ri-gps-line"></i>
-    Guided Presentation
-  </x-link>
+
+  <div class="btn-toolbar justify-gap" style="gap:1em">
+    <a href="presentations" class="btn btn-info text-white">
+      <i class="ri-gps-line"></i>
+      As Presentation
+    </a>
+
+    <a href="stepper" class="btn btn-info text-white"
+       style="display: table-cell">
+      <i class="ri-database-line"></i>
+      As Stepper / Wizard
+    </a>
+  </div>
 
   <div class="x-nav-bottom">
-    <x-link slot="start" href="/routing">
+    <a slot="start" href="/routing">
       <button class="btn btn-light btn-lg">&lt; Routing</button>
-    </x-link>
-    <x-link slot="end" href="/content">
-      <button class="btn btn-primary btn-lg">Next: Content &gt;</button>
-    </x-link>
+    </a>
+    <a slot="end" href="/content">
+      <button class="btn btn-primary btn-lg">Content &gt;</button>
+    </a>
   </div>
 </div>

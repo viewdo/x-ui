@@ -145,7 +145,7 @@ export class RouterService {
 
   resolvePathname(url: string, parentUrl?: string) {
     if (isAbsolute(url) || url.startsWith('http')) return url
-    return resolvePathname(url, parentUrl || this.root)
+    return resolvePathname(url, parentUrl || '/')
   }
 
   normalizeChildUrl(childUrl: string, parentUrl: string) {

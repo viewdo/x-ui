@@ -11,9 +11,9 @@
                    filter="components[docsTags[text='audio']]">
       <template>
         <li class="list-group-item">
-          <x-link href="/components/{data:tag}">
+          <a href="/components/{data:tag}">
             <h5>&lt;{data:tag}&gt;</h5>
-          </x-link>
+          </a>
         </li>
       </template>
     </x-data-repeat>
@@ -61,8 +61,8 @@
   <h3>Enable Audio</h3>
   <p>
     To enable audio, you must first add the
-    <x-link href="/components/x-audio-player"><b>&lt;x-audio-player&gt;</b>
-    </x-link> to the page.
+    <a href="/components/x-audio-player"><b>&lt;x-audio-player&gt;</b>
+    </a> to the page.
   </p>
   <button class="btn btn-light" type="button" data-bs-toggle="collapse"
           data-bs-target="#loadSource" aria-expanded="false"
@@ -85,42 +85,38 @@
 
   <h4 class="mt-3">Audio Examples</h4>
   <p>
-    Since audio only plays on <x-link href="/components/x-view-do">
+    Since audio only plays on <a href="/components/x-view-do">
       <b>&lt;x-view-do&gt;</b>
-    </x-link>
+    </a>
     routes, we set some up here for you to check out:
   </p>
 
-  <x-link href="/audio/music" custom="button"
-          anchor-class="btn btn-info text-white">
+  <a href="/audio/music" class="btn btn-info text-white">
     <i class="ri-music-line"></i>
     Music
-  </x-link>
+  </a>
 
-  <x-link href="/audio/sound" custom="button"
-          anchor-class="btn btn-info text-white">
+  <a href="/audio/sound" class="btn btn-info text-white">
     <i class="ri-surround-sound-line"></i>
     Sounds
-  </x-link>
+  </a>
 
-  <x-link href="/audio/both" custom="button"
-          anchor-class="btn btn-info text-white">
+  <a href="/audio/both" class="btn btn-info text-white">
     <i class="ri-sound-module-fill"></i>
     Music & Sounds
-  </x-link>
+  </a>
 
-  <x-link href="/audio/timed" custom="button"
-          anchor-class="btn btn-info text-white">
+  <a href="/audio/timed" class="btn btn-info text-white">
     <i class="ri-timer-flash-line"></i>
     Timed Sounds
-  </x-link>
+  </a>
 
   <div class="x-nav-bottom">
-    <x-link slot="start" href="/actions">
+    <a slot="start" href="/actions">
       <button class="btn btn-light btn-lg">&lt; Actions</button>
-    </x-link>
+    </a>
     <x-link hidden slot="end" href="/video">
-      <button class="btn btn-primary btn-lg">Next: Video &gt;</button>
-    </x-link>
+      <button class="btn btn-primary btn-lg">Video &gt;</button>
+      </a>
   </div>
 </div>

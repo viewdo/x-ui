@@ -105,6 +105,7 @@ export class XUI {
     const refresh = confirm('New Version Available. Reload?')
 
     if (refresh) {
+      location.reload()
       registration.waiting.postMessage('skipWaiting')
     }
   }
@@ -196,8 +197,7 @@ export class XUI {
       el.removeAttribute('x-cloak')
     })
     if (this.startUrl !== '/' && this.router.location?.pathname === this.root) {
-      const startUrl = this.router.normalizeChildUrl(this.startUrl, this.root)
-      this.router.history.push(this.router.getUrl(startUrl, this.root))
+      this.router.history.push(this.router.getUrl(this.startUrl, this.root))
     }
   }
 

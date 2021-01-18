@@ -12,19 +12,19 @@
 
   <div
        style="display: flex; flex-direction: row; flex-flow: nowrap; gap: 0.3em">
-    <x-link href="/presentations/guided/demo" custom="button"
-            anchor-class="btn btn-info text-white" style="display: table-cell">
+    <a href="/presentations/guided/demo" class="btn btn-info text-white"
+       style="display: table-cell">
       <i class="ri-rest-time-line d-none d-sm-inline"></i>
       Demo
-    </x-link>
+    </a>
   </div>
 
   <div class="x-nav-bottom">
-    <x-link slot="start" href="/content">
+    <a slot="start" href="/content">
       <button class="btn btn-light btn-lg">&lt; Content</button>
-    </x-link>
-    <x-link slot="end" href="/actions">
-      <button class="btn btn-primary btn-lg">Next: Actions &gt;</button>
-    </x-link>
+    </a>
+    <a slot="end" href="/actions">
+      <button class="btn btn-primary btn-lg">Actions &gt;</button>
+    </a>
   </div>
 </div>

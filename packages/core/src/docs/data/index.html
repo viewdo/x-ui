@@ -11,9 +11,9 @@
                    filter="components[docsTags[text='data']]">
       <template>
         <li class="list-group-item">
-          <x-link href="/components/{data:tag}">
+          <a href="/components/{data:tag}">
             <h5>&lt;{data:tag}&gt;</h5>
-          </x-link>
+          </a>
         </li>
       </template>
     </x-data-repeat>
@@ -25,26 +25,26 @@
 
   <h2>Displaying Data</h2>
   <p></p>
-  <x-link href="/use-data/display" custom="button"
-          anchor-class="btn btn-info text-white "> Data Display </x-link>
+  <a href="/use-data/display" class="btn btn-info text-white ">
+    Data Display </a>
 
   <h2>Data Expressions</h2>
   <p></p>
-  <x-link href="/use-data/expressions" custom="button"
-          anchor-class="btn btn-info text-white "> Data Expressions & Predicates
-  </x-link>
+  <a href="/use-data/expressions" class="btn btn-info text-white "> Data
+    Expressions & Predicates
+  </a>
 
   <h2>Data Providers</h2>
   <p></p>
-  <x-link href="/use-data/providers" custom="button"
-          anchor-class="btn btn-info text-white "> Data Providers </x-link>
+  <a href="/use-data/providers" class="btn btn-info text-white "> Data Providers
+  </a>
 
   <div class="x-nav-bottom">
-    <x-link slot="start" href="/navigation">
+    <a slot="start" href="/navigation">
       <button class="btn btn-light btn-lg">&lt; Navigation</button>
-    </x-link>
-    <x-link slot="end" href="/actions">
-      <button class="btn btn-primary btn-lg">Next: Actions &gt;</button>
-    </x-link>
+    </a>
+    <a slot="end" href="/actions">
+      <button class="btn btn-primary btn-lg">Actions &gt;</button>
+    </a>
   </div>
 </div>

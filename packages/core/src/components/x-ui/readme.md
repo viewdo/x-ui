@@ -86,6 +86,7 @@ Input-type elements (input, textarea and select) can specify a data expression f
 
 <!-- Auto Generated Below -->
 
+
 ## Properties
 
 | Property              | Attribute           | Description                                                                                                                  | Type                  | Default     |
@@ -99,6 +100,7 @@ Input-type elements (input, textarea and select) can specify a data expression f
 | `startUrl`            | `start-url`         | This is the start path a user should land on when they first land on this app.                                               | `string`              | `'/'`       |
 | `transition`          | `transition`        | Navigation transition between routes. This is a CSS animation class.                                                         | `string \| undefined` | `undefined` |
 
+
 ## Events
 
 | Event       | Description                                                                                                                | Type               |
@@ -106,6 +108,7 @@ Input-type elements (input, textarea and select) can specify a data expression f
 | `x:actions` | These events are **`<x-ui/>`** command-requests for action handlers to perform tasks. Any handles should cancel the event. | `CustomEvent<any>` |
 | `x:events`  | Listen for events that occurred within the **`<x-ui/>`** system.                                                           | `CustomEvent<any>` |
 
----
+
+----------------------------------------------
 
 view.DO : Experience Platform

@@ -14,11 +14,11 @@
     This router supports segment and query-string variables and we provide a
     simple, declarative method for using that data in your application. By using
     special (Node.js
-    Express-based) notation in the <x-link href="/components/x-view">
+    Express-based) notation in the <a href="/components/x-view">
       <b>&lt;x-view&gt;</b>
-    </x-link> element's <b>URL</b> attribute, the route
+    </a> element's <b>URL</b> attribute, the route
     data becomes available in our unified
-    <x-link href="/data/expressions">data expression</x-link> system.
+    <a href="/data/expressions">data expression</a> system.
   </p>
   <p>
     <button class="btn btn-light" type="button" data-bs-toggle="collapse"
@@ -38,8 +38,8 @@
             <x-display text="{route:item}"></x-display>
           </x-view>
 
-          <x-link href="/routing/data/item/cake">Cake</x-link>
-          <x-link href="/routing/data/item/wine">Wine</x-link>
+          <a href="/routing/data/item/cake">Cake</a>
+          <a href="/routing/data/item/wine">Wine</a>
         </x-view>
         ```
       </script>
@@ -51,41 +51,38 @@
   <p>Routes can express dynamic parameters, to provide data-driven views You can
     even use that data in your HTML, again with no code.</p>
 
-  <x-link href="/routing/data/item/cake" custom="button"
-          anchor-class="btn btn-info text-white">
+  <a href="/routing/data/item/cake" class="btn btn-info text-white">
     <i class="ri-cake-2-line"></i>
     Cake
-  </x-link>
+  </a>
 
-  <x-link href="/routing/data/item/wine" custom="button"
-          anchor-class="btn btn-info text-white">
+  <a href="/routing/data/item/wine" class="btn btn-info text-white">
     <i class="ri-goblet-fill"></i>
     Wine
-  </x-link>
+  </a>
 
-  <x-link href="/routing/data/custom" custom="button"
-          x-hide-when="{storage:favorite}"
-          anchor-class="btn btn-info text-white">
+  <a href="/routing/data/custom" x-hide-when="{storage:favorite}"
+     class="btn btn-info text-white">
     <i class="ri-discuss-line"></i>
     Custom Item
-  </x-link>
+  </a>
 
   <x-data-display hidden x-show-when="{storage:favorite}">
     <template>
-      <x-link href="/routing/data/item/{storage:favorite}" custom="button"
-              anchor-class="btn btn-info text-white">
+      <a href="/routing/data/item/{storage:favorite}"
+         class="btn btn-info text-white">
         <i class="ri-user-heart-line"></i>
         {storage:favorite}
-      </x-link>
+      </a>
     </template>
   </x-data-display>
 
   <div class="x-nav-bottom">
-    <x-link slot="start" href="/routing/nesting">
+    <a slot="start" href="/routing/nesting">
       <button class="btn btn-light btn-lg">&lt; Nested Routes</button>
-    </x-link>
-    <x-link slot="end" href="/routing">
+    </a>
+    <a slot="end" href="/routing">
       <button class="btn btn-primary btn-lg">Routing &gt;</button>
-    </x-link>
+    </a>
   </div>
 </div>

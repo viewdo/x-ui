@@ -13,8 +13,8 @@
 
   <x-data-display>
     <template>
-      <h2>Spirit Animal: <x-link href="/use-data/storage">{storage:animal}
-        </x-link>
+      <h2>Spirit Animal: <a href="/use-data/storage">{storage:animal}
+        </a>
       </h2>
     </template>
   </x-data-display>
@@ -56,12 +56,12 @@
     spirit-animal is 'dog'</h2>
 
   <div class="x-nav-bottom">
-    <x-link slot="start" href="/use-data">
+    <a slot="start" href="/use-data">
       <button class="btn btn-light btn-lg">&lt; Using Data</button>
-    </x-link>
-    <x-link slot="end" href="/use-data/expressions">
-      <button class="btn btn-primary btn-lg">Next: Data Expressions
+    </a>
+    <a slot="end" href="/use-data/expressions">
+      <button class="btn btn-primary btn-lg">Data Expressions
         &gt;</button>
-    </x-link>
+    </a>
   </div>
 </div>

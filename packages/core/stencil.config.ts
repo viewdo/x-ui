@@ -8,6 +8,7 @@ const config: Config = {
   plugins: [sass()],
   preamble: 'view.DO 2021',
   hashFileNames: false,
+  enableCache: false,
   devServer: {
     openBrowser: false,
     reloadStrategy: 'pageReload',
@@ -52,9 +53,7 @@ const wwwOutput: any = {
   dir: '../../www',
   buildDir: 'x-ui',
   empty: true,
-  serviceWorker: {
-    globPatterns: ['**/*.{js,css,json,html,md,mdx,wav,ico,mp3}'],
-  },
+  serviceWorker: null,
   copy: [
     { src: 'docs', dest: './', keepDirStructure: true },
     {
@@ -74,8 +73,10 @@ const wwwOutput: any = {
   ],
 }
 
-if (config.devMode) {
-  wwwOutput.serviceWorker = null
+if (!config.devMode) {
+  wwwOutput.serviceWorker = {
+    globPatterns: ['**/*.{js,css,json,html,md,mdx,wav,ico,mp3}'],
+  }
 }
 
 config.outputTargets?.push(wwwOutput)
