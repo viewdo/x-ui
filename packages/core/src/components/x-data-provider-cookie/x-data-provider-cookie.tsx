@@ -1,5 +1,14 @@
 import { Component, Element, Event, EventEmitter, h, Host, Prop, State } from '@stencil/core'
-import { CookieConsent, CookieProvider, DataProviderRegistration, DATA_COMMANDS, DATA_TOPIC, evaluatePredicate, EventAction, IDataProvider } from '../..'
+import {
+  CookieConsent,
+  CookieProvider,
+  DataProviderRegistration,
+  DATA_COMMANDS,
+  DATA_TOPIC,
+  evaluatePredicate,
+  EventAction,
+  IDataProvider,
+} from '../..'
 
 /**
  *  @system providers
@@ -34,8 +43,7 @@ export class XDataProviderCookie {
     bubbles: true,
     composed: true,
     cancelable: true,
-  })
-  didConsent!: EventEmitter<CookieConsent>
+  }) didConsent!: EventEmitter<CookieConsent>
 
   private get consentKey() {
     return 'consent'

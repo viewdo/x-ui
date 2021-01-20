@@ -278,7 +278,8 @@ const arrayToRegexp = (path: Array<string | RegExp>, keys: Key[], options: RegEx
 /**
  * Create a path regexp from string input.
  */
-const stringToRegexp = (path: string, keys: Key[], options: RegExpOptions): RegExp => tokensToRegExp(parse(path, options), keys, options)
+const stringToRegexp = (path: string, keys: Key[], options: RegExpOptions): RegExp =>
+  tokensToRegExp(parse(path, options), keys, options)
 
 /**
  * Expose a function for taking tokens and returning a RegExp.

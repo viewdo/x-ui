@@ -1,5 +1,6 @@
-import { Component, Element, Fragment, h, Host, Prop, State } from '@stencil/core'
-import { DATA_EVENTS, eventBus, removeAllChildNodes, resolveExpression, ROUTE_EVENTS, warn } from '../../services'
+import { Component, Element, h, Host, Prop, State } from '@stencil/core';
+import { DATA_EVENTS, eventBus, resolveChildElements, resolveExpression, RouterService, ROUTE_EVENTS, warn } from '../../services';
+import { createElement, removeAllChildNodes } from '../../services/utils/dom-utils';
 
 /**
  *  @system data
@@ -7,7 +8,8 @@ import { DATA_EVENTS, eventBus, removeAllChildNodes, resolveExpression, ROUTE_EV
  */
 @Component({
   tag: 'x-data-display',
-  shadow: false,
+  styleUrl: 'x-data-display.scss',
+  shadow: true,
 })
 export class XDataDisplay {
   private subscriptionData!: () => void
@@ -17,6 +19,7 @@ export class XDataDisplay {
   @State() resolvedTemplate?: string
   @State() innerData: any
   @State() value?: string
+
 
   /**
    The data expression to obtain a value for rendering as inner-text for this element.
@@ -33,36 +36,16 @@ export class XDataDisplay {
 
   @Prop({ mutable: true }) noRender = false
 
-  get childTemplate(): HTMLTemplateElement | null {
-    if (!this.el.hasChildNodes()) {
-      return null
-    }
+  private get router(): RouterService | undefined {
+    return this.el.closest('x-ui')?.router
+  }
 
-    const childTemplates = Array.from(this.el.childNodes)
-      .filter((c) => c.nodeName === 'TEMPLATE')
-      .map((v) => v as HTMLTemplateElement)
-
-    if (childTemplates.length > 0) {
-      return childTemplates[0]
-    }
-
-    return null
+  private get childTemplate(): HTMLTemplateElement | null {
+    return this.el.querySelector('template')
   }
 
   private get childScript(): HTMLScriptElement | null {
-    if (!this.el.hasChildNodes()) {
-      return null
-    }
-
-    const childScripts = Array.from(this.el.childNodes)
-      .filter((c) => c.nodeName === 'SCRIPT')
-      .map((v) => v as HTMLScriptElement)
-
-    if (childScripts.length > 0) {
-      return childScripts[0]
-    }
-
-    return null
+    return this.el.querySelector('script')
   }
 
   async componentWillLoad() {
@@ -86,11 +69,8 @@ export class XDataDisplay {
       }
     }
 
-    removeAllChildNodes(this.el)
-  }
-
-  async componentWillRender() {
     await this.resolveTemplate()
+    removeAllChildNodes(this.el)
   }
 
   private async resolveTemplate() {
@@ -107,20 +87,30 @@ export class XDataDisplay {
     }
   }
 
+  private resetContent() {
+    const remoteContent = this.el.querySelector(`.dynamic`)
+    remoteContent?.remove()
+  }
+
+  private async setContent() {
+    const content = createElement(
+      `${this.value || ''}${this.resolvedTemplate || ''}`)
+    content.className = 'dynamic'
+    await resolveChildElements(content, this.router, location.href)
+    this.el.append(content)
+  }
+
+  async componentWillRender() {
+    this.resetContent()
+    this.setContent()
+  }
+
   disconnectedCallback() {
     this.subscriptionData()
     this.subscriptionRoutes()
   }
 
   render() {
-    if (this.resolvedTemplate) {
-      return <Host innerHTML={this.resolvedTemplate}>{this.value}</Host>
-    }
-
-    if (this.value) {
-      return <Fragment>{this.value}</Fragment>
-    }
-
-    return null
+    return <Host><slot /></Host>
   }
 }

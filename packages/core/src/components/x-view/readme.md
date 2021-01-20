@@ -92,7 +92,7 @@ Input-type elements (input, textarea and select) can specify a data expression f
 | `debug`               | `debug`             | Turn on debug statements for load, update and render events.                      | `boolean`             | `false`     |
 | `exact` _(required)_  | `exact`             | The url for this route should only be matched when it is exact.                   | `boolean`             | `undefined` |
 | `pageTitle`           | `page-title`        | The title for this view. This is prefixed before the app title configured in x-ui | `string`              | `''`        |
-| `router` _(required)_ | --                  |                                                                                   | `RouterService`       | `undefined` |
+| `router` _(required)_ | --                  | The router-service instance  (internal)                                           | `RouterService`       | `undefined` |
 | `scrollTopOffset`     | `scroll-top-offset` | Header height or offset for scroll-top on this view.                              | `number`              | `0`         |
 | `transition`          | `transition`        | Navigation transition between routes. This is a CSS animation class.              | `string \| undefined` | `undefined` |
 | `url` _(required)_    | `url`               | The url for this route, including the parent's routes.                            | `string`              | `undefined` |

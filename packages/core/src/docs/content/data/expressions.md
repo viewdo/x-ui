@@ -17,7 +17,7 @@
 - Query: **query**
 - Inline Data: **data**
 
-> See [data providers](/use-data/providers) to learn how to add custom data providers.
+> See [data providers](/content/data/providers) to learn how to add custom data providers.
 
 ## Special Functions
 

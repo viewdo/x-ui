@@ -1,8 +1,19 @@
-import { Component, Element, h, Host, Prop, State, Watch } from '@stencil/core'
-import { DATA_EVENTS, debugIf, eventBus, hasVisited, markVisit, MatchResults, resolveChildElements, resolveNext, Route, warn, wrapFragment } from '../..'
+import { Component, Element, h, Host, Prop, State } from '@stencil/core'
+import {
+  DATA_EVENTS,
+  debugIf,
+  eventBus,
+  hasVisited,
+  markVisit,
+  MatchResults,
+  resolveChildElements,
+  resolveNext,
+  Route,
+  warn,
+  wrapFragment,
+} from '../..'
 import { RouterService } from '../../services/routing/router'
 import { createKey } from '../../services/routing/utils/location-utils'
-import '../x-view-do/x-view-do'
 
 /**
  *  @system routing
@@ -14,11 +25,16 @@ import '../x-view-do/x-view-do'
 })
 export class XView {
   private readonly subscription!: () => void
-  route!: Route
-  @Prop() router!: RouterService
+  private route!: Route
   @Element() el!: HTMLXViewElement
   @State() match!: MatchResults | null
   @State() contentKey?: string
+
+  /**
+   * The router-service instance  (internal)
+   *
+   */
+  @Prop() router!: RouterService
 
   /**
    * The title for this view. This is prefixed
@@ -45,19 +61,6 @@ export class XView {
    */
   @Prop() url!: string
 
-  @Watch('url')
-  validatePath(newValue: string, _oldValue: string) {
-    const isBlank = typeof newValue !== 'string' || newValue === ''
-    const has2chars = typeof newValue === 'string' && newValue.length >= 2
-    if (isBlank) {
-      throw new Error('url: required')
-    }
-
-    if (!has2chars) {
-      throw new Error('url: too short')
-    }
-  }
-
   /**
    * The url for this route should only be matched
    * when it is exact.
@@ -82,7 +85,7 @@ export class XView {
     return this.el.closest('x-ui')
   }
 
-  isChild(element: HTMLXViewDoElement) {
+  private isChild(element: HTMLXViewDoElement) {
     return element.closest('x-view') === this.el
   }
 
@@ -112,9 +115,17 @@ export class XView {
 
     if (!this.router) return
 
-    this.route = this.router.createRoute(this.el, this.url, this.exact, this.pageTitle, this.transition || this.parent?.transition || null, this.scrollTopOffset, async (match) => {
-      this.match = match
-    })
+    this.route = this.router.createRoute(
+      this.el,
+      this.url,
+      this.exact,
+      this.pageTitle,
+      this.transition || this.parent?.transition || null,
+      this.scrollTopOffset,
+      (match) => {
+        this.match = match ? { ...match } : null
+      },
+    )
 
     this.childViews.forEach((v) => {
       v.url = this.route.normalizeChildUrl(v.url)

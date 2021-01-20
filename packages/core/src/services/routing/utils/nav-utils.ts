@@ -10,4 +10,5 @@ export const supportsPopStateOnHashChange = (nav: Navigator) => !nav.userAgent.i
  */
 export const supportsGoWithoutReloadUsingHash = (nav: Navigator) => !nav.userAgent.includes('Firefox')
 
-export const isExtraneousPopstateEvent = (nav: Navigator, event: any) => event.state === undefined && !nav.userAgent.includes('CriOS')
+export const isExtraneousPopstateEvent = (nav: Navigator, event: any) =>
+  event.state === undefined && !nav.userAgent.includes('CriOS')

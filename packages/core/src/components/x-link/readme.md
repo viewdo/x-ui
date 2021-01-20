@@ -17,22 +17,13 @@ The element should be used in-place of an **`a`** tag to navigate without refres
 
 ## Properties
 
-| Property            | Attribute          | Description | Type                  | Default         |
-| ------------------- | ------------------ | ----------- | --------------------- | --------------- |
-| `activeClass`       | `active-class`     |             | `string`              | `'link-active'` |
-| `anchorClass`       | `anchor-class`     |             | `string \| undefined` | `undefined`     |
-| `anchorId`          | `anchor-id`        |             | `string \| undefined` | `undefined`     |
-| `anchorRole`        | `anchor-role`      |             | `string \| undefined` | `undefined`     |
-| `anchorTabIndex`    | `anchor-tab-index` |             | `string \| undefined` | `undefined`     |
-| `anchorTitle`       | `anchor-title`     |             | `string \| undefined` | `undefined`     |
-| `ariaHaspopup`      | `aria-haspopup`    |             | `string \| undefined` | `undefined`     |
-| `ariaLabel`         | `aria-label`       |             | `string \| undefined` | `undefined`     |
-| `ariaPosinset`      | `aria-posinset`    |             | `string \| undefined` | `undefined`     |
-| `ariaSetsize`       | `aria-setsize`     |             | `number \| undefined` | `undefined`     |
-| `custom`            | `custom`           |             | `string`              | `'a'`           |
-| `exact`             | `exact`            |             | `boolean`             | `false`         |
-| `href` _(required)_ | `href`             |             | `string`              | `undefined`     |
-| `strict`            | `strict`           |             | `boolean`             | `true`          |
+| Property            | Attribute      | Description                                                        | Type      | Default         |
+| ------------------- | -------------- | ------------------------------------------------------------------ | --------- | --------------- |
+| `activeClass`       | `active-class` | The class to add when this HREF is active in the browser           | `string`  | `'link-active'` |
+| `debug`             | `debug`        |                                                                    | `boolean` | `false`         |
+| `exact`             | `exact`        | Only active on the exact href match no not on child routes         | `boolean` | `true`          |
+| `href` _(required)_ | `href`         | The destination route for this link                                | `string`  | `undefined`     |
+| `strict`            | `strict`       | Only active on the exact href match using every aspect of the URL. | `boolean` | `true`          |
 
 
 ----------------------------------------------

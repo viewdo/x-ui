@@ -119,8 +119,7 @@ export class XUI {
     composed: true,
     cancelable: true,
     bubbles: false,
-  })
-  actions!: EventEmitter
+  }) actions!: EventEmitter
 
   /**
    * Listen for events that occurred within the **`<x-ui/>`**
@@ -131,8 +130,7 @@ export class XUI {
     composed: true,
     cancelable: false,
     bubbles: true,
-  })
-  events!: EventEmitter
+  }) events!: EventEmitter
 
   private get childViews(): HTMLXViewElement[] {
     if (!this.el.hasChildNodes()) {
@@ -161,7 +159,17 @@ export class XUI {
       this.events.emit(args)
     })
 
-    this.router = new RouterService(writeTask, eventBus, actionBus, this.el, this.mode, this.root, this.appTitle, this.transition, this.scrollTopOffset)
+    this.router = new RouterService(
+      writeTask,
+      eventBus,
+      actionBus,
+      this.el,
+      this.mode,
+      this.root,
+      this.appTitle,
+      this.transition,
+      this.scrollTopOffset,
+    )
 
     this.childViews.forEach((v) => {
       if (v.url) {
@@ -187,18 +195,28 @@ export class XUI {
   async componentDidLoad() {
     log('x-ui: initialized')
 
-    await resolveChildElements(this.el, this.router, this.root)
+    const body = this.el.ownerDocument.body
+    if (body) {
+      writeTask(async () => {
+        await this.performLoadElementManipulation(body)
+      })
+    }
 
-    this.el.querySelectorAll('[x-hide]').forEach((el) => {
-      el.setAttribute('hidden', '')
-      el.removeAttribute('x-hide')
-    })
-    this.el.querySelectorAll('[x-cloak]').forEach((el) => {
-      el.removeAttribute('x-cloak')
-    })
     if (this.startUrl !== '/' && this.router.location?.pathname === this.root) {
       this.router.history.push(this.router.getUrl(this.startUrl, this.root))
     }
+  }
+
+  private async performLoadElementManipulation(element: HTMLElement) {
+    await resolveChildElements(element, this.router, this.root)
+
+    element.querySelectorAll('[x-hide]').forEach((el) => {
+      el.setAttribute('hidden', '')
+      el.removeAttribute('x-hide')
+    })
+    element.querySelectorAll('[x-cloak]').forEach((el) => {
+      el.removeAttribute('x-cloak')
+    })
   }
 
   disconnectedCallback() {

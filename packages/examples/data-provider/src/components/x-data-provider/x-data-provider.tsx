@@ -8,10 +8,10 @@ import { DataProviderRegistration, DATA_COMMANDS, DATA_TOPIC, EventAction, InMem
 })
 export class XDataProvider {
   private readonly customProvider = new InMemoryProvider()
-  private inputKeyEl: HTMLInputElement
-  private inputValueEl: HTMLInputElement
-  private formEl: HTMLFormElement
-  @State() keys = []
+  private inputKeyEl!: HTMLInputElement
+  private inputValueEl!: HTMLInputElement
+  private formEl!: HTMLFormElement
+  @State() keys: string[] = []
 
   /**
    * When debug is true, a reactive table of values is displayed.
@@ -30,8 +30,7 @@ export class XDataProvider {
    */
   @Event({
     eventName: DATA_TOPIC,
-  })
-  register!: EventEmitter<EventAction<DataProviderRegistration>>
+  }) register!: EventEmitter<EventAction<DataProviderRegistration>>
 
   componentDidLoad() {
     this.register.emit({

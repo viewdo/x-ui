@@ -7,11 +7,18 @@ import { onInterfaceChange } from '../../services'
   shadow: false,
 })
 export class XUiAudio {
-  slider?: HTMLInputElement
+  private slider?: HTMLInputElement
   private muteSubscription!: () => void
   @State() muted!: boolean
 
+  /**
+   *
+   */
   @Prop() classes?: string
+
+  /**
+   *
+   */
   @Prop() inputId?: string
 
   componentWillLoad() {

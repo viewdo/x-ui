@@ -1,9 +1,9 @@
 jest.mock('../../../services/logging')
 
-import { newSpecPage } from '@stencil/core/testing'
-import { XDataDisplay } from '../x-data-display'
-import { InMemoryProvider } from '../../../services/data/providers/memory'
-import { addDataProvider } from '../../../services/data/providers/factory'
+import { newSpecPage } from '@stencil/core/testing';
+import { addDataProvider } from '../../../services/data/providers/factory';
+import { InMemoryProvider } from '../../../services/data/providers/memory';
+import { XDataDisplay } from '../x-data-display';
 
 describe('x-data-display', () => {
   let session: InMemoryProvider
@@ -17,28 +17,18 @@ describe('x-data-display', () => {
     const page = await newSpecPage({
       components: [XDataDisplay],
       html: `<x-data-display text="foo"></x-data-display>`,
-      supportsShadowDom: false,
     })
 
     await page.waitForChanges()
 
     expect(page.root).toEqualHtml(`
       <x-data-display text="foo">
-        foo
-      </x-data-display>
-    `)
-  })
-
-  it('renders simple strings with classes', async () => {
-    const page = await newSpecPage({
-      components: [XDataDisplay],
-      html: `<x-data-display text="foo" class="name"></x-data-display>`,
-      supportsShadowDom: false,
-    })
-
-    expect(page.root).toEqualHtml(`
-      <x-data-display text="foo" class="name">
-        foo
+        <mock:shadow-root>
+          <slot></slot>
+        </mock:shadow-root>
+        <span class="dynamic">
+          foo
+        </span>
       </x-data-display>
     `)
   })
@@ -51,35 +41,21 @@ describe('x-data-display', () => {
                 <p>Hello Jason!</p>
               </template>
              </x-data-display>`,
-      supportsShadowDom: false,
     })
 
     expect(page.root).toEqualHtml(`
-      <x-data-display innerhtml=" <p>Hello Jason!</p> " text="test">
-        <p>Hello Jason!</p>
-        test
+      <x-data-display text="test">
+        <mock:shadow-root>
+          <slot></slot>
+        </mock:shadow-root>
+        <span class="dynamic">
+          test
+          <p>Hello Jason!</p>
+        </span>
       </x-data-display>
     `)
   })
 
-  it('renders text value in child template', async () => {
-    const page = await newSpecPage({
-      components: [XDataDisplay],
-      html: `<x-data-display text="test">
-              <template>
-                <p>Hello Jason!</p>
-              </template>
-             </x-data-display>`,
-      supportsShadowDom: false,
-    })
-
-    expect(page.root).toEqualHtml(`
-      <x-data-display innerhtml=" <p>Hello Jason!</p> " text="test">
-        <p>Hello Jason!</p>
-        test
-      </x-data-display>
-    `)
-  })
 
   it('renders inline data to child template', async () => {
     const page = await newSpecPage({
@@ -92,12 +68,16 @@ describe('x-data-display', () => {
                 <p>Hello {data:name}!</p>
               </template>
              </x-data-display>`,
-      supportsShadowDom: false,
     })
 
     expect(page.root).toEqualHtml(`
-      <x-data-display innerHtml=" <p>Hello Forrest!</p> ">
+      <x-data-display>
+       <mock:shadow-root>
+          <slot></slot>
+        </mock:shadow-root>
+        <span class="dynamic">
         <p>Hello Forrest!</p>
+        </span>
       </x-data-display>
     `)
   })
@@ -111,12 +91,16 @@ describe('x-data-display', () => {
                 <p>Hello {session:name}!</p>
               </template>
              </x-data-display>`,
-      supportsShadowDom: false,
     })
 
     expect(page.root).toEqualHtml(`
-      <x-data-display innerHtml=" <p>Hello Tom!</p> ">
+      <x-data-display>
+       <mock:shadow-root>
+          <slot></slot>
+        </mock:shadow-root>
+        <span class="dynamic">
         <p>Hello Tom!</p>
+        </span>
       </x-data-display>
     `)
   })

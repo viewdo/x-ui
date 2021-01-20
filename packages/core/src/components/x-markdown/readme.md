@@ -13,13 +13,48 @@
 <x-markdown src="https://example.com/markdown.md"></x-markdown>
 ```
 
+### Inline Markdown
+
+You also use markdown inline.
+
+```html
+<!-- Do not set the `src` attribute -->
+<x-markdown>
+  <!-- Write your markdown inside a `<script type="text/markdown">` tag -->
+  <script type="text/markdown">
+    # **This** is my [markdown](https://example.com)
+  </script>
+</x-markdown>
+```
+
+### Delayed Rendering
+
+When using this component, you may want to delay the fetch until the content is needed. The **no-render** attribute will prevent the HTML from being fetched until that attribute is removed.
+
+```html
+<x-markdown id="markdown" src="<url-to-html>" no-render> </x-markdown>
+```
+
+You can remove the attribute programmatically to force the fetch:
+
+```javascript
+const include = document.querySelector("#markdown);
+include.removeAttribute('no-render');
+```
+
+Or, just include it in one of the components [**`<x-view>`**](/components/x-view) or [**`<x-view-do>`**](/components/x-view-do). These components remove any **no-render** attributes on child elements once their route is activated, giving us lazy-loaded routes with this component.
+
+
 ## Styling
 
 By default, there is no styling. The HTML is rendered to the page without styles. For basic styles, you can include the Marked.js css file in the head:
 
 ```html
 <head>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sindresorhus/github-markdown-css@4/github-markdown.min.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/sindresorhus/github-markdown-css@4/github-markdown.min.css"
+  />
 </head>
 ```
 
@@ -35,19 +70,7 @@ By default, there is no styling. The HTML is rendered to the page without styles
 </head>
 ```
 
-## Inline Markdown
 
-You can pass in your markdown inline too.
-
-```html
-<!-- Do not set the `src` attribute -->
-<x-markdown>
-  <!-- Write your markdown inside a `<script type="text/markdown">` tag -->
-  <script type="text/markdown">
-    # **This** is my [markdown](https://example.com)
-  </script>
-</x-markdown>
-```
 
 <!-- Auto Generated Below -->
 

@@ -6,7 +6,8 @@ This component declares audio used within this **`<x-view-do>`** route. The **`<
 
 ```html
 <x-view-do>
-  <x-audio-sound-load mode="queue|play|load" track-id="<unique-id>" src="<url>" discard="route|next|none" track> </x-audio-sound-load>
+  <x-audio-sound-load mode="queue|play|load" track-id="<unique-id>" src="<url>" discard="route|next|none" track>
+  </x-audio-sound-load>
 </x-view-do>
 ```
 

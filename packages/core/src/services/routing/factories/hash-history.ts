@@ -6,11 +6,21 @@ import { LocationSegments, Prompt, RouterHistory } from '../interfaces'
 import { getConfirmation } from '../utils/browser-utils'
 import { createKey, createLocation, locationsAreEqual } from '../utils/location-utils'
 import { supportsGoWithoutReloadUsingHash } from '../utils/nav-utils'
-import { addLeadingSlash, createPath, hasBasename, stripBasename, stripLeadingSlash, stripTrailingSlash } from '../utils/path-utils'
+import {
+  addLeadingSlash,
+  createPath,
+  hasBasename,
+  stripBasename,
+  stripLeadingSlash,
+  stripTrailingSlash,
+} from '../utils/path-utils'
 import { createTransitionManager } from './transition-manager'
 
 export interface CreateHashHistoryOptions {
-  getUserConfirmation?: (message: string, callback: (confirmed: boolean) => Record<string, unknown>) => Record<string, unknown>
+  getUserConfirmation?: (
+    message: string,
+    callback: (confirmed: boolean) => Record<string, unknown>,
+  ) => Record<string, unknown>
   hashType?: 'hashbang' | 'noslash' | 'slash'
   basename?: string
   keyLength?: number

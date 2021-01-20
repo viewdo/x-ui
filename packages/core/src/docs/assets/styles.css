@@ -14,7 +14,7 @@ body {
 
   --primary-bg: #483f61;
 
-  --content-max-width: 750px;
+  --content-max-width: 950px;
 
   font-family: 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   background-color: var(--background-color);
@@ -56,15 +56,18 @@ nav button:focus {
   box-shadow: none;
 }
 
-.hero {
-  margin-bottom: 2em;
-  text-justify: auto;
+nav .navbar-brand a,
+nav .navbar-brand a:any-link {
+  color: white;
+  font-family: 'Nunito', sans-serif, 'Ubuntu Mono', monospace;
+  font-size: 8vw;
+  font-weight: 500;
+  margin: 0;
+}
+nav .navbar-brand a:hover {
+  text-decoration: none;
 }
 
-h1.brand {
-  font-family: 'Nunito', sans-serif, 'Ubuntu Mono', monospace;
-  font-size: calc(100% + 2vw);
-}
 .brand {
   font-family: 'Nunito', sans-serif;
   font-family: 'Ubuntu Mono', monospace;
@@ -90,14 +93,6 @@ b.brand {
   font-weight: 600;
 }
 
-.tag-line {
-  color: white;
-  font-family: 'Nunito', sans-serif, 'Ubuntu Mono', monospace;
-  font-size: calc(100% + 3rem);
-  position: relative;
-  margin: 0;
-}
-
 #viewdo-logo {
   padding: 1em 0 1em 1em;
 }
@@ -105,13 +100,17 @@ b.brand {
   filter: brightness(0) invert(1);
 }
 
+/* ELEMENTS ------ */
+
 h1 {
   font-family: 'Nunito', sans-serif, 'Ubuntu Mono';
-  margin: 1rem 0;
+  margin: 1em 1em 0 0;
   font-size: 2rem;
 }
+
 h2 {
   font-size: 1.5rem;
+  margin-bottom: 2em;
 }
 h3 {
   font-size: 1.2rem;
@@ -120,9 +119,24 @@ h3 {
   display: flex;
 }
 
+
+.button-nav {
+  display: flex;
+  flex-direction: row;
+  flex-flow: wrap;
+  align-items: stretch;
+  justify-items: stretch;
+  justify-content: space-between;
+  gap: 0.3em
+}
+
+.button-nav > * {
+  flex: 1 1 auto;
+  vertical-align: middle;
+}
+
 h2,
-h3,
-h4 {
+h3 {
   color: var(--primary);
 }
 
@@ -130,6 +144,16 @@ h2,
 h3,
 h4 {
   margin: 0.75em 0 0.25em 0;
+}
+h3 { clear: right;}
+
+h4 {
+  color: var(--text-color);
+  font-size: 1.1em;
+}
+
+p {
+  clear: left;
 }
 
 a,
@@ -145,6 +169,10 @@ a:hover {
   text-decoration: underline;
 }
 
+.btn:hover {
+  text-decoration: none;
+}
+
 blockquote {
   background: var(--background-color);
   border-left: 10px solid var(--primary);
@@ -157,20 +185,20 @@ blockquote > p {
 
 table {
   width: 100%;
-  border: solid 2px var(--text-color);
+  border: solid 2px var(--nav-bg);
   border-collapse: collapse;
   border-spacing: 0;
   overflow-x: scroll;
 }
 table thead th {
-  background-color: var(--text-color);
-  border: solid 2px var(--text-color);
-  color: var(--background-color);
+  background-color: var(--nav-bg);
+  border: solid 2px var(--nav-bg);
+  color: #fff;
   padding: 10px;
   text-align: left;
 }
 table tbody td {
-  border: solid 2px var(--text-color);
+  border: solid 2px var(--nav-bg);
   color: var(--text-color);
   padding: 10px;
 }
@@ -180,13 +208,31 @@ code {
   font-family: 'Courier New', Courier, monospace;
 }
 
+/* X-UI ---------------*/
 x-ui {
-  margin: 0;
-  padding: 0;
   height: 100vh;
+  width: 100%;
 }
-x-link {
-  cursor: pointer;
+
+x-link::part(anchor) {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 400;
+}
+x-link::part(anchor:hover) {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+x-link.text-white::part(anchor) {
+  color: white;
+}
+
+x-ui > x-view {
+  max-width: var(--content-max-width);
+  padding: var(--bs-gutter-x, 0.75rem);
+  margin-right: auto !important;
+  margin-left: auto !important;
 }
 
 x-markdown pre {
@@ -198,26 +244,38 @@ x-view-do .modal {
   display: block;
 }
 
-.x-nav-bottom {
+x-ui-theme {
+  z-index: 1;
+  margin: var(--bs-gutter-x, 1rem);
+  text-align: right;
+  top: 20px;
+}
+
+.component-list {
+  position: sticky;
+  z-index: 5;
+}
+
+footer {
   background-image: linear-gradient(to bottom, transparent, var(--background-color));
   background-size: fill;
   position: sticky;
+  z-index: 1;
   bottom: 0;
   width: 100%;
   padding: 3vh 0 1vh 0;
-  z-index: 1;
   overflow: auto;
 }
-.x-nav-bottom::after {
+footer::after {
   content: '';
   clear: both;
   display: table;
 }
-.x-nav-bottom [slot='end'] {
+footer [slot='end'] {
   float: right;
   right: 0;
 }
-.x-nav-bottom [slot='start'] {
+footer [slot='start'] {
   float: left;
 }
 
@@ -228,10 +286,8 @@ x-view-do .modal {
   background-color: var(--background-color);
 }
 
-/* Bootstrap */
-.container {
-  max-width: var(--content-max-width);
-}
+/* Bootstrap ------------------*/
+
 .btn-primary {
   background-color: var(--primary-bg);
   border-color: white;
@@ -241,9 +297,7 @@ x-view-do .modal {
   color: var(--accent);
   border-color: white;
 }
-a.btn-primary:any-link {
-  color: white;
-}
+
 
 .btn-secondary {
   background-color: var(--secondary);
@@ -252,7 +306,14 @@ a.btn-primary:any-link {
 .btn-secondary:hover {
   background-color: var(--secondary);
 }
+
+a.btn-primary:any-link {
+  color: white;
+}
 a.btn-secondary:any-link {
+  color: white;
+}
+a.btn-info:any-link {
   color: white;
 }
 
@@ -269,7 +330,6 @@ a.btn-secondary:any-link {
 
 .container-fluid {
   max-width: var(--content-max-width);
-  padding-bottom: 1em;
 }
 
 .dropdown-toggle::after {
@@ -308,7 +368,7 @@ a.btn-secondary:any-link {
 .accordion-button,
 .list-group-item {
   color: white;
-  background-color: var(--dark);
+  background-color: var(--nav-bg);
 }
 
 .list-group-item i,
@@ -319,7 +379,7 @@ a.btn-secondary:any-link {
 
 .accordion-button:not(.collapsed) {
   color: var(--accent);
-  background-color: var(--dark);
+  background-color: var(--nav-bg);
 }
 
 .form-floating > label {

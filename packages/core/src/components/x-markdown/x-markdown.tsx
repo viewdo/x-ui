@@ -1,5 +1,13 @@
 import { Component, Element, h, Host, Prop, State } from '@stencil/core'
-import { DATA_EVENTS, eventBus, resolveChildElements, resolveExpression, RouterService, ROUTE_EVENTS, warn } from '../..'
+import {
+  DATA_EVENTS,
+  eventBus,
+  resolveChildElements,
+  resolveExpression,
+  RouterService,
+  ROUTE_EVENTS,
+  warn,
+} from '../..'
 
 /**
  *  @system content

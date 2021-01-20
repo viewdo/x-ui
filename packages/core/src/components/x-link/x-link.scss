@@ -1,0 +1,13 @@
+:host {
+  display: contents;
+  position: relative;
+}
+
+:host[href] {
+  cursor: pointer;
+}
+
+a,
+a:focus {
+  outline: none;
+}

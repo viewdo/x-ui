@@ -1,43 +1,42 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
-
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport"
-          content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
+    />
     <title>Loading...</title>
-    <meta http-equiv="x-ua-compatible" content="IE=Edge">
-    <meta name="description"
-          content="New HTML elementsto put some do in your view">
+    <meta http-equiv="x-ua-compatible" content="IE=Edge" />
+    <meta name="description" content="New HTML elementsto put some do in your view" />
     <meta name="og:title" content="" />
     <meta name="og:description" content="" />
     <meta name="og:image" content="" />
 
-    <meta name="format-detection" content="telephone=no">
-    <meta name="msapplication-tap-highlight" content="no">
-    <link rel="apple-touch-icon" sizes="180x180"
-          href="/assets/icon/apple-touch-icon.png">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="View.DO Experience Player">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/icon/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="View.DO Experience Player" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" content="#16161d">
+    <meta name="theme-color" content="#16161d" />
 
     <!-- Ionic -->
-    <script type="module"
-            src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"
-          media="print" onload="this.media='all'" />
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"
+      media="print"
+      onload="this.media='all'"
+    />
 
     <!-- Markdown -->
-    <script type="module"
-            src="https://cdn.jsdelivr.net/gh/zerodevx/x-markdown@2/dist/x-markdown.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/gh/zerodevx/x-markdown@2/dist/x-markdown.min.js"></script>
 
     <!-- Replace w/npm unpkg paths -->
     <script type="module" src="/build/viewdo.esm.js"></script>
-    <link rel="stylesheet" href="/build/viewdo.css" media="print"
-          onload="this.media='all'" />
+    <link rel="stylesheet" href="/build/viewdo.css" media="print" onload="this.media='all'" />
     <base href="/" />
 
     <style>
@@ -86,7 +85,7 @@
         --ion-color-warning: #ffd534;
         --ion-color-warning-rgb: 255, 213, 52;
         --ion-color-warning-contrast: #000;
-        --ion-color-war-ning-contrast-rgb: 0, 0, 0;
+        --ion-color-warning-contrast-rgb: 0, 0, 0;
         --ion-color-warning-shade: #e0bb2e;
         --ion-color-warning-tint: #ffd948;
         --ion-color-danger: #ff4961;
@@ -146,7 +145,7 @@
             <a href="/home">
               <ion-button size="large">
                 <ion-icon slot="icon-only" name="home"></ion-icon>
-                </button>
+              </ion-button>
             </a>
           </ion-buttons>
           <ion-buttons slot="end">
@@ -154,12 +153,10 @@
               <a href="/home/name">
                 <ion-chip>
                   <ion-avatar>
-                    <img
-                         src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+                    <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" />
                   </ion-avatar>
                   <label>
-                    <x-data-display text="{storage:name}"
-                                    show-when="{storage:name}">
+                    <x-data-display text="{storage:name}" show-when="{storage:name}"></x-data-display>
                   </label>
                 </ion-chip>
               </a>
@@ -184,13 +181,9 @@
         </div>
       </ion-menu>
 
-      <x-ui app-title="view.DO UI Components" transition="fade-in"
-            start-url="/home">
-
+      <x-ui app-title="view.DO UI Components" transition="fade-in" start-url="/home">
         <x-view url="/home" page-title="Home">
-
-          <x-view-do url="/name" page-title="Introductions"
-                     when="!{storage:name}">
+          <x-view-do url="/name" page-title="Introductions" when="!{storage:name}">
             <x-include no-render src="/docs/home/intro.html"></x-include>
           </x-view-do>
 
@@ -201,18 +194,13 @@
           <div class="container container-fluid mx-auto" id="main">
             <h1>Home Page</h1>
           </div>
-
         </x-view>
-
 
         <!-- Not Found Route -->
         <x-view url="*">
-          <h3>Not Found</h3>>
+          <h3>Not Found</h3>
         </x-view>
-
-
       </x-ui>
     </ion-app>
   </body>
-
 </html>

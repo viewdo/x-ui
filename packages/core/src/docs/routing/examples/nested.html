@@ -1,17 +1,18 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
   <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <base href="sample.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
-          crossorigin="anonymous" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+      crossorigin="anonymous"
+    />
 
     <title>Loading...</title>
     <style>
@@ -19,8 +20,7 @@
         display: none;
       }
     </style>
-    <script type="module"
-            src="https://unpkg.com/@viewdo/x-ui/dist/x-ui/x-ui.esm.js"></script>
+    <script type="module" src="https://unpkg.com/@viewdo/x-ui/dist/x-ui/x-ui.esm.js"></script>
     <!--
       HIYA! Right-click to save this file locally. Then open it in you favorite HTML editor to make changes
       You can preview it through a local dev-server, like this one:
@@ -28,7 +28,6 @@
   </head>
 
   <body>
-
     <x-ui app-title="My HTML App" start-url="home" mode="hash">
       <x-view url="home" page-title="Home">
         <div class="container" slot="content">
@@ -37,8 +36,8 @@
           <h2>Hello World!</h2>
           <p>Now you have a basic content router.</p>
 
-          <x-link href="home/nested">Nested Page</a>
-            <x-link href="about">Sibling Page</a>
+          <a href="home/nested">Nested Page</a>
+          <a href="about">Sibling Page</a>
         </div>
         <x-view url="nested" page-title="Nested" x-cloak>
           <div class="container" slot="content">
@@ -46,7 +45,7 @@
             <hr />
             <h2>A child page</h2>
 
-            <x-link href="">Back to Home</a>
+            <a href="">Back to Home</a>
           </div>
         </x-view>
       </x-view>
@@ -54,11 +53,9 @@
         <div class="container" slot="content">
           <h1>Sibling Page</h1>
           <h2>You now have a multi-page app!</h2>
-          <x-link href="">Back to Home</a>
+          <a href="">Back to Home</a>
         </div>
       </x-view>
     </x-ui>
-
   </body>
-
 </html>

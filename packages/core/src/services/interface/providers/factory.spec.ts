@@ -1,12 +1,12 @@
 jest.mock('../../logging')
 
-import { MockWindow } from '@stencil/core/mock-doc';
-import { INTERFACE_COMMANDS } from '..';
-import { actionBus, eventBus } from '../../actions';
-import { sleep } from '../../utils/promise-utils';
-import { InterfaceListener } from '../action-listener';
-import { DefaultInterfaceProvider } from './default';
-import { getInterfaceProvider, setInterfaceProvider } from './factory';
+import { MockWindow } from '@stencil/core/mock-doc'
+import { INTERFACE_COMMANDS } from '..'
+import { actionBus, eventBus } from '../../actions'
+import { sleep } from '../../utils/promise-utils'
+import { InterfaceListener } from '../action-listener'
+import { DefaultInterfaceProvider } from './default'
+import { getInterfaceProvider, setInterfaceProvider } from './factory'
 
 describe('provider-factory', () => {
   let custom: DefaultInterfaceProvider
@@ -117,7 +117,7 @@ describe('provider-factory', () => {
       data: {
         selector: 'h1',
         attribute: 'hidden',
-        value: 'true'
+        value: 'true',
       },
     })
 

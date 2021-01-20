@@ -55,13 +55,18 @@ export class XActionActivator {
   @Method()
   async activateActions(): Promise<void> {
     if (!this.multiple && this.activated) {
-      return
+      return Promise.resolve()
     }
 
     // Activate children
     this.actions.forEach((action) => {
       const dataString = JSON.stringify(action.data)
-      debugIf(this.debug, `x-action-activator:  ${this.parent?.url || ''} Activating [${this.activate}~{topic: ${action?.topic}, command:${action?.command}, data: ${dataString}}]`)
+      debugIf(
+        this.debug,
+        `x-action-activator:  ${this.parent?.url || ''} Activating [${this.activate}~{topic: ${
+          action?.topic
+        }, command:${action?.command}, data: ${dataString}}]`,
+      )
 
       actionBus.emit(action.topic, action)
     })
@@ -97,7 +102,9 @@ export class XActionActivator {
       const dataString = JSON.stringify(action.data)
       debugIf(
         this.debug,
-        `x-action-activator: ${this.parent?.url || ''} registered [${this.activate}~{topic: ${action?.topic}, command:${action?.command}, data: ${dataString}}}] `,
+        `x-action-activator: ${this.parent?.url || ''} registered [${this.activate}~{topic: ${action?.topic}, command:${
+          action?.command
+        }, data: ${dataString}}}] `,
       )
       this.actions.push(action)
     })
@@ -112,7 +119,12 @@ export class XActionActivator {
       } else {
         debugIf(this.debug, `x-action-activator: element found ${element.nodeName}`)
         element.addEventListener(this.targetEvent, async () => {
-          debugIf(this.debug, `x-action-activator: ${this.parent?.url || ''} received ${element?.nodeName || ''} ${this.targetEvent} event`)
+          debugIf(
+            this.debug,
+            `x-action-activator: ${this.parent?.url || ''} received ${element?.nodeName || ''} ${
+              this.targetEvent
+            } event`,
+          )
           await this.activateActions()
         })
       }

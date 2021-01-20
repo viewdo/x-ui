@@ -6,25 +6,35 @@
 </x-use>
 <div class="container container-fluid mx-auto">
   <h1>Guided Presentations</h1>
-  <p class="lead">These components provide powerful ways to declaratively
-    present a series of pages as a workflow, wizard, interactive video or
-    tutorial.</p>
+  <p class="lead">
+    These components provide powerful ways to declaratively present a series of
+    pages as a workflow, wizard, interactive
+    video or tutorial.
+  </p>
 
-  <div
-       style="display: flex; flex-direction: row; flex-flow: nowrap; gap: 0.3em">
-    <a href="/presentations/guided/demo" class="btn btn-info text-white"
-       style="display: table-cell">
+  <p>[intro]</p>
+
+  <h2>How it Works</h2>
+  <p></p>
+
+  <h3>Example</h3>
+  <p></p>
+
+  <h3>Learn More</h3>
+  <p></p>
+
+
+  <div class="button-nav">
+    <a href="/presentations/guided/demo" class="btn btn-info text-white">
       <i class="ri-rest-time-line d-none d-sm-inline"></i>
       Demo
     </a>
   </div>
 
-  <div class="x-nav-bottom">
-    <a slot="start" href="/content">
-      <button class="btn btn-light btn-lg">&lt; Content</button>
+  <footer>
+    <a slot="start" href="/content" class="btn btn-light btn-lg">&lt; Content
     </a>
-    <a slot="end" href="/actions">
-      <button class="btn btn-primary btn-lg">Actions &gt;</button>
+    <a slot="end" href="/actions" class="btn btn-primary btn-lg">Actions &gt;
     </a>
-  </div>
+  </footer>
 </div>

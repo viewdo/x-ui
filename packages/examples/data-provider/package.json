@@ -24,7 +24,7 @@
     "generate": "stencil generate"
   },
   "dependencies": {
-    "@viewdo/x-ui": "0.1.0"
+    "@viewdo/x-ui": "file:../../core"
   },
   "devDependencies": {
     "@stencil/core": "^2.0.1"

@@ -1,15 +1,16 @@
-import { Component, Element, h, Prop, State } from '@stencil/core'
-import { eventBus, MatchResults, RouterService, ROUTE_EVENTS } from '../..'
+import { Component, Element, forceUpdate, h, Host, Prop, State } from '@stencil/core'
+import { debugIf, eventBus, MatchResults, RouterService, ROUTE_EVENTS } from '../..'
 
 /**
  *  @system navigation
  */
 @Component({
   tag: 'x-link',
-  shadow: false,
+  styleUrl: 'x-link.scss',
+  shadow: true,
 })
 export class XViewLink {
-  private subscription!: () => void
+  private subscriptionDispose!: () => void
   @Element() el!: HTMLXLinkElement
   @State() match?: MatchResults | null
 
@@ -18,86 +19,51 @@ export class XViewLink {
   }
 
   /**
-   *
+   * The destination route for this link
    */
   @Prop({ mutable: true }) href!: string
 
   /**
-   *
+   * The class to add when this HREF is active
+   * in the browser
    */
   @Prop() activeClass = 'link-active'
 
   /**
-   *
+   * Only active on the exact href match
+   * no not on child routes
    */
-  @Prop() exact = false
+  @Prop() exact = true
 
   /**
-   *
+   * Only active on the exact href match
+   * using every aspect of the URL.
    */
   @Prop() strict = true
 
   /**
    *
    */
-  @Prop() custom = 'a'
+  @Prop() debug = false
 
-  /**
-   *
-   */
-  @Prop() anchorClass?: string
-
-  /**
-   *
-   */
-  @Prop() anchorRole?: string
-
-  /**
-   *
-   */
-  @Prop() anchorTitle?: string
-
-  /**
-   *
-   */
-  @Prop() anchorTabIndex?: string
-
-  /**
-   *
-   */
-  @Prop() anchorId?: string
-
-  /**
-   *
-   */
-  @Prop() ariaHaspopup?: string
-
-  /**
-   *
-   */
-  @Prop() ariaPosinset?: string
-
-  /**
-   *
-   */
-  @Prop() ariaSetsize?: number
-
-  /**
-   *
-   */
-  @Prop() ariaLabel?: string
 
   get parentUrl() {
     return this.el.closest('x-view-do')?.url || this.el.closest('x-view')?.url
   }
 
   componentWillLoad() {
-    this.subscription = eventBus.on(ROUTE_EVENTS.RouteChanged, () => {
-      this.match = this.router?.matchPath({
+    this.subscriptionDispose = eventBus.on(ROUTE_EVENTS.RouteChanged, () => {
+      const match = this.router!.matchPath({
         path: this.href,
         exact: this.exact,
         strict: this.strict,
       })
+
+      if (this.match != match) {
+        debugIf(this.debug, `x-link: ${this.href} FORCING CHANGE`)
+        forceUpdate(this)
+      }
+      this.match = match
     })
     this.match = this.router?.matchPath({
       path: this.href,
@@ -118,42 +84,35 @@ export class XViewLink {
   }
 
   disconnectedCallback() {
-    this.subscription?.call(this)
+    this.subscriptionDispose?.call(this)
   }
 
   // Get the URL for this route link without the root from the router
   render() {
-    let anchorAttributes: Record<string, any> = {
-      class: {
+    debugIf(this.debug, `x-link: ${this.href} matched: ${this.match != null}`)
+
+    const classes = {
         [this.activeClass]: this.match !== null,
-      },
-      onClick: this.handleClick.bind(this),
+        [this.el.className]: true
     }
 
-    if (this.anchorClass) {
-      anchorAttributes.class[this.anchorClass] = true
-    }
-
-    if (this.custom === 'a') {
-      anchorAttributes = {
-        ...anchorAttributes,
-        'href': this.href,
-        'title': this.anchorTitle,
-        'role': this.anchorRole,
-        'tabindex': this.anchorTabIndex,
-        'aria-haspopup': this.ariaHaspopup,
-        'id': this.anchorId,
-        'aria-posinset': this.ariaPosinset,
-        'aria-setsize': this.ariaSetsize,
-        'aria-label': this.ariaLabel,
-        'x-link-attached': '',
-      }
+    let anchorAttributes: Record<string, any> = {
+      title: this.el.title,
+      role: this.el.getAttribute('aria-role'),
+      tabindex: this.el.tabIndex,
+      id: this.el.id,
+      class: classes
     }
 
     return (
-      <this.custom {...anchorAttributes}>
-        <slot />
-      </this.custom>
+      <Host onClick={(e:MouseEvent) => this.handleClick(e)}>
+        <a href={this.href} title={this.el.title}
+          {...anchorAttributes} part="anchor"
+            x-link-attached
+          onClick={(e:MouseEvent) => this.handleClick(e)}>
+          <slot />
+        </a>
+      </Host>
     )
   }
 }

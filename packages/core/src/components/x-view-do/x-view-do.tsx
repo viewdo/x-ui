@@ -1,4 +1,4 @@
-import { Component, Element, h, Host, Prop, State, Watch } from '@stencil/core'
+import { Component, Element, h, Host, Prop, State } from '@stencil/core'
 import {
   ActionActivationStrategy,
   actionBus,
@@ -69,19 +69,6 @@ export class XViewDo {
    *
    */
   @Prop() url!: string
-
-  @Watch('url')
-  validatePath(newValue: string, _oldValue: string) {
-    const isBlank = typeof newValue !== 'string' || newValue === ''
-    const has2chars = typeof newValue === 'string' && newValue.length >= 2
-    if (isBlank) {
-      throw new Error('url: required')
-    }
-
-    if (!has2chars) {
-      throw new Error('url: too short')
-    }
-  }
 
   /**
    * The url for this route should only be matched
@@ -301,6 +288,7 @@ export class XViewDo {
   }
 
   private async resolveChildren() {
+    // TODO: Clean-up and move to testable service
     debugIf(this.debug, `x-view-do: ${this.url} resolve children called`)
 
     // Attach next
@@ -322,10 +310,10 @@ export class XViewDo {
           this.next(element.localName, 'clicked', route)
         })
       }
-
       element.removeAttribute('x-link')
     })
 
+    // TODO: Add attributes to ensure only a single event listener is attached
     this.el.querySelectorAll('a[href]').forEach((element) => {
       element.addEventListener('click', (e) => {
         e.preventDefault()
@@ -334,7 +322,6 @@ export class XViewDo {
       })
     })
 
-    // Attach back
     this.el.querySelectorAll('[x-back]').forEach((element) => {
       element.addEventListener('click', (e) => {
         e.preventDefault()
@@ -344,11 +331,16 @@ export class XViewDo {
     })
 
     // Activate on-enter actions
-    this.actionActivators.filter((activator) => activator.activate === ActionActivationStrategy.OnEnter).forEach(async (activator) => activator.activateActions())
+    this.actionActivators
+      .filter((activator) => activator.activate === ActionActivationStrategy.OnEnter)
+      .forEach(async (activator) => activator.activateActions())
 
     // Capture timed nodes
     this.timedNodes = this.captureElementChildTimedNodes(this.duration)
-    debugIf(this.debug && this.timedNodes.length > 0, `x-view-do: ${this.url} found time-child nodes: ${JSON.stringify(this.timedNodes)}`)
+    debugIf(
+      this.debug && this.timedNodes.length > 0,
+      `x-view-do: ${this.url} found time-child nodes: ${JSON.stringify(this.timedNodes)}`,
+    )
   }
 
   private async setupTimer() {
@@ -493,12 +485,18 @@ export class XViewDo {
         debugIf(debug, `x-view-do: node ${node.element.id} is after start: ${node.start} before end: ${node.end}`)
         // Time is after start and before end, if it exists
         if (node.classIn && !node.element.classList.contains(node.classIn)) {
-          debugIf(debug, `x-view-do: node ${node.element.id} is after start: ${node.start} before end: ${node.end} [adding classIn: ${node.classIn}]`)
+          debugIf(
+            debug,
+            `x-view-do: node ${node.element.id} is after start: ${node.start} before end: ${node.end} [adding classIn: ${node.classIn}]`,
+          )
           node.element.classList.add(node.classIn)
         }
 
         if (node.element.hasAttribute('hidden')) {
-          debugIf(debug, `x-view-do: node ${node.element.id} is after start: ${node.start} before end: ${node.end} [removing hidden attribute]`)
+          debugIf(
+            debug,
+            `x-view-do: node ${node.element.id} is after start: ${node.start} before end: ${node.end} [removing hidden attribute]`,
+          )
           // Otherwise, if there's a hidden attribute, remove it
           node.element.removeAttribute('hidden')
         }
@@ -508,7 +506,10 @@ export class XViewDo {
         // Time is after end, if it exists
         debugIf(debug, `x-view-do: node ${node.element.id} is after end: ${node.end}`)
         if (node.classIn && node.element.classList.contains(node.classIn)) {
-          debugIf(debug, `x-view-do: node ${node.element.id} is after end: ${node.end}  [removing classIn: ${node.classIn}]`)
+          debugIf(
+            debug,
+            `x-view-do: node ${node.element.id} is after end: ${node.end}  [removing classIn: ${node.classIn}]`,
+          )
           // Remove the in class, if it exists
           node.element.classList.remove(node.classIn)
         }
@@ -516,7 +517,10 @@ export class XViewDo {
         if (node.classOut) {
           // If a class-out was specified and isn't on the element, add it
           if (!node.element.classList.contains(node.classOut)) {
-            debugIf(debug, `x-view-do: node ${node.element.id} is after end: ${node.end} [adding classOut: ${node.classOut}]`)
+            debugIf(
+              debug,
+              `x-view-do: node ${node.element.id} is after end: ${node.end} [adding classOut: ${node.classOut}]`,
+            )
             node.element.classList.add(node.classOut)
           }
         } else if (!node.element.hasAttribute('hidden')) {

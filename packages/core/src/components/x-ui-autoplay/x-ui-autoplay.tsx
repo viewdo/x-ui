@@ -7,11 +7,18 @@ import { onInterfaceChange } from '../../services'
   shadow: false,
 })
 export class XUiAutoplay {
-  slider?: HTMLInputElement
+  private slider?: HTMLInputElement
   private muteSubscription!: () => void
   @State() autoPlay = true
 
+  /**
+   *
+   */
   @Prop() classes?: string
+
+  /**
+   *
+   */
   @Prop() inputId?: string
 
   componentWillLoad() {

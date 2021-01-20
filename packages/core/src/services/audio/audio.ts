@@ -9,7 +9,12 @@ export class AudioTrack extends AudioInfo {
   private readonly sound: Howl
   events: EventEmitter = new EventEmitter()
 
-  static createSound = (audio: AudioInfo, onload?: () => void, onend?: () => void, onerror?: (id: number, error: any) => void) => {
+  static createSound = (
+    audio: AudioInfo,
+    onload?: () => void,
+    onend?: () => void,
+    onerror?: (id: number, error: any) => void,
+  ) => {
     const { loop, src, type } = audio
     debug(`Loading howl: ${src}`)
     return new Howl({

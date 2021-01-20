@@ -33,6 +33,18 @@ export class XAction implements IActionElement {
   /**
    * Get the underlying actionEvent instance. Used by the x-action-activator element.
    */
+
+  /**
+   * Get the underlying actionEvent instance. Used by the x-action-activator element.
+   */
+
+  /**
+   * Get the underlying actionEvent instance. Used by the x-action-activator element.
+   */
+
+  /**
+   * Get the underlying actionEvent instance. Used by the x-action-activator element.
+   */
   @Method()
   async getAction(): Promise<EventAction<any> | null> {
     if (!this.topic) {

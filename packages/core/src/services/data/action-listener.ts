@@ -2,7 +2,15 @@ import { EventAction, IEventActionListener, IEventEmitter } from '../actions'
 import { interfaceState } from '../interface/state'
 import { debugIf, warn } from '../logging'
 import { storageAvailable } from '../routing/utils/browser-utils'
-import { DataProviderRegistration, DATA_COMMANDS, DATA_EVENTS, DATA_PROVIDER, DATA_TOPIC, IDataProvider, SetData } from './interfaces'
+import {
+  DataProviderRegistration,
+  DATA_COMMANDS,
+  DATA_EVENTS,
+  DATA_PROVIDER,
+  DATA_TOPIC,
+  IDataProvider,
+  SetData,
+} from './interfaces'
 import { addDataProvider, getDataProvider } from './providers/factory'
 import { SessionProvider } from './providers/session'
 import { StorageProvider } from './providers/storage'

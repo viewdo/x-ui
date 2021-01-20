@@ -7,7 +7,6 @@ import { interfaceState } from '../..'
   shadow: true,
 })
 export class XUiTheme {
-  slider?: HTMLInputElement
   @State() dark!: boolean
 
   componentWillLoad() {
@@ -39,9 +38,6 @@ export class XUiTheme {
           <input
             aria-label="Change Theme"
             type="checkbox"
-            ref={(e) => {
-              this.slider = e
-            }}
             onChange={() => this.toggleDarkTheme()}
             id="slider"
             checked={!this.dark}

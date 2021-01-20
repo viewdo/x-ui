@@ -1,5 +1,15 @@
-import { Component, Element, h, Host, Prop, State } from '@stencil/core'
-import { DATA_EVENTS, eventBus, resolveChildElements, resolveExpression, RouterService, ROUTE_EVENTS, warn } from '../..'
+import { Component, Element, h, Host, Prop, State } from '@stencil/core';
+import {
+  DATA_EVENTS,
+  eventBus,
+  resolveChildElements,
+  resolveExpression,
+  RouterService,
+  ROUTE_EVENTS,
+  warn,
+  wrapFragment
+} from '../..';
+import { createKey } from '../../services/routing/utils/location-utils';
 
 /**
  *  @system content
@@ -9,6 +19,7 @@ import { DATA_EVENTS, eventBus, resolveChildElements, resolveExpression, RouterS
   shadow: false,
 })
 export class XInclude {
+  private contentKey!: string
   private dataSubscription!: () => void
   private routeSubscription!: () => void
 
@@ -32,6 +43,8 @@ export class XInclude {
   }
 
   async componentWillLoad() {
+    this.contentKey = `dynamic-content-${createKey(10)}`
+
     this.dataSubscription = eventBus.on(DATA_EVENTS.DataChanged, async () => {
       await this.resolveContent()
     })
@@ -39,16 +52,15 @@ export class XInclude {
     this.routeSubscription = eventBus.on(ROUTE_EVENTS.RouteChanged, async () => {
       await this.resolveContent()
     })
-  }
 
-  async componentWillRender() {
     await this.resolveContent()
   }
 
-  async componentDidRender() {
-    if (this.router) {
-      await resolveChildElements(this.el, this.router, location.href)
-    }
+
+
+   private resetContent() {
+    const remoteContent = this.el.querySelector(`#${this.contentKey}`)
+    remoteContent?.remove()
   }
 
   private async resolveContent() {
@@ -70,20 +82,27 @@ export class XInclude {
     }
   }
 
+  async componentWillRender() {
+    if (this.content) {
+      this.resetContent();
+      let innerContent = `${this.content || ''}`;
+      const content = wrapFragment(innerContent, 'content', this.contentKey)
+      this.el.append(content)
+    }
+  }
+
+  async componentDidRender() {
+    if (this.router) {
+      await resolveChildElements(this.el, this.router, location.href)
+    }
+  }
+
   disconnectedCallback() {
     this.dataSubscription()
     this.routeSubscription()
   }
 
   render() {
-    if (this.content) {
-      return (
-        <Host>
-          <div innerHTML={this.content}></div>
-        </Host>
-      )
-    }
-
-    return <Host hidden></Host>
+    return <Host><slot name="content" /></Host>
   }
 }

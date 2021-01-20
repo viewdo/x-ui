@@ -2,7 +2,7 @@ import { EventEmitter } from '../../actions/event-emitter'
 import { DATA_EVENTS, IDataProvider } from '../interfaces'
 
 export class InMemoryProvider implements IDataProvider {
-  data: Record<string, any> = {}
+  data: { [index: string]: any } = {}
   constructor() {
     this.changed = new EventEmitter()
   }

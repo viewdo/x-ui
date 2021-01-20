@@ -23,7 +23,12 @@ export const storageAvailable = (win: any, type: 'localStorage' | 'sessionStorag
 export const supportsHistory = (win: Window) => {
   const ua = win.navigator.userAgent
 
-  if ((ua.includes('Android 2.') || ua.includes('Android 4.0')) && ua.includes('Mobile Safari') && !ua.includes('Chrome') && !ua.includes('Windows Phone')) {
+  if (
+    (ua.includes('Android 2.') || ua.includes('Android 4.0')) &&
+    ua.includes('Mobile Safari') &&
+    !ua.includes('Chrome') &&
+    !ua.includes('Windows Phone')
+  ) {
     return false
   }
 

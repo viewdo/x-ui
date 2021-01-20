@@ -15,7 +15,11 @@ export class AudioActionListener {
   public readonly queued: Record<string, AudioTrack[]>
   public readonly loaded: Record<string, AudioTrack[]>
 
-  constructor(private readonly eventBus: EventEmitter, private readonly actionBus: EventEmitter, private readonly debug: boolean = false) {
+  constructor(
+    private readonly eventBus: EventEmitter,
+    private readonly actionBus: EventEmitter,
+    private readonly debug: boolean = false,
+  ) {
     this.events = new EventEmitter()
 
     this.actionSubscription = this.actionBus.on(AUDIO_TOPIC, (ev: EventAction<any>) => {
@@ -51,7 +55,12 @@ export class AudioActionListener {
   }
 
   public hasAudio(): boolean {
-    return this.queued[AudioType.Music].length > 0 || this.queued[AudioType.Sound].length > 0 || this.loaded[AudioType.Music].length > 0 || this.loaded[AudioType.Sound].length > 0
+    return (
+      this.queued[AudioType.Music].length > 0 ||
+      this.queued[AudioType.Sound].length > 0 ||
+      this.loaded[AudioType.Music].length > 0 ||
+      this.loaded[AudioType.Sound].length > 0
+    )
   }
 
   public events: EventEmitter

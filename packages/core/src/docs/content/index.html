@@ -5,52 +5,58 @@
        script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
 </x-use>
 <div class="container container-fluid mx-auto">
-  <ul class="list-group btn-group-xl float-end ms-3 mt-2 d-none d-sm-block">
-    <li class="list-group-item fw-bold">Content Components</li>
-    <x-data-repeat items-src="/data/x-components.json"
-                   filter="components[docsTags[text='content']]">
-      <template>
-        <li class="list-group-item">
-          <a href="/components/{data:tag}?group=content">
-            <h5>&lt;{data:tag}&gt;</h5>
-          </a>
-        </li>
-      </template>
-    </x-data-repeat>
-  </ul>
-
   <h1>Dynamic Content</h1>
-  <p class="lead">These components provide powerful ways to declaratively use or
-    render HTML dynamically without complicated scripting or a framework.</p>
-
-  <h3>Displaying HTML Fragments</h3>
+  <p class="lead">
+    These components provide powerful ways to declaratively use or render HTML
+    dynamically without complicated scripting
+    or a framework.
+  </p>
+  <h2>How it works</h2>
   <p></p>
-  <a href="/content/include" class="btn btn-info text-white ">
-    Include Remote HTML </a>
 
-  <h3>Displaying Markdown</h3>
+  <h3>Simple Example</h3>
   <p></p>
-  <a href="/content/markdown" class="btn btn-info text-white ">
-    Include Markdown </a>
-
-  <h3>Declaring Dependencies</h3>
-  <p></p>
-  <a href="/content/use" class="btn btn-info text-white "> Data
-    Expressions & Predicates
-  </a>
-
-  <h3>Displaying Data</h3>
-  <p></p>
-  <a href="/content/data" class="btn btn-info text-white "> Data
-    Templates </a>
-
-  <div class="x-nav-bottom">
-    <a slot="start" href="/routing">
-      <button class="btn btn-light btn-lg">&lt; Routing</button>
-    </a>
-    <a slot="end" href="/presentations">
-      <button class="btn btn-primary btn-lg">Presentations
-        &gt;</button>
-    </a>
+  <div>
+    <a href="/docs/routing/examples/simple.html" target="_blank"
+       class="btn btn-secondary float-end">
+      <i class="ri-external-link-line"></i>
+      Visit Demo</a>
+    <button class="btn btn-light" type="button" data-bs-toggle="collapse"
+            data-bs-target="#loadSource" aria-expanded="false"
+            aria-controls="loadSource">
+      <i class="ri-code-s-slash-line"></i>
+      View Source
+    </button>
   </div>
+  <div class="collapse" id="loadSource">
+    <x-markdown>
+      <script type="text/markdown">
+        </script>
+    </x-markdown>
+  </div>
+
+  <h3 style="clear:right">Advanced Dynamic Content</h3>
+  <p></p>
+  <div class="button-nav">
+    <a href="/content/include" class="btn btn-info text-white">
+      Include Remote HTML </a>
+
+    <a href="/content/markdown" class="btn btn-info text-white">
+      Include Markdown
+    </a>
+    <a href="/content/use" class="btn btn-info text-white">
+      Data Expressions & Predicates </a>
+
+    <a href="/content/data" class="btn btn-info text-white">
+      Data Templates </a>
+  </div>
+
+  <footer>
+    <a slot="start" href="/navigation" class="btn btn-light btn-lg">
+      &lt; Navigation
+    </a>
+    <a slot="end" href="/content/data" class="btn btn-primary btn-lg">
+      Data Binding &gt;
+    </a>
+  </footer>
 </div>

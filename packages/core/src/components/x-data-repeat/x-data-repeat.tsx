@@ -152,7 +152,10 @@ export class XDataRepeat {
     } else if (this.items) {
       await this.resolveItemsExpression()
     } else {
-      warnIf(this.debug, 'x-data-repeat: you must include at least one of the following: items, json-src or a <script> element with a JSON array.')
+      warnIf(
+        this.debug,
+        'x-data-repeat: you must include at least one of the following: items, json-src or a <script> element with a JSON array.',
+      )
     }
 
     // DebugIf(this.debug, `x-data-repeat: innerItems ${JSON.stringify(this.resolvedItems || [])}`);

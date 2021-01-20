@@ -2,12 +2,12 @@
   "default": true,
   "line-length": false,
   "no-trailing-punctuation": {
-     "punctuation": ".,;:"
+    "punctuation": ".,;:"
   },
   "list-marker-space": false,
   "no-multiple-blanks": false,
   "no-duplicate-header": {
-     "allow_different_nesting": true,
-     "siblings_only": true
+    "allow_different_nesting": true,
+    "siblings_only": true
   }
 }

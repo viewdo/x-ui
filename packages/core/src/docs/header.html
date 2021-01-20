@@ -1,17 +1,12 @@
 <div class="collapse navbar-collapse" id="navbarSupportedContent">
   <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-    <li class="nav-item d-none d-md-block">
-      <x-link class="nav-link" active-class="hide" href="/start">
-        <h2>Get Started</h2>
-      </x-link>
-    </li>
     <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" href="#" id="navbarGuidesDropdown" role="button" data-bs-toggle="dropdown"
-         aria-expanded="false">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarGuidesDropdown"
+         role="button" data-bs-toggle="dropdown" aria-expanded="false">
         <h2>Guides</h2>
       </a>
       <ul class="dropdown-menu" aria-labelledby="navbarGuidesDropdown">
-        <li class="dropdown-item d-sm-block d-md-none">
+        <li class="dropdown-item">
           <x-link href="/start">
             <i class="ri-rocket-line"></i>
             Get Started
@@ -36,7 +31,7 @@
           </x-link>
         </li>
         <li class="dropdown-item">
-          <x-link href="/use-data">
+          <x-link href="/content/data">
             <i class="ri-database-2-line"></i>
             Data Binding
           </x-link>
@@ -74,19 +69,20 @@
         </li>
       </ul>
     </li>
-    <li
-        class="nav-item dropdown"
+    <li class="nav-item dropdown"
         data-intro="The <b>x-data-repeat</b> element rendered this list from a remote JSON data-source. <br/><br/> Check out the <a href='components/x-data-repeat'>documentation</a> to see what else you can do.">
-      <a class="nav-link dropdown-toggle" href="#" id="navbarComponentsDropdown" role="button" data-bs-toggle="dropdown"
-         aria-expanded="false">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarComponentsDropdown"
+         role="button" data-bs-toggle="dropdown" aria-expanded="false">
         <h2>Components</h2>
       </a>
       <ul class="dropdown-menu" aria-labelledby="navbarComponentsDropdown">
         <li class="dropdown-item-text fw-bold">Routing</li>
-        <x-data-repeat items-src="/data/x-components.json" filter="components[docsTags[text='routing']]">
+        <x-data-repeat items-src="/data/components.json"
+                       filter="components[docsTags[text='routing']]">
           <template>
             <li class="dropdown-item">
-              <x-link href="/components/{data:tag}?group=routing"> &lt;{data:tag}&gt; </x-link>
+              <x-link href="/components/{data:tag}?group=routing">
+                &lt;{data:tag}&gt; </x-link>
             </li>
           </template>
         </x-data-repeat>
@@ -94,10 +90,12 @@
           <hr class="dropdown-divider" />
         </li>
         <li class="dropdown-item-text fw-bold">Content</li>
-        <x-data-repeat items-src="/data/x-components.json" filter="components[docsTags[text='content']]">
+        <x-data-repeat items-src="/data/components.json"
+                       filter="components[docsTags[text='content']]">
           <template>
             <li class="dropdown-item">
-              <x-link href="/components/{data:tag}?group=content"> &lt;{data:tag}&gt; </x-link>
+              <x-link href="/components/{data:tag}?group=content">
+                &lt;{data:tag}&gt; </x-link>
             </li>
           </template>
         </x-data-repeat>
@@ -105,10 +103,12 @@
           <hr class="dropdown-divider" />
         </li>
         <li class="dropdown-item-text fw-bold">Embedded Data</li>
-        <x-data-repeat items-src="/data/x-components.json" filter="components[docsTags[text='data']]">
+        <x-data-repeat items-src="/data/components.json"
+                       filter="components[docsTags[text='data']]">
           <template>
             <li class="dropdown-item">
-              <x-link href="/components/{data:tag}?group=data"> &lt;{data:tag}&gt; </x-link>
+              <x-link href="/components/{data:tag}?group=data">
+                &lt;{data:tag}&gt; </x-link>
             </li>
           </template>
         </x-data-repeat>
@@ -116,10 +116,12 @@
           <hr class="dropdown-divider" />
         </li>
         <li class="dropdown-item-text fw-bold">Event Actions</li>
-        <x-data-repeat items-src="/data/x-components.json" filter="components[docsTags[text='actions']]">
+        <x-data-repeat items-src="/data/components.json"
+                       filter="components[docsTags[text='actions']]">
           <template>
             <li class="dropdown-item">
-              <x-link href="/components/{data:tag}?group=actions"> &lt;{data:tag}&gt; </x-link>
+              <x-link href="/components/{data:tag}?group=actions">
+                &lt;{data:tag}&gt; </x-link>
             </li>
           </template>
         </x-data-repeat>
@@ -127,10 +129,12 @@
           <hr class="dropdown-divider" />
         </li>
         <li class="dropdown-item-text fw-bold">Audio</li>
-        <x-data-repeat items-src="/data/x-components.json" filter="components[docsTags[text='audio']]">
+        <x-data-repeat items-src="/data/components.json"
+                       filter="components[docsTags[text='audio']]">
           <template>
             <li class="dropdown-item">
-              <x-link href="/components/{data:tag}?group=audio"> &lt;{data:tag}&gt; </x-link>
+              <x-link href="/components/{data:tag}?group=audio">
+                &lt;{data:tag}&gt; </x-link>
             </li>
           </template>
         </x-data-repeat>

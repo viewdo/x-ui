@@ -6,8 +6,7 @@
     "editorconfig.editorconfig",
     "streetsidesoftware.code-spell-checker",
     "orta.vscode-jest",
-    "samverschueren.linter-xo",
-    "bryan-chen.linter-xo-2",
-    "ldez.ignore-files"
+    "ldez.ignore-files",
+    "dbaeumer.vscode-eslint"
   ]
 }

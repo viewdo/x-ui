@@ -11,7 +11,10 @@ import { createScrollHistory } from './scroll-history'
 import { createTransitionManager } from './transition-manager'
 
 export interface CreateBrowserHistoryOptions {
-  getUserConfirmation?: (message: string, callback: (confirmed: boolean) => Record<string, unknown>) => Record<string, unknown>
+  getUserConfirmation?: (
+    message: string,
+    callback: (confirmed: boolean) => Record<string, unknown>,
+  ) => Record<string, unknown>
   forceRefresh?: boolean
   keyLength?: number
   basename?: string
@@ -216,7 +219,10 @@ export function createBrowserHistory(win: Window, props: CreateBrowserHistoryOpt
           setState({ action, location })
         }
       } else {
-        warnIf(state === undefined, 'Browser history cannot replace state in browsers that do not support HTML5 history')
+        warnIf(
+          state === undefined,
+          'Browser history cannot replace state in browsers that do not support HTML5 history',
+        )
 
         globalLocation.replace(href)
       }

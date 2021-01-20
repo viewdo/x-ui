@@ -43,7 +43,7 @@ describe('x-action-activator', () => {
       command = e.command
     })
 
-    await activator.activateActions()
+    await activator?.activateActions()
 
     expect(command).toBe('pass')
   })
@@ -69,13 +69,13 @@ describe('x-action-activator', () => {
       command = e.command
     })
 
-    button.click()
+    button?.click()
 
     await sleep(100)
 
     expect(command).toBe('pass')
 
-    button.click()
+    button?.click()
   })
 
   it('captures child element event no selector', async () => {
@@ -99,7 +99,7 @@ describe('x-action-activator', () => {
       command = e.command
     })
 
-    link.click()
+    link?.click()
 
     await sleep(100)
 
@@ -121,7 +121,7 @@ describe('x-action-activator', () => {
 
     expect(action).not.toBeNull()
 
-    const event = action.getAction()
+    const event = action?.getAction()
 
     expect(event).not.toBeNull()
   })
@@ -144,12 +144,12 @@ describe('x-action-activator', () => {
 
     expect(action).not.toBeNull()
 
-    const event = await action.getAction()
+    const event = await action?.getAction()
 
     expect(event).not.toBeNull()
 
-    expect(event.topic).toBe('test')
-    expect(event.command).toBe('feed-me')
-    expect(event.data.name).toBe('willy')
+    expect(event?.topic).toBe('test')
+    expect(event?.command).toBe('feed-me')
+    expect(event?.data.name).toBe('willy')
   })
 })

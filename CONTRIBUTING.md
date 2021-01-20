@@ -1,3 +1,29 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [Contributing](#contributing)
+  - [Code of Conduct](#code-of-conduct)
+  - [How can I contribute?](#how-can-i-contribute)
+    - [Improve documentation](#improve-documentation)
+    - [Give feedback on issues](#give-feedback-on-issues)
+    - [Fix bugs and implement features](#fix-bugs-and-implement-features)
+  - [Using the issue tracker](#using-the-issue-tracker)
+    - [Bug report](#bug-report)
+    - [Feature request](#feature-request)
+    - [New plugin request](#new-plugin-request)
+  - [Submitting a Pull Request](#submitting-a-pull-request)
+  - [Coding rules](#coding-rules)
+    - [Source code](#source-code)
+    - [Documentation](#documentation)
+    - [Commit message guidelines](#commit-message-guidelines)
+  - [Working with the code](#working-with-the-code)
+    - [Set up the workspace](#set-up-the-workspace)
+    - [Lint](#lint)
+    - [Tests](#tests)
+    - [Commits](#commits)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 <!-- markdownlint-disable MD029 -->
 
 # Contributing

@@ -215,19 +215,22 @@ export namespace Components {
         "src": string;
     }
     interface XLink {
+        /**
+          * The class to add when this HREF is active in the browser
+         */
         "activeClass": string;
-        "anchorClass"?: string;
-        "anchorId"?: string;
-        "anchorRole"?: string;
-        "anchorTabIndex"?: string;
-        "anchorTitle"?: string;
-        "ariaHaspopup"?: string;
-        "ariaLabel"?: string;
-        "ariaPosinset"?: string;
-        "ariaSetsize"?: number;
-        "custom": string;
+        "debug": boolean;
+        /**
+          * Only active on the exact href match no not on child routes
+         */
         "exact": boolean;
+        /**
+          * The destination route for this link
+         */
         "href": string;
+        /**
+          * Only active on the exact href match using every aspect of the URL.
+         */
         "strict": boolean;
     }
     interface XMarkdown {
@@ -335,6 +338,9 @@ export namespace Components {
           * The title for this view. This is prefixed before the app title configured in x-ui
          */
         "pageTitle": string;
+        /**
+          * The router-service instance  (internal)
+         */
         "router": RouterService;
         /**
           * Header height or offset for scroll-top on this view.
@@ -744,19 +750,22 @@ declare namespace LocalJSX {
         "src": string;
     }
     interface XLink {
+        /**
+          * The class to add when this HREF is active in the browser
+         */
         "activeClass"?: string;
-        "anchorClass"?: string;
-        "anchorId"?: string;
-        "anchorRole"?: string;
-        "anchorTabIndex"?: string;
-        "anchorTitle"?: string;
-        "ariaHaspopup"?: string;
-        "ariaLabel"?: string;
-        "ariaPosinset"?: string;
-        "ariaSetsize"?: number;
-        "custom"?: string;
+        "debug"?: boolean;
+        /**
+          * Only active on the exact href match no not on child routes
+         */
         "exact"?: boolean;
+        /**
+          * The destination route for this link
+         */
         "href": string;
+        /**
+          * Only active on the exact href match using every aspect of the URL.
+         */
         "strict"?: boolean;
     }
     interface XMarkdown {
@@ -872,6 +881,9 @@ declare namespace LocalJSX {
           * The title for this view. This is prefixed before the app title configured in x-ui
          */
         "pageTitle"?: string;
+        /**
+          * The router-service instance  (internal)
+         */
         "router": RouterService;
         /**
           * Header height or offset for scroll-top on this view.

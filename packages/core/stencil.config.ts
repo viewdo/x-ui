@@ -8,7 +8,6 @@ const config: Config = {
   plugins: [sass()],
   preamble: 'view.DO 2021',
   hashFileNames: false,
-  enableCache: false,
   devServer: {
     openBrowser: false,
     reloadStrategy: 'pageReload',
@@ -16,13 +15,8 @@ const config: Config = {
   },
   outputTargets: [
     {
-      type: 'docs-vscode',
-      file: './dist/custom-elements/custom-elements.json',
-    },
-    {
       type: 'dist',
       esmLoaderPath: 'loader',
-      empty: true,
     },
     {
       type: 'dist-custom-elements-bundle',
@@ -30,6 +24,10 @@ const config: Config = {
     {
       type: 'docs-readme',
       footer: 'view.DO : Experience Platform',
+    },
+    {
+      type: 'docs-vscode',
+      file: './dist/custom-elements/custom-elements.json',
     },
     {
       type: 'docs-custom',
@@ -43,7 +41,7 @@ const config: Config = {
     },
     {
       type: 'docs-json',
-      file: '../../www/data/x-components.json',
+      file: '../../www/data/components.json',
     },
   ],
 }
@@ -55,7 +53,11 @@ const wwwOutput: any = {
   empty: true,
   serviceWorker: null,
   copy: [
-    { src: 'docs', dest: './', keepDirStructure: true },
+    {
+      src: 'docs',
+      dest: './',
+      keepDirStructure: true,
+    },
     {
       src: 'docs/*.html',
       dest: './',

@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 
-import { evaluatePredicate, hasExpression, resolveExpression } from '..'
-import { RouterService } from '../routing/router'
+import { evaluatePredicate, hasExpression, resolveExpression } from '..';
+import { RouterService } from '../routing/router';
 
 export type TimedNode = {
   start: number
@@ -17,7 +17,17 @@ export type TimedNode = {
   }
 }
 
-export function wrapFragment(html: string, slot?: string, id?: string): HTMLDivElement {
+export function createElement(content:string):HTMLSpanElement {
+  const span = document.createElement('span')
+  span.innerHTML = content
+  return span
+}
+
+export function wrapFragment(
+  html: string,
+  slot?: string,
+  id?: string,
+  classes?: string): HTMLDivElement {
   const wrapper = document.createElement('div')
   if (slot) {
     wrapper.slot = slot
@@ -25,6 +35,10 @@ export function wrapFragment(html: string, slot?: string, id?: string): HTMLDivE
 
   if (id) {
     wrapper.id = id
+  }
+
+  if (classes) {
+    wrapper.className = classes
   }
 
   wrapper.innerHTML = html
@@ -85,7 +99,8 @@ export async function resolveChildElements(element: HTMLElement, router?: Router
   if (router)
     element.querySelectorAll('a[href]').forEach((el) => {
       const href = el.getAttribute('href')
-      if (!router || !href || el.hasAttribute('x-link-attached')) return
+      if (!href || el.hasAttribute('x-link-attached')) return
+
       const path = router.resolvePathname(href, url)
       if (el.hasAttribute('target')) {
         el.setAttribute('href', path)

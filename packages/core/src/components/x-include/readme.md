@@ -1,12 +1,14 @@
 # X-INCLUDE
 
-This component fetches remote HTML as defined in the src attribute and renders it to the page.
+This component fetches remote HTML and renders it safely and directly into the page when when and where you tell it too, as soon as it renders.
+
+## Usage
 
 ```html
 <x-include src="<url-to-html>"> </x-include>
 ```
 
-## Delayed Rendering
+### Delayed Rendering
 
 When using this component, you may want to delay the fetch until the content is needed. The **no-render** attribute will prevent the HTML from being fetched until that attribute is removed.
 

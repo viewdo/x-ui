@@ -25,16 +25,15 @@
     "--- dev ---": "---------------",
     "display-browser-support": "browserslist --stats && echo '' && browserslist --coverage && echo '' && echo 'See more at https://browserl.ist/'",
     "--- format ---": "---------------",
-    "format": "run-s format:doctoc format:imports format:prettier format:eslint",
+    "format": "run-s format:doctoc format:prettier format:eslint",
     "format:doctoc": "doctoc --maxlevel 3 --notitle ./README.md ./CONTRIBUTING.md",
-    "format:eslint": "xo --fix ./ >/dev/null 2>&1 || true",
-    "format:imports": "import-sort --write '**/*.{ts,tsx}'",
-    "format:prettier": "prettier --write '**/*.{css,html,json,md,mdx,scss,ts,tsx,yaml,yml}'",
+    "format:eslint": "eslint --ext .tsx,.ts --fix packages/** >/dev/null 2>&1 || true",
+    "format:prettier": "prettier --write 'packages/**/*.{css,html,json,md,mdx,scss,yaml,yml}'",
     "--- lint ---": "---------------",
     "lint": "run-p lint:es lint:markdown",
-    "lint:watch": "onchange '**/src/**/*' --initial --kill --delay 1000  -- npm run lint",
-    "lint:es": "xo ",
-    "lint:markdown": "markdownlint  '**/*.md'",
+    "lint:watch": "onchange 'packages/**/src/**/*' --initial --kill --delay 1000  -- npm run lint",
+    "lint:es": "eslint --ext .tsx,.ts packages/**",
+    "lint:markdown": "markdownlint  'packages/**/*.md'",
     "--- publish ---": "---------------",
     "gs:push": "gsutil cp -r ./www gs://viewdo-static/x-ui",
     "--- docker ---": "---------------",
@@ -45,6 +44,11 @@
     "pre:commit": "run-p lint test",
     "--- workspace shortcuts ---": "---------------",
     "ws:core": "yarn workspace @viewdo/x-ui "
+  },
+  "resolutions": {
+    "**/@typescript-eslint/eslint-plugin": "4.13.0",
+    "**/@typescript-eslint/parser": "4.13.0",
+    "**/typescript": "4.1.3"
   },
   "devDependencies": {
     "@babel/core": "7.12.10",
@@ -62,19 +66,17 @@
     "chalk": "4.1.0",
     "doctoc": "2.0.0",
     "eslint": "7.18.0",
+    "eslint-cli": "^1.1.1",
     "eslint-config-airbnb-typescript": "12.0.0",
-    "eslint-config-xo-typescript": "0.37.0",
-    "eslint-formatter-pretty": "4.0.0",
+    "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-eslint-comments": "3.2.0",
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-jest": "24.1.3",
     "eslint-plugin-jsx-a11y": "6.4.1",
+    "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react": "7.22.0",
     "http-proxy-middleware": "1.0.6",
     "husky": "4.3.8",
-    "import-sort-cli": "6.0.0",
-    "import-sort-parser-typescript": "6.0.0",
-    "import-sort-style-module": "6.0.0",
     "jest": "26.6.3",
     "jest-cli": "26.6.3",
     "lint-staged": "10.5.3",
@@ -88,7 +90,6 @@
     "stylelint": "13.8.0",
     "stylelint-config-sass-guidelines": "7.1.0",
     "typescript": "4.1.3",
-    "xo": "0.37.1",
     "yargs": "16.2.0"
   },
   "jest": {
@@ -100,8 +101,7 @@
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
-      "prettier --write",
-      "xo --fix",
+      "eslint --ext .tsx,.ts --fix",
       "git add"
     ],
     "*.json": [
@@ -114,7 +114,7 @@
     ],
     "*.scss": [
       "prettier --write",
-      "stylelint '**/src/**/*.scss' --fix",
+      "stylelint 'packages/**/*.scss' --fix",
       "git add"
     ]
   },
@@ -129,41 +129,5 @@
     "packages/plugins/*",
     "packages/examples/*"
   ],
-  "dependencies": {},
-  "resolutions": {
-    "**/@typescript-eslint/eslint-plugin": "4.13.0",
-    "**/@typescript-eslint/parser": "4.13.0",
-    "**/typescript": "4.1.3"
-  },
-  "xo": {
-    "space": 2,
-    "prettier": true,
-    "rules": {
-      "new-cap": "off",
-      "no-useless-call": "off",
-      "import/no-unassigned-import": "off",
-      "import/extensions": "off",
-      "no-await-in-loop": "off",
-      "no-alert": "off",
-      "max-params": "off",
-      "complexity": "off",
-      "@typescript-eslint/no-extraneous-class": "off",
-      "@typescript-eslint/member-ordering": "off",
-      "@typescript-eslint/no-dynamic-delete": "off",
-      "@typescript-eslint/prefer-nullish-coalescing": "off",
-      "@typescript-eslint/no-confusing-void-expression": "off",
-      "@typescript-eslint/restrict-template-expressions": "off",
-      "@typescript-eslint/no-implicit-any-catch": "off",
-      "@typescript-eslint/prefer-regexp-exec": "off",
-      "unicorn/no-abusive-eslint-disable": "off",
-      "unicorn/prevent-abbreviations": "off",
-      "unicorn/no-array-reduce": "off"
-    }
-  },
-
-  "bolt": {
-    "workspaces": [
-      "packages/*"
-    ]
-  }
+  "dependencies": {}
 }

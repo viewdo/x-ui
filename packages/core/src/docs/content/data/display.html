@@ -13,8 +13,7 @@
 
   <x-data-display>
     <template>
-      <h2>Spirit Animal: <a href="/use-data/storage">{storage:animal}
-        </a>
+      <h2>Spirit Animal: <a href="/content/data/storage">{storage:animal} </a>
       </h2>
     </template>
   </x-data-display>
@@ -55,13 +54,10 @@
   <h2 hidden x-show-when="'{storage:animal}' == 'dog'">I only show up when your
     spirit-animal is 'dog'</h2>
 
-  <div class="x-nav-bottom">
-    <a slot="start" href="/use-data">
-      <button class="btn btn-light btn-lg">&lt; Using Data</button>
-    </a>
-    <a slot="end" href="/use-data/expressions">
-      <button class="btn btn-primary btn-lg">Data Expressions
-        &gt;</button>
-    </a>
-  </div>
+  <footer>
+    <a slot="start" href="/content/data" class="btn btn-light btn-lg"> &lt;
+      Using Data </a>
+    <a slot="end" href="/content/data/expressions"
+       class="btn btn-primary btn-lg"> Data Expressions &gt; </a>
+  </footer>
 </div>

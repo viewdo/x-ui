@@ -7,7 +7,7 @@
 <div class="container container-fluid mx-auto">
   <ul class="list-group btn-group-xl float-end ms-3 mt-2 d-none d-sm-block">
     <li class="list-group-item fw-bold">Content Components</li>
-    <x-data-repeat items-src="/data/x-components.json"
+    <x-data-repeat items-src="/data/components.json"
                    filter="components[docsTags[text='data']]">
       <template>
         <li class="list-group-item">
@@ -20,18 +20,21 @@
   </ul>
 
   <h1>Dynamic Content</h1>
-  <p class="lead">These components provide powerful ways to declaratively use or
-    render HTML dynamically without complicated scripting or a framework.</p>
+  <p class="lead">
+    These components provide powerful ways to declaratively use or render HTML
+    dynamically without complicated scripting
+    or a framework.
+  </p>
 
   <h2>Data Templates</h2>
   <p></p>
 
-  <div class="x-nav-bottom">
+  <footer>
     <a slot="start" href="/content/markdown">
       <button class="btn btn-light btn-lg">&lt; Content</button>
     </a>
     <a slot="end" href="/content/data">
       <button class="btn btn-primary btn-lg">Markdown &gt;</button>
     </a>
-  </div>
+  </footer>
 </div>
