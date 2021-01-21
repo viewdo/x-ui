@@ -75,7 +75,7 @@ The **OnElementEvent** activation-strategy can be used anywhere within the **\<x
 
 #### OnElementEvent: Default Element and Event
 
-The default activation is OnElementEvent and the default event is click. Also, if no target-element is supplied, it looks for the first element that isn't an action or script and attaches to its event.
+The default activation is OnElementEvent and the default event is click. Also, if no target-element is supplied, it looks for the first element that isn't an action or script and attaches to its event. If no target-event is defined, it assumes 'click'
 
 ```html
 <x-action-activator>
@@ -86,6 +86,8 @@ The default activation is OnElementEvent and the default event is click. Also, i
 </x-action-activator>
 ```
 
+> *PRO-TIP:* This element appends any child input element's values to the actions it fires.
+
 <!-- Auto Generated Below -->
 
 
@@ -93,7 +95,7 @@ The default activation is OnElementEvent and the default event is click. Also, i
 
 | Property        | Attribute        | Description                                                                                                                                                                                                     | Type                                                                                                                                                | Default                                   |
 | --------------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
-| `activate`      | `activate`       | The activation strategy to use for the contained actions.                                                                                                                                                       | `ActionActivationStrategy.AtTime \| ActionActivationStrategy.OnElementEvent \| ActionActivationStrategy.OnEnter \| ActionActivationStrategy.OnExit` | `ActionActivationStrategy.OnElementEvent` |
+| `activate`      | `activate`       | The activation strategy to use for the contained actions. Values: 'OnElementEvent'\|'OnEnter'\|'AtTime'\|'OnExit'                                                                                               | `ActionActivationStrategy.AtTime \| ActionActivationStrategy.OnElementEvent \| ActionActivationStrategy.OnEnter \| ActionActivationStrategy.OnExit` | `ActionActivationStrategy.OnElementEvent` |
 | `debug`         | `debug`          | Turn on debug statements for load, update and render events.                                                                                                                                                    | `boolean`                                                                                                                                           | `false`                                   |
 | `multiple`      | `multiple`       | Allow the actions to fire more than once per the event.                                                                                                                                                         | `boolean`                                                                                                                                           | `false`                                   |
 | `targetElement` | `target-element` | The element to watch for events when using the OnElementEvent activation strategy. This element uses the HTML Element querySelector function to find the element.  For use with activate="OnElementEvent" Only! | `string \| undefined`                                                                                                                               | `undefined`                               |

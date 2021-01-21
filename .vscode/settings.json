@@ -56,15 +56,12 @@
     "source.organizeImports": true,
     "source.fixAll.eslint": true
   },
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "typescript"
-  ],
+  "eslint.validate": ["javascript", "javascriptreact", "typescript"],
   "vsicons.associations.files": [
     { "icon": "markdownlint", "extensions": [".markdownlintignore"], "format": "svg" },
     { "icon": "node", "extensions": [".rc"], "format": "svg" },
     { "icon": "stencil", "extensions": [".config.ts"], "format": "svg" },
-    { "icon": "config", "extensions": [".config.js"], "format": "svg" },
-  ]
+    { "icon": "config", "extensions": [".config.js"], "format": "svg" }
+  ],
+  "html.customData": ["./packages/core/dist/custom-elements/custom-elements.json"]
 }

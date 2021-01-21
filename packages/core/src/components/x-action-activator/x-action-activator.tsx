@@ -1,5 +1,5 @@
-import { Component, Element, h, Host, Method, Prop, State } from '@stencil/core'
-import { ActionActivationStrategy, actionBus, debugIf, EventAction, IActionElement, warn } from '../..'
+import { Component, Element, h, Host, Method, Prop, State } from '@stencil/core';
+import { ActionActivationStrategy, actionBus, debugIf, EventAction, IActionElement, warn } from '../..';
 
 /**
  * @system actions
@@ -15,8 +15,10 @@ export class XActionActivator {
 
   /**
    * The activation strategy to use for the contained actions.
+   * Values: 'OnElementEvent'|'OnEnter'|'AtTime'|'OnExit'
    */
   @Prop() activate: ActionActivationStrategy = ActionActivationStrategy.OnElementEvent
+
 
   /**
    * The element to watch for events when using the OnElementEvent
@@ -58,9 +60,24 @@ export class XActionActivator {
       return Promise.resolve()
     }
 
+    const values: Record<string,any> = {}
+
+    Array.from(this.el.querySelectorAll('[value]'))
+      .forEach(e => {
+        const input = e as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+        values[input.name||e.id] = input.value
+      })
+
     // Activate children
     this.actions.forEach((action) => {
-      const dataString = JSON.stringify(action.data)
+      const data = action.data
+      if (this.activate == ActionActivationStrategy.OnElementEvent) {
+        Object.assign(data, {
+          values
+        })
+      }
+
+      const dataString = JSON.stringify(data)
       debugIf(
         this.debug,
         `x-action-activator:  ${this.parent?.url || ''} Activating [${this.activate}~{topic: ${

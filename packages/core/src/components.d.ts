@@ -30,7 +30,7 @@ export namespace Components {
     }
     interface XActionActivator {
         /**
-          * The activation strategy to use for the contained actions.
+          * The activation strategy to use for the contained actions. Values: 'OnElementEvent'|'OnEnter'|'AtTime'|'OnExit'
          */
         "activate": ActionActivationStrategy;
         "activateActions": () => Promise<void>;
@@ -570,7 +570,7 @@ declare namespace LocalJSX {
     }
     interface XActionActivator {
         /**
-          * The activation strategy to use for the contained actions.
+          * The activation strategy to use for the contained actions. Values: 'OnElementEvent'|'OnEnter'|'AtTime'|'OnExit'
          */
         "activate"?: ActionActivationStrategy;
         /**

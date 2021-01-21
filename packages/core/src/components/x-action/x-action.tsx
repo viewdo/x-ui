@@ -1,5 +1,5 @@
-import { Component, Element, h, Host, Method, Prop } from '@stencil/core'
-import { EventAction, IActionElement, warn } from '../..'
+import { Component, Element, h, Host, Method, Prop } from '@stencil/core';
+import { EventAction, IActionElement, warn } from '../..';
 
 /**
  * This element just holds data to express the actionEvent to fire. This element
@@ -29,18 +29,6 @@ export class XAction implements IActionElement {
    * The JSON serializable data payload the command requires.
    */
   @Prop() data?: string
-
-  /**
-   * Get the underlying actionEvent instance. Used by the x-action-activator element.
-   */
-
-  /**
-   * Get the underlying actionEvent instance. Used by the x-action-activator element.
-   */
-
-  /**
-   * Get the underlying actionEvent instance. Used by the x-action-activator element.
-   */
 
   /**
    * Get the underlying actionEvent instance. Used by the x-action-activator element.
