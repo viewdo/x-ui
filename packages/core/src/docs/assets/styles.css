@@ -215,17 +215,17 @@ x-ui {
   width: 100%;
 }
 
-x-link::part(anchor) {
+x-link a:any-link {
   color: var(--primary);
   text-decoration: none;
   font-weight: 400;
 }
-x-link::part(anchor:hover) {
+x-link a:hover {
   color: var(--accent);
   text-decoration: underline;
 }
 
-x-link.text-white::part(anchor) {
+x-link.text-white a:any-link {
   color: white;
 }
 

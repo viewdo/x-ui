@@ -6,8 +6,8 @@ import { debugIf, eventBus, MatchResults, RouterService, ROUTE_EVENTS } from '..
  */
 @Component({
   tag: 'x-link',
-  styleUrl: 'x-link.scss',
-  shadow: true,
+  styles: `x-link {}`,
+  shadow: false,
 })
 export class XLink {
   private subscriptionDispose!: () => void
@@ -92,24 +92,21 @@ export class XLink {
     debugIf(this.debug, `x-link: ${this.href} matched: ${this.match != null}`)
 
     const classes = {
-        [this.activeClass]: this.match !== null,
-        [this.el.className]: true
+        [this.activeClass]: this.match !== null
     }
 
     let anchorAttributes: Record<string, any> = {
       title: this.el.title,
       role: this.el.getAttribute('aria-role'),
-      tabindex: this.el.tabIndex,
-      id: this.el.id,
-      class: classes
+      id: this.el.id
     }
 
     return (
-      <Host onClick={(e:MouseEvent) => this.handleClick(e)}>
+      <Host>
         <a href={this.href} title={this.el.title}
-          {...anchorAttributes} part="anchor"
+          {...anchorAttributes}
           x-attached-click
-          onClick={(e:MouseEvent) => e.preventDefault()}>
+          class={classes} onClick={(e:MouseEvent) => this.handleClick(e)}>
           <slot />
         </a>
       </Host>

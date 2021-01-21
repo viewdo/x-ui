@@ -11,11 +11,8 @@ describe('x-link', () => {
     })
     expect(page.root).toEqualHtml(`
       <x-link>
-        <mock:shadow-root>
-          <a class="link-active" part="anchor" tabindex="-1" x-attached-click="">
-            <slot></slot>
-          </a>
-        </mock:shadow-root>
+        <a class="link-active" x-attached-click="">
+        </a>
       </x-link>
     `)
   })
