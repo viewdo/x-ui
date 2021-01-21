@@ -1,25 +1,21 @@
-<x-use script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
-       style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
-</x-use>
 <x-use
-       script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
+  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
+  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css"
+>
 </x-use>
+<x-use script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js"> </x-use>
 <div class="container container-fluid mx-auto">
   <h1>Lazy Loaded Routes</h1>
-  <p class="lead">
-    HTML when you need it, not when you don't.
-  </p>
-  <p>A route's content could be inline or fetched from a remote file as
-    needed. This is called "lazy-loaded".</p>
+  <p class="lead">HTML when you need it, not when you don't.</p>
+  <p>A route's content could be inline or fetched from a remote file as needed. This is called "lazy-loaded".</p>
   <p>
-    You get the benefit of shared layouts and components without the need for a
-    application-server, client-side framework or static-site generation process.
+    You get the benefit of shared layouts and components without the need for a application-server, client-side
+    framework or static-site generation process.
   </p>
 
   <h2>How it Works</h2>
   <p>
-    Instead of wrapping content, you can specify a remote file
-    to fetch with both
+    Instead of wrapping content, you can specify a remote file to fetch with both
     <a href="/components/x-view">
       <b>&lt;x-view&gt;</b>
     </a>
@@ -27,13 +23,11 @@
     <a href="/components/x-view-do">
       <b>&lt;x-view-do&gt;</b>
     </a>
-    elements. The referenced file won't be
-    fetched until the URL path matches the path
-    set in the <b>url</b> attribute.
+    elements. The referenced file won't be fetched until the URL path matches the path set in the <b>url</b> attribute.
   </p>
   <p>
-    This gives you the the ability to keep the initial page-size
-    light and only fetch heavier HTML fragments when needed.
+    This gives you the the ability to keep the initial page-size light and only fetch heavier HTML fragments when
+    needed.
   </p>
 
   <h3>Lazy Route Example</h3>
@@ -49,9 +43,14 @@
     components to "lazy-load" the inner-html when the route is activated.
   </p>
   <div>
-    <button class="btn btn-light" type="button" data-bs-toggle="collapse"
-            data-bs-target="#loadRemoteSource" aria-expanded="false"
-            aria-controls="loadRemoteSource">
+    <button
+      class="btn btn-light"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#loadRemoteSource"
+      aria-expanded="false"
+      aria-controls="loadRemoteSource"
+    >
       <i class="ri-code-s-slash-line"></i>
       Toggle Source
     </button>
@@ -60,8 +59,7 @@
     <x-markdown>
       <script type="text/markdown">
         ```html
-        <x-view url="page-1" page-title="Page 1"
-          content-src="/pages/page-1.html">
+        <x-view url="page-1" page-title="Page 1" content-src="/pages/page-1.html">
           <h1>Page 1</h1>
           ...
         </x-view>
@@ -70,9 +68,8 @@
     </x-markdown>
     <blockquote>
       <b>PRO-TIP:</b>
-      A mixture of inline and remote content can be used within the same route.
-      Be sure to include the <b>slot="content"</b> attribute for content
-      that should not show on child-routes.
+      A mixture of inline and remote content can be used within the same route. Be sure to include the
+      <b>slot="content"</b> attribute for content that should not show on child-routes.
     </blockquote>
   </div>
 
@@ -80,18 +77,15 @@
   <p>
     There are other ways to lazy-load content. You can use the
     <a href="/components/x-include"><b>&lt;x-include&gt;</b></a>
-    or <a href="/components/x-markdown"><b>&lt;x-markdown&gt;</b></a>
-    components along with their <b>no-render</b> attribute to
-    essentially do the same thing.
+    or <a href="/components/x-markdown"><b>&lt;x-markdown&gt;</b></a> components along with their
+    <b>no-render</b> attribute to essentially do the same thing.
   </p>
   <p>
-    When routes are activated they remove the <b>no-render</b> attribute
-    from child components, which in-turn performs a fetch on route-activate.
+    When routes are activated they remove the <b>no-render</b> attribute from child components, which in-turn performs a
+    fetch on route-activate.
   </p>
 
   <footer>
-    <a slot="start" href="/routing" class="btn btn-light">
-      &lt; Routing
-    </a>
+    <a slot="start" href="/routing" class="btn btn-light"> &lt; Routing </a>
   </footer>
 </div>

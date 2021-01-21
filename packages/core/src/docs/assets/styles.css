@@ -119,7 +119,6 @@ h3 {
   display: flex;
 }
 
-
 .button-nav {
   display: flex;
   flex-direction: row;
@@ -127,7 +126,7 @@ h3 {
   align-items: stretch;
   justify-items: stretch;
   justify-content: space-between;
-  gap: 0.3em
+  gap: 0.3em;
 }
 
 .button-nav > * {
@@ -145,7 +144,9 @@ h3,
 h4 {
   margin: 0.75em 0 0.25em 0;
 }
-h3 { clear: right;}
+h3 {
+  clear: right;
+}
 
 h4 {
   color: var(--text-color);
@@ -297,7 +298,6 @@ footer [slot='start'] {
   color: var(--accent);
   border-color: white;
 }
-
 
 .btn-secondary {
   background-color: var(--secondary);

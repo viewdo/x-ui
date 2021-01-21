@@ -1,18 +1,8 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-- [view.DO Experience UI](#viewdo-experience-ui)
-  - [Turbo-charge your HTML](#turbo-charge-your-html)
-  - [Learn more](#learn-more)
-    - [Thanks to](#thanks-to)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
 # view.DO Experience UI
 
 ![Pre-Release](https://via.placeholder.com/728x90/333333/FFFFFF?text=PREVIEW+RELEASE:ALPHA+0.1)
 
-![MIT](https://img.shields.io/github/license/viewdo/experience-ui) [![Built With view.DO](https://img.shields.io/badge/view.DO-DXP-1c6d9a)](https://view.do) [![NPM](https://img.shields.io/npm/v/@viewdo/x-ui)](https://www.npmjs.com/package/@viewdo/x-ui) ![Main CI](https://github.com/viewdo/x-ui/workflows/Main%20CI/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/viewdo/x-ui/badge.svg)](https://coveralls.io/github/viewdo/x-ui) ![size](https://img.shields.io/bundlephobia/min/@viewdo/x-ui) [![Gitter](https://badges.gitter.im/viewdo/x-ui.svg)](https://gitter.im/viewdo/x-ui?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/xojs/xo)
+![MIT](https://img.shields.io/github/license/viewdo/experience-ui) [![NPM](https://img.shields.io/npm/v/@viewdo/x-ui)](https://www.npmjs.com/package/@viewdo/x-ui) ![Main CI](https://github.com/viewdo/x-ui/workflows/Main%20CI/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/viewdo/x-ui/badge.svg)](https://coveralls.io/github/viewdo/x-ui) ![size](https://img.shields.io/bundlephobia/min/@viewdo/x-ui) [![Gitter](https://badges.gitter.im/viewdo/x-ui.svg)](https://gitter.im/viewdo/x-ui?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 Experience UI is a suite of custom HTML elements that turns a static HTML file into single-page web-experiences.
 

@@ -44,7 +44,6 @@ include.removeAttribute('no-render');
 
 Or, just include it in one of the components [**`<x-view>`**](/components/x-view) or [**`<x-view-do>`**](/components/x-view-do). These components remove any **no-render** attributes on child elements once their route is activated, giving us lazy-loaded routes with this component.
 
-
 ## Styling
 
 By default, there is no styling. The HTML is rendered to the page without styles. For basic styles, you can include the Marked.js css file in the head:
@@ -69,8 +68,6 @@ By default, there is no styling. The HTML is rendered to the page without styles
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css" />
 </head>
 ```
-
-
 
 <!-- Auto Generated Below -->
 
