@@ -1,7 +1,7 @@
-import { Component, Element, h, Host, Prop, State } from '@stencil/core'
-import jsonata from 'jsonata'
-import { DATA_EVENTS, debugIf, eventBus, hasExpression, resolveExpression, ROUTE_EVENTS, warnIf } from '../../services'
-import { arrify } from '../../services/utils/misc-utils'
+import { Component, Element, h, Host, Prop, State } from '@stencil/core';
+import jsonata from 'jsonata';
+import { DATA_EVENTS, debugIf, eventBus, hasExpression, resolveExpression, RouterService, ROUTE_EVENTS, warnIf } from '../../services';
+import { arrify } from '../../services/utils/misc-utils';
 
 /**
  *  @system data
@@ -48,6 +48,10 @@ export class XDataRepeat {
    * Turn on debug statements for load, update and render events.
    */
   @Prop() debug = false
+
+  private get router(): RouterService | undefined {
+    return this.el.closest('x-ui')?.router
+  }
 
   get childTemplate(): HTMLTemplateElement | null {
     if (!this.el.hasChildNodes()) {
@@ -185,6 +189,10 @@ export class XDataRepeat {
         Promise.resolve(),
       )
     }
+  }
+
+  componentDidRender() {
+    this.router?.captureInnerLinks(this.el)
   }
 
   disconnectedCallback() {

@@ -1,8 +1,8 @@
-import { eventBus } from '..'
-import { hasExpression, resolveExpression } from '../data/expression-evaluator'
-import { MatchResults, RouteViewOptions, ROUTE_EVENTS } from './interfaces'
-import { RouterService } from './router'
-import { matchesAreEqual } from './utils/match-path'
+import { eventBus } from '..';
+import { hasExpression, resolveExpression } from '../data/expression-evaluator';
+import { MatchResults, RouteViewOptions, ROUTE_EVENTS } from './interfaces';
+import { RouterService } from './router';
+import { matchesAreEqual } from './utils/match-path';
 
 export class Route {
   private readonly subscription: () => void
@@ -62,6 +62,10 @@ export class Route {
 
       await this.adjustTitle()
     }
+  }
+
+  public captureInnerLinks(root?: HTMLElement) {
+    this.router.captureInnerLinks(root || this.routeElement, this.path)
   }
 
   private async adjustTitle() {

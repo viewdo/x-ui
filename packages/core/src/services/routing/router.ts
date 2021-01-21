@@ -1,10 +1,10 @@
-import { RafCallback } from '@stencil/core/internal'
-import { debugIf, interfaceState } from '..'
-import { EventAction, IEventEmitter } from '../actions'
-import { addDataProvider } from '../data/providers/factory'
-import { RoutingDataProvider } from './data-provider'
-import { createBrowserHistory } from './factories/browser-history'
-import { createHashHistory } from './factories/hash-history'
+import { RafCallback } from '@stencil/core/internal';
+import { captureElementsEventOnce, debugIf, interfaceState } from '..';
+import { EventAction, IEventEmitter } from '../actions';
+import { addDataProvider } from '../data/providers/factory';
+import { RoutingDataProvider } from './data-provider';
+import { createBrowserHistory } from './factories/browser-history';
+import { createHashHistory } from './factories/hash-history';
 import {
   HistoryType,
   LocationSegments,
@@ -16,11 +16,11 @@ import {
   RouteViewOptions,
   ROUTE_COMMANDS,
   ROUTE_EVENTS,
-  ROUTE_TOPIC,
-} from './interfaces'
-import { Route } from './route'
-import { getLocation, getUrl, isAbsolute, resolvePathname } from './utils/location-utils'
-import { matchPath } from './utils/match-path'
+  ROUTE_TOPIC
+} from './interfaces';
+import { Route } from './route';
+import { getLocation, getUrl, resolvePathname } from './utils/location-utils';
+import { matchPath } from './utils/match-path';
 
 const HISTORIES: { [key in HistoryType]: (win: Window) => RouterHistory } = {
   browser: createBrowserHistory,
@@ -78,6 +78,8 @@ export class RouterService {
     } else if (actionEvent.command === ROUTE_COMMANDS.NavigateTo) {
       const { url } = actionEvent.data as NavigateTo
       this.history.push(url)
+    } else if (actionEvent.command === ROUTE_COMMANDS.NavigateBack) {
+      this.history.goBack()
     }
   }
 
@@ -144,8 +146,7 @@ export class RouterService {
   }
 
   resolvePathname(url: string, parentUrl?: string) {
-    if (isAbsolute(url) || url.startsWith('http')) return url
-    return resolvePathname(url, parentUrl || '/')
+    return resolvePathname(url, parentUrl || this.location?.pathname)
   }
 
   normalizeChildUrl(childUrl: string, parentUrl: string) {
@@ -159,6 +160,27 @@ export class RouterService {
 
   isModifiedEvent(ev: MouseEvent) {
     return ev.metaKey || ev.altKey || ev.ctrlKey || ev.shiftKey
+  }
+
+  public captureInnerLinks(root?:HTMLElement, fromPath?: string) {
+    captureElementsEventOnce<HTMLAnchorElement, MouseEvent>(
+      root || this.rootElement,
+      `a`,
+      'click',
+      (el: HTMLAnchorElement, ev: MouseEvent) => {
+        if (this.isModifiedEvent(ev) || !this?.history) return true
+
+        if (!el.href.includes(location.origin)) return true
+
+        ev.preventDefault()
+
+        return this.handleRouteLinkClick(el.href.replace(location.origin, ''), fromPath)
+      })
+  }
+
+  handleRouteLinkClick(toPath:string, fromPath?: string) {
+    const route = this.resolvePathname(toPath, fromPath)
+    this.history.push(route)
   }
 
   destroy() {

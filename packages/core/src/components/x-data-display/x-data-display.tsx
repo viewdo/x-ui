@@ -1,6 +1,6 @@
 import { Component, Element, h, Host, Prop, State } from '@stencil/core';
-import { DATA_EVENTS, eventBus, resolveChildElements, resolveExpression, RouterService, ROUTE_EVENTS, warn } from '../../services';
-import { createElement, removeAllChildNodes } from '../../services/utils/dom-utils';
+import { DATA_EVENTS, eventBus, resolveChildElementXAttributes, resolveExpression, RouterService, ROUTE_EVENTS, warn } from '../../services';
+import { removeAllChildNodes } from '../../services/utils/dom-utils';
 
 /**
  *  @system data
@@ -93,11 +93,12 @@ export class XDataDisplay {
   }
 
   private async setContent() {
-    const content = createElement(
-      `${this.value || ''}${this.resolvedTemplate || ''}`)
-    content.className = 'dynamic'
-    await resolveChildElements(content, this.router, location.href)
-    this.el.append(content)
+    const span = document.createElement('span')
+    span.innerHTML = `${this.value || ''}${this.resolvedTemplate || ''}`
+    span.className = 'dynamic'
+    await resolveChildElementXAttributes(span)
+    this.router?.captureInnerLinks(span)
+    this.el.append(span)
   }
 
   async componentWillRender() {

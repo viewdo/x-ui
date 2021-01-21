@@ -1,4 +1,4 @@
-import { Component, Element, h, Host, Prop, State } from '@stencil/core'
+import { Component, Element, h, Host, Prop, State } from '@stencil/core';
 import {
   DATA_EVENTS,
   debugIf,
@@ -6,14 +6,13 @@ import {
   hasVisited,
   markVisit,
   MatchResults,
-  resolveChildElements,
+  resolveChildElementXAttributes,
   resolveNext,
   Route,
-  warn,
-  wrapFragment,
-} from '../..'
-import { RouterService } from '../../services/routing/router'
-import { createKey } from '../../services/routing/utils/location-utils'
+  warn
+} from '../..';
+import { RouterService } from '../../services/routing/router';
+import { createKey } from '../../services/routing/utils/location-utils';
 
 /**
  *  @system routing
@@ -28,7 +27,7 @@ export class XView {
   private route!: Route
   @Element() el!: HTMLXViewElement
   @State() match!: MatchResults | null
-  @State() contentKey?: string
+  @State() contentKey?: string | null
 
   /**
    * The router-service instance  (internal)
@@ -123,7 +122,8 @@ export class XView {
       this.transition || this.parent?.transition || null,
       this.scrollTopOffset,
       (match) => {
-        this.match = match ? { ...match } : null
+        if (match === null) this.resetContent()
+        this.match = match
       },
     )
 
@@ -145,8 +145,10 @@ export class XView {
 
     eventBus.on(DATA_EVENTS.DataChanged, async () => {
       debugIf(this.debug, `x-view: ${this.url} data changed `)
-      await resolveChildElements(this.el, this.route?.router, this.url)
+      await resolveChildElementXAttributes(this.el)
     })
+
+    this.route.captureInnerLinks()
   }
 
   async componentWillRender() {
@@ -194,12 +196,13 @@ export class XView {
       this.resetContent()
     }
 
-    await resolveChildElements(this.el, this.route?.router, this.url)
+    await resolveChildElementXAttributes(this.el)
   }
 
   private resetContent() {
-    const remoteContent = this.el.querySelector(`#${this.contentKey}`)
-    remoteContent?.remove()
+    const remoteContent = this.el.querySelector(`#${this.contentKey}`);
+    remoteContent?.remove();
+    this.contentKey = null
   }
 
   private async fetchHtml() {
@@ -212,12 +215,15 @@ export class XView {
       this.resetContent()
       const response = await fetch(this.contentSrc)
       if (response.status === 200) {
-        const data = await response.text()
-        const content = wrapFragment(data, 'content', this.contentKey)
+        const innerContent = await response.text()
+        this.contentKey = `remote-content-${createKey(10)}`;
+        const content = this.el.ownerDocument.createElement('div');
+        content.slot = 'content';
+        content.id = this.contentKey!
+        content.innerHTML = innerContent
         if (this.route.transition) content.className = this.route.transition
-
+        this.route.captureInnerLinks(content)
         this.el.append(content)
-        this.contentKey = `remote-content-${createKey(10)}`
       } else {
         warn(`x-view: ${this.url} Unable to retrieve from ${this.contentSrc}`)
       }

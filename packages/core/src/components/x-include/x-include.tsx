@@ -2,12 +2,11 @@ import { Component, Element, h, Host, Prop, State } from '@stencil/core';
 import {
   DATA_EVENTS,
   eventBus,
-  resolveChildElements,
+  resolveChildElementXAttributes,
   resolveExpression,
   RouterService,
   ROUTE_EVENTS,
-  warn,
-  wrapFragment
+  warn
 } from '../..';
 import { createKey } from '../../services/routing/utils/location-utils';
 
@@ -56,9 +55,7 @@ export class XInclude {
     await this.resolveContent()
   }
 
-
-
-   private resetContent() {
+  private resetContent() {
     const remoteContent = this.el.querySelector(`#${this.contentKey}`)
     remoteContent?.remove()
   }
@@ -86,15 +83,20 @@ export class XInclude {
     if (this.content) {
       this.resetContent();
       let innerContent = `${this.content || ''}`;
-      const content = wrapFragment(innerContent, 'content', this.contentKey)
+      const content = this.el.ownerDocument.createElement('div');
+      content.slot = 'content';
+      content.id = this.contentKey
+      content.innerHTML = innerContent
+      await resolveChildElementXAttributes(content)
+      if (this.router) {
+        this.router!.captureInnerLinks(content)
+      }
       this.el.append(content)
     }
   }
 
   async componentDidRender() {
-    if (this.router) {
-      await resolveChildElements(this.el, this.router, location.href)
-    }
+
   }
 
   disconnectedCallback() {

@@ -1,5 +1,5 @@
-import { Component, Element, forceUpdate, h, Host, Prop, State } from '@stencil/core'
-import { debugIf, eventBus, MatchResults, RouterService, ROUTE_EVENTS } from '../..'
+import { Component, Element, forceUpdate, h, Host, Prop, State } from '@stencil/core';
+import { debugIf, eventBus, MatchResults, RouterService, ROUTE_EVENTS } from '../..';
 
 /**
  *  @system navigation
@@ -9,7 +9,7 @@ import { debugIf, eventBus, MatchResults, RouterService, ROUTE_EVENTS } from '..
   styleUrl: 'x-link.scss',
   shadow: true,
 })
-export class XViewLink {
+export class XLink {
   private subscriptionDispose!: () => void
   @Element() el!: HTMLXLinkElement
   @State() match?: MatchResults | null
@@ -108,8 +108,8 @@ export class XViewLink {
       <Host onClick={(e:MouseEvent) => this.handleClick(e)}>
         <a href={this.href} title={this.el.title}
           {...anchorAttributes} part="anchor"
-            x-link-attached
-          onClick={(e:MouseEvent) => this.handleClick(e)}>
+          x-attached-click
+          onClick={(e:MouseEvent) => e.preventDefault()}>
           <slot />
         </a>
       </Host>

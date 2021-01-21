@@ -1,11 +1,11 @@
-import { Howl } from 'howler'
-import { EventEmitter } from '../actions/event-emitter'
-import { AudioActionListener, AudioInfo, AUDIO_COMMANDS } from '../index'
-import { AudioTrack } from './audio'
-import { AudioType, AUDIO_TOPIC, DiscardStrategy } from './interfaces'
+import { Howl } from 'howler';
+import { EventEmitter } from '../actions/event-emitter';
+import { AudioActionListener, AudioInfo, AUDIO_COMMANDS } from '../index';
+import { AudioTrack } from './audio';
+import { AudioType, AUDIO_TOPIC, DiscardStrategy } from './interfaces';
 
 describe('audio-listener:', () => {
-  let audio
+  let audio: any
   let listener: AudioActionListener
   let actionBus: EventEmitter
   let eventBus: EventEmitter

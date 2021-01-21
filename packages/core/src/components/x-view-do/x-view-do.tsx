@@ -1,4 +1,4 @@
-import { Component, Element, h, Host, Prop, State } from '@stencil/core'
+import { Component, Element, h, Host, Prop, State } from '@stencil/core';
 import {
   ActionActivationStrategy,
   actionBus,
@@ -10,19 +10,30 @@ import {
   interfaceState,
   markVisit,
   MatchResults,
-  resolveChildElements,
+  resolveChildElementXAttributes,
   Route,
   storeVisit,
-  TimedNode,
   VIDEO_COMMANDS,
   VIDEO_EVENTS,
   VIDEO_TOPIC,
   VisitStrategy,
-  warn,
-  wrapFragment,
-} from '../..'
-import { createKey } from '../../services/routing/utils/location-utils'
-import '../x-view/x-view'
+  warn
+} from '../..';
+import { createKey } from '../../services/routing/utils/location-utils';
+
+export type TimedNode = {
+  start: number
+  end: number
+  classIn: string | null
+  classOut: string | null
+  element: {
+    id: any
+    classList: { contains: (arg0: string) => any; add: (arg0: string) => void; remove: (arg0: string) => void }
+    hasAttribute: (arg0: string) => any
+    removeAttribute: (arg0: string) => void
+    setAttribute: (arg0: string, arg1: string) => void
+  }
+}
 
 /**
  *  @system routing
@@ -42,7 +53,7 @@ export class XViewDo {
   private route!: Route
   @Element() el!: HTMLXViewDoElement
   @State() match: MatchResults | null = null
-  @State() contentKey?: string
+  @State() contentKey?: string | null
 
   /**
    * The title for this view. This is prefixed
@@ -169,7 +180,7 @@ export class XViewDo {
 
     this.subscription = eventBus.on(DATA_EVENTS.DataChanged, async () => {
       debugIf(this.debug, 'x-view-do: data changed ')
-      await resolveChildElements(this.el, this.routeContainer?.router, this.url)
+      await resolveChildElementXAttributes(this.el)
     })
 
     // Attach enter-key for next
@@ -178,6 +189,8 @@ export class XViewDo {
         this.next(this.el.localName, 'enter-key')
       }
     })
+
+    this.route.captureInnerLinks()
   }
 
   async componentWillRender() {
@@ -194,17 +207,17 @@ export class XViewDo {
 
     if (this.match?.isExact) {
       debugIf(this.debug, `x-view-do: ${this.url} on-enter`)
-      this.el.removeAttribute('hidden')
       await this.fetchHtml()
       await this.resolveChildren()
       await this.setupTimer()
+      this.el.removeAttribute('hidden')
       await this.route.loadCompleted()
     } else {
       this.el.setAttribute('hidden', '')
       this.cleanup()
     }
 
-    await resolveChildElements(this.el, this.routeContainer?.router, this.url)
+    await resolveChildElementXAttributes(this.el)
   }
 
   private async fetchHtml() {
@@ -216,9 +229,16 @@ export class XViewDo {
       this.resetContent()
       const response = await fetch(this.contentSrc)
       if (response.status === 200) {
-        const data = await response.text()
-        this.contentKey = `remote-content-${createKey(10)}`
-        this.el.append(wrapFragment(data, 'content', this.contentKey))
+        const innerContent = await response.text()
+        this.contentKey = `remote-content-${createKey(10)}`;
+        const content = this.el.ownerDocument.createElement('div');
+        content.slot = 'content';
+        content.id = this.contentKey!
+        content.innerHTML = innerContent
+        this.route.captureInnerLinks(content)
+        if (this.route.transition) content.className = this.route.transition
+        await resolveChildElementXAttributes(content)
+        this.el.append(content)
       } else {
         warn(`x-view-do: ${this.url} Unable to retrieve from ${this.contentSrc}`)
       }
@@ -230,6 +250,7 @@ export class XViewDo {
   private resetContent() {
     const remoteContent = this.el.querySelector(`#${this.contentKey}`)
     remoteContent?.remove()
+    this.contentKey = null
   }
 
   private cleanup() {
@@ -239,6 +260,7 @@ export class XViewDo {
     this.restoreElementChildTimedNodes()
     this.timer = null
     this.lastTime = 0
+    this.resetContent()
   }
 
   private beforeExit() {
@@ -311,15 +333,6 @@ export class XViewDo {
         })
       }
       element.removeAttribute('x-link')
-    })
-
-    // TODO: Add attributes to ensure only a single event listener is attached
-    this.el.querySelectorAll('a[href]').forEach((element) => {
-      element.addEventListener('click', (e) => {
-        e.preventDefault()
-        const url = element.getAttribute('href')
-        this.next(element.localName, 'clicked', url)
-      })
     })
 
     this.el.querySelectorAll('[x-back]').forEach((element) => {

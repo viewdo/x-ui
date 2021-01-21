@@ -1,13 +1,13 @@
-import { Component, Element, h, Host, Prop, State } from '@stencil/core'
+import { Component, Element, h, Host, Prop, State } from '@stencil/core';
 import {
   DATA_EVENTS,
   eventBus,
-  resolveChildElements,
+  resolveChildElementXAttributes,
   resolveExpression,
   RouterService,
   ROUTE_EVENTS,
-  warn,
-} from '../..'
+  warn
+} from '../..';
 
 /**
  *  @system content
@@ -77,8 +77,9 @@ export class XMarkdown {
   }
 
   async componentDidRender() {
+    await resolveChildElementXAttributes(this.el)
     if (this.router) {
-      await resolveChildElements(this.el, this.router, this.baseUrl || location.href)
+      this.router!.captureInnerLinks(this.el)
     }
   }
 

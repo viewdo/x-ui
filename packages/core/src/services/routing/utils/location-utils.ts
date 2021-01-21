@@ -1,7 +1,9 @@
 /* istanbul ignore file */
 
-import { LocationSegments } from '../interfaces'
-import { parsePath, parseQueryString } from './path-utils'
+import { LocationSegments } from '../interfaces';
+import { parsePath, parseQueryString } from './path-utils';
+
+export const isFullUrl = (path: string) => path.startsWith('http')
 
 export const isAbsolute = (pathname: string) => pathname.startsWith('/')
 

@@ -3,6 +3,7 @@
 export enum ROUTE_COMMANDS {
   NavigateNext = 'navigate-next',
   NavigateTo = 'navigate-to',
+  NavigateBack = 'navigate-back',
 }
 
 export enum ROUTE_EVENTS {

@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Host, Listen, Prop, State, writeTask } from '@stencil/core'
+import { Component, Element, Event, EventEmitter, h, Host, Listen, Prop, State, writeTask } from '@stencil/core';
 import {
   actionBus,
   DataListener,
@@ -11,10 +11,10 @@ import {
   interfaceState,
   LocationSegments,
   log,
-  resolveChildElements,
-  RouterService,
-} from '../../services'
-import { clearDataProviders } from '../../services/data/providers/factory'
+  resolveChildElementXAttributes,
+  RouterService
+} from '../../services';
+import { clearDataProviders } from '../../services/data/providers/factory';
 
 /**
  *  @set routing
@@ -171,6 +171,8 @@ export class XUI {
       this.scrollTopOffset,
     )
 
+    this.router.captureInnerLinks()
+
     this.childViews.forEach((v) => {
       if (v.url) {
         v.url = this.router.normalizeChildUrl(v.url, this.root)
@@ -208,7 +210,7 @@ export class XUI {
   }
 
   private async performLoadElementManipulation(element: HTMLElement) {
-    await resolveChildElements(element, this.router, this.root)
+    await resolveChildElementXAttributes(element)
 
     element.querySelectorAll('[x-hide]').forEach((el) => {
       el.setAttribute('hidden', '')
