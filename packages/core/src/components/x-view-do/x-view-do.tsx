@@ -156,19 +156,12 @@ export class XViewDo {
         this.match = match
       },
     )
-
-    this.match = this.route.router.matchPath({
-      path: this.url,
-      exact: this.exact,
-      strict: true,
-    })
+    this.match = this.route.match
 
     this.dataChangedSubscription = eventBus.on(DATA_EVENTS.DataChanged, async () => {
       debugIf(this.debug, 'x-view-do: data changed ')
       await resolveChildElementXAttributes(this.el)
     })
-
-
   }
 
   private activateActions(

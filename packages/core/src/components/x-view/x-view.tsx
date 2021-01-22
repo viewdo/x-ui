@@ -122,10 +122,10 @@ export class XView {
       this.transition || this.parent?.transition || null,
       this.scrollTopOffset,
       (match) => {
-        if (match === null) this.resetContent()
         this.match = match
       },
     )
+    this.match = this.route.match
 
     this.childViews.forEach((v) => {
       v.url = this.route.normalizeChildUrl(v.url)
@@ -137,18 +137,13 @@ export class XView {
       v.transition = v.transition || this.transition
     })
 
-    this.match = this.route.router?.matchPath({
-      path: this.url,
-      exact: this.exact,
-      strict: true,
-    })
 
     eventBus.on(DATA_EVENTS.DataChanged, async () => {
       debugIf(this.debug, `x-view: ${this.url} data changed `)
       await resolveChildElementXAttributes(this.el)
     })
 
-    this.route.captureInnerLinks()
+
   }
 
   async componentWillRender() {
@@ -202,6 +197,7 @@ export class XView {
       })
     }
 
+    this.route.captureInnerLinks()
     await this.route.loadCompleted()
   }
 

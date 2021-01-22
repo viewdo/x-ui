@@ -24,7 +24,7 @@ export const getLocation = (location: LocationSegments, root: string): LocationS
 
   return {
     ...location,
-    pathname,
+    pathname: pathname.startsWith('//') ? pathname.slice(1): pathname ,
   }
 }
 
