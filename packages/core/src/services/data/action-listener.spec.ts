@@ -1,23 +1,23 @@
 jest.mock('../logging')
 
-import { getDataProvider, clearDataProviders, getDataProviders } from './providers/factory'
-import { DataListener } from './action-listener'
-import { DATA_COMMANDS, DATA_TOPIC, IDataProvider } from './interfaces'
-import { InMemoryProvider } from './providers/memory'
-import { EventEmitter } from '..'
+import { EventEmitter } from '..';
+import { DataListener } from './action-listener';
+import { DATA_COMMANDS, DATA_TOPIC, IDataProvider } from './interfaces';
+import { clearDataProviders, getDataProvider, getDataProviders } from './providers/factory';
+import { InMemoryProvider } from './providers/memory';
 
 class MockDataProvider extends InMemoryProvider {
-  setItem(x, y) {
+  setItem(x: string, y: string) {
     this.set(x, y)
   }
 
-  removeItem(_x) {
+  removeItem(_x: string | number) {
     delete this.data[_x]
   }
 }
 
 describe('data-provider-listener', () => {
-  let subject: DataListener = null
+  let subject: DataListener|null = null
   let mockWindow: any
   let mockDataProvider: IDataProvider
   let actionBus: EventEmitter

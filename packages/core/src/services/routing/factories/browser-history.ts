@@ -1,14 +1,14 @@
 // Adapted from the https://github.com/ReactTraining/history and converted to TypeScript
 
-import { Listener } from '../../actions/interfaces'
-import { warnIf } from '../../logging'
-import { LocationSegments, RouterHistory } from '../interfaces'
-import { getConfirmation, supportsHistory } from '../utils/browser-utils'
-import { createKey, createLocation } from '../utils/location-utils'
-import { isExtraneousPopstateEvent, supportsPopStateOnHashChange } from '../utils/nav-utils'
-import { addLeadingSlash, createPath, hasBasename, stripBasename, stripTrailingSlash } from '../utils/path-utils'
-import { createScrollHistory } from './scroll-history'
-import { createTransitionManager } from './transition-manager'
+import { Listener } from '../../actions/interfaces';
+import { warnIf } from '../../logging';
+import { LocationSegments, RouterHistory } from '../interfaces';
+import { getConfirmation, supportsHistory } from '../utils/browser-utils';
+import { createKey, createLocation } from '../utils/location-utils';
+import { isExtraneousPopstateEvent, supportsPopStateOnHashChange } from '../utils/nav-utils';
+import { addLeadingSlash, createPath, hasBasename, stripBasename, stripTrailingSlash } from '../utils/path-utils';
+import { createScrollHistory } from './scroll-history';
+import { createTransitionManager } from './transition-manager';
 
 export interface CreateBrowserHistoryOptions {
   getUserConfirmation?: (
@@ -149,8 +149,7 @@ export function createBrowserHistory(win: Window, props: CreateBrowserHistoryOpt
   const createHref = (location: LocationSegments) => basename + createPath(location)
 
   const push = (path: string | LocationSegments, state?: any) => {
-    warnIf(
-      typeof path === 'object' && path.state !== undefined && state !== undefined,
+    warnIf(typeof path === 'object' && path?.state && state,
       'You should avoid providing a 2nd state argument to push when the 1st argument is a location-like object that already has state; it is ignored',
     )
 
@@ -180,7 +179,7 @@ export function createBrowserHistory(win: Window, props: CreateBrowserHistoryOpt
           setState({ action, location })
         }
       } else {
-        warnIf(state === undefined, 'Browser history cannot push state in browsers that do not support HTML5 history')
+        warnIf(state !== undefined, 'Browser history cannot push state in browsers that do not support HTML5 history')
 
         globalLocation.href = href
       }

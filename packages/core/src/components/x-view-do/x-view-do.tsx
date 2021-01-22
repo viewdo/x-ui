@@ -4,37 +4,24 @@ import {
   actionBus,
   DATA_EVENTS,
   debugIf,
-  EventAction,
   eventBus,
-  EventEmitter,
   interfaceState,
-  markVisit,
   MatchResults,
-  resolveChildElementXAttributes,
+  recordVisit,
   Route,
-  storeVisit,
-  VIDEO_COMMANDS,
-  VIDEO_EVENTS,
-  VIDEO_TOPIC,
+  VideoListener,
   VisitStrategy,
   warn
 } from '../..';
-import { createKey } from '../../services/routing/utils/location-utils';
-import { captureXBackClickEvent, captureXLinkClickEvent, captureXNextClickEvent, getChildInputValidity } from '../../services/utils/dom-utils';
+import {
+  captureXBackClickEvent,
+  captureXLinkClickEvent,
+  captureXNextClickEvent, ElementTimer,
 
-export type TimedNode = {
-  start: number
-  end: number
-  classIn: string | null
-  classOut: string | null
-  element: {
-    id: any
-    classList: { contains: (arg0: string) => any; add: (arg0: string) => void; remove: (arg0: string) => void }
-    hasAttribute: (arg0: string) => any
-    removeAttribute: (arg0: string) => void
-    setAttribute: (arg0: string, arg1: string) => void
-  }
-}
+  getChildInputValidity, resolveChildElementXAttributes,
+  TIMER_EVENTS
+} from '../../services/elements';
+import { createKey } from '../../services/routing/utils/location-utils';
 
 /**
  *  @system routing
@@ -45,13 +32,11 @@ export type TimedNode = {
   shadow: true,
 })
 export class XViewDo {
-  private subscription!: () => void
-  private subscriptionVideoActions!: () => void
-  private timedNodes: TimedNode[] = []
-  private timer: any
-  private timeEvent!: EventEmitter
-  private lastTime = 0
+  private dataChangedSubscription!: () => void
   private route!: Route
+  private videoListener?: VideoListener
+  private elementTimer?: ElementTimer
+
   @Element() el!: HTMLXViewDoElement
   @State() match: MatchResults | null = null
   @State() contentKey?: string | null
@@ -178,28 +163,29 @@ export class XViewDo {
       strict: true,
     })
 
-    this.subscription = eventBus.on(DATA_EVENTS.DataChanged, async () => {
+    this.dataChangedSubscription = eventBus.on(DATA_EVENTS.DataChanged, async () => {
       debugIf(this.debug, 'x-view-do: data changed ')
       await resolveChildElementXAttributes(this.el)
     })
 
-    // Attach enter-key for next
-    this.el.addEventListener('keypress', (ev: KeyboardEvent) => {
-      if (ev.key === 'Enter') {
-        this.next(this.el.localName, 'enter-key')
-      }
-    })
 
-    this.route.captureInnerLinks()
+  }
+
+  private activateActions(
+    forEvent: ActionActivationStrategy,
+    filter: (activator: HTMLXActionActivatorElement) => boolean = (_a) => true,
+  ) {
+    this.actionActivators
+      .filter((activator) => activator.activate === forEvent)
+      .filter(filter)
+      .forEach(async (activator) => {
+        await activator.activateActions()
+      })
   }
 
   async componentWillRender() {
     debugIf(this.debug, `x-view-do: ${this.url} will render`)
     await this.resolveView()
-  }
-
-  async componentDidRender() {
-    debugIf(this.debug, `x-view-do: ${this.url} did render`)
   }
 
   private async resolveView() {
@@ -208,17 +194,19 @@ export class XViewDo {
     if (this.match?.isExact) {
       debugIf(this.debug, `x-view-do: ${this.url} on-enter`)
       await this.fetchHtml()
-      await this.resolveChildren()
-      await this.setupTimer()
+      await this.activateView()
       this.el.removeAttribute('hidden')
-      await this.route.loadCompleted()
     } else {
-      this.el.setAttribute('hidden', '')
       this.cleanup()
-      this.resetContent()
+      this.el.setAttribute('hidden', '')
     }
+  }
 
-    await resolveChildElementXAttributes(this.el)
+  private async activateView() {
+    this.activateActions(ActionActivationStrategy.OnEnter)
+    await this.setupTimer()
+    await this.route.loadCompleted()
+    await this.captureChildElements()
   }
 
   private async fetchHtml() {
@@ -227,13 +215,12 @@ export class XViewDo {
     }
 
     try {
-      this.resetContent()
-      this.contentKey = `remote-content-${createKey(10)}`;
       const response = await fetch(this.contentSrc)
       if (response.status === 200) {
+        this.contentKey = `remote-content-${createKey(10)}`
         const innerContent = await response.text()
-        const content = this.el.ownerDocument.createElement('div');
-        content.slot = 'content';
+        const content = this.el.ownerDocument.createElement('div')
+        content.slot = 'content'
         content.id = this.contentKey!
         content.innerHTML = innerContent
         if (this.route.transition) content.className = this.route.transition
@@ -247,6 +234,82 @@ export class XViewDo {
     }
   }
 
+  private async captureChildElements() {
+    debugIf(this.debug, `x-view-do: ${this.url} resolve children called`)
+
+    captureXBackClickEvent(this.el, (tag) => {
+      this.back(tag, 'clicked')
+    })
+
+    captureXNextClickEvent(this.el, (tag, route) => {
+      this.next(tag, 'clicked', route)
+    })
+
+    captureXLinkClickEvent(this.el, (tag, route) => {
+      this.next(tag, 'clicked', route)
+    })
+
+    await resolveChildElementXAttributes(this.el)
+
+    this.route.captureInnerLinks()
+  }
+
+  private async setupTimer() {
+    const video = this.childVideo
+
+    const timeUpdateEvent = 'vmCurrentTimeChange'
+
+    this.elementTimer = new ElementTimer(
+      this.el,
+      this.duration,
+      this.debug)
+
+    if (video) {
+      this.videoListener = new VideoListener(video, eventBus, this.debug, actionBus)
+
+      video.addEventListener(timeUpdateEvent, () => {
+        this.elementTimer!.emit(
+          TIMER_EVENTS.OnInterval,
+          video.currentTime)
+      })
+
+      video.addEventListener('vmPlaybackEnded', () => {
+        this.elementTimer!.emit(
+          TIMER_EVENTS.OnEnd)
+      })
+
+      video.addEventListener('end', () => {
+        this.elementTimer!.emit(
+          TIMER_EVENTS.OnEnd)
+      })
+
+      if (interfaceState.autoplay) {
+        await video?.play()
+      }
+    } else {
+      this.elementTimer.beginInternalTimer()
+    }
+
+    this.elementTimer.on(TIMER_EVENTS.OnInterval, (time: number) => {
+      this.activateActions(ActionActivationStrategy.AtTime, (activator) =>
+        activator.time ? time >= activator.time : false,
+      )
+    })
+
+    this.elementTimer.on(TIMER_EVENTS.OnEnd, () => {
+      if (interfaceState.autoplay) {
+        this.cleanup()
+        this.next('timer', TIMER_EVENTS.OnEnd)
+      }
+    })
+  }
+
+
+
+  componentDidRender() {
+    debugIf(this.debug, `x-view-do: ${this.url} did render`)
+  }
+
   private resetContent() {
     const remoteContent = this.el.querySelector(`#${this.contentKey}`)
     remoteContent?.remove()
@@ -255,357 +318,36 @@ export class XViewDo {
   }
 
   private cleanup() {
-    clearInterval(this.timer)
+    this.resetContent()
     this.childVideo?.pause()
-    this.subscriptionVideoActions?.call(this)
-    this.restoreElementChildTimedNodes()
-    this.timer = null
-    this.lastTime = 0
-  }
-
-  private beforeExit() {
-    this.cleanup()
-    let valid = getChildInputValidity(this.el)
-    if (valid) {
-      this.actionActivators
-        .filter((activator) => activator.activate === ActionActivationStrategy.OnExit)
-        .forEach(async (activator) => {
-          await activator.activateActions()
-        })
-    }
-
-    return valid
+    this.videoListener?.destroy()
+    this.elementTimer?.destroy()
   }
 
   private back(element: string, eventName: string) {
     debugIf(this.debug, `x-view-do: back fired from ${element}:${eventName}`)
-    this.beforeExit()
-    this.resetContent()
+    this.cleanup()
     this.route?.router.history.goBack()
   }
 
   private next(element: string, eventName: string, route?: string | null) {
     debugIf(this.debug, `x-view-do: next fired from ${element}:${eventName}`)
 
-    if (this.beforeExit()) {
-      markVisit(this.url)
-      if (this.visit === VisitStrategy.once) {
-        storeVisit(this.url)
-      }
-      this.resetContent()
+    const valid = getChildInputValidity(this.el)
+    if (valid) {
+      recordVisit(this.visit, this.url)
+      this.cleanup()
+      this.activateActions(ActionActivationStrategy.OnExit)
       if (route) {
-        this.route.router?.goToRoute(route)
+        this.route.goToRoute(route)
       } else {
-        this.route.router?.goToParentRoute()
+        this.route.router.goToParentRoute()
       }
     }
-  }
-
-  private async resolveChildren() {
-    debugIf(this.debug, `x-view-do: ${this.url} resolve children called`)
-
-    captureXNextClickEvent(this.el, (tag, route) => {
-      this.next(tag, 'clicked', route)
-    })
-
-    captureXBackClickEvent(this.el, (tag) => {
-      this.back(tag, 'clicked')
-    })
-
-    captureXLinkClickEvent(this.el, (tag, route) => {
-      this.next(tag, 'clicked', route)
-    })
-
-    // Activate on-enter actions
-    this.actionActivators
-      .filter((activator) => activator.activate === ActionActivationStrategy.OnEnter)
-      .forEach(async (activator) => activator.activateActions())
-
-    // Capture timed nodes
-    this.timedNodes = this.captureElementChildTimedNodes(this.duration)
-    debugIf(
-      this.debug && this.timedNodes.length > 0,
-      `x-view-do: ${this.url} found time-child nodes: ${JSON.stringify(this.timedNodes)}`,
-    )
-  }
-
-  private async setupTimer() {
-    const video = this.childVideo
-    const { debug, duration } = this
-    const timeUpdateEvent = 'vmCurrentTimeChange'
-
-    this.timeEvent = new EventEmitter()
-    this.lastTime = 0
-
-    debugIf(this.debug, `x-view-do: starting timer w/ ${duration} duration`)
-
-    if (video) {
-      this.subscriptionVideoActions = actionBus.on(VIDEO_TOPIC, async (e, ev: EventAction<any>) => {
-        debugIf(this.debug, `x-audio-player: event received ${e}:${ev.command}`)
-        await this.commandReceived(ev.command, ev.data)
-      })
-
-      video.addEventListener(timeUpdateEvent, () => {
-        this.timeEvent.emit(timeUpdateEvent, video.currentTime)
-        this.lastTime = video.currentTime
-      })
-
-      video.addEventListener('vmPlaybackEnded', () => {
-        this.next('video', 'ended')
-      })
-
-      video.addEventListener('end', () => {
-        this.next('video', 'ended')
-      })
-
-      if (interfaceState.autoplay) {
-        await video?.play()
-      }
-    } else {
-      const time = 0
-      const started = performance.now()
-      const emitTime = (time: number) => {
-        time = (performance.now() - started) / 1000
-        debugIf(this.debug, `x-view-do: ${this.lastTime} - ${time}`)
-        this.timeEvent.emit(timeUpdateEvent, time)
-
-        if ((duration > 0 && time < duration) || duration === 0) {
-          this.timer = setTimeout(() => {
-            this.timer = requestAnimationFrame(() => {
-              emitTime(time)
-            })
-          }, 500)
-
-          this.lastTime = time
-        }
-
-        if (duration > 0 && time > duration) {
-          debugIf(debug, `x-view-do: presentation ended at ${time} [not redirecting]`)
-          cancelAnimationFrame(this.timer)
-          clearInterval(this.timer)
-          if (interfaceState.autoplay) {
-            this.next('timer', timeUpdateEvent)
-          }
-        }
-      }
-
-      this.timer = requestAnimationFrame(() => {
-        emitTime(time)
-      })
-    }
-
-    this.timeEvent.on(timeUpdateEvent, (time: number) => {
-      const { debug, duration } = this
-
-      this.actionActivators
-        .filter((activator) => activator.activate === ActionActivationStrategy.AtTime)
-        .filter((activator) => (activator.time ? time >= activator.time : false))
-        .forEach(async (activator) => {
-          await activator.activateActions()
-        })
-
-      this.resolveElementChildTimedNodesByTime(time, duration, debug)
-    })
-  }
-
-  private mute(muted: boolean) {
-    if (!this.childVideo) {
-      return
-    }
-
-    this.childVideo.muted = muted
-    if (muted) {
-      eventBus.emit(VIDEO_EVENTS.Muted)
-    } else {
-      eventBus.emit(VIDEO_EVENTS.Unmuted)
-    }
-  }
-
-  private async play() {
-    await this.childVideo?.play()
-    eventBus.emit(VIDEO_EVENTS.Played)
-  }
-
-  private pause() {
-    this.childVideo?.pause()
-    eventBus.emit(VIDEO_EVENTS.Paused)
-  }
-
-  private async resume() {
-    await this.childVideo?.play()
-    eventBus.emit(VIDEO_EVENTS.Resumed)
-  }
-
-  private async commandReceived(command: string, data: any) {
-    switch (command) {
-      case VIDEO_COMMANDS.Play: {
-        await this.play()
-        break
-      }
-
-      case VIDEO_COMMANDS.Pause: {
-        this.pause()
-        eventBus.emit(VIDEO_EVENTS.Paused)
-        break
-      }
-
-      case VIDEO_COMMANDS.Resume: {
-        await this.resume()
-        eventBus.emit(VIDEO_EVENTS.Resumed)
-        break
-      }
-
-      case VIDEO_COMMANDS.Mute: {
-        this.mute(data.value)
-        eventBus.emit(VIDEO_EVENTS.Muted)
-        break
-      }
-
-      default:
-    }
-  }
-
-  private resolveElementChildTimedNodesByTime(time: number, duration: number, debug: boolean) {
-    this.timedNodes.forEach((node) => {
-      if (node.start > -1 && time >= node.start && (node.end > -1 ? time < node.end : true)) {
-        debugIf(debug, `x-view-do: node ${node.element.id} is after start: ${node.start} before end: ${node.end}`)
-        // Time is after start and before end, if it exists
-        if (node.classIn && !node.element.classList.contains(node.classIn)) {
-          debugIf(
-            debug,
-            `x-view-do: node ${node.element.id} is after start: ${node.start} before end: ${node.end} [adding classIn: ${node.classIn}]`,
-          )
-          node.element.classList.add(node.classIn)
-        }
-
-        if (node.element.hasAttribute('hidden')) {
-          debugIf(
-            debug,
-            `x-view-do: node ${node.element.id} is after start: ${node.start} before end: ${node.end} [removing hidden attribute]`,
-          )
-          // Otherwise, if there's a hidden attribute, remove it
-          node.element.removeAttribute('hidden')
-        }
-      }
-
-      if (node.end > -1 && time > node.end) {
-        // Time is after end, if it exists
-        debugIf(debug, `x-view-do: node ${node.element.id} is after end: ${node.end}`)
-        if (node.classIn && node.element.classList.contains(node.classIn)) {
-          debugIf(
-            debug,
-            `x-view-do: node ${node.element.id} is after end: ${node.end}  [removing classIn: ${node.classIn}]`,
-          )
-          // Remove the in class, if it exists
-          node.element.classList.remove(node.classIn)
-        }
-
-        if (node.classOut) {
-          // If a class-out was specified and isn't on the element, add it
-          if (!node.element.classList.contains(node.classOut)) {
-            debugIf(
-              debug,
-              `x-view-do: node ${node.element.id} is after end: ${node.end} [adding classOut: ${node.classOut}]`,
-            )
-            node.element.classList.add(node.classOut)
-          }
-        } else if (!node.element.hasAttribute('hidden')) {
-          // Otherwise, if there's no hidden attribute, add it
-          debugIf(debug, `x-view-do: node ${node.element.id} is after end: ${node.end} [adding hidden attribute]`)
-          node.element.setAttribute('hidden', '')
-        }
-      }
-    })
-
-    // Resolve x-time-to
-    const timeValueElements = this.el.querySelectorAll('[x-time-to]')
-    timeValueElements.forEach((element_) => {
-      const seconds = Math.floor(time)
-      const attributeName = element_.getAttribute('x-time-to')
-      if (attributeName) {
-        element_.setAttribute(attributeName, seconds.toString())
-      } else {
-        element_.childNodes.forEach((cn) => cn.remove())
-        element_.append(document.createTextNode(seconds.toString()))
-      }
-    })
-
-    // Resolve x-percentage-to
-    const timePercentageValueElements = this.el.querySelectorAll('[x-percentage-to]')
-    timePercentageValueElements.forEach((element) => {
-      const attributeName = element.getAttribute('x-percentage-to')
-      const percentage = time / duration
-      if (attributeName) {
-        element.setAttribute(attributeName, percentage.toString())
-      } else {
-        element.childNodes.forEach((cn) => cn.remove())
-        element.append(document.createTextNode(`${Math.round(percentage * 100)}%`))
-      }
-    })
-  }
-
-  private restoreElementChildTimedNodes() {
-    this.timedNodes.forEach((node) => {
-      if (node.classIn && node.element.classList.contains(node.classIn)) {
-        node.element.classList.remove(node.classIn)
-      }
-
-      if (node.classOut && node.element.classList.contains(node.classOut)) {
-        node.element.classList.remove(node.classOut)
-      }
-
-      if (!node.element.hasAttribute('hidden')) {
-        node.element.setAttribute('hidden', '')
-      }
-    })
-
-    // Resolve x-time-to
-    const timeValueElements = this.el.querySelectorAll('[x-time-to]')
-    timeValueElements.forEach((element_) => {
-      const attributeName = element_.getAttribute('x-time-to')
-      if (attributeName) {
-        element_.setAttribute(attributeName, '0')
-      } else {
-        element_.childNodes.forEach((cn) => cn.remove())
-        element_.append(document.createTextNode('0'))
-      }
-    })
-
-    // Resolve x-percentage-to
-    const timePercentageValueElements = this.el.querySelectorAll('[x-percentage-to]')
-    timePercentageValueElements.forEach((element_) => {
-      const attributeName = element_.getAttribute('x-percentage-to')
-      if (attributeName) {
-        element_.setAttribute(attributeName, '0')
-      } else {
-        element_.childNodes.forEach((cn) => cn.remove())
-        element_.append(document.createTextNode('0%'))
-      }
-    })
-  }
-
-  private captureElementChildTimedNodes(defaultDuration: number) {
-    const timedNodes: TimedNode[] = []
-    this.el.querySelectorAll('[x-in-time], [x-out-time]').forEach((element) => {
-      const startAttribute = element.getAttribute('x-in-time')
-      const start = startAttribute ? Number.parseFloat(startAttribute) : 0
-      const endAttribute = element.getAttribute('x-out-time')
-      const end = endAttribute ? Number.parseFloat(endAttribute) : defaultDuration
-      timedNodes.push({
-        start,
-        end,
-        classIn: element.getAttribute('x-in-class'),
-        classOut: element.getAttribute('x-out-class'),
-        element,
-      })
-    })
-    return timedNodes
   }
 
   disconnectedCallback() {
-    clearInterval(this.timer)
-    this.timeEvent.removeAllListeners()
-    this.subscription()
+    this.dataChangedSubscription()
     this.route.destroy()
   }
 

@@ -2,6 +2,7 @@ import { eventBus } from '..';
 import { hasExpression, resolveExpression } from '../data/expression-evaluator';
 import { MatchResults, RouteViewOptions, ROUTE_EVENTS } from './interfaces';
 import { RouterService } from './router';
+import { isAbsolute } from './utils/location-utils';
 import { matchesAreEqual } from './utils/match-path';
 
 export class Route {
@@ -81,6 +82,12 @@ export class Route {
         this.routeElement.ownerDocument.title = `${this.router.appTitle}`
       }
     }
+  }
+
+  goToRoute(path: string) {
+    const route = !isAbsolute(path) ?
+        this.router.resolvePathname(path, this.path) : path
+    this.router.history.push(route);
   }
 
   public destroy() {

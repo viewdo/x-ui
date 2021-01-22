@@ -19,7 +19,7 @@ import {
   ROUTE_TOPIC
 } from './interfaces';
 import { Route } from './route';
-import { getLocation, getUrl, resolvePathname } from './utils/location-utils';
+import { getLocation, getUrl, isAbsolute, resolvePathname } from './utils/location-utils';
 import { matchPath } from './utils/match-path';
 
 const HISTORIES: { [key in HistoryType]: (win: Window) => RouterHistory } = {
@@ -132,13 +132,10 @@ export class RouterService {
     })
   }
 
-  goToRoute(path: string, replace = false) {
-    const route = this.getUrl(path)
-    if (replace) {
-      this.history.replace(route);
-    } else {
-      this.history?.push(route);
-    }
+  goToRoute(path: string) {
+    const route = isAbsolute(path) ? path
+      : this.resolvePathname(path, this.location?.pathname)
+    this.history?.push(route);
   }
 
   matchPath(options: MatchOptions = {}): MatchResults | null {
@@ -163,7 +160,8 @@ export class RouterService {
       normalizedUrl = `${parentUrl}/${childUrl}`
     }
 
-    return normalizedUrl.replace('//', '/')
+    const path = normalizedUrl.replace('//', '/')
+    return (path.endsWith('/')) ? path.slice(0, path.length-1): path
   }
 
   isModifiedEvent(ev: MouseEvent) {
@@ -180,16 +178,14 @@ export class RouterService {
 
         if (!el.href.includes(location.origin) || el.target) return true
 
-        if (el.getAttribute('x-next') || el.getAttribute('x-back')) return true
-
         ev.preventDefault()
-
-        return this.handleRouteLinkClick(el.href.replace(location.origin, ''), fromPath)
+        const path = el.href.replace(location.origin, '')
+        return this.handleRouteLinkClick(path, fromPath)
       })
   }
 
   handleRouteLinkClick(toPath:string, fromPath?: string) {
-    const route = this.resolvePathname(toPath, fromPath)
+    const route = isAbsolute(toPath) ? toPath : this.normalizeChildUrl(toPath, fromPath || '/')
     this.goToRoute(route)
   }
 

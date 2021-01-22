@@ -3,7 +3,7 @@
   <h1>Your Profile</h1>
   <p>This data does not leave your browser. It is only for demonstration
     purposes.</p>
-  <x-action-activator debug activate="OnElementEvent" target-element="#name"
+  <x-action-activator activate="OnElementEvent" target-element="#name"
                       target-event="change" multiple>
     <x-action topic="data" command="set-data" data='{"provider": "storage"}'>
     </x-action>
@@ -26,7 +26,7 @@
   <x-data-show when="'{cookie:consent}' == 'true'">
     <h3>You gave us consent to set a cookie.</h3>
     <p>This is just an example and not meant to be taken seriously.</p>
-    <x-action-activator>
+    <x-action-activator target-element="#consent">
       <x-action topic="data" command="set-data">
         <script lang="JSON" type="application/json">
           {
@@ -36,9 +36,10 @@
             }
           }
         </script>
+        <input type="hidden" value="false" id="consent" />
       </x-action>
-      <button class="btn btn-light">Revoke Consent</button>
     </x-action-activator>
+    <button id='consent' class="btn btn-light">Revoke Consent</button>
   </x-data-show>
 
   <footer>

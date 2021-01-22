@@ -62,7 +62,7 @@ export class XActionActivator {
 
     const values: Record<string,any> = {}
 
-    Array.from(this.el.querySelectorAll('[value]'))
+    Array.from(this.el.querySelectorAll(':enabled'))
       .forEach(e => {
         const input = e as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
         values[input.name||e.id] = input.value
@@ -128,10 +128,10 @@ export class XActionActivator {
 
     if (this.activate === ActionActivationStrategy.OnElementEvent) {
       const element = this.targetElement
-        ? this.el.querySelector(this.targetElement)
-        : this.el.querySelector(':not(x-action):not(x-audio-music-action):not(x-audio-sound-action):not(script)')
+        ? this.el.parentElement?.querySelector(this.targetElement)
+        : this.el.parentElement?.querySelector(':not(x-action):not(x-audio-music-action):not(x-audio-sound-action):not(script):not(x-action-activator)')
 
-      if (element === null) {
+      if (!element) {
         warn(`x-action-activator: ${this.parent?.url || ''} no elements found for '${this.targetElement || 'na'}'`)
       } else {
         debugIf(this.debug, `x-action-activator: element found ${element.nodeName}`)

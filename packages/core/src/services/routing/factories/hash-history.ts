@@ -1,20 +1,20 @@
 // Adapted from the https://github.com/ReactTraining/history and converted to TypeScript
 
-import { Listener } from '../../actions/interfaces'
-import { warnIf } from '../../logging'
-import { LocationSegments, Prompt, RouterHistory } from '../interfaces'
-import { getConfirmation } from '../utils/browser-utils'
-import { createKey, createLocation, locationsAreEqual } from '../utils/location-utils'
-import { supportsGoWithoutReloadUsingHash } from '../utils/nav-utils'
+import { Listener } from '../../actions/interfaces';
+import { warnIf } from '../../logging';
+import { LocationSegments, Prompt, RouterHistory } from '../interfaces';
+import { getConfirmation } from '../utils/browser-utils';
+import { createKey, createLocation, locationsAreEqual } from '../utils/location-utils';
+import { supportsGoWithoutReloadUsingHash } from '../utils/nav-utils';
 import {
   addLeadingSlash,
   createPath,
   hasBasename,
   stripBasename,
   stripLeadingSlash,
-  stripTrailingSlash,
-} from '../utils/path-utils'
-import { createTransitionManager } from './transition-manager'
+  stripTrailingSlash
+} from '../utils/path-utils';
+import { createTransitionManager } from './transition-manager';
 
 export interface CreateHashHistoryOptions {
   getUserConfirmation?: (
@@ -181,7 +181,7 @@ export function createHashHistory(win: Window, props: CreateHashHistoryOptions =
   const createHref = (location: LocationSegments) => `#${encodePath(basename + createPath(location))}`
 
   const push = (url: string | LocationSegments, state: any) => {
-    warnIf(state, 'Hash history cannot push state; it is ignored')
+    warnIf(state !== undefined, 'Hash history cannot push state; it is ignored')
 
     const action = 'PUSH'
     const location = createLocation(url, undefined, createKey(keyLength), history.location)

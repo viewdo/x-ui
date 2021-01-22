@@ -1,5 +1,6 @@
-import { warnIf } from '../logging'
-import { storageAvailable } from './utils/browser-utils'
+import { warnIf } from '../logging';
+import { VisitStrategy } from './interfaces';
+import { storageAvailable } from './utils/browser-utils';
 
 const supportsSession = storageAvailable(window, 'sessionStorage')
 warnIf(!supportsSession, 'session-storage is not supported')
@@ -49,6 +50,14 @@ export function setStoredVisits(visits: string[]) {
 
 export function hasVisited(url: string) {
   return getSessionVisits().includes(url) || getStoredVisits().includes(url)
+}
+
+export function recordVisit(visit: VisitStrategy, url: string) {
+  if (visit == VisitStrategy.once) {
+    storeVisit(url)
+  } else {
+    markVisit(url)
+  }
 }
 
 export function markVisit(url: string) {

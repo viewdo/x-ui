@@ -1,5 +1,7 @@
 /* istanbul ignore file */
 
+import { Path } from './utils';
+
 export enum ROUTE_COMMANDS {
   NavigateNext = 'navigate-next',
   NavigateTo = 'navigate-to',
@@ -18,7 +20,6 @@ export const ROUTE_TOPIC = 'routing'
 
 export type NavigateNext = Record<string, unknown>
 
-export type Path = string | RegExp | Array<string | RegExp>
 
 export type Prompt = (location: LocationSegments, action: string) => string
 

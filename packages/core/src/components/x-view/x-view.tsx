@@ -23,7 +23,7 @@ import { createKey } from '../../services/routing/utils/location-utils';
   shadow: true,
 })
 export class XView {
-  private readonly subscription!: () => void
+  private readonly dataChangedSubscription!: () => void
   private route!: Route
   @Element() el!: HTMLXViewElement
   @State() match!: MatchResults | null
@@ -176,7 +176,7 @@ export class XView {
         debugIf(this.debug, `x-view: ${this.url} route is matched `)
         const nextDo = await this.resolveNext()
         if (nextDo) {
-          this.route.router?.goToRoute(nextDo.url, true)
+          this.route.goToRoute(nextDo.url)
         } else {
           this.activateView(this.match.url)
         }
@@ -240,7 +240,7 @@ export class XView {
   }
 
   disconnectedCallback() {
-    this.subscription()
+    this.dataChangedSubscription()
     this.route.destroy()
   }
 

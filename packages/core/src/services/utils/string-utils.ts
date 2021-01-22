@@ -4,7 +4,7 @@
  * @return {boolean}
  */
 export function toBoolean(value: string) {
-  if (!value) {
+  if (value == undefined || value == null) {
     return false
   }
 
@@ -29,5 +29,5 @@ export function toBoolean(value: string) {
  * @return {string}
  */
 export function kebabToCamelCase(kebabString: string) {
-  return kebabString.replace(/-./g, (x) => x[1].toUpperCase())
+  return kebabString.toLowerCase().replace(/-./g, (x) => x[1].toUpperCase())
 }

@@ -109,8 +109,8 @@
       <x-view url="/home" page-title="Home" content-src="/docs/home/index.html">
         <x-data-provider-cookie x-cloak>
           <div class="container container-fluid" style="clear: both;">
-            <p>This (fake) site uses cookies for non-nefarious reasons.</p>
-            <p>You okay with that or what?</p>
+            <p>This site uses cookies for non-nefarious reasons.</p>
+            <p>Are you okay with that?</p>
             <div>
               <button type=" button" class="btn btn-primary"
                       x-accept>Yes</button>
@@ -138,10 +138,10 @@
         <x-use
                script-src="https://cdn.jsdelivr.net/gh/markedjs/marked@1/marked.min.js">
         </x-use>
-        <x-view url="select" when="!{storage:installed}"
-                page-title="Select Installation"
-                content-src="/docs/start/select.html">
-        </x-view>
+        <x-view-do url="select" when="!{storage:installed}"
+                   page-title="Select Installation"
+                   content-src="/docs/start/select.html">
+        </x-view-do>
 
         <x-view-do url="cdn" page-title="Use w/CDN" visit="optional"
                    content-src="/docs/start/cdn.html">

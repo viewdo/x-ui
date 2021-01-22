@@ -1,6 +1,6 @@
 import { Component, Element, h, Host, Prop, State } from '@stencil/core';
 import { DATA_EVENTS, eventBus, resolveChildElementXAttributes, resolveExpression, RouterService, ROUTE_EVENTS, warn } from '../../services';
-import { removeAllChildNodes } from '../../services/utils/dom-utils';
+import { removeAllChildNodes } from '../../services/elements/functions';
 
 /**
  *  @system data

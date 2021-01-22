@@ -131,7 +131,7 @@
                style-src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css">
         </x-use>
         <h2>Survey</h2>
-        <div class="step" x-class="completed" x-class-when="{storage:name}">
+        <div class="step" x-class="completed" x-class-when="{storage:nickname}">
           <div class="stepper">
             <div class="circle"></div>
             <div class="line"></div>
@@ -139,17 +139,18 @@
           <div class="form">
             <h3>
               Step 1
-              <span x-hide-when="!{storage:name}">
+              <span x-hide-when="!{storage:nickname}">
                 <a href="/survey/step-1">✔️</a>
               </span>
             </h3>
-            <x-view-do when="!{storage:name}" url="step-1" page-title="Step 1">
+            <x-view-do when="!{storage:nickname}" url="step-1"
+                       page-title="Step 1">
               <div slot="content" class="form-group">
-                <label class="form-label" for="name">Name</label>
+                <label class="form-label" for="name">Nick Name</label>
                 <input type="text" required class="form-control mb-3" id="name"
-                       onblur="localStorage.setItem('name', this.value)"
-                       onchange="localStorage.setItem('name', this.value)"
-                       x-value-from="{storage:name}" tabindex="0" />
+                       onblur="localStorage.setItem('nickname', this.value)"
+                       onchange="localStorage.setItem('nickname', this.value)"
+                       x-value-from="{storage:nickname}" tabindex="0" />
 
                 <xa class="btn btn-primary" x-next="step-2"> Next </xa>
               </div>
