@@ -156,53 +156,60 @@ export class XView {
     await this.resolveView()
   }
 
+  private async resolveNext() {
+    const viewDos = this.childViewDos.map((viewDo) => {
+      const { when, visit, url } = viewDo
+      const visited = hasVisited(url)
+      return { when, visit, visited, url }
+    })
+
+    return await resolveNext(viewDos)
+  }
+
+
   private async resolveView() {
     debugIf(this.debug, `x-view: ${this.url} resolve view called`)
 
-    if (this.route && this.match) {
+    if (this.match) {
       this.el.classList.add('active-route')
       if (this.match.isExact) {
         debugIf(this.debug, `x-view: ${this.url} route is matched `)
-
-        const viewDos = this.childViewDos.map((viewDo) => {
-          const { when, visit, url } = viewDo
-          const visited = hasVisited(url)
-          return { when, visit, visited, url }
-        })
-
-        const nextDo = await resolveNext(viewDos)
+        const nextDo = await this.resolveNext()
         if (nextDo) {
-          this.route.router?.history.push(nextDo.url)
+          this.route.router?.goToRoute(nextDo.url, true)
         } else {
-          this.el.querySelectorAll('[no-render]').forEach(async (el) => {
-            el.removeAttribute('no-render')
-          })
-          this.el.classList.add('active-route-exact')
-          markVisit(this.match.url)
-          await this.fetchHtml()
-          if (this.route.transition) {
-            this.route.transition.split(' ').forEach((c) => {
-              this.el.classList.add(c)
-            })
-          }
-
-          await this.route.loadCompleted()
+          this.activateView(this.match.url)
         }
       } else {
         this.el.classList.remove('active-route-exact')
       }
+      await resolveChildElementXAttributes(this.el)
     } else {
-      this.el.classList.remove('active-route')
       this.resetContent()
     }
+  }
 
-    await resolveChildElementXAttributes(this.el)
+  private async activateView(url: string) {
+    this.el.querySelectorAll('[no-render]').forEach((el) => {
+      el.removeAttribute('no-render')
+    })
+    this.el.classList.add('active-route-exact')
+    markVisit(url)
+    await this.fetchHtml()
+    if (this.route.transition) {
+      this.route.transition.split(' ').forEach((c) => {
+        this.el.classList.add(c)
+      })
+    }
+
+    await this.route.loadCompleted()
   }
 
   private resetContent() {
     const remoteContent = this.el.querySelector(`#${this.contentKey}`);
     remoteContent?.remove();
     this.contentKey = null
+    this.el.classList.remove('active-route')
   }
 
   private async fetchHtml() {

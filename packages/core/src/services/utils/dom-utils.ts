@@ -82,8 +82,63 @@ export function captureElementsEventOnce<TElement extends HTMLElement,TEvent ext
     })
 }
 
+
+export function getChildInputValidity(parent: HTMLElement) {
+  let valid = true;
+  const inputElements = parent.querySelectorAll('*:enabled');
+  inputElements.forEach((i) => {
+    const input = i as HTMLInputElement;
+    input.blur?.call(i);
+    if (!input.reportValidity()) {
+      valid = false;
+    }
+  });
+  return valid;
+}
+
 export function removeAllChildNodes(parent: HTMLElement) {
   while (parent.firstChild !== null) {
     parent.firstChild.remove()
   }
+}
+
+export function captureXBackClickEvent(
+  parent: HTMLElement,
+  handler: (tag:string) => void) {
+  captureElementsEventOnce<HTMLElement, MouseEvent>(
+    parent,
+    '[x-back]',
+    'click',
+    (el:HTMLElement, e:MouseEvent) => {
+      e.preventDefault()
+      handler(el.localName)
+    })
+}
+
+export function captureXNextClickEvent(
+  parent: HTMLElement,
+  handler: (tag:string, route?:string|null) => void) {
+  captureElementsEventOnce<HTMLElement, MouseEvent>(
+    parent,
+    '[x-next]',
+    'click',
+    (el:HTMLElement, e:MouseEvent) => {
+      const route = el.getAttribute('x-next')
+      e.preventDefault()
+      handler(el.localName, route)
+    })
+}
+
+export function captureXLinkClickEvent(
+  parent: HTMLElement,
+  handler: (tag:string, route?:string|null) => void) {
+  captureElementsEventOnce<HTMLElement, MouseEvent>(
+    parent,
+    '[x-link]',
+    'click',
+    (el:HTMLElement, e:MouseEvent) => {
+      const route = el.getAttribute('x-link')
+      e.preventDefault()
+      handler(el.localName, route)
+    })
 }

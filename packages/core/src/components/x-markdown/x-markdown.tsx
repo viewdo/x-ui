@@ -105,7 +105,7 @@ export class XMarkdown {
     if (!element?.textContent) return
     const md = this.dedent(element.textContent)
     const win = window as any
-    return win.marked ? win.marked(md) : null
+    return win.marked ? win.marked(md) : '[marked not loaded]'
   }
 
   private dedent(innerText: string) {

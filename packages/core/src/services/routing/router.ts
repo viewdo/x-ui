@@ -53,8 +53,7 @@ export class RouterService {
       const newLocation = getLocation(location, root)
       this.history.location = newLocation
       this.location = newLocation
-
-      this.events.emit(ROUTE_EVENTS.RouteChanged, newLocation)
+      writeTask(() => this.events.emit(ROUTE_EVENTS.RouteChanged, newLocation))
     })
 
     this.removeSubscription = this.actions.on(ROUTE_TOPIC, (e) => {
@@ -77,7 +76,7 @@ export class RouterService {
       this.goToParentRoute()
     } else if (actionEvent.command === ROUTE_COMMANDS.NavigateTo) {
       const { url } = actionEvent.data as NavigateTo
-      this.history.push(url)
+      this.goToRoute(url)
     } else if (actionEvent.command === ROUTE_COMMANDS.NavigateBack) {
       this.history.goBack()
     }
@@ -103,7 +102,7 @@ export class RouterService {
 
     const parentSegments = history.location?.pathParts?.slice(0, -1)
     if (parentSegments) {
-      history.push(parentSegments.join('/'))
+      this.history?.push(parentSegments.join('/'))
     } else {
       history.goBack()
     }
@@ -131,6 +130,15 @@ export class RouterService {
     this.writeTask(() => {
       history.win.scrollTo(0, scrollToLocation || 0)
     })
+  }
+
+  goToRoute(path: string, replace = false) {
+    const route = this.getUrl(path)
+    if (replace) {
+      this.history.replace(route);
+    } else {
+      this.history?.push(route);
+    }
   }
 
   matchPath(options: MatchOptions = {}): MatchResults | null {
@@ -162,7 +170,7 @@ export class RouterService {
     return ev.metaKey || ev.altKey || ev.ctrlKey || ev.shiftKey
   }
 
-  public captureInnerLinks(root?:HTMLElement, fromPath?: string) {
+  captureInnerLinks(root?:HTMLElement, fromPath?: string) {
     captureElementsEventOnce<HTMLAnchorElement, MouseEvent>(
       root || this.rootElement,
       `a`,
@@ -170,7 +178,9 @@ export class RouterService {
       (el: HTMLAnchorElement, ev: MouseEvent) => {
         if (this.isModifiedEvent(ev) || !this?.history) return true
 
-        if (!el.href.includes(location.origin)) return true
+        if (!el.href.includes(location.origin) || el.target) return true
+
+        if (el.getAttribute('x-next') || el.getAttribute('x-back')) return true
 
         ev.preventDefault()
 
@@ -180,7 +190,7 @@ export class RouterService {
 
   handleRouteLinkClick(toPath:string, fromPath?: string) {
     const route = this.resolvePathname(toPath, fromPath)
-    this.history.push(route)
+    this.goToRoute(route)
   }
 
   destroy() {

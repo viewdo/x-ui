@@ -79,8 +79,7 @@ export class XLink {
     }
 
     e.preventDefault()
-    const path = router.resolvePathname(this.href, this.parentUrl)
-    router.history.push(path)
+    router.goToRoute(this.href)
   }
 
   disconnectedCallback() {

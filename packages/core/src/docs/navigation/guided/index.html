@@ -1,67 +1,62 @@
-<x-use
-  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
-  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css"
->
+<x-use script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
+       style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
 </x-use>
-<x-use script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js"> </x-use>
+<x-use
+       script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
+</x-use>
 <div class="container container-fluid mx-auto">
-  <x-markdown>
-    <script lang="markdown" type="text/markdown">
-      # Guided Navigation
-
-      You can create smart guided navigation using simple conventions, visit-tracking and data-expressions to guide users through workflows or presentations.
-
-      > Using just static HTML, this page was able to create a rich navigation system that walks a user through content in a personalized, conversational format.
-
-      ### Sequential Routes
-
-      By convention, routes are given an order based on how they are declared.
-
-      <a href="/presentations/guided/sequential"
-        class="btn btn-info text-white">
-      <i class="ri-order-play-line"></i>
-      Basic Sequenced Navigation
-      </a>
-
-      ### Timed Routes
-
-      <a href="/presentations/guided/timed"
-        class="btn btn-info text-white">
-      <i class="ri-guide-line"></i>
-      Automatic Navigation w/Time-based Routes
-      </a>
-
-      ### Smart Routing
-
-      <a href="/presentations/guided/smart"
-        class="btn btn-info text-white">
-      <i class="ri-lightbulb-flash-line"></i>
-      Smart Guidance w/Visit Tracking
-      </a>
-
-      ### Rule Based Routes
-
-      <a href="/presentations/guided/rules"
-        class="btn btn-info text-white">
-      <i class="ri-gps-line"></i>
-      Using Rules for Advanced Guidance
-      </a>
-
-      ### Convention-based Routing
-
-      <a href="/presentations/guided/tutorial"
-        class="btn btn-info text-white">
+  <h1>Guided Navigation</h1>
+  <p class="lead">
+    Guided navigation creates a
+    back/next format with a convention-based next
+    route automatically determined by the router.
+  </p>
+  <h2>How it Works</h2>
+  <p>
+    <a href="/navigation/guided/tutorial" class="btn btn-secondary float-end">
       <i class="ri-book-3-line"></i>
-      Learn more about convention-based routing
-      </a>
-    </script>
-  </x-markdown>
+      Learn more.
+    </a>
+    You can create smart guided navigation using simple conventions,
+    visit-tracking
+    and data-expressions to guide users through workflows or navigation.
+  </p>
+  <p>
+    By convention, routes are given an order based on how they are declared.
+  </p>
+  <blockquote>
+    Using just static HTML, this page was able to create a rich navigation
+    system
+    that walks a user through content in a personalized, conversational format.
+  </blockquote>
+  <div class="button-nav">
+    <a href="/navigation/guided/sequential" class="btn btn-info text-white">
+      <i class="ri-order-play-line"></i>
+      Basic Sequenced
+    </a>
+
+    <a href="/navigation/guided/timed" class="btn btn-info text-white">
+      <i class="ri-guide-line"></i>
+      Automatic & Time-based
+    </a>
+
+    <a href="/navigation/guided/smart" class="btn btn-info text-white">
+      <i class="ri-lightbulb-flash-line"></i>
+      Guidance w/Tracking
+    </a>
+
+    <a href="/navigation/guided/rules" class="btn btn-info text-white">
+      <i class="ri-gps-line"></i>
+      Rules-Based Guidance
+    </a>
+
+
+  </div>
+
   <footer>
-    <a slot="start" href="/presentations">
-      <button class="btn btn-light btn-lg">&lt; XX</button>
+    <a slot="start" href="/navigation">
+      <button class="btn btn-light">&lt; Navigation</button>
     </a>
-    <a slot="end" href="/presentations">
-      <button class="btn btn-primary btn-lg">XX &gt;</button>
-    </a>
+
   </footer>
 </div>

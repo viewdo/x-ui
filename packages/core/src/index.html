@@ -55,7 +55,7 @@
   </head>
 
   <body>
-    <x-ui start-url="home" app-title="view.DO :: <x-ui/>"
+    <x-ui start-url="/home" app-title="view.DO :: <x-ui/>"
           transition="animate__animated animate__fadeIn">
       <x-use style-src="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
              script-src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js">
@@ -106,7 +106,7 @@
         </div>
       </div>
 
-      <x-view url="home" page-title="Home" content-src="/docs/home/index.html">
+      <x-view url="/home" page-title="Home" content-src="/docs/home/index.html">
         <x-data-provider-cookie x-cloak>
           <div class="container container-fluid" style="clear: both;">
             <p>This (fake) site uses cookies for non-nefarious reasons.</p>
@@ -202,7 +202,7 @@
         </x-view>
       </x-view>
 
-      <x-view url="navigation" page-title="Navigation System"
+      <x-view url="/navigation" page-title="Navigation System"
               content-src="/docs/navigation/index.html">
         <x-use
                script-src="https://cdn.jsdelivr.net/gh/markedjs/marked@1/marked.min.js">
@@ -220,9 +220,16 @@
             </template>
           </x-data-repeat>
         </ul>
+        <x-view url="guided" page-title="Guided"
+                content-src="/docs/navigation/guided/index.html"
+                visit="optional">
+        </x-view>
+        <x-view url="stepper" page-title="Stepper"
+                content-src="/docs/navigation/stepper.html" visit="optional">
+        </x-view>
       </x-view>
 
-      <x-view url="presentations" page-title="Guided Routing"
+      <x-view url="/presentations" page-title="Guided Routing"
               content-src="/docs/presentations/index.html">
         <x-view url="guided" page-title="Guided Navigation"
                 content-src="/docs/presentations/guided.html">
@@ -347,7 +354,7 @@
         </x-view>
       </x-view>
 
-      <x-view url="content" page-title="Dynamic Content"
+      <x-view url="/content" page-title="Dynamic Content"
               content-src="/docs/content/index.html">
         <x-use
                script-src="https://cdn.jsdelivr.net/gh/markedjs/marked@1/marked.min.js">
@@ -402,7 +409,7 @@
         </x-view>
       </x-view>
 
-      <x-view url="actions" page-title="Action"
+      <x-view url="/actions" page-title="Action"
               content-src="/docs/actions/index.html">
         <x-use
                script-src="https://cdn.jsdelivr.net/gh/markedjs/marked@1/marked.min.js">
@@ -443,7 +450,7 @@
                    content-src="/docs/actions/elements.html"> </x-view-do>
       </x-view>
 
-      <x-view url="audio" page-title="Audio Systems"
+      <x-view url="/audio" page-title="Audio Systems"
               content-src="/docs/audio/index.html">
         <x-use
                script-src="https://cdn.jsdelivr.net/gh/markedjs/marked@1/marked.min.js">

@@ -43,7 +43,7 @@ export class XUI {
    * if it isn't '/', then the router needs to know
    * where to begin creating paths.
    */
-  @Prop() root = '/'
+  @Prop() root:string = '/'
 
   /**
    * Browser (paths) or Hash (#) routing.
@@ -171,13 +171,12 @@ export class XUI {
       this.scrollTopOffset,
     )
 
+    this.startUrl = this.router.normalizeChildUrl(this.startUrl, '/')
     this.router.captureInnerLinks()
 
     this.childViews.forEach((v) => {
-      if (v.url) {
-        v.url = this.router.normalizeChildUrl(v.url, this.root)
-      }
-
+      if (v.url)
+        v.url = this.router.normalizeChildUrl(v.url, '/')
       v.transition = v.transition || this.transition
     })
 
@@ -204,8 +203,9 @@ export class XUI {
       })
     }
 
-    if (this.startUrl !== '/' && this.router.location?.pathname === this.root) {
-      this.router.history.push(this.router.getUrl(this.startUrl, this.root))
+    if (this.startUrl !== '/' &&
+      (this.router.location?.pathname === '/' || this.router.location?.pathname == '')) {
+      this.router.goToRoute(this.startUrl)
     }
   }
 

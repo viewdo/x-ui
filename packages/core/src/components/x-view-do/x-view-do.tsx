@@ -20,6 +20,7 @@ import {
   warn
 } from '../..';
 import { createKey } from '../../services/routing/utils/location-utils';
+import { captureXBackClickEvent, captureXLinkClickEvent, captureXNextClickEvent, getChildInputValidity } from '../../services/utils/dom-utils';
 
 export type TimedNode = {
   start: number
@@ -166,8 +167,7 @@ export class XViewDo {
       this.pageTitle,
       this.transition || this.parentView.transition || null,
       this.scrollTopOffset || 0,
-      async (match) => {
-        if (match === null) this.cleanup()
+      (match) => {
         this.match = match
       },
     )
@@ -215,6 +215,7 @@ export class XViewDo {
     } else {
       this.el.setAttribute('hidden', '')
       this.cleanup()
+      this.resetContent()
     }
 
     await resolveChildElementXAttributes(this.el)
@@ -227,15 +228,14 @@ export class XViewDo {
 
     try {
       this.resetContent()
+      this.contentKey = `remote-content-${createKey(10)}`;
       const response = await fetch(this.contentSrc)
       if (response.status === 200) {
         const innerContent = await response.text()
-        this.contentKey = `remote-content-${createKey(10)}`;
         const content = this.el.ownerDocument.createElement('div');
         content.slot = 'content';
         content.id = this.contentKey!
         content.innerHTML = innerContent
-        this.route.captureInnerLinks(content)
         if (this.route.transition) content.className = this.route.transition
         await resolveChildElementXAttributes(content)
         this.el.append(content)
@@ -251,6 +251,7 @@ export class XViewDo {
     const remoteContent = this.el.querySelector(`#${this.contentKey}`)
     remoteContent?.remove()
     this.contentKey = null
+    this.match = null
   }
 
   private cleanup() {
@@ -260,21 +261,11 @@ export class XViewDo {
     this.restoreElementChildTimedNodes()
     this.timer = null
     this.lastTime = 0
-    this.resetContent()
   }
 
   private beforeExit() {
     this.cleanup()
-    const inputElements = this.el.querySelectorAll('*:enabled')
-    let valid = true
-
-    inputElements.forEach((i) => {
-      const input = i as HTMLInputElement
-      input.blur?.call(i)
-      if (!input.reportValidity()) {
-        valid = false
-      }
-    })
+    let valid = getChildInputValidity(this.el)
     if (valid) {
       this.actionActivators
         .filter((activator) => activator.activate === ActionActivationStrategy.OnExit)
@@ -289,7 +280,8 @@ export class XViewDo {
   private back(element: string, eventName: string) {
     debugIf(this.debug, `x-view-do: back fired from ${element}:${eventName}`)
     this.beforeExit()
-    this.route.router?.history.goBack()
+    this.resetContent()
+    this.route?.router.history.goBack()
   }
 
   private next(element: string, eventName: string, route?: string | null) {
@@ -300,9 +292,9 @@ export class XViewDo {
       if (this.visit === VisitStrategy.once) {
         storeVisit(this.url)
       }
-
+      this.resetContent()
       if (route) {
-        this.route.router?.history.push(route)
+        this.route.router?.goToRoute(route)
       } else {
         this.route.router?.goToParentRoute()
       }
@@ -310,37 +302,18 @@ export class XViewDo {
   }
 
   private async resolveChildren() {
-    // TODO: Clean-up and move to testable service
     debugIf(this.debug, `x-view-do: ${this.url} resolve children called`)
 
-    // Attach next
-    this.el.querySelectorAll('[x-next]').forEach((element) => {
-      const route = element.getAttribute('x-next')
-      element.addEventListener('click', (e) => {
-        e.preventDefault()
-        this.next(element?.localName, 'clicked', route)
-      })
-      element.removeAttribute('x-next')
+    captureXNextClickEvent(this.el, (tag, route) => {
+      this.next(tag, 'clicked', route)
     })
 
-    // Attach routes
-    this.el.querySelectorAll('[x-link]').forEach((element) => {
-      const route = element.getAttribute('x-link')
-      if (route) {
-        element.addEventListener('click', (e) => {
-          e.preventDefault()
-          this.next(element.localName, 'clicked', route)
-        })
-      }
-      element.removeAttribute('x-link')
+    captureXBackClickEvent(this.el, (tag) => {
+      this.back(tag, 'clicked')
     })
 
-    this.el.querySelectorAll('[x-back]').forEach((element) => {
-      element.addEventListener('click', (e) => {
-        e.preventDefault()
-        this.back(element.localName, 'clicked')
-      })
-      element.removeAttribute('x-back')
+    captureXLinkClickEvent(this.el, (tag, route) => {
+      this.next(tag, 'clicked', route)
     })
 
     // Activate on-enter actions
