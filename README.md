@@ -12,7 +12,7 @@ Add application-like features to static HTML: partial-includes, routing, guided 
 
 ## Learn more
 
-<https://demo.x-ui.dev>
+<https://x-ui.dev>
 
 
 ### Thanks to
