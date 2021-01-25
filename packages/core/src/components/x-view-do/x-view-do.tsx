@@ -71,7 +71,7 @@ export class XViewDo {
    * The url for this route should only be matched
    * when it is exact.
    */
-  @Prop() exact = true
+  @Prop() exact:boolean = true
 
   /**
    * The visit strategy for this do.

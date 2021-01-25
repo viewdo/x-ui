@@ -3,14 +3,15 @@ import {
   DATA_EVENTS,
   debugIf,
   eventBus,
-  hasVisited,
+
   markVisit,
   MatchResults,
   resolveChildElementXAttributes,
-  resolveNext,
+
   Route,
   warn
 } from '../..';
+import { resolveNext } from '../../services';
 import { RouterService } from '../../services/routing/router';
 import { createKey } from '../../services/routing/utils/location-utils';
 
@@ -137,30 +138,16 @@ export class XView {
       v.transition = v.transition || this.transition
     })
 
-
     eventBus.on(DATA_EVENTS.DataChanged, async () => {
       debugIf(this.debug, `x-view: ${this.url} data changed `)
       await resolveChildElementXAttributes(this.el)
     })
-
-
   }
 
   async componentWillRender() {
     debugIf(this.debug, `x-view: ${this.url} will render`)
     await this.resolveView()
   }
-
-  private async resolveNext() {
-    const viewDos = this.childViewDos.map((viewDo) => {
-      const { when, visit, url } = viewDo
-      const visited = hasVisited(url)
-      return { when, visit, visited, url }
-    })
-
-    return await resolveNext(viewDos)
-  }
-
 
   private async resolveView() {
     debugIf(this.debug, `x-view: ${this.url} resolve view called`)
@@ -169,7 +156,7 @@ export class XView {
       this.el.classList.add('active-route')
       if (this.match.isExact) {
         debugIf(this.debug, `x-view: ${this.url} route is matched `)
-        const nextDo = await this.resolveNext()
+        const nextDo = await resolveNext(this.childViewDos)
         if (nextDo) {
           this.route.goToRoute(nextDo.url)
         } else {

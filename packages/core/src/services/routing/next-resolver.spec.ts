@@ -1,13 +1,13 @@
 jest.mock('../logging')
 
-import { actionBus, eventBus } from '..'
-import { evaluatePredicate } from '../data'
-import { addDataProvider } from '../data/providers/factory'
-import { InMemoryProvider } from '../data/providers/memory'
-import { IViewDo, VisitStrategy } from './interfaces'
-import { resolveNext } from './next-resolver'
+import { actionBus, eventBus } from '..';
+import { addDataProvider } from '../data/providers/factory';
+import { InMemoryProvider } from '../data/providers/memory';
+import { IViewDo, VisitStrategy } from './interfaces';
+import { resolveNext } from './next-resolver';
+import { clearVisits, markVisit } from './visits';
 
-describe('next-resolver', () => {
+describe('next-resolver: find next', () => {
   let toDos: IViewDo[]
   let session: InMemoryProvider
   beforeEach(() => {
@@ -16,145 +16,122 @@ describe('next-resolver', () => {
     toDos = []
     actionBus.removeAllListeners()
     eventBus.removeAllListeners()
+    clearVisits()
   })
 
-  it('find next with only one item', async () => {
-    await session.set('name', 'biden')
-
-    const todo = {
-      visit: VisitStrategy.always,
-      when: '"{session:name}" != empty',
-      visited: false,
-      path: 'me',
-      url: 'home',
-    }
-
-    toDos.push(todo)
-
-    const result = await resolveNext(toDos)
-    expect(result).toBe(todo)
-  })
-
-  it('find next with when using negation', async () => {
-    await session.set('name', 'biden')
-
-    const todo = {
-      visit: VisitStrategy.always,
+  const setupBasicPath = () => {
+    toDos = [{
       when: '!{session:name}',
-      visited: false,
-      path: 'me',
-      url: 'home',
-    }
-
-    toDos.push(todo)
-
-    const result = await resolveNext(toDos)
-    expect(result).toBeNull()
-  })
-
-  it('find next with when using negation, no value', async () => {
-    const todo = {
+      url: '/name',
+    },{
+      when: '!{session:email}',
+      url: '/email',
+    },{
+      when: '!{session:color}',
+      url: '/color',
+    },{
+      visit: VisitStrategy.once,
+      url: '/once',
+    },{
+     visit: VisitStrategy.once,
+      url: '/terms',
+    },{
+     visit: VisitStrategy.optional,
+      url: '/optional',
+    },{
       visit: VisitStrategy.always,
-      when: '!{session:name}',
-      visited: false,
-      path: 'me',
-      url: 'home',
-    }
+      url: '/always',
+    }]
+  }
 
-    toDos.push(todo)
-
+  it('when resolves to true', async () => {
+    setupBasicPath()
     const result = await resolveNext(toDos)
-    expect(result).toBe(result)
+    expect(result?.url).toBe('/name')
   })
 
-  it('find next with only one item visited', async () => {
+  it('when resolves to true, visited', async () => {
+    setupBasicPath()
+    toDos[0].visited = true
+
+    const result = await resolveNext(toDos)
+    expect(result?.url).toBe('/name')
+  })
+
+  it('multiple when resolution, find first', async () => {
+    setupBasicPath()
     await session.set('name', 'biden')
 
-    const todo = {
-      visit: VisitStrategy.always,
-      when: '"{session:name}" !== empty',
-      visited: true,
-      path: 'me',
-      url: 'home',
-    }
-
-    toDos.push(todo)
-
     const result = await resolveNext(toDos)
-    expect(result).toBe(todo)
+    expect(result?.url).toBe('/email')
   })
 
-  it('find next with visited restriction still applicable', async () => {
+   it('multiple when resolution, find first visited', async () => {
+    setupBasicPath()
+     await session.set('name', 'biden')
+     toDos[1].visited = true
+
+    const result = await resolveNext(toDos)
+    expect(result?.url).toBe('/email')
+    })
+
+  it('multiple when resolution, find first of three', async () => {
+    setupBasicPath()
     await session.set('name', 'biden')
-
-    const todo1 = {
-      visit: VisitStrategy.always,
-      when: '"{session:name}" != empty',
-      visited: true,
-      path: 'me',
-      url: 'home',
-    }
-
-    toDos.push(todo1)
-
-    const pred = await evaluatePredicate(todo1.when)
-    expect(pred).toBe(true)
+    await session.set('email', 'j@biden.com')
 
     const result = await resolveNext(toDos)
-    expect(result).toBe(todo1)
+    expect(result?.url).toBe('/color')
   })
 
-  it('find next with all open, should give first', async () => {
-    const todo1 = {
-      visit: VisitStrategy.always,
-      visited: false,
-      url: 'foo',
-    }
-    const todo2 = {
-      visit: VisitStrategy.always,
-      visited: false,
-      url: 'boo',
-    }
-
-    toDos.push(todo1, todo2)
+  it('multiple when resolution, find first unvisited', async () => {
+    setupBasicPath()
+    await session.set('name', 'biden')
+    await session.set('email', 'j@biden.com')
+    await session.set('color', 'red')
 
     const result = await resolveNext(toDos)
-    expect(result).toBe(todo1)
+    expect(result?.url).toBe('/once')
   })
 
-  it('one visited and one optional', async () => {
-    const todo1 = {
-      visit: VisitStrategy.optional,
-      visited: false,
-      url: 'home',
-    }
-    const todo2 = {
-      visit: VisitStrategy.always,
-      visited: false,
-      url: 'profile',
-    }
+  it('multiple when resolution, find first once visited', async () => {
+    setupBasicPath()
+    await session.set('name', 'biden')
+    await session.set('email', 'j@biden.com')
+    await session.set('color', 'red')
 
-    toDos.push(todo1, todo2)
+    markVisit('/once')
 
     const result = await resolveNext(toDos)
-    expect(result).toBe(todo2)
+    expect(result?.url).toBe('/terms')
   })
 
-  it('all optional', async () => {
-    const todo1 = {
-      visit: VisitStrategy.optional,
-      visited: false,
-      url: 'home',
-    }
-    const todo2 = {
-      visit: VisitStrategy.optional,
-      visited: false,
-      url: 'profile',
-    }
+  it('multiple when resolution, find first once all visited', async () => {
+    setupBasicPath()
+    await session.set('name', 'biden')
+    await session.set('email', 'j@biden.com')
+    await session.set('color', 'red')
 
-    toDos.push(todo1, todo2)
+    markVisit('/once')
+    markVisit('/terms')
 
     const result = await resolveNext(toDos)
-    expect(result).toBe(null)
+    expect(result?.url).toBe('/always')
   })
+
+  it('multiple when resolution, find first unmet condition once all visited', async () => {
+    setupBasicPath()
+    await session.set('email', 'j@biden.com')
+    await session.set('color', 'red')
+
+    markVisit('/name')
+    markVisit('/once')
+    markVisit('/terms')
+
+    const result = await resolveNext(toDos)
+    expect(result?.url).toBe('/name')
+  })
+
+
+
 })

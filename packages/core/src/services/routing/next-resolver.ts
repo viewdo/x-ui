@@ -1,14 +1,29 @@
-import { findAsyncSequential } from '..';
 import { evaluatePredicate } from '../data/expression-evaluator';
 import { IViewDo, VisitStrategy } from './interfaces';
+import { hasVisited } from './visits';
 
-async function shouldVisit(item: IViewDo) {
-  return item.when ? evaluatePredicate(item.when) : true
+async function getVisited(item: IViewDo) {
+  if (item.when) {
+    const shouldGo = await evaluatePredicate(item.when);
+    return shouldGo ? false : true
+  }
+  return hasVisited(item.url)
 }
 
-export async function resolveNext(doList: IViewDo[]): Promise<IViewDo | null> {
-  const filtered = doList.filter((d) => d.visit !== VisitStrategy.optional && (!d.visited || d.when))
+async function applyPredicate(viewDo: IViewDo): Promise<IViewDo> {
+  const { when, url, visit = VisitStrategy.once } = viewDo
+  const visited = await getVisited(viewDo)
+  return { when, visit, visited, url }
+}
 
-  const found = await findAsyncSequential(filtered, shouldVisit)
-  return found
+async function findFirstUnvisited(doList: IViewDo[]): Promise<IViewDo | null> {
+  const found = doList
+    .filter((d) => d.visit !== VisitStrategy.optional)
+    .find(i => i.visited == false)
+  return found || null
+}
+
+export async function resolveNext(childViewDos: Array<IViewDo>): Promise<IViewDo | null> {
+  const converted = await Promise.all(childViewDos.map(async e => await applyPredicate(e)))
+  return findFirstUnvisited(converted)
 }
