@@ -1,20 +1,11 @@
 /* istanbul ignore file */
 
-import { LocationSegments } from '../interfaces';
-import { parsePath, parseQueryString } from './path-utils';
+import { LocationSegments } from '../interfaces'
+import { parsePath, parseQueryString } from './path-utils'
 
-export const isAbsolute = (pathname: string) => pathname.startsWith('/')
+export const isAbsolute = (pathname: string) => pathname?.startsWith('/') || false
 
 export const createKey = (keyLength: number) => Math.random().toString(36).slice(2, keyLength)
-
-export const getUrl = (url: string, root: string) => {
-  // Don't allow double slashes
-  if (url.startsWith('/') && root.endsWith('/')) {
-    return root.slice(0, -1) + url
-  }
-
-  return root + url
-}
 
 // About 1.5x faster than the two-arg version of Array#splice()
 const spliceOne = (list: string[], index: number) => {

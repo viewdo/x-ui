@@ -1,143 +1,269 @@
-import { newSpecPage } from '@stencil/core/testing';
-import { RafCallback } from '../../../../plugins/x-ionic/dist/types/stencil-public-runtime';
-import { actionBus, eventBus } from '../actions';
-import { HistoryType } from './interfaces';
-import { RouterService } from './router';
-
+import { newSpecPage } from '@stencil/core/testing'
+import { RafCallback } from '../../../../plugins/x-ionic/dist/types/stencil-public-runtime'
+import { EventEmitter } from '../actions/event-emitter'
+import { HistoryService } from './history'
+import { HistoryType, ROUTE_COMMANDS, ROUTE_TOPIC } from './interfaces'
+import { RouterService } from './router'
+import { MockHistory } from './__mocks__/history'
 
 describe('router', () => {
-  const writeTask: (func: RafCallback) => void = (_func) => { };
+  let actionBus: EventEmitter
+  let eventBus: EventEmitter
+  const writeTask: (func: RafCallback) => void = (_func) => {}
 
   const startPage = async (url: string = '') => {
     return await newSpecPage({
       components: [],
-      html: `<div></div>`,
-      url: 'http://localhost' + url
-    });
-  };
+      html: `<div style="margin-top:1000px"><a name="test" href="/home"><h1>Test Header</h1></a></div>`,
+      url: 'http://localhost' + url,
+    })
+  }
 
   beforeEach(async () => {
-    actionBus.removeAllListeners();
-    eventBus.removeAllListeners();
-  });
+    actionBus = new EventEmitter()
+    eventBus = new EventEmitter()
+  })
 
   const testNormalize = (subject: RouterService) => {
-    let normalized = subject.normalizeChildUrl('child', 'parent');
-    expect(normalized).toBe('/parent/child');
+    let normalized = subject.normalizeChildUrl('child', 'parent')
+    expect(normalized).toBe('/parent/child')
 
-    normalized = subject.normalizeChildUrl('/child', 'parent');
-    expect(normalized).toBe('/parent/child');
+    normalized = subject.normalizeChildUrl('/child', 'parent')
+    expect(normalized).toBe('/parent/child')
 
-    normalized = subject.normalizeChildUrl('child', '/parent');
-    expect(normalized).toBe('/parent/child');
+    normalized = subject.normalizeChildUrl('child', '/parent')
+    expect(normalized).toBe('/parent/child')
 
-    normalized = subject.normalizeChildUrl('//child', '//parent');
-    expect(normalized).toBe('/parent/child');
+    normalized = subject.normalizeChildUrl('//child', '//parent')
+    expect(normalized).toBe('/parent/child')
 
-    normalized = subject.normalizeChildUrl('//child/', '//parent');
-    expect(normalized).toBe('/parent/child');
+    normalized = subject.normalizeChildUrl('//child/', '//parent')
+    expect(normalized).toBe('/parent/child')
 
-    normalized = subject.normalizeChildUrl('child/', 'parent/');
-    expect(normalized).toBe('/parent/child');
-  };
+    normalized = subject.normalizeChildUrl('child/', 'parent/')
+    expect(normalized).toBe('/parent/child')
+  }
 
   const testGoToPath = (subject: RouterService) => {
+    subject.goToRoute('/home')
+    expect(subject.location.pathname).toBe('/home')
 
-    subject.goToRoute('/home');
-    expect(subject.location.pathname).toBe('/home');
+    subject.goToRoute('home')
+    expect(subject.location.pathname).toBe('/home')
 
-    subject.goToRoute('home');
-    expect(subject.location.pathname).toBe('/home');
+    subject.goToRoute('home/page1')
+    expect(subject.location.pathname).toBe('/home/page1')
 
-    subject.goToRoute('home/page1');
-    expect(subject.location.pathname).toBe('/home/page1');
-
-    subject.goToParentRoute();
-    expect(subject.location.pathname).toBe('/home');
-  };
+    subject.goToParentRoute()
+    expect(subject.location.pathname).toBe('/home')
+  }
 
   const testMatch = (subject: RouterService) => {
-    subject.goToRoute('home');
+    subject.goToRoute('home')
 
     let match = subject.matchPath({
       path: '/home',
       strict: true,
-      exact: true
-    });
+      exact: true,
+    })
 
-    expect(match).not.toBeNull();
-    expect(match!.isExact).toBe(true);
-    expect(match!.path).toBe('/home');
-    expect(match!.url).toBe('/home');
+    expect(match).not.toBeNull()
+    expect(match!.isExact).toBe(true)
+    expect(match!.path).toBe('/home')
+    expect(match!.url).toBe('/home')
 
     match = subject.matchPath({
-      path: '/about'
-    });
+      path: '/about',
+    })
 
-    expect(match).toBeNull();
-  };
+    expect(match).toBeNull()
+  }
 
   it('initialized: browser | blank path/', async () => {
-    const page = await startPage();
-    const subject = new RouterService(
-      page.win,
-      writeTask,
-      eventBus,
-      actionBus);
+    const page = await startPage()
+    const subject = new RouterService(page.win, writeTask, eventBus, actionBus)
 
-    expect(subject.location.pathname).toBe('/');
-
-    testGoToPath(subject);
-    testNormalize(subject);
-    testMatch(subject);
-  });
-
-  it('initialized: hash', async () => {
-    const page = await startPage();
-    const subject = new RouterService(
-      page.win,
-      writeTask,
-      eventBus,
-      actionBus,
-      HistoryType.Hash);
-
-    expect(subject.location.pathname).toBe('/');
-
-    testGoToPath(subject);
-    testNormalize(subject);
-    testMatch(subject);
-  });
-
-  it('initialized: browser | path = /home', async () => {
-    const page = await startPage('/home');
-    const subject = new RouterService(
-      page.win,
-      writeTask,
-      eventBus,
-      actionBus)
-
-    expect(subject.location.pathname).toBe('/home');
+    expect(subject.location.pathname).toBe('/')
 
     testGoToPath(subject)
     testNormalize(subject)
     testMatch(subject)
-  });
+  })
+
+  it('initialized: hash', async () => {
+    const page = await startPage()
+    const subject = new RouterService(page.win, writeTask, eventBus, actionBus, HistoryType.Hash)
+
+    expect(subject.location.pathname).toBe('/')
+
+    testGoToPath(subject)
+    testNormalize(subject)
+    testMatch(subject)
+  })
+
+  it('initialized: browser | path = /home', async () => {
+    const page = await startPage('/home')
+    const subject = new RouterService(page.win, writeTask, eventBus, actionBus)
+
+    expect(subject.location.pathname).toBe('/home')
+
+    testGoToPath(subject)
+    testNormalize(subject)
+    testMatch(subject)
+  })
 
   it('initialized: hash | path = /#/home', async () => {
-    const page = await startPage('/#/home');
+    const page = await startPage('/#/home')
+    const subject = new RouterService(page.win, writeTask, eventBus, actionBus, HistoryType.Hash)
+
+    expect(subject.location.pathname).toBe('/home')
+    expect(page.win.location.pathname).toBe('/')
+    expect(page.win.location.hash).toBe('#/home')
+
+    testGoToPath(subject)
+    testNormalize(subject)
+    testMatch(subject)
+  })
+
+  it('match-path: browser | path = /item/:item ', async () => {
+    const page = await startPage('/item/food')
+    const subject = new RouterService(page.win, writeTask, eventBus, actionBus)
+
+    expect(subject.location.pathname).toBe('/item/food')
+
+    let results = subject.matchPath({
+      path: '/item/:item',
+    })
+
+    expect(results).not.toBeNull()
+    expect(results?.params.item).not.toBeNull()
+    expect(results?.params.item).toBe('food')
+  })
+
+  it('match-path: hash | path = /#/item/:item ', async () => {
+    const page = await startPage('/#/item/food')
+    const subject = new RouterService(page.win, writeTask, eventBus, actionBus, HistoryType.Hash)
+
+    expect(subject.location.pathname).toBe('/item/food')
+
+    let results = subject.matchPath({
+      path: '/item/:item',
+    })
+
+    expect(results).not.toBeNull()
+    expect(results?.params.item).not.toBeNull()
+    expect(results?.params.item).toBe('food')
+  })
+
+  it('route-listener: navigate-to, navigate-next ', async () => {
+    const page = await startPage('/')
+    const subject = new RouterService(page.win, writeTask, eventBus, actionBus)
+
+    actionBus.emit(ROUTE_TOPIC, {
+      topic: ROUTE_TOPIC,
+      command: ROUTE_COMMANDS.NavigateTo,
+      data: {
+        url: '/home',
+      },
+    })
+
+    expect(subject.location.pathname).toBe('/home')
+
+    actionBus.emit(ROUTE_TOPIC, {
+      topic: ROUTE_TOPIC,
+      command: ROUTE_COMMANDS.NavigateTo,
+      data: {
+        url: '/home/page1',
+      },
+    })
+
+    expect(subject.location.pathname).toBe('/home/page1')
+
+    actionBus.emit(ROUTE_TOPIC, {
+      topic: ROUTE_TOPIC,
+      command: ROUTE_COMMANDS.NavigateNext,
+    })
+
+    expect(subject.history.location.pathname).toBe('/home')
+    expect(subject.location.pathname).toBe('/home')
+  })
+
+  it('route-listener: navigate-back ', async () => {
+    const page = await startPage('/')
+    const history = new HistoryService(page.win, HistoryType.Browser, '', new MockHistory(page.win))
     const subject = new RouterService(
       page.win,
       writeTask,
       eventBus,
       actionBus,
-      HistoryType.Hash)
+      HistoryType.Browser,
+      '',
+      '',
+      '',
+      0,
+      history,
+    )
 
-    expect(subject.location.pathname).toBe('/home');
-    expect(page.win.location.pathname).toBe('/')
-    expect(page.win.location.hash).toBe('#/home')
+    actionBus.emit(ROUTE_TOPIC, {
+      topic: ROUTE_TOPIC,
+      command: ROUTE_COMMANDS.NavigateTo,
+      data: {
+        url: '/page1',
+      },
+    })
 
-    testGoToPath(subject);
-    testNormalize(subject);
-    testMatch(subject);
-  });
+    actionBus.emit(ROUTE_TOPIC, {
+      topic: ROUTE_TOPIC,
+      command: ROUTE_COMMANDS.NavigateTo,
+      data: {
+        url: '/page2',
+      },
+    })
+
+    expect(subject.history.location.pathname).toBe('/page2')
+
+    actionBus.emit(ROUTE_TOPIC, {
+      topic: ROUTE_TOPIC,
+      command: ROUTE_COMMANDS.NavigateBack,
+    })
+
+    // TODO: I can't find a way to mock the history back...
+    // expect(subject.history.location.pathname).toBe('/page1')
+  })
+
+  it('router-service: scrollTop ', async () => {
+    const page = await startPage('/')
+    const subject = new RouterService(page.win, writeTask, eventBus, actionBus)
+
+    let didScroll = false
+
+    page.win.onscroll = () => {
+      didScroll = true
+    }
+
+    subject.viewsUpdated({
+      scrollTopOffset: 10,
+      scrollToId: 'test',
+    })
+
+    subject.scrollTo(0)
+
+    // TODO: We need a way to detect page scrolls in this mock object
+    // expect(didScroll).toBe(true)
+  })
+
+  it('router-service: captureInnerLinks ', async () => {
+    const page = await startPage('/')
+    const subject = new RouterService(page.win, writeTask, eventBus, actionBus)
+
+    subject.captureInnerLinks(page.body)
+    await page.waitForChanges()
+    let anchor = page.body.querySelector('a')
+
+    expect(anchor?.getAttribute('x-attached-click')).not.toBeNull()
+
+    anchor?.click()
+
+    subject.destroy()
+  })
 })

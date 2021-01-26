@@ -1,9 +1,9 @@
-import { Howl } from 'howler'
-import { EventEmitter } from '../actions/event-emitter'
-import { debug, warn } from '../logging'
-import { AudioInfo } from './audio-info'
-import { AUDIO_EVENTS } from './interfaces'
-import { trackPlayed } from './tracked'
+import { Howl } from 'howler';
+import { EventEmitter } from '../actions/event-emitter';
+import { warn } from '../logging';
+import { AudioInfo } from './audio-info';
+import { AUDIO_EVENTS } from './interfaces';
+import { trackPlayed } from './tracked';
 
 export class AudioTrack extends AudioInfo {
   private readonly sound: Howl
@@ -16,7 +16,6 @@ export class AudioTrack extends AudioInfo {
     onerror?: (id: number, error: any) => void,
   ) => {
     const { loop, src, type } = audio
-    debug(`Loading howl: ${src}`)
     return new Howl({
       src,
       loop: type === 'music' ? loop : false,
@@ -56,7 +55,7 @@ export class AudioTrack extends AudioInfo {
     return this.sound.state()
   }
 
-  get isPlaying() {
+  get playing() {
     return this.sound.playing()
   }
 
@@ -79,6 +78,11 @@ export class AudioTrack extends AudioInfo {
   pause() {
     this.sound.pause()
     this.events.emit(AUDIO_EVENTS.Paused, this.trackId)
+  }
+
+  mute(mute:boolean) {
+    this.sound.mute(mute)
+    this.events.emit(AUDIO_EVENTS.Muted, this.trackId)
   }
 
   resume() {

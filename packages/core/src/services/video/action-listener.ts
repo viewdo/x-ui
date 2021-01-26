@@ -2,22 +2,22 @@ import { EventAction, IEventEmitter } from '../actions';
 import { debugIf } from '../logging';
 import { VIDEO_COMMANDS, VIDEO_EVENTS, VIDEO_TOPIC } from './interfaces';
 
-export class VideoListener {
+export class VideoActionListener {
   disposeHandle: () => void
 
   constructor(
     private childVideo: HTMLVideoElement,
     private eventBus: IEventEmitter,
-    private debug: boolean,
-    actionBus: IEventEmitter,) {
+    private actionBus: IEventEmitter,
+    private debug: boolean,) {
 
-    this.disposeHandle = actionBus.on(VIDEO_TOPIC, async (e, ev: EventAction<any>) => {
-        debugIf(this.debug, `x-video-listener: event received ${e}:${ev.command}`)
-        await this.commandReceived(ev.command, ev.data)
-      })
+    this.disposeHandle = this.actionBus.on(VIDEO_TOPIC, async (ev: EventAction<any>) => {
+      debugIf(this.debug, `x-video-listener: event received ${ev.topic}:${ev.command}`)
+      await this.commandReceived(ev.command, ev.data)
+    })
   }
 
-  private mute(muted: boolean) {
+  public mute(muted: boolean) {
     if (!this.childVideo) {
       return
     }
@@ -30,17 +30,17 @@ export class VideoListener {
     }
   }
 
-  private async play() {
+  public async play() {
     await this.childVideo?.play()
     this.eventBus.emit(VIDEO_EVENTS.Played)
   }
 
-  private pause() {
+  public pause() {
     this.childVideo?.pause()
     this.eventBus.emit(VIDEO_EVENTS.Paused)
   }
 
-  private async resume() {
+  public async resume() {
     await this.childVideo?.play()
     this.eventBus.emit(VIDEO_EVENTS.Resumed)
   }

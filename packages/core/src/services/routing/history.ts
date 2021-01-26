@@ -1,9 +1,9 @@
-import { warnIf } from '../logging';
-import { Listener } from './../actions/interfaces';
-import { HistoryType, LocationSegments } from './interfaces';
-import { ScrollHistory } from './scroll-history';
-import { createKey, createLocation, getUrl, locationsAreEqual } from './utils/location-utils';
-import { addLeadingSlash, createPath, hasBasename, stripBasename } from './utils/path-utils';
+import { warnIf } from '../logging'
+import { Listener } from './../actions/interfaces'
+import { HistoryType, LocationSegments } from './interfaces'
+import { ScrollHistory } from './scroll-history'
+import { createKey, createLocation, locationsAreEqual } from './utils/location-utils'
+import { addLeadingSlash, createPath, ensureBasename, hasBasename, stripBasename } from './utils/path-utils'
 
 const KeyLength = 6
 
@@ -16,9 +16,6 @@ const isExtraneousPopstateEvent = (nav: Navigator, event: any) =>
 
 export class HistoryService {
   listeners: Listener[] = []
-  get length() {
-    return this.history.length
-  }
   location: LocationSegments
   allKeys: string[] = []
   scrollHistory: ScrollHistory
@@ -27,20 +24,19 @@ export class HistoryService {
     return this.win.history && 'pushState' in this.win.history
   }
 
-  constructor(
-    public win: Window,
-    private type: HistoryType,
-    private basename: string,
-    private history: History = win.history) {
+  get length() {
+    return this.history.length
+  }
 
+  constructor(public win: Window, private type: HistoryType, private basename: string, private history: History) {
     this.location = this.getDOMLocation(this.getHistoryState())
     this.allKeys.push(this.location.key)
     this.scrollHistory = new ScrollHistory(win)
 
     if (this.type == HistoryType.Hash) {
       this.win.addEventListener('hashchange', () => {
-        this.handleHashChange();
-      });
+        this.handleHashChange()
+      })
       const pathTest = this.getHashPath()
       const encodedPathTest = addLeadingSlash(pathTest)
 
@@ -50,15 +46,13 @@ export class HistoryService {
       this.push(encodedPathTest)
     } else {
       this.win.addEventListener('popstate', (e) => {
-        this.handlePopState(e);
+        this.handlePopState(e)
       })
       this.push(this.location.pathname)
     }
-
-
   }
 
-  private getHistoryState ()  {
+  private getHistoryState() {
     try {
       return this.win.history.state || {}
     } catch {
@@ -87,8 +81,7 @@ export class HistoryService {
   }
 
   createHref(location: LocationSegments) {
-    if (this.type == HistoryType.Browser)
-      return getUrl(createPath(location), this.basename)
+    if (this.type == HistoryType.Browser) return ensureBasename(createPath(location), this.basename)
     return `${this.basename}/#${addLeadingSlash(createPath(location))}`
   }
 
@@ -130,7 +123,7 @@ export class HistoryService {
     }
   }
 
-  getHashPath () {
+  getHashPath() {
     // We can't use window.location.hash here because it's not
     // consistent across browsers - Firefox will pre-decode it!
     const { href } = this.win.location
@@ -138,15 +131,15 @@ export class HistoryService {
     return hashIndex === -1 ? '' : href.slice(Math.max(0, hashIndex + 1))
   }
 
-  pushHashPath (path: string) {
+  pushHashPath(path: string) {
     this.win.location.hash = path
   }
 
-  handlePop (location: LocationSegments)  {
+  handlePop(location: LocationSegments) {
     this.setState('POP', location)
   }
 
-  replaceHashPath (path: string) {
+  replaceHashPath(path: string) {
     const hashIndex = this.win.location.href.indexOf('#')
     this.win.location.replace(`${this.win.location.href.slice(0, hashIndex >= 0 ? hashIndex : 0)}#${path}`)
   }
@@ -159,7 +152,7 @@ export class HistoryService {
     }
   }
 
-  private pushHash (url: string) {
+  private pushHash(url: string) {
     const action = 'PUSH'
     const location = createLocation(url, undefined, createKey(KeyLength), this.location)
 
@@ -183,7 +176,7 @@ export class HistoryService {
     }
   }
 
-  private pushBrowser (path: string, state: any = {}) {
+  private pushBrowser(path: string, state: any = {}) {
     const action = 'PUSH'
     const location = createLocation(path, state, createKey(KeyLength), this.location)
 
@@ -200,7 +193,6 @@ export class HistoryService {
       this.allKeys = nextKeys
 
       this.setState(action, location)
-
     } else {
       warnIf(state !== undefined, 'Browser history cannot push state in browsers that do not support HTML5 history')
       this.win.location.href = href
@@ -253,11 +245,11 @@ export class HistoryService {
     this.setState(action, location)
   }
 
-  go (n: number) {
+  go(n: number) {
     this.history.go(n)
   }
 
-  goBack () {
+  goBack() {
     this.go(-1)
   }
 
@@ -265,7 +257,7 @@ export class HistoryService {
     this.go(1)
   }
 
-  listen (listener: Listener){
+  listen(listener: Listener) {
     return this.appendListener(listener)
   }
 
@@ -294,5 +286,4 @@ export class HistoryService {
   destroy() {
     this.listeners = []
   }
-
 }

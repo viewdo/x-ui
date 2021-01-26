@@ -9,7 +9,7 @@ import {
   MatchResults,
   recordVisit,
   Route,
-  VideoListener,
+  VideoActionListener,
   VisitStrategy,
   warn
 } from '../..';
@@ -34,7 +34,7 @@ import { createKey } from '../../services/routing/utils/location-utils';
 export class XViewDo {
   private dataChangedSubscription!: () => void
   private route!: Route
-  private videoListener?: VideoListener
+  private videoListener?: VideoActionListener
   private elementTimer?: ElementTimer
 
   @Element() el!: HTMLXViewDoElement
@@ -258,7 +258,7 @@ export class XViewDo {
       this.debug)
 
     if (video) {
-      this.videoListener = new VideoListener(video, eventBus, this.debug, actionBus)
+      this.videoListener = new VideoActionListener(video, eventBus, actionBus, this.debug)
 
       video.addEventListener(timeUpdateEvent, () => {
         this.elementTimer!.emit(
@@ -296,8 +296,6 @@ export class XViewDo {
       }
     })
   }
-
-
 
   componentDidRender() {
     debugIf(this.debug, `x-view-do: ${this.url} did render`)

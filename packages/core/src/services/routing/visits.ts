@@ -1,6 +1,6 @@
-import { warnIf } from '../logging';
-import { storageAvailable } from '../utils/browser-utils';
-import { VisitStrategy } from './interfaces';
+import { warnIf } from '../logging'
+import { storageAvailable } from '../utils/browser-utils'
+import { VisitStrategy } from './interfaces'
 
 const supportsSession = storageAvailable(window, 'sessionStorage')
 warnIf(!supportsSession, 'session-storage is not supported')
@@ -23,7 +23,7 @@ export function getSessionVisits() {
     return []
   }
 
-  const visits = sessionStorage.getItem(visitKey)
+  const visits = sessionStorage?.getItem(visitKey)
   return parseVisits(visits)
 }
 

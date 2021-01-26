@@ -1,9 +1,9 @@
-import { eventBus } from '..';
-import { hasExpression, resolveExpression } from '../data/expression-evaluator';
-import { MatchResults, RouteViewOptions, ROUTE_EVENTS } from './interfaces';
-import { RouterService } from './router';
-import { isAbsolute } from './utils/location-utils';
-import { matchesAreEqual } from './utils/match-path';
+import { eventBus } from '..'
+import { hasExpression, resolveExpression } from '../data/expression-evaluator'
+import { MatchResults, RouteViewOptions, ROUTE_EVENTS } from './interfaces'
+import { RouterService } from './router'
+import { isAbsolute } from './utils/location-utils'
+import { matchesAreEqual } from './utils/match-path'
 
 export class Route {
   private readonly subscription: () => void
@@ -30,11 +30,12 @@ export class Route {
       })
       matchSetter(this.match)
     })
-    this.match = this.router?.matchPath({
+    this.match = this.router.matchPath({
       path,
       exact,
       strict: true,
     })
+    if (this.match) matchSetter(this.match)
   }
 
   normalizeChildUrl(childUrl: string) {
@@ -85,9 +86,8 @@ export class Route {
   }
 
   goToRoute(path: string) {
-    const route = !isAbsolute(path) ?
-        this.router.resolvePathname(path, this.path) : path
-    this.router.goToRoute(route);
+    const route = !isAbsolute(path) ? this.router.resolvePathname(path, this.path) : path
+    this.router.goToRoute(route)
   }
 
   public destroy() {

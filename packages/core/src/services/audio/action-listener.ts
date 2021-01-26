@@ -1,12 +1,12 @@
-import { Howler } from 'howler'
-import { EventAction, EventEmitter } from '../actions'
-import { debugIf } from '../logging'
-import { ROUTE_EVENTS } from '../routing'
-import { AudioTrack } from './audio'
-import { AudioInfo } from './audio-info'
-import { AudioRequest } from './audio-request'
-import { AudioType, AUDIO_COMMANDS, AUDIO_EVENTS, AUDIO_TOPIC, DiscardStrategy, LoadStrategy } from './interfaces'
-import { hasPlayed } from './tracked'
+import { Howler } from 'howler';
+import { EventAction, EventEmitter } from '../actions';
+import { debugIf } from '../logging';
+import { ROUTE_EVENTS } from '../routing';
+import { AudioTrack } from './audio';
+import { AudioInfo } from './audio-info';
+import { AudioRequest } from './audio-request';
+import { AudioType, AUDIO_COMMANDS, AUDIO_EVENTS, AUDIO_TOPIC, DiscardStrategy, LoadStrategy } from './interfaces';
+import { hasPlayed } from './tracked';
 
 export class AudioActionListener {
   private readonly actionSubscription: () => void
@@ -51,11 +51,13 @@ export class AudioActionListener {
   // Public Members
 
   public isPlaying(): boolean {
-    return Boolean(this.onDeck[AudioType.Music]?.isPlaying) || Boolean(this.onDeck[AudioType.Sound]?.isPlaying)
+    return Boolean(this.onDeck[AudioType.Music]?.playing) || Boolean(this.onDeck[AudioType.Sound]?.playing)
   }
 
   public hasAudio(): boolean {
     return (
+      this.onDeck[AudioType.Music] != null ||
+      this.onDeck[AudioType.Sound] != null ||
       this.queued[AudioType.Music].length > 0 ||
       this.queued[AudioType.Sound].length > 0 ||
       this.loaded[AudioType.Music].length > 0 ||
@@ -83,8 +85,9 @@ export class AudioActionListener {
     this.onDeck[AudioType.Sound]?.resume()
   }
 
-  public mute(mute = false) {
-    Howler.mute(mute)
+  public mute(mute = true) {
+    this.onDeck[AudioType.Music]?.mute(mute)
+    this.onDeck[AudioType.Sound]?.mute(mute)
   }
 
   public seek(type: AudioType, trackId: string, seek: number) {
@@ -136,7 +139,7 @@ export class AudioActionListener {
       }
 
       case AUDIO_COMMANDS.Mute: {
-        this.mute(!this.isPlaying)
+        this.mute(this.isPlaying())
         break
       }
 
@@ -167,9 +170,6 @@ export class AudioActionListener {
 
     audio.events.on('*', (...args) => {
       const [event, trackId] = args
-      if (event === 'undefined') {
-        console.dir(args)
-      }
 
       if (event) {
         debugIf(this.debug, `event-listener: audio event ${event} ${trackId}`)
@@ -188,6 +188,11 @@ export class AudioActionListener {
       return
     }
 
+    if (mode === LoadStrategy.Play) {
+      this.discardActive(AudioType.Sound, DiscardStrategy.Next)
+      this.playNextTrackFromQueue(type)
+    }
+
     if (discard === DiscardStrategy.None) {
       // If this track shouldn't be discarded, requeue it
       this.addTrackToQueue(audio)
@@ -202,8 +207,11 @@ export class AudioActionListener {
     // Discard any route-based audio
     this.discardActive(AudioType.Sound, DiscardStrategy.Route)
     this.discardTracksFromQueue(AudioType.Sound, DiscardStrategy.Route)
+    this.discardTracksFromLoaded(AudioType.Sound, DiscardStrategy.Route)
+
     this.discardActive(AudioType.Music, DiscardStrategy.Route)
     this.discardTracksFromQueue(AudioType.Music, DiscardStrategy.Route)
+    this.discardTracksFromLoaded(AudioType.Music, DiscardStrategy.Route)
   }
 
   // Queue Management
@@ -242,6 +250,12 @@ export class AudioActionListener {
     this.queued[type] = this.queued[type].filter((i) => eligibleAudio(i))
   }
 
+
+  private discardTracksFromLoaded(type: AudioType, ...reasons: DiscardStrategy[]) {
+    const eligibleAudio = (audio: AudioTrack) => !reasons.includes(audio.discard)
+    this.loaded[type] = this.loaded[type].filter((i) => eligibleAudio(i))
+  }
+
   // AudioTrack workflow
 
   private startLoadedTrack(startRequest: AudioRequest) {
@@ -258,17 +272,15 @@ export class AudioActionListener {
     if (!audio) {
       return
     }
-
-    if (audio.track && hasPlayed(audio.trackId)) {
-      audio.destroy()
-      this.playNextTrackFromQueue(audio.type)
-    } else {
-      this.replaceActiveTrack(audio)
-    }
+    this.replaceActiveTrack(audio)
   }
 
   private replaceActiveTrack(nextUp: AudioTrack) {
     debugIf(this.debug, `event-listener: play now ${nextUp.trackId}`)
+    if (nextUp.track && hasPlayed(nextUp.trackId)) {
+      nextUp.destroy();
+      return;
+    }
     this.discardActive(nextUp.type, DiscardStrategy.Next)
     this.onDeck[nextUp.type] = nextUp
     this.playActiveTrack(nextUp.type)
