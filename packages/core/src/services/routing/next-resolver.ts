@@ -24,6 +24,11 @@ async function findFirstUnvisited(doList: IViewDo[]): Promise<IViewDo | null> {
 }
 
 export async function resolveNext(childViewDos: Array<IViewDo>): Promise<IViewDo | null> {
-  const converted = await Promise.all(childViewDos.map(async e => await applyPredicate(e)))
+  const converted = childViewDos.slice()
+
+  await Promise.all(converted.map(async (e,i) => {
+    converted[i] = await applyPredicate(e);
+  }))
+
   return findFirstUnvisited(converted)
 }

@@ -167,8 +167,6 @@ export class XUI {
       this.transition,
       this.scrollTopOffset,
     )
-
-    this.startUrl = this.router.normalizeChildUrl(this.startUrl, this.root)
     this.router.captureInnerLinks(this.el)
 
     debugIf(this.debug, `x-ui: found ${this.childViews.length} child views`)

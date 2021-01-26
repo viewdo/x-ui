@@ -86,7 +86,7 @@ export class Route {
 
   goToRoute(path: string) {
     const route = !isAbsolute(path) ?
-        this.router.normalizeChildUrl(path, this.path) : path
+        this.router.resolvePathname(path, this.path) : path
     this.router.goToRoute(route);
   }
 

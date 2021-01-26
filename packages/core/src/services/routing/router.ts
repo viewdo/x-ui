@@ -128,7 +128,7 @@ export class RouterService {
   goToRoute(path: string) {
     const route = isAbsolute(path) ? path
       : this.resolvePathname(path, this.location?.pathname)
-    this.history.push(this.getUrl(route));
+    this.history.push(route);
   }
 
   matchPath(options: MatchOptions = {}): MatchResults | null {
