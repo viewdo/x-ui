@@ -55,7 +55,7 @@
   </head>
 
   <body>
-    <x-ui start-url="/home" app-title="view.DO :: <x-ui/>" debug
+    <x-ui start-url="/home" app-title="view.DO :: <x-ui/>"
           transition="animate__animated animate__fadeIn">
       <x-use style-src="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
              script-src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js">
@@ -71,8 +71,7 @@
           </button>
           <div slot="start" class="navbar-brand"
                data-intro="This page uses the <b>x-view</b> component. This component display content for a given route.<br/><br/> Check out the <a href='components/x-view'>documentation</a> to see what else you can do.">
-            <a href="/home" title="view.DO Experience UI HTML">
-              &lt;x-ui/&gt;
+            <a href="/home" title="view.DO Experience UI HTML"> &lt;x-ui/&gt;
             </a>
           </div>
           <div class="d-sm-inline-flex d-flex p-2">
@@ -129,8 +128,7 @@
         </x-view-do>
 
         <x-view url="profile" page-title="Profile"
-                content-src="/docs/home/profile.html">
-        </x-view>
+                content-src="/docs/home/profile.html"> </x-view>
       </x-view>
 
       <x-view url="/start" page-title="Get Started"
@@ -490,8 +488,7 @@
 
       <!-- Not Found Route -->
       <x-view url="*" page-title="Page not Found"
-              content-src="/docs/not-found.html">
-      </x-view>
+              content-src="/docs/not-found.html"> </x-view>
     </x-ui>
   </body>
 

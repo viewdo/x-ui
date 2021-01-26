@@ -1,26 +1,19 @@
 <div class="container container-fluid mx-auto">
-
   <h1>Your Profile</h1>
-  <p>This data does not leave your browser. It is only for demonstration
-    purposes.</p>
-  <x-action-activator activate="OnElementEvent" target-element="#name"
-                      target-event="change" multiple>
-    <x-action topic="data" command="set-data" data='{"provider": "storage"}'>
-    </x-action>
+  <p>This data does not leave your browser. It is only for demonstration purposes.</p>
+  <x-action-activator activate="OnElementEvent" target-element="#name" target-event="change" multiple>
+    <x-action topic="data" command="set-data" data='{"provider": "storage"}'> </x-action>
     <div class="form-floating mb-3">
-      <input type="text" required class="form-control" id="name"
-             x-value-from="{storage:name}" />
+      <input type="text" required class="form-control" id="name" x-value-from="{storage:name}" />
       <label for="floatingInput">Nickname</label>
     </div>
   </x-action-activator>
   <div class="form-check form-switch">
-    <x-ui-audio classes="form-check-input" input-id="audioSwitch">
-    </x-ui-audio>
+    <x-ui-audio classes="form-check-input" input-id="audioSwitch"> </x-ui-audio>
     <label class="form-check-label" for="audioSwitch">Mute Audio</label>
   </div>
   <div class="form-check form-switch">
-    <x-ui-autoplay classes="form-check-input" input-id="autoPlaySwitch">
-    </x-ui-autoplay>
+    <x-ui-autoplay classes="form-check-input" input-id="autoPlaySwitch"> </x-ui-autoplay>
     <label class="form-check-label" for="autoPlaySwitch">Auto-play</label>
   </div>
   <x-data-show when="'{cookie:consent}' == 'true'">
@@ -39,7 +32,7 @@
         <input type="hidden" value="false" id="consent" />
       </x-action>
     </x-action-activator>
-    <button id='consent' class="btn btn-light">Revoke Consent</button>
+    <button id="consent" class="btn btn-light">Revoke Consent</button>
   </x-data-show>
 
   <footer>

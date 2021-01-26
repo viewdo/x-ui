@@ -86,7 +86,7 @@ The default activation is OnElementEvent and the default event is click. Also, i
 </x-action-activator>
 ```
 
-> *PRO-TIP:* This element appends any child input element's values to the actions it fires.
+> _PRO-TIP:_ This element appends any child input element's values to the actions it fires.
 
 <!-- Auto Generated Below -->
 
