@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-import { LocationSegments } from '../interfaces'
+import { LocationSegments } from '../interfaces';
 
 export const hasBasename = (path: string, prefix: string) => new RegExp(`^${prefix}(\\/|\\?|#|$)`, 'i').test(path)
 
@@ -13,10 +13,7 @@ export const addLeadingSlash = (path: string) => (path.startsWith('/') ? path : 
 
 export const stripLeadingSlash = (path: string) => (path.startsWith('/') ? path.slice(1) : path)
 
-export const stripPrefix = (path: string, prefix: string) =>
-  path.startsWith(prefix) ? path.slice(prefix.length) : path
-
-export const parsePath = (path = '/'): LocationSegments => {
+export function parsePath (path = '/'):LocationSegments {
   let pathname = path
   let search = ''
   let hash = ''
@@ -43,7 +40,7 @@ export const parsePath = (path = '/'): LocationSegments => {
   }
 }
 
-export const createPath = (location: LocationSegments) => {
+export function createPath (location: LocationSegments) {
   const { pathname, search, hash } = location
   let path = pathname || '/'
 
@@ -58,7 +55,7 @@ export const createPath = (location: LocationSegments) => {
   return path
 }
 
-export const parseQueryString = (query: string) => {
+export function parseQueryString (query: string) {
   if (!query) {
     return {}
   }

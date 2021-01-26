@@ -3,8 +3,6 @@
 import { LocationSegments } from '../interfaces';
 import { parsePath, parseQueryString } from './path-utils';
 
-export const isFullUrl = (path: string) => path.startsWith('http')
-
 export const isAbsolute = (pathname: string) => pathname.startsWith('/')
 
 export const createKey = (keyLength: number) => Math.random().toString(36).slice(2, keyLength)
@@ -16,16 +14,6 @@ export const getUrl = (url: string, root: string) => {
   }
 
   return root + url
-}
-
-export const getLocation = (location: LocationSegments, root: string): LocationSegments => {
-  // Remove the root URL if found at beginning of string
-  const pathname = location.pathname.startsWith(root) ? `/${location.pathname.slice(root.length)}` : location.pathname
-
-  return {
-    ...location,
-    pathname: pathname.startsWith('//') ? pathname.slice(1): pathname ,
-  }
 }
 
 // About 1.5x faster than the two-arg version of Array#splice()

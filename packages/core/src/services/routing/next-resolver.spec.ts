@@ -1,6 +1,6 @@
 jest.mock('../logging')
 
-import { actionBus, eventBus } from '..';
+import { actionBus, eventBus } from '../actions';
 import { addDataProvider } from '../data/providers/factory';
 import { InMemoryProvider } from '../data/providers/memory';
 import { IViewDo, VisitStrategy } from './interfaces';

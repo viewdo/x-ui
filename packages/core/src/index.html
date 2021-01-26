@@ -55,7 +55,7 @@
   </head>
 
   <body>
-    <x-ui start-url="/home" app-title="view.DO :: <x-ui/>"
+    <x-ui start-url="/home" app-title="view.DO :: <x-ui/>" debug
           transition="animate__animated animate__fadeIn">
       <x-use style-src="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
              script-src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js">
@@ -112,7 +112,7 @@
             <p>This site uses cookies for non-nefarious reasons.</p>
             <p>Are you okay with that?</p>
             <div>
-              <button type=" button" class="btn btn-primary"
+              <button type="button" class="btn btn-primary"
                       x-accept>Yes</button>
               <button type="button" class="btn" x-reject>No Thanks</button>
             </div>
@@ -133,7 +133,7 @@
         </x-view>
       </x-view>
 
-      <x-view url="start" page-title="Get Started"
+      <x-view url="/start" page-title="Get Started"
               content-src="/docs/start/index.html">
         <x-use
                script-src="https://cdn.jsdelivr.net/gh/markedjs/marked@1/marked.min.js">
@@ -162,7 +162,7 @@
         </x-view-do>
       </x-view>
 
-      <x-view url="routing" page-title="Static Routing"
+      <x-view url="/routing" page-title="Static Routing"
               content-src="/docs/routing/index.html"
               transition="animate__animated animate__fadeIn">
         <ul x-cloak
@@ -480,7 +480,7 @@
         </x-view-do>
       </x-view>
 
-      <x-view url="components/:component"
+      <x-view url="/components/:component"
               page-title="Component: <{route:component}>"
               content-src="/docs/components/index.html">
         <x-use
@@ -489,7 +489,8 @@
       </x-view>
 
       <!-- Not Found Route -->
-      <x-view page-title="Page not Found" content-src="/docs/not-found.html">
+      <x-view url="*" page-title="Page not Found"
+              content-src="/docs/not-found.html">
       </x-view>
     </x-ui>
   </body>

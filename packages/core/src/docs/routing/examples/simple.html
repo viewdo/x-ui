@@ -32,7 +32,7 @@
   </head>
 
   <body>
-    <x-ui app-title="My HTML App" start-url="home" mode="hash">
+    <x-ui app-title="My HTML App" start-url="/home" mode="hash">
       <nav>
 
         <x-link class="nav-link" href="/home" active-class="active">
@@ -43,7 +43,7 @@
           About
         </x-link>
       </nav>
-      <x-view url="home" page-title="Home">
+      <x-view url="/home" page-title="Home">
         <div class="container" slot="content">
           <h1>Home</h1>
           <hr />
@@ -51,7 +51,7 @@
           <p>Now you have a basic content router.</p>
         </div>
       </x-view>
-      <x-view url="about" page-title="About" x-cloak>
+      <x-view url="/about" page-title="About" x-cloak>
         <div class="container" slot="content">
           <h1>About</h1>
           <hr />

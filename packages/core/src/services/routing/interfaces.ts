@@ -20,6 +20,10 @@ export const ROUTE_TOPIC = 'routing'
 
 export type NavigateNext = Record<string, unknown>
 
+export interface NextState {
+  action: string
+  location: LocationSegments
+}
 
 export type Prompt = (location: LocationSegments, action: string) => string
 
@@ -40,7 +44,10 @@ export interface RouteSubscription {
   groupIndex?: number
 }
 
-export type HistoryType = 'browser' | 'hash'
+export enum HistoryType {
+  Browser = 'browser',
+  Hash = 'hash',
+}
 
 export interface LocationSegments {
   params: Record<string, any>
@@ -62,8 +69,8 @@ export interface RouterHistory {
   action: string
   location: LocationSegments
   createHref: (location: LocationSegments) => string
-  push: (path: string | LocationSegments, state?: any) => void
-  replace: (path: string | LocationSegments, state?: any) => void
+  push: (path: string, state?: any) => void
+  replace: (path: string, state?: any) => void
   go: (n: number) => void
   goBack: () => void
   goForward: () => void
@@ -92,9 +99,9 @@ export enum VisitStrategy {
 }
 
 export interface IViewDo {
-  visit: VisitStrategy
+  visit?: VisitStrategy
   when?: string
-  visited: boolean
+  visited?: boolean
   url: string
   [key: string]: any
 }

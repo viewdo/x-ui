@@ -3,8 +3,7 @@ import { captureElementsEventOnce, debugIf, interfaceState } from '..';
 import { EventAction, IEventEmitter } from '../actions';
 import { addDataProvider } from '../data/providers/factory';
 import { RoutingDataProvider } from './data-provider';
-import { createBrowserHistory } from './factories/browser-history';
-import { createHashHistory } from './factories/hash-history';
+import { HistoryService } from './history';
 import {
   HistoryType,
   LocationSegments,
@@ -12,55 +11,53 @@ import {
   MatchResults,
   NavigateNext,
   NavigateTo,
-  RouterHistory,
   RouteViewOptions,
   ROUTE_COMMANDS,
   ROUTE_EVENTS,
   ROUTE_TOPIC
 } from './interfaces';
 import { Route } from './route';
-import { getLocation, getUrl, isAbsolute, resolvePathname } from './utils/location-utils';
+import { getUrl, isAbsolute, resolvePathname } from './utils/location-utils';
 import { matchPath } from './utils/match-path';
 
-const HISTORIES: { [key in HistoryType]: (win: Window) => RouterHistory } = {
-  browser: createBrowserHistory,
-  hash: createHashHistory,
-}
-
 export class RouterService {
-  location?: LocationSegments
-  history: RouterHistory
+  public location!: LocationSegments
+  public readonly history!: HistoryService
   private readonly removeHandler!: () => void
   private readonly removeSubscription!: () => void
 
   constructor(
+    private win: Window,
     private readonly writeTask: (t: RafCallback) => void,
     private readonly events: IEventEmitter,
     private readonly actions: IEventEmitter,
-    public rootElement: HTMLElement,
-    public historyType: HistoryType,
-    public root: string,
-    public appTitle: string | undefined,
+    private historyType: HistoryType = HistoryType.Browser,
+    private root: string = '',
+    public appTitle?: string,
     public transition?: string,
     public scrollTopOffset = 0,
   ) {
-    this.history = HISTORIES[historyType]((rootElement.ownerDocument as any).defaultView)
-    if (!this.history) {
+
+    if (!win) {
       return
     }
 
+    // this.history = historyType == 'browser'
+    //   ? createBrowserHistory(win)
+    //   : createHashHistory(win)
+
+    this.history = new HistoryService(win, historyType, root)
+
     this.removeHandler = this.history.listen((location: LocationSegments) => {
-      const newLocation = getLocation(location, root)
-      this.history.location = newLocation
-      this.location = newLocation
-      writeTask(() => this.events.emit(ROUTE_EVENTS.RouteChanged, newLocation))
+      this.location = location
+      this.events.emit(ROUTE_EVENTS.RouteChanged, location)
     })
 
     this.removeSubscription = this.actions.on(ROUTE_TOPIC, (e) => {
-      this.handleEvent(e)
+      this.handleEventAction(e)
     })
 
-    this.location = getLocation(this.history.location, root)
+    this.location = this.history.location
 
     addDataProvider('route', new RoutingDataProvider((key: string) => this.location?.params[key]))
 
@@ -69,84 +66,78 @@ export class RouterService {
     this.events.emit(ROUTE_EVENTS.RouteChanged, this.location)
   }
 
-  handleEvent(actionEvent: EventAction<NavigateTo | NavigateNext>) {
-    debugIf(interfaceState.debug, `router-service: action received ${JSON.stringify(actionEvent)}`)
+  handleEventAction(eventAction: EventAction<NavigateTo | NavigateNext>) {
+    debugIf(interfaceState.debug, `router-service: action received ${JSON.stringify(eventAction)}`)
 
-    if (actionEvent.command === ROUTE_COMMANDS.NavigateNext) {
+    if (eventAction.command === ROUTE_COMMANDS.NavigateNext) {
       this.goToParentRoute()
-    } else if (actionEvent.command === ROUTE_COMMANDS.NavigateTo) {
-      const { url } = actionEvent.data as NavigateTo
+    } else if (eventAction.command === ROUTE_COMMANDS.NavigateTo) {
+      const { url } = eventAction.data as NavigateTo
       this.goToRoute(url)
-    } else if (actionEvent.command === ROUTE_COMMANDS.NavigateBack) {
-      this.history.goBack()
+    } else if (eventAction.command === ROUTE_COMMANDS.NavigateBack) {
+      this.history!.goBack()
     }
   }
 
   viewsUpdated = (options: RouteViewOptions = {}) => {
     if (this.history && options.scrollToId && this.historyType === 'browser') {
-      const elm = this.history?.win.document.querySelector('#' + options.scrollToId)
+      const elm = this.win.document.querySelector('#' + options.scrollToId)
       if (elm) {
         elm.scrollIntoView()
         return
       }
     }
-
     this.scrollTo(options.scrollTopOffset || this.scrollTopOffset)
   }
 
   goToParentRoute() {
-    const { history } = this
-    if (!history) {
-      return
+    if (!this.history) {
+      return;
     }
 
-    const parentSegments = history.location?.pathParts?.slice(0, -1)
+    const parentSegments = this.history.location.pathParts?.slice(0, -1)
     if (parentSegments) {
-      this.history?.push(parentSegments.join('/'))
+      this.goToRoute(parentSegments.join('/'))
     } else {
-      history.goBack()
+      this.history.goBack()
     }
   }
 
   scrollTo(scrollToLocation?: number) {
-    const { history } = this
-    if (!history) {
+    if (!this.history) {
       return
     }
 
-    if (scrollToLocation === null || !history) {
+    if (scrollToLocation === null || !this.history) {
       return
     }
 
-    if (history.action === 'POP' && Array.isArray(history.location.scrollPosition)) {
-      if (history?.location && Array.isArray(history.location.scrollPosition)) {
-        history.win.scrollTo(history.location.scrollPosition[0], history.location.scrollPosition[1])
+    if (Array.isArray(this.history.location.scrollPosition)) {
+      if (this.history?.location && Array.isArray(this.history.location.scrollPosition)) {
+        this.win.scrollTo(this.history.location.scrollPosition[0], this.history.location.scrollPosition[1])
       }
-
       return
     }
 
     // Okay, the frame has passed. Go ahead and render now
     this.writeTask(() => {
-      history.win.scrollTo(0, scrollToLocation || 0)
+      this.win.scrollTo(0, scrollToLocation || 0)
     })
   }
 
   goToRoute(path: string) {
     const route = isAbsolute(path) ? path
       : this.resolvePathname(path, this.location?.pathname)
-    this.history?.push(this.getUrl(route));
+    this.history.push(this.getUrl(route));
   }
 
   matchPath(options: MatchOptions = {}): MatchResults | null {
-    if (!this.location) {
-      return null
-    }
+    if (!this.location) return null
     return matchPath(this.location, options)
   }
 
-  getUrl(url: string, root?: string) {
-    return getUrl(url, root || this.root)
+  getUrl(url: string) {
+    return getUrl(url, this.root)
   }
 
   resolvePathname(url: string, parentUrl?: string) {
@@ -156,10 +147,10 @@ export class RouterService {
   normalizeChildUrl(childUrl: string, parentUrl: string) {
     let normalizedUrl = childUrl
     if (!childUrl.startsWith(parentUrl)) {
-      normalizedUrl = `${parentUrl}/${childUrl}`
+      normalizedUrl = `/${parentUrl}/${childUrl}`
     }
 
-    const path = normalizedUrl.replace('//', '/')
+    const path = normalizedUrl.replace(/[/]{2,}/gi, '/')
     return (path.endsWith('/')) ? path.slice(0, path.length-1): path
   }
 
@@ -167,9 +158,9 @@ export class RouterService {
     return ev.metaKey || ev.altKey || ev.ctrlKey || ev.shiftKey
   }
 
-  captureInnerLinks(root?:HTMLElement, fromPath?: string) {
+  captureInnerLinks(root:HTMLElement, fromPath?: string) {
     captureElementsEventOnce<HTMLAnchorElement, MouseEvent>(
-      root || this.rootElement,
+      root,
       `a`,
       'click',
       (el: HTMLAnchorElement, ev: MouseEvent) => {
@@ -192,6 +183,7 @@ export class RouterService {
     this.events.removeAllListeners()
     this.removeHandler()
     this.removeSubscription()
+    this.history.destroy()
   }
 
   createRoute(

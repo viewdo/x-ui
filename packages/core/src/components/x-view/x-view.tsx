@@ -85,22 +85,18 @@ export class XView {
     return this.el.closest('x-ui')
   }
 
-  private isChild(element: HTMLXViewDoElement) {
-    return element.closest('x-view') === this.el
+  private isChild(element: HTMLElement) {
+    return element.parentElement?.closest('x-view') === this.el
   }
 
   private get childViewDos(): HTMLXViewDoElement[] {
-    return Array.from(this.el.querySelectorAll('x-view-do')).filter((e) => this.isChild(e))
+    return Array.from(this.el.querySelectorAll('x-view-do'))
+      .filter((e) => this.isChild(e))
   }
 
   private get childViews(): HTMLXViewElement[] {
-    if (!this.el.hasChildNodes()) {
-      return []
-    }
-
-    return Array.from(this.el.childNodes)
-      .filter((c) => c.nodeName === 'X-VIEW')
-      .map((v) => v as HTMLXViewElement)
+    return Array.from(this.el.querySelectorAll('x-view'))
+      .filter((e) => this.isChild(e))
   }
 
   async componentWillLoad() {
@@ -128,15 +124,19 @@ export class XView {
     )
     this.match = this.route.match
 
+    debugIf(this.debug, `x-view: ${this.url} found ${this.childViews.length} child views`)
     this.childViews.forEach((v) => {
       v.url = this.route.normalizeChildUrl(v.url)
       v.transition = v.transition || this.transition
     })
 
+    debugIf(this.debug, `x-view: ${this.url} found ${this.childViewDos.length} child view-dos`)
     this.childViewDos.forEach((v) => {
       v.url = this.route.normalizeChildUrl(v.url)
       v.transition = v.transition || this.transition
     })
+
+
 
     eventBus.on(DATA_EVENTS.DataChanged, async () => {
       debugIf(this.debug, `x-view: ${this.url} data changed `)

@@ -43,14 +43,14 @@ export class XUI {
    * if it isn't '/', then the router needs to know
    * where to begin creating paths.
    */
-  @Prop() root:string = '/'
+  @Prop() root:string = ''
 
   /**
    * Browser (paths) or Hash (#) routing.
    * To support browser history, the HTTP server
    * must be setup for a PWA
    */
-  @Prop() mode: HistoryType = 'browser'
+  @Prop() mode: HistoryType = HistoryType.Browser
 
   /**
    * Navigation transition between routes.
@@ -133,13 +133,10 @@ export class XUI {
   }) events!: EventEmitter
 
   private get childViews(): HTMLXViewElement[] {
-    if (!this.el.hasChildNodes()) {
-      return []
-    }
-
-    return Array.from(this.el.childNodes)
-      .filter((c) => c.nodeName === 'X-VIEW')
-      .map((v) => v as HTMLXViewElement)
+    return Array.from(this.el.querySelectorAll('x-view'))
+      .filter(e => {
+        return e.parentElement?.closest('x-view') == null
+      })
   }
 
   componentWillLoad() {
@@ -160,10 +157,10 @@ export class XUI {
     })
 
     this.router = new RouterService(
+      window,
       writeTask,
       eventBus,
       actionBus,
-      this.el,
       this.mode,
       this.root,
       this.appTitle,
@@ -171,12 +168,11 @@ export class XUI {
       this.scrollTopOffset,
     )
 
-    this.startUrl = this.router.normalizeChildUrl(this.startUrl, '/')
-    this.router.captureInnerLinks()
+    this.startUrl = this.router.normalizeChildUrl(this.startUrl, this.root)
+    this.router.captureInnerLinks(this.el)
 
+    debugIf(this.debug, `x-ui: found ${this.childViews.length} child views`)
     this.childViews.forEach((v) => {
-      if (v.url)
-        v.url = this.router.normalizeChildUrl(v.url, '/')
       v.transition = v.transition || this.transition
     })
 

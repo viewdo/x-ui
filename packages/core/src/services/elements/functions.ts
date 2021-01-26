@@ -75,6 +75,7 @@ export function captureElementsEventOnce<TElement extends HTMLElement,TEvent ext
   const attribute = `x-attached-${event}`
   Array.from(rootElement.querySelectorAll(query))
     .map(el => el as TElement)
+    .filter(el => !el.hasAttribute(attribute))
     .forEach((el: TElement) => {
       el.addEventListener(event, (ev) => {
         clickHandler(el, ev as TEvent)

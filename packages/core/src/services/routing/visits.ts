@@ -1,6 +1,6 @@
 import { warnIf } from '../logging';
+import { storageAvailable } from '../utils/browser-utils';
 import { VisitStrategy } from './interfaces';
-import { storageAvailable } from './utils/browser-utils';
 
 const supportsSession = storageAvailable(window, 'sessionStorage')
 warnIf(!supportsSession, 'session-storage is not supported')
