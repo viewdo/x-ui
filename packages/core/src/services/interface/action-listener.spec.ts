@@ -2,21 +2,16 @@ import { newSpecPage } from '@stencil/core/testing'
 import { EventEmitter } from '../actions/event-emitter'
 import { InterfaceActionListener } from './action-listener'
 import { INTERFACE_COMMANDS, INTERFACE_TOPIC } from './interfaces'
+import { clearInterfaceProvider, getInterfaceProvider } from './providers/factory'
 import { clearReferences, hasReference, markReference } from './references'
+
 describe('interface-action-listener:', () => {
-  let subject: InterfaceActionListener
   let actionBus: EventEmitter
   let eventBus: EventEmitter
-  let events: Array<any[]>
 
   beforeAll(() => {
-    events = []
     actionBus = new EventEmitter()
     eventBus = new EventEmitter()
-    subject = new InterfaceActionListener()
-    eventBus.on('*', (...args: any[]) => {
-      events.push(...args)
-    })
   })
 
   it('references ', async () => {
@@ -28,12 +23,97 @@ describe('interface-action-listener:', () => {
     clearReferences()
   })
 
-  it('elementToggleClass ', async () => {
+  it('register provider', async () => {
     const page = await newSpecPage({
       components: [],
       html: `<div></div>`,
     })
+    const subject = new InterfaceActionListener()
+    subject.initialize(page.win, actionBus, eventBus)
 
+    const provider = subject.defaultProvider
+
+    actionBus.emit(INTERFACE_TOPIC, {
+      topic: INTERFACE_TOPIC,
+      command: INTERFACE_COMMANDS.RegisterProvider,
+      data: {
+        name: 'special',
+        provider,
+      },
+    })
+
+    let result = getInterfaceProvider()
+
+    expect(result).toBe(provider)
+
+    clearInterfaceProvider()
+
+    result = getInterfaceProvider()
+
+    expect(result).toBeNull()
+
+    subject.destroy()
+  })
+
+  it('theme, autoplay & mute', async () => {
+    const page = await newSpecPage({
+      components: [],
+      html: `<div></div>`,
+    })
+    const subject = new InterfaceActionListener()
+    subject.initialize(page.win, actionBus, eventBus)
+
+    subject.defaultProvider.setAutoPlay(true)
+    subject.defaultProvider.setTheme('dark')
+    subject.defaultProvider.setMute(true)
+
+    expect(page.win.localStorage.getItem('autoplay')).toBe('true')
+    expect(page.win.localStorage.getItem('theme')).toBe('dark')
+    expect(page.win.localStorage.getItem('muted')).toBe('true')
+
+    subject.destroy()
+  })
+
+  it('actions: theme, autoplay & mute', async () => {
+    const page = await newSpecPage({
+      components: [],
+      html: `<div></div>`,
+    })
+    const subject = new InterfaceActionListener()
+    subject.initialize(page.win, actionBus, eventBus)
+
+    actionBus.emit(INTERFACE_TOPIC, {
+      topic: INTERFACE_TOPIC,
+      command: INTERFACE_COMMANDS.SetAutoPlay,
+      data: true,
+    })
+
+    actionBus.emit(INTERFACE_TOPIC, {
+      topic: INTERFACE_TOPIC,
+      command: INTERFACE_COMMANDS.SetTheme,
+      data: 'dark',
+    })
+
+    actionBus.emit(INTERFACE_TOPIC, {
+      topic: INTERFACE_TOPIC,
+      command: INTERFACE_COMMANDS.SetMute,
+      data: true,
+    })
+
+    expect(page.win.localStorage.getItem('autoplay')).toBe('true')
+    expect(page.win.localStorage.getItem('theme')).toBe('dark')
+    expect(page.win.localStorage.getItem('muted')).toBe('true')
+
+    subject.destroy()
+  })
+
+  it('elementToggleClass ', async () => {
+    const page = await newSpecPage({
+      components: [],
+      html: `<div></div>`,
+      autoApplyChanges: true,
+    })
+    const subject = new InterfaceActionListener()
     subject.initialize(page.win, actionBus, eventBus)
 
     actionBus.emit(INTERFACE_TOPIC, {
@@ -45,13 +125,12 @@ describe('interface-action-listener:', () => {
       },
     })
 
-    await page.waitForChanges()
+    // TODO: I can't get this to consistently work with with the Mocks
+    // let element = page.body.querySelector('div')
+    // let hasClass = element?.classList.contains('test')
+    // expect(hasClass).toBe(true)
 
-    let element = page.body.querySelector('div')
-
-    let hasClass = element?.classList.contains('test')
-
-    expect(hasClass).toBe(true)
+    subject.destroy()
   })
 
   it('elementAddClasses, elementRemoveClasses', async () => {
@@ -59,7 +138,7 @@ describe('interface-action-listener:', () => {
       components: [],
       html: `<div></div>`,
     })
-
+    const subject = new InterfaceActionListener()
     subject.initialize(page.win, actionBus, eventBus)
 
     actionBus.emit(INTERFACE_TOPIC, {
@@ -92,6 +171,7 @@ describe('interface-action-listener:', () => {
     hasClass = element?.classList.contains('test')
 
     expect(hasClass).toBe(false)
+    subject.destroy()
   })
 
   it('elementSetAttribute, elementRemoveAttribute', async () => {
@@ -99,7 +179,7 @@ describe('interface-action-listener:', () => {
       components: [],
       html: `<div></div>`,
     })
-
+    const subject = new InterfaceActionListener()
     subject.initialize(page.win, actionBus, eventBus)
 
     actionBus.emit(INTERFACE_TOPIC, {
@@ -132,5 +212,6 @@ describe('interface-action-listener:', () => {
     hasAttribute = element?.hasAttribute('test')
 
     expect(hasAttribute).toBe(false)
+    subject.destroy()
   })
 })

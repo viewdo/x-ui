@@ -20,28 +20,28 @@ export class InterfaceActionListener implements IEventActionListener {
     this.actionsSubscription = actionBus.on(INTERFACE_TOPIC, async (e) => {
       await this.handleAction(e)
     })
-    this.registerBrowserProviders(window)
+    this.registerDefaultProvider(window)
   }
 
-  registerBrowserProviders(win: Window | MockWindow) {
+  registerDefaultProvider(win: Window | MockWindow) {
     this.defaultProvider = new DefaultInterfaceProvider(win)
-    setInterfaceProvider('default', this.defaultProvider)
+    this.setProvider('default', this.defaultProvider)
   }
 
   setProvider(name: string, provider: InterfaceProvider) {
     debugIf(interfaceState.debug, `interface-provider: ${name} changed`)
 
-    this.themeSubscription = provider?.onChange('theme', (theme) => {
+    this.themeSubscription = provider.onChange('theme', (theme) => {
       this.defaultProvider.state.theme = theme
       this.eventBus.emit(INTERFACE_EVENTS.ThemeChanged)
     })
 
-    this.muteSubscription = provider?.onChange('muted', (muted) => {
+    this.muteSubscription = provider.onChange('muted', (muted) => {
       this.defaultProvider.state.muted = muted
       this.eventBus.emit(INTERFACE_EVENTS.SoundChanged)
     })
 
-    this.autoplaySubscription = provider?.onChange('autoplay', (autoplay) => {
+    this.autoplaySubscription = provider.onChange('autoplay', (autoplay) => {
       this.defaultProvider.state.autoplay = autoplay
       this.eventBus.emit(INTERFACE_EVENTS.AutoPlayChanged)
     })

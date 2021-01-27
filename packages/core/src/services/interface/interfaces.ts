@@ -26,7 +26,7 @@ export enum INTERFACE_COMMANDS {
   OpenPopover = 'open-popover',
   SetTheme = 'set-theme',
   SetAutoPlay = 'set-auto-play',
-  SetSound = 'set-sound',
+  SetMute = 'set-mute',
   ElementToggleClass = 'element-toggle-class',
   ElementAddClasses = 'element-add-classes',
   ElementRemoveClasses = 'element-remove-classes',

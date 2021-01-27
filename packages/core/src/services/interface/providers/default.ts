@@ -39,38 +39,40 @@ export class DefaultInterfaceProvider implements InterfaceProvider {
     const { selector, className } = args
     if (!className) return
     const element = this.body.querySelector(selector) as HTMLElement
-    element?.classList.toggle(className)
+    if (element && className) element.classList.toggle(className)
   }
 
   elementAddClasses(args: any) {
     const { selector, classes } = args
     if (!classes) return
     const element = this.body.querySelector(selector) as HTMLElement
-    classes?.split(' ').forEach((c: string) => {
-      element?.classList.add(c)
-    })
+    if (element && classes)
+      classes.split(' ').forEach((c: string) => {
+        element.classList.add(c)
+      })
   }
 
   elementRemoveClasses(args: any) {
     const { selector, classes } = args
     const element = this.body.querySelector(selector) as HTMLElement
-    classes?.split(' ').forEach((c: string) => {
-      element?.classList.remove(c)
-    })
+    if (element && classes)
+      classes?.split(' ').forEach((c: string) => {
+        element?.classList.remove(c)
+      })
   }
 
   elementSetAttribute(args: any) {
     const { selector, attribute, value } = args
     if (!attribute) return
     const element = this.body.querySelector(selector) as HTMLElement
-    element?.setAttribute(attribute, value || '')
+    if (element && attribute) element.setAttribute(attribute, value || '')
   }
 
   elementRemoveAttribute(args: any) {
     const { selector, attribute } = args
     if (!attribute) return
     const element = this.body.querySelector(selector) as HTMLElement
-    element?.removeAttribute(attribute)
+    if (element && attribute) element?.removeAttribute(attribute)
   }
 
   elementCallMethod(args: any) {

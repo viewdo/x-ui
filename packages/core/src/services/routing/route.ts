@@ -15,11 +15,11 @@ export class Route {
     public router: RouterService,
     public routeElement: HTMLElement,
     public path: string,
-    exact: boolean,
-    public pageTitle: string,
-    public transition: string | null,
-    public scrollTopOffset: number,
-    matchSetter: (m: MatchResults | null) => void,
+    exact: boolean = true,
+    public pageTitle: string = '',
+    public transition: string | null = null,
+    public scrollTopOffset: number = 0,
+    matchSetter: (m: MatchResults | null) => void = () => {},
   ) {
     this.subscription = eventBus.on(ROUTE_EVENTS.RouteChanged, () => {
       this.previousMatch = this.match
@@ -45,9 +45,9 @@ export class Route {
   async loadCompleted() {
     let routeViewOptions: RouteViewOptions = {}
 
-    if (this.router?.history && this.router?.history.location.hash) {
+    if (this.router.history && this.router.history.location.hash) {
       routeViewOptions = {
-        scrollToId: this.router?.history.location.hash.slice(1),
+        scrollToId: this.router.history.location.hash.slice(1),
       }
     } else if (this.scrollTopOffset) {
       routeViewOptions = {
@@ -70,7 +70,7 @@ export class Route {
     this.router.captureInnerLinks(root || this.routeElement, this.path)
   }
 
-  private async adjustTitle() {
+  public async adjustTitle() {
     if (this.routeElement.ownerDocument) {
       if (this.pageTitle) {
         let { pageTitle } = this
@@ -78,7 +78,9 @@ export class Route {
           pageTitle = await resolveExpression(this.pageTitle)
         }
 
-        this.routeElement.ownerDocument.title = `${pageTitle} | ${this.router.appTitle || ''}`
+        this.routeElement.ownerDocument.title = `${pageTitle} | ${
+          this.router.appTitle || this.routeElement.ownerDocument.title
+        }`
       } else if (this.router.appTitle) {
         this.routeElement.ownerDocument.title = `${this.router.appTitle}`
       }

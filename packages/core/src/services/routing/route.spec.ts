@@ -3,6 +3,7 @@ import { newSpecPage } from '@stencil/core/testing'
 import { EventEmitter } from '../actions/event-emitter'
 import { HistoryService } from './history'
 import { HistoryType, MatchResults } from './interfaces'
+import { Route } from './route'
 import { RouterService } from './router'
 import { MockHistory } from './__mocks__/history'
 
@@ -55,5 +56,133 @@ describe('route', () => {
     subject.destroy()
 
     // expect(match).not.toBeNull()
+  })
+
+  it('normalizeChildUrl', async () => {
+    page = await startPage('/')
+    router = new RouterService(page.win, writeTask, eventBus, actionBus)
+    let subject = new Route(router, page.body, '/route')
+
+    let normalized = subject.normalizeChildUrl('child')
+    expect(normalized).toBe('/route/child')
+
+    normalized = subject.normalizeChildUrl('/child')
+    expect(normalized).toBe('/route/child')
+
+    normalized = subject.normalizeChildUrl('child')
+    expect(normalized).toBe('/route/child')
+
+    normalized = subject.normalizeChildUrl('//child')
+    expect(normalized).toBe('/route/child')
+
+    normalized = subject.normalizeChildUrl('//child/')
+    expect(normalized).toBe('/route/child')
+
+    normalized = subject.normalizeChildUrl('child/')
+    expect(normalized).toBe('/route/child')
+  })
+
+  it('adjustPageTitle', async () => {
+    page = await startPage('/')
+    router = new RouterService(page.win, writeTask, eventBus, actionBus, HistoryType.Browser, '', 'App')
+    let subject = router.createRoute(page.body, '/route', true, 'Page', null, 0, () => {})
+
+    subject.adjustTitle()
+
+    await page.waitForChanges()
+
+    expect(page.doc.title).toBe('Page | App')
+  })
+
+  it('adjustPageTitle - dynamic', async () => {
+    page = await startPage('/route/Widget')
+    router = new RouterService(page.win, writeTask, eventBus, actionBus, HistoryType.Browser, '', 'App')
+    let subject = router.createRoute(page.body, '/route/:product', true, '{route:product}', null, 0, () => {})
+
+    subject.adjustTitle()
+
+    await page.waitForChanges()
+
+    expect(page.doc.title).toBe('Widget | App')
+  })
+
+  it('adjustPageTitle - no page', async () => {
+    page = await startPage('/route')
+    router = new RouterService(page.win, writeTask, eventBus, actionBus, HistoryType.Browser, '', 'App')
+    let subject = new Route(router, page.body, '/route')
+
+    subject.adjustTitle()
+
+    await page.waitForChanges()
+
+    expect(page.doc.title).toBe('App')
+  })
+
+  it('loadComplete - match', async () => {
+    page = await startPage('/route')
+    router = new RouterService(page.win, writeTask, eventBus, actionBus, HistoryType.Browser, '', 'App')
+    let subject = new Route(router, page.body, '/route')
+
+    subject.match = {
+      path: '/route',
+      isExact: true,
+      params: {},
+      url: '/route',
+    }
+
+    subject.loadCompleted()
+
+    expect(page.doc.title).toBe('App')
+  })
+
+  it('loadComplete - hash match', async () => {
+    page = await startPage('/#/route')
+    router = new RouterService(page.win, writeTask, eventBus, actionBus, HistoryType.Hash, '', 'App')
+    let subject = new Route(router, page.body, '/route', true, 'Page', null, 10)
+
+    subject.match = {
+      path: '/route',
+      isExact: true,
+      params: {},
+      url: '/route',
+    }
+
+    subject.loadCompleted()
+
+    expect(page.doc.title).toBe('Page | App')
+  })
+
+  it('loadComplete - scroll-top', async () => {
+    page = await startPage('/route')
+    page.doc.title = 'Neat!'
+    router = new RouterService(page.win, writeTask, eventBus, actionBus)
+    let subject = new Route(router, page.body, '/route', true, 'Page', null, 10)
+
+    subject.match = {
+      path: '/route',
+      isExact: true,
+      params: {},
+      url: '/route',
+    }
+
+    subject.loadCompleted()
+
+    expect(page.doc.title).toBe('Page | Neat!')
+  })
+
+  it('captureInnerLinks', async () => {
+    page = await startPage('/')
+    router = new RouterService(page.win, writeTask, eventBus, actionBus)
+    let subject = new Route(router, page.body, '/route')
+
+    subject.captureInnerLinks()
+
+    let anchor = page.body.querySelector('a')
+
+    expect(anchor?.getAttribute('x-attached-click')).not.toBeNull()
+
+    anchor?.click()
+
+    subject.destroy()
   })
 })
