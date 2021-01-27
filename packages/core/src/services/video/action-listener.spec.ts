@@ -1,11 +1,9 @@
-import { EventEmitter } from '../actions/event-emitter';
-import { sleep } from '../utils/promise-utils';
-import { VideoActionListener } from './action-listener';
-import { VIDEO_COMMANDS, VIDEO_TOPIC } from './interfaces';
+import { EventEmitter } from '../actions/event-emitter'
+import { sleep } from '../utils/promise-utils'
+import { VideoActionListener } from './action-listener'
+import { VIDEO_COMMANDS, VIDEO_TOPIC } from './interfaces'
 
-
-
-describe('video-listener:', () => {
+describe('video-action-listener:', () => {
   let subject: VideoActionListener
   let video: any
   let actionBus: EventEmitter
@@ -17,11 +15,7 @@ describe('video-listener:', () => {
     actionBus = new EventEmitter()
     eventBus = new EventEmitter()
 
-    subject = new VideoActionListener(
-      video as HTMLVideoElement,
-      eventBus,
-      actionBus,
-      false)
+    subject = new VideoActionListener(video as HTMLVideoElement, eventBus, actionBus, false)
 
     eventBus.on('*', (...args: any[]) => {
       events.push(...args)
@@ -40,7 +34,7 @@ describe('video-listener:', () => {
       isPlaying = false
     }
 
-    video.mute = (mute:boolean) => {
+    video.mute = (mute: boolean) => {
       video.muted = mute
     }
 
@@ -75,15 +69,11 @@ describe('video-listener:', () => {
       topic: VIDEO_TOPIC,
       command: VIDEO_COMMANDS.Mute,
       data: {
-        value: true
+        value: true,
       },
     })
     await sleep(100)
 
     expect(video.muted).toBe(true)
-
-
   })
-
-
 })

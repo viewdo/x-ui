@@ -7,7 +7,7 @@ import {
   eventBus,
   HistoryType,
   IEventActionListener,
-  InterfaceListener,
+  InterfaceActionListener,
   interfaceState,
   LocationSegments,
   log,
@@ -177,7 +177,7 @@ export class XUI {
     const dataListener = new DataListener()
     this.addListener('data', dataListener)
 
-    const documentListener = new InterfaceListener()
+    const documentListener = new InterfaceActionListener()
     this.addListener('document', documentListener)
   }
 

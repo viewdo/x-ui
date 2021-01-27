@@ -1,21 +1,11 @@
 import { RafCallback } from '@stencil/core/internal'
-import { captureElementsEventOnce, debugIf, interfaceState } from '..'
-import { EventAction, IEventEmitter } from '../actions'
+import { captureElementsEventOnce } from '..'
+import { IEventEmitter } from '../actions'
 import { addDataProvider } from '../data/providers/factory'
+import { RoutingActionListener } from './action-listener'
 import { RoutingDataProvider } from './data-provider'
 import { HistoryService } from './history'
-import {
-  HistoryType,
-  LocationSegments,
-  MatchOptions,
-  MatchResults,
-  NavigateNext,
-  NavigateTo,
-  RouteViewOptions,
-  ROUTE_COMMANDS,
-  ROUTE_EVENTS,
-  ROUTE_TOPIC,
-} from './interfaces'
+import { HistoryType, LocationSegments, MatchOptions, MatchResults, RouteViewOptions } from './interfaces'
 import { Route } from './route'
 import { isAbsolute, resolvePathname } from './utils/location-utils'
 import { matchPath } from './utils/match-path'
@@ -24,27 +14,25 @@ import { ensureBasename } from './utils/path-utils'
 export class RouterService {
   public location!: LocationSegments
   private readonly removeHandler!: () => void
-  private readonly removeSubscription!: () => void
+  private listener!: RoutingActionListener
 
   constructor(
     private win: Window,
     private readonly writeTask: (t: RafCallback) => void,
-    private readonly events: IEventEmitter,
-    private readonly actions: IEventEmitter,
+    events: IEventEmitter,
+    actions: IEventEmitter,
     private historyType: HistoryType = HistoryType.Browser,
-    private root: string = '',
+    public root: string = '',
     public appTitle?: string,
     public transition?: string,
     public scrollTopOffset = 0,
     public readonly history: HistoryService = new HistoryService(win, historyType, root, win.history),
   ) {
+    this.listener = new RoutingActionListener(this, events, actions)
+
     this.removeHandler = this.history.listen((location: LocationSegments) => {
       this.location = location
-      this.events.emit(ROUTE_EVENTS.RouteChanged, location)
-    })
-
-    this.removeSubscription = this.actions.on(ROUTE_TOPIC, (e) => {
-      this.handleEventAction(e)
+      this.listener.notifyRouteChanged(location)
     })
 
     this.location = this.history.location
@@ -53,27 +41,7 @@ export class RouterService {
 
     addDataProvider('query', new RoutingDataProvider((key: string) => this.location?.query[key]))
 
-    this.events.emit(ROUTE_EVENTS.RouteChanged, this.location)
-  }
-
-  handleEventAction(eventAction: EventAction<NavigateTo | NavigateNext>) {
-    debugIf(interfaceState.debug, `router-service: action received ${JSON.stringify(eventAction)}`)
-
-    switch (eventAction.command) {
-      case ROUTE_COMMANDS.NavigateNext: {
-        this.goToParentRoute()
-        break
-      }
-      case ROUTE_COMMANDS.NavigateTo: {
-        const { url } = eventAction.data as NavigateTo
-        this.goToRoute(url)
-        break
-      }
-      case ROUTE_COMMANDS.NavigateBack: {
-        this.goBack()
-        break
-      }
-    }
+    this.listener.notifyRouteChanged(this.location)
   }
 
   viewsUpdated = (options: RouteViewOptions = {}) => {
@@ -158,9 +126,8 @@ export class RouterService {
   }
 
   destroy() {
-    this.events.removeAllListeners()
     this.removeHandler()
-    this.removeSubscription()
+    this.listener.destroy()
     this.history.destroy()
   }
 

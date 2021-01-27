@@ -7,7 +7,7 @@ import { DefaultInterfaceProvider } from './providers/default'
 import { getInterfaceProvider, setInterfaceProvider } from './providers/factory'
 import { interfaceState } from './state'
 
-export class InterfaceListener implements IEventActionListener {
+export class InterfaceActionListener implements IEventActionListener {
   actionsSubscription!: () => void
   themeSubscription!: () => void
   muteSubscription!: () => void

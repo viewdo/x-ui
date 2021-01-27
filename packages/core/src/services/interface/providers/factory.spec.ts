@@ -4,7 +4,7 @@ import { MockWindow } from '@stencil/core/mock-doc'
 import { INTERFACE_COMMANDS } from '..'
 import { actionBus, eventBus } from '../../actions'
 import { sleep } from '../../utils/promise-utils'
-import { InterfaceListener } from '../action-listener'
+import { InterfaceActionListener } from '../action-listener'
 import { DefaultInterfaceProvider } from './default'
 import { getInterfaceProvider, setInterfaceProvider } from './factory'
 
@@ -29,7 +29,7 @@ describe('provider-factory', () => {
   it('interface listener: ElementAddClasses / ElementRemoveClasses', async () => {
     const fakeWindow = new MockWindow('<html><body><h1>Hello</h1></body></html>')
 
-    const interfaceListener = new InterfaceListener()
+    const interfaceListener = new InterfaceActionListener()
     interfaceListener.initialize(fakeWindow.window, actionBus, eventBus)
 
     actionBus.emit('interface', {
@@ -62,7 +62,7 @@ describe('provider-factory', () => {
   it('interface listener: elementToggleClass', async () => {
     const fakeWindow = new MockWindow('<html><body><h1>Hello</h1></body></html>')
 
-    const interfaceListener = new InterfaceListener()
+    const interfaceListener = new InterfaceActionListener()
     interfaceListener.initialize(fakeWindow.window, actionBus, eventBus)
 
     actionBus.emit('interface', {
@@ -95,7 +95,7 @@ describe('provider-factory', () => {
   it('interface listener: ElementSetAttribute / ElementRemoveAttribute', async () => {
     const fakeWindow = new MockWindow('<html><body><h1>Hello</h1></body></html>')
 
-    const interfaceListener = new InterfaceListener()
+    const interfaceListener = new InterfaceActionListener()
     interfaceListener.initialize(fakeWindow.window, actionBus, eventBus)
 
     actionBus.emit('interface', {

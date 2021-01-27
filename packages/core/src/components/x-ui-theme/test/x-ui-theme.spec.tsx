@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import { newSpecPage } from '@stencil/core/testing';
 import { XUiTheme } from '../x-ui-theme';
 

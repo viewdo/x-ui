@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 /**
  * Throws an error if the value parameter is not defined.
  * @param {string} value the value that should not be null

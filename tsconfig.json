@@ -17,7 +17,5 @@
     "stripInternal": true,
     "strict": true
   },
-  "exclude": [
-    "__mocks__"
-  ]
+  "exclude": ["**/__mocks__/**"]
 }
