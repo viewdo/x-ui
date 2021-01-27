@@ -1,15 +1,23 @@
-/* istanbul ignore file */
 
 import { newSpecPage } from '@stencil/core/testing';
-import { interfaceState } from '../../../services';
-import { XUiTheme } from '../x-ui-theme';
+import { interfaceState, interfaceStateDispose } from '../../../services';
+import { XUITheme } from '../x-ui-theme';
+
+
 
 describe('x-ui-theme', () => {
+
+  afterEach(() => {
+    interfaceStateDispose()
+  })
+
   it('renders', async () => {
     const page = await newSpecPage({
-      components: [XUiTheme],
+      components: [XUITheme],
       html: `<x-ui-theme></x-ui-theme>`,
+      autoApplyChanges: true
     });
+
     expect(page.root).toEqualHtml(`
       <x-ui-theme>
         <mock:shadow-root>
@@ -21,7 +29,26 @@ describe('x-ui-theme', () => {
       </x-ui-theme>
     `);
 
+    const subject = page.body.querySelector('x-ui-theme')
+
+    subject?.remove()
+  })
+
+  it('renders with dark preset', async () => {
     interfaceState.theme = 'dark'
+    const page = await newSpecPage({
+      components: [XUITheme]
+    });
+
+    page.win.matchMedia = (query: string) => {
+      const results = page.win.matchMedia(query);
+      return {
+        ...results,
+        matches: true,
+      }
+    }
+
+    page.setContent(`<x-ui-theme></x-ui-theme>`)
 
     await page.waitForChanges()
 
@@ -54,8 +81,61 @@ describe('x-ui-theme', () => {
       </x-ui-theme>
     `);
 
-    page.body.querySelector('x-ui-autoplay')?.remove()
+    const subject = page.body.querySelector('x-ui-theme')
+    subject?.remove()
   });
+
+  it('renders with dark media', async () => {
+    const page = await newSpecPage({
+      components: [XUITheme]
+    });
+
+    let componentListener!: any
+    const mediaChanged = (_type: any, listener: any) => {
+      componentListener = listener
+    }
+
+    const inner = window.matchMedia
+    const replaced = (query: string) => {
+      const results = inner(query);
+      return {
+        ...results,
+        matches: true,
+        addEventListener: mediaChanged
+      }
+    }
+
+    page.win.matchMedia = replaced
+
+    page.setContent(`<x-ui-theme></x-ui-theme>`)
+
+    await page.waitForChanges()
+
+    expect(page.root).toEqualHtml(`
+      <x-ui-theme>
+        <mock:shadow-root>
+          <label class="switch" id="switch">
+            <input aria-label="Change Theme" id="slider" type="checkbox">
+            <span class="round slider"></span>
+          </label>
+        </mock:shadow-root>
+      </x-ui-theme>
+    `);
+
+    expect(page.body.classList.contains('dark')).toBe(true)
+
+    componentListener({
+      matches: false
+    })
+
+    await page.waitForChanges()
+
+    expect(page.body.classList.contains('dark')).toBe(false)
+
+    const subject = page.body.querySelector('x-ui-theme')
+    subject?.remove()
+  });
+
 
 
 });

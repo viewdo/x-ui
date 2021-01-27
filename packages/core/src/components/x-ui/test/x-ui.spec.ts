@@ -1,8 +1,8 @@
 jest.mock('../../../services/logging')
 
-import { newSpecPage } from '@stencil/core/testing'
-import { actionBus, eventBus } from '../../..'
-import { XUI } from '../x-ui'
+import { newSpecPage } from '@stencil/core/testing';
+import { actionBus, eventBus } from '../../..';
+import { XUI } from '../x-ui';
 
 describe('x-ui', () => {
   it('renders hidden by default', async () => {
@@ -22,7 +22,7 @@ describe('x-ui', () => {
     `)
   })
 
-  it('renders hidden with hash', async () => {
+  it('renders with hash', async () => {
     actionBus.removeAllListeners()
     eventBus.removeAllListeners()
 

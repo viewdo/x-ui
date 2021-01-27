@@ -1,11 +1,9 @@
 jest.mock('../../../services/logging')
-jest.mock('../../../services/logging')
 
-import { newSpecPage } from '@stencil/core/testing'
-import { XActionActivator } from '../x-action-activator'
-import { XAction } from '../../x-action/x-action'
-import { actionBus, eventBus } from '../../../services'
-import { sleep } from '../../../services/utils/promise-utils'
+import { newSpecPage } from '@stencil/core/testing';
+import { actionBus, EventAction, eventBus, sleep } from '../../../services';
+import { XAction } from '../../x-action/x-action';
+import { XActionActivator } from '../x-action-activator';
 
 describe('x-action-activator', () => {
   beforeAll(() => {
@@ -78,6 +76,43 @@ describe('x-action-activator', () => {
     button?.click()
   })
 
+  it('captures child input values', async () => {
+    const page = await newSpecPage({
+      components: [XActionActivator, XAction],
+      html: `<x-action-activator activate="OnElementEvent" target-element="button" >
+               <x-action topic="test" command="pass"></x-action>
+               <input type="text" name="text" value="Tom" />
+               <input type="hidden" name="hidden" value="fed-ex" />
+               <input type="checkbox" name="agree" checked/>
+               <input type="text" value="index" />
+               <button type="button">Click Me</button>
+             </x-action-activator>`,
+    })
+
+    await page.waitForChanges()
+
+    const activator = page.body.querySelector('x-action-activator')
+    expect(activator).toBeDefined()
+
+    const button = page.body.querySelector('button')
+
+    let eventAction: EventAction<any>|null = null
+    actionBus.on('test', (e) => {
+      eventAction = e
+    })
+
+    button?.click()
+
+    await sleep(100)
+
+    expect(eventAction!.command).toBe('pass')
+    expect(eventAction!.data).not.toBeNull()
+    expect(eventAction!.data.text).toBe('Tom')
+    expect(eventAction!.data.hidden).toBe('fed-ex')
+    expect(eventAction!.data.agree).toBe(true)
+    expect(eventAction!.data[3]).toBe('index')
+  })
+
   it('captures child element event no selector', async () => {
     const page = await newSpecPage({
       components: [XActionActivator, XAction],
@@ -106,50 +141,32 @@ describe('x-action-activator', () => {
     expect(command).toBe('pass')
   })
 
-  it('x-action: get data', async () => {
+  it('does not capture if no element exists', async () => {
     const page = await newSpecPage({
-      components: [XAction],
-      html: `<x-action></x-action>`,
-      supportsShadowDom: false,
+      components: [XActionActivator, XAction],
+      html: `<x-action-activator>
+               <x-action topic="test" command="pass"></x-action>
+             </x-action-activator>`,
     })
-    expect(page.root).toEqualHtml(
-      `<x-action hidden="">
-       </x-action>`,
-    )
 
-    const action = page.body.querySelector('x-action')
+    await page.waitForChanges()
 
-    expect(action).not.toBeNull()
+    const activator = page.body.querySelector('x-action-activator')
+    expect(activator).toBeDefined()
 
-    const event = action?.getAction()
+    const link = page.body.querySelector('a')
 
-    expect(event).not.toBeNull()
+    let command = null
+    actionBus.on('test', (e) => {
+      command = e
+    })
+
+    link?.click()
+
+    await sleep(100)
+
+    expect(command).toBeNull()
   })
 
-  it('x-action: get data from script', async () => {
-    const page = await newSpecPage({
-      components: [XAction],
-      html: `<x-action topic="test" command="feed-me">
-              <script>{ "name": "willy" }</script>
-             </x-action>`,
-      supportsShadowDom: false,
-    })
-    expect(page.root).toEqualHtml(
-      `<x-action hidden="" topic="test" command="feed-me">
-        <script>{ "name": "willy" }</script>
-       </x-action>`,
-    )
 
-    const action = page.body.querySelector('x-action')
-
-    expect(action).not.toBeNull()
-
-    const event = await action?.getAction()
-
-    expect(event).not.toBeNull()
-
-    expect(event?.topic).toBe('test')
-    expect(event?.command).toBe('feed-me')
-    expect(event?.data.name).toBe('willy')
-  })
 })

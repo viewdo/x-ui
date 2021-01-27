@@ -45,6 +45,14 @@ export class XAction implements IActionElement {
       return null
     }
 
+    if (this.deserializedData == undefined) {
+      this.deserializedData = {}
+    }
+
+    this.childInputs.forEach((el: any, index) => {
+      this.deserializedData![el.id||el.name||index] = el.value || el.checked
+    })
+
     return {
       topic: this.topic,
       command: this.command,
@@ -60,10 +68,16 @@ export class XAction implements IActionElement {
     return this.el.querySelector('script')
   }
 
+  private get childInputs() {
+    return this.el.querySelectorAll('input,select,textarea')
+  }
+
   componentWillLoad() {
-    if (this.parent === undefined) {
+    if (this.parent === null) {
       warn('The x-action component must be wrapped with an x-action-activator component to work.')
-    } else if (this.childScript) {
+    }
+
+    if (this.childScript) {
       this.deserializedData = JSON.parse(this.childScript?.textContent || '{}')
     } else {
       this.deserializedData = JSON.parse(this.data || '{}')
@@ -71,6 +85,6 @@ export class XAction implements IActionElement {
   }
 
   render() {
-    return <Host hidden></Host>
+    return <Host hidden={this.childInputs.length == 0}></Host>
   }
 }

@@ -1,25 +1,36 @@
 import { MockWindow } from '@stencil/core/mock-doc'
 import { createStore } from '@stencil/store'
-import { OnChangeHandler } from '@stencil/store/dist/types'
-import { InterfaceProvider, InterfaceState } from '../interfaces'
+import { IEventEmitter } from '../../actions/interfaces'
+import { InterfaceState, INTERFACE_EVENTS } from '../interfaces'
 
-export class DefaultInterfaceProvider implements InterfaceProvider {
-  state: InterfaceState
-  onChange: OnChangeHandler<InterfaceState>
-  body: HTMLBodyElement
-  constructor(win: MockWindow | Window = window) {
+export class DefaultInterfaceProvider {
+  private state: InterfaceState
+  private body: HTMLBodyElement
+  private disposeThemeSubscription!: () => void
+  private disposeMuteSubscription!: () => void
+  private disposeAutoPlaySubscription!: () => void
+
+  constructor(win: MockWindow | Window = window, eventBus?: IEventEmitter) {
     const { state, onChange } = createStore<InterfaceState>({
       theme: win?.localStorage.getItem('theme') || 'light',
       muted: win?.localStorage.getItem('muted') === 'true',
       autoplay: win?.localStorage.getItem('autoplay') === 'true',
     })
 
-    onChange('theme', (t) => win?.localStorage.setItem('theme', t.toString()))
-    onChange('muted', (m) => win?.localStorage.setItem('muted', m.toString()))
-    onChange('autoplay', (a) => win?.localStorage.setItem('autoplay', a.toString()))
+    this.disposeThemeSubscription = onChange('theme', (t) => {
+      win?.localStorage.setItem('theme', t.toString())
+      eventBus?.emit(INTERFACE_EVENTS.ThemeChanged, t)
+    })
+    this.disposeMuteSubscription = onChange('muted', (m) => {
+      win?.localStorage.setItem('muted', m.toString())
+      eventBus?.emit(INTERFACE_EVENTS.SoundChanged, m)
+    })
+    this.disposeAutoPlaySubscription = onChange('autoplay', (a) => {
+      win?.localStorage.setItem('autoplay', a.toString())
+      eventBus?.emit(INTERFACE_EVENTS.AutoPlayChanged, a)
+    })
 
     this.state = state
-    this.onChange = onChange
     this.body = win.document.body as HTMLBodyElement
   }
 
@@ -85,5 +96,11 @@ export class DefaultInterfaceProvider implements InterfaceProvider {
         elementMethod(data)
       }
     }
+  }
+
+  destroy() {
+    this.disposeAutoPlaySubscription()
+    this.disposeMuteSubscription()
+    this.disposeThemeSubscription()
   }
 }

@@ -1,4 +1,4 @@
-import { IEvents, Listener, IEventEmitter } from './interfaces'
+import { IEventEmitter, IEvents, Listener } from './interfaces'
 
 export class EventEmitter implements IEventEmitter {
   readonly events: IEvents = {}

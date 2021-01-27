@@ -62,20 +62,15 @@ export class XActionActivator {
 
     const values: Record<string,any> = {}
 
-    Array.from(this.el.querySelectorAll(':enabled') || [])
-      .forEach(e => {
-        const input = e as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-        values[input.name||e.id] = input.value
-      })
+    this.childInputs.forEach((el: any, index) => {
+      values[el.id||el.name||index] = el.value || el.checked
+    })
 
     // Activate children
     this.actions.forEach((action) => {
       const data = action.data
-      if (this.activate == ActionActivationStrategy.OnElementEvent) {
-        Object.assign(data, {
-          values
-        })
-      }
+
+      Object.assign(data, values, { values })
 
       const dataString = JSON.stringify(data)
       debugIf(
@@ -89,6 +84,10 @@ export class XActionActivator {
     })
     this.activated = true
     return Promise.resolve()
+  }
+
+  private get childInputs() {
+    return this.el.querySelectorAll('input,select,textarea')
   }
 
   private get parent(): HTMLXViewDoElement | HTMLXViewElement | null {

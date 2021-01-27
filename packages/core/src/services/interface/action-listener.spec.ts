@@ -5,6 +5,13 @@ import { INTERFACE_COMMANDS, INTERFACE_TOPIC } from './interfaces'
 import { clearInterfaceProvider, getInterfaceProvider } from './providers/factory'
 import { clearReferences, hasReference, markReference } from './references'
 
+let called = false
+class MockProvider {
+  doTheThing(..._args: any[]) {
+    called = true
+  }
+}
+
 describe('interface-action-listener:', () => {
   let actionBus: EventEmitter
   let eventBus: EventEmitter
@@ -31,20 +38,31 @@ describe('interface-action-listener:', () => {
     const subject = new InterfaceActionListener()
     subject.initialize(page.win, actionBus, eventBus)
 
-    //const provider = {}
+    const provider = new MockProvider()
 
-    //actionBus.emit(INTERFACE_TOPIC, {
-    //  topic: INTERFACE_TOPIC,
-    //  command: INTERFACE_COMMANDS.RegisterProvider,
-    //  data: {
-    //    name: 'special',
-    //    provider,
-    //  },
-    //})
+    actionBus.emit(INTERFACE_TOPIC, {
+      topic: INTERFACE_TOPIC,
+      command: INTERFACE_COMMANDS.RegisterProvider,
+      data: {
+        name: 'special',
+        provider,
+      },
+    })
 
-    // TODO: Need to mock a real one
     let result = getInterfaceProvider()
-    //expect(result).toBe(provider)
+    expect(result).toBe(provider)
+
+    actionBus.emit(INTERFACE_TOPIC, {
+      topic: INTERFACE_TOPIC,
+      command: 'do-the-thing',
+      data: {
+        name: 'special',
+      },
+    })
+
+    await page.waitForChanges()
+
+    expect(called).toBe(true)
 
     clearInterfaceProvider()
 

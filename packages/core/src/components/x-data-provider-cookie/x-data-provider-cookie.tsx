@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Host, Prop, State } from '@stencil/core'
+import { Component, Element, Event, EventEmitter, h, Host, Prop, State } from '@stencil/core';
 import {
   CookieConsent,
   CookieProvider,
@@ -7,15 +7,15 @@ import {
   DATA_TOPIC,
   evaluatePredicate,
   EventAction,
-  IDataProvider,
-} from '../..'
+  IDataProvider
+} from '../..';
 
 /**
  *  @system providers
  */
 @Component({
   tag: 'x-data-provider-cookie',
-  shadow: false,
+  shadow: true,
 })
 export class XDataProviderCookie {
   private customProvider!: IDataProvider

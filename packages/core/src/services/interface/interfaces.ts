@@ -1,29 +1,20 @@
 /* istanbul ignore file */
 
-import { OnChangeHandler } from '@stencil/store/dist/types'
-
 export class InterfaceState {
   theme!: string
   muted!: boolean
   autoplay!: boolean
 }
 
-export type InterfaceProvider = {
-  onChange: OnChangeHandler<InterfaceState>
-  setTheme(theme: 'dark' | 'light'): void
-  setAutoPlay(autoPlay: boolean): void
-  setMute(muted: boolean): void
-}
-
 export const INTERFACE_TOPIC = 'interface'
 
 export enum INTERFACE_COMMANDS {
   RegisterProvider = 'register-provider',
-  Alert = 'alert',
-  OpenToast = 'open-toast',
-  ModalOpen = 'modal-open',
-  ModalClose = 'modal-open',
-  OpenPopover = 'open-popover',
+  // Alert = 'alert',
+  // OpenToast = 'open-toast',
+  // ModalOpen = 'modal-open',
+  // ModalClose = 'modal-open',
+  // OpenPopover = 'open-popover',
   SetTheme = 'set-theme',
   SetAutoPlay = 'set-auto-play',
   SetMute = 'set-mute',
@@ -43,5 +34,5 @@ export enum INTERFACE_EVENTS {
 
 export type InterfaceProviderRegistration = {
   name: string
-  provider: InterfaceProvider
+  provider: any
 }

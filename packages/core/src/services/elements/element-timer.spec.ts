@@ -30,25 +30,28 @@ describe('element-timer:', () => {
     expect(input!.value).toBe('0.2')
   })
 
-  // it('emits time then cleans up', async () => {
-  //   const page = await newSpecPage({
-  //     components: [],
-  //     html: `
-  //     <div id="timer">
-  //       <input type="text" x-percentage-to="value" />
-  //     </div>
-  //     `,
-  //   })
-  //
-  //   subject = new ElementTimer(page.body, 3, false)
-  //   // subject.beginInternalTimer()
-  //   //await sleep(3500)
-  //   //let input = page.body.querySelector('input')
-  //   //let value = Number(input!.value)
-  //   //expect(value).toBeGreaterThan(0.8)
-  //   //await sleep(500)
+  it('emits time then cleans up', async () => {
+    const page = await newSpecPage({
+      components: [],
+      html: `
+      <div id="timer">
+        <input type="text" x-percentage-to="value" />
+      </div>
+      `,
+    })
+    subject = new ElementTimer(page.body, 3, false)
+    jest.useFakeTimers()
+    subject.beginInternalTimer()
 
-  //   //expect(input!.value).toBe('0')
-  //   subject.destroy()
-  // })
+    jest.runTimersToTime(3000)
+
+    let input = page.body.querySelector('input')
+    let value = Number(input!.value)
+    expect(value).toBe(1)
+
+    jest.runTimersToTime(3100)
+
+    expect(input!.value).toBe('0')
+    subject.destroy()
+  })
 })

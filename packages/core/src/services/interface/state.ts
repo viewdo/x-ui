@@ -22,7 +22,7 @@ const store = createStore<StateModel>({
   references: [],
 })
 
-const { state, onChange } = store
+const { state, onChange, reset, dispose } = store
 
 onChange('theme', (t) => {
   if (t) localStorage?.setItem('theme', t?.toString())
@@ -30,4 +30,10 @@ onChange('theme', (t) => {
 onChange('muted', (m) => localStorage?.setItem('muted', m?.toString()))
 onChange('autoplay', (a) => localStorage?.setItem('autoplay', a?.toString()))
 
-export { store as interfaceStore, state as interfaceState, onChange as onInterfaceChange }
+export {
+  store as interfaceStore,
+  state as interfaceState,
+  onChange as onInterfaceChange,
+  reset as interfaceStateReset,
+  dispose as interfaceStateDispose,
+}
