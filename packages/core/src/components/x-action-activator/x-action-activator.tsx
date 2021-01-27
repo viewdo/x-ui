@@ -62,7 +62,7 @@ export class XActionActivator {
 
     const values: Record<string,any> = {}
 
-    Array.from(this.el.querySelectorAll(':enabled'))
+    Array.from(this.el.querySelectorAll(':enabled') || [])
       .forEach(e => {
         const input = e as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
         values[input.name||e.id] = input.value

@@ -86,20 +86,20 @@ export class XView {
   }
 
   private isChild(element: HTMLElement) {
-    return element.parentElement?.closest('x-view') === this.el
+    return element.parentElement?.closest('x-view') === this.el || false
   }
 
   private get childViewDos(): HTMLXViewDoElement[] {
-    return Array.from(this.el.querySelectorAll('x-view-do'))
+    return Array.from(this.el.querySelectorAll('x-view-do')||[])
       .filter((e) => this.isChild(e))
   }
 
   private get childViews(): HTMLXViewElement[] {
-    return Array.from(this.el.querySelectorAll('x-view'))
+    return Array.from(this.el.querySelectorAll('x-view')||[])
       .filter((e) => this.isChild(e))
   }
 
-  async componentWillLoad() {
+  componentWillLoad() {
     debugIf(this.debug, `x-view: ${this.url} loading`)
 
     if (!this.routeContainer || !this.routeContainer.router) {
@@ -135,8 +135,6 @@ export class XView {
       v.url = this.route.normalizeChildUrl(v.url)
       v.transition = v.transition || this.transition
     })
-
-
 
     eventBus.on(DATA_EVENTS.DataChanged, async () => {
       debugIf(this.debug, `x-view: ${this.url} data changed `)

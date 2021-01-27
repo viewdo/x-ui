@@ -33,7 +33,7 @@ describe('history-service', () => {
   })
 
   it('initialize: browser @base/home ', async () => {
-    const page = await startPage('@base/home')
+    const page = await startPage('/@base/home')
     const history = new MockHistory(page.win)
     const subject = new HistoryService(page.win, HistoryType.Browser, '/@base', history)
     expect(subject.location).not.toBeNull()

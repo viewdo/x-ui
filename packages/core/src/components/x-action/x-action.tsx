@@ -57,19 +57,7 @@ export class XAction implements IActionElement {
   }
 
   private get childScript(): HTMLScriptElement | null {
-    if (!this.el.hasChildNodes()) {
-      return null
-    }
-
-    const childScripts = Array.from(this.el.childNodes)
-      .filter((c) => c.nodeName === 'SCRIPT')
-      .map((v) => v as HTMLScriptElement)
-
-    if (childScripts.length > 0) {
-      return childScripts[0]
-    }
-
-    return null
+    return this.el.querySelector('script')
   }
 
   componentWillLoad() {

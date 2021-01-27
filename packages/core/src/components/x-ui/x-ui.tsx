@@ -133,7 +133,7 @@ export class XUI {
   }) events!: EventEmitter
 
   private get childViews(): HTMLXViewElement[] {
-    return Array.from(this.el.querySelectorAll('x-view'))
+    return Array.from(this.el.querySelectorAll('x-view')||[])
       .filter(e => {
         return e.parentElement?.closest('x-view') == null
       })

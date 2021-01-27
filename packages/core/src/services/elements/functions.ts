@@ -74,7 +74,7 @@ export function captureElementsEventOnce<TElement extends HTMLElement, TEvent ex
   clickHandler: (el: TElement, ev: TEvent) => void,
 ) {
   const attribute = `x-attached-${event}`
-  Array.from(rootElement.querySelectorAll(query))
+  Array.from(rootElement.querySelectorAll(query) || [])
     .map((el) => el as TElement)
     .filter((el) => !el.hasAttribute(attribute))
     .forEach((el: TElement) => {
@@ -226,14 +226,14 @@ export function resolveElementChildTimedNodesByTime(
 
   // Resolve x-time-to
   const timeValueElements = rootElement.querySelectorAll('[x-time-to]')
-  timeValueElements.forEach((element_) => {
+  timeValueElements.forEach((el) => {
     const seconds = Math.floor(time)
-    const attributeName = element_.getAttribute('x-time-to')
+    const attributeName = el.getAttribute('x-time-to')
     if (attributeName) {
-      element_.setAttribute(attributeName, seconds.toString())
+      el.setAttribute(attributeName, seconds.toString())
     } else {
-      element_.childNodes.forEach((cn) => cn.remove())
-      element_.append(document.createTextNode(seconds.toString()))
+      el.childNodes.forEach((cn) => cn.remove())
+      el.append(document.createTextNode(seconds.toString()))
     }
   })
 

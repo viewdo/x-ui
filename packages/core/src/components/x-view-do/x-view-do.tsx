@@ -132,7 +132,7 @@ export class XViewDo {
     return Array.from(this.el.querySelectorAll('x-action-activator'))
   }
 
-  async componentWillLoad() {
+  componentWillLoad() {
     debugIf(this.debug, `x-view-do: ${this.url} loading`)
 
     if (!this.routeContainer) {

@@ -54,35 +54,11 @@ export class XDataRepeat {
   }
 
   get childTemplate(): HTMLTemplateElement | null {
-    if (!this.el.hasChildNodes()) {
-      return null
-    }
-
-    const childTemplates = Array.from(this.el.childNodes)
-      .filter((c) => c.nodeName === 'TEMPLATE')
-      .map((v) => v as HTMLTemplateElement)
-
-    if (childTemplates.length > 0) {
-      return childTemplates[0]
-    }
-
-    return null
+    return this.el.querySelector('template')
   }
 
   private get childScript(): HTMLScriptElement | null {
-    if (!this.el.hasChildNodes()) {
-      return null
-    }
-
-    const childScripts = Array.from(this.el.childNodes)
-      .filter((c) => c.nodeName === 'SCRIPT')
-      .map((v) => v as HTMLScriptElement)
-
-    if (childScripts.length > 0) {
-      return childScripts[0]
-    }
-
-    return null
+    return this.el.querySelector('script')
   }
 
   async componentWillLoad() {
@@ -98,7 +74,7 @@ export class XDataRepeat {
     if (this.childTemplate === null) {
       warnIf(this.debug, 'x-data-repeat: missing child <template> tag')
     } else {
-      this.innerTemplate = this.childTemplate.innerHTML.slice()
+      this.innerTemplate = this.childTemplate.innerHTML
     }
 
     await this.resolveHtml()
