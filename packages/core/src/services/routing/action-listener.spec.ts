@@ -1,10 +1,8 @@
 import { RafCallback } from '@stencil/core'
 import { newSpecPage } from '@stencil/core/testing'
 import { EventEmitter } from '../actions/event-emitter'
-import { HistoryService } from './history'
-import { HistoryType, ROUTE_COMMANDS, ROUTE_TOPIC } from './interfaces'
+import { ROUTE_COMMANDS, ROUTE_TOPIC } from './interfaces'
 import { RouterService } from './router'
-import { MockHistory } from './__mocks__/history'
 
 describe('route-action-listener:', () => {
   let actionBus: EventEmitter
@@ -58,19 +56,7 @@ describe('route-action-listener:', () => {
 
   it('navigate-back ', async () => {
     const page = await startPage('/')
-    const history = new HistoryService(page.win, HistoryType.Browser, '', new MockHistory(page.win))
-    const subject = new RouterService(
-      page.win,
-      writeTask,
-      eventBus,
-      actionBus,
-      HistoryType.Browser,
-      '',
-      '',
-      '',
-      0,
-      history,
-    )
+    const subject = new RouterService(page.win, writeTask, eventBus, actionBus, '', '', '', 0)
 
     actionBus.emit(ROUTE_TOPIC, {
       topic: ROUTE_TOPIC,

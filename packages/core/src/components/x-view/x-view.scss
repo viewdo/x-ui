@@ -11,6 +11,8 @@
 }
 
 :host(.active-route-exact) {
+  display: block;
+
   ::slotted([slot='content']) {
     display: block;
   }

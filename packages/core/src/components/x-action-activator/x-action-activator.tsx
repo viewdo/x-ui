@@ -70,7 +70,7 @@ export class XActionActivator {
     this.actions.forEach((action) => {
       const data = action.data
 
-      Object.assign(data, values, { values })
+      Object.assign(data, values)
 
       const dataString = JSON.stringify(data)
       debugIf(

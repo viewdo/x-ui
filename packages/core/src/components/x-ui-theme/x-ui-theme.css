@@ -5,7 +5,7 @@
 .switch {
   display: inline-block;
   position: relative;
-  width: 60px;
+  width: 50px;
 }
 
 /* Hide default HTML checkbox */

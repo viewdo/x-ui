@@ -5,7 +5,6 @@ import {
   debugIf,
   EventAction,
   eventBus,
-  HistoryType,
   IEventActionListener,
   InterfaceActionListener,
   interfaceState,
@@ -45,12 +44,6 @@ export class XUI {
    */
   @Prop() root:string = ''
 
-  /**
-   * Browser (paths) or Hash (#) routing.
-   * To support browser history, the HTTP server
-   * must be setup for a PWA
-   */
-  @Prop() mode: HistoryType = HistoryType.Browser
 
   /**
    * Navigation transition between routes.
@@ -161,7 +154,6 @@ export class XUI {
       writeTask,
       eventBus,
       actionBus,
-      this.mode,
       this.root,
       this.appTitle,
       this.transition,

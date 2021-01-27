@@ -65,7 +65,7 @@ export class XViewDo {
    * routes.
    *
    */
-  @Prop() url!: string
+  @Prop({ mutable: true, reflect: true}) url!: string
 
   /**
    * The url for this route should only be matched

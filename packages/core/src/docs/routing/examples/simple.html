@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Bootstrap CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
-      crossorigin="anonymous"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+          crossorigin="anonymous" />
 
     <title>Loading...</title>
     <style>
@@ -28,15 +27,23 @@
         text-decoration: none;
       }
     </style>
-    <script type="module" src="https://unpkg.com/@viewdo/x-ui/dist/x-ui/x-ui.esm.js"></script>
+    <!-- Experience UI -->
+    <script type="module" src="/x-ui/x-ui.esm.js"></script>
+    <!--
+          HIYA! Right-click to save this file locally.  Uncomment the script
+          reference below, and remove the one above.
+        -->
+    <!--script type="module" src="https://unpkg.com/@viewdo/x-ui/dist/x-ui/x-ui.esm.js"></script-->
   </head>
 
   <body>
-    <x-ui app-title="My HTML App" start-url="/home" mode="hash">
+    <x-ui app-title="My HTML App" start="/home" root="/simple.html#">
       <nav>
-        <x-link class="nav-link" href="/home" active-class="active"> Home </x-link>
+        <x-link class="nav-link" href="/home" active-class="active"> Home
+        </x-link>
 
-        <x-link class="nav-link" href="/about" active-class="active"> About </x-link>
+        <x-link class="nav-link" href="/about" active-class="active"> About
+        </x-link>
       </nav>
       <x-view url="/home" page-title="Home">
         <div class="container" slot="content">
@@ -56,4 +63,5 @@
       </x-view>
     </x-ui>
   </body>
+
 </html>

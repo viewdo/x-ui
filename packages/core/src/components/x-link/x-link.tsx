@@ -53,7 +53,7 @@ export class XLink {
 
   componentWillLoad() {
     if (this.router)
-      this.href = this.router!.normalizeChildUrl(this.href, this.parentUrl || '/')
+      this.href = this.router!.resolvePathname(this.href, this.parentUrl || '/')
 
     this.subscriptionDispose = eventBus.on(ROUTE_EVENTS.RouteChanged, () => {
       const match = this.router!.matchPath({

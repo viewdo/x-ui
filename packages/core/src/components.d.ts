@@ -7,7 +7,7 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { ActionActivationStrategy, CookieConsent, DiscardStrategy, EventAction, LoadStrategy, VisitStrategy } from ".";
 import { AUDIO_COMMANDS } from "./services/audio/interfaces";
-import { HistoryType, RouterService } from "./services";
+import { RouterService } from "./services";
 import { RouterService as RouterService1 } from "./services/routing/router";
 export namespace Components {
     interface XAction {
@@ -256,10 +256,6 @@ export namespace Components {
           * Turn on debugging to get helpful messages from the routing, data and action systems.
          */
         "debug": boolean;
-        /**
-          * Browser (paths) or Hash (#) routing. To support browser history, the HTTP server must be setup for a PWA
-         */
-        "mode": HistoryType;
         /**
           * This is the root path that the actual page is, if it isn't '/', then the router needs to know where to begin creating paths.
          */
@@ -792,10 +788,6 @@ declare namespace LocalJSX {
          */
         "debug"?: boolean;
         /**
-          * Browser (paths) or Hash (#) routing. To support browser history, the HTTP server must be setup for a PWA
-         */
-        "mode"?: HistoryType;
-        /**
           * These events are **`<x-ui/>`** command-requests for action handlers to perform tasks. Any handles should cancel the event.
          */
         "onX:actions"?: (event: CustomEvent<any>) => void;
@@ -876,7 +868,7 @@ declare namespace LocalJSX {
         /**
           * The url for this route should only be matched when it is exact.
          */
-        "exact": boolean;
+        "exact"?: boolean;
         /**
           * The title for this view. This is prefixed before the app title configured in x-ui
          */

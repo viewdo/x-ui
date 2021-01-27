@@ -15,7 +15,7 @@ export class Route {
     public router: RouterService,
     public routeElement: HTMLElement,
     public path: string,
-    exact: boolean = true,
+    private exact: boolean = true,
     public pageTitle: string = '',
     public transition: string | null = null,
     public scrollTopOffset: number = 0,
@@ -23,22 +23,23 @@ export class Route {
   ) {
     this.subscription = eventBus.on(ROUTE_EVENTS.RouteChanged, () => {
       this.previousMatch = this.match
-      this.match = this.router?.matchPath({
-        path,
-        exact,
+      this.match = router.matchPath({
+        path: this.path,
+        exact: this.exact,
         strict: true,
       })
       matchSetter(this.match)
     })
     this.match = this.router.matchPath({
-      path,
-      exact,
+      path: this.path,
+      exact: this.exact,
       strict: true,
     })
-    if (this.match) matchSetter(this.match)
+    matchSetter(this.match)
   }
 
   normalizeChildUrl(childUrl: string) {
+    if (isAbsolute(childUrl)) return childUrl
     return this.router.normalizeChildUrl(childUrl, this.path)
   }
 

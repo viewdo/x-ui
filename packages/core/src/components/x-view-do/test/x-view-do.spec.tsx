@@ -8,7 +8,7 @@ import { XViewDo } from '../x-view-do';
 
 describe('x-view-do', () => {
 
-  beforeAll(() => {
+  beforeEach(() => {
     actionBus.removeAllListeners()
     eventBus.removeAllListeners()
   })
@@ -18,14 +18,16 @@ describe('x-view-do', () => {
       components: [XUI, XView, XViewDo],
       url: 'http://test/',
       html: `<x-ui><x-view url='/foo'><x-view-do url="/go"></x-view-do></x-view></x-ui>`,
-      autoApplyChanges: true
     })
+
+    expect(page.win.location.pathname).toBe('/')
+
     expect(page.root).toEqualHtml(`
     <x-ui>
       <mock:shadow-root>
         <slot></slot>
       </mock:shadow-root>
-      <x-view class="" url="/foo">
+      <x-view class="active-route active-route-exact" url="/foo">
         <mock:shadow-root>
           <slot></slot>
           <slot name="content"></slot>
@@ -63,7 +65,7 @@ describe('x-view-do', () => {
       <mock:shadow-root>
         <slot></slot>
       </mock:shadow-root>
-      <x-view class="active-route" url="/">
+      <x-view class="active-route active-route-exact" url="/">
         <mock:shadow-root>
           <slot></slot>
           <slot name="content"></slot>

@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-import { Path } from './utils';
+import { Path } from './utils'
 
 export enum ROUTE_COMMANDS {
   NavigateNext = 'navigate-next',
@@ -42,11 +42,6 @@ export interface RouteSubscription {
   isMatch: boolean
   groupId?: string
   groupIndex?: number
-}
-
-export enum HistoryType {
-  Browser = 'browser',
-  Hash = 'hash',
 }
 
 export interface LocationSegments {

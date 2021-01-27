@@ -1,11 +1,9 @@
 import { RafCallback, SpecPage } from '@stencil/core/internal'
 import { newSpecPage } from '@stencil/core/testing'
 import { EventEmitter } from '../actions/event-emitter'
-import { HistoryService } from './history'
-import { HistoryType, MatchResults } from './interfaces'
+import { MatchResults } from './interfaces'
 import { Route } from './route'
 import { RouterService } from './router'
-import { MockHistory } from './__mocks__/history'
 
 describe('route', () => {
   let actionBus: EventEmitter
@@ -30,9 +28,8 @@ describe('route', () => {
   it('router-service -> create-route', async () => {
     page = await startPage('/')
     let match: MatchResults | null = null
-    const history = new HistoryService(page.win, HistoryType.Browser, '', new MockHistory(page.win))
 
-    router = new RouterService(page.win, writeTask, eventBus, actionBus, HistoryType.Browser, '', 'App', '', 0, history)
+    router = new RouterService(page.win, writeTask, eventBus, actionBus, '', 'App', '', 0)
 
     let subject = router.createRoute(page.body, '/route', true, 'Page', null, 0, (m) => (match = m))
 
@@ -67,24 +64,12 @@ describe('route', () => {
     expect(normalized).toBe('/route/child')
 
     normalized = subject.normalizeChildUrl('/child')
-    expect(normalized).toBe('/route/child')
-
-    normalized = subject.normalizeChildUrl('child')
-    expect(normalized).toBe('/route/child')
-
-    normalized = subject.normalizeChildUrl('//child')
-    expect(normalized).toBe('/route/child')
-
-    normalized = subject.normalizeChildUrl('//child/')
-    expect(normalized).toBe('/route/child')
-
-    normalized = subject.normalizeChildUrl('child/')
-    expect(normalized).toBe('/route/child')
+    expect(normalized).toBe('/child')
   })
 
   it('adjustPageTitle', async () => {
     page = await startPage('/')
-    router = new RouterService(page.win, writeTask, eventBus, actionBus, HistoryType.Browser, '', 'App')
+    router = new RouterService(page.win, writeTask, eventBus, actionBus, '', 'App')
     const routeElement = page.body.querySelector('div')!
     let subject = router.createRoute(routeElement, '/route', true, 'Page', null, 0, () => {})
 
@@ -97,7 +82,7 @@ describe('route', () => {
 
   it('adjustPageTitle - dynamic', async () => {
     page = await startPage('/route/Widget')
-    router = new RouterService(page.win, writeTask, eventBus, actionBus, HistoryType.Browser, '', 'App')
+    router = new RouterService(page.win, writeTask, eventBus, actionBus, '', 'App')
     const routeElement = page.body.querySelector('div')!
     let subject = router.createRoute(routeElement, '/route/:product', true, '{route:product}', null, 0, () => {})
 
@@ -110,7 +95,7 @@ describe('route', () => {
 
   it('adjustPageTitle - no page', async () => {
     page = await startPage('/route')
-    router = new RouterService(page.win, writeTask, eventBus, actionBus, HistoryType.Browser, '', 'App')
+    router = new RouterService(page.win, writeTask, eventBus, actionBus, '', 'App')
     const routeElement = page.body.querySelector('div')!
     let subject = new Route(router, routeElement, '/route')
 
@@ -123,7 +108,7 @@ describe('route', () => {
 
   it('loadComplete - match', async () => {
     page = await startPage('/route')
-    router = new RouterService(page.win, writeTask, eventBus, actionBus, HistoryType.Browser, '', 'App')
+    router = new RouterService(page.win, writeTask, eventBus, actionBus, '', 'App')
     const routeElement = page.body.querySelector('div')!
     let subject = new Route(router, routeElement, '/route')
 
@@ -137,24 +122,6 @@ describe('route', () => {
     subject.loadCompleted()
 
     expect(page.doc.title).toBe('App')
-  })
-
-  it('loadComplete - hash match', async () => {
-    page = await startPage('/#/route')
-    router = new RouterService(page.win, writeTask, eventBus, actionBus, HistoryType.Hash, '', 'App')
-    const routeElement = page.body.querySelector('div')!
-    let subject = new Route(router, routeElement, '/route', true, 'Page', null, 10)
-
-    subject.match = {
-      path: '/route',
-      isExact: true,
-      params: {},
-      url: '/route',
-    }
-
-    subject.loadCompleted()
-
-    expect(page.doc.title).toBe('Page | App')
   })
 
   it('loadComplete - scroll-top', async () => {

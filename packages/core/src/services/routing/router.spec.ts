@@ -1,7 +1,6 @@
 import { RafCallback } from '@stencil/core'
 import { newSpecPage } from '@stencil/core/testing'
 import { EventEmitter } from '../actions/event-emitter'
-import { HistoryType } from './interfaces'
 import { RouterService } from './router'
 
 describe('router', () => {
@@ -77,7 +76,7 @@ describe('router', () => {
     expect(match).toBeNull()
   }
 
-  it('initialized: browser | blank path/', async () => {
+  it('initialized: blank path/', async () => {
     const page = await startPage()
     const subject = new RouterService(page.win, writeTask, eventBus, actionBus)
 
@@ -88,18 +87,7 @@ describe('router', () => {
     testMatch(subject)
   })
 
-  it('initialized: hash', async () => {
-    const page = await startPage()
-    const subject = new RouterService(page.win, writeTask, eventBus, actionBus, HistoryType.Hash)
-
-    expect(subject.location.pathname).toBe('/')
-
-    testGoToPath(subject)
-    testNormalize(subject)
-    testMatch(subject)
-  })
-
-  it('initialized: browser | path = /home', async () => {
+  it('initialized: path = /home', async () => {
     const page = await startPage('/home')
     const subject = new RouterService(page.win, writeTask, eventBus, actionBus)
 
@@ -110,37 +98,9 @@ describe('router', () => {
     testMatch(subject)
   })
 
-  it('initialized: hash | path = /#/home', async () => {
-    const page = await startPage('/#/home')
-    const subject = new RouterService(page.win, writeTask, eventBus, actionBus, HistoryType.Hash)
-
-    expect(subject.location.pathname).toBe('/home')
-    expect(page.win.location.pathname).toBe('/')
-    expect(page.win.location.hash).toBe('#/home')
-
-    testGoToPath(subject)
-    testNormalize(subject)
-    testMatch(subject)
-  })
-
   it('match-path: browser | path = /item/:item ', async () => {
     const page = await startPage('/item/food')
     const subject = new RouterService(page.win, writeTask, eventBus, actionBus)
-
-    expect(subject.location.pathname).toBe('/item/food')
-
-    let results = subject.matchPath({
-      path: '/item/:item',
-    })
-
-    expect(results).not.toBeNull()
-    expect(results?.params.item).not.toBeNull()
-    expect(results?.params.item).toBe('food')
-  })
-
-  it('match-path: hash | path = /#/item/:item ', async () => {
-    const page = await startPage('/#/item/food')
-    const subject = new RouterService(page.win, writeTask, eventBus, actionBus, HistoryType.Hash)
 
     expect(subject.location.pathname).toBe('/item/food')
 

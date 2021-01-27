@@ -5,9 +5,9 @@ import { addDataProvider } from '../data/providers/factory'
 import { RoutingActionListener } from './action-listener'
 import { RoutingDataProvider } from './data-provider'
 import { HistoryService } from './history'
-import { HistoryType, LocationSegments, MatchOptions, MatchResults, RouteViewOptions } from './interfaces'
+import { LocationSegments, MatchOptions, MatchResults, RouteViewOptions } from './interfaces'
 import { Route } from './route'
-import { isAbsolute, resolvePathname } from './utils/location-utils'
+import { isAbsolute, locationsAreEqual, resolvePathname } from './utils/location-utils'
 import { matchPath } from './utils/match-path'
 import { ensureBasename } from './utils/path-utils'
 
@@ -15,37 +15,42 @@ export class RouterService {
   public location!: LocationSegments
   private readonly removeHandler!: () => void
   private listener!: RoutingActionListener
+  public history: HistoryService
 
   constructor(
     private win: Window,
     private readonly writeTask: (t: RafCallback) => void,
     events: IEventEmitter,
     actions: IEventEmitter,
-    private historyType: HistoryType = HistoryType.Browser,
     public root: string = '',
     public appTitle?: string,
     public transition?: string,
     public scrollTopOffset = 0,
-    public readonly history: HistoryService = new HistoryService(win, historyType, root, win.history),
   ) {
+    this.history = new HistoryService(win, root)
     this.listener = new RoutingActionListener(this, events, actions)
 
     this.removeHandler = this.history.listen((location: LocationSegments) => {
-      this.location = location
-      this.listener.notifyRouteChanged(location)
+      if (this.location) {
+        if (!locationsAreEqual(this.location, location)) {
+          this.location = location
+          this.listener.notifyRouteChanged(location)
+        }
+      } else {
+        this.location = location
+        this.listener.notifyRouteChanged(location)
+      }
     })
 
     this.location = this.history.location
+    this.listener.notifyRouteChanged(this.location)
 
     addDataProvider('route', new RoutingDataProvider((key: string) => this.location?.params[key]))
-
     addDataProvider('query', new RoutingDataProvider((key: string) => this.location?.query[key]))
-
-    this.listener.notifyRouteChanged(this.location)
   }
 
   viewsUpdated = (options: RouteViewOptions = {}) => {
-    if (options.scrollToId && this.historyType === 'browser') {
+    if (options.scrollToId) {
       const elm = this.win.document.querySelector('#' + options.scrollToId)
       if (elm) {
         elm.scrollIntoView()
@@ -70,7 +75,7 @@ export class RouterService {
 
   scrollTo(scrollToLocation: number) {
     if (Array.isArray(this.history.location.scrollPosition)) {
-      if (this.history?.location && Array.isArray(this.history.location.scrollPosition)) {
+      if (this.history.location && Array.isArray(this.history.location.scrollPosition)) {
         this.win.scrollTo(this.history.location.scrollPosition[0], this.history.location.scrollPosition[1])
       }
       return
@@ -83,8 +88,7 @@ export class RouterService {
   }
 
   goToRoute(path: string) {
-    const route = isAbsolute(path) ? path : this.resolvePathname(path, this.location?.pathname)
-    this.history.push(route)
+    this.history.push(path)
   }
 
   matchPath(options: MatchOptions = {}): MatchResults | null {

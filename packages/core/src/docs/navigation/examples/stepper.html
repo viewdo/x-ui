@@ -1,15 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <base href="stepper.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <script type="module" src="https://unpkg.com/@viewdo/x-ui/dist/x-ui/x-ui.esm.js"></script>
+    <!-- Experience UI -->
+    <script type="module" src="/x-ui/x-ui.esm.js"></script>
+    <!--
+          HIYA! Right-click to save this file locally.  Uncomment the script
+          reference below, and remove the one above.
+        -->
+    <!--script type="module" src="https://unpkg.com/@viewdo/x-ui/dist/x-ui/x-ui.esm.js"></script-->
 
     <!-- Bootstrap  -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" />
 
     <title>Loading...</title>
     <style>
@@ -107,7 +115,8 @@
   </head>
 
   <body>
-    <x-ui app-title="My HTML App" start-url="home" mode="hash" class="container">
+    <x-ui app-title="My HTML App" start-url="home" mode="hash"
+          class="container">
       <h1 class="mt-3">No-Code Stepper</h1>
 
       <x-view url="home" page-title="Home">
@@ -115,13 +124,17 @@
         <div slot="content">
           <p>Click the link below to begin.</p>
 
-          <a class="btn btn-primary" href="/survey" x-hide-when="{storage:food}">Take Survey</a>
-          <a class="btn btn-light" href="/survey/step-1" hidden x-show-when="{storage:food}">Retake Survey</a>
+          <a class="btn btn-primary" href="/survey"
+             x-hide-when="{storage:food}">Take Survey</a>
+          <a class="btn btn-light" href="/survey/step-1" hidden
+             x-show-when="{storage:food}">Retake Survey</a>
         </div>
       </x-view>
 
       <x-view url="survey" page-title="Survey" x-cloak>
-        <x-use style-src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css"> </x-use>
+        <x-use
+               style-src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css">
+        </x-use>
         <h2>Survey</h2>
         <div class="step" x-class="completed" x-class-when="{storage:nickname}">
           <div class="stepper">
@@ -135,19 +148,14 @@
                 <a href="/survey/step-1">✔️</a>
               </span>
             </h3>
-            <x-view-do when="!{storage:nickname}" url="step-1" page-title="Step 1">
+            <x-view-do when="!{storage:nickname}" url="step-1"
+                       page-title="Step 1">
               <div slot="content" class="form-group">
                 <label class="form-label" for="name">Nick Name</label>
-                <input
-                  type="text"
-                  required
-                  class="form-control mb-3"
-                  id="name"
-                  onblur="localStorage.setItem('nickname', this.value)"
-                  onchange="localStorage.setItem('nickname', this.value)"
-                  x-value-from="{storage:nickname}"
-                  tabindex="0"
-                />
+                <input type="text" required class="form-control mb-3" id="name"
+                       onblur="localStorage.setItem('nickname', this.value)"
+                       onchange="localStorage.setItem('nickname', this.value)"
+                       x-value-from="{storage:nickname}" tabindex="0" />
 
                 <xa class="btn btn-primary" x-next="step-2"> Next </xa>
               </div>
@@ -169,16 +177,10 @@
             <x-view-do when="!{storage:show}" url="step-2" page-title="Step 2">
               <div slot="content">
                 <label class="form-label" for="show">TV Show</label>
-                <input
-                  type="text"
-                  required
-                  id="show"
-                  class="form-control mb-3"
-                  onblur="localStorage.setItem('show', this.value)"
-                  onchange="localStorage.setItem('show', this.value)"
-                  x-value-from="{storage:show}"
-                  tabindex="0"
-                />
+                <input type="text" required id="show" class="form-control mb-3"
+                       onblur="localStorage.setItem('show', this.value)"
+                       onchange="localStorage.setItem('show', this.value)"
+                       x-value-from="{storage:show}" tabindex="0" />
                 <a class="btn btn-primary" x-next="step-3">Next</a>
               </div>
             </x-view-do>
@@ -198,16 +200,10 @@
             <x-view-do when="!{storage:food}" url="step-3" page-title="Step 3">
               <div slot="content">
                 <label class="form-label" for="show">Food or Snack</label>
-                <input
-                  type="text"
-                  required
-                  id="food"
-                  class="form-control mb-3"
-                  onblur="localStorage.setItem('food', this.value)"
-                  onchange="localStorage.setItem('food', this.value)"
-                  x-value-from="{storage:food}"
-                  tabindex="0"
-                />
+                <input type="text" required id="food" class="form-control mb-3"
+                       onblur="localStorage.setItem('food', this.value)"
+                       onchange="localStorage.setItem('food', this.value)"
+                       x-value-from="{storage:food}" tabindex="0" />
 
                 <a class="btn btn-primary" x-next>Next</a>
               </div>
@@ -222,4 +218,5 @@
       </x-view>
     </x-ui>
   </body>
+
 </html>

@@ -3,11 +3,9 @@ import {
   DATA_EVENTS,
   debugIf,
   eventBus,
-
   markVisit,
   MatchResults,
   resolveChildElementXAttributes,
-
   Route,
   warn
 } from '../..';
@@ -27,7 +25,7 @@ export class XView {
   private readonly dataChangedSubscription!: () => void
   private route!: Route
   @Element() el!: HTMLXViewElement
-  @State() match!: MatchResults | null
+  @State() match: MatchResults | null = null
   @State() contentKey?: string | null
 
   /**
@@ -59,13 +57,13 @@ export class XView {
    * The url for this route, including the parent's
    * routes.
    */
-  @Prop() url!: string
+  @Prop({ mutable: true, reflect: true }) url!: string
 
   /**
    * The url for this route should only be matched
    * when it is exact.
    */
-  @Prop() exact!: boolean
+  @Prop() exact: boolean = false
 
   /**
    * Remote URL for this Route's content.
@@ -144,6 +142,8 @@ export class XView {
 
   async componentWillRender() {
     debugIf(this.debug, `x-view: ${this.url} will render`)
+    this.el.classList.toggle('active-route', this.match != null)
+    this.el.classList.toggle('active-route-exact', this.match?.isExact || false)
     await this.resolveView()
   }
 
@@ -151,7 +151,6 @@ export class XView {
     debugIf(this.debug, `x-view: ${this.url} resolve view called`)
 
     if (this.match) {
-      this.el.classList.add('active-route')
       if (this.match.isExact) {
         debugIf(this.debug, `x-view: ${this.url} route is matched `)
         const nextDo = await resolveNext(this.childViewDos)
@@ -160,8 +159,6 @@ export class XView {
         } else {
           this.activateView(this.match.url)
         }
-      } else {
-        this.el.classList.remove('active-route-exact')
       }
       await resolveChildElementXAttributes(this.el)
     } else {
@@ -173,7 +170,6 @@ export class XView {
     this.el.querySelectorAll('[no-render]').forEach((el) => {
       el.removeAttribute('no-render')
     })
-    this.el.classList.add('active-route-exact')
     markVisit(url)
     await this.fetchHtml()
     if (this.route.transition) {
@@ -190,7 +186,6 @@ export class XView {
     const remoteContent = this.el.querySelector(`#${this.contentKey}`);
     remoteContent?.remove();
     this.contentKey = null
-    this.el.classList.remove('active-route')
   }
 
   private async fetchHtml() {
