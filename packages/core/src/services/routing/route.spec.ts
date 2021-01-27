@@ -1,9 +1,8 @@
 import { RafCallback, SpecPage } from '@stencil/core/internal'
 import { newSpecPage } from '@stencil/core/testing'
-import { MatchResults } from '../../../dist/types/services/routing/interfaces'
 import { EventEmitter } from '../actions/event-emitter'
 import { HistoryService } from './history'
-import { HistoryType } from './interfaces'
+import { HistoryType, MatchResults } from './interfaces'
 import { RouterService } from './router'
 import { MockHistory } from './__mocks__/history'
 

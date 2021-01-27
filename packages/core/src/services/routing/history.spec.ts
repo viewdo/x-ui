@@ -1,7 +1,6 @@
 import { newSpecPage } from '@stencil/core/testing'
-import { LocationSegments } from '../../../dist/types/services/routing/interfaces'
 import { HistoryService } from './history'
-import { HistoryType } from './interfaces'
+import { HistoryType, LocationSegments } from './interfaces'
 import { MockHistory } from './__mocks__/history'
 
 describe('history-service', () => {

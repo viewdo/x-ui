@@ -1,8 +1,7 @@
-import { LocationSegments } from '../../../dist/types/services/routing/interfaces'
 import { EventAction, IEventEmitter } from '../actions'
 import { interfaceState } from '../interface'
 import { debugIf } from '../logging'
-import { NavigateNext, NavigateTo, ROUTE_COMMANDS, ROUTE_EVENTS, ROUTE_TOPIC } from './interfaces'
+import { LocationSegments, NavigateNext, NavigateTo, ROUTE_COMMANDS, ROUTE_EVENTS, ROUTE_TOPIC } from './interfaces'
 import { RouterService } from './router'
 
 export class RoutingActionListener {
