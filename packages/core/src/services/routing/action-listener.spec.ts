@@ -1,5 +1,5 @@
+import { RafCallback } from '@stencil/core'
 import { newSpecPage } from '@stencil/core/testing'
-import { RafCallback } from '../../../../plugins/x-ionic/dist/types/stencil-public-runtime'
 import { EventEmitter } from '../actions/event-emitter'
 import { HistoryService } from './history'
 import { HistoryType, ROUTE_COMMANDS, ROUTE_TOPIC } from './interfaces'
