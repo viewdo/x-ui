@@ -26,7 +26,7 @@
     "display-browser-support": "browserslist --stats && echo '' && browserslist --coverage && echo '' && echo 'See more at https://browserl.ist/'",
     "--- format ---": "---------------",
     "format": "run-s format:doctoc format:prettier format:eslint",
-    "format:doctoc": "doctoc --maxlevel 3 --notitle ./README.md ./CONTRIBUTING.md",
+    "format:doctoc": "doctoc --maxlevel 3 --notitle ./CONTRIBUTING.md",
     "format:eslint": "eslint --ext .tsx,.ts --fix packages/** >/dev/null 2>&1 || true",
     "format:prettier": "prettier --write 'packages/**/*.{css,html,json,md,mdx,scss,yaml,yml}'",
     "--- lint ---": "---------------",
