@@ -1,6 +1,6 @@
-import { Component, h, Host, Prop, State } from '@stencil/core'
-import { interfaceState } from '../..'
-import { onInterfaceChange } from '../../services'
+import { Component, h, Host, Prop, State } from '@stencil/core';
+import { interfaceState } from '../..';
+import { onInterfaceChange } from '../../services';
 
 @Component({
   tag: 'x-ui-autoplay',
@@ -8,7 +8,7 @@ import { onInterfaceChange } from '../../services'
 })
 export class XUiAutoplay {
   private slider?: HTMLInputElement
-  private muteSubscription!: () => void
+  private subscriptionDispose!: () => void
   @State() autoPlay = true
 
   /**
@@ -24,7 +24,7 @@ export class XUiAutoplay {
   componentWillLoad() {
     this.autoPlay = interfaceState.autoplay
 
-    this.muteSubscription = onInterfaceChange('autoplay', (a) => {
+    this.subscriptionDispose = onInterfaceChange('autoplay', (a) => {
       this.autoPlay = a
     })
   }
@@ -34,7 +34,7 @@ export class XUiAutoplay {
   }
 
   disconnectedCallback() {
-    this.muteSubscription()
+    this.subscriptionDispose()
   }
 
   render() {

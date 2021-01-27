@@ -1,5 +1,6 @@
-import { Component, h, Host, State } from '@stencil/core'
-import { interfaceState } from '../..'
+import { Component, h, Host, State } from '@stencil/core';
+import { interfaceState } from '../..';
+import { onInterfaceChange } from '../../services';
 
 @Component({
   tag: 'x-ui-theme',
@@ -7,10 +8,16 @@ import { interfaceState } from '../..'
   shadow: true,
 })
 export class XUiTheme {
+  private subscriptionDispose!: () => void
   @State() dark!: boolean
 
   componentWillLoad() {
     this.dark = interfaceState.theme === 'dark'
+
+    this.subscriptionDispose = onInterfaceChange('theme', (theme) => {
+      this.dark = (theme == 'dark')
+      this.toggleDarkTheme(this.dark)
+    })
 
     if (interfaceState.theme === null) {
       const prefersDark = window?.matchMedia('(prefers-color-scheme: dark)')
@@ -29,6 +36,10 @@ export class XUiTheme {
     document.body.classList.toggle('dark', enableDark)
     interfaceState.theme = enableDark ? 'dark' : 'light'
     this.dark = enableDark
+  }
+
+  disconnectedCallback() {
+    this.subscriptionDispose()
   }
 
   render() {

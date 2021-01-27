@@ -16,7 +16,6 @@ describe('x-data-provider-cookie', () => {
       html: `<x-data-provider-cookie></x-data-provider-cookie>`,
       supportsShadowDom: false
     })
-    await page.waitForChanges()
     // expect(page.root).toEqualHtml(`<x-data-provider-cookie></x-data-provider-cookie>`)
   })
 })
