@@ -33,7 +33,7 @@
     "@viewdo/x-ui": "file:../../core"
   },
   "devDependencies": {
-    "@stencil/core": "2.3.0",
+    "@stencil/core": "2.4.0",
     "@stencil/sass": "1.4.1"
   }
 }

@@ -1205,7 +1205,12 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@stencil/core@2.3.0", "@stencil/core@^2.0.1":
+"@stencil/core@2.4.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@stencil/core/-/core-2.4.0.tgz#17b45629c8986e35dcbce3f7dab7d64beede83f2"
+  integrity sha512-gU6+Yyd6O0KrCSS/O6j8KKqmRo+/Dcs2fI0+APCpbAWK+nqhwDISpdnSEfGDCLMoAC08XOZCycBRk2K1VGnEcg==
+
+"@stencil/core@^2.0.1":
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/@stencil/core/-/core-2.3.0.tgz#9190df3a0064537730be1546545e13531d701da8"
   integrity sha512-VZ/Ox0E1kngcmHbJhHUufuLELi+xG3of3LuRI3X2AMWyE82JUVYlOEsQci/YBZWpfc9BS9I36R88prBew22oew==
@@ -1557,7 +1562,7 @@
     eslint-visitor-keys "^2.0.0"
 
 "@viewdo/x-ui@file:packages/core":
-  version "0.1.14"
+  version "0.1.15"
   dependencies:
     expr-eval "^2.0.2"
     howler "^2.2.1"
