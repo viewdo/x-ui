@@ -52,7 +52,7 @@
   },
   "devDependencies": {
     "@babel/core": "7.12.13",
-    "@babel/highlight": "^7.12.13",
+    "@babel/highlight": "7.12.13",
     "@babel/preset-typescript": "7.12.13",
     "@stencil/core": "2.4.0",
     "@stencil/eslint-plugin": "0.3.1",
