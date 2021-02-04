@@ -1,5 +1,5 @@
+import { storageAvailable } from '../data/utils/browser-utils'
 import { warnIf } from '../logging'
-import { storageAvailable } from '../utils/browser-utils'
 import { VisitStrategy } from './interfaces'
 
 const supportsSession = storageAvailable(window, 'sessionStorage')

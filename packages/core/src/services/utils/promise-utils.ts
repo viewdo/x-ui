@@ -1,9 +1,9 @@
 /**
  * Wait ('await') for a specified amount of time.
  * @param {number} ms time in milliseconds to wait
- * @return {void}
+ * @return {Promise<void>}
  */
-export async function sleep(ms: number): Promise<void> {
+export function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => {
     setTimeout(resolve, ms)
   })
@@ -17,7 +17,7 @@ export async function sleep(ms: number): Promise<void> {
  * @template T
  * @param {T[]} array
  * @param {(t: T) => Promise<boolean>} predicate
- * @return {*}  {(Promise<T | undefined>)}
+ * @return {(Promise<T|undefined>)}
  */
 export async function findAsyncSequential<T>(array: T[], predicate: (t: T) => Promise<boolean>): Promise<T | null> {
   for (const t of array) {

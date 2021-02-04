@@ -1,7 +1,7 @@
 import { EventAction, IEventActionListener, IEventEmitter } from '../actions'
 import { interfaceState } from '../interface/state'
 import { debugIf, warn } from '../logging'
-import { storageAvailable } from '../utils/browser-utils'
+import { debounce } from '../utils/misc-utils'
 import {
   DataProviderRegistration,
   DATA_COMMANDS,
@@ -14,10 +14,12 @@ import {
 import { addDataProvider, getDataProvider } from './providers/factory'
 import { SessionProvider } from './providers/session'
 import { StorageProvider } from './providers/storage'
+import { storageAvailable } from './utils/browser-utils'
 
 export class DataListener implements IEventActionListener {
   private eventBus!: IEventEmitter
   disposeHandles: Array<() => void> = []
+  emitChange!: Function
   public initialize(window: Window, actionBus: IEventEmitter, eventBus: IEventEmitter) {
     this.eventBus = eventBus
     const handle = actionBus.on(DATA_TOPIC, (e) => {
@@ -26,6 +28,14 @@ export class DataListener implements IEventActionListener {
     this.disposeHandles.push(handle)
 
     this.registerBrowserProviders(window)
+
+    this.emitChange = debounce(
+      300,
+      () => {
+        this.eventBus.emit(DATA_EVENTS.DataChanged, {})
+      },
+      false,
+    )
   }
 
   registerBrowserProviders(win: Window) {
@@ -45,7 +55,7 @@ export class DataListener implements IEventActionListener {
   registerProvider(name: string, provider: IDataProvider) {
     const handle = provider.changed.on(DATA_EVENTS.DataChanged, () => {
       debugIf(interfaceState.debug, `data-provider: ${name} changed`)
-      this.eventBus.emit(DATA_EVENTS.DataChanged, {})
+      this.emitChange()
     })
     this.disposeHandles.push(handle)
     addDataProvider(name, provider)
