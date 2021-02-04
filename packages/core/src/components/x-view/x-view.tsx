@@ -32,7 +32,7 @@ export class XView {
    * The router-service instance  (internal)
    *
    */
-  @Prop() router!: RouterService
+  @Prop({ mutable: true }) router!: RouterService
 
   /**
    * The title for this view. This is prefixed

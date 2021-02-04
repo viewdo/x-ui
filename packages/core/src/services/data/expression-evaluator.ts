@@ -55,7 +55,7 @@ export async function resolveExpression(valueExpression: string, data?: any): Pr
     const propKey = match[3] || ''
     const defaultValue = match[4] || ''
 
-    const provider = getDataProvider(providerKey)
+    const provider = await getDataProvider(providerKey)
 
     let value = (await provider?.get(dataKey)) || defaultValue
 

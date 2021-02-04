@@ -35,7 +35,7 @@ export class XUI {
    * This is the router service instantiated with this
    * component.
    */
-  @Prop() router!: RouterService
+  @Prop({ mutable: true }) router!: RouterService
 
   /**
    * This is the root path that the actual page is,

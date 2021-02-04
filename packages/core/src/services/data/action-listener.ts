@@ -1,7 +1,7 @@
-import { EventAction, IEventActionListener, IEventEmitter } from '../actions';
-import { interfaceState } from '../interface/state';
-import { debugIf, warn } from '../logging';
-import { storageAvailable } from '../utils/browser-utils';
+import { EventAction, IEventActionListener, IEventEmitter } from '../actions'
+import { interfaceState } from '../interface/state'
+import { debugIf, warn } from '../logging'
+import { storageAvailable } from '../utils/browser-utils'
 import {
   DataProviderRegistration,
   DATA_COMMANDS,
@@ -9,11 +9,11 @@ import {
   DATA_PROVIDER,
   DATA_TOPIC,
   IDataProvider,
-  SetData
-} from './interfaces';
-import { addDataProvider, getDataProvider } from './providers/factory';
-import { SessionProvider } from './providers/session';
-import { StorageProvider } from './providers/storage';
+  SetData,
+} from './interfaces'
+import { addDataProvider, getDataProvider } from './providers/factory'
+import { SessionProvider } from './providers/session'
+import { StorageProvider } from './providers/storage'
 
 export class DataListener implements IEventActionListener {
   private eventBus!: IEventEmitter
@@ -51,7 +51,7 @@ export class DataListener implements IEventActionListener {
     addDataProvider(name, provider)
   }
 
-  handleAction(actionEvent: EventAction<DataProviderRegistration | SetData>) {
+  async handleAction(actionEvent: EventAction<DataProviderRegistration | SetData>) {
     debugIf(interfaceState.debug, `data-listener: action received {command:${actionEvent.command}}`)
     if (actionEvent.command === DATA_COMMANDS.RegisterDataProvider) {
       const { name, provider } = actionEvent.data as DataProviderRegistration
@@ -62,7 +62,7 @@ export class DataListener implements IEventActionListener {
       const { provider, values } = actionEvent.data as SetData
       debugIf(interfaceState.debug, `data-provider: ${provider} set-data`)
       if (provider && values) {
-        const instance = getDataProvider(provider)
+        const instance = await getDataProvider(provider)
         if (instance) {
           Object.keys(values).forEach(async (key) => {
             await instance.set(key, values[key])

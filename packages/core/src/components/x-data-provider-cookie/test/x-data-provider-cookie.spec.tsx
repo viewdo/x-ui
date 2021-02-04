@@ -63,10 +63,10 @@ describe('x-data-provider-cookie', () => {
       </x-ui>
     `)
 
-    const provider = getDataProvider('cookie')
+    const provider = await getDataProvider('cookie')
     expect(provider).not.toBeNull()
 
-    let value = await provider.get('consent')
+    let value = await provider!.get('consent')
 
     expect(value).toBe('true')
 
@@ -109,7 +109,7 @@ describe('x-data-provider-cookie', () => {
       </x-ui>
     `)
 
-    const provider = getDataProvider('cookie') || null
+    const provider = await getDataProvider('cookie')
     expect(provider).toBeNull()
 
     subject?.remove()

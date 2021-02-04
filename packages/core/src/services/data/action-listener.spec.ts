@@ -1,10 +1,10 @@
 jest.mock('../logging')
 
-import { EventEmitter } from '..';
-import { DataListener } from './action-listener';
-import { DATA_COMMANDS, DATA_TOPIC, IDataProvider } from './interfaces';
-import { clearDataProviders, getDataProvider, getDataProviders } from './providers/factory';
-import { InMemoryProvider } from './providers/memory';
+import { EventEmitter } from '..'
+import { DataListener } from './action-listener'
+import { DATA_COMMANDS, DATA_TOPIC, IDataProvider } from './interfaces'
+import { clearDataProviders, getDataProvider, getDataProviders } from './providers/factory'
+import { InMemoryProvider } from './providers/memory'
 
 class MockDataProvider extends InMemoryProvider {
   setItem(x: string, y: string) {
@@ -17,7 +17,7 @@ class MockDataProvider extends InMemoryProvider {
 }
 
 describe('data-provider-listener', () => {
-  let subject: DataListener|null = null
+  let subject: DataListener | null = null
   let mockWindow: any
   let mockDataProvider: IDataProvider
   let actionBus: EventEmitter
@@ -44,14 +44,14 @@ describe('data-provider-listener', () => {
     delete mockWindow.sessionStorage
     subject = new DataListener()
     subject.initialize(mockWindow, actionBus, eventBus)
-    const session = getDataProvider('session')
+    const session = await getDataProvider('session')
     expect(session).toBeNull()
   })
 
   it('detects storage', async () => {
     subject = new DataListener()
     subject.initialize(mockWindow, actionBus, eventBus)
-    const storage = getDataProvider('storage')
+    const storage = await getDataProvider('storage')
     expect(storage).toBeDefined()
   })
 
@@ -59,7 +59,7 @@ describe('data-provider-listener', () => {
     delete mockWindow.localStorage
     subject = new DataListener()
     subject.initialize(mockWindow, actionBus, eventBus)
-    const storage = getDataProvider('storage')
+    const storage = await getDataProvider('storage')
     expect(storage).toBeNull()
   })
 
@@ -86,7 +86,7 @@ describe('data-provider-listener', () => {
 
     actionBus.emit(DATA_TOPIC, event)
 
-    const mock = getDataProvider('mock')
+    const mock = await getDataProvider('mock')
     expect(mock).toBeDefined()
     expect(mock).toBe(mockDataProvider)
   })

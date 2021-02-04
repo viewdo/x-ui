@@ -1,11 +1,11 @@
 jest.mock('../../logging')
 
 import { newSpecPage } from '@stencil/core/testing'
-import { addDataProvider, getDataProvider, removeDataProvider, clearDataProviders } from './factory'
-import { InMemoryProvider } from './memory'
 import { XUI } from '../../../components/x-ui/x-ui'
-import { CookieProvider } from './cookie'
 import { actionBus, eventBus } from '../../actions'
+import { CookieProvider } from './cookie'
+import { addDataProvider, clearDataProviders, getDataProvider, removeDataProvider } from './factory'
+import { InMemoryProvider } from './memory'
 
 describe('provider-factory', () => {
   let custom: InMemoryProvider
@@ -18,24 +18,24 @@ describe('provider-factory', () => {
   })
 
   it('getProvider: incorrect name should return null', async () => {
-    const provider = getDataProvider('bad')
+    const provider = await getDataProvider('bad')
     expect(provider).toBe(null)
   })
 
   it('getProvider: returns custom provider', async () => {
-    const provider = getDataProvider('custom')
+    const provider = await getDataProvider('custom')
     expect(provider).toBe(custom)
   })
 
   it('removeProvider: removes correctly', async () => {
     removeDataProvider('custom')
-    const provider = getDataProvider('custom')
+    const provider = await getDataProvider('custom')
     expect(provider).toBe(null)
   })
 
   it('clearDataProviders: removes correctly', async () => {
     clearDataProviders()
-    const provider = getDataProvider('custom')
+    const provider = await getDataProvider('custom')
     expect(provider).toBe(null)
   })
 
@@ -45,15 +45,15 @@ describe('provider-factory', () => {
       html: '<x-ui></x-ui>',
       supportsShadowDom: true,
     })
-    const provider = getDataProvider('session')
+    const provider = await getDataProvider('session')
     expect(provider).toBeDefined()
 
-    await provider.set('test', 'value')
+    await provider!.set('test', 'value')
 
     const result = page.win.sessionStorage.getItem('test')
     expect(result).toBe('value')
 
-    const verified = await provider.get('test')
+    const verified = await provider!.get('test')
     expect(verified).toBe(result)
   })
 
@@ -65,15 +65,15 @@ describe('provider-factory', () => {
     })
     await page.waitForChanges()
 
-    const provider = getDataProvider('storage')
+    const provider = await getDataProvider('storage')
     expect(provider).toBeDefined()
 
-    await provider.set('test', 'value')
+    await provider!.set('test', 'value')
 
     const result = page.win.localStorage.getItem('test')
     expect(result).toBe('value')
 
-    const verified = await provider.get('test')
+    const verified = await provider!.get('test')
     expect(verified).toBe(result)
   })
 

@@ -1,5 +1,6 @@
 import { interfaceState } from '../../interface'
 import { debugIf } from '../../logging'
+import { sleep } from '../../utils'
 import { requireValue } from '../../utils/misc-utils'
 import { IDataProvider } from '../interfaces'
 
@@ -22,9 +23,16 @@ export function addDataProvider(name: string, provider: IDataProvider) {
   debugIf(interfaceState.debug && name !== 'data', `data-provider: ${name} registered`)
 }
 
-export function getDataProvider(name: string): IDataProvider {
+export async function getDataProvider(name: string): Promise<IDataProvider | null> {
+  const key = name.toLowerCase()
   requireValue(name, 'provider name')
-  return providers[name.toLowerCase()] || null
+  if (Object.keys(providers).includes(key)) return providers[key]
+
+  await sleep(500)
+
+  if (Object.keys(providers).includes(key)) return providers[key]
+
+  return null
 }
 
 export function getDataProviders(): DataProviders {
