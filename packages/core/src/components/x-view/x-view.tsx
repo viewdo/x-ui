@@ -153,7 +153,11 @@ export class XView {
     if (this.match) {
       if (this.match.isExact) {
         debugIf(this.debug, `x-view: ${this.url} route is matched `)
-        const nextDo = await resolveNext(this.childViewDos)
+        const viewDos = this.childViewDos.map(el => {
+          const { url, when, visit } = el;
+          return { url, when, visit }
+        })
+        const nextDo = await resolveNext(viewDos)
         if (nextDo) {
           this.route.goToRoute(nextDo.url)
         } else {

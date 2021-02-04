@@ -29,11 +29,11 @@
     "test:watch": "stencil test --spec --watch"
   },
   "dependencies": {
-    "@ionic/core": "^5.5.2",
+    "@ionic/core": "^5.5.4",
     "@viewdo/x-ui": "file:../../core"
   },
   "devDependencies": {
-    "@stencil/core": "2.3.0",
+    "@stencil/core": "2.4.0",
     "@stencil/sass": "1.4.1"
   }
 }

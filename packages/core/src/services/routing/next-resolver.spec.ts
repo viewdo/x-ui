@@ -1,11 +1,11 @@
 jest.mock('../logging')
 
-import { actionBus, eventBus } from '../actions';
-import { addDataProvider } from '../data/providers/factory';
-import { InMemoryProvider } from '../data/providers/memory';
-import { IViewDo, VisitStrategy } from './interfaces';
-import { resolveNext } from './next-resolver';
-import { clearVisits, markVisit } from './visits';
+import { actionBus, eventBus } from '../actions'
+import { addDataProvider } from '../data/providers/factory'
+import { InMemoryProvider } from '../data/providers/memory'
+import { IViewDo, VisitStrategy } from './interfaces'
+import { resolveNext } from './next-resolver'
+import { clearVisits, markVisit } from './visits'
 
 describe('next-resolver: find next', () => {
   let toDos: IViewDo[]
@@ -20,28 +20,36 @@ describe('next-resolver: find next', () => {
   })
 
   const setupBasicPath = () => {
-    toDos = [{
-      when: '!{session:name}',
-      url: '/name',
-    },{
-      when: '!{session:email}',
-      url: '/email',
-    },{
-      when: '!{session:color}',
-      url: '/color',
-    },{
-      visit: VisitStrategy.once,
-      url: '/once',
-    },{
-     visit: VisitStrategy.once,
-      url: '/terms',
-    },{
-     visit: VisitStrategy.optional,
-      url: '/optional',
-    },{
-      visit: VisitStrategy.always,
-      url: '/always',
-    }]
+    toDos = [
+      {
+        when: '!{session:name}',
+        url: '/name',
+      },
+      {
+        when: '!{session:email}',
+        url: '/email',
+      },
+      {
+        when: '!{session:color}',
+        url: '/color',
+      },
+      {
+        visit: VisitStrategy.once,
+        url: '/once',
+      },
+      {
+        visit: VisitStrategy.once,
+        url: '/terms',
+      },
+      {
+        visit: VisitStrategy.optional,
+        url: '/optional',
+      },
+      {
+        visit: VisitStrategy.always,
+        url: '/always',
+      },
+    ]
   }
 
   it('when resolves to true', async () => {
@@ -66,14 +74,14 @@ describe('next-resolver: find next', () => {
     expect(result?.url).toBe('/email')
   })
 
-   it('multiple when resolution, find first visited', async () => {
+  it('multiple when resolution, find first visited', async () => {
     setupBasicPath()
-     await session.set('name', 'biden')
-     toDos[1].visited = true
+    await session.set('name', 'biden')
+    toDos[1].visited = true
 
     const result = await resolveNext(toDos)
     expect(result?.url).toBe('/email')
-    })
+  })
 
   it('multiple when resolution, find first of three', async () => {
     setupBasicPath()
@@ -131,7 +139,4 @@ describe('next-resolver: find next', () => {
     const result = await resolveNext(toDos)
     expect(result?.url).toBe('/name')
   })
-
-
-
 })

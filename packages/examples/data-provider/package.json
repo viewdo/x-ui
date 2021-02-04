@@ -27,6 +27,6 @@
     "@viewdo/x-ui": "file:../../core"
   },
   "devDependencies": {
-    "@stencil/core": "^2.0.1"
+    "@stencil/core": "^2.4.0"
   }
 }
