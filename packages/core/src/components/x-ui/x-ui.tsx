@@ -76,6 +76,19 @@ export class XUI {
    */
   @Prop() scrollTopOffset?: number
 
+  /**
+   * The wait-time, in milliseconds to wait for un-registered data providers
+   * found in an expression. This is to accommodate a possible lag between
+   * evaluation before the first view-do 'when' predicate an the registration process.
+   */
+  @Prop() providerTimeout: number = 500
+
+  /**
+   * The interval, in milliseconds to use with the element-timer (used in place for a video)
+   * when timing animations in  x-view-do elements.
+   */
+  @Prop() animationInterval: number = 500
+
   @Listen('x:actions', {
     passive: true,
     target: 'body',
@@ -98,8 +111,8 @@ export class XUI {
     const refresh = confirm('New Version Available. Reload?')
 
     if (refresh) {
-      location.reload()
       registration.waiting.postMessage('skipWaiting')
+      location.reload()
     }
   }
 
@@ -134,6 +147,8 @@ export class XUI {
 
   componentWillLoad() {
     interfaceState.debug = this.debug
+    interfaceState.animationInterval = this.animationInterval
+    interfaceState.providerTimeout = this.providerTimeout
 
     if (this.debug) {
       log('x-ui: initializing <debug>')

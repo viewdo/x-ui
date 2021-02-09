@@ -249,6 +249,10 @@ export namespace Components {
     }
     interface XUi {
         /**
+          * The interval, in milliseconds to use with the element-timer (used in place for a video) when timing animations in  x-view-do elements.
+         */
+        "animationInterval": number;
+        /**
           * This is the application / site title. If the views or dos have titles, this is added as a suffix.
          */
         "appTitle"?: string;
@@ -256,6 +260,10 @@ export namespace Components {
           * Turn on debugging to get helpful messages from the routing, data and action systems.
          */
         "debug": boolean;
+        /**
+          * The wait-time, in milliseconds to wait for un-registered data providers found in an expression. This is to accommodate a possible lag between evaluation before the first view-do 'when' predicate an the registration process.
+         */
+        "providerTimeout": number;
         /**
           * This is the root path that the actual page is, if it isn't '/', then the router needs to know where to begin creating paths.
          */
@@ -780,6 +788,10 @@ declare namespace LocalJSX {
     }
     interface XUi {
         /**
+          * The interval, in milliseconds to use with the element-timer (used in place for a video) when timing animations in  x-view-do elements.
+         */
+        "animationInterval"?: number;
+        /**
           * This is the application / site title. If the views or dos have titles, this is added as a suffix.
          */
         "appTitle"?: string;
@@ -795,6 +807,10 @@ declare namespace LocalJSX {
           * Listen for events that occurred within the **`<x-ui/>`** system.
          */
         "onX:events"?: (event: CustomEvent<any>) => void;
+        /**
+          * The wait-time, in milliseconds to wait for un-registered data providers found in an expression. This is to accommodate a possible lag between evaluation before the first view-do 'when' predicate an the registration process.
+         */
+        "providerTimeout"?: number;
         /**
           * This is the root path that the actual page is, if it isn't '/', then the router needs to know where to begin creating paths.
          */

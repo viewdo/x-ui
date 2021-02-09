@@ -10,6 +10,8 @@ class StateModel {
   storedVisits!: string[]
   sessionVisits!: string[]
   references!: string[]
+  providerTimeout!: number
+  animationInterval!: number
 }
 
 const store = createStore<StateModel>({
@@ -20,6 +22,8 @@ const store = createStore<StateModel>({
   storedVisits: [],
   sessionVisits: [],
   references: [],
+  providerTimeout: 500,
+  animationInterval: 500,
 })
 
 const { state, onChange, reset, dispose } = store

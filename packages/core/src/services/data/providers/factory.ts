@@ -28,7 +28,7 @@ export async function getDataProvider(name: string): Promise<IDataProvider | nul
   requireValue(name, 'provider name')
   if (Object.keys(providers).includes(key)) return providers[key]
 
-  await sleep(500)
+  await sleep(interfaceState.providerTimeout)
 
   if (Object.keys(providers).includes(key)) return providers[key]
 
