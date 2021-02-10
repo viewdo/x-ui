@@ -71,7 +71,7 @@ export function captureElementsEventOnce<TElement extends HTMLElement, TEvent ex
   rootElement: HTMLElement,
   query: string,
   event: string,
-  clickHandler: (el: TElement, ev: TEvent) => void,
+  eventHandler: (el: TElement, ev: TEvent) => void,
 ) {
   const attribute = `x-attached-${event}`
   Array.from(rootElement.querySelectorAll(query) || [])
@@ -79,7 +79,7 @@ export function captureElementsEventOnce<TElement extends HTMLElement, TEvent ex
     .filter((el) => !el.hasAttribute(attribute))
     .forEach((el: TElement) => {
       el.addEventListener(event, (ev) => {
-        clickHandler(el, ev as TEvent)
+        eventHandler(el, ev as TEvent)
       })
       el.setAttribute(attribute, '')
     })
@@ -91,7 +91,7 @@ export function getChildInputValidity(rootElement: HTMLElement) {
   inputElements.forEach((i) => {
     const input = i as HTMLInputElement
     input.blur?.call(i)
-    if (!input.reportValidity()) {
+    if (input.reportValidity?.call(input) === false) {
       valid = false
     }
   })
@@ -104,21 +104,34 @@ export function removeAllChildNodes(rootElement: HTMLElement) {
   }
 }
 
-export function captureXBackClickEvent(rootElement: HTMLElement, handler: (tag: string) => void) {
+export function captureXBackClickEvent(rootElement: HTMLElement, eventHandler: (tag: string) => void) {
   captureElementsEventOnce<HTMLElement, MouseEvent>(
     rootElement,
     '[x-back]',
     'click',
     (el: HTMLElement, e: MouseEvent) => {
       e.preventDefault()
-      handler(el.localName)
+      eventHandler(el.localName)
+    },
+  )
+
+  captureElementsEventOnce<HTMLElement, KeyboardEvent>(
+    rootElement,
+    '[x-back]',
+    'keydown',
+    (el: HTMLElement, e: KeyboardEvent) => {
+      if (e.isComposing) return
+      if (e.key == 'Space' || e.key == 'Enter') {
+        e.preventDefault()
+        eventHandler(el.localName)
+      }
     },
   )
 }
 
 export function captureXNextClickEvent(
   rootElement: HTMLElement,
-  handler: (tag: string, route?: string | null) => void,
+  eventHandler: (tag: string, route?: string | null) => void,
 ) {
   captureElementsEventOnce<HTMLElement, MouseEvent>(
     rootElement,
@@ -127,14 +140,27 @@ export function captureXNextClickEvent(
     (el: HTMLElement, e: MouseEvent) => {
       const route = el.getAttribute('x-next')
       e.preventDefault()
-      handler(el.localName, route)
+      eventHandler(el.localName, route)
+    },
+  )
+  captureElementsEventOnce<HTMLElement, KeyboardEvent>(
+    rootElement,
+    '[x-next]',
+    'keydown',
+    (el: HTMLElement, e: KeyboardEvent) => {
+      if (e.isComposing) return
+      if (e.key == 'Space' || e.key == 'Enter') {
+        const route = el.getAttribute('x-next')
+        e.preventDefault()
+        eventHandler(el.localName, route)
+      }
     },
   )
 }
 
 export function captureXLinkClickEvent(
   rootElement: HTMLElement,
-  handler: (tag: string, route?: string | null) => void,
+  eventHandler: (tag: string, route?: string | null) => void,
 ) {
   captureElementsEventOnce<HTMLElement, MouseEvent>(
     rootElement,
@@ -143,7 +169,7 @@ export function captureXLinkClickEvent(
     (el: HTMLElement, e: MouseEvent) => {
       const route = el.getAttribute('x-link')
       e.preventDefault()
-      handler(el.localName, route)
+      eventHandler(el.localName, route)
     },
   )
 }
