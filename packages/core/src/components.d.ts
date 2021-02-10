@@ -285,6 +285,8 @@ export namespace Components {
          */
         "transition"?: string;
     }
+    interface XUiAnalytics {
+    }
     interface XUiAudio {
         "classes"?: string;
         "inputId"?: string;
@@ -497,6 +499,12 @@ declare global {
         prototype: HTMLXUiElement;
         new (): HTMLXUiElement;
     };
+    interface HTMLXUiAnalyticsElement extends Components.XUiAnalytics, HTMLStencilElement {
+    }
+    var HTMLXUiAnalyticsElement: {
+        prototype: HTMLXUiAnalyticsElement;
+        new (): HTMLXUiAnalyticsElement;
+    };
     interface HTMLXUiAudioElement extends Components.XUiAudio, HTMLStencilElement {
     }
     var HTMLXUiAudioElement: {
@@ -549,6 +557,7 @@ declare global {
         "x-link": HTMLXLinkElement;
         "x-markdown": HTMLXMarkdownElement;
         "x-ui": HTMLXUiElement;
+        "x-ui-analytics": HTMLXUiAnalyticsElement;
         "x-ui-audio": HTMLXUiAudioElement;
         "x-ui-autoplay": HTMLXUiAutoplayElement;
         "x-ui-theme": HTMLXUiThemeElement;
@@ -832,6 +841,20 @@ declare namespace LocalJSX {
          */
         "transition"?: string;
     }
+    interface XUiAnalytics {
+        /**
+          * Raised analytics events.
+         */
+        "onX:analytics:event"?: (event: CustomEvent<any>) => void;
+        /**
+          * Page views.
+         */
+        "onX:analytics:page-view"?: (event: CustomEvent<any>) => void;
+        /**
+          * View percentage views.
+         */
+        "onX:analytics:view-percentage"?: (event: CustomEvent<any>) => void;
+    }
     interface XUiAudio {
         "classes"?: string;
         "inputId"?: string;
@@ -968,6 +991,7 @@ declare namespace LocalJSX {
         "x-link": XLink;
         "x-markdown": XMarkdown;
         "x-ui": XUi;
+        "x-ui-analytics": XUiAnalytics;
         "x-ui-audio": XUiAudio;
         "x-ui-autoplay": XUiAutoplay;
         "x-ui-theme": XUiTheme;
@@ -995,6 +1019,7 @@ declare module "@stencil/core" {
             "x-link": LocalJSX.XLink & JSXBase.HTMLAttributes<HTMLXLinkElement>;
             "x-markdown": LocalJSX.XMarkdown & JSXBase.HTMLAttributes<HTMLXMarkdownElement>;
             "x-ui": LocalJSX.XUi & JSXBase.HTMLAttributes<HTMLXUiElement>;
+            "x-ui-analytics": LocalJSX.XUiAnalytics & JSXBase.HTMLAttributes<HTMLXUiAnalyticsElement>;
             "x-ui-audio": LocalJSX.XUiAudio & JSXBase.HTMLAttributes<HTMLXUiAudioElement>;
             "x-ui-autoplay": LocalJSX.XUiAutoplay & JSXBase.HTMLAttributes<HTMLXUiAutoplayElement>;
             "x-ui-theme": LocalJSX.XUiTheme & JSXBase.HTMLAttributes<HTMLXUiThemeElement>;

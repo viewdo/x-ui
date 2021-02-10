@@ -52,6 +52,17 @@
           onload="this.media='all'" />
 
     <link rel="manifest" href="/manifest.json" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async
+            src="https://www.googletagmanager.com/gtag/js?id=G-SL9WMJ9XVP"></script>
+    <script>
+      window.dataLayer = window.dataLayer || []
+      function gtag() {
+        dataLayer.push( arguments )
+      }
+      gtag( 'js', new Date() )
+      gtag( 'config', 'G-SL9WMJ9XVP' )
+    </script>
   </head>
 
   <body>
@@ -490,6 +501,19 @@
       <x-view url="*" page-title="Page not Found"
               content-src="/docs/not-found.html"> </x-view>
     </x-ui>
+    <x-ui-analytics id="analytics">
+      <script>
+        analytics.addEventListener( 'x:analytics:event', e => {
+          gtag( e.detail.key, e.detail.value )
+        } )
+        analytics.addEventListener( 'x:analytics:page-view', e => {
+          gtag( 'page_view', e.detail.pathname )
+        } )
+        analytics.addEventListener( 'x:analytics:view-percentage', e => {
+          gtag( e.detail.key, e.detail.value )
+        } )
+      </script>
+    </x-ui-analytics>
   </body>
 
 </html>

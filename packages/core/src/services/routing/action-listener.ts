@@ -18,7 +18,7 @@ export class RoutingActionListener {
   }
 
   handleEventAction(eventAction: EventAction<NavigateTo | NavigateNext>) {
-    debugIf(interfaceState.debug, `router-service: action received ${JSON.stringify(eventAction)}`)
+    debugIf(interfaceState.debug, `route-listener: action received ${JSON.stringify(eventAction)}`)
 
     switch (eventAction.command) {
       case ROUTE_COMMANDS.NavigateNext: {

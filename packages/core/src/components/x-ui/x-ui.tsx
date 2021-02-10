@@ -16,7 +16,7 @@ import {
 import { clearDataProviders } from '../../services/data/providers/factory';
 
 /**
- *  @set routing
+ *  @system routing
  */
 @Component({
   tag: 'x-ui',

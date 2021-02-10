@@ -2,6 +2,9 @@ import { Component, h, Host, Prop, State } from '@stencil/core';
 import { interfaceState } from '../..';
 import { onInterfaceChange } from '../../services';
 
+/**
+ * @system presentation
+ */
 @Component({
   tag: 'x-ui-autoplay',
   shadow: false,
