@@ -75,7 +75,7 @@ describe('x-view-do', () => {
             <slot></slot>
             <slot name="content"></slot>
           </mock:shadow-root>
-          <a x-attached-click="" x-next="">Next</a>
+          <a x-attached-click="" x-attached-keydown="" x-next="">Next</a>
         </x-view-do>
       </x-view>
     </x-ui>
