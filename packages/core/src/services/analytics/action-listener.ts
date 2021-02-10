@@ -1,7 +1,7 @@
-import { LocationSegments } from '../../../dist/types/services/routing/interfaces'
 import { EventAction, IEventEmitter } from '../actions'
 import { interfaceState } from '../interface'
 import { debugIf } from '../logging'
+import { LocationSegments } from '../routing/interfaces'
 import { ROUTE_EVENTS } from './../routing/interfaces'
 import { ANALYTICS_COMMANDS, ANALYTICS_EVENTS, ANALYTICS_TOPIC } from './interfaces'
 

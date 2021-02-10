@@ -47,6 +47,7 @@ Using the `<x-ui-analytics>` is simple, but does require some scripting.
 
 <!-- Auto Generated Below -->
 
+
 ## Events
 
 | Event                         | Description              | Type               |
@@ -55,6 +56,7 @@ Using the `<x-ui-analytics>` is simple, but does require some scripting.
 | `x:analytics:page-view`       | Page views.              | `CustomEvent<any>` |
 | `x:analytics:view-percentage` | View percentage views.   | `CustomEvent<any>` |
 
----
+
+----------------------------------------------
 
 view.DO : Experience Platform
