@@ -12,6 +12,7 @@ const config: Config = {
     openBrowser: false,
     reloadStrategy: 'pageReload',
     port: 3333,
+    root: '../../docs',
   },
   outputTargets: [
     {
@@ -41,35 +42,27 @@ const config: Config = {
     },
     {
       type: 'docs-json',
-      file: '../../www/data/components.json',
+      file: '../../docs/data/components.json',
     },
   ],
 }
 
 const wwwOutput: any = {
   type: 'www',
-  dir: '../../www',
-  buildDir: 'x-ui',
-  empty: true,
+  dir: '../../docs',
+  buildDir: 'dist',
+  empty: false,
   serviceWorker: null,
+  indexHtml: 'index.html',
   copy: [
     {
-      src: 'docs',
-      dest: './',
-      keepDirStructure: true,
-    },
-    {
-      src: 'docs/*.html',
-      dest: './',
-    },
-    {
       src: 'components/**/*.{md,html}',
-      dest: 'docs',
+      dest: 'pages',
       keepDirStructure: true,
     },
     {
       src: 'services/**/*.{md,html}',
-      dest: 'docs',
+      dest: 'pages',
       keepDirStructure: true,
     },
   ],

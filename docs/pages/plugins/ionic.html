@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html dir="ltr"
+  lang="en">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+    <title>Loading...</title>
+    <meta http-equiv="x-ua-compatible"
+      content="IE=Edge" />
+    <meta name="description"
+      content="New HTML elementsto put some do in your view" />
+    <meta name="og:title"
+      content="" />
+    <meta name="og:description"
+      content="" />
+    <meta name="og:image"
+      content="" />
+
+    <meta name="format-detection"
+      content="telephone=no" />
+    <meta name="msapplication-tap-highlight"
+      content="no" />
+    <link rel="apple-touch-icon"
+      sizes="180x180"
+      href="/assets/icon/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable"
+      content="yes" />
+    <meta name="apple-mobile-web-app-title"
+      content="View.DO Experience Player" />
+    <meta name="apple-mobile-web-app-status-bar-style"
+      content="black" />
+    <meta name="color-scheme"
+      content="light dark" />
+    <meta name="theme-color"
+      content="#16161d" />
+
+    <!-- Ionic -->
+    <script type="module"
+      src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+    <link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"
+      media="print"
+      onload="this.media='all'" />
+
+    <!-- Markdown -->
+    <script type="module"
+      src="https://cdn.jsdelivr.net/gh/zerodevx/x-markdown@2/dist/x-markdown.min.js"></script>
+
+    <!-- Replace w/npm unpkg paths -->
+    <script type="module"
+      src="/build/viewdo.esm.js"></script>
+    <link rel="stylesheet"
+      href="/build/viewdo.css"
+      media="print"
+      onload="this.media='all'" />
+    <base href="/" />
+
+    <style>
+      body {
+        --ion-background-color: #fff;
+        --ion-background-color-rgb: 255, 255, 255;
+        --ion-text-color: #000;
+        --ion-text-color-rgb: 0, 0, 0;
+        color: #000;
+      }
+
+      .dark {
+        --ion-background-color: #2f2f2f;
+        --ion-background-color-rgb: 18, 18, 18;
+        --ion-text-color: #fff;
+        --ion-text-color-rgb: 255, 255, 255;
+        --ion-border-color: #525151;
+        --li-background: #363636;
+        --div-background: #464646;
+        --ion-tab-bar-background: #000;
+        --ion-card-background: #414141;
+        --ion-color-primary: #428cff;
+        --ion-color-primary-rgb: 66, 140, 255;
+        --ion-color-primary-contrast: #fff;
+        --ion-color-primary-contrast-rgb: 255, 255, 255;
+        --ion-color-primary-shade: #3a7be0;
+        --ion-color-primary-tint: #5598ff;
+        --ion-color-secondary: #50c8ff;
+        --ion-color-secondary-rgb: 80, 200, 255;
+        --ion-color-secondary-contrast: #fff;
+        --ion-color-secondary-contrast-rgb: 255, 255, 255;
+        --ion-color-secondary-shade: #46b0e0;
+        --ion-color-secondary-tint: #62ceff;
+        --ion-color-tertiary: #6a64ff;
+        --ion-color-tertiary-rgb: 106, 100, 255;
+        --ion-color-tertiary-contrast: #fff;
+        --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+        --ion-color-tertiary-shade: #5d58e0;
+        --ion-color-tertiary-tint: #7974ff;
+        --ion-color-success: #2fdf75;
+        --ion-color-success-rgb: 47, 223, 117;
+        --ion-color-success-contrast: #000;
+        --ion-color-success-contrast-rgb: 0, 0, 0;
+        --ion-color-success-shade: #29c467;
+        --ion-color-success-tint: #44e283;
+        --ion-color-warning: #ffd534;
+        --ion-color-warning-rgb: 255, 213, 52;
+        --ion-color-warning-contrast: #000;
+        --ion-color-warning-contrast-rgb: 0, 0, 0;
+        --ion-color-warning-shade: #e0bb2e;
+        --ion-color-warning-tint: #ffd948;
+        --ion-color-danger: #ff4961;
+        --ion-color-danger-rgb: 255, 73, 97;
+        --ion-color-danger-contrast: #fff;
+        --ion-color-danger-contrast-rgb: 255, 255, 255;
+        --ion-color-danger-shade: #e04055;
+        --ion-color-danger-tint: #ff5b71;
+        --ion-color-dark: #f4f5f8;
+        --ion-color-dark-rgb: 244, 245, 248;
+        --ion-color-dark-contrast: #000;
+        --ion-color-dark-contrast-rgb: 0, 0, 0;
+        --ion-color-dark-shade: #d7d8da;
+        --ion-color-dark-tint: #f5f6f9;
+        --ion-color-medium: #989aa2;
+        --ion-color-medium-rgb: 152, 154, 162;
+        --ion-color-medium-contrast: #000;
+        --ion-color-medium-contrast-rgb: 0, 0, 0;
+        --ion-color-medium-shade: #86888f;
+        --ion-color-medium-tint: #a2a4ab;
+        --ion-color-light: #222428;
+        --ion-color-light-rgb: 34, 36, 40;
+        --ion-color-light-contrast: #fff;
+        --ion-color-light-contrast-rgb: 255, 255, 255;
+        --ion-color-light-shade: #1e2023;
+        --ion-color-light-tint: #383a3e;
+      }
+
+      .dark * {
+        color: #fff !important;
+      }
+
+      h1 {
+        font-size: x-large;
+      }
+
+      h2 {
+        font-size: larger;
+      }
+
+      h3 {
+        font-size: large;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <div>
+          <ion-buttons slot="start">
+            <ion-menu-toggle>
+              <button slot="end"
+                class="btn btn-primary btn-lg">
+                <ion-icon name="menu"></ion-icon>
+              </button>
+            </ion-menu-toggle>
+            <a href="/home">
+              <ion-button size="large">
+                <ion-icon slot="icon-only"
+                  name="home"></ion-icon>
+              </ion-button>
+            </a>
+          </ion-buttons>
+          <ion-buttons slot="end">
+            <x-data-show when="{storage:name}">
+              <a href="/home/name">
+                <ion-chip>
+                  <ion-avatar>
+                    <img
+                      src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" />
+                  </ion-avatar>
+                  <label>
+                    <x-data-display text="{storage:name}"
+                      show-when="{storage:name}"></x-data-display>
+                  </label>
+                </ion-chip>
+              </a>
+            </x-data-show>
+            <x-preferences-popover-button></x-preferences-popover-button>
+          </ion-buttons>
+        </div>
+      </ion-header>
+      <ion-menu side="start"
+        menu-id="main"
+        content-id="main">
+        <div class="container container-fluid mx-auto">
+          <ion-list>
+            <ion-list-header>
+              <h2>Components</h2>
+            </ion-list-header>
+            <li>
+              <ion-icon slot="start"
+                name="flash"></ion-icon>
+              <a href="/test">
+                <ion-menu-toggle>Testing</ion-menu-toggle>
+              </a>
+            </li>
+          </ion-list>
+        </div>
+      </ion-menu>
+
+      <x-ui app-title="view.DO UI Components"
+        transition="fade-in"
+        start-url="/home">
+        <x-view url="/home"
+          page-title="Home">
+          <x-view-do url="/name"
+            page-title="Introductions"
+            when="!{storage:name}">
+            <x-include no-render
+              src="/pages/home/intro.html"></x-include>
+          </x-view-do>
+
+          <x-view-do url="/welcome"
+            page-title="Welcome"
+            visit="always">
+            <x-include no-render
+              src="/pages/home/welcome.html"></x-include>
+          </x-view-do>
+
+          <div class="container container-fluid mx-auto"
+            id="main">
+            <h1>Home Page</h1>
+          </div>
+        </x-view>
+
+        <!-- Not Found Route -->
+        <x-view url="*">
+          <h3>Not Found</h3>
+        </x-view>
+      </x-ui>
+    </ion-app>
+  </body>
+
+</html>

@@ -4,3 +4,8 @@ www
 dist
 loader
 .eslintcache
+docs/**/*.js
+docs/**/*.json
+docs/**/*.js.map
+docs/**/*.ts
+docs/index.html

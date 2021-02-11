@@ -1,0 +1,57 @@
+<x-use script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
+  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
+</x-use>
+<x-use
+  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
+</x-use>
+<div class="container container-fluid mx-auto">
+  <h1>Event Actions</h1>
+  <p></p>
+  <x-markdown src="/pages/actions/default.md"></x-markdown>
+
+  <h2>How it works</h2>
+  <p></p>
+
+  <h3>Simple Example</h3>
+  <p></p>
+
+  <div>
+    <button class="btn btn-light"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#loadSource"
+      aria-expanded="false"
+      aria-controls="loadSource">
+      <i class="ri-code-s-slash-line"></i>
+      View Source
+    </button>
+  </div>
+  <div class="collapse"
+    id="loadSource">
+    <x-markdown>
+      <script type="text/markdown"></script>
+    </x-markdown>
+  </div>
+
+  <h3>Advanced Topics</h3>
+  <p></p>
+  <div class="button-nav">
+    <a href="/actions/events"
+      class="btn btn-info text-white"> Event-based Actions </a>
+    <a href="/actions/timed"
+      class="btn btn-info text-white"> Timed Actions </a>
+    <a href="/actions/elements"
+      class="btn btn-info text-white"> Element Event Actions </a>
+  </div>
+
+  <footer>
+    <a slot="start"
+      href="/content">
+      <button class="btn btn-light btn-lg">&lt; Content</button>
+    </a>
+    <a slot="end"
+      href="/audio">
+      <button class="btn btn-primary btn-lg">Audio &gt;</button>
+    </a>
+  </footer>
+</div>

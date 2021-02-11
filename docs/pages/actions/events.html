@@ -1,0 +1,20 @@
+<x-use script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
+  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
+</x-use>
+<x-use
+  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
+</x-use>
+<div class="container container-fluid mx-auto">
+  <x-markdown src="/pages/actions/event.md"></x-markdown>
+  <h2>X-VIEW-DO Enter & Exit Events</h2>
+  <p>You should get two alerts. One on entry and one on exit.</p>
+
+  <footer>
+    <button slot="start"
+      x-back
+      class="btn btn-light btn-lg">&lt; Back</button>
+    <button slot="end"
+      x-next
+      class="btn btn-primary btn-lg">Next &gt;</button>
+  </footer>
+</div>
