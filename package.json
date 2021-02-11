@@ -128,9 +128,7 @@
     "not op_mini all"
   ],
   "workspaces": [
-    "packages/core",
-    "packages/plugins/*",
-    "packages/examples/*"
+    "packages/*/*"
   ],
   "dependencies": {}
 }
