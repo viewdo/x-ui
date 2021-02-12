@@ -1,5 +1,52 @@
 import { findAsyncSequential } from './promise-utils'
 import { kebabToCamelCase, toBoolean } from './string-utils'
+// @ponicode
+describe('toBoolean', () => {
+  test('empty string', () => {
+    let result: any = toBoolean('')
+    expect(result).toBe(false)
+  })
+
+  test('undefined', () => {
+    let result: any = toBoolean(undefined)
+    expect(result).toBe(false)
+  })
+
+  test('"false"', () => {
+    let result: any = toBoolean('false')
+    expect(result).toBe(false)
+  })
+
+  test('"0"', () => {
+    let result: any = toBoolean('0')
+    expect(result).toBe(false)
+  })
+
+  test('"no"', () => {
+    let result: any = toBoolean('no')
+    expect(result).toBe(false)
+  })
+
+  test('off', () => {
+    let result: any = toBoolean('off')
+    expect(result).toBe(false)
+  })
+
+  test('true', () => {
+    let result: any = toBoolean('off')
+    expect(result).toBe(false)
+  })
+
+  test('yes', () => {
+    let result: any = toBoolean('off')
+    expect(result).toBe(false)
+  })
+
+  test('on', () => {
+    let result: any = toBoolean('off')
+    expect(result).toBe(false)
+  })
+})
 
 describe('kebabToCamelCase', () => {
   let camel = kebabToCamelCase('this-is-a-word')

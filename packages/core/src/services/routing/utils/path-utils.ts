@@ -1,12 +1,21 @@
 /* istanbul ignore file */
 
 import { LocationSegments } from '../interfaces'
-
+/**
+ * Ensures basename
+ * @param path
+ * @param prefix
+ * @returns
+ */
 export function ensureBasename(path: string, prefix: string) {
   let result = hasBasename(path, prefix) ? path : `${prefix}/${path}`
   return stripTrailingSlash(addLeadingSlash(result).replace(/[/]{2,}/gi, '/'))
 }
-
+/**
+ * Paths has basename
+ * @param path
+ * @param prefix
+ */
 export const hasBasename = (path: string, prefix: string) => new RegExp(`^${prefix}(\\/|\\?|#|$)`, 'i').test(path)
 
 export const stripBasename = (path: string, prefix: string) =>

@@ -37,6 +37,7 @@
     "paren",
     "playsinline",
     "plusplus",
+    "ponicode",
     "preconnect",
     "recalc",
     "referrerpolicy",
@@ -65,5 +66,9 @@
     { "icon": "stencil", "extensions": [".config.ts"], "format": "svg" },
     { "icon": "config", "extensions": [".config.js"], "format": "svg" }
   ],
-  "html.customData": ["./packages/core/dist/custom-elements/custom-elements.json"]
+  "html.customData": [
+    "./packages/core/dist/custom-elements/custom-elements.json"
+  ],
+  "ponicode.testSettings.testLocation.locationType": "Custom",
+  "ponicode.testSettings.testLocation.path": "{rootDir}/{filePath}/{fileName}.spec.{ext}"
 }

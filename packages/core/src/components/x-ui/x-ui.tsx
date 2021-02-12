@@ -62,7 +62,7 @@ export class XUI {
    * This is the start path a user should
    * land on when they first land on this app.
    */
-  @Prop() startUrl = '/'
+  @Prop() startUrl?: string
 
   /**
    * Turn on debugging to get helpful messages from the
@@ -204,7 +204,7 @@ export class XUI {
       })
     }
 
-    if (this.startUrl !== '/' &&
+    if (this.startUrl && this.startUrl !== '/' &&
       (this.router.location?.pathname === '/' || this.router.location?.pathname == '')) {
       this.router.goToRoute(this.startUrl)
     }

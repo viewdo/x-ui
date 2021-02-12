@@ -645,8 +645,10 @@
 
       <!-- Not Found Route -->
       <x-view url="*"
+        exact
+        debug
         page-title="Page not Found"
-        content-src="/pages/not-found.html"> </x-view>
+        content-src="/pages/404.html"> </x-view>
     </x-ui>
     <x-ui-analytics id="analytics">
       <script>

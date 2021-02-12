@@ -5,6 +5,11 @@
   .hide {
     display: none;
   }
+
+  x-view.active-route + x-view {
+    display: none;
+  }
+
 }
 
 :host {

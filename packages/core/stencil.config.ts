@@ -8,6 +8,11 @@ const config: Config = {
   plugins: [sass()],
   preamble: 'view.DO 2021',
   hashFileNames: false,
+  bundles: [
+    {
+      components: [],
+    },
+  ],
   devServer: {
     openBrowser: false,
     reloadStrategy: 'pageReload',

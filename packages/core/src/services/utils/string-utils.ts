@@ -9,7 +9,7 @@ export function toBoolean(value: string) {
   }
 
   const stringResult = value.slice()
-  if (['false', 'no', 'off', '!'].includes(stringResult.toLocaleLowerCase().trim())) {
+  if (['false', 'no', 'off', '!', '0', 'null', 'undefined', ''].includes(stringResult.toLocaleLowerCase().trim())) {
     return false
   }
 

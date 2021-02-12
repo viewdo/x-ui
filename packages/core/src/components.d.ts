@@ -279,7 +279,7 @@ export namespace Components {
         /**
           * This is the start path a user should land on when they first land on this app.
          */
-        "startUrl": string;
+        "startUrl"?: string;
         /**
           * Navigation transition between routes. This is a CSS animation class.
          */
