@@ -98,6 +98,10 @@ export class DefaultInterfaceProvider {
     }
   }
 
+  console(args: any) {
+    window?.console.table(args)
+  }
+
   destroy() {
     this.disposeAutoPlaySubscription()
     this.disposeMuteSubscription()

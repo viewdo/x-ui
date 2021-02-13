@@ -69,14 +69,17 @@ export class DataListener implements IEventActionListener {
         this.registerProvider(name, provider)
       }
     } else if (actionEvent.command === DATA_COMMANDS.SetData) {
-      const { provider, values } = actionEvent.data as SetData
+      const { provider } = actionEvent.data as SetData
+      let data = actionEvent.data as SetData
       debugIf(interfaceState.debug, `data-provider: ${provider} set-data`)
-      if (provider && values) {
+      if (provider) {
         const instance = await getDataProvider(provider)
         if (instance) {
-          Object.keys(values).forEach(async (key) => {
-            await instance.set(key, values[key])
-          })
+          Object.keys(data)
+            .filter((k) => k != 'provider')
+            .forEach(async (key) => {
+              await instance.set(key, data[key])
+            })
         }
       }
     }

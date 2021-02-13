@@ -10,11 +10,7 @@ export const INTERFACE_TOPIC = 'interface'
 
 export enum INTERFACE_COMMANDS {
   RegisterProvider = 'register-provider',
-  // Alert = 'alert',
-  // OpenToast = 'open-toast',
-  // ModalOpen = 'modal-open',
-  // ModalClose = 'modal-open',
-  // OpenPopover = 'open-popover',
+  Console = 'console',
   SetTheme = 'set-theme',
   SetAutoPlay = 'set-auto-play',
   SetMute = 'set-mute',

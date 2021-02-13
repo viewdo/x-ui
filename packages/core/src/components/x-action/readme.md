@@ -52,11 +52,11 @@ graph TD;
 
 ## Properties
 
-| Property  | Attribute | Description                                              | Type                                                                   | Default     |
-| --------- | --------- | -------------------------------------------------------- | ---------------------------------------------------------------------- | ----------- |
-| `command` | `command` | The command to execute.                                  | `string \| undefined`                                                  | `undefined` |
-| `data`    | `data`    | The JSON serializable data payload the command requires. | `string \| undefined`                                                  | `undefined` |
-| `topic`   | `topic`   | This is the topic this action-command is targeting.      | `"audio" \| "data" \| "document" \| "routing" \| "video" \| undefined` | `undefined` |
+| Property  | Attribute | Description                                                   | Type                                                                   | Default     |
+| --------- | --------- | ------------------------------------------------------------- | ---------------------------------------------------------------------- | ----------- |
+| `command` | `command` | The command to execute.                                       | `string \| undefined`                                                  | `undefined` |
+| `data`    | --        | Data binding for JSX binding                                  | `undefined \| { [x: string]: any; }`                                   | `undefined` |
+| `topic`   | `topic`   | This is the topic this action-command is targeting.  data: [] | `"audio" \| "data" \| "document" \| "routing" \| "video" \| undefined` | `undefined` |
 
 
 ## Methods
@@ -68,6 +68,16 @@ Get the underlying actionEvent instance. Used by the x-action-activator element.
 #### Returns
 
 Type: `Promise<EventAction<any> | null>`
+
+
+
+### `sendAction(data?: Record<string, any> | undefined) => Promise<void>`
+
+Send this action to the the Action Bus.
+
+#### Returns
+
+Type: `Promise<void>`
 
 
 

@@ -35,7 +35,7 @@ export type DataProviderRegistration = {
 
 export type SetData = {
   provider: string
-  values: Record<string, any>
+  [key: string]: string
 }
 
 export type CookieConsent = {

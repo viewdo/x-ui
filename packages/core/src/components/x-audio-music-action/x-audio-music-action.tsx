@@ -1,5 +1,5 @@
-import { Component, Host, h, Method, Prop, Element } from '@stencil/core'
-import { AUDIO_TOPIC, AudioType, IActionElement, EventAction, warn } from '../..'
+import { Component, Element, h, Host, Method, Prop } from '@stencil/core';
+import { AudioType, AUDIO_TOPIC, EventAction, IActionElement, warn } from '../..';
 
 /**
  * This element just holds data to express the actionEvent to fire. This element

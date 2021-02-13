@@ -79,7 +79,7 @@ describe('x-action', () => {
   it('x-action: getAction param data', async () => {
     const page = await newSpecPage({
       components: [XAction],
-      html: `<x-action topic="routing" command="go-to" data='{"name":"Bill"}'></x-action>`,
+      html: `<x-action topic="routing" command="go-to" data-name="Bill"></x-action>`,
       supportsShadowDom: false,
     })
 

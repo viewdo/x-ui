@@ -1,5 +1,6 @@
 import { Component, Element, h, Host, Method, Prop } from '@stencil/core';
 import { EventAction, IActionElement, warn } from '../..';
+import { actionBus } from '../../services';
 
 /**
  * This element just holds data to express the actionEvent to fire. This element
@@ -12,11 +13,12 @@ import { EventAction, IActionElement, warn } from '../..';
   shadow: false,
 })
 export class XAction implements IActionElement {
-  private deserializedData?: Record<string, any>
 
   @Element() el!: HTMLXActionElement
   /**
    * This is the topic this action-command is targeting.
+   *
+   * data: []
    */
   @Prop() topic?: 'data' | 'routing' | 'document' | 'audio' | 'video'
 
@@ -25,10 +27,10 @@ export class XAction implements IActionElement {
    */
   @Prop() command?: string
 
-  /**
-   * The JSON serializable data payload the command requires.
-   */
-  @Prop() data?: string
+ /**
+  * Data binding for JSX binding
+  */
+ @Prop() data?: Record<string,any>
 
   /**
    * Get the underlying actionEvent instance. Used by the x-action-activator element.
@@ -45,18 +47,38 @@ export class XAction implements IActionElement {
       return null
     }
 
-    if (this.deserializedData == undefined) {
-      this.deserializedData = {}
+
+    let data: Record<string, any> =  { ...this.el.dataset }
+
+    if (this.childScript) {
+      Object.assign(data, JSON.parse(this.childScript?.textContent || '{}'))
     }
 
     this.childInputs.forEach((el: any, index) => {
-      this.deserializedData![el.id||el.name||index] = el.value || el.checked
+      data![el.id||el.name||index] = el.value || el.checked
     })
+
+    if (this.data) {
+      Object.assign(data, this.data)
+    }
 
     return {
       topic: this.topic,
       command: this.command,
-      data: this.deserializedData,
+      data,
+    }
+  }
+
+  /**
+   * Send this action to the the Action Bus.
+   */
+  @Method()
+  async sendAction(data?:Record<string,any>) {
+    const action = await this.getAction()
+    if (action) {
+      if (data)
+        Object.assign(action.data, data)
+      actionBus.emit(action.topic, action);
     }
   }
 
@@ -77,11 +99,7 @@ export class XAction implements IActionElement {
       warn('The x-action component must be wrapped with an x-action-activator component to work.')
     }
 
-    if (this.childScript) {
-      this.deserializedData = JSON.parse(this.childScript?.textContent || '{}')
-    } else {
-      this.deserializedData = JSON.parse(this.data || '{}')
-    }
+
   }
 
   render() {

@@ -1,13 +1,12 @@
-import { Component, Element, h, Host, Method, Prop } from '@stencil/core'
-import { AudioType, AUDIO_TOPIC, EventAction, IActionElement, warn } from '../..'
-import { AUDIO_COMMANDS } from '../../services/audio/interfaces'
+import { Component, Element, h, Host, Method, Prop } from '@stencil/core';
+import { AudioType, AUDIO_TOPIC, EventAction, IActionElement, warn } from '../..';
+import { AUDIO_COMMANDS } from '../../services/audio/interfaces';
 
 /**
  * This element just holds data to express the actionEvent to fire. This element
  * should always be the child of a x-action-activator.
  *
  * @system audio
- * @system actions
  */
 @Component({
   tag: 'x-audio-sound-action',
