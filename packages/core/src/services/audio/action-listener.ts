@@ -1,30 +1,40 @@
-import { Howler } from 'howler';
-import { EventAction, EventEmitter } from '../actions';
-import { debugIf } from '../logging';
-import { ROUTE_EVENTS } from '../routing';
-import { AudioTrack } from './audio';
-import { AudioInfo } from './audio-info';
-import { AudioRequest } from './audio-request';
-import { AudioType, AUDIO_COMMANDS, AUDIO_EVENTS, AUDIO_TOPIC, DiscardStrategy, LoadStrategy } from './interfaces';
-import { hasPlayed } from './tracked';
+import { MockWindow } from '@stencil/core/mock-doc'
+import { Howler } from 'howler'
+import { EventAction, EventEmitter } from '../actions'
+import { debugIf } from '../logging'
+import { ROUTE_EVENTS } from '../routing'
+import { AudioTrack } from './audio'
+import { AudioInfo } from './audio-info'
+import { AudioRequest } from './audio-request'
+import { AudioType, AUDIO_COMMANDS, AUDIO_EVENTS, AUDIO_TOPIC, DiscardStrategy, LoadStrategy } from './interfaces'
+import { audioState, onAudioStateChange } from './state'
+import { hasPlayed } from './tracked'
 
 export class AudioActionListener {
   private readonly actionSubscription: () => void
   private readonly eventSubscription: () => void
+  private readonly disposeMuteSubscription!: () => void
   public readonly onDeck: Record<string, AudioTrack | null>
   public readonly queued: Record<string, AudioTrack[]>
   public readonly loaded: Record<string, AudioTrack[]>
 
   constructor(
+    win: Window | MockWindow,
     private readonly eventBus: EventEmitter,
     private readonly actionBus: EventEmitter,
     private readonly debug: boolean = false,
   ) {
+    audioState.muted = win.localStorage?.getItem('muted') == 'true' || false
     this.events = new EventEmitter()
 
     this.actionSubscription = this.actionBus.on(AUDIO_TOPIC, (ev: EventAction<any>) => {
       debugIf(this.debug, `audio-listener: event received ${ev.topic}:${ev.command}`)
       this.commandReceived(ev.command, ev.data)
+    })
+
+    this.disposeMuteSubscription = onAudioStateChange('muted', (m) => {
+      win.localStorage?.setItem('muted', m.toString())
+      eventBus.emit(AUDIO_EVENTS.SoundChanged, m)
     })
 
     this.eventSubscription = this.eventBus.on(ROUTE_EVENTS.RouteChanged, () => {
@@ -49,6 +59,10 @@ export class AudioActionListener {
   }
 
   // Public Members
+
+  public setMute(muted: boolean) {
+    audioState.muted = muted
+  }
 
   public isPlaying(): boolean {
     return Boolean(this.onDeck[AudioType.Music]?.playing) || Boolean(this.onDeck[AudioType.Sound]?.playing)
@@ -103,8 +117,13 @@ export class AudioActionListener {
 
   // Private members
 
-  private commandReceived(command: string, data: AudioInfo | AudioRequest) {
+  private commandReceived(command: string, data: AudioInfo | AudioRequest | boolean) {
     switch (command) {
+      case AUDIO_COMMANDS.SetMute: {
+        this.setMute(data as boolean)
+        break
+      }
+
       case AUDIO_COMMANDS.Load: {
         const audio = this.createQueuedAudioFromTrack(data as AudioInfo)
         this.loadTrack(audio)
@@ -250,7 +269,6 @@ export class AudioActionListener {
     this.queued[type] = this.queued[type].filter((i) => eligibleAudio(i))
   }
 
-
   private discardTracksFromLoaded(type: AudioType, ...reasons: DiscardStrategy[]) {
     const eligibleAudio = (audio: AudioTrack) => !reasons.includes(audio.discard)
     this.loaded[type] = this.loaded[type].filter((i) => eligibleAudio(i))
@@ -278,8 +296,8 @@ export class AudioActionListener {
   private replaceActiveTrack(nextUp: AudioTrack) {
     debugIf(this.debug, `event-listener: play now ${nextUp.trackId}`)
     if (nextUp.track && hasPlayed(nextUp.trackId)) {
-      nextUp.destroy();
-      return;
+      nextUp.destroy()
+      return
     }
     this.discardActive(nextUp.type, DiscardStrategy.Next)
     this.onDeck[nextUp.type] = nextUp
@@ -303,6 +321,7 @@ export class AudioActionListener {
     this.pause()
     this.eventSubscription()
     this.actionSubscription()
+    this.disposeMuteSubscription()
     this.events.removeAllListeners()
   }
 }

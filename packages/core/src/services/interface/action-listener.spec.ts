@@ -81,13 +81,9 @@ describe('interface-action-listener:', () => {
     const subject = new InterfaceActionListener()
     subject.initialize(page.win, actionBus, eventBus)
 
-    subject.defaultProvider.setAutoPlay(true)
     subject.defaultProvider.setTheme('dark')
-    subject.defaultProvider.setMute(true)
 
-    expect(page.win.localStorage.getItem('autoplay')).toBe('true')
     expect(page.win.localStorage.getItem('theme')).toBe('dark')
-    expect(page.win.localStorage.getItem('muted')).toBe('true')
 
     subject.destroy()
   })
@@ -102,25 +98,11 @@ describe('interface-action-listener:', () => {
 
     actionBus.emit(INTERFACE_TOPIC, {
       topic: INTERFACE_TOPIC,
-      command: INTERFACE_COMMANDS.SetAutoPlay,
-      data: true,
-    })
-
-    actionBus.emit(INTERFACE_TOPIC, {
-      topic: INTERFACE_TOPIC,
       command: INTERFACE_COMMANDS.SetTheme,
       data: 'dark',
     })
 
-    actionBus.emit(INTERFACE_TOPIC, {
-      topic: INTERFACE_TOPIC,
-      command: INTERFACE_COMMANDS.SetMute,
-      data: true,
-    })
-
-    expect(page.win.localStorage.getItem('autoplay')).toBe('true')
     expect(page.win.localStorage.getItem('theme')).toBe('dark')
-    expect(page.win.localStorage.getItem('muted')).toBe('true')
 
     subject.destroy()
   })

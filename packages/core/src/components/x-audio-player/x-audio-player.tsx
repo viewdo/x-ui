@@ -1,6 +1,6 @@
-import { Component, Element, h, Host, Prop, State } from '@stencil/core'
-import { actionBus, audioState, eventBus, onInterfaceChange, warn } from '../..'
-import { AudioActionListener } from '../../services/audio/action-listener'
+import { Component, Element, h, Host, Prop, State } from '@stencil/core';
+import { actionBus, audioState, eventBus, onAudioStateChange, warn } from '../..';
+import { AudioActionListener } from '../../services/audio/action-listener';
 
 /**
  *
@@ -40,14 +40,14 @@ export class XAudioPlayer {
       return
     }
 
-    this.listener = new AudioActionListener(eventBus, actionBus, this.debug)
+    this.listener = new AudioActionListener(window, eventBus, actionBus, this.debug)
 
     this.listenerSubscription = this.listener.events.on('*', () => {
       this.hasAudio = this.listener.hasAudio()
       this.isPlaying = this.listener.isPlaying()
     })
 
-    this.muteSubscription = onInterfaceChange('muted', (muted: boolean) => {
+    this.muteSubscription = onAudioStateChange('muted', (muted: boolean) => {
       this.listener.mute(muted)
     })
 

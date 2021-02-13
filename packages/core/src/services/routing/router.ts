@@ -2,7 +2,7 @@ import { RafCallback } from '@stencil/core/internal'
 import { captureElementsEventOnce } from '..'
 import { IEventEmitter } from '../actions'
 import { addDataProvider } from '../data/providers/factory'
-import { RoutingActionListener } from './action-listener'
+import { NavigationActionListener } from '../navigation/action-listener'
 import { RoutingDataProvider } from './data-provider'
 import { HistoryService } from './history'
 import { LocationSegments, MatchOptions, MatchResults, RouteViewOptions } from './interfaces'
@@ -14,7 +14,7 @@ import { ensureBasename } from './utils/path-utils'
 export class RouterService {
   public location!: LocationSegments
   private readonly removeHandler!: () => void
-  private listener!: RoutingActionListener
+  private listener!: NavigationActionListener
   public history: HistoryService
 
   constructor(
@@ -28,7 +28,7 @@ export class RouterService {
     public scrollTopOffset = 0,
   ) {
     this.history = new HistoryService(win, root)
-    this.listener = new RoutingActionListener(this, events, actions)
+    this.listener = new NavigationActionListener(this, events, actions)
 
     this.removeHandler = this.history.listen((location: LocationSegments) => {
       if (this.location) {

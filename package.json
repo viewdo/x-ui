@@ -36,7 +36,7 @@
     "lint:markdown": "markdownlint  'packages/**/*.md'",
     "--- publish ---": "---------------",
     "gs:push": "gsutil cp -r ./www gs://viewdo-static/x-ui",
-    "prepublish:core": "yarn workspace @viewdo/x-ui run build",
+    "prepublish:core": "npm version patch && yarn workspace @viewdo/x-ui run build",
     "publish:core": "yarn workspace @viewdo/x-ui publish",
     "--- docker ---": "---------------",
     "docker": "run-s build docker:build docker:push",

@@ -5,11 +5,16 @@ import {
   DATA_EVENTS,
   debugIf,
   eventBus,
-  interfaceState,
+
+
   MatchResults,
   recordVisit,
   Route,
-  VideoActionListener,
+  VideoActionListener, videoState,
+
+
+
+
   VisitStrategy,
   warn
 } from '../..';
@@ -17,7 +22,6 @@ import {
   captureXBackClickEvent,
   captureXLinkClickEvent,
   captureXNextClickEvent, ElementTimer,
-
   getChildInputValidity, resolveChildElementXAttributes,
   TIMER_EVENTS
 } from '../../services/elements';
@@ -258,7 +262,7 @@ export class XViewDo {
       this.debug)
 
     if (video) {
-      this.videoListener = new VideoActionListener(video, eventBus, actionBus, this.debug)
+      this.videoListener = new VideoActionListener(window, video, eventBus, actionBus, this.debug)
 
       video.addEventListener(timeUpdateEvent, () => {
         this.elementTimer!.emit(
@@ -276,7 +280,7 @@ export class XViewDo {
           TIMER_EVENTS.OnEnd)
       })
 
-      if (interfaceState.autoplay) {
+      if (videoState.autoplay) {
         await video?.play()
       }
     } else {
@@ -290,7 +294,7 @@ export class XViewDo {
     })
 
     this.elementTimer.on(TIMER_EVENTS.OnEnd, () => {
-      if (interfaceState.autoplay) {
+      if (videoState.autoplay) {
         this.cleanup()
         this.next('timer', TIMER_EVENTS.OnEnd)
       }

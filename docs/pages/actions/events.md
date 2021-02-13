@@ -4,10 +4,10 @@
 
 Event Name: **actionEvent**
 
-**Custom Event**
+### Custom Event
 
 ```typescript
-const action = new CustomEvent('actionEvent', {
+const action = new CustomEvent('x:actions', {
   detail: {
     topic: "<topic",
     command: "<command>",
@@ -29,7 +29,7 @@ xui.dispatchEvent(action, {
 
 ```typescript
 
-import { ActionBus } from '@viewdo/ui';
+import { ActionBus } from '@viewdo/x-ui';
 
 ActionBus.emit('<topic>', {
   command: "<command>",

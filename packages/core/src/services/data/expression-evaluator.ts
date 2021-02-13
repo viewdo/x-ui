@@ -1,6 +1,6 @@
 import { Parser } from 'expr-eval'
 import { warn } from '../logging'
-import { hasVisited } from '../routing/visits'
+import { hasVisited } from '../navigation/visits'
 import { requireValue } from '../utils/misc-utils'
 import { toBoolean } from '../utils/string-utils'
 import { ExpressionContext } from './interfaces'

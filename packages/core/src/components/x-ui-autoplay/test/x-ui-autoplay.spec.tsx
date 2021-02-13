@@ -1,5 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { interfaceState } from '../../../services/interface';
+import { videoState } from '../../..';
 import { XUiAutoplay } from '../x-ui-autoplay';
 
 describe('x-ui-autoplay', () => {
@@ -10,11 +10,11 @@ describe('x-ui-autoplay', () => {
     });
     expect(page.root).toEqualHtml(`
       <x-ui-autoplay>
-        <input type="checkbox">
+        <input checked="" type="checkbox">
       </x-ui-autoplay>
     `);
 
-    interfaceState.autoplay = true
+    videoState.autoplay = true
 
     await page.waitForChanges()
 

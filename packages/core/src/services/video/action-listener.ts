@@ -1,20 +1,32 @@
-import { EventAction, IEventEmitter } from '../actions';
-import { debugIf } from '../logging';
-import { VIDEO_COMMANDS, VIDEO_EVENTS, VIDEO_TOPIC } from './interfaces';
+import { MockWindow } from '@stencil/core/mock-doc'
+import { EventAction, IEventEmitter } from '../actions'
+import { debugIf } from '../logging'
+import { VIDEO_COMMANDS, VIDEO_EVENTS, VIDEO_TOPIC } from './interfaces'
+import { onVideoChange, videoState } from './state'
 
 export class VideoActionListener {
   disposeHandle: () => void
-
+  private disposeAutoPlaySubscription!: () => void
   constructor(
+    win: Window | MockWindow,
     private childVideo: HTMLVideoElement,
     private eventBus: IEventEmitter,
     private actionBus: IEventEmitter,
-    private debug: boolean,) {
-
+    private debug: boolean,
+  ) {
+    videoState.autoplay = win.localStorage?.getItem('autoplay') === 'true'
     this.disposeHandle = this.actionBus.on(VIDEO_TOPIC, async (ev: EventAction<any>) => {
       debugIf(this.debug, `x-video-listener: event received ${ev.topic}:${ev.command}`)
       await this.commandReceived(ev.command, ev.data)
     })
+    this.disposeAutoPlaySubscription = onVideoChange('autoplay', (a) => {
+      win.localStorage?.setItem('autoplay', a?.toString())
+      eventBus?.emit(VIDEO_EVENTS.AutoPlayChanged, a)
+    })
+  }
+
+  public setAutoPlay(autoplay: boolean) {
+    videoState.autoplay = autoplay
   }
 
   public mute(muted: boolean) {
@@ -47,6 +59,11 @@ export class VideoActionListener {
 
   private async commandReceived(command: string, data: any) {
     switch (command) {
+      case VIDEO_COMMANDS.SetAutoPlay: {
+        await this.setAutoPlay(data)
+        break
+      }
+
       case VIDEO_COMMANDS.Play: {
         await this.play()
         break
@@ -54,19 +71,16 @@ export class VideoActionListener {
 
       case VIDEO_COMMANDS.Pause: {
         this.pause()
-        this.eventBus.emit(VIDEO_EVENTS.Paused)
         break
       }
 
       case VIDEO_COMMANDS.Resume: {
         await this.resume()
-        this.eventBus.emit(VIDEO_EVENTS.Resumed)
         break
       }
 
       case VIDEO_COMMANDS.Mute: {
         this.mute(data.value)
-        this.eventBus.emit(VIDEO_EVENTS.Muted)
         break
       }
 
@@ -76,5 +90,6 @@ export class VideoActionListener {
 
   destroy() {
     this.disposeHandle?.call(this)
+    this.disposeAutoPlaySubscription()
   }
 }

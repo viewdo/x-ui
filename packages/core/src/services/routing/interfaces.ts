@@ -2,36 +2,11 @@
 
 import { Path } from './utils'
 
-export enum ROUTE_COMMANDS {
-  NavigateNext = 'navigate-next',
-  NavigateTo = 'navigate-to',
-  NavigateBack = 'navigate-back',
-}
-
 export enum ROUTE_EVENTS {
   RouteChanged = 'route-changed',
 }
 
-export type NavigateTo = {
-  url: string
-}
-
-export const ROUTE_TOPIC = 'routing'
-
-export type NavigateNext = Record<string, unknown>
-
-export interface NextState {
-  action: string
-  location: LocationSegments
-}
-
 export type Prompt = (location: LocationSegments, action: string) => string
-
-export interface RouteRenderProps {
-  history: RouterHistory
-  match: MatchResults
-  [key: string]: any
-}
 
 export interface RouteViewOptions {
   scrollTopOffset?: number
@@ -85,18 +60,4 @@ export interface MatchResults {
   url: string
   isExact: boolean
   params: Record<string, string>
-}
-
-export enum VisitStrategy {
-  once = 'once',
-  always = 'always',
-  optional = 'optional',
-}
-
-export interface IViewDo {
-  visit?: VisitStrategy
-  when?: string
-  visited?: boolean
-  url: string
-  [key: string]: any
 }

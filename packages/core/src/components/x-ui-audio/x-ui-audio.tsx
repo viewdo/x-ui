@@ -1,6 +1,6 @@
 import { Component, h, Host, Prop, State } from '@stencil/core';
-import { interfaceState } from '../..';
-import { onInterfaceChange } from '../../services';
+import { audioState } from '../..';
+import { onAudioStateChange } from '../../services';
 
 /**
  * @system presentation
@@ -25,15 +25,15 @@ export class XUiAudio {
   @Prop() inputId?: string
 
   componentWillLoad() {
-    this.muted = interfaceState.muted
+    this.muted = audioState.muted
 
-    this.muteSubscription = onInterfaceChange('muted', (m) => {
+    this.muteSubscription = onAudioStateChange('muted', (m) => {
       this.muted = m
     })
   }
 
   private toggleSound() {
-    interfaceState.muted = this.slider?.checked || false
+    audioState.muted = this.slider?.checked || false
   }
 
   disconnectedCallback() {

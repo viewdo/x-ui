@@ -2,8 +2,6 @@
 
 export class InterfaceState {
   theme!: string
-  muted!: boolean
-  autoplay!: boolean
 }
 
 export const INTERFACE_TOPIC = 'interface'
@@ -12,8 +10,7 @@ export enum INTERFACE_COMMANDS {
   RegisterProvider = 'register-provider',
   Console = 'console',
   SetTheme = 'set-theme',
-  SetAutoPlay = 'set-auto-play',
-  SetMute = 'set-mute',
+
   ElementToggleClass = 'element-toggle-class',
   ElementAddClasses = 'element-add-classes',
   ElementRemoveClasses = 'element-remove-classes',
@@ -24,8 +21,6 @@ export enum INTERFACE_COMMANDS {
 
 export enum INTERFACE_EVENTS {
   ThemeChanged = 'theme',
-  AutoPlayChanged = 'autoplay',
-  SoundChanged = 'muted',
 }
 
 export type InterfaceProviderRegistration = {

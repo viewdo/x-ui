@@ -1,132 +1,53 @@
-# Interface Actions
+# Analytics Actions
 
-The default Interface Action Listener is configured to handle commands raised to the [Event-Action Bus](/actions/event-bus).
+The Analytics Action Listener is configured to handle commands raised to the [Action Bus](/actions/event-bus)
+to send to all analytics components which can execute functions for any analytics system configured.
 
----
+Topic: `analytics`
+
+```html
+<x-action-activator activate="...">
+  <x-action topic="analytics" command="<command>" ...> </x-action>
+</x-action-activator>
+```
 
 ## Commands
 
-### set-theme
+### `send-event`
 
-Sets the main page theme to dark or light.
+Sends the payload to the onEvent handler in x-analytics component.
 
-**data:**
+- **(key:value)[]**\
+  All key-values pairs are sent to the handler.
 
-- **theme** 'dark|light' (required)
+```html
+<x-action-activator activate="...">
+  <x-action topic="analytics" command="send-event" data-(key)="(value)"> </x-action>
+</x-action-activator>
+```
 
-### set-auto-play
+### `send-view-percentage`
 
-Sets wether or not videos and audio can automatically play when a new route is activated.
+Sends the payload to the onEvent handler in x-analytics component.
 
-**data:**
+- **(key:value)[]**\
+  All key-values pairs are sent to the handler.
 
-- **autoPlay** boolean (required)
+```html
+<x-action-activator activate="...">
+  <x-action topic="analytics" command="send-view-percentage" data-value="(value)"> </x-action>
+</x-action-activator>
+```
 
-### set-sound
+### `send-page-view`
 
-Sets wether or not audio is played globally for audio and videos.
+Sends the payload to the onEvent handler in x-analytics component.
 
-**data:**
+- **(key:value)[]**\
+  All key-values pairs are sent to the handler.
 
-- **muted** boolean (required)
-
----
-
-## DOM Commands
-
-### element-toggle-class
-
-Toggles a given class on or off.
-
-**data:**
-
-- **id** (required)
-- **className** (required)
-
-### element-add-classes
-
-Add a class or classes to a specified element.
-
-**data:**
-
-- **selector** (required)
-- **classes** (required)
-
-### element-remove-classes
-
-Remove a class or classes to a specified element.
-
-**data:**
-
-- **selector** (required)
-- **classes** (required)
-
-### element-set-attribute
-
-Add an attribute to a specified element.
-
-**data:**
-
-- **selector** (required)
-- **attribute** (required)
-- **value**
-
-### element-remove-attribute
-
-Remove an attribute from the specified element.
-
-**data:**
-
-- **selector** (required)
-- **classes** (required)
-
-### element-call-method
-
-Call a method on an element with optional arguments.
-
-**data:**
-
-- **selector** (required)
-- **method** (required)
-- **args**
-
----
-
-## Advanced Commands
-
-These commands require an additional Interface Provider.
-
-### modal-open
-
-Open a modal (if the interface provider supports it)
-
-**data:**
-
-- **id** (required)
-- **classes** (required)
-
-### modal-close
-
-<fill in>
-
-**data:**
-
-- **id** (required)
-- **classes** (required)
-
-### alert
-
-<fill in>
-
-**data:**
-
-- **message** (required)
-
-### open-toast
-
-<fill in>
-
-**data:**
-
-- **type** (required)
-- **message**(required)
+```html
+<x-action-activator activate="...">
+  <x-action topic="analytics" command="send-page-view" data-value="(page)"> </x-action>
+</x-action-activator>
+```

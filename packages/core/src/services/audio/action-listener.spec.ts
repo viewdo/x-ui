@@ -1,11 +1,11 @@
-
-import { EventEmitter } from '../actions/event-emitter';
-import { AudioActionListener, AudioInfo, AUDIO_COMMANDS } from '../index';
-import { ROUTE_EVENTS } from '../routing/interfaces';
-import { sleep } from '../utils';
-import { AudioTrack } from './audio';
-import { AudioType, AUDIO_EVENTS, AUDIO_TOPIC, DiscardStrategy, LoadStrategy } from './interfaces';
-import { clearTracked } from './tracked';
+import { newSpecPage, SpecPage } from '@stencil/core/testing'
+import { EventEmitter } from '../actions/event-emitter'
+import { AudioActionListener, AudioInfo, AUDIO_COMMANDS } from '../index'
+import { ROUTE_EVENTS } from '../routing/interfaces'
+import { sleep } from '../utils'
+import { AudioTrack } from './audio'
+import { AudioType, AUDIO_EVENTS, AUDIO_TOPIC, DiscardStrategy, LoadStrategy } from './interfaces'
+import { clearTracked } from './tracked'
 
 describe('audio-listener:', () => {
   let audio: any = {}
@@ -13,11 +13,16 @@ describe('audio-listener:', () => {
   let actionBus: EventEmitter
   let eventBus: EventEmitter
   let events: Array<any[]>
-  beforeAll(() => {
+  let page: SpecPage
+  beforeAll(async () => {
+    page = await newSpecPage({
+      components: [],
+      html: `<div></div>`,
+    })
     events = []
     actionBus = new EventEmitter()
     eventBus = new EventEmitter()
-    listener = new AudioActionListener(eventBus, actionBus)
+    listener = new AudioActionListener(page.win, eventBus, actionBus)
 
     eventBus.on('*', (...args: any[]) => {
       events.push(...args)
@@ -29,22 +34,22 @@ describe('audio-listener:', () => {
         onload,
         onend,
         onerror,
-        play: () =>  _state = 'playing',
-        pause: () => _state = 'paused',
+        play: () => (_state = 'playing'),
+        pause: () => (_state = 'paused'),
         fade: () => this,
-        start: () => _state = 'playing',
-        stop: () => _state = 'stopped',
-        mute: (mute:boolean) => _state = (mute ? 'muted' : 'playing'),
+        start: () => (_state = 'playing'),
+        stop: () => (_state = 'stopped'),
+        mute: (mute: boolean) => (_state = mute ? 'muted' : 'playing'),
         state: () => _state,
-        seek: (time: number) => _state = `${_state}:${time}`,
+        seek: (time: number) => (_state = `${_state}:${time}`),
         volume: (_value: number) => this,
         player: () => true,
         playing: () => _state.startsWith('playing'),
-        unload: () => _state = '',
+        unload: () => (_state = ''),
       })
       _state = 'loaded'
       setTimeout(() => {
-        instance.onload();
+        instance.onload()
       }, 1)
       return instance
     }
@@ -73,7 +78,7 @@ describe('audio-listener:', () => {
 
     actionBus.emit(AUDIO_TOPIC, {
       command: AUDIO_COMMANDS.Pause,
-      data: { }
+      data: {},
     })
 
     expect(listener.isPlaying()).toBe(false)
@@ -82,7 +87,7 @@ describe('audio-listener:', () => {
     // calling pause again, should cause no harm
     actionBus.emit(AUDIO_TOPIC, {
       command: AUDIO_COMMANDS.Pause,
-      data: { }
+      data: {},
     })
 
     expect(listener.isPlaying()).toBe(false)
@@ -90,7 +95,7 @@ describe('audio-listener:', () => {
 
     actionBus.emit(AUDIO_TOPIC, {
       command: AUDIO_COMMANDS.Resume,
-      data: { }
+      data: {},
     })
 
     expect(listener.isPlaying()).toBe(true)
@@ -99,7 +104,7 @@ describe('audio-listener:', () => {
     // Calling resume again, should have no harm
     actionBus.emit(AUDIO_TOPIC, {
       command: AUDIO_COMMANDS.Resume,
-      data: { }
+      data: {},
     })
 
     expect(listener.isPlaying()).toBe(true)
@@ -152,11 +157,9 @@ describe('audio-listener:', () => {
     expect(listener.hasAudio()).toBe(true)
 
     expect(playing?.src).toBe('/fake/path2.mp3')
-
   })
 
   it('sound: load, play, pause, resume and end', async () => {
-
     actionBus.emit(AUDIO_TOPIC, {
       topic: AUDIO_TOPIC,
       command: AUDIO_COMMANDS.Load,
@@ -164,7 +167,7 @@ describe('audio-listener:', () => {
         src: '/fake/path.mp3',
         trackId: 'sound-1',
         type: AudioType.Sound,
-        discard: DiscardStrategy.Route
+        discard: DiscardStrategy.Route,
       },
     })
 
@@ -177,8 +180,8 @@ describe('audio-listener:', () => {
       command: AUDIO_COMMANDS.Start,
       data: {
         type: AudioType.Sound,
-        trackId: 'sound-1'
-      }
+        trackId: 'sound-1',
+      },
     })
 
     expect(listener.isPlaying()).toBe(true)
@@ -186,7 +189,7 @@ describe('audio-listener:', () => {
 
     actionBus.emit(AUDIO_TOPIC, {
       command: AUDIO_COMMANDS.Pause,
-      data: { }
+      data: {},
     })
 
     expect(listener.isPlaying()).toBe(false)
@@ -194,7 +197,7 @@ describe('audio-listener:', () => {
 
     actionBus.emit(AUDIO_TOPIC, {
       command: AUDIO_COMMANDS.Resume,
-      data: { }
+      data: {},
     })
 
     expect(listener.isPlaying()).toBe(true)
@@ -206,11 +209,9 @@ describe('audio-listener:', () => {
     expect(playing).toBeNull()
     expect(listener.isPlaying()).toBe(false)
     expect(listener.hasAudio()).toBe(false)
-
   })
 
   it('music: play, seek, mute and set volume', () => {
-
     actionBus.emit(AUDIO_TOPIC, {
       topic: AUDIO_TOPIC,
       command: AUDIO_COMMANDS.Play,
@@ -236,12 +237,11 @@ describe('audio-listener:', () => {
       data: {
         type: AudioType.Music,
         trackId: 'play-1',
-        value: 100
+        value: 100,
       },
     })
 
     expect(playing!.state).toBe('playing:100')
-
 
     // bad seek
     actionBus.emit(AUDIO_TOPIC, {
@@ -250,7 +250,7 @@ describe('audio-listener:', () => {
       data: {
         type: AudioType.Music,
         trackId: 'bad-id',
-        value: 50
+        value: 50,
       },
     })
 
@@ -260,7 +260,7 @@ describe('audio-listener:', () => {
       topic: AUDIO_TOPIC,
       command: AUDIO_COMMANDS.Volume,
       data: {
-        value: 5
+        value: 5,
       },
     })
 
@@ -270,16 +270,14 @@ describe('audio-listener:', () => {
       topic: AUDIO_TOPIC,
       command: AUDIO_COMMANDS.Mute,
       data: {
-        value: true
+        value: true,
       },
     })
 
     expect(listener.isPlaying()).toBe(false)
-
   })
 
   it('sound: ends and is marked to not play again', () => {
-
     actionBus.emit(AUDIO_TOPIC, {
       topic: AUDIO_TOPIC,
       command: AUDIO_COMMANDS.Play,
@@ -314,7 +312,7 @@ describe('audio-listener:', () => {
         type: AudioType.Sound,
         discard: DiscardStrategy.Next,
         track: true,
-        mode: LoadStrategy.Play
+        mode: LoadStrategy.Play,
       },
     })
 
@@ -332,7 +330,7 @@ describe('audio-listener:', () => {
         type: AudioType.Sound,
         discard: DiscardStrategy.Next,
         track: true,
-        mode: LoadStrategy.Play
+        mode: LoadStrategy.Play,
       },
     })
 
@@ -340,6 +338,25 @@ describe('audio-listener:', () => {
     expect(playing).not.toBeNull()
 
     listener.destroy()
+  })
 
+  it('set-mute: updates storage via listener', () => {
+    listener.setMute(true)
+
+    expect(page.win.localStorage.getItem('muted')).toBe('true')
+
+    listener.destroy()
+  })
+
+  it('set-mute: updates storage from action', () => {
+    actionBus.emit(AUDIO_TOPIC, {
+      topic: AUDIO_TOPIC,
+      command: AUDIO_COMMANDS.SetMute,
+      data: true,
+    })
+
+    expect(page.win.localStorage.getItem('muted')).toBe('true')
+
+    listener.destroy()
   })
 })

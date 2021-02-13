@@ -3,6 +3,7 @@
 export const AUDIO_TOPIC = 'audio'
 
 export enum AUDIO_COMMANDS {
+  SetMute = 'set-mute',
   Play = 'play',
   Queue = 'queue',
   Load = 'load',
@@ -28,6 +29,7 @@ export enum AUDIO_EVENTS {
   Looped = 'looped',
   Errored = 'errored',
   Discarded = 'discarded',
+  SoundChanged = 'muted',
 }
 
 export enum DiscardStrategy {

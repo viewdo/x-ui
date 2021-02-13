@@ -1,14 +1,15 @@
 import { EventAction, IEventEmitter } from '../actions'
 import { interfaceState } from '../interface'
 import { debugIf } from '../logging'
-import { LocationSegments, NavigateNext, NavigateTo, ROUTE_COMMANDS, ROUTE_EVENTS, ROUTE_TOPIC } from './interfaces'
-import { RouterService } from './router'
+import { LocationSegments, ROUTE_EVENTS } from '../routing'
+import { RouterService } from '../routing/router'
+import { NavigateNext, NavigateTo, NAVIGATION_COMMANDS, NAVIGATION_TOPIC } from './interfaces'
 
-export class RoutingActionListener {
+export class NavigationActionListener {
   private readonly removeSubscription!: () => void
 
   constructor(private router: RouterService, private events: IEventEmitter, private actions: IEventEmitter) {
-    this.removeSubscription = this.actions.on(ROUTE_TOPIC, (e) => {
+    this.removeSubscription = this.actions.on(NAVIGATION_TOPIC, (e) => {
       this.handleEventAction(e)
     })
   }
@@ -21,16 +22,16 @@ export class RoutingActionListener {
     debugIf(interfaceState.debug, `route-listener: action received ${JSON.stringify(eventAction)}`)
 
     switch (eventAction.command) {
-      case ROUTE_COMMANDS.NavigateNext: {
+      case NAVIGATION_COMMANDS.NavigateNext: {
         this.router.goToParentRoute()
         break
       }
-      case ROUTE_COMMANDS.NavigateTo: {
+      case NAVIGATION_COMMANDS.NavigateTo: {
         const { url } = eventAction.data as NavigateTo
         this.router.goToRoute(url)
         break
       }
-      case ROUTE_COMMANDS.NavigateBack: {
+      case NAVIGATION_COMMANDS.NavigateBack: {
         this.router.goBack()
         break
       }

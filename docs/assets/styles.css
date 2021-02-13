@@ -45,6 +45,7 @@ body.dark {
 
 nav {
   background-color: var(--nav-bg);
+  box-shadow: 0 0 3px 0 #000;
 }
 nav h2 {
   color: white;

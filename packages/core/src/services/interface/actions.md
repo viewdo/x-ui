@@ -1,91 +1,157 @@
 # Interface Actions
 
-The default Interface Action Listener is configured to handle commands raised to the [Event-Action Bus](/actions/event-bus).
+The default Interface Action Listener is configured to handle commands raised to the [Action Bus](/actions/event-bus).
 
----
+Topic: `interface`
+
+```html
+<x-action-activator activate="...">
+  <x-action topic="interface" command="<command>" ...> </x-action>
+</x-action-activator>
+```
 
 ## Commands
 
-### set-theme
+### `set-theme`
 
 Sets the main page theme to dark or light.
 
-**data:**
+Arguments:
 
-- **theme** 'dark|light' (required)
+- **theme** 'dark|light' (required)'
 
-### set-auto-play
+```html
+<x-action-activator activate="...">
+  <x-action topic="interface" command="set-theme" data-theme="dark"> </x-action>
+</x-action-activator>
+```
+
+### `set-auto-play`
 
 Sets wether or not videos and audio can automatically play when a new route is activated.
 
-**data:**
+Arguments:
 
 - **autoPlay** boolean (required)
 
-### set-sound
+```html
+<x-action-activator activate="...">
+  <x-action topic="interface" command="set-auto-play" data-auto-play="true"> </x-action>
+</x-action-activator>
+```
+
+### `set-sound`
 
 Sets wether or not audio is played globally for audio and videos.
 
-**data:**
+Arguments:
 
 - **muted** boolean (required)
 
----
+```html
+<x-action-activator activate="...">
+  <x-action topic="interface" command="set-sound" data-muted="true"> </x-action>
+</x-action-activator>
+```
+
+--
 
 ## DOM Commands
 
-### element-toggle-class
+### `element-toggle-class`
 
 Toggles a given class on or off.
 
-**data:**
+Arguments:
 
-- **id** (required)
+- **selector** (required)
 - **className** (required)
 
-### element-add-classes
+```html
+<x-action-activator activate="...">
+  <x-action topic="interface" command="element-toggle-class" selector="#el" class-name="hidden"></x-action>
+</x-action-activator>
+```
+
+### `element-add-classes`
 
 Add a class or classes to a specified element.
 
-**data:**
+Arguments:
 
 - **selector** (required)
 - **classes** (required)
+
+```html
+<x-action-activator activate="...">
+  <x-action topic="interface" command="element-add-class" selector="#el" classes="hidden red"></x-action>
+</x-action-activator>
+```
 
 ### element-remove-classes
 
 Remove a class or classes to a specified element.
 
-**data:**
+Arguments:
 
 - **selector** (required)
 - **classes** (required)
+
+```html
+<x-action-activator activate="...">
+  <x-action topic="interface" command="element-remove-class" selector="#el" classes="hidden red"></x-action>
+</x-action-activator>
+```
 
 ### element-set-attribute
 
 Add an attribute to a specified element.
 
-**data:**
+Arguments:
 
 - **selector** (required)
 - **attribute** (required)
 - **value**
 
+```html
+<x-action-activator activate="...">
+  <x-action topic="interface" command="element-set-attribute" selector="#el" attribute="hidden" value="true"></x-action>
+</x-action-activator>
+```
+
 ### element-remove-attribute
 
 Remove an attribute from the specified element.
 
-**data:**
+Arguments:
 
 - **selector** (required)
-- **classes** (required)
+- **attribute** (required)
+
+```html
+<x-action-activator activate="...">
+  <x-action topic="interface" command="element-remove-attribute" selector="#el" attribute="hidden"></x-action>
+</x-action-activator>
+```
 
 ### element-call-method
 
 Call a method on an element with optional arguments.
 
-**data:**
+Arguments:
 
 - **selector** (required)
 - **method** (required)
-- **args**
+- **(args)**
+
+```html
+<x-action-activator activate="...">
+  <x-action
+    topic="interface"
+    command="element-call-method"
+    selector="x-action"
+    method="sendAction"
+    data-(arg)=""
+  ></x-action>
+</x-action-activator>
+```

@@ -1,3 +1,4 @@
+import { newSpecPage, SpecPage } from '@stencil/core/testing'
 import { EventEmitter } from '../actions/event-emitter'
 import { sleep } from '../utils/promise-utils'
 import { VideoActionListener } from './action-listener'
@@ -9,13 +10,18 @@ describe('video-action-listener:', () => {
   let actionBus: EventEmitter
   let eventBus: EventEmitter
   let events: Array<any[]>
-  beforeAll(() => {
+  let page: SpecPage
+  beforeAll(async () => {
+    page = await newSpecPage({
+      components: [],
+      html: `<div></div>`,
+    })
     events = []
     video = {}
     actionBus = new EventEmitter()
     eventBus = new EventEmitter()
 
-    subject = new VideoActionListener(video as HTMLVideoElement, eventBus, actionBus, false)
+    subject = new VideoActionListener(page.win, video as HTMLVideoElement, eventBus, actionBus, false)
 
     eventBus.on('*', (...args: any[]) => {
       events.push(...args)
@@ -75,5 +81,41 @@ describe('video-action-listener:', () => {
     await sleep(100)
 
     expect(video.muted).toBe(true)
+  })
+
+  it('actions: autoplay from listener', async () => {
+    subject = new VideoActionListener(page.win, video as HTMLVideoElement, eventBus, actionBus, false)
+
+    subject.setAutoPlay(true)
+
+    expect(page.win.localStorage.getItem('autoplay')).toBe('true')
+
+    subject.setAutoPlay(false)
+
+    expect(page.win.localStorage.getItem('autoplay')).toBe('false')
+
+    subject.destroy()
+  })
+
+  it('actions: autoplay from bus ', async () => {
+    subject = new VideoActionListener(page.win, video as HTMLVideoElement, eventBus, actionBus, false)
+
+    actionBus.emit(VIDEO_TOPIC, {
+      topic: VIDEO_TOPIC,
+      command: VIDEO_COMMANDS.SetAutoPlay,
+      data: true,
+    })
+
+    expect(page.win.localStorage.getItem('autoplay')).toBe('true')
+
+    actionBus.emit(VIDEO_TOPIC, {
+      topic: VIDEO_TOPIC,
+      command: VIDEO_COMMANDS.SetAutoPlay,
+      data: false,
+    })
+
+    expect(page.win.localStorage.getItem('autoplay')).toBe('false')
+
+    subject.destroy()
   })
 })

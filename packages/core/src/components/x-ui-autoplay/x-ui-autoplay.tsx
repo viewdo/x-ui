@@ -1,6 +1,6 @@
 import { Component, h, Host, Prop, State } from '@stencil/core';
-import { interfaceState } from '../..';
-import { onInterfaceChange } from '../../services';
+import { videoState } from '../..';
+import { onVideoChange } from '../../services';
 
 /**
  * @system presentation
@@ -25,15 +25,15 @@ export class XUiAutoplay {
   @Prop() inputId?: string
 
   componentWillLoad() {
-    this.autoPlay = interfaceState.autoplay
+    this.autoPlay = videoState.autoplay
 
-    this.subscriptionDispose = onInterfaceChange('autoplay', (a) => {
+    this.subscriptionDispose = onVideoChange('autoplay', (a) => {
       this.autoPlay = a
     })
   }
 
   private toggleAutoPlay() {
-    interfaceState.autoplay = this.slider?.checked || false
+    videoState.autoplay = this.slider?.checked || false
   }
 
   disconnectedCallback() {

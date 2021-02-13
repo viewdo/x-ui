@@ -1,9 +1,9 @@
 jest.mock('../logging')
 
+import { clearVisits, markVisit } from '../navigation/visits'
 import { evaluate, evaluateExpression, evaluatePredicate, resolveExpression } from './expression-evaluator'
-import { InMemoryProvider } from './providers/memory'
 import { addDataProvider } from './providers/factory'
-import { markVisit, clearVisits } from '../routing/visits'
+import { InMemoryProvider } from './providers/memory'
 
 describe('resolveExpression', () => {
   let session: InMemoryProvider

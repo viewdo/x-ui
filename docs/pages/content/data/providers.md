@@ -24,7 +24,7 @@ The provider is the name of the store and the key is the data-item key. There is
 
 There are data-providers already created for sessionStorage, localStorage and cookies. The first two automatically are registered. The cookie provider is optional.
 
-#### Session Storage
+### Session Storage
 
 This store is short-lived and used to track 'session visits' and other temporary values.
 
@@ -32,7 +32,7 @@ Provider Key: '**session**'
 
 `{session:(key)}`
 
-#### Local Storage
+### Local Storage
 
 This store is long-lived from the same browser. and used to track 'session visits' and other temporary values.
 
@@ -40,7 +40,7 @@ Provider Key: '**storage**'
 
 `{storage:(key)}`
 
-#### Cookie Storage
+### Cookie Storage
 
 This store is long-lived from the same browser, but for very small data items.
 
@@ -48,7 +48,7 @@ Provider Key: '**cookie**'
 
 `{cookie:(key)}`
 
-The cookie provider is registered using a special component **<x-data-provider-cookie>**.
+The cookie provider is registered using a special component **`<x-data-provider-cookie>`**.
 
 ## Custom Data Providers
 
@@ -66,14 +66,14 @@ new CustomEvent('actionEvent', {
     topic: 'data'
     command: "register-provider",
     data: {
-      name: 'myprovider',
+      name: 'my_provider',
       provider: providerInstance
     }
   }
 })
 ```
 
-Then, assuming your instance has a data item with key **name**, your HTML can use this value in an the expression: `{myprovider:name}`
+Then, assuming your instance has a data item with key **name**, your HTML can use this value in an the expression: `{my_provider:name}`
 
 **Data Provider Interface:**
 
@@ -87,12 +87,12 @@ export interface IDataProvider {
 
 ### Data Changed Event
 
-To notify the system that your underlying data has changed, the interface includes a simple event emitter. Emit 'data-changed' from your **changed** emitter and all elementsusing your value will re-render with the new data value.
+To notify the system that your underlying data has changed, the interface includes a simple event emitter. Emit 'data-changed' from your **changed** emitter and all elements using your value will re-render with the new data value.
 
 ### Sample Data Provider
 
 ```typescript
-import { DATA_EVENTS, IDataProvider, EventEmitter } from '@viewdo/ui'
+import { DATA_EVENTS, IDataProvider, EventEmitter } from '@viewdo/x-ui'
 
 export class MyProvider implements IDataProvider {
   data = {}
@@ -119,13 +119,12 @@ export class MyProvider implements IDataProvider {
 All that is needed by the data-system is a custom event with an instance of your provider in the details.data.provider property. _Note: be sure the event is composed, so it can reach shadow-dom listeners._
 
 ```javascript
-
 const customProvider = new MyProvider(); // IDataProvider
 const event = new CustomEvent('xui:action-events:data', {
   detail: {
     command: 'register-provider'
     data: {
-      name: 'myprovder,
+      name: 'my_provider,
       provider: customProvider,
     },
   }

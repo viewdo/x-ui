@@ -1,8 +1,8 @@
 import { RafCallback } from '@stencil/core'
 import { newSpecPage } from '@stencil/core/testing'
 import { EventEmitter } from '../actions/event-emitter'
-import { ROUTE_COMMANDS, ROUTE_TOPIC } from './interfaces'
-import { RouterService } from './router'
+import { RouterService } from '../routing/router'
+import { NAVIGATION_COMMANDS, NAVIGATION_TOPIC } from './interfaces'
 
 describe('route-action-listener:', () => {
   let actionBus: EventEmitter
@@ -25,9 +25,9 @@ describe('route-action-listener:', () => {
     const page = await startPage('/')
     const subject = new RouterService(page.win, writeTask, eventBus, actionBus)
 
-    actionBus.emit(ROUTE_TOPIC, {
-      topic: ROUTE_TOPIC,
-      command: ROUTE_COMMANDS.NavigateTo,
+    actionBus.emit(NAVIGATION_TOPIC, {
+      topic: NAVIGATION_TOPIC,
+      command: NAVIGATION_COMMANDS.NavigateTo,
       data: {
         url: '/home',
       },
@@ -35,9 +35,9 @@ describe('route-action-listener:', () => {
 
     expect(subject.location.pathname).toBe('/home')
 
-    actionBus.emit(ROUTE_TOPIC, {
-      topic: ROUTE_TOPIC,
-      command: ROUTE_COMMANDS.NavigateTo,
+    actionBus.emit(NAVIGATION_TOPIC, {
+      topic: NAVIGATION_TOPIC,
+      command: NAVIGATION_COMMANDS.NavigateTo,
       data: {
         url: '/home/page1',
       },
@@ -45,9 +45,9 @@ describe('route-action-listener:', () => {
 
     expect(subject.location.pathname).toBe('/home/page1')
 
-    actionBus.emit(ROUTE_TOPIC, {
-      topic: ROUTE_TOPIC,
-      command: ROUTE_COMMANDS.NavigateNext,
+    actionBus.emit(NAVIGATION_TOPIC, {
+      topic: NAVIGATION_TOPIC,
+      command: NAVIGATION_COMMANDS.NavigateNext,
     })
 
     expect(subject.history.location.pathname).toBe('/home')
@@ -58,17 +58,17 @@ describe('route-action-listener:', () => {
     const page = await startPage('/')
     const subject = new RouterService(page.win, writeTask, eventBus, actionBus, '', '', '', 0)
 
-    actionBus.emit(ROUTE_TOPIC, {
-      topic: ROUTE_TOPIC,
-      command: ROUTE_COMMANDS.NavigateTo,
+    actionBus.emit(NAVIGATION_TOPIC, {
+      topic: NAVIGATION_TOPIC,
+      command: NAVIGATION_COMMANDS.NavigateTo,
       data: {
         url: '/page1',
       },
     })
 
-    actionBus.emit(ROUTE_TOPIC, {
-      topic: ROUTE_TOPIC,
-      command: ROUTE_COMMANDS.NavigateTo,
+    actionBus.emit(NAVIGATION_TOPIC, {
+      topic: NAVIGATION_TOPIC,
+      command: NAVIGATION_COMMANDS.NavigateTo,
       data: {
         url: '/page2',
       },
@@ -76,9 +76,9 @@ describe('route-action-listener:', () => {
 
     expect(subject.history.location.pathname).toBe('/page2')
 
-    actionBus.emit(ROUTE_TOPIC, {
-      topic: ROUTE_TOPIC,
-      command: ROUTE_COMMANDS.NavigateBack,
+    actionBus.emit(NAVIGATION_TOPIC, {
+      topic: NAVIGATION_TOPIC,
+      command: NAVIGATION_COMMANDS.NavigateBack,
     })
 
     // TODO: I can't find a way to mock the history back...

@@ -1,5 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { interfaceState } from '../../../services';
+import { audioState } from '../../../services';
 import { XUiAudio } from '../x-ui-audio';
 
 describe('x-ui-audio', () => {
@@ -14,7 +14,7 @@ describe('x-ui-audio', () => {
       </x-ui-audio>
     `);
 
-    interfaceState.muted = true
+    audioState.muted = true
 
     await page.waitForChanges()
 
