@@ -16,15 +16,19 @@ export namespace Components {
          */
         "command"?: string;
         /**
-          * The JSON serializable data payload the command requires.
+          * Data binding for JSX binding
          */
-        "data"?: string;
+        "data"?: Record<string,any>;
         /**
           * Get the underlying actionEvent instance. Used by the x-action-activator element.
          */
         "getAction": () => Promise<EventAction<any> | null>;
         /**
-          * This is the topic this action-command is targeting.
+          * Send this action to the the Action Bus.
+         */
+        "sendAction": (data?: Record<string, any> | undefined) => Promise<void>;
+        /**
+          * This is the topic this action-command is targeting.  data: []
          */
         "topic"?: 'data' | 'routing' | 'document' | 'audio' | 'video';
     }
@@ -573,11 +577,11 @@ declare namespace LocalJSX {
          */
         "command"?: string;
         /**
-          * The JSON serializable data payload the command requires.
+          * Data binding for JSX binding
          */
-        "data"?: string;
+        "data"?: Record<string,any>;
         /**
-          * This is the topic this action-command is targeting.
+          * This is the topic this action-command is targeting.  data: []
          */
         "topic"?: 'data' | 'routing' | 'document' | 'audio' | 'video';
     }

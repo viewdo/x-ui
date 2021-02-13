@@ -1,6 +1,6 @@
 {
   "name": "@viewdo/x-ui",
-  "version": "0.1.20",
+  "version": "0.1.22",
   "description": "view.DO <x-ui/>",
   "author": "view.DO Tech <tech@view.do> (https://view.do)",
   "private": false,
@@ -45,7 +45,8 @@
   "dependencies": {
     "expr-eval": "^2.0.2",
     "howler": "^2.2.1",
-    "jsonata": "^1.8.4"
+    "jsonata": "^1.8.4",
+    "remarkable": "^2.0.1"
   },
   "devDependencies": {
     "@stencil/core": "2.4.0",

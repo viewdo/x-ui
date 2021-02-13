@@ -191,9 +191,7 @@
       <x-view url="/start"
         page-title="Get Started"
         content-src="/pages/start/default.html">
-        <x-use
-          script-src="https://cdn.jsdelivr.net/gh/markedjs/marked@1/marked.min.js">
-        </x-use>
+
         <x-view-do url="select"
           when="!{storage:installed}"
           page-title="Select Installation"
@@ -207,7 +205,8 @@
           <x-action-activator activate="OnEnter">
             <x-action topic="data"
               command="set-data"
-              data='{"provider": "storage", "values": {"installed": "cdn" }}'>
+              data-provider="storage"
+              data-installed="cdn">
             </x-action>
           </x-action-activator>
         </x-view-do>
@@ -219,7 +218,8 @@
           <x-action-activator activate="OnEnter">
             <x-action topic="data"
               command="set-data"
-              data='{"provider": "storage", "values": {"installed": "npm" }}'>
+              data-provider="storage"
+              data-installed="npm">
             </x-action>
           </x-action-activator>
         </x-view-do>
@@ -243,9 +243,7 @@
             </template>
           </x-data-repeat>
         </ul>
-        <x-use
-          script-src="https://cdn.jsdelivr.net/gh/markedjs/marked@1/marked.min.js">
-        </x-use>
+
         <x-view url="lazy"
           page-title="Lazy Loaded Routes"
           content-src="/pages/routing/lazy.html"> </x-view>
@@ -275,9 +273,7 @@
       <x-view url="/navigation"
         page-title="Navigation System"
         content-src="/pages/navigation/default.html">
-        <x-use
-          script-src="https://cdn.jsdelivr.net/gh/markedjs/marked@1/marked.min.js">
-        </x-use>
+
         <ul x-cloak
           class="component-list list-group btn-group-xl float-end ms-2 mt-4 d-none d-sm-block">
           <li class="list-group-item fw-bold">Navigation Components</li>
@@ -320,7 +316,7 @@
                 time="9.9">
                 <x-action topic="routing"
                   command="navigate-to"
-                  data='{"url":"video-1"}'> </x-action>
+                  data-url="video-1"> </x-action>
               </x-action-activator>
             </x-view-do>
             <x-view-do url="video-1"
@@ -331,7 +327,7 @@
                 time="9.9">
                 <x-action topic="routing"
                   command="navigate-to"
-                  data='{"url":"video-2"}'> </x-action>
+                  data-url="video-2"> </x-action>
               </x-action-activator>
             </x-view-do>
             <x-view-do url="video-2"
@@ -342,7 +338,7 @@
                 time="9.9">
                 <x-action topic="routing"
                   command="navigate-to"
-                  data='{"url":"video-3"}'> </x-action>
+                  data-url="video-3"> </x-action>
               </x-action-activator>
             </x-view-do>
             <x-view-do url="video-3"
@@ -379,12 +375,6 @@
                 page-title="Step 3"
                 visit="always"
                 content-src="/pages/presentations/demo/step3.html">
-                <x-action-activator activate="OnExit">
-                  <x-action topic="routing"
-                    command="navigate-to"
-                    data='{"url": "/presentations/guided/sequential" }'>
-                  </x-action>
-                </x-action-activator>
               </x-view-do>
             </x-view>
           </x-view>
@@ -412,12 +402,7 @@
                 visit="always"
                 next-after="10"
                 content-src="/pages/presentations/demo/step3.html">
-                <x-action-activator activate="OnExit">
-                  <x-action topic="routing"
-                    command="navigate-to"
-                    data='{"url": "/presentations/guided/smart" }'>
-                  </x-action>
-                </x-action-activator>
+
               </x-view-do>
             </x-view>
           </x-view>
@@ -445,12 +430,7 @@
                 visit="always"
                 next-after="10"
                 content-src="/pages/presentations/demo/step3.html">
-                <x-action-activator activate="OnExit">
-                  <x-action topic="routing"
-                    command="navigate-to"
-                    data='{"url": "/presentations/guided/timed" }'>
-                  </x-action>
-                </x-action-activator>
+
               </x-view-do>
             </x-view>
 
@@ -483,9 +463,7 @@
       <x-view url="/content"
         page-title="Dynamic Content"
         content-src="/pages/content/default.html">
-        <x-use
-          script-src="https://cdn.jsdelivr.net/gh/markedjs/marked@1/marked.min.js">
-        </x-use>
+
         <ul x-cloak
           class="component-list list-group btn-group-xl float-end ms-2 mt-4 d-none d-sm-block">
           <li class="list-group-item fw-bold">Content Components</li>
@@ -512,9 +490,7 @@
         <x-view url="data"
           page-title="Data Templates"
           content-src="/pages/content/data/default.html">
-          <x-use
-            script-src="https://cdn.jsdelivr.net/gh/markedjs/marked@1/marked.min.js">
-          </x-use>
+
 
           <x-view url="expressions"
             page-title="Data Expressions"
@@ -549,9 +525,7 @@
       <x-view url="/actions"
         page-title="Action"
         content-src="/pages/actions/default.html">
-        <x-use
-          script-src="https://cdn.jsdelivr.net/gh/markedjs/marked@1/marked.min.js">
-        </x-use>
+
         <ul x-cloak
           class="component-list list-group btn-group-xl float-end ms-2 mt-4 d-none d-sm-block">
           <li class="list-group-item fw-bold">Action Components</li>
@@ -568,40 +542,42 @@
           visit="optional"
           content-src="/pages/actions/events.html">
           <x-action-activator activate="OnEnter">
-            <x-action topic="document"
-              command="alert"
-              data='{"message": "Testing on-enter action"}'> </x-action>
+            <x-action topic="interface"
+              command="console"
+              data-message="Testing on-enter action"></x-action>
           </x-action-activator>
           <x-action-activator activate="OnExit">
-            <x-action topic="document"
-              command="alert"
-              data='{"message": "Testing on-exit action"}'></x-action>
+            <x-action topic="interface"
+              command="console"
+              data-message="Testing on-exit action"></x-action>
           </x-action-activator>
         </x-view-do>
 
         <x-view-do url="timed"
           visit="optional"
-          next-after="30"
           content-src="/pages/actions/timed.html">
           <x-action-activator activate="AtTime"
             time="3">
-            <x-action topic="document"
-              command="alert"
-              data='{"message": "3-seconds has passed."}'></x-action>
+            <x-action topic="interface"
+              command="console"
+              data-message="3-seconds!"></x-action>
           </x-action-activator>
         </x-view-do>
 
         <x-view-do url="elements"
           visit="optional"
-          content-src="/pages/actions/elements.html"> </x-view-do>
+          content-src="/pages/actions/elements.html">
+        </x-view-do>
+
+        <x-view url=":listener" content-src="/pages/actions/listener.html">
+
+        </x-view>
       </x-view>
 
       <x-view url="/audio"
         page-title="Audio Systems"
         content-src="/pages/audio/default.html">
-        <x-use
-          script-src="https://cdn.jsdelivr.net/gh/markedjs/marked@1/marked.min.js">
-        </x-use>
+
         <x-audio-player title="Audio"></x-audio-player>
         <ul x-cloak
           class="component-list list-group btn-group-xl float-end ms-2 mt-4 d-none d-sm-block">
@@ -638,15 +614,12 @@
       <x-view url="/components/:component"
         page-title="Component: <{route:component}>"
         content-src="/pages/components/default.html">
-        <x-use
-          script-src="https://cdn.jsdelivr.net/gh/markedjs/marked@1/marked.min.js">
-        </x-use>
+
       </x-view>
 
       <!-- Not Found Route -->
       <x-view url="*"
         exact
-        debug
         page-title="Page not Found"
         content-src="/pages/404.html"> </x-view>
     </x-ui>

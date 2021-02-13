@@ -5,16 +5,7 @@ The root component is the base container for the view-engine and its child compo
 ## Usage
 
 ```html
-<x-ui
-  app-title="view.DO Web Components"
-  history-type="browser|hash"
-  scroll-top-offset="0"
-  transition="fade-in"
-  full-page="false"
-  start-url="/"
-  root=""
-  debug
->
+<x-ui app-title="view.DO Web Components" scroll-top-offset="0" transition="fade-in" start-url="/home" root="" debug>
   ...
   <x-view ...></x-view>
   <x-view ...></x-view>

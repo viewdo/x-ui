@@ -8,31 +8,31 @@
   <x-markdown src="/pages/actions/element-event.md"></x-markdown>
   <br />
   <x-markdown>
-    <script type="text/markdown">
+    <-cript type="text/markdown">
       ## Wrapped Element
 
       ```html
-      <x-action-activator activate="OnElementEvent" target-element="#button1" target-event="click">
-        <x-action topic="document" command="alert" data='{"message": "You clicked it!"}'></x-action>
+      <x-action-activator activate="OnElementEvent" target-element="#button1"
+        target-event="click">
+        <x-action topic="document" command="alert"
+          data='{"message": "You clicked it!"}'></x-action>
         <input type="hidden" name="extra" value="a-special-value" />
         <button>Wrapped Button</button>
       </x-action-activator>
       ```
-    </script>
+    </-cript>
   </x-markdown>
 
   <x-action-activator activate="OnElementEvent"
     target-event="click">
     <x-action topic="data"
       command="set-data">
-      <script type="application/json">
+      <-cript type="application/json">
         {
-          "provider": "session",
-          "values": {
-            "clicked": "button1"
-          }
+        "provider": "session",
+        "clicked": "button1"
         }
-      </script>
+      </-cript>
     </x-action>
     <input type="hidden"
       name="extra"
@@ -44,12 +44,22 @@
     <script type="text/markdown">
       ## Unwrapped Element
 
-      ```html
-      <x-action-activator activate="OnElementEvent" target-element="#button2" target-event="click">
-        <x-action topic="data" command="set-data"> </x-action>
+      ````html
+      <x-action-activator activate="OnElementEvent"
+        target-element="#button2"
+        target-event="click">
+        <x-action topic="data"
+          command="set-data">
+          <s-cript type="application/json">
+          {
+            "provider": "session",
+            "clicked": "button1"
+          }
+          </s-cript>
+        </x-action>
       </x-action-activator>
       <button id="button2">Not Wrapped</button>
-      ```
+      ````
     </script>
   </x-markdown>
 

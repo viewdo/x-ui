@@ -3,12 +3,6 @@
 ## Usage
 
 ```html
-<head>
-  <script src="https://cdn.jsdelivr.net/gh/markedjs/marked@1/marked.min.js"></script>
-</head>
-```
-
-```html
 <!-- Simply set the `src` attribute and win -->
 <x-markdown src="https://example.com/markdown.md"></x-markdown>
 ```
@@ -61,7 +55,6 @@ By default, there is no styling. The HTML is rendered to the page without styles
 
 ```html
 <head>
-  <script src="https://cdn.jsdelivr.net/gh/markedjs/marked@1/marked.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js" data-manual=""></script>
   <script src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js"></script>
 

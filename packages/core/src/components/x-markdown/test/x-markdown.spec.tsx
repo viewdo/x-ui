@@ -1,5 +1,5 @@
-import { newSpecPage } from '@stencil/core/testing'
-import { XMarkdown } from '../x-markdown'
+import { newSpecPage } from '@stencil/core/testing';
+import { XMarkdown } from '../x-markdown';
 
 describe('x-markdown', () => {
   it('renders', async () => {
@@ -19,9 +19,6 @@ describe('x-markdown', () => {
       components: [XMarkdown],
     })
 
-    page.win.marked = (_data, _options) => {
-      return '<h1>Hello</h1>'
-    }
 
     page.setContent(
       `<x-markdown>

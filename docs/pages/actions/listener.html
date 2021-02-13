@@ -4,15 +4,16 @@
 <x-use
   script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
 </x-use>
+
 <div class="container container-fluid mx-auto">
-  <x-markdown src="/pages/actions/event.md"></x-markdown>
-  <h2>X-VIEW-DO Enter & Exit Events</h2>
-  <p>You should see log messages in the console. One on entry and one on exit of
-    this page.</p>
+  <x-markdown src="/pages/services/{route:listener?data}/actions.md">
+  </x-markdown>
 
   <footer>
-    <button slot="start"
-      x-next
-      class="btn btn-light btn-lg">&lt; Back</button>
+    <a slot="start"
+      href="/actions">
+      <button class="btn btn-light btn-lg">&lt;
+        Back</button>
+    </a>
   </footer>
 </div>

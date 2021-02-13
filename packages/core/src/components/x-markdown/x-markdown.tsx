@@ -8,6 +8,7 @@ import {
   ROUTE_EVENTS,
   warn
 } from '../..';
+import { render } from './markdown.worker';
 
 /**
  *  @system content
@@ -65,9 +66,9 @@ export class XMarkdown {
 
     let content = ''
     if (this.src) {
-      content = await this.getContentFromSrc()
+      content = await this.getContentFromSrc() || ''
     } else if (this.childScript) {
-      content = this.getContentFromScript()
+      content = await this.getContentFromScript() || ''
     }
 
     const div = document.createElement('div')
@@ -90,8 +91,7 @@ export class XMarkdown {
       const response = await fetch(src)
       if (response.status === 200) {
         const data = await response.text()
-        const win = window as any
-        return win.marked ? win.marked(data, { baseUrl: this.baseUrl }) : null
+        return await render(data);
       }
 
       warn(`x-markdown: unable to retrieve from ${this.src}`)
@@ -100,12 +100,11 @@ export class XMarkdown {
     }
   }
 
-  private getContentFromScript() {
+  private async getContentFromScript() {
     const element = this.childScript
     if (!element?.textContent) return
     const md = this.dedent(element.textContent)
-    const win = window as any
-    return win.marked ? win.marked(md) : '[marked not loaded]'
+    return await render(md)
   }
 
   private dedent(innerText: string) {
@@ -115,15 +114,15 @@ export class XMarkdown {
   }
 
   private highlight(container: { querySelectorAll: (arg0: string) => any }) {
-    const unhinted = container.querySelectorAll('pre>code:not([class*="language-"])')
-    unhinted.forEach((n: any) => {
-      // Dead simple language detection :)
-      const lang = n.textContent.match(/^\s*</) ? 'markup' : n.textContent.match(/^\s*(\$|#)/) ? 'bash' : 'js'
-      n.classList.add(`language-${lang}`)
-    })
     const win = window as any
     const prism = win.Prism
     if (prism?.highlightAllUnder) {
+      const unhinted = container.querySelectorAll('pre>code:not([class*="language-"])')
+      unhinted.forEach((n: any) => {
+        // Dead simple language detection :)
+        const lang = n.textContent.match(/^\s*</) ? 'markup' : n.textContent.match(/^\s*(\$|#)/) ? 'bash' : 'js'
+        n.classList.add(`language-${lang}`)
+      })
       prism.highlightAllUnder(container)
     }
   }
