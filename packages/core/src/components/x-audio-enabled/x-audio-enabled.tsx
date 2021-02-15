@@ -3,37 +3,38 @@ import { audioState } from '../..';
 import { onAudioStateChange } from '../../services';
 
 /**
- * @system presentation
+ * Expose a checkbox to enable or disable global audio for background sounds and video.
+ * @system audio
  */
 @Component({
-  tag: 'x-ui-audio',
+  tag: 'x-audio-enabled',
   shadow: false,
 })
-export class XUiAudio {
+export class XAudioEnabled {
   private slider?: HTMLInputElement
   private muteSubscription!: () => void
-  @State() muted!: boolean
+  @State() enabled!: boolean
 
   /**
-   *
+   * Any classes to add to the input-element directly.
    */
   @Prop() classes?: string
 
   /**
-   *
+   * The id field to add to the input-element directly.
    */
   @Prop() inputId?: string
 
   componentWillLoad() {
-    this.muted = audioState.muted
+    this.enabled = audioState.enabled
 
-    this.muteSubscription = onAudioStateChange('muted', (m) => {
-      this.muted = m
+    this.muteSubscription = onAudioStateChange('enabled', (m) => {
+      this.enabled = m
     })
   }
 
-  private toggleSound() {
-    audioState.muted = this.slider?.checked || false
+  private toggle() {
+    audioState.enabled = this.slider?.checked || false
   }
 
   disconnectedCallback() {
@@ -50,8 +51,8 @@ export class XUiAudio {
           ref={(e) => {
             this.slider = e
           }}
-          onChange={() => this.toggleSound()}
-          checked={this.muted}
+          onChange={() => this.toggle()}
+          checked={this.enabled}
         ></input>
       </Host>
     )
