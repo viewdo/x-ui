@@ -3,7 +3,7 @@
 export const AUDIO_TOPIC = 'audio'
 
 export enum AUDIO_COMMANDS {
-  SetMute = 'set-mute',
+  SetMute = 'enabled',
   Play = 'play',
   Queue = 'queue',
   Load = 'load',

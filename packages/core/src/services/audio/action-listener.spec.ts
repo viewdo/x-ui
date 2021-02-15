@@ -340,15 +340,32 @@ describe('audio-listener:', () => {
     listener.destroy()
   })
 
-  it('set-mute: updates storage via listener', () => {
+  it('set-mute: updates storage via listener', async () => {
+    page = await newSpecPage({
+      components: [],
+      html: `<div></div>`,
+    })
+
+    listener = new AudioActionListener(page.win, eventBus, actionBus)
     listener.setMute(true)
 
     expect(page.win.localStorage.getItem('muted')).toBe('true')
 
+    listener.setMute(false)
+
+    expect(page.win.localStorage.getItem('muted')).toBe('false')
+
     listener.destroy()
   })
 
-  it('set-mute: updates storage from action', () => {
+  it('set-mute: updates storage from action', async () => {
+    page = await newSpecPage({
+      components: [],
+      html: `<div></div>`,
+    })
+
+    listener = new AudioActionListener(page.win, eventBus, actionBus)
+
     actionBus.emit(AUDIO_TOPIC, {
       topic: AUDIO_TOPIC,
       command: AUDIO_COMMANDS.SetMute,
@@ -356,6 +373,14 @@ describe('audio-listener:', () => {
     })
 
     expect(page.win.localStorage.getItem('muted')).toBe('true')
+
+    actionBus.emit(AUDIO_TOPIC, {
+      topic: AUDIO_TOPIC,
+      command: AUDIO_COMMANDS.SetMute,
+      data: false,
+    })
+
+    expect(page.win.localStorage.getItem('muted')).toBe('false')
 
     listener.destroy()
   })
