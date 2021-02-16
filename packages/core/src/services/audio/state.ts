@@ -3,13 +3,13 @@
 class StateModel {
   hasAudio!: boolean
   playedAudio!: string[]
-  muted!: boolean
+  enabled!: boolean
 }
 
 const store = createStore<StateModel>({
   hasAudio: false,
   playedAudio: [],
-  muted: false,
+  enabled: true,
 })
 
 const { state, onChange } = store

@@ -11,6 +11,7 @@ import { audioState, onAudioStateChange } from './state'
 import { hasPlayed } from './tracked'
 
 export class AudioActionListener {
+  public enabledKey = 'audio'
   private readonly actionSubscription: () => void
   private readonly eventSubscription: () => void
   private readonly disposeMuteSubscription!: () => void
@@ -24,17 +25,16 @@ export class AudioActionListener {
     private readonly actionBus: EventEmitter,
     private readonly debug: boolean = false,
   ) {
-    audioState.muted = win.localStorage?.getItem('muted') == 'true' || false
-    this.events = new EventEmitter()
+    audioState.enabled = win.localStorage?.getItem(this.enabledKey) == 'true' || false
 
     this.actionSubscription = this.actionBus.on(AUDIO_TOPIC, (ev: EventAction<any>) => {
       debugIf(this.debug, `audio-listener: event received ${ev.topic}:${ev.command}`)
       this.commandReceived(ev.command, ev.data)
     })
 
-    this.disposeMuteSubscription = onAudioStateChange('muted', (m) => {
-      win.localStorage?.setItem('muted', m.toString())
-      eventBus.emit(AUDIO_EVENTS.SoundChanged, m)
+    this.disposeMuteSubscription = onAudioStateChange('enabled', (m) => {
+      win.localStorage?.setItem(this.enabledKey, m.toString())
+      eventBus.emit(AUDIO_TOPIC, AUDIO_EVENTS.SoundChanged, m)
     })
 
     this.eventSubscription = this.eventBus.on(ROUTE_EVENTS.RouteChanged, () => {
@@ -60,8 +60,12 @@ export class AudioActionListener {
 
   // Public Members
 
-  public setMute(muted: boolean) {
-    audioState.muted = muted
+  public enable() {
+    audioState.enabled = true
+  }
+
+  public disable() {
+    audioState.enabled = false
   }
 
   public isPlaying(): boolean {
@@ -78,8 +82,6 @@ export class AudioActionListener {
       this.loaded[AudioType.Sound].length > 0
     )
   }
-
-  public events: EventEmitter
 
   public pause() {
     if (!this.isPlaying()) {
@@ -119,8 +121,13 @@ export class AudioActionListener {
 
   private commandReceived(command: string, data: AudioInfo | AudioRequest | boolean) {
     switch (command) {
-      case AUDIO_COMMANDS.SetMute: {
-        this.setMute(data as boolean)
+      case AUDIO_COMMANDS.Enable: {
+        this.enable()
+        break
+      }
+
+      case AUDIO_COMMANDS.Disable: {
+        this.disable()
         break
       }
 
@@ -192,7 +199,7 @@ export class AudioActionListener {
 
       if (event) {
         debugIf(this.debug, `event-listener: audio event ${event} ${trackId}`)
-        this.events.emit(event, ...args)
+        this.eventBus.emit(AUDIO_TOPIC, ...args)
       }
     })
 
@@ -239,7 +246,7 @@ export class AudioActionListener {
     const { type } = audio
     if (!this.loaded[type].includes(audio)) {
       this.loaded[type].push(audio)
-      this.events.emit(AUDIO_EVENTS.Loaded, audio.trackId)
+      this.eventBus.emit(AUDIO_TOPIC, AUDIO_EVENTS.Loaded, audio.trackId)
     }
   }
 
@@ -247,7 +254,7 @@ export class AudioActionListener {
     const { type } = audio
     if (!this.queued[type].includes(audio)) {
       this.queued[type].push(audio)
-      this.events.emit(AUDIO_EVENTS.Queued, audio.trackId)
+      this.eventBus.emit(AUDIO_TOPIC, AUDIO_EVENTS.Queued, audio.trackId)
     }
 
     if (!this.onDeck[audio.type]) {
@@ -258,7 +265,7 @@ export class AudioActionListener {
   private getNextAudioFromQueue(type: AudioType) {
     const audio = this.queued[type].pop()
     if (audio) {
-      this.events.emit(AUDIO_EVENTS.Dequeued, audio.trackId)
+      this.eventBus.emit(AUDIO_TOPIC, AUDIO_EVENTS.Dequeued, audio.trackId)
     }
 
     return audio
@@ -280,7 +287,7 @@ export class AudioActionListener {
     const audio = this.loaded[startRequest.type]?.find((a) => a.trackId === startRequest.trackId)
     if (audio) {
       this.replaceActiveTrack(audio)
-      this.events.emit(AUDIO_EVENTS.Started, audio.trackId)
+      this.eventBus.emit(AUDIO_TOPIC, AUDIO_EVENTS.Started, audio.trackId)
     }
   }
 
@@ -322,6 +329,5 @@ export class AudioActionListener {
     this.eventSubscription()
     this.actionSubscription()
     this.disposeMuteSubscription()
-    this.events.removeAllListeners()
   }
 }

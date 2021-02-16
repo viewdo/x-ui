@@ -347,13 +347,13 @@ describe('audio-listener:', () => {
     })
 
     listener = new AudioActionListener(page.win, eventBus, actionBus)
-    listener.setMute(true)
+    listener.enable()
 
-    expect(page.win.localStorage.getItem('muted')).toBe('true')
+    expect(page.win.localStorage.getItem(listener.enabledKey)).toBe('true')
 
-    listener.setMute(false)
+    listener.disable()
 
-    expect(page.win.localStorage.getItem('muted')).toBe('false')
+    expect(page.win.localStorage.getItem(listener.enabledKey)).toBe('false')
 
     listener.destroy()
   })
@@ -368,19 +368,17 @@ describe('audio-listener:', () => {
 
     actionBus.emit(AUDIO_TOPIC, {
       topic: AUDIO_TOPIC,
-      command: AUDIO_COMMANDS.SetMute,
-      data: true,
+      command: AUDIO_COMMANDS.Enable,
     })
 
-    expect(page.win.localStorage.getItem('muted')).toBe('true')
+    expect(page.win.localStorage.getItem(listener.enabledKey)).toBe('true')
 
     actionBus.emit(AUDIO_TOPIC, {
       topic: AUDIO_TOPIC,
-      command: AUDIO_COMMANDS.SetMute,
-      data: false,
+      command: AUDIO_COMMANDS.Disable,
     })
 
-    expect(page.win.localStorage.getItem('muted')).toBe('false')
+    expect(page.win.localStorage.getItem(listener.enabledKey)).toBe('false')
 
     listener.destroy()
   })

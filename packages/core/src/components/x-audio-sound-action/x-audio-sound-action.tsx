@@ -1,5 +1,5 @@
 import { Component, Element, h, Host, Method, Prop } from '@stencil/core';
-import { AudioType, AUDIO_TOPIC, EventAction, IActionElement, warn } from '../..';
+import { actionBus, AudioType, AUDIO_TOPIC, EventAction, IActionElement, warn } from '../..';
 import { AUDIO_COMMANDS } from '../../services/audio/interfaces';
 
 /**
@@ -43,6 +43,19 @@ export class XAudioSoundAction implements IActionElement {
         trackId: this.trackId,
         value: this.value,
       },
+    }
+  }
+
+  /**
+  * Send this action to the the Action Bus.
+  */
+  @Method()
+  async sendAction(data?:Record<string,any>) {
+    const action = await this.getAction()
+    if (action) {
+      if (data)
+        Object.assign(action.data, data)
+      actionBus.emit(action.topic, action);
     }
   }
 
