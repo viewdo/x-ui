@@ -103,6 +103,6 @@ export class XAction implements IActionElement {
   }
 
   render() {
-    return <Host hidden={this.childInputs.length == 0}></Host>
+    return <Host></Host>
   }
 }

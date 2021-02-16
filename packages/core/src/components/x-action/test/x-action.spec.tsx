@@ -11,7 +11,7 @@ describe('x-action', () => {
       html: `<x-action></x-action>`,
     })
     expect(page.root).toEqualHtml(
-      `<x-action hidden="">
+      `<x-action>
        </x-action>`,
     )
   })
@@ -23,7 +23,7 @@ describe('x-action', () => {
       supportsShadowDom: false,
     })
     expect(page.root).toEqualHtml(
-      `<x-action hidden="">
+      `<x-action>
        </x-action>`,
     )
 
@@ -43,7 +43,7 @@ describe('x-action', () => {
       supportsShadowDom: false,
     })
     expect(page.root).toEqualHtml(
-      `<x-action topic="routing" hidden="">
+      `<x-action topic="routing">
        </x-action>`,
     )
 
@@ -63,7 +63,7 @@ describe('x-action', () => {
       supportsShadowDom: false,
     })
     expect(page.root).toEqualHtml(
-      `<x-action topic="routing" command="go-to" hidden="">
+      `<x-action topic="routing" command="go-to">
        </x-action>`,
     )
 
@@ -104,7 +104,7 @@ describe('x-action', () => {
       supportsShadowDom: false,
     })
     expect(page.root).toEqualHtml(
-      `<x-action hidden="" topic="test" command="feed-me">
+      `<x-action topic="test" command="feed-me">
         <script>{ "name": "willy" }</script>
        </x-action>`,
     )
