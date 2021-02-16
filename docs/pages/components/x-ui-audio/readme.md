@@ -1,7 +1,6 @@
-# x-ui-audio
+# x-audio-enabled
 
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -10,7 +9,6 @@
 | `classes` | `classes`  |             | `string \| undefined` | `undefined` |
 | `inputId` | `input-id` |             | `string \| undefined` | `undefined` |
 
-
-----------------------------------------------
+---
 
 view.DO : Experience Platform

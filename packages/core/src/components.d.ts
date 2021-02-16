@@ -59,6 +59,16 @@ export namespace Components {
          */
         "time"?: number;
     }
+    interface XAudioEnabled {
+        /**
+          * Any classes to add to the input-element directly.
+         */
+        "classes"?: string;
+        /**
+          * The id field to add to the input-element directly.
+         */
+        "inputId"?: string;
+    }
     interface XAudioMusicAction {
         /**
           * The command to execute.
@@ -68,6 +78,10 @@ export namespace Components {
           * Get the underlying actionEvent instance. Used by the x-action-activator element.
          */
         "getAction": () => Promise<EventAction<any>>;
+        /**
+          * Send this action to the the Action Bus.
+         */
+        "sendAction": (data?: Record<string, any> | undefined) => Promise<void>;
         /**
           * The track to target.
          */
@@ -123,6 +137,10 @@ export namespace Components {
           * Get the underlying actionEvent instance. Used by the x-action-activator element.
          */
         "getAction": () => Promise<EventAction<any>>;
+        /**
+          * Send this action to the the Action Bus.
+         */
+        "sendAction": (data?: Record<string, any> | undefined) => Promise<void>;
         /**
           * The track to target.
          */
@@ -291,10 +309,6 @@ export namespace Components {
     }
     interface XUiAnalytics {
     }
-    interface XUiAudio {
-        "classes"?: string;
-        "inputId"?: string;
-    }
     interface XUiAutoplay {
         "classes"?: string;
         "inputId"?: string;
@@ -425,6 +439,12 @@ declare global {
         prototype: HTMLXActionActivatorElement;
         new (): HTMLXActionActivatorElement;
     };
+    interface HTMLXAudioEnabledElement extends Components.XAudioEnabled, HTMLStencilElement {
+    }
+    var HTMLXAudioEnabledElement: {
+        prototype: HTMLXAudioEnabledElement;
+        new (): HTMLXAudioEnabledElement;
+    };
     interface HTMLXAudioMusicActionElement extends Components.XAudioMusicAction, HTMLStencilElement {
     }
     var HTMLXAudioMusicActionElement: {
@@ -509,12 +529,6 @@ declare global {
         prototype: HTMLXUiAnalyticsElement;
         new (): HTMLXUiAnalyticsElement;
     };
-    interface HTMLXUiAudioElement extends Components.XUiAudio, HTMLStencilElement {
-    }
-    var HTMLXUiAudioElement: {
-        prototype: HTMLXUiAudioElement;
-        new (): HTMLXUiAudioElement;
-    };
     interface HTMLXUiAutoplayElement extends Components.XUiAutoplay, HTMLStencilElement {
     }
     var HTMLXUiAutoplayElement: {
@@ -548,6 +562,7 @@ declare global {
     interface HTMLElementTagNameMap {
         "x-action": HTMLXActionElement;
         "x-action-activator": HTMLXActionActivatorElement;
+        "x-audio-enabled": HTMLXAudioEnabledElement;
         "x-audio-music-action": HTMLXAudioMusicActionElement;
         "x-audio-music-load": HTMLXAudioMusicLoadElement;
         "x-audio-player": HTMLXAudioPlayerElement;
@@ -562,7 +577,6 @@ declare global {
         "x-markdown": HTMLXMarkdownElement;
         "x-ui": HTMLXUiElement;
         "x-ui-analytics": HTMLXUiAnalyticsElement;
-        "x-ui-audio": HTMLXUiAudioElement;
         "x-ui-autoplay": HTMLXUiAutoplayElement;
         "x-ui-theme": HTMLXUiThemeElement;
         "x-use": HTMLXUseElement;
@@ -610,6 +624,16 @@ declare namespace LocalJSX {
           * The time, in seconds at which the contained actions should be submitted.  For use with activate="AtTime" Only!
          */
         "time"?: number;
+    }
+    interface XAudioEnabled {
+        /**
+          * Any classes to add to the input-element directly.
+         */
+        "classes"?: string;
+        /**
+          * The id field to add to the input-element directly.
+         */
+        "inputId"?: string;
     }
     interface XAudioMusicAction {
         /**
@@ -859,10 +883,6 @@ declare namespace LocalJSX {
          */
         "onX:analytics:view-percentage"?: (event: CustomEvent<any>) => void;
     }
-    interface XUiAudio {
-        "classes"?: string;
-        "inputId"?: string;
-    }
     interface XUiAutoplay {
         "classes"?: string;
         "inputId"?: string;
@@ -982,6 +1002,7 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "x-action": XAction;
         "x-action-activator": XActionActivator;
+        "x-audio-enabled": XAudioEnabled;
         "x-audio-music-action": XAudioMusicAction;
         "x-audio-music-load": XAudioMusicLoad;
         "x-audio-player": XAudioPlayer;
@@ -996,7 +1017,6 @@ declare namespace LocalJSX {
         "x-markdown": XMarkdown;
         "x-ui": XUi;
         "x-ui-analytics": XUiAnalytics;
-        "x-ui-audio": XUiAudio;
         "x-ui-autoplay": XUiAutoplay;
         "x-ui-theme": XUiTheme;
         "x-use": XUse;
@@ -1010,6 +1030,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "x-action": LocalJSX.XAction & JSXBase.HTMLAttributes<HTMLXActionElement>;
             "x-action-activator": LocalJSX.XActionActivator & JSXBase.HTMLAttributes<HTMLXActionActivatorElement>;
+            "x-audio-enabled": LocalJSX.XAudioEnabled & JSXBase.HTMLAttributes<HTMLXAudioEnabledElement>;
             "x-audio-music-action": LocalJSX.XAudioMusicAction & JSXBase.HTMLAttributes<HTMLXAudioMusicActionElement>;
             "x-audio-music-load": LocalJSX.XAudioMusicLoad & JSXBase.HTMLAttributes<HTMLXAudioMusicLoadElement>;
             "x-audio-player": LocalJSX.XAudioPlayer & JSXBase.HTMLAttributes<HTMLXAudioPlayerElement>;
@@ -1024,7 +1045,6 @@ declare module "@stencil/core" {
             "x-markdown": LocalJSX.XMarkdown & JSXBase.HTMLAttributes<HTMLXMarkdownElement>;
             "x-ui": LocalJSX.XUi & JSXBase.HTMLAttributes<HTMLXUiElement>;
             "x-ui-analytics": LocalJSX.XUiAnalytics & JSXBase.HTMLAttributes<HTMLXUiAnalyticsElement>;
-            "x-ui-audio": LocalJSX.XUiAudio & JSXBase.HTMLAttributes<HTMLXUiAudioElement>;
             "x-ui-autoplay": LocalJSX.XUiAutoplay & JSXBase.HTMLAttributes<HTMLXUiAutoplayElement>;
             "x-ui-theme": LocalJSX.XUiTheme & JSXBase.HTMLAttributes<HTMLXUiThemeElement>;
             "x-use": LocalJSX.XUse & JSXBase.HTMLAttributes<HTMLXUseElement>;

@@ -6,24 +6,26 @@
   script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
 </x-use>
 <div class="container container-fluid mx-auto">
-  <h1>Event Actions</h1>
+  <h1>Actions</h1>
   <p class="lead">
-    <b>&lt;x-ui/&gt;</b> components
-    use a messaging system for inter-component
-    communication.
-  </p>
-  <p>
-    Event Actions provide an asynchronous system for expressing
-    reactive HTML manipulation.
+    <b>&lt;x-ui/&gt;</b> Actions provide a mechanism for HTML to express
+    reactive functionality directly, reducing the need to mix JavaScript & HTML.
   </p>
 
   <h2>Actions</h2>
   <p>
-    Actions are an event, with a data payload. The data command components
+    Actions could be thought of as commands , sent through a centralized
+    event-bus.
+    The topic, combined with the data executes functions
     to perform various functions, like updating a data store or setting a
     cookie. Action messages sent to a topic consist of
     a command and the arguments required for the given command.
   </p>
+  <blockquote>
+    <b>&lt;x-ui/&gt;</b> components
+    use a messaging system for inter-component
+    communication
+  </blockquote>
   <ul>
     <li>
       <dt>topic</dt>
@@ -38,7 +40,6 @@
       <dd>The arguments for the command, in a name-value format.</dd>
     </li>
   </ul>
-
 
   <h3>Activation</h3>
   <p>

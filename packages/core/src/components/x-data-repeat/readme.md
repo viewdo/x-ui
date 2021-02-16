@@ -14,7 +14,7 @@ This tag renders a template for each item in the configured array. The item temp
 
 The **items** attribute can be any array-string or an [expression](/data/expressions) to pull data from a registered provider.
 
-### Declarative Items Source
+### Items Source
 
 This component supports a three ways to express the collection or where it comes from.
 

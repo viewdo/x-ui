@@ -26,7 +26,7 @@ Add application features, like: includes, routing, guided navigation, data-bindi
 ### Modern
 
 - **Fast:** Lightweight and lightening fast: [No Framework](https://stenciljs.com) & [Lazy Loaded](https://www.imperva.com/learn/performance/lazy-loading)
-- **Extensible:** Provider System to extend data, UI and event actions.
+- **Extensible:** Provider System to extend data, UI and declarative actions.
 - **Typed:** Built with TypeScript so you can enjoy completely typed components
 - **Portable:** Simple HTML/CSS/JS with [web components](https://developer.mozilla.org/en-US/docs/Web/Web_Components)
 

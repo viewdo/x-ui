@@ -4,7 +4,7 @@ The **`<x-view-do>`** element represents a specialized child-route that for its 
 
 > **`<x-view-do>`** are essentially **to-do** items for the parent route.
 
-They are used to create presentation, wizards, input workflows, or step by step instructions or wherever you want guided or automatic navigation. These are the only routes that support [audio](/audio), [video](/video) and [event actions](/actions).
+They are used to create presentation, wizards, input workflows, or step by step instructions or wherever you want guided or automatic navigation. These are the only routes that support [audio](/audio), [video](/video) and [declarative actions](/actions).
 
 ## Usage
 
@@ -75,7 +75,7 @@ This route will be activated if a value for 'consent' was not found in local-sto
 
 > **Important**: If a value for `{storage:consent}` is not set in this route's somehow, the user cannot get to the parent page.
 
-This data can be set manually or using our specialized declarative components to update data. See [event actions](/actions) for more info.
+This data can be set manually or using our specialized declarative components to update data. See [declarative actions](/actions) for more info.
 
 [^1]: Check out the [data system](/embedded-data) for expressions and how to use external data.
 

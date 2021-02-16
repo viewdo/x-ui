@@ -26,6 +26,16 @@ Type: `Promise<EventAction<any>>`
 
 
 
+### `sendAction(data?: Record<string, any> | undefined) => Promise<void>`
+
+Send this action to the the Action Bus.
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
 
 ----------------------------------------------
 

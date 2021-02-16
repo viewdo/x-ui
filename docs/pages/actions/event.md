@@ -1,4 +1,4 @@
-# Enter & Exit Event Actions
+# Enter & Exit Actions
 
 [Event actions](/actions) work using by attaching to the parent `x-view-do` element. The enter and exit only apply when the route is matched exactly.
 

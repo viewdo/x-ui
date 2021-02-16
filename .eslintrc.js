@@ -1,15 +1,14 @@
 module.exports = {
   extends: ['plugin:@stencil/recommended'],
   parserOptions: {
-    extends: './tsconfig.json',
-    project: './packages/**/tsconfig.ts',
+    project: './tsconfig.json',
   },
   plugins: ['prettier'],
   rules: {
-    '@stencil/required-jsdoc': 1,
+    //'@stencil/required-jsdoc': 1,
     '@stencil/strict-boolean-conditions': 0,
     '@stencil/strict-mutable': 0,
-    '@stencil/async-methods': 0,
+    //'@stencil/async-methods': 0,
     '@typescript-eslint/naming-convention': 0,
     '@typescript-eslint/lines-between-class-members': 0,
     'react/react-in-jsx-scope': 0,
@@ -28,10 +27,17 @@ module.exports = {
     'no-restricted-syntax': 0,
     'object-curly-spacing': 0,
     'object-curly-newline': 0,
-    'import/no-extraneous-dependencies': 0,
     'no-plusplus': 0,
     'class-methods-use-this': 0,
     'no-undef': 0,
   },
+  overrides: [
+    {
+      files: ['**/*.tsx'],
+      rules: {
+        'import/no-extraneous-dependencies': 0,
+      },
+    },
+  ],
   ignorePatterns: ['__mocks__'],
 }

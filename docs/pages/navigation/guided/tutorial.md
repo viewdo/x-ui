@@ -1,4 +1,4 @@
-# Declarative Guided Navigation
+# Guided Navigation
 
 Experience content is presentational in nature. Content is concise with minimal noise and tends to have an implicit ending; a selection was made, the form was completed, the video ended or the next button was clicked.
 

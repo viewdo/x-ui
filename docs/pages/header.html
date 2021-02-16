@@ -21,7 +21,7 @@
         <li class="dropdown-item">
           <x-link href="/routing">
             <i class="ri-route-line"></i>
-            Static Routing
+            Routing
           </x-link>
         </li>
         <li class="dropdown-item">
@@ -33,7 +33,7 @@
         <li class="dropdown-item">
           <x-link href="/content">
             <i class="ri-code-box-line"></i>
-            Dynamic Content
+            Content
           </x-link>
         </li>
         <li class="dropdown-item">
@@ -45,7 +45,7 @@
         <li class="dropdown-item">
           <x-link href="/actions">
             <i class="ri-flashlight-line"></i>
-            Event Actions
+            Actions
           </x-link>
         </li>
         <li class="dropdown-item">
@@ -103,7 +103,7 @@
         <li>
           <hr class="dropdown-divider" />
         </li>
-        <li class="dropdown-item-text fw-bold">Dynamic Content</li>
+        <li class="dropdown-item-text fw-bold">Content</li>
         <x-data-repeat items-src="/data/components.json"
           filter="components[docsTags[text='content']]">
           <template>
@@ -129,7 +129,7 @@
         <li>
           <hr class="dropdown-divider" />
         </li>
-        <li class="dropdown-item-text fw-bold">Event Actions</li>
+        <li class="dropdown-item-text fw-bold">Actions</li>
         <x-data-repeat items-src="/data/components.json"
           filter="components[docsTags[text='actions']]">
           <template>
