@@ -5,10 +5,8 @@ module.exports = {
   },
   plugins: ['prettier'],
   rules: {
-    //'@stencil/required-jsdoc': 1,
     '@stencil/strict-boolean-conditions': 0,
     '@stencil/strict-mutable': 0,
-    //'@stencil/async-methods': 0,
     '@typescript-eslint/naming-convention': 0,
     '@typescript-eslint/lines-between-class-members': 0,
     'react/react-in-jsx-scope': 0,

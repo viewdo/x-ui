@@ -33,9 +33,9 @@ This component declares audio used within this **`<x-view-do>`** route. The **`<
 
 #### Mode
 
-- **queue**: (default) plays after the previous audio is complete or when it's requested.
-- **play**: stop any playing audio and play now, buffering be-damned.
-- **wait**: wait for an event action before playing, any currently playing audio continues.
+* **queue**: (default) plays after the previous audio is complete or when it's requested.
+* **play**: stop any playing audio and play now, buffering be-damned.
+* **wait**: wait for an event action before playing, any currently playing audio continues.
 
 #### Discard
 

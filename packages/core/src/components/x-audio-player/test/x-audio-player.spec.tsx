@@ -1,9 +1,9 @@
 jest.mock('../../../services/logging')
 jest.mock('../../../services/audio/action-listener')
 
-import { newSpecPage } from '@stencil/core/testing'
-import { audioState, interfaceState, AudioInfo, audioStore, interfaceStore, actionBus, AudioType, DiscardStrategy, eventBus, AudioTrack } from '../../..'
-import { XAudioPlayer } from '../x-audio-player'
+import { newSpecPage } from '@stencil/core/testing';
+import { actionBus, AudioInfo, audioState, audioStore, AudioTrack, AudioType, DiscardStrategy, eventBus, interfaceStore } from '../../..';
+import { XAudioPlayer } from '../x-audio-player';
 
 type Audio = {
   play: () => number
@@ -86,7 +86,7 @@ describe('x-audio-player', () => {
 
     await page.waitForChanges()
 
-    interfaceState.muted = true
+    audioState.enabled = true
   })
 
   it('reacts to listener changes', async () => {

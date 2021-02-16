@@ -1,10 +1,10 @@
 # X-ACTION-ACTIVATOR
 
-This element defines how and when a group of Actions, defined with the **`<x-action>`** element, are submitted to the [Action Bus](/actions).
+This element defines how and when a group of Actions, defined with the **`<x-action>`** element, are submitted through [Actions Bus](/actions).
 
 ## Usage
 
-This element should only ever contain child **`<x-action>`** tags. The attributes tells the parent The parent tag defines how and when the child actions are submitted to the [Action Bus](/actions/bus).
+This element should only ever contain child **`<x-action>`** tags. The attributes tells the parent The parent tag defines how and when the child actions are submitted through [Actions Bus](/actions/bus).
 
 ```html
 <x-action-activator activate="<activation-strategy>" ... supporting attributes ...>

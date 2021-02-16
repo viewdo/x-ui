@@ -7,7 +7,9 @@ Topic: `data`
 
 ```html
 <x-action-activator activate="...">
-  <x-action topic="data" command="<command>" ...> </x-action>
+  <x-action topic="data" 
+    command="<command>" 
+    data-(key)="(value)"></x-action>
 </x-action-activator>
 ```
 
@@ -19,15 +21,18 @@ This command sets the experience data
 
 Arguments:
 
-- **provider** (required)\
+* **provider** (required)\
   The input key to the experience input to update.
 
-- **(key:value)[]**\
+* **(key:value)[]**\
   All other key-values pairs will be passed to the data provider.
 
 ```html
 <x-action-activator activate="...">
-  <x-action topic="data" command="set-data" data-provider="<provider>" data-(key)="(value)"> </x-action>
+  <x-action topic="data" 
+    command="set-data" 
+    data-provider="<provider>" 
+    data-(key)="(value)"></x-action>
 </x-action-activator>
 ```
 

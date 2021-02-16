@@ -127,8 +127,8 @@ export class XActionActivator {
 
     if (this.activate === ActionActivationStrategy.OnElementEvent) {
       const element = this.targetElement
-        ? this.el.parentElement?.querySelector(this.targetElement)
-        : this.el.parentElement?.querySelector(':not(x-action):not(x-audio-music-action):not(x-audio-sound-action):not(script):not(x-action-activator)')
+        ? this.el.ownerDocument.querySelector(this.targetElement)
+        : this.el.querySelector(':enabled:not(x-action):not(x-audio-music-action):not(x-audio-sound-action):not(script):not(x-action-activator)')
 
       if (!element) {
         warn(`x-action-activator: ${this.parent?.url || ''} no elements found for '${this.targetElement || 'na'}'`)

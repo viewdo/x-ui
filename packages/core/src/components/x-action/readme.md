@@ -1,10 +1,10 @@
 # X-ACTION
 
-This element holds the data that **is** the Event Action submitted to the [Action Bus](/actions).
+This element holds the data that **is** the Event Action submitted through [Actions Bus](/actions).
 
 ## Usage
 
-This element should only ever exists within a parent **`<x-action-activator>`** tag. The parent tag defines how and when the child actions are submitted to the [Action Bus](/actions).
+This element should only ever exists within a parent **`<x-action-activator>`** tag. The parent tag defines how and when the child actions are submitted through [Actions Bus](/actions).
 
 ### In-Attribute Data
 

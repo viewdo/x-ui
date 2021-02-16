@@ -1,18 +1,18 @@
 /* istanbul ignore file */
 
-import { LocationSegments } from '../routing/interfaces'
+import { LocationSegments } from '../routing/interfaces';
 
 export enum NAVIGATION_COMMANDS {
-  NavigateNext = 'navigate-next',
-  NavigateTo = 'navigate-to',
-  NavigateBack = 'navigate-back',
+  GoNext = 'go-next',
+  GoTo = 'go-to',
+  GoBack = 'go-back',
 }
 
 export type NavigateTo = {
   url: string
 }
 
-export const NAVIGATION_TOPIC = 'routing'
+export const NAVIGATION_TOPIC = 'navigation'
 
 export type NavigateNext = Record<string, unknown>
 

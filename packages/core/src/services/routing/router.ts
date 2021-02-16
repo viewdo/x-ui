@@ -1,15 +1,15 @@
-import { RafCallback } from '@stencil/core/internal'
-import { captureElementsEventOnce } from '..'
-import { IEventEmitter } from '../actions'
-import { addDataProvider } from '../data/providers/factory'
-import { NavigationActionListener } from '../navigation/action-listener'
-import { RoutingDataProvider } from './data-provider'
-import { HistoryService } from './history'
-import { LocationSegments, MatchOptions, MatchResults, RouteViewOptions } from './interfaces'
-import { Route } from './route'
-import { isAbsolute, locationsAreEqual, resolvePathname } from './utils/location-utils'
-import { matchPath } from './utils/match-path'
-import { ensureBasename } from './utils/path-utils'
+import { RafCallback } from '@stencil/core/internal';
+import { captureElementsEventOnce } from '..';
+import { IEventEmitter } from '../actions';
+import { addDataProvider } from '../data/providers/factory';
+import { NavigationActionListener } from '../navigation/action-listener';
+import { RoutingDataProvider } from './data-provider';
+import { HistoryService } from './history';
+import { LocationSegments, MatchOptions, MatchResults, RouteViewOptions } from './interfaces';
+import { Route } from './route';
+import { isAbsolute, locationsAreEqual, resolvePathname } from './utils/location-utils';
+import { matchPath } from './utils/match-path';
+import { ensureBasename } from './utils/path-utils';
 
 export class RouterService {
   public location!: LocationSegments
@@ -126,6 +126,13 @@ export class RouterService {
 
   handleRouteLinkClick(toPath: string, fromPath?: string) {
     const route = isAbsolute(toPath) ? toPath : this.normalizeChildUrl(toPath, fromPath || '/')
+    if (fromPath && route.startsWith(fromPath) && route.includes('#')) {
+      const elId = toPath.substr(toPath.indexOf('#'))
+      this.win.document?.querySelector(elId)?.scrollIntoView({
+        behavior: 'smooth'
+      })
+      return
+    }
     this.goToRoute(route)
   }
 

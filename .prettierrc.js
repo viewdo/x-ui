@@ -1,4 +1,4 @@
-module.exports =  {
+module.exports = {
   arrowParens: 'always',
   bracketSpacing: true,
   jsxBracketSameLine: false,
@@ -16,8 +16,8 @@ module.exports =  {
       options: { parser: 'yaml' },
     },
     {
-      files: "LICENSE",
-      options: { parser: "markdown" },
+      files: 'LICENSE',
+      options: { parser: 'markdown' },
     },
   ],
-};
+}

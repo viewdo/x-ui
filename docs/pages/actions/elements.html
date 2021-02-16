@@ -5,91 +5,270 @@
   script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
 </x-use>
 <div class="container container-fluid mx-auto">
-  <x-markdown src="/pages/actions/element-event.md"></x-markdown>
-  <br />
-  <x-markdown>
-    <-cript type="text/markdown">
-      ## Wrapped Element
+  <h1>Element Activated Actions</h1>
+  <p>Element activation works by attaching an event-listener to specified element.</p>
 
-      ```html
-      <x-action-activator activate="OnElementEvent" target-element="#button1"
-        target-event="click">
-        <x-action topic="document" command="alert"
-          data='{"message": "You clicked it!"}'></x-action>
-        <input type="hidden" name="extra" value="a-special-value" />
-        <button>Wrapped Button</button>
-      </x-action-activator>
-      ```
-    </-cript>
-  </x-markdown>
+  <h2>Wrapped Elements</h2>
+  <p>You can wrap inputs and buttons in the action-elements to activate and add user-data to actions.</p>
 
-  <x-action-activator activate="OnElementEvent"
-    target-event="click">
-    <x-action topic="data"
-      command="set-data">
-      <-cript type="application/json">
-        {
-        "provider": "session",
-        "clicked": "button1"
-        }
-      </-cript>
+  <h3>Wrapped Click Target</h3>
+  <button class="btn btn-light float-end mb-2 ms-2"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#loadSource1"
+    aria-expanded="false"
+    aria-controls="loadSource1">
+    <i class="ri-code-s-slash-line"></i>
+    Toggle Source
+  </button>
+
+  <p>
+    The following button has been wrapped with the x-action-activator element. This automatically
+    registers actions to the click-event. <em>Note,
+    since it's the only element, no target-element or event needs to be declared.</em>
+  </p>
+
+  <x-action-activator multiple>
+    <x-action topic="interface"
+      command="log"
+      data-message="You clicked the wrapped button.">
     </x-action>
-    <input type="hidden"
-      name="extra"
-      value="a-special-value" />
     <button class="btn btn-info text-white">Wrapped Button</button>
   </x-action-activator>
 
-  <x-markdown style="margin-top: 20px">
-    <script type="text/markdown">
-      ## Unwrapped Element
+  <div class="collapse mt-1"
+    id="loadSource1">
+    <x-markdown>
+      <script type="text/markdown">
+        ```html
+        <x-action-activator multiple>
+          <x-action topic="interface"
+            command="log"
+            data-message="You clicked the wrapped button.">
+          </x-action>
+          <button class="btn btn-info text-white">Wrapped Button</button>
+        </x-action-activator>
+        ```
+      </script>
+    </x-markdown>
+  </div>
 
-      ````html
-      <x-action-activator activate="OnElementEvent"
-        target-element="#button2"
-        target-event="click">
-        <x-action topic="data"
-          command="set-data">
-          <s-cript type="application/json">
-          {
-            "provider": "session",
-            "clicked": "button1"
-          }
-          </s-cript>
-        </x-action>
-      </x-action-activator>
-      <button id="button2">Not Wrapped</button>
-      ````
-    </script>
-  </x-markdown>
+  <h3>Wrapped Input</h3>
+  <button class="btn btn-light float-end mb-2 ms-2"
+      data-bs-toggle="collapse"
+      data-bs-target="#loadSource2"
+      aria-expanded="false"
+      aria-controls="loadSource2">
+      <i class="ri-code-s-slash-line"></i>
+      Toggle Source
+    </button>
+  <p>Action argument data can come from inputs, by wrapping the inputs inside the activator tag.</p>
 
   <x-action-activator activate="OnElementEvent"
-    target-element="#button2"
-    target-event="click">
-    <x-action topic="data"
-      command="set-data">
-      <script type="application/json">
-        {
-          "provider": "session",
-          "values": {
-            "clicked": "button2"
-          }
-        }
-      </script>
+    target-element="#send"
+    multiple>
+    <x-action topic="interface"
+      command="log">
     </x-action>
+    <div class="input-group mt-1">
+      <input id="message" value="I am message you can change!" class="form-control"/>
+      <div class="input-group-append">
+        <button id="send" class="btn btn-outline-secondary" type="button">Send</button>
+      </div>
+    </div>
   </x-action-activator>
 
+  <div class="collapse" id="loadSource2">
+    <x-markdown>
+      <script type="text/markdown">
+        ```html
+        <x-action-activator activate="OnElementEvent"
+          target-element="#send"
+          multiple>
+          <x-action topic="interface"
+            command="log">
+          </x-action>
+          <div class="input-group">
+            <input id="message" value="I am message you can change!" class="form-control"/>
+            <div class="input-group-append">
+              <button id="send" class="btn btn-outline-secondary" type="button">Send</button>
+            </div>
+          </div>
+        </x-action-activator>
+        ```
+      </script>
+    </x-markdown>
+  </div>
+
+  <h3>Wrapped Form</h3>
+  <button class="btn btn-light float-end mb-2 ms-2"
+      data-bs-toggle="collapse"
+      data-bs-target="#loadSource3"
+      aria-expanded="false"
+      aria-controls="loadSource3">
+      <i class="ri-code-s-slash-line"></i>
+      Toggle Source
+    </button>
+  <p>An action's data can be entirely derived from a form collection of inputs.</p>
+
+  <x-action-activator activate="OnElementEvent"
+    target-element="#send3"
+    multiple>
+    <x-action topic="interface"
+      command="log">
+    </x-action>
+    <div class="form-group mt-1">
+      <label for="email">Email</label>
+      <input type="email" class="form-control" id="email" value="name@example.com"/>
+      <label for="url">Url</label>
+      <input type="url" class="form-control" id="url" value="https://view.do"/>
+      <label for="select">Select</label>
+      <select class="form-select" id="select" aria-label="Floating label select example">
+        <option selected>Open this select menu</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+      <button type="button" id="send3" class="btn btn-primary mt-2">Send</button>
+    </div>
+  </x-action-activator>
+
+  <div class="collapse" id="loadSource3">
+    <x-markdown>
+      <script type="text/markdown">
+        ```html
+        <x-action-activator activate="OnElementEvent"
+          target-element="#send3"
+          multiple>
+          <x-action topic="interface"
+            command="log">
+          </x-action>
+          <div class="form-group mt-1">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" value="name@example.com"/>
+            <label for="url">Url</label>
+            <input type="url" class="form-control" id="url" value="https://view.do"/>
+            <label for="select">Select</label>
+            <select class="form-select" id="select" aria-label="Floating label select example">
+              <option selected>Open this select menu</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+            <button type="button" id="send3" class="btn btn-primary mt-2">Send</button>
+          </div>
+        </x-action-activator>
+        ```
+      </script>
+    </x-markdown>
+  </div>
+
+  <h2>Unwrapped Elements</h2>
+  <p>In some cases, the element might not be wrappable. The following examples show how to target elements
+    for activating actions without wrapping.</p>
+
+  <h3>Unwrapped Activator</h3>
+  <button class="btn btn-light float-end mb-2 ms-2"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#loadSource4"
+    aria-expanded="false"
+    aria-controls="loadSource4">
+    <i class="ri-code-s-slash-line"></i>
+    Toggle Source
+  </button>
+  <p>This example shows an action that is activated by a button somewhere else on the page.</p>
+
+  <x-action-activator activate="OnElementEvent"
+    target-element="#button4"
+    target-event="click"
+    multiple>
+    <x-action topic="interface"
+      command="log"
+      data-message="You clicked an unwrapped button.">
+    </x-action>
+  </x-action-activator>
   <button class="btn btn-info text-white"
-    id="button2">Not Wrapped</button>
+    id="button4">Not Wrapped</button>
+
+  <div class="collapse"
+    id="loadSource4">
+    <x-markdown>
+      <script type="text/markdown">
+        ````html
+        <x-action-activator activate="OnElementEvent"
+          target-element="#button4"
+          target-event="click"
+          multiple>
+          <x-action topic="interface"
+            command="log"
+            data-message="You clicked an unwrapped button.">
+          </x-action>
+        </x-action-activator>
+        <button class="btn btn-info text-white"
+          id="button4">Not Wrapped</button>
+        ````
+      </script>
+    </x-markdown>
+  </div>
+
+  <h3>Unwrapped Activator, Wrapped Data</h3>
+  <button class="btn btn-light float-end mb-2 ms-2"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#loadSource5"
+    aria-expanded="false"
+    aria-controls="loadSource5">
+    <i class="ri-code-s-slash-line"></i>
+    Toggle Source
+  </button>
+  <p>This example shows an action that is activated by a button somewhere else on the page.</p>
+
+  <x-action-activator activate="OnElementEvent"
+    target-element="#button5"
+    target-event="click"
+    multiple>
+    <x-action topic="interface"
+      command="log"
+      data-message="You clicked an unwrapped button.">
+    </x-action>
+    <x-action topic="interface"
+      command="dir"
+      data-inline="An inline value">
+      <input type="hidden" name="input" value="A hidden input value"/>
+    </x-action>
+  </x-action-activator>
+  <button class="btn btn-info text-white"
+    id="button5">Not Wrapped</button>
+
+  <div class="collapse"
+    id="loadSource5">
+    <x-markdown>
+      <script type="text/markdown">
+        ````html
+        <x-action-activator activate="OnElementEvent"
+          target-element="#button5"
+          target-event="click"
+          multiple>
+          <x-action topic="interface"
+            command="log"
+            data-message="You clicked an unwrapped button.">
+          </x-action>
+          <x-action topic="interface"
+            command="dir"
+            data-inline="An inline value">
+            <input type="hidden" name="input" value="A hidden input value"/>
+          </x-action>
+        </x-action-activator>
+        <button class="btn btn-info text-white"
+          id="button5">Not Wrapped</button>
+        ````
+      </script>
+    </x-markdown>
+  </div>
 
   <footer>
-    <a href="/actions"
-      slot="start">
-      <button class="btn btn-light btn-lg">&lt; Back</button>
-    </a>
-    <a href="/actions"
-      slot="end">
-      <button class="btn btn-primary btn-lg">Actions &gt;</button>
-    </a>
+    <button x-next="/actions"
+      slot="start" class="btn btn-light">&lt; Back</button>
   </footer>
 </div>

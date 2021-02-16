@@ -2,7 +2,7 @@
 
 > The Interface Provider System is a way to make UX actions occur without scripting.
 
-The Interface Provider listens for actions sent through the action-bus and performs those commands.
+The Interface Provider listens for actions sent through actions and performs those commands.
 
 ## Built-in Provider
 

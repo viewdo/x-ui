@@ -1,6 +1,6 @@
 # Analytics Actions
 
-The Analytics Action Listener is configured to handle commands raised to the [Action Bus](/actions/event-bus)
+The Analytics Action Listener is configured to handle commands raised through [Actions Bus](/actions/event-bus)
 to send to all analytics components which can execute functions for any analytics system configured.
 
 Topic: `analytics`
@@ -17,7 +17,7 @@ Topic: `analytics`
 
 Sends the payload to the onEvent handler in x-analytics component.
 
-- **(key:value)[]**\
+* **(key:value)[]**\
   All key-values pairs are sent to the handler.
 
 ```html
@@ -30,7 +30,7 @@ Sends the payload to the onEvent handler in x-analytics component.
 
 Sends the payload to the onEvent handler in x-analytics component.
 
-- **(key:value)[]**\
+* **(key-values)[]**\
   All key-values pairs are sent to the handler.
 
 ```html
@@ -43,7 +43,7 @@ Sends the payload to the onEvent handler in x-analytics component.
 
 Sends the payload to the onEvent handler in x-analytics component.
 
-- **(key:value)[]**\
+* **(key:value)[]**\
   All key-values pairs are sent to the handler.
 
 ```html

@@ -1,3 +1,13 @@
+export const ELEMENTS_TOPIC = 'elements'
+
+export enum ELEMENTS_COMMANDS {
+  ElementToggleClass = 'element-toggle-class',
+  ElementAddClasses = 'element-add-classes',
+  ElementRemoveClasses = 'element-remove-classes',
+  ElementSetAttribute = 'element-set-attribute',
+  ElementRemoveAttribute = 'element-remove-attribute',
+  ElementCallMethod = 'element-call-method',
+}
 
 export enum TIMER_EVENTS {
   OnInterval = 'on-interval',

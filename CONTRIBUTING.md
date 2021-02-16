@@ -129,7 +129,7 @@ To ensure consistency and quality throughout the source code, all code modificat
 
 - No [linting](#lint) errors
 - A [test](#tests) for every possible case introduced by your code change
-- **100%** test coverage
+* **100%** test coverage
 - [Valid commit message(s)](#commit-message-guidelines)
 - Documentation for new features
 - Updated documentation for modified features

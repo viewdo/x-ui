@@ -39,11 +39,11 @@ describe('x-action', () => {
   it('x-action: getAction missing command', async () => {
     const page = await newSpecPage({
       components: [XAction],
-      html: `<x-action topic="routing"></x-action>`,
+      html: `<x-action topic="navigation"></x-action>`,
       supportsShadowDom: false,
     })
     expect(page.root).toEqualHtml(
-      `<x-action topic="routing">
+      `<x-action topic="navigation">
        </x-action>`,
     )
 
@@ -59,11 +59,11 @@ describe('x-action', () => {
   it('x-action: getAction no data', async () => {
     const page = await newSpecPage({
       components: [XAction],
-      html: `<x-action topic="routing" command="go-to"></x-action>`,
+      html: `<x-action topic="navigation" command="go-to"></x-action>`,
       supportsShadowDom: false,
     })
     expect(page.root).toEqualHtml(
-      `<x-action topic="routing" command="go-to">
+      `<x-action topic="navigation" command="go-to">
        </x-action>`,
     )
 
@@ -79,7 +79,7 @@ describe('x-action', () => {
   it('x-action: getAction param data', async () => {
     const page = await newSpecPage({
       components: [XAction],
-      html: `<x-action topic="routing" command="go-to" data-name="Bill"></x-action>`,
+      html: `<x-action topic="navigation" command="go-to" data-name="Bill"></x-action>`,
       supportsShadowDom: false,
     })
 
@@ -125,7 +125,7 @@ describe('x-action', () => {
   it('x-action: getAction data from input', async () => {
     const page = await newSpecPage({
       components: [XAction],
-      html: `<x-action topic="routing" command="go-to">
+      html: `<x-action topic="navigation" command="go-to">
               <input type="text" name="username" value="user1"/>
             </x-action>`,
       supportsShadowDom: false,
@@ -146,7 +146,7 @@ describe('x-action', () => {
   it('x-action: getAction data from hidden input', async () => {
     const page = await newSpecPage({
       components: [XAction],
-      html: `<x-action topic="routing" command="go-to">
+      html: `<x-action topic="navigation" command="go-to">
               <input type="hidden" id="username" value="user1"/>
             </x-action>`,
       supportsShadowDom: false,
@@ -167,7 +167,7 @@ describe('x-action', () => {
   it('x-action: getAction data from checkbox', async () => {
     const page = await newSpecPage({
       components: [XAction],
-      html: `<x-action topic="routing" command="go-to">
+      html: `<x-action topic="navigation" command="go-to">
               <input type="checkbox" id="agree" />
             </x-action>`,
       supportsShadowDom: false,

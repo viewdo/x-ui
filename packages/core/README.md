@@ -25,14 +25,14 @@ Add application features, like: includes, routing, guided navigation, data-bindi
 
 ### Modern
 
-- **Fast:** Lightweight and lightening fast: [No Framework](https://stenciljs.com) & [Lazy Loaded](https://www.imperva.com/learn/performance/lazy-loading)
-- **Extensible:** Provider System to extend data, UI and declarative actions.
-- **Typed:** Built with TypeScript so you can enjoy completely typed components
-- **Portable:** Simple HTML/CSS/JS with [web components](https://developer.mozilla.org/en-US/docs/Web/Web_Components)
+* **Fast:** Lightweight and lightening fast: [No Framework](https://stenciljs.com) & [Lazy Loaded](https://www.imperva.com/learn/performance/lazy-loading)
+* **Extensible:** Provider System to extend data, UI and declarative actions.
+* **Typed:** Built with TypeScript so you can enjoy completely typed components
+* **Portable:** Simple HTML/CSS/JS with [web components](https://developer.mozilla.org/en-US/docs/Web/Web_Components)
 
 ### Thanks to
 
-- **Stencil.js**: [SDK](https://stenciljs.com) for the best way to create web-components
-- **howler.js**: [howler-js](https://github.com/goldfire/howler.js) best audio player on the market
-- **Vime.js**: [media-player](https://vimejs.com) for the awesome video player
-- **SilentMatt**: [expression evaluator](https://github.com/silentmatt/expr-eval) for view condition expressions
+* **Stencil.js**: [SDK](https://stenciljs.com) for the best way to create web-components
+* **howler.js**: [howler-js](https://github.com/goldfire/howler.js) best audio player on the market
+* **Vime.js**: [media-player](https://vimejs.com) for the awesome video player
+* **SilentMatt**: [expression evaluator](https://github.com/silentmatt/expr-eval) for view condition expressions

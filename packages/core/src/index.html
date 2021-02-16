@@ -314,8 +314,8 @@
               content-src="/pages/presentations/demo/video.html">
               <x-action-activator activate="AtTime"
                 time="9.9">
-                <x-action topic="routing"
-                  command="navigate-to"
+                <x-action topic="navigation"
+                  command="go-to"
                   data-url="video-1"> </x-action>
               </x-action-activator>
             </x-view-do>
@@ -325,8 +325,8 @@
               content-src="/pages/presentations/demo/video.html">
               <x-action-activator activate="AtTime"
                 time="9.9">
-                <x-action topic="routing"
-                  command="navigate-to"
+                <x-action topic="navigation"
+                  command="go-to"
                   data-url="video-2"> </x-action>
               </x-action-activator>
             </x-view-do>
@@ -336,8 +336,8 @@
               content-src="/pages/presentations/demo/video.html">
               <x-action-activator activate="AtTime"
                 time="9.9">
-                <x-action topic="routing"
-                  command="navigate-to"
+                <x-action topic="navigation"
+                  command="go-to"
                   data-url="video-3"> </x-action>
               </x-action-activator>
             </x-view-do>
@@ -538,7 +538,7 @@
             </template>
           </x-data-repeat>
         </ul>
-        <x-view-do url="events"
+        <x-view-do url="activation/events"
           visit="optional"
           content-src="/pages/actions/events.html">
           <x-action-activator activate="OnEnter">
@@ -553,7 +553,7 @@
           </x-action-activator>
         </x-view-do>
 
-        <x-view-do url="timed"
+        <x-view-do url="activation/timed"
           visit="optional"
           content-src="/pages/actions/timed.html">
           <x-action-activator activate="AtTime"
@@ -564,7 +564,7 @@
           </x-action-activator>
         </x-view-do>
 
-        <x-view-do url="elements"
+        <x-view-do url="activation/elements"
           visit="optional"
           content-src="/pages/actions/elements.html">
         </x-view-do>

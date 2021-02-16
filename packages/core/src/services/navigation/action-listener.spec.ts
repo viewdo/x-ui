@@ -27,7 +27,7 @@ describe('route-action-listener:', () => {
 
     actionBus.emit(NAVIGATION_TOPIC, {
       topic: NAVIGATION_TOPIC,
-      command: NAVIGATION_COMMANDS.NavigateTo,
+      command: NAVIGATION_COMMANDS.GoTo,
       data: {
         url: '/home',
       },
@@ -37,7 +37,7 @@ describe('route-action-listener:', () => {
 
     actionBus.emit(NAVIGATION_TOPIC, {
       topic: NAVIGATION_TOPIC,
-      command: NAVIGATION_COMMANDS.NavigateTo,
+      command: NAVIGATION_COMMANDS.GoTo,
       data: {
         url: '/home/page1',
       },
@@ -47,7 +47,7 @@ describe('route-action-listener:', () => {
 
     actionBus.emit(NAVIGATION_TOPIC, {
       topic: NAVIGATION_TOPIC,
-      command: NAVIGATION_COMMANDS.NavigateNext,
+      command: NAVIGATION_COMMANDS.GoNext,
     })
 
     expect(subject.history.location.pathname).toBe('/home')
@@ -60,7 +60,7 @@ describe('route-action-listener:', () => {
 
     actionBus.emit(NAVIGATION_TOPIC, {
       topic: NAVIGATION_TOPIC,
-      command: NAVIGATION_COMMANDS.NavigateTo,
+      command: NAVIGATION_COMMANDS.GoTo,
       data: {
         url: '/page1',
       },
@@ -68,7 +68,7 @@ describe('route-action-listener:', () => {
 
     actionBus.emit(NAVIGATION_TOPIC, {
       topic: NAVIGATION_TOPIC,
-      command: NAVIGATION_COMMANDS.NavigateTo,
+      command: NAVIGATION_COMMANDS.GoTo,
       data: {
         url: '/page2',
       },
@@ -78,7 +78,7 @@ describe('route-action-listener:', () => {
 
     actionBus.emit(NAVIGATION_TOPIC, {
       topic: NAVIGATION_TOPIC,
-      command: NAVIGATION_COMMANDS.NavigateBack,
+      command: NAVIGATION_COMMANDS.GoBack,
     })
 
     // TODO: I can't find a way to mock the history back...

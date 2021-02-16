@@ -1,3 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   --primary: #7566a0;
   --secondary: #5b7f95;
@@ -245,6 +249,33 @@ x-ui > x-view {
 
 x-markdown pre {
   clear: both;
+  margin-top: 1rem;
+}
+x-markdown h3 code {
+  font-size: larger;
+  font-weight: 700;
+}
+x-markdown p code {
+  font-size: larger;
+  font-weight: 700;
+}
+x-markdown ul {
+  list-style: none; /* Remove default bullets */
+}
+x-markdown ul li::before {
+  content: "→";
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
+
+x-markdown ul li.required::before {
+  color: red;
+}
+
+x-markdown ul li.data::before {
+  content: "⇶";
 }
 
 .active-route-exact .modal,
@@ -255,7 +286,6 @@ x-view-do .modal {
 x-view.active-route + x-view {
   display: none;
 }
-
 
 x-ui-theme {
   z-index: 1;

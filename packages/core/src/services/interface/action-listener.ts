@@ -1,11 +1,11 @@
-import { MockWindow } from '@stencil/core/mock-doc'
-import { EventAction, IEventActionListener, IEventEmitter } from '../actions'
-import { debugIf } from '../logging'
-import { kebabToCamelCase } from '../utils/string-utils'
-import { INTERFACE_COMMANDS, INTERFACE_TOPIC } from './interfaces'
-import { DefaultInterfaceProvider } from './providers/default'
-import { getInterfaceProvider, setInterfaceProvider } from './providers/factory'
-import { interfaceState } from './state'
+import { MockWindow } from '@stencil/core/mock-doc';
+import { EventAction, IEventActionListener, IEventEmitter } from '../actions';
+import { debugIf } from '../logging';
+import { kebabToCamelCase } from '../utils/string-utils';
+import { INTERFACE_COMMANDS, INTERFACE_TOPIC } from './interfaces';
+import { DefaultInterfaceProvider } from './providers/default';
+import { getInterfaceProvider, setInterfaceProvider } from './providers/factory';
+import { interfaceState } from './state';
 
 export class InterfaceActionListener implements IEventActionListener {
   actionsSubscription!: () => void
@@ -44,6 +44,6 @@ export class InterfaceActionListener implements IEventActionListener {
 
   destroy() {
     this.actionsSubscription()
-    this.defaultProvider.destroy()
+    this.defaultProvider?.destroy()
   }
 }

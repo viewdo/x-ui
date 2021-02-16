@@ -1,17 +1,20 @@
-
 import { newSpecPage } from '@stencil/core/testing';
-import { interfaceState, interfaceStateDispose } from '../../../services';
+import { EventEmitter, IEventEmitter, InterfaceActionListener, interfaceState, interfaceStateDispose } from '../../../services';
 import { XUITheme } from '../x-ui-theme';
 
-
-
 describe('x-ui-theme', () => {
-
-  afterEach(() => {
+  let actionListener: InterfaceActionListener
+  let actionBus: IEventEmitter
+  let eventBus: IEventEmitter
+  beforeEach(() => {
     interfaceStateDispose()
+    actionListener = new InterfaceActionListener()
+    eventBus = new EventEmitter
+    actionBus = new EventEmitter()
   })
 
   it('renders', async () => {
+
     const page = await newSpecPage({
       components: [XUITheme],
       html: `<x-ui-theme></x-ui-theme>`,
@@ -30,24 +33,17 @@ describe('x-ui-theme', () => {
     `);
 
     const subject = page.body.querySelector('x-ui-theme')
-
     subject?.remove()
   })
 
   it('renders with dark preset', async () => {
-    interfaceState.theme = 'dark'
+
     const page = await newSpecPage({
       components: [XUITheme]
     });
 
-    page.win.matchMedia = (query: string) => {
-      const results = page.win.matchMedia(query);
-      return {
-        ...results,
-        matches: true,
-      }
-    }
-
+    actionListener.initialize(page.win, actionBus, eventBus)
+    interfaceState.theme = 'dark'
     page.setContent(`<x-ui-theme></x-ui-theme>`)
 
     await page.waitForChanges()
@@ -70,11 +66,13 @@ describe('x-ui-theme', () => {
     input!.checked = true
     input!.dispatchEvent(new Event('change'));
 
+    await page.waitForChanges()
+
     expect(page.root).toEqualHtml(`
      <x-ui-theme>
         <mock:shadow-root>
           <label class="switch" id="switch">
-            <input aria-label="Change Theme" id="slider" checked="" type="checkbox">
+            <input aria-label="Change Theme" checked="" id="slider" type="checkbox">
             <span class="round slider"></span>
           </label>
         </mock:shadow-root>
@@ -90,12 +88,14 @@ describe('x-ui-theme', () => {
       components: [XUITheme]
     });
 
-    let componentListener!: any
+    actionListener.initialize(page.win, actionBus, eventBus)
+
+    let componentListener: any
     const mediaChanged = (_type: any, listener: any) => {
       componentListener = listener
     }
 
-    const inner = window.matchMedia
+    const inner = page.win.matchMedia
     const replaced = (query: string) => {
       const results = inner(query);
       return {
@@ -124,9 +124,11 @@ describe('x-ui-theme', () => {
 
     expect(page.body.classList.contains('dark')).toBe(true)
 
-    componentListener({
-      matches: false
-    })
+    if (componentListener) {
+      componentListener({
+        matches: false
+      })
+    }
 
     await page.waitForChanges()
 

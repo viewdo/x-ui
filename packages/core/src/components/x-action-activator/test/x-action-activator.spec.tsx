@@ -117,7 +117,7 @@ describe('x-action-activator', () => {
     const page = await newSpecPage({
       components: [XActionActivator, XAction],
       html: `<x-action-activator activate="OnElementEvent" >
-               <a>Click Me </a>
+               <input type="button">Click Me </input>
                <x-action topic="test" command="pass"></x-action>
              </x-action-activator>`,
     })
@@ -127,7 +127,7 @@ describe('x-action-activator', () => {
     const activator = page.body.querySelector('x-action-activator')
     expect(activator).toBeDefined()
 
-    const link = page.body.querySelector('a')
+    const link = page.body.querySelector('input')
 
     let command = null
     actionBus.on('test', (e) => {

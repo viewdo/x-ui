@@ -3,6 +3,7 @@ import {
   actionBus,
   DataListener,
   debugIf,
+  elementsState,
   EventAction,
   eventBus,
   IEventActionListener,
@@ -14,6 +15,7 @@ import {
   RouterService
 } from '../../services';
 import { clearDataProviders } from '../../services/data/providers/factory';
+import { ElementsActionListener } from '../../services/elements/action-listener';
 
 /**
  *  @system routing
@@ -146,15 +148,15 @@ export class XUI {
   }
 
   componentWillLoad() {
-    interfaceState.debug = this.debug
-    interfaceState.animationInterval = this.animationInterval
-    interfaceState.providerTimeout = this.providerTimeout
-
     if (this.debug) {
       log('x-ui: initializing <debug>')
     } else {
       log('x-ui: initializing')
     }
+
+    interfaceState.debug = this.debug
+    interfaceState.providerTimeout = this.providerTimeout
+    elementsState.animationInterval = this.animationInterval
 
     this.actionsSubscription = actionBus.on('*', (_topic, args) => {
       this.actions.emit(args)
@@ -181,11 +183,9 @@ export class XUI {
       v.transition = v.transition || this.transition
     })
 
-    const dataListener = new DataListener()
-    this.addListener('data', dataListener)
-
-    const documentListener = new InterfaceActionListener()
-    this.addListener('document', documentListener)
+    this.addListener('data', new DataListener())
+    this.addListener('interface', new InterfaceActionListener())
+    this.addListener('elements', new ElementsActionListener())
   }
 
   private addListener(name: string, listener: IEventActionListener) {

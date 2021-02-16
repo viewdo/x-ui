@@ -38,8 +38,8 @@ When the parent [**`<x-view>`**](/components/x-view)'s route is activated, befor
 1. Lists all direct-child **`<x-view-do>`** items, one at a time in sequence.
 2. Finds the first unvisited route respecting the **'visit'** requirement or [**'when'** predicate](/expression), if present.
 
-   - **If found**: It pushes the page state to its url, thus activated the child route.
-   - **Otherwise**: The [**`<x-view>`**](/components/x-view) is satisfied and can now render its own contents.
+   * **If found**: It pushes the page state to its url, thus activated the child route.
+   * **Otherwise**: The [**`<x-view>`**](/components/x-view) is satisfied and can now render its own contents.
 
 ## Samples
 

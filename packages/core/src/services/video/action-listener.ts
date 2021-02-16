@@ -1,8 +1,8 @@
-import { MockWindow } from '@stencil/core/mock-doc'
-import { EventAction, IEventEmitter } from '../actions'
-import { debugIf } from '../logging'
-import { VIDEO_COMMANDS, VIDEO_EVENTS, VIDEO_TOPIC } from './interfaces'
-import { onVideoChange, videoState } from './state'
+import { MockWindow } from '@stencil/core/mock-doc';
+import { EventAction, IEventEmitter } from '../actions';
+import { debugIf } from '../logging';
+import { VIDEO_COMMANDS, VIDEO_EVENTS, VIDEO_TOPIC } from './interfaces';
+import { onVideoChange, videoState } from './state';
 
 export class VideoActionListener {
   disposeHandle: () => void
@@ -23,6 +23,37 @@ export class VideoActionListener {
       win.localStorage?.setItem('autoplay', a?.toString())
       eventBus?.emit(VIDEO_EVENTS.AutoPlayChanged, a)
     })
+  }
+
+  private async commandReceived(command: string, data: any) {
+    switch (command) {
+      case VIDEO_COMMANDS.SetAutoPlay: {
+        this.setAutoPlay(data)
+        break
+      }
+
+      case VIDEO_COMMANDS.Play: {
+        await this.play()
+        break
+      }
+
+      case VIDEO_COMMANDS.Pause: {
+        this.pause()
+        break
+      }
+
+      case VIDEO_COMMANDS.Resume: {
+        await this.resume()
+        break
+      }
+
+      case VIDEO_COMMANDS.Mute: {
+        this.mute(data.value)
+        break
+      }
+
+      default:
+    }
   }
 
   public setAutoPlay(autoplay: boolean) {
@@ -57,36 +88,6 @@ export class VideoActionListener {
     this.eventBus.emit(VIDEO_EVENTS.Resumed)
   }
 
-  private async commandReceived(command: string, data: any) {
-    switch (command) {
-      case VIDEO_COMMANDS.SetAutoPlay: {
-        await this.setAutoPlay(data)
-        break
-      }
-
-      case VIDEO_COMMANDS.Play: {
-        await this.play()
-        break
-      }
-
-      case VIDEO_COMMANDS.Pause: {
-        this.pause()
-        break
-      }
-
-      case VIDEO_COMMANDS.Resume: {
-        await this.resume()
-        break
-      }
-
-      case VIDEO_COMMANDS.Mute: {
-        this.mute(data.value)
-        break
-      }
-
-      default:
-    }
-  }
 
   destroy() {
     this.disposeHandle?.call(this)

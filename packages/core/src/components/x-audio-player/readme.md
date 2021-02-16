@@ -155,10 +155,10 @@ If audio is set to loop with no deactivation, any new configuration will end it.
 
 Each audio track-request defines when it should be stopped and removed from the queue. This allows for music music to plays between routes. By default, a route-change will empty the queue of any unplayed audio.
 
-- **route**: When the route changes (default for unmarked)
-- **video**: When a video plays
-- **next**: Play/queue until route or another audio is queued.
-- **none**: Play until a new track is played (default for music)
+* **route**: When the route changes (default for unmarked)
+* **video**: When a video plays
+* **next**: Play/queue until route or another audio is queued.
+* **none**: Play until a new track is played (default for music)
 
 ### Track
 

@@ -1,6 +1,5 @@
 import { Component, Element, h, Host, State } from '@stencil/core';
-import { interfaceState } from '../..';
-import { onInterfaceChange } from '../../services';
+import { interfaceState, onInterfaceChange } from '../../services/interface';
 
 @Component({
   tag: 'x-ui-theme',
@@ -20,16 +19,16 @@ export class XUITheme {
       this.toggleDarkTheme(theme === 'dark')
     })
 
-    if (interfaceState.theme === null) {
+    if (interfaceState.theme != null) {
+      this.toggleDarkTheme(interfaceState.theme === 'dark')
+    } else {
       const prefersDark = window?.matchMedia('(prefers-color-scheme: dark)')
       if (prefersDark?.addEventListener) {
-        this.toggleDarkTheme(prefersDark.matches)
         prefersDark.addEventListener('change', (ev) => {
           this.toggleDarkTheme(ev.matches);
         })
+        this.toggleDarkTheme(prefersDark.matches)
       }
-    } else {
-      this.toggleDarkTheme(interfaceState.theme === 'dark')
     }
   }
 

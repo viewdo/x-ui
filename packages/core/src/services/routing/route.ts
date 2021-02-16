@@ -1,9 +1,9 @@
-import { eventBus } from '..'
-import { hasExpression, resolveExpression } from '../data/expression-evaluator'
-import { MatchResults, RouteViewOptions, ROUTE_EVENTS } from './interfaces'
-import { RouterService } from './router'
-import { isAbsolute } from './utils/location-utils'
-import { matchesAreEqual } from './utils/match-path'
+import { eventBus } from '..';
+import { hasExpression, resolveExpression } from '../data/expression-evaluator';
+import { MatchResults, RouteViewOptions, ROUTE_EVENTS } from './interfaces';
+import { RouterService } from './router';
+import { isAbsolute } from './utils/location-utils';
+import { matchesAreEqual } from './utils/match-path';
 
 export class Route {
   private readonly subscription: () => void

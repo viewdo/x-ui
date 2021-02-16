@@ -22,16 +22,16 @@ export class NavigationActionListener {
     debugIf(interfaceState.debug, `route-listener: action received ${JSON.stringify(eventAction)}`)
 
     switch (eventAction.command) {
-      case NAVIGATION_COMMANDS.NavigateNext: {
+      case NAVIGATION_COMMANDS.GoNext: {
         this.router.goToParentRoute()
         break
       }
-      case NAVIGATION_COMMANDS.NavigateTo: {
+      case NAVIGATION_COMMANDS.GoTo: {
         const { url } = eventAction.data as NavigateTo
         this.router.goToRoute(url)
         break
       }
-      case NAVIGATION_COMMANDS.NavigateBack: {
+      case NAVIGATION_COMMANDS.GoBack: {
         this.router.goBack()
         break
       }
