@@ -80,12 +80,12 @@ This component supports HTML string interpolation within a child template tag. E
 
 **Providers:**
 
-- Browser Session: **session**
-- Browser Storage: **storage**
-- Cookies: **cookie**
-- Route: **route**
-- Query: **query**
-- Data Item: **data**
+* Browser Session: **session**
+* Browser Storage: **storage**
+* Cookies: **cookie**
+* Route: **route**
+* Query: **query**
+* Data Item: **data**
 
 > See [data providers](/data/providers) to learn how to add custom data providers.
 

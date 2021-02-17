@@ -19,7 +19,7 @@
       <i x-show-when="didVisit('/routing')"
         class="ri-checkbox-fill float-end text-whitefs-5 ms-2" hidden></i>
       <i class="ri-route-line"></i>
-      Routing
+      URL Routing
     </a>
   </li>
 
@@ -30,7 +30,7 @@
       <i x-show-when="didVisit('/navigation')"
         class="ri-checkbox-fill float-end text-whitefs-5 ms-2" hidden></i>
       <i class="ri-slideshow-2-line"></i>
-      Navigation
+      Smooth Navigation
     </a>
   </li>
 
@@ -41,7 +41,7 @@
       <i x-show-when="didVisit('/content')"
         class="ri-checkbox-fill float-end text-whitefs-5 ms-2" hidden></i>
       <i class="ri-code-box-line"></i>
-      Content
+      Remote Content
     </a>
   </li>
 
@@ -52,7 +52,7 @@
       <i x-show-when="didVisit('/content/data')"
         class="ri-checkbox-fill float-end text-whitefs-5 ms-2" hidden></i>
       <i class="ri-database-2-line"></i>
-      Data Binding
+      Data
     </a>
   </li>
 
@@ -67,14 +67,25 @@
     </a>
   </li>
 
-  <li class="list-group-item">
+  <li hidden class="list-group-item">
+    <a href="/interface" class="stretched-link">
+      <i x-hide-when="didVisit('/interface')"
+        class="ri-checkbox-blank-line float-end fs-5 text-white ms-2"></i>
+      <i x-show-when="didVisit('/interface')"
+        class="ri-checkbox-fill float-end text-whitefs-5 ms-2" hidden></i>
+      <i class="ri-plug-2-line"></i>
+      Extensions
+    </a>
+  </li>
+
+  <li hidden class="list-group-item">
     <a href="/audio" class="stretched-link">
       <i x-hide-when="didVisit('/audio')"
         class="ri-checkbox-blank-line float-end fs-5 text-white ms-2"></i>
       <i x-show-when="didVisit('/audio')"
         class="ri-checkbox-fill float-end text-whitefs-5 ms-2" hidden></i>
       <i class="ri-music-line"></i>
-      Reactive Audio
+      Audio
     </a>
   </li>
 
@@ -85,18 +96,7 @@
       <i x-show-when="didVisit('/video')"
         class="ri-checkbox-fill float-end text-whitefs-5 ms-2" hidden></i>
       <i class="ri-video-line"></i>
-      Interactive Video
-    </a>
-  </li>
-
-  <li hidden class="list-group-item">
-    <a href="/interface" class="stretched-link">
-      <i x-hide-when="didVisit('/interface')"
-        class="ri-checkbox-blank-line float-end fs-5 text-white ms-2"></i>
-      <i x-show-when="didVisit('/interface')"
-        class="ri-checkbox-fill float-end text-whitefs-5 ms-2" hidden></i>
-      <i class="ri-plug-2-line"></i>
-      Plugins & Providers
+      Video
     </a>
   </li>
 

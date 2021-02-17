@@ -19,10 +19,10 @@ This component is the root container for all routing. It provides an entry-point
 
 **Responsibilities:**
 
-- Content navigation settings
-- Event Action Listener Registrations
-- Event Action event delegation to and from the bus
-- Page title
+* Content navigation settings
+* Event Action Listener Registrations
+* Event Action event delegation to and from the bus
+* Page title
 
 For more information on routing, check out the [routing](/routing) documentation. Also, check out the [**`<x-view>`**](/components/x-view) and [**`<x-view-do>`**](/components/x-view-do) components.
 

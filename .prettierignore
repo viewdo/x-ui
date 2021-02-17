@@ -6,3 +6,4 @@ www
 dist
 test
 __mock__
+*.md

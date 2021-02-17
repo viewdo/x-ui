@@ -4,37 +4,53 @@ This element holds the data that **is** the Event Action submitted through [Acti
 
 ## Usage
 
-This element should only ever exists within a parent **`<x-action-activator>`** tag. The parent tag defines how and when the child actions are submitted through [Actions Bus](/actions).
+This element does not activate these actions automatically. They need to be activated through script, or by wrapping them in an **`<x-action-activator>`** tag. The parent tag defines how and when the child actions are submitted through [Actions](/actions).
 
-### In-Attribute Data
+### Attribute Data
+
+For most action-argument data, it is easies to specify them as key-value pairs using the `data-*` attributes within the **`x-action`** tag. The name of the argument should be prefixed with `data-`. A
 
 ```html
-<x-action-activator ...>
-  <x-action topic="<topic>" command="<command>" data='{"arg": "Hello world!"}'></x-action>
-</x-action-activator>
+<x-action topic="<topic>" 
+  command="<command>" 
+  data-(key)="value">
+</x-action>
 ```
 
-#### Child Script Data
+> NOTE: If a listener declares an argument using 'camelCase', it should be converted to 'kebab-case' in HTML, (words separated by dashes, all lowercase). It will be converted to 'camelCase' automatically when activated.
 
-Alternatively, you define the data parameter in a child script tag.
+### Nested Input Data
+
+For most data, it is easy to specify key-value pairs using the `data-*` attributes within the **`x-action`** tag.
 
 ```html
-<x-action-activator ...>
-  <x-action topic="<topic>" command="<command>">
-    <script type="application/json">
-      {
-        "arg": "Hello world!"
-      }
-    </script>
-  </x-action>
-</x-action-activator>
+<x-action topic="<topic>" 
+  command="<command>">
+  <input type="hidden" 
+    name="arg1" 
+    value="Hello World">
+</x-action>
+```
+
+#### JSON Data
+
+For more complex data shapes, you can define the data parameters as JSON in a child script tag.
+
+```html
+<x-action topic="<topic>" command="<command>">
+  <script type="application/json">
+    {
+      "arg1": "Hello world!"
+    }
+  </script>
+</x-action>
 ```
 
 ## Dependencies
 
 ### Depends on
 
-- x-action-activator
+* **`<x-action-activator>`**
 
 ### Graph
 

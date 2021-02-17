@@ -15,12 +15,12 @@ The View component is a child component for the **`<x-ui>`** component for addin
 
 The View Component and its attributes provide the page context & functionality:
 
-- Page title updates
-- Scroll top on navigation
-- Smooth transitions between routes
-- Parameterized data for data-driven routing
-- Page visit tracking
-- Attribute-based conditional show/hide of child elements
+* Page title updates
+* Scroll top on navigation
+* Smooth transitions between routes
+* Parameterized data for data-driven routing
+* Page visit tracking
+* Attribute-based conditional show/hide of child elements
 
 ### Child Views & Routing
 

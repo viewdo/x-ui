@@ -48,12 +48,12 @@ This component supports HTML string interpolation within a child template tag. T
 
 **Providers:**
 
-- Browser Session: **session**
-- Browser Storage: **storage**
-- Cookies: **cookie**
-- Route: **route**
-- Query: **query**
-- Inline Data: **data**
+* **session**: Browser Session
+* **storage**: Browser Storage
+* **cookie**: Cookies
+* **route**: Route
+* **query**: Query
+* **data**: Inline Data
 
 > See [data providers](/data/providers) to learn how to add custom data providers.
 

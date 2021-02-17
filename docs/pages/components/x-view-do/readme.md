@@ -91,24 +91,24 @@ This route will be activated only through navigation. This is helpful for opt-in
 
 #### Special Features
 
-- Supports [audio](/audio) support:
+* Supports [audio](/audio) support:
   - Event-based sounds
   - Background music
   - Voice-overs
-- Supports [actions](/actions):
+* Supports [actions](/actions):
   - At route entrance
   - At a given time
   - At a given user interaction
   - Before route exit
-- Built-in timer & and optional duration:
+* Built-in timer & and optional duration:
   - Synced to video (respecting scrub, pause, etc)
   - Based on time elapsed since entrance
   - Hide and show elements at certain times
   - Time-based animation class toggling
   - Time-based navigation or when the video ends.
-- Automatic visibility resolution for child elements using special attributes.
-- Automatic next and back handlers for child elements using special attributes.
-- Automatic time/percentage value insertion for child elements using special attributes.
+* Automatic visibility resolution for child elements using special attributes.
+* Automatic next and back handlers for child elements using special attributes.
+* Automatic time/percentage value insertion for child elements using special attributes.
 
 ### Routing & Guided Navigation
 

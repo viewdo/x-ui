@@ -42,10 +42,10 @@ The following demonstrates how to load a track, and wait 10 seconds until it pla
 
 #### Discard
 
-- video: when any video plays (default for sound)
-- state: state changes
-- event: wait for a stop event (or any other activation)
-- none: loop until stopped or updated by new state (default for music)
+* video: when any video plays (default for sound)
+* state: state changes
+* event: wait for a stop event (or any other activation)
+* none: loop until stopped or updated by new state (default for music)
 
 #### Track
 

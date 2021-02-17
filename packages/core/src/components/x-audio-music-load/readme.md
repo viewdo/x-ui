@@ -39,10 +39,10 @@ This component declares audio used within this **`<x-view-do>`** route. The **`<
 
 #### Discard
 
-- video: when any video plays (default for sound)
-- state: state changes
-- event: wait for a stop event (or any other activation)
-- none: loop until stopped or updated by new state (default for music)
+* video: when any video plays (default for sound)
+* state: state changes
+* event: wait for a stop event (or any other activation)
+* none: loop until stopped or updated by new state (default for music)
 
 #### Track
 

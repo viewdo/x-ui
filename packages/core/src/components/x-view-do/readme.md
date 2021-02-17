@@ -89,26 +89,31 @@ This route will be activated only through navigation. This is helpful for opt-in
 
 > **Important**: When linking from a **`<x-view-do>`** to another any other route, you using a **`<x-link>`**, validation and visit tracking is not performed. To mark the current route 'visited', add a **'x-next'** attribute to any clickable element.
 
-#### Special Features
+#### Presentation Features
 
-- Supports [audio](/audio) support:
-  - Event-based sounds
-  - Background music
-  - Voice-overs
-- Supports [actions](/actions):
-  - At route entrance
-  - At a given time
-  - At a given user interaction
-  - Before route exit
-- Built-in timer & and optional duration:
-  - Synced to video (respecting scrub, pause, etc)
-  - Based on time elapsed since entrance
-  - Hide and show elements at certain times
-  - Time-based animation class toggling
-  - Time-based navigation or when the video ends.
-- Automatic visibility resolution for child elements using special attributes.
-- Automatic next and back handlers for child elements using special attributes.
-- Automatic time/percentage value insertion for child elements using special attributes.
+* Supports [video](/video) support:
+  * Video Timer becomes basis for Timed Actions
+  * Auto-Play w/Global Setting
+  * Auto-Next available on Video End
+  * Video Supports Global Audio Preferences
+* Supports [audio](/audio) support:
+  * Time & Event-based Sounds * Voice Over
+  * Background Music
+  * Voice-overs
+* Supports [actions](/actions):
+  * At route entrance
+  * At a given time
+  * At a given user interaction
+  * Before route exit
+* Built-in timer & and optional duration:
+  * Synced to video (respecting scrub, pause, etc)
+  * Based on time elapsed since entrance
+  * Hide and show elements at certain times
+  * Time-based animation class toggling
+  * Time-based navigation or when the video ends.
+* Automatic visibility resolution for child elements using special attributes.
+* Automatic next and back handlers for child elements using special attributes.
+* Automatic time/percentage value insertion for child elements using special attributes.
 
 ### Routing & Guided Navigation
 
