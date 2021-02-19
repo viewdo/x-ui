@@ -12,14 +12,14 @@ Interface Providers
 
 <a href="/interface/elements"
   anchor-class="btn btn-info text-white">
-<i class="ri-code-box-line"></i>
-How to Update Elements
+  <i class="ri-code-box-line"></i>
+  How to Update Elements
 </a>
 
 ## Alerts, Toasts and Modals
 
 <a href="/interface/tools"
   anchor-class="btn btn-info text-white">
-<i class="ri-hard-drive-line"></i>
-Other UX Tools
+  <i class="ri-hard-drive-line"></i>
+  Other UX Tools
 </a>

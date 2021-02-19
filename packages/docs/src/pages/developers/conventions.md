@@ -8,7 +8,7 @@ Only properties of type `boolean`, `string` or `number` are reflected as an
 
 The presence of a boolean attribute indicate the value of its property is `true`. Its absence indicates that the value of the property is `false`. The value of boolean attributes is ignored, only their presence or absence is relevant.
 
-```
+```html
 <x-include></x-include>
 <!-- "no-render" is false -->
 <!-- -->

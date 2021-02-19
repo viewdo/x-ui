@@ -1,8 +1,11 @@
-<x-content-reference script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
-  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
+<x-content-reference
+  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
+  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css"
+>
 </x-content-reference>
 <x-content-reference
-  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
+  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js"
+>
 </x-content-reference>
 <div class="container container-fluid mx-auto">
   <h1>Get Started</h1>
@@ -16,20 +19,20 @@
     <h3>CDN Example</h3>
     <p>You opted for the CDN reference.</p>
     <div>
-      <a href="/start/npm"
-        class="btn btn-secondary float-end"> Switch to NPM </a>
-      <button class="btn btn-light"
+      <a href="/start/npm" class="btn btn-secondary float-end"> Switch to NPM </a>
+      <button
+        class="btn btn-light"
         type="button"
         data-bs-toggle="collapse"
         data-bs-target="#loadCDNSource"
         aria-expanded="false"
-        aria-controls="loadCDNSource">
+        aria-controls="loadCDNSource"
+      >
         <i class="ri-code-s-slash-line"></i>
         Toggle Source
       </button>
     </div>
-    <div class="collapse"
-      id="loadCDNSource">
+    <div class="collapse" id="loadCDNSource">
       <x-content-md src="/pages/start/ref-cdn.md"> </x-content-md>
     </div>
   </div>
@@ -38,70 +41,59 @@
     <h3>NPM Example</h3>
     <p>You opted for a local reference.</p>
     <div>
-      <a href="/start/cdn"
-        class="btn btn-secondary float-end"> Switch to CDN </a>
-      <button class="btn btn-light"
+      <a href="/start/cdn" class="btn btn-secondary float-end"> Switch to CDN </a>
+      <button
+        class="btn btn-light"
         type="button"
         data-bs-toggle="collapse"
         data-bs-target="#loadCDNSource"
         aria-expanded="false"
-        aria-controls="loadCDNSource">
+        aria-controls="loadCDNSource"
+      >
         <i class="ri-code-s-slash-line"></i>
         Toggle Source
       </button>
     </div>
 
-    <div class="collapse"
-      id="loadCDNSource">
+    <div class="collapse" id="loadCDNSource">
       <x-content-md src="/pages/start/ref-npm.md"> </x-content-md>
     </div>
   </div>
 
   <h2>Learn More</h2>
-  <p>You can use most of these elements independently, but some only work as
-    children of other elements.</p>
+  <p>You can use most of these elements independently, but some only work as children of other elements.</p>
 
   <h3>Jump to Topic</h3>
   <p>You can skip ahead to the are you are most interested in.</p>
   <div class="button-nav">
-    <a href="/routing"
-      class="btn btn-info text-white">
+    <a href="/routing" class="btn btn-info text-white">
       <i class="ri-route-line"></i>
       Routing
     </a>
-    <a href="/navigation"
-      class="btn btn-info text-white">
+    <a href="/navigation" class="btn btn-info text-white">
       <i class="ri-route-line"></i>
       Navigation
     </a>
-    <a href="/content"
-      class="btn btn-info text-white">
+    <a href="/content" class="btn btn-info text-white">
       <i class="ri-code-box-line"></i>
       Content
     </a>
-    <a href="/data"
-      class="btn btn-info text-white">
+    <a href="/data" class="btn btn-info text-white">
       <i class="ri-database-2-line"></i>
       Data
     </a>
-    <a href="/actions"
-      class="btn btn-info text-white">
+    <a href="/actions" class="btn btn-info text-white">
       <i class="ri-flashlight-line"></i>
       Actions
     </a>
-    <a hidden href="/presentations"
-      class="btn btn-info text-white">
+    <a hidden href="/presentations" class="btn btn-info text-white">
       <i class="ri-slideshow-2-line"></i>
       Presentations
     </a>
   </div>
 
   <footer>
-    <a slot="start"
-      href="/home"
-      class="btn btn-light btn-lg">&lt; Home</a>
-    <a slot="end"
-      href="/routing"
-      class="btn btn-primary btn-lg">Routing &gt; </a>
+    <a slot="start" href="/home" class="btn btn-light btn-lg">&lt; Home</a>
+    <a slot="end" href="/routing" class="btn btn-primary btn-lg">Routing &gt; </a>
   </footer>
 </div>

@@ -107,7 +107,7 @@ Open a modal (if the interface provider supports it)
 
 ### modal-close
 
-<fill in>
+    <fill in>
 
 **data:**
 
@@ -116,7 +116,7 @@ Open a modal (if the interface provider supports it)
 
 ### alert
 
-<fill in>
+    <fill in>
 
 **data:**
 
@@ -124,7 +124,7 @@ Open a modal (if the interface provider supports it)
 
 ### open-toast
 
-<fill in>
+    <fill in>
 
 **data:**
 

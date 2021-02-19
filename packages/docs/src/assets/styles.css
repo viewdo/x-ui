@@ -93,7 +93,7 @@ a.link-active:link,
 a.link-active:active,
 a.link-active:visited,
 a.link-active * {
-  color: var(--accent)!important;
+  color: var(--accent) !important;
   font-weight: 600;
 }
 
@@ -207,7 +207,6 @@ table {
   border: solid 2px var(--nav-bg);
   border-collapse: collapse;
   border-spacing: 0;
-
 }
 table thead th {
   background-color: var(--nav-bg);
@@ -272,11 +271,11 @@ x-content-md ul {
 }
 x-content-md ul li {
   list-style-type: none;
-  padding-left: .1em;
+  padding-left: 0.1em;
 }
 
 x-content-md ul li.data::before {
-  content: "⇶";
+  content: '⇶';
 }
 
 x-app-view.active-route + x-app-view {
@@ -310,7 +309,6 @@ footer [slot='end'] {
 footer [slot='start'] {
   float: left;
 }
-
 
 /* Bootstrap ------------------*/
 
@@ -411,7 +409,6 @@ a.btn-info:any-link {
   color: #000;
 }
 
-
 /* setup tooltips */
 .tip {
   display: flex;
@@ -424,10 +421,10 @@ a.btn-info:any-link {
   pointer-events: none;
 }
 .tip span {
-	border: 2px solid var(--accent);
+  border: 2px solid var(--accent);
   border-radius: 2px;
-  background:  var(--background-color);
-  color: var(--text-color)!important;
+  background: var(--background-color);
+  color: var(--text-color) !important;
   padding: 6px 10px;
   white-space: nowrap;
   left: -50%;
@@ -435,27 +432,27 @@ a.btn-info:any-link {
 }
 .tip span.right {
   right: 0;
-  left:auto;
+  left: auto;
 }
 .tip span.left {
   left: 0;
-  right:auto;
+  right: auto;
 }
 
 /* expand */
 .tip:before {
-  transform: scale3d(.2,.2,1);
-  transition: all .2s ease-in-out;
+  transform: scale3d(0.2, 0.2, 1);
+  transition: all 0.2s ease-in-out;
 }
 .tip span {
-  transform: translate3d(0,6px,0);
-  transition: all .1s ease-in-out;
+  transform: translate3d(0, 6px, 0);
+  transition: all 0.1s ease-in-out;
 }
 .tip:hover:before,
 .tip:hover span {
   opacity: 1;
-  transform: scale3d(1,1,1);
+  transform: scale3d(1, 1, 1);
 }
 .tip:hover span {
-  transition: all .2s .1s ease-in-out;
+  transition: all 0.2s 0.1s ease-in-out;
 }

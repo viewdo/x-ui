@@ -1,62 +1,60 @@
-<x-content-reference script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
-  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
+<x-content-reference
+  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
+  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css"
+>
 </x-content-reference>
 <x-content-reference
-  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
+  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js"
+>
 </x-content-reference>
 <div class="container container-fluid mx-auto">
   <h1>Child Routes</h1>
   <p class="lead">Routes, child-routes, their child-routes ad-infinitum.</p>
-  <p>A route is a path segment in the URL. A child-route is a new path segment
-    under that route:</p>
+  <p>A route is a path segment in the URL. A child-route is a new path segment under that route:</p>
   <code class="ms-3"> /route/child-route </code>
 
   <h2>How it Works</h2>
   <p>
     The first-level must be a DIRECT child of the
-    <a href="/components/x-app"><b>&lt;x-app&gt;</b></a> element however, any
-    declared deeper in the HTML will create
+    <a href="/components/x-app"><b>&lt;x-app&gt;</b></a> element however, any declared deeper in the HTML will create
     child-routes.
   </p>
   <p>
     Nested routes are declared statically using the
     <a href="/components/x-app-view"><b>&lt;x-app-view&gt;</b></a> (and
-    <a href="/components/x-app-view-do"><b>&lt;x-app-view-do&gt;</b></a>) elements.
+    <a href="/components/x-app-view-do"><b>&lt;x-app-view-do&gt;</b></a
+    >) elements.
   </p>
 
   <h3>Child Routes Example</h3>
-  <p>Child routes <em>'nested'</em> or <em>'flat'</em> format, depending on your
-    taste.</p>
+  <p>Child routes <em>'nested'</em> or <em>'flat'</em> format, depending on your taste.</p>
   <p>
-    <a hidden
-      href="/routing/examples/nested.html"
-      target="_blank"
-      class="btn btn-secondary float-end">
+    <a hidden href="/routing/examples/nested.html" target="_blank" class="btn btn-secondary float-end">
       <i class="ri-external-link-line"></i>
-      Visit Demo</a>
-    <a href="/routing/child/deep"
-      class="btn btn-secondary">
+      Visit Demo</a
+    >
+    <a href="/routing/child/deep" class="btn btn-secondary">
       <i class="ri-treasure-map-fill"></i>
       Deep Nested Route
     </a>
   </p>
 
   <h4>Nested Declaration</h4>
-  <p>Routes contain child-routes to semantically express their relationship
-    using HTML.</p>
+  <p>Routes contain child-routes to semantically express their relationship using HTML.</p>
   <div>
-    <button class="btn btn-light"
+    <button
+      class="btn btn-light"
       type="button"
       data-bs-toggle="collapse"
       data-bs-target="#semanticSource"
       aria-expanded="false"
-      aria-controls="semanticSource">
+      aria-controls="semanticSource"
+    >
       <i class="ri-code-s-slash-line"></i>
       Toggle Source
     </button>
   </div>
-  <div class="collapse"
-    id="semanticSource">
+  <div class="collapse" id="semanticSource">
     <x-content-md>
       <script type="text/markdown">
         ```html
@@ -70,22 +68,21 @@
   </div>
 
   <h4>Flat Declaration</h4>
-  <p>You can also declare routes without nesting the elements, and use the
-    <b>url</b> path explicitly.
-  </p>
+  <p>You can also declare routes without nesting the elements, and use the <b>url</b> path explicitly.</p>
   <div>
-    <button class="btn btn-light"
+    <button
+      class="btn btn-light"
       type="button"
       data-bs-toggle="collapse"
       data-bs-target="#flatSource"
       aria-expanded="false"
-      aria-controls="flatSource">
+      aria-controls="flatSource"
+    >
       <i class="ri-code-s-slash-line"></i>
       Toggle Source
     </button>
   </div>
-  <div class="collapse"
-    id="flatSource">
+  <div class="collapse" id="flatSource">
     <x-content-md>
       <script type="text/markdown">
         ```html
@@ -98,8 +95,7 @@
   </div>
 
   <footer>
-    <a slot="start"
-      href="/routing">
+    <a slot="start" href="/routing">
       <button class="btn btn-light">&lt; Routing</button>
     </a>
   </footer>

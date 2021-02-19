@@ -1,10 +1,10 @@
-## Framework integrations 👨‍💻
+# Framework integrations 👨‍💻
 
-### Angular
+## Angular
 
-Using `x-ui` elementswithin an Angular project:
+Using `x-ui` elements within an Angular project:
 
-#### Including the Custom Elements Schema
+### Including the Custom Elements Schema
 
 Including the `CUSTOM_ELEMENTS_SCHEMA` in the module allows the use of Web Components in the HTML files. Here is an example of adding it to `AppModule`:
 

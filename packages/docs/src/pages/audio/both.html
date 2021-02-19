@@ -1,28 +1,22 @@
-<x-content-reference script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
-  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
+<x-content-reference
+  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
+  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css"
+>
 </x-content-reference>
 <x-content-reference
-  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
+  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js"
+>
 </x-content-reference>
-<x-audio-music-load
-  mode="load"
-  track-id="music"
-  src="/assets/sample-music-1.mp3">
-</x-audio-music-load>
-<x-audio-sound-load
-  track-id="cheer"
-  src="/assets/crowd-cheer.wav">
-</x-audio-sound-load>
+<x-audio-music-load mode="load" track-id="music" src="/assets/sample-music-1.mp3"> </x-audio-music-load>
+<x-audio-sound-load track-id="cheer" src="/assets/crowd-cheer.wav"> </x-audio-sound-load>
 <div class="container container-fluid mx-auto">
   <h1>Music & Sound</h1>
   <p class="lead">
-    Dual audio layers allow music to play, even across routes while still using
-    sounds activated by interactions or
+    Dual audio layers allow music to play, even across routes while still using sounds activated by interactions or
     time.
   </p>
   <h2>Play music while still reacting to events with sounds!</h2>
-  <p>This technique can be used with animations to create responsive and
-    emissive experiences.</p>
+  <p>This technique can be used with animations to create responsive and emissive experiences.</p>
   <h3>First: Load Music & Sounds</h3>
   <p>
     Again, we pre-load all sounds for a route using the
@@ -33,22 +27,22 @@
     <a href="/components/x-audio-music-load">
       <b>&lt;x-audio-music-load&gt;</b>
     </a>
-    components. This gets the audio ready to play and waits for the start
-    command.
+    components. This gets the audio ready to play and waits for the start command.
   </p>
   <p>
-    <button class="btn btn-light"
+    <button
+      class="btn btn-light"
       type="button"
       data-bs-toggle="collapse"
       data-bs-target="#loadSource"
       aria-expanded="false"
-      aria-controls="loadSource">
+      aria-controls="loadSource"
+    >
       <i class="ri-code-s-slash-line"></i>
       View Route Source
     </button>
   </p>
-  <div class="collapse"
-    id="loadSource">
+  <div class="collapse" id="loadSource">
     <x-content-md>
       <script type="text/markdown">
         ```html
@@ -69,8 +63,7 @@
   <p>
     Again, we play the music by sending an <a href="/actions">event action </a>
     with start command using the
-    <a href="/components/x-action-activator"> <b>&lt;x-action-activator&gt;</b>
-    </a>,
+    <a href="/components/x-action-activator"> <b>&lt;x-action-activator&gt;</b> </a>,
     <a href="/components/x-audio-music-action">
       <b>&lt;x-audio-music-action&gt;</b>
     </a>
@@ -81,42 +74,35 @@
     elements with their command and track-id.
   </p>
   <p>
-    <x-action-activator
-      activate="OnElementEvent"
-      multiple>
-      <x-audio-sound-action
-        command="start"
-        track-id="cheer"></x-audio-sound-action>
+    <x-action-activator activate="OnElementEvent" multiple>
+      <x-audio-sound-action command="start" track-id="cheer"></x-audio-sound-action>
       <button class="btn btn-info text-white">
         <i class="ri-play-circle-line"></i>
         Play Sound
       </button>
     </x-action-activator>
     <x-action-activator activate="OnElementEvent">
-      <x-audio-music-action
-        command="start"
-        track-id="music">
-      </x-audio-music-action>
-      <button type="button"
-        class="btn btn-info text-white">
+      <x-audio-music-action command="start" track-id="music"> </x-audio-music-action>
+      <button type="button" class="btn btn-info text-white">
         <i class="ri-play-circle-line"></i>
         Play Music
       </button>
     </x-action-activator>
   </p>
   <p>
-    <button class="btn btn-light"
+    <button
+      class="btn btn-light"
       type="button"
       data-bs-toggle="collapse"
       data-bs-target="#buttonSource"
       aria-expanded="false"
-      aria-controls="buttonSource">
+      aria-controls="buttonSource"
+    >
       <i class="ri-code-s-slash-line"></i>
       View Buttons Source
     </button>
   </p>
-  <div class="collapse"
-    id="buttonSource">
+  <div class="collapse" id="buttonSource">
     <x-content-md>
       <script type="text/markdown">
         ```html
@@ -137,11 +123,7 @@
   </div>
 
   <footer>
-    <a slot="start"
-      x-back
-      class="btn btn-light btn-lg"> &lt; Back </a>
-    <a slot="end"
-      x-link="/audio/timed"
-      class="btn btn-primary btn-lg"> Continue &gt; </a>
+    <a slot="start" x-back class="btn btn-light btn-lg"> &lt; Back </a>
+    <a slot="end" x-link="/audio/timed" class="btn btn-primary btn-lg"> Continue &gt; </a>
   </footer>
 </div>

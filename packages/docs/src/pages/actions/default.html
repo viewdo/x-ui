@@ -1,32 +1,33 @@
 <x-content-reference
   script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
-  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
+  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css"
+>
 </x-content-reference>
 <x-content-reference
-  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
+  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js"
+>
 </x-content-reference>
 <div class="container container-fluid mx-auto">
   <h1>Declarative Actions</h1>
   <p class="lead">
-    Actions provide a declarative  mechanism for expressing
-    reactive functionality directly in HTML, reducing the need
-    to write and test JavaScript.
+    Actions provide a declarative mechanism for expressing reactive functionality directly in HTML, reducing the need to
+    write and test JavaScript.
   </p>
 
   <h2>Actions</h2>
   <p>
-    Actions could be thought of as commands, that are pre-configured to execute in response to
-    a declared event. Once activated, the action becomes a command for the listener to execute.
+    Actions could be thought of as commands, that are pre-configured to execute in response to a declared event. Once
+    activated, the action becomes a command for the listener to execute.
   </p>
   <p>
-    The topic routes the action to the listener. The command is a function on the listener.
-    The listener executes the command using the action-data as function parameters.
+    The topic routes the action to the listener. The command is a function on the listener. The listener executes the
+    command using the action-data as function parameters.
   </p>
   <p>
-    Actions provide a script-less way to enact functionality in response to a user's actions.
-    They can be used to update data in a store, call an API, or set a cookie. See
-    <a href="#listeners">action listeners</a> below to see what actions you can perform or
-    how to install your own listeners.
+    Actions provide a script-less way to enact functionality in response to a user's actions. They can be used to update
+    data in a store, call an API, or set a cookie. See
+    <a href="#listeners">action listeners</a> below to see what actions you can perform or how to install your own
+    listeners.
   </p>
   <h4>Action Properties:</h4>
   <ul>
@@ -44,21 +45,22 @@
     </li>
   </ul>
   <blockquote>
-    <b>&lt;x-ui/&gt;</b> components
-    use a command/event messaging system for inter-component
-    communication. Actions are commands declared with HTML.
+    <b>&lt;x-ui/&gt;</b> components use a command/event messaging system for inter-component communication. Actions are
+    commands declared with HTML.
   </blockquote>
 
   <h3>Declarative Activation</h3>
-  <button class="btn btn-light float-end mb-2 ms-2"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#loadSource"
-      aria-expanded="false"
-      aria-controls="loadSource">
-      <i class="ri-code-s-slash-line"></i>
-      Toggle Source
-    </button>
+  <button
+    class="btn btn-light float-end mb-2 ms-2"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#loadSource"
+    aria-expanded="false"
+    aria-controls="loadSource"
+  >
+    <i class="ri-code-s-slash-line"></i>
+    Toggle Source
+  </button>
   <p>
     Actions can also be expressed using the
     <a href="/components/x-action"><b>&lt;x-action&gt;</b></a>
@@ -67,99 +69,94 @@
     element to define how and when the actions within are activated.
   </p>
 
-  <div class="collapse"
-    id="loadSource">
+  <div class="collapse" id="loadSource">
     <x-content-md>
       <script type="text/markdown">
-      ````html
-      <x-action-activator activate="...">
-        <x-action topic="interface"
-          command="log"
-          data-message="Testing on-enter action"></x-action>
-      </x-action-activator>
-      ````
+        ```html
+        <x-action-activator activate="...">
+          <x-action topic="interface" command="log" data-message="Testing on-enter action"></x-action>
+        </x-action-activator>
+        ```
       </script>
     </x-content-md>
   </div>
 
   <div class="button-nav">
-    <a href="/actions/activation/events"
-      class="btn btn-info text-white">Event Activation
-    </a>
-    <a href="/actions/activation/timed"
-      class="btn btn-info text-white">Timed Activation
-    </a>
-    <a href="/actions/activation/elements"
-      class="btn btn-info text-white">Element Activation
-    </a>
+    <a href="/actions/activation/events" class="btn btn-info text-white">Event Activation </a>
+    <a href="/actions/activation/timed" class="btn btn-info text-white">Timed Activation </a>
+    <a href="/actions/activation/elements" class="btn btn-info text-white">Element Activation </a>
   </div>
 
   <h3>Script Activation</h3>
-  <button class="btn btn-light float-end mb-2 ms-2"
+  <button
+    class="btn btn-light float-end mb-2 ms-2"
     type="button"
     data-bs-toggle="collapse"
     data-bs-target="#loadManualSource"
     aria-expanded="false"
-    aria-controls="loadManualSource">
+    aria-controls="loadManualSource"
+  >
     <i class="ri-code-s-slash-line"></i>
     Toggle Source
   </button>
   <p>
-    Actions can be sent to the Action Bus using a standard HTML CustomEvent
-    with the properties above, using the event name: <b>x:actions</b>
+    Actions can be sent to the Action Bus using a standard HTML CustomEvent with the properties above, using the event
+    name: <b>x:actions</b>
   </p>
 
   <div class="collapse" id="loadManualSource">
     <x-content-md>
       <script type="text/markdown">
-        ````javascript
+        ```javascript
         const action = new CustomEvent('x:actions', {
           detail: {
-            topic: "<system>",
-            command: "<command>",
+            topic: '<system>',
+            command: '<command>',
             data: {
-              ...args
-            }
+              ...args,
+            },
           },
-        });
-        this.el.ownerDocument.body.dispatchEvent(customEvent);
-        ````
+        })
+        this.el.ownerDocument.body.dispatchEvent(customEvent)
+        ```
       </script>
     </x-content-md>
   </div>
 
   <h3>Mixed Activation</h3>
-  <button class="btn btn-light float-end mb-2 ms-2"
+  <button
+    class="btn btn-light float-end mb-2 ms-2"
     type="button"
     data-bs-toggle="collapse"
     data-bs-target="#loadMixedSource"
     aria-expanded="false"
-    aria-controls="loadMixedSource">
+    aria-controls="loadMixedSource"
+  >
     <i class="ri-code-s-slash-line"></i>
     Toggle Source
   </button>
-  <p>You can also activate an action directly with JavaScript, using the x-action element's <b>activateAction()</b> function.</p>
-  <div id="loadMixedSource"  class="collapse">
+  <p>
+    You can also activate an action directly with JavaScript, using the x-action element's
+    <b>activateAction()</b> function.
+  </p>
+  <div id="loadMixedSource" class="collapse">
     <x-content-md>
       <script type="text/markdown">
-        ````html
-        <x-action topic="interface" id="actionlog"
-          command="console"
-          data-message="Testing on-enter action">
-        </x-action>
-        ````
-        ````javascript
+        ```html
+        <x-action topic="interface" id="actionlog" command="console" data-message="Testing on-enter action"> </x-action>
+        ```
+
+        ```javascript
         await actionlog.activateAction()
-        ````
+        ```
       </script>
     </x-content-md>
   </div>
 
   <h2><a id="listeners">Action Listeners</a></h2>
   <p>
-    Listeners execute functions or perform tasks based
-    on the action commands. Check out the built-in
-    actions in the documentation below.
+    Listeners execute functions or perform tasks based on the action commands. Check out the built-in actions in the
+    documentation below.
   </p>
   <ul>
     <li><a href="/actions/data">Data Actions</a></li>
@@ -173,15 +170,11 @@
   </ul>
 
   <footer>
-    <a slot="start"
-      href="/content">
-      <button class="btn btn-light btn-lg">&lt;
-        Content</button>
+    <a slot="start" href="/content">
+      <button class="btn btn-light btn-lg">&lt; Content</button>
     </a>
-    <a slot="end"
-      href="/audio">
-      <button class="btn btn-primary btn-lg">Audio
-        &gt;</button>
+    <a slot="end" href="/audio">
+      <button class="btn btn-primary btn-lg">Audio &gt;</button>
     </a>
   </footer>
 </div>

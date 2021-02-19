@@ -1,17 +1,16 @@
-<x-content-reference script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
-  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
+<x-content-reference
+  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
+  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css"
+>
 </x-content-reference>
 <x-content-reference
-  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
+  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js"
+>
 </x-content-reference>
-<x-audio-music-load track-id="music"
-  src="/assets/sample-music-1.mp3"
-  discard="none"
-  loop> </x-audio-music-load>
+<x-audio-music-load track-id="music" src="/assets/sample-music-1.mp3" discard="none" loop> </x-audio-music-load>
 <div class="container container-fluid mx-auto">
   <h1>Music</h1>
-  <p class="lead">This page has background music configured. You should start to
-    hear music after a moment.</p>
+  <p class="lead">This page has background music configured. You should start to hear music after a moment.</p>
   <h2>Add music to liven up your content!</h2>
   <p>
     <a href="/components/x-app-view-do"><b>&lt;x-app-view-do&gt;</b></a>
@@ -27,24 +26,24 @@
   </p>
 
   <p>
-    <button class="btn btn-light"
+    <button
+      class="btn btn-light"
       type="button"
       data-bs-toggle="collapse"
       data-bs-target="#loadSource"
       aria-expanded="false"
-      aria-controls="loadSource">
+      aria-controls="loadSource"
+    >
       <i class="ri-code-s-slash-line"></i>
       View Route Source
     </button>
   </p>
-  <div class="collapse"
-    id="loadSource">
+  <div class="collapse" id="loadSource">
     <x-content-md>
       <script type="text/markdown">
         ```html
         <x-app-view-do ...>
-          <x-audio-music-load track-id="music" src="/assets/sample-music-1.mp3" discard="route">
-          </x-audio-music-load>
+          <x-audio-music-load track-id="music" src="/assets/sample-music-1.mp3" discard="route"> </x-audio-music-load>
           ...
         </x-app-view-do>
         ```
@@ -67,56 +66,42 @@
     components.
   </p>
   <p>
-    <x-action-activator activate="OnElementEvent"
-      multiple>
-      <x-audio-music-action
-       command="pause"
-        track-id="music"> </x-audio-music-action>
-      <button type="button"
-        class="btn btn-info text-white">
+    <x-action-activator activate="OnElementEvent" multiple>
+      <x-audio-music-action command="pause" track-id="music"> </x-audio-music-action>
+      <button type="button" class="btn btn-info text-white">
         <i class="ri-pause-circle-line"></i>
         Pause
       </button>
     </x-action-activator>
-    <x-action-activator activate="OnElementEvent"
-      multiple>
-      <x-audio-music-action
-        command="resume"
-        track-id="music">
-      </x-audio-music-action>
-      <button type="button"
-        class="btn btn-info text-white">
+    <x-action-activator activate="OnElementEvent" multiple>
+      <x-audio-music-action command="resume" track-id="music"> </x-audio-music-action>
+      <button type="button" class="btn btn-info text-white">
         <i class="ri-play-circle-line"></i>
         Play
       </button>
     </x-action-activator>
-    <x-action-activator activate="OnElementEvent"
-      multiple>
-      <x-audio-music-action
-        command="seek"
-        track-id="music"
-        value="60">
-      </x-audio-music-action>
-      <button type="button"
-        class="btn btn-info text-white">
+    <x-action-activator activate="OnElementEvent" multiple>
+      <x-audio-music-action command="seek" track-id="music" value="60"> </x-audio-music-action>
+      <button type="button" class="btn btn-info text-white">
         <i class="ri-arrow-right-circle-line"></i>
         Seek to 60 Seconds
       </button>
     </x-action-activator>
   </p>
   <p>
-    <button class="btn btn-light"
+    <button
+      class="btn btn-light"
       type="button"
       data-bs-toggle="collapse"
       data-bs-target="#buttonSource"
       aria-expanded="false"
-      aria-controls="buttonSource">
+      aria-controls="buttonSource"
+    >
       <i class="ri-code-s-slash-line"></i>
       View Buttons Source
     </button>
   </p>
-  <div class="collapse"
-    id="buttonSource">
+  <div class="collapse" id="buttonSource">
     <x-content-md>
       <script type="text/markdown">
         ```html
@@ -154,11 +139,7 @@
   </div>
 
   <footer>
-    <a slot="start"
-      x-back
-      class="btn btn-light">&lt; Music</a>
-    <a slot="end"
-      x-link="/audio/sound"
-      class="btn btn-primary">Continue &gt;</a>
+    <a slot="start" x-back class="btn btn-light">&lt; Music</a>
+    <a slot="end" x-link="/audio/sound" class="btn btn-primary">Continue &gt;</a>
   </footer>
 </div>

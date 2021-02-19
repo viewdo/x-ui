@@ -1,8 +1,11 @@
-<x-content-reference script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
-  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
+<x-content-reference
+  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
+  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css"
+>
 </x-content-reference>
 <x-content-reference
-  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
+  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js"
+>
 </x-content-reference>
 <div class="container container-fluid mx-auto">
   <h1>Navigation</h1>
@@ -10,40 +13,36 @@
 
   <h2>How it Works</h2>
   <p>
-    Regular anchor <b>&lt;a&gt;</b> tags inside the <b>&lt;x-app/&gt;</b> tag
-    will have their click event intercepted for
-    use fast in-place content updates without refreshing the page. rendering by
-    using special
+    Regular anchor <b>&lt;a&gt;</b> tags inside the <b>&lt;x-app/&gt;</b> tag will have their click event intercepted
+    for use fast in-place content updates without refreshing the page. rendering by using special
     <a href="/components/x-app-link?group=navigation"> <b>&lt;x-app-link&gt;</b> </a>
     elements.
   </p>
 
   <h3>Simple Navigation</h3>
   <p>
-    Every link on this page has been intercepted to try first to perform an
-    in-page content fetch, rather than a full
+    Every link on this page has been intercepted to try first to perform an in-page content fetch, rather than a full
     page refresh.
   </p>
   <div>
-    <a hidden
-      href="/routing/examples/simple.html"
-      target="_blank"
-      class="btn btn-secondary float-end">
+    <a hidden href="/routing/examples/simple.html" target="_blank" class="btn btn-secondary float-end">
       <i class="ri-external-link-line"></i>
-      Visit Demo</a>
-    <button class="btn btn-light"
+      Visit Demo</a
+    >
+    <button
+      class="btn btn-light"
       type="button"
       data-bs-toggle="collapse"
       data-bs-target="#loadSource"
       aria-expanded="false"
-      aria-controls="loadSource">
+      aria-controls="loadSource"
+    >
       <i class="ri-code-s-slash-line"></i>
       View Source
     </button>
   </div>
 
-  <div class="collapse"
-    id="loadSource">
+  <div class="collapse" id="loadSource">
     <x-content-md>
       <script type="text/markdown">
         ```html
@@ -62,33 +61,24 @@
 
   <h3>Advanced Navigation Examples</h3>
   <p>
-    Guided navigation creates a back/next format with a convention-based next
-    route automatically determined by the
+    Guided navigation creates a back/next format with a convention-based next route automatically determined by the
     router.
   </p>
 
   <div class="button-nav">
-    <a href="/navigation/guided"
-      class="btn btn-info">
+    <a href="/navigation/guided" class="btn btn-info">
       <i class="ri-gps-line"></i>
       Guided Navigation
     </a>
 
-    <a href="/navigation/stepper"
-      class="btn btn-info">
+    <a href="/navigation/stepper" class="btn btn-info">
       <i class="ri-database-line"></i>
       Stepper / Wizard
     </a>
   </div>
 
   <footer>
-    <a slot="start"
-      href="/routing"
-      class="btn btn-light btn-lg"> &lt; Routing
-    </a>
-    <a slot="end"
-      href="/content"
-      class="btn btn-primary btn-lg"> Content &gt;
-    </a>
+    <a slot="start" href="/routing" class="btn btn-light btn-lg"> &lt; Routing </a>
+    <a slot="end" href="/content" class="btn btn-primary btn-lg"> Content &gt; </a>
   </footer>
 </div>

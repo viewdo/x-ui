@@ -1,39 +1,36 @@
-<x-content-reference script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
-  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
+<x-content-reference
+  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
+  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css"
+>
 </x-content-reference>
 <x-content-reference
-  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
+  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js"
+>
 </x-content-reference>
 <div class="container container-fluid mx-auto">
   <h1>Event Activated Actions</h1>
 
   <h2>Enter & Exit Events</h2>
-  <p>Actions can be activated by the parent `x-app-view-do` element. The enter and exit only apply when the route is matched exactly.</p>
+  <p>
+    Actions can be activated by the parent `x-app-view-do` element. The enter and exit only apply when the route is
+    matched exactly.
+  </p>
   <x-content-md>
     <script type="text/markdown">
       ```html
       <x-action-activator activate="OnEnter">
-        <x-action topic="interface"
-          command="log"
-          data-message="Testing on-enter action"></x-action>
+        <x-action topic="interface" command="log" data-message="Testing on-enter action"></x-action>
       </x-action-activator>
       <x-action-activator activate="OnExit">
-        <x-action topic="interface"
-          command="log"
-          data-message="Testing on-exit action"></x-action>
+        <x-action topic="interface" command="log" data-message="Testing on-exit action"></x-action>
       </x-action-activator>
       ```
     </script>
   </x-content-md>
 
-  <blockquote>
-    You should see log messages in the console. One on entry and one on exit of
-    this page.
-  </blockquote>
+  <blockquote>You should see log messages in the console. One on entry and one on exit of this page.</blockquote>
 
   <footer>
-    <button slot="start"
-      x-next="/actions"
-      class="btn btn-light">&lt; Back</button>
+    <button slot="start" x-next="/actions" class="btn btn-light">&lt; Back</button>
   </footer>
 </div>
