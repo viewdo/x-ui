@@ -156,7 +156,7 @@ export class XAppViewDo {
       this.pageTitle,
       this.transition || this.parentView.transition || null,
       this.scrollTopOffset || 0,
-      (match) => {
+      (match:MatchResults|null) => {
         this.match = match
       },
     )

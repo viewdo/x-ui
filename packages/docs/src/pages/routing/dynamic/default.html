@@ -1,9 +1,9 @@
-<x-use
+<x-content-reference
   script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
   style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css"
 >
-</x-use>
-<x-use script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js"> </x-use>
+</x-content-reference>
+<x-content-reference script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js"> </x-content-reference>
 <div class="container container-fluid mx-auto">
   <h1>Dynamic Routes</h1>
   <p class="lead">Data-driven, dynamic routing for HTML.</p>
@@ -12,8 +12,8 @@
   <p>
     This router supports segment and query-string variables and we provide a simple, declarative method for using that
     data in your application. By using special (Node.js Express-based) notation in the
-    <a href="/components/x-view">
-      <b>&lt;x-view&gt;</b>
+    <a href="/components/x-app-view">
+      <b>&lt;x-app-view&gt;</b>
     </a>
     element's <b>URL</b> attribute, the route data becomes available in our unified
     <a href="/data/expressions">data expression</a> system.
@@ -65,20 +65,20 @@
     </button>
   </div>
   <div class="collapse" id="loadSource">
-    <x-markdown>
+    <x-content-md>
       <script type="text/markdown">
         ```html
-        <x-view url="/data" page-title="Data List">
-          <x-view url="/item/:foodKey" page-title="{route:foodKey} Details">
+        <x-app-view url="/data" page-title="Data List">
+          <x-app-view url="/item/:foodKey" page-title="{route:foodKey} Details">
             ... content that uses foodKey to render ...
-          </x-view>
+          </x-app-view>
 
           <a href="/routing/dynamic/item/cake">Cake</a>
           <a href="/routing/dynamic/item/wine">Wine</a>
-        </x-view>
+        </x-app-view>
         ```
       </script>
-    </x-markdown>
+    </x-content-md>
   </div>
 
   <footer>

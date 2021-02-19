@@ -14,16 +14,22 @@ const config: Config = {
     root: '../../docs',
   },
   outputTargets: []
-
 }
 
 const wwwOutput: any = {
   type: 'www',
   dir: '../../docs',
-  buildDir: 'dist',
+  buildDir: 'js',
   empty: false,
   serviceWorker: null,
-  indexHtml: 'index.html'
+  indexHtml: 'index.html',
+  copy: [
+    {
+      src: 'pages',
+      dest: '.',
+      keepDirStructure: true,
+    },
+  ]
 }
 
 // if (!config.devMode) {

@@ -78,14 +78,14 @@ export class XDataProviderCookie {
 
   componentDidLoad() {
     if (!this.hide) {
-      const acceptElement = this.el.querySelector('[x-accept]')
-      acceptElement?.addEventListener('click', async (e) => {
+      const acceptElement = this.el.querySelector('*[x-accept]')
+      acceptElement?.addEventListener('click', async (e:any) => {
         e.preventDefault()
         await this.handleConsentResponse(true)
       })
 
-      const rejectElement = this.el.querySelector('[x-reject]')
-      rejectElement?.addEventListener('click', async (e) => {
+      const rejectElement = this.el.querySelector('*[x-reject]')
+      rejectElement?.addEventListener('click', async (e:any) => {
         e.preventDefault()
         await this.handleConsentResponse(false)
       })

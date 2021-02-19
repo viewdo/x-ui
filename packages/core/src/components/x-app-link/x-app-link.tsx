@@ -3,6 +3,7 @@ import { debugIf, eventBus, MatchResults, RouterService, ROUTE_EVENTS } from '..
 
 /**
  *  @system navigation
+ *  @system routing
  */
 @Component({
   tag: 'x-app-link',

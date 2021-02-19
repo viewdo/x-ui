@@ -1,9 +1,9 @@
-<x-use script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
+<x-content-reference script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
   style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
-</x-use>
-<x-use
+</x-content-reference>
+<x-content-reference
   script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
-</x-use>
+</x-content-reference>
 <div class="container container-fluid mx-auto">
   <h1>Routing</h1>
   <p class="lead">
@@ -21,12 +21,12 @@
   <h2>How it works</h2>
   <p>
     By wrapping content in an
-    <a href="/components/x-view">
-      <b>&lt;x-view&gt;</b>
+    <a href="/components/x-app-view">
+      <b>&lt;x-app-view&gt;</b>
     </a>
     or
-    <a href="/components/x-view-do">
-      <b>&lt;x-view-do&gt;</b>
+    <a href="/components/x-app-view-do">
+      <b>&lt;x-app-view-do&gt;</b>
     </a>
     elements and setting the <b>url</b>, the contained-content won't be
     displayed until the URL path matches the path
@@ -64,11 +64,11 @@
   </div>
   <div class="collapse"
     id="loadSource">
-    <x-markdown>
+    <x-content-md>
       <script type="text/markdown">
         ```html
-        <x-ui app-title="My HTML App" start-url="home" mode="hash">
-          <x-view url="home" page-title="Home">
+        <x-app app-title="My HTML App" start-url="home" mode="hash">
+          <x-app-view url="home" page-title="Home">
             <div class="container" slot="content">
               <h1>Home</h1>
               <hr />
@@ -78,7 +78,7 @@
               <a href="home/nested">Nested Page</a>
               <a href="about">Sibling Page</a>
             </div>
-            <x-view url="nested" page-title="Nested" x-cloak>
+            <x-app-view url="nested" page-title="Nested" x-cloak>
               <div class="container" slot="content">
                 <h1>Nested</h1>
                 <hr />
@@ -86,19 +86,19 @@
 
                 <a href="">Back to Home</a>
               </div>
-            </x-view>
-          </x-view>
-          <x-view url="about" page-title="About" x-cloak>
+            </x-app-view>
+          </x-app-view>
+          <x-app-view url="about" page-title="About" x-cloak>
             <div class="container" slot="content">
               <h1>Sibling Page</h1>
               <h2>You now have a multi-page app!</h2>
               <a href="">Back to Home</a>
             </div>
-          </x-view>
-        </x-ui>
+          </x-app-view>
+        </x-app>
         ```
       </script>
-    </x-markdown>
+    </x-content-md>
     <blockquote>
       <b>PRO-TIP:</b> Content that that should only appear on a route, and not a
       child-route should be inserted using

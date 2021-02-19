@@ -51,7 +51,7 @@
         /*   visibility: visible; */
       }
 
-      .step x-view-do {
+      .step x-app-view-do {
         margin-left: 10px;
       }
 
@@ -115,11 +115,11 @@
   </head>
 
   <body>
-    <x-ui app-title="My HTML App" start-url="home" mode="hash"
+    <x-app app-title="My HTML App" start-url="home" mode="hash"
           class="container">
       <h1 class="mt-3">No-Code Stepper</h1>
 
-      <x-view url="home" page-title="Home">
+      <x-app-view url="home" page-title="Home">
         <h2>Home</h2>
         <div slot="content">
           <p>Click the link below to begin.</p>
@@ -129,12 +129,12 @@
           <a class="btn btn-light" href="/survey/step-1" hidden
              x-show-when="{storage:food}">Retake Survey</a>
         </div>
-      </x-view>
+      </x-app-view>
 
-      <x-view url="survey" page-title="Survey" x-cloak>
-        <x-use
+      <x-app-view url="survey" page-title="Survey" x-cloak>
+        <x-content-reference
                style-src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css">
-        </x-use>
+        </x-content-reference>
         <h2>Survey</h2>
         <div class="step" x-class="completed" x-class-when="{storage:nickname}">
           <div class="stepper">
@@ -148,7 +148,7 @@
                 <a href="/survey/step-1">✔️</a>
               </span>
             </h3>
-            <x-view-do when="!{storage:nickname}" url="step-1"
+            <x-app-view-do when="!{storage:nickname}" url="step-1"
                        page-title="Step 1">
               <div slot="content" class="form-group">
                 <label class="form-label" for="name">Nick Name</label>
@@ -159,7 +159,7 @@
 
                 <xa class="btn btn-primary" x-next="step-2"> Next </xa>
               </div>
-            </x-view-do>
+            </x-app-view-do>
           </div>
         </div>
         <div class="step" x-class="completed" x-class-when="{storage:show}">
@@ -174,7 +174,7 @@
                 <a href="/survey/step-2">✔️</a>
               </span>
             </h3>
-            <x-view-do when="!{storage:show}" url="step-2" page-title="Step 2">
+            <x-app-view-do when="!{storage:show}" url="step-2" page-title="Step 2">
               <div slot="content">
                 <label class="form-label" for="show">TV Show</label>
                 <input type="text" required id="show" class="form-control mb-3"
@@ -183,7 +183,7 @@
                        x-value-from="{storage:show}" tabindex="0" />
                 <a class="btn btn-primary" x-next="step-3">Next</a>
               </div>
-            </x-view-do>
+            </x-app-view-do>
           </div>
         </div>
         <div class="step" x-class="completed" x-class-when="{storage:food}">
@@ -197,7 +197,7 @@
                 <a href="/survey/step-3">✔️</a>
               </span>
             </h3>
-            <x-view-do when="!{storage:food}" url="step-3" page-title="Step 3">
+            <x-app-view-do when="!{storage:food}" url="step-3" page-title="Step 3">
               <div slot="content">
                 <label class="form-label" for="show">Food or Snack</label>
                 <input type="text" required id="food" class="form-control mb-3"
@@ -207,7 +207,7 @@
 
                 <a class="btn btn-primary" x-next>Next</a>
               </div>
-            </x-view-do>
+            </x-app-view-do>
           </div>
         </div>
 
@@ -215,8 +215,8 @@
           <p>Thank you for completing our survey.</p>
           <a class="btn btn-light" href="/home">Return Home </a>
         </div>
-      </x-view>
-    </x-ui>
+      </x-app-view>
+    </x-app>
   </body>
 
 </html>

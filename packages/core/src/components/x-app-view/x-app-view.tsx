@@ -171,7 +171,7 @@ export class XAppView {
   }
 
   private async activateView(url: string) {
-    this.el.querySelectorAll('[no-render]').forEach((el) => {
+    this.el.querySelectorAll('[no-render]').forEach((el:any) => {
       el.removeAttribute('no-render')
     })
     markVisit(url)

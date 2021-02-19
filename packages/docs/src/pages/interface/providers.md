@@ -133,8 +133,8 @@ export class MyInterfaceProvider {
 Then just include your component somewhere on the page:
 
 ```html
-<x-ui>
+<x-app>
   ...
   <my-interface-provider></my-interface-provider
-></x-ui>
+></x-app>
 ```

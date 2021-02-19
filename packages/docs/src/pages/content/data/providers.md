@@ -92,7 +92,7 @@ To notify the system that your underlying data has changed, the interface includ
 ### Sample Data Provider
 
 ```typescript
-import { DATA_EVENTS, IDataProvider, EventEmitter } from '@viewdo/x-ui'
+import { DATA_EVENTS, IDataProvider, EventEmitter } from '@viewdo/x-app'
 
 export class MyProvider implements IDataProvider {
   data = {}
@@ -175,8 +175,8 @@ export class MyDataProvider {
 Then just include your component somewhere on the page:
 
 ```html
-<x-ui>
+<x-app>
   ...
   <my-data-provider></my-data-provider
-></x-ui>
+></x-app>
 ```

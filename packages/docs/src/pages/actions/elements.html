@@ -1,9 +1,9 @@
-<x-use script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
+<x-content-reference script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
   style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
-</x-use>
-<x-use
+</x-content-reference>
+<x-content-reference
   script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
-</x-use>
+</x-content-reference>
 <div class="container container-fluid mx-auto">
   <h1>Element Activated Actions</h1>
   <p>Element activation works by attaching an event-listener to specified element.</p>
@@ -38,7 +38,7 @@
 
   <div class="collapse mt-1"
     id="loadSource1">
-    <x-markdown>
+    <x-content-md>
       <script type="text/markdown">
         ```html
         <x-action-activator multiple>
@@ -50,7 +50,7 @@
         </x-action-activator>
         ```
       </script>
-    </x-markdown>
+    </x-content-md>
   </div>
 
   <h3>Wrapped Input</h3>
@@ -79,7 +79,7 @@
   </x-action-activator>
 
   <div class="collapse" id="loadSource2">
-    <x-markdown>
+    <x-content-md>
       <script type="text/markdown">
         ```html
         <x-action-activator activate="OnElementEvent"
@@ -97,7 +97,7 @@
         </x-action-activator>
         ```
       </script>
-    </x-markdown>
+    </x-content-md>
   </div>
 
   <h3>Wrapped Form</h3>
@@ -134,7 +134,7 @@
   </x-action-activator>
 
   <div class="collapse" id="loadSource3">
-    <x-markdown>
+    <x-content-md>
       <script type="text/markdown">
         ```html
         <x-action-activator activate="OnElementEvent"
@@ -160,7 +160,7 @@
         </x-action-activator>
         ```
       </script>
-    </x-markdown>
+    </x-content-md>
   </div>
 
   <h2>Unwrapped Elements</h2>
@@ -193,7 +193,7 @@
 
   <div class="collapse"
     id="loadSource4">
-    <x-markdown>
+    <x-content-md>
       <script type="text/markdown">
         ````html
         <x-action-activator activate="OnElementEvent"
@@ -209,7 +209,7 @@
           id="button4">Not Wrapped</button>
         ````
       </script>
-    </x-markdown>
+    </x-content-md>
   </div>
 
   <h3>Unwrapped Activator, Wrapped Data</h3>
@@ -243,7 +243,7 @@
 
   <div class="collapse"
     id="loadSource5">
-    <x-markdown>
+    <x-content-md>
       <script type="text/markdown">
         ````html
         <x-action-activator activate="OnElementEvent"
@@ -264,7 +264,7 @@
           id="button5">Not Wrapped</button>
         ````
       </script>
-    </x-markdown>
+    </x-content-md>
   </div>
 
   <footer>

@@ -86,7 +86,7 @@
 
   <body>
     <x-app start-url="/home"
-      app-title="<x-app/> :: view.DO"
+      app-title="<x-ui/> :: view.DO"
       transition="animate__animated animate__fadeIn">
       <x-app-theme></x-app-theme>
       <x-content-reference
@@ -99,7 +99,7 @@
           <h1 class="navbar-brand"><a href="/home"
               data-intro="This page uses the <b>x-app-view</b> component. This component display content for a given route.<br/><br/> Check out the <a href='components/x-app-view'>documentation</a> to see what else you can do."
               title="view.DO Experience UI HTML">
-              &lt;x-app/&gt;
+              &lt;x-ui/&gt;
             </a>
           </h1>
           <div class="dropdown"
@@ -115,7 +115,7 @@
             <ul class="dropdown-menu"
               aria-labelledby="navbarComponentsDropdown">
               <li class="dropdown-item-text fw-bold">App Routing</li>
-              <x-data-repeat items-src="/assets/components.json"
+              <x-data-repeat items-src="/json/components.json"
                 filter="components[docsTags[text='routing']]">
                 <template>
                   <li class="dropdown-item">
@@ -128,7 +128,7 @@
                 <hr class="dropdown-divider" />
               </li>
               <li class="dropdown-item-text fw-bold">Dynamic Content</li>
-              <x-data-repeat items-src="/assets/components.json"
+              <x-data-repeat items-src="/json/components.json"
                 filter="components[docsTags[text='content']]">
                 <template>
                   <li class="dropdown-item">
@@ -141,7 +141,7 @@
                 <hr class="dropdown-divider" />
               </li>
               <li class="dropdown-item-text fw-bold">Data Binding</li>
-              <x-data-repeat items-src="/assets/components.json"
+              <x-data-repeat items-src="/json/components.json"
                 filter="components[docsTags[text='data']]">
                 <template>
                   <li class="dropdown-item">
@@ -154,7 +154,7 @@
                 <hr class="dropdown-divider" />
               </li>
               <li class="dropdown-item-text fw-bold">Declarative Actions</li>
-              <x-data-repeat items-src="/assets/components.json"
+              <x-data-repeat items-src="/json/components.json"
                 filter="components[docsTags[text='actions']]">
                 <template>
                   <li class="dropdown-item">
@@ -334,7 +334,7 @@
           class="component-list list-group btn-group-xl float-end ms-3 mt-4 d-none d-sm-block">
           <li class="list-group-item fw-bold text-capitalize">Routing Components
           </li>
-          <x-data-repeat items-src="/assets/components.json"
+          <x-data-repeat items-src="/json/components.json"
             filter="components[docsTags[text='routing']]">
             <template>
               <li class="list-group-item">
@@ -378,7 +378,7 @@
         <ul x-cloak
           class="component-list list-group btn-group-xl float-end ms-2 mt-4 d-none d-sm-block">
           <li class="list-group-item fw-bold">Navigation Components</li>
-          <x-data-repeat items-src="/assets/components.json"
+          <x-data-repeat items-src="/json/components.json"
             filter="components[docsTags[text='navigation']]">
             <template>
               <li class="list-group-item">
@@ -568,7 +568,7 @@
         <ul x-cloak
           class="component-list list-group btn-group-xl float-end ms-2 mt-4 d-none d-sm-block">
           <li class="list-group-item fw-bold">Content Components</li>
-          <x-data-repeat items-src="/assets/components.json"
+          <x-data-repeat items-src="/json/components.json"
             filter="components[docsTags[text='content']]">
             <template>
               <li class="list-group-item">
@@ -592,7 +592,7 @@
 
       </x-app-view>
 
-      <x-app-view url="data"
+      <x-app-view url="/data"
         page-title="Data Templates"
         content-src="/pages/data/default.html">
         <x-app-view url="expressions"
@@ -630,7 +630,7 @@
         <ul x-cloak
           class="component-list list-group btn-group-xl float-end ms-2 mt-4 d-none d-sm-block">
           <li class="list-group-item fw-bold">Action Components</li>
-          <x-data-repeat items-src="/assets/components.json"
+          <x-data-repeat items-src="/json/components.json"
             filter="components[docsTags[text='actions']]">
             <template>
               <li class="list-group-item">
@@ -683,7 +683,7 @@
         <ul x-cloak
           class="component-list list-group btn-group-xl float-end ms-2 mt-4 d-none d-sm-block">
           <li class="list-group-item fw-bold">Audio Components</li>
-          <x-data-repeat items-src="/assets/components.json"
+          <x-data-repeat items-src="/json/components.json"
             filter="components[docsTags[text='audio']]">
             <template>
               <li class="list-group-item">
@@ -715,7 +715,6 @@
       <x-app-view url="/components/:component"
         page-title="Component: <{route:component}>"
         content-src="/pages/components/default.html">
-
       </x-app-view>
 
       <!-- Not Found Route -->

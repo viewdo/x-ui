@@ -1,9 +1,9 @@
-<x-use script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
+<x-content-reference script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
   style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
-</x-use>
-<x-use
+</x-content-reference>
+<x-content-reference
   script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
-</x-use>
+</x-content-reference>
 <div class="container container-fluid mx-auto">
   <h1>Child Routes</h1>
   <p class="lead">Routes, child-routes, their child-routes ad-infinitum.</p>
@@ -14,14 +14,14 @@
   <h2>How it Works</h2>
   <p>
     The first-level must be a DIRECT child of the
-    <a href="/components/x-ui"><b>&lt;x-ui&gt;</b></a> element however, any
+    <a href="/components/x-app"><b>&lt;x-app&gt;</b></a> element however, any
     declared deeper in the HTML will create
     child-routes.
   </p>
   <p>
     Nested routes are declared statically using the
-    <a href="/components/x-view"><b>&lt;x-view&gt;</b></a> (and
-    <a href="/components/x-view-do"><b>&lt;x-view-do&gt;</b></a>) elements.
+    <a href="/components/x-app-view"><b>&lt;x-app-view&gt;</b></a> (and
+    <a href="/components/x-app-view-do"><b>&lt;x-app-view-do&gt;</b></a>) elements.
   </p>
 
   <h3>Child Routes Example</h3>
@@ -57,16 +57,16 @@
   </div>
   <div class="collapse"
     id="semanticSource">
-    <x-markdown>
+    <x-content-md>
       <script type="text/markdown">
         ```html
-        <x-view url="home" page-title="Home">
-          <x-view url="about" page-title="About"> ... about content ... </x-view>
+        <x-app-view url="home" page-title="Home">
+          <x-app-view url="about" page-title="About"> ... about content ... </x-app-view>
           ... end-url = home/about ...
-        </x-view>
+        </x-app-view>
         ```
       </script>
-    </x-markdown>
+    </x-content-md>
   </div>
 
   <h4>Flat Declaration</h4>
@@ -86,15 +86,15 @@
   </div>
   <div class="collapse"
     id="flatSource">
-    <x-markdown>
+    <x-content-md>
       <script type="text/markdown">
         ```html
-        <x-view url="home" page-title="Home"> ... home content ... </x-view>
+        <x-app-view url="home" page-title="Home"> ... home content ... </x-app-view>
 
-        <x-view url="home/about" page-title="About"> ... about content ... </x-view>
+        <x-app-view url="home/about" page-title="About"> ... about content ... </x-app-view>
         ```
       </script>
-    </x-markdown>
+    </x-content-md>
   </div>
 
   <footer>

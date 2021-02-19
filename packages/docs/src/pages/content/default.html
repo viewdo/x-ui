@@ -1,10 +1,10 @@
-<x-use
+<x-content-reference
   script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
   style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
-</x-use>
-<x-use
+</x-content-reference>
+<x-content-reference
   script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
-</x-use>
+</x-content-reference>
 <div class="container container-fluid mx-auto">
   <h1>Content</h1>
   <p class="lead">
@@ -30,9 +30,9 @@
     </button>
   </div>
   <div class="collapse" id="loadSource">
-    <x-markdown>
+    <x-content-md>
       <script type="text/markdown"></script>
-    </x-markdown>
+    </x-content-md>
   </div>
 
   <h3 style="clear: right">Advanced Content</h3>
