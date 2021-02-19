@@ -9,9 +9,8 @@ import {
   Route,
   warn
 } from '../..';
-import { resolveNext } from '../../services';
+import { ActionActivationStrategy, resolveNext, slugify } from '../../services';
 import { RouterService } from '../../services/routing/router';
-import { createKey } from '../../services/routing/utils/location-utils';
 
 /**
  *  @system routing
@@ -26,7 +25,7 @@ export class XAppView {
   private route!: Route
   @Element() el!: HTMLXAppViewElement
   @State() match: MatchResults | null = null
-  @State() contentKey?: string | null
+  private contentKey?: string | null
 
   /**
    * The router-service instance  (internal)
@@ -95,6 +94,10 @@ export class XAppView {
   private get childViews(): HTMLXAppViewElement[] {
     return Array.from(this.el.querySelectorAll('x-app-view')||[])
       .filter((e) => this.isChild(e))
+  }
+
+  private get actionActivators(): HTMLXActionActivatorElement[] {
+    return Array.from(this.el.querySelectorAll('x-action-activator'))
   }
 
   componentWillLoad() {
@@ -167,10 +170,26 @@ export class XAppView {
       await resolveChildElementXAttributes(this.el)
     } else {
       this.resetContent()
+      if (this.route.previousMatch?.isExact) {
+        await this.activateActions(ActionActivationStrategy.OnExit)
+      }
     }
   }
 
+  private async activateActions(
+    forEvent: ActionActivationStrategy,
+    filter: (activator: HTMLXActionActivatorElement) => boolean = (_a) => true,
+  ) {
+    await Promise.all(this.actionActivators
+      .filter((activator) => activator.activate === forEvent)
+      .filter(filter)
+      .map(async (activator) => {
+        await activator.activateActions()
+      }))
+  }
+
   private async activateView(url: string) {
+
     this.el.querySelectorAll('[no-render]').forEach((el:any) => {
       el.removeAttribute('no-render')
     })
@@ -193,17 +212,18 @@ export class XAppView {
   }
 
   private async fetchHtml() {
-    if (!this.contentSrc || this.contentKey) {
+    if (!this.contentSrc || this.el.querySelector(`#${this.contentKey}`)) {
       return
     }
 
+    this.contentKey = `remote-content-${slugify(this.contentSrc)}`;
+
     try {
       debugIf(this.debug, `x-app-view: ${this.url} fetching content from ${this.contentSrc}`)
-      this.resetContent()
+
       const response = await fetch(this.contentSrc)
       if (response.status === 200) {
         const innerContent = await response.text()
-        this.contentKey = `remote-content-${createKey(10)}`;
         const content = this.el.ownerDocument.createElement('div');
         content.slot = 'content';
         content.id = this.contentKey!
@@ -222,6 +242,12 @@ export class XAppView {
   disconnectedCallback() {
     this.dataChangedSubscription()
     this.route.destroy()
+  }
+
+  async componentDidRender() {
+    debugIf(this.debug, `x-app-view: ${this.url} did render`)
+    if (this.match?.isExact)
+      await this.activateActions(ActionActivationStrategy.OnEnter)
   }
 
   render() {

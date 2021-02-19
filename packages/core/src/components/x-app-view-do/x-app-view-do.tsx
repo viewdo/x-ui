@@ -13,6 +13,7 @@ import {
   VisitStrategy,
   warn
 } from '../..';
+import { slugify } from '../../services';
 import {
   captureXBackClickEvent,
   captureXLinkClickEvent,
@@ -20,7 +21,6 @@ import {
   getChildInputValidity, resolveChildElementXAttributes,
   TIMER_EVENTS
 } from '../../services/elements';
-import { createKey } from '../../services/routing/utils/location-utils';
 
 /**
  *  @system routing
@@ -38,7 +38,7 @@ export class XAppViewDo {
 
   @Element() el!: HTMLXAppViewDoElement
   @State() match: MatchResults | null = null
-  @State() contentKey?: string | null
+  private contentKey?: string | null
 
   /**
    * The title for this view. This is prefixed
@@ -189,27 +189,30 @@ export class XAppViewDo {
       await this.activateView()
       this.el.removeAttribute('hidden')
     } else {
+      if (this.route.previousMatch?.isExact) {
+        await this.activateActions(ActionActivationStrategy.OnExit)
+      }
       this.cleanup()
       this.el.setAttribute('hidden', '')
     }
   }
 
   private async activateView() {
-    await this.activateActions(ActionActivationStrategy.OnEnter)
     await this.setupTimer()
     await this.route.loadCompleted()
     await this.captureChildElements()
   }
 
   private async fetchHtml() {
-    if (!this.contentSrc || this.contentKey) {
+    if (!this.contentSrc || this.el.querySelector(`#${this.contentKey}`)) {
       return
     }
+
+    this.contentKey = `remote-content-${slugify(this.contentSrc)}`
 
     try {
       const response = await fetch(this.contentSrc)
       if (response.status === 200) {
-        this.contentKey = `remote-content-${createKey(10)}`
         const innerContent = await response.text()
         const content = this.el.ownerDocument.createElement('div')
         content.slot = 'content'
@@ -296,8 +299,11 @@ export class XAppViewDo {
     })
   }
 
-  componentDidRender() {
+  async componentDidRender() {
     debugIf(this.debug, `x-app-view-do: ${this.url} did render`)
+    if (this.match?.isExact)
+      await this.activateActions(ActionActivationStrategy.OnEnter)
+
   }
 
   private resetContent() {
@@ -327,7 +333,6 @@ export class XAppViewDo {
     if (valid) {
       recordVisit(this.visit, this.url)
       this.cleanup()
-      await this.activateActions(ActionActivationStrategy.OnExit)
       if (route) {
         this.route.goToRoute(route)
       } else {

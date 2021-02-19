@@ -12,16 +12,12 @@
   <p class="lead">Smart lazy-loading to only download what you use.</p>
   <p>This guide will walk you through the core systems and their components.</p>
 
-  <h2>Create a Reference</h2>
-  <p></p>
+  <h2>First</h2>
+  <p>All you need to start, is a script reference in the head of your page.</p>
 
   <div x-hide-when="'{storage:installed}' != 'cdn'">
-    <h3>CDN Example</h3>
-    <p>You opted for the CDN reference.</p>
-    <div>
-      <a href="/start/npm" class="btn btn-secondary float-end"> Switch to NPM </a>
-      <button
-        class="btn btn-light"
+    <button
+        class="btn btn-light float-end"
         type="button"
         data-bs-toggle="collapse"
         data-bs-target="#loadCDNSource"
@@ -31,10 +27,14 @@
         <i class="ri-code-s-slash-line"></i>
         Toggle Source
       </button>
-    </div>
+    <h3>CDN Example</h3>
+    <p>You opted for the CDN reference. Open the source below to see how it should look in your page.</p>
+
     <div class="collapse" id="loadCDNSource">
       <x-content-md src="/pages/start/ref-cdn.md"> </x-content-md>
     </div>
+    <p>If you would prefer to download the files and serve them from your webserver, opt for the NPM installation method:</p>
+    <a href="/start/npm" class="btn btn-secondary"> Switch to NPM </a>
   </div>
 
   <div x-hide-when="'{storage:installed}' != 'npm'">

@@ -9,19 +9,19 @@ Only properties of type `boolean`, `string` or `number` are reflected as an
 The presence of a boolean attribute indicate the value of its property is `true`. Its absence indicates that the value of the property is `false`. The value of boolean attributes is ignored, only their presence or absence is relevant.
 
 ```html
-<x-include></x-include>
+<x-content-include></x-content-include>
 <!-- "no-render" is false -->
 <!-- -->
-<x-include no-render></x-include>
+<x-content-include no-render></x-content-include>
 <!-- "no-render" is true -->
 <!-- -->
-<x-include no-render="true"></x-include>
+<x-content-include no-render="true"></x-content-include>
 <!-- "no-render" is true -->
 <!-- -->
-<x-include no-render="foo"></x-include>
+<x-content-include no-render="foo"></x-content-include>
 <!-- "no-render" is true -->
 <!-- -->
-<x-include no-render="false"></x-include>
+<x-content-include no-render="false"></x-content-include>
 <!-- !! "no-render" is true -->
 
 ```

@@ -28,6 +28,16 @@
 
   <h2 hidden x-show-when="'{storage:animal}' == 'dog'">I only show up when your spirit-animal is 'dog'</h2>
 
+  <x-data-provider-cookie x-cloak>
+    <div class="container container-fluid" style="clear: both">
+      <p>This site uses just added cookies as a data-provider for demonstration purposes.</p>
+      <p>Here's where the lawyers add all their jargon knowing you will likely not read it.</p>
+      <div>
+        <button type="button" class="btn btn-primary" x-accept>Accept</button>
+        <button type="button" class="btn" x-reject>Decline</button>
+      </div>
+    </div>
+  </x-data-provider-cookie>
   <footer>
     <a slot="start" href="/data">
       <button class="btn btn-light btn-lg">&lt; Data</button>

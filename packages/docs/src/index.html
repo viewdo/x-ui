@@ -74,7 +74,7 @@
           <h1 class="navbar-brand nav-fill">
             <a
               href="/home"
-              data-intro="This page uses the <b>x-app-view</b> component. This component display content for a given route.<br/><br/> Check out the <a href='components/x-app-view'>documentation</a> to see what else you can do."
+              data-intro="This page uses the <b>x-app-view</b> component. This component display content for a given route.<br/><br/> Check out the <a href='/components/x-app-view'>documentation</a> to see what else you can do."
               title="view.DO Experience UI HTML">
               &lt;x-ui/&gt;
             </a>
@@ -83,7 +83,7 @@
             href="https://github.com/viewdo/x-ui"
             title="Source on GitHub"
             target="_blank"
-            class="nav-link fs-2"
+            class="nav-link text-white fs-2"
             rel="noopener">
             <i class="ri-github-line"></i>
           </a>
@@ -91,10 +91,18 @@
             href="https://www.npmjs.com/package/@viewdo/x-ui"
             title="Package on NPM"
             target="_blank"
-            class="nav-link fs-2"
+            class="nav-link text-white fs-2"
             rel="noopener">
             <i class="ri-npmjs-line"></i>
           </a>
+          <x-app-link
+            href="/home/profile"
+            title="Updated your profile"
+            class="nav-link text-white fs-2"
+            data-intro="Go here to change the theme and update preferences."
+          >
+            <i class="ri-user-5-line"></i>
+          </x-app-link>
         </div>
       </nav>
       <nav class="navbar-nav bg-dark sticky-top">
@@ -131,7 +139,7 @@
 
           <x-app-link class="nav-link flex-fill tip" title="All Components" href="/components">
             <i class="ri-settings-6-line"></i>
-            <span>All Components</span>
+            <span class="right">All Components</span>
           </x-app-link>
 
           <!--x-app-link hidden title="Reactive Audio" href="/audio">
@@ -151,15 +159,7 @@
           </x-app-link-->
 
 
-          <x-app-link
-            href="/home/profile"
-            title="Updated your profile"
-            class="nav-link tip"
-            data-intro="Click this to see a <b>x-app-view-do</b> component in action. It creates a special sub-route with automated navigation. It's conditioned using data expressions. <br/><br/> Check out the <a href='components/x-app-view-do'>documentation</a> to see what else you can do."
-          >
-            <i class="ri-user-5-line"></i>
-            <span class="right">Updated your profile</span>
-          </x-app-link>
+
         </div>
       </nav>
       <div x-hide class="container container-fluid container-md mx-auto">
@@ -171,16 +171,7 @@
       </div>
 
       <x-app-view url="/home" page-title="Home" content-src="/pages/home/default.html">
-        <x-data-provider-cookie x-cloak>
-          <div class="container container-fluid" style="clear: both">
-            <p>This site uses cookies for non-nefarious reasons.</p>
-            <p>Are you okay with that?</p>
-            <div>
-              <button type="button" class="btn btn-primary" x-accept>Yes</button>
-              <button type="button" class="btn" x-reject>No Thanks</button>
-            </div>
-          </div>
-        </x-data-provider-cookie>
+
 
         <x-app-view-do
           url="name"
@@ -390,8 +381,7 @@
                 page-title="Step 3"
                 visit="always"
                 next-after="10"
-                content-src="/pages/presentations/demo/step3.html"
-              >
+                content-src="/pages/presentations/demo/step3.html">
               </x-app-view-do>
             </x-app-view>
           </x-app-view>

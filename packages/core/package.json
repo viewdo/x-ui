@@ -17,7 +17,7 @@
   },
   "main": "dist/index.cjs.js",
   "sideEffects": false,
-  "module": "dist/x-ui/x-ui.esm.js",
+  "module": "dist/custom-elements/index.js",
   "es2015": "dist/esm/index.js",
   "es2017": "dist/esm/index.js",
   "types": "dist/types/index.d.ts",

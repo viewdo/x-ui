@@ -22,6 +22,7 @@ body {
   color: var(--text-color);
   text-shadow: 0 0 0.5px var(--dark);
   max-width: 100vw;
+  overflow-x: hidden;
 }
 
 body.dark {
@@ -111,6 +112,11 @@ a.link-active * {
 }
 .dark #viewdo-logo {
   filter: brightness(0) invert(1);
+}
+
+.dark .introjs-tooltip {
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 /* ELEMENTS ------ */
@@ -338,6 +344,10 @@ a.btn-secondary:any-link {
 }
 a.btn-info:any-link {
   color: white;
+}
+
+.form-control {
+  font-size: x-large;
 }
 
 .btn-light {
