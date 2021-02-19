@@ -11,7 +11,7 @@
     "generate": "stencil generate"
   },
   "devDependencies": {
-    "@stencil/core": "^2.0.0"
+    "@stencil/core": "2.4.0"
   },
   "license": "MIT"
 }
