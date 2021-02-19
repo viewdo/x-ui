@@ -31,7 +31,7 @@
   "scripts": {
     "--- development ---": "---------------",
     "start": "npm run watch",
-    "watch": "stencil build --docs --dev --watch --serve --port 3002",
+    "watch": "stencil build --docs --dev --watch --www",
     "gen": "stencil generate",
     "--- production ---": "---------------",
     "build": "stencil build --docs --www",

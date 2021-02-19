@@ -62,7 +62,7 @@ export class XActionActivator {
 
     const values: Record<string,any> = {}
 
-    this.childInputs.forEach((el: any, index) => {
+    this.childInputs.forEach((el: any, index:number) => {
       values[el.id||el.name||index] = el.value || el.checked
     })
 
@@ -101,7 +101,7 @@ export class XActionActivator {
 
     const audioSoundActions = Array.from(this.el.querySelectorAll('x-audio-sound-action'))
 
-    return [...actions, ...audioMusicActions, ...audioSoundActions]
+    return [...actions, ...audioMusicActions, ...audioSoundActions] as IActionElement[]
   }
 
   componentDidLoad() {

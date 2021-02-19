@@ -1,9 +1,9 @@
-<x-use script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
+<x-content-reference script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
   style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
-</x-use>
-<x-use
+</x-content-reference>
+<x-content-reference
   script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
-</x-use>
+</x-content-reference>
 <div class="container container-fluid mx-auto">
   <h1>Deep Nested Routing</h1>
   <p class="lead">Go as deep as you need to.</p>
@@ -11,12 +11,12 @@
   <h2>How it Works</h2>
   <p>
     Each
-    <a href="/components/x-view">
-      <b>&lt;x-view&gt;</b>
+    <a href="/components/x-app-view">
+      <b>&lt;x-app-view&gt;</b>
     </a>
     element looks for child
-    <a href="/components/x-view">
-      <b>&lt;x-view&gt;</b>
+    <a href="/components/x-app-view">
+      <b>&lt;x-app-view&gt;</b>
     </a>
     elements and ensures they have its own URL in their path.
   </p>
@@ -42,19 +42,19 @@
   </div>
   <div class="collapse"
     id="flatSource">
-    <x-markdown>
+    <x-content-md>
       <script type="text/markdown">
         ```html
-        <x-view url="routing" page-title="Routing">
-          <x-view url="nested" page-title="Nested">
-            <x-view url="deep" page-title="Deep Nesting"> ... THIS PAGE .... </x-view>
+        <x-app-view url="routing" page-title="Routing">
+          <x-app-view url="nested" page-title="Nested">
+            <x-app-view url="deep" page-title="Deep Nesting"> ... THIS PAGE .... </x-app-view>
             ... nested content ...
-          </x-view>
+          </x-app-view>
           ... routing content ...
-        </x-view>
+        </x-app-view>
         ```
       </script>
-    </x-markdown>
+    </x-content-md>
   </div>
   <footer>
     <a slot="start"

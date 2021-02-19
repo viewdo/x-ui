@@ -153,7 +153,7 @@ import { x-uiSendMessageButton, keyFramesSendMessage, optionsSendMessage } from 
 export class MyComponent {
   render() {
     return (
-      <x-ui
+      <x-app
 
       />
     )

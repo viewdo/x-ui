@@ -6,5 +6,6 @@ dist
 loader
 .eslintcache
 
-docs/
-examples/data-provider
+/examples
+/docs
+coverage

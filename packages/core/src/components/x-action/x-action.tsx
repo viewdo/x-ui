@@ -54,7 +54,7 @@ export class XAction implements IActionElement {
       Object.assign(data, JSON.parse(this.childScript?.textContent || '{}'))
     }
 
-    this.childInputs.forEach((el: any, index) => {
+    this.childInputs.forEach((el: any, index: number) => {
       data![el.id||el.name||index] = el.value || el.checked
     })
 

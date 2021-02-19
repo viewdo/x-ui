@@ -81,7 +81,6 @@ nav .navbar-brand a:hover {
 }
 b.brand {
   color: var(--primary);
-  font-size: (100% + 1.3vm);
 }
 
 .accent {
@@ -221,48 +220,48 @@ code {
 }
 
 /* X-UI ---------------*/
-x-ui {
+x-app {
   height: 100vh;
   width: 100%;
 }
 
-x-link a:any-link {
+x-app-link a:any-link {
   color: var(--primary);
   text-decoration: none;
   font-weight: 400;
 }
-x-link a:hover {
+x-app-link a:hover {
   color: var(--accent);
   text-decoration: underline;
 }
 
-x-link.text-white a:any-link {
+x-app-link.text-white a:any-link {
   color: white;
 }
 
-x-ui > x-view {
+x-app > x-app-view {
   max-width: var(--content-max-width);
   padding: var(--bs-gutter-x, 0.75rem);
   margin-right: auto !important;
   margin-left: auto !important;
 }
 
-x-markdown pre {
+x-content-md pre {
   clear: both;
   margin-top: 1rem;
 }
-x-markdown h3 code {
+x-content-md h3 code {
   font-size: larger;
   font-weight: 700;
 }
-x-markdown p code {
+x-content-md p code {
   font-size: larger;
   font-weight: 700;
 }
-x-markdown ul {
+x-content-md ul {
   list-style: none; /* Remove default bullets */
 }
-x-markdown ul li::before {
+x-content-md ul li::before {
   content: "→";
   font-weight: bold;
   display: inline-block;
@@ -270,28 +269,21 @@ x-markdown ul li::before {
   margin-left: -1em;
 }
 
-x-markdown ul li.required::before {
+x-content-md ul li.required::before {
   color: red;
 }
 
-x-markdown ul li.data::before {
+x-content-md ul li.data::before {
   content: "⇶";
 }
 
 .active-route-exact .modal,
-x-view-do .modal {
+x-app-view-do .modal {
   display: block;
 }
 
-x-view.active-route + x-view {
+x-app-view.active-route + x-app-view {
   display: none;
-}
-
-x-ui-theme {
-  z-index: 1;
-  margin: var(--bs-gutter-x, 1rem);
-  text-align: right;
-  top: 20px;
 }
 
 .component-list {

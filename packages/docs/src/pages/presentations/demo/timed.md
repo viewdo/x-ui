@@ -2,7 +2,7 @@
 
 This page is part of a guided-navigation system. The back and next are automatically defined based on the convention we discussed.
 
-The above is done using special attributes that only work on a guided route ``x-view-do`
+The above is done using special attributes that only work on a guided route ``x-app-view-do`
 
 ```html
 <div class="card-media">

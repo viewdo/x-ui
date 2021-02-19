@@ -16,9 +16,9 @@ Topic: `navigation`
 
 ### `go-next`
 
-This tells the navigation system to go to the next [`x-view-do`](/components/x-view-do) route or back to the parent [`x-view`](/components/x-view) route.
+This tells the navigation system to go to the next [`x-app-view-do`](/components/x-app-view-do) route or back to the parent [`x-app-view`](/components/x-app-view) route.
 
-> This command has no effect outside of a `x-view-do` route.
+> This command has no effect outside of a `x-app-view-do` route.
 
 ```html
 <x-action-activator activate="...">

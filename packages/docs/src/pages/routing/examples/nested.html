@@ -40,21 +40,21 @@
   </head>
 
   <body>
-    <x-ui app-title="My HTML App"
+    <x-app app-title="My HTML App"
       start-url="home"
       root="/routing/examples/nested.html/#">
       <nav>
-        <x-link class="nav-link"
+        <x-app-link class="nav-link"
           href="/home"
           active-class="active"> Home
-        </x-link>
+        </x-app-link>
 
-        <x-link class="nav-link"
+        <x-app-link class="nav-link"
           href="/about"
           active-class="active"> About
-        </x-link>
+        </x-app-link>
       </nav>
-      <x-view url="/home"
+      <x-app-view url="/home"
         page-title="Home">
         <div class="container"
           slot="content">
@@ -65,7 +65,7 @@
 
           <a href="/home/nested">Nested</a>
         </div>
-        <x-view url="/nested"
+        <x-app-view url="/nested"
           page-title="Nested"
           x-cloak>
           <div class="container"
@@ -76,9 +76,9 @@
 
             <a href="/home">Back to Home</a>
           </div>
-        </x-view>
-      </x-view>
-      <x-view url="/about"
+        </x-app-view>
+      </x-app-view>
+      <x-app-view url="/about"
         page-title="About"
         x-cloak>
         <div class="container"
@@ -87,8 +87,8 @@
           <hr />
           <h2>You now have a multi-page app!</h2>
         </div>
-      </x-view>
-    </x-ui>
+      </x-app-view>
+    </x-app>
   </body>
 
 </html>

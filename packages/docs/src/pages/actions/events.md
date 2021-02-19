@@ -17,7 +17,7 @@ const action = new CustomEvent('x:actions', {
   }
 });
 
-const xui = document.querySelector('x-ui');
+const xui = document.querySelector('x-app');
 xui.dispatchEvent(action, {
   bubbles: true,
   composed: true,
@@ -29,7 +29,7 @@ xui.dispatchEvent(action, {
 
 ```typescript
 
-import { ActionBus } from '@viewdo/x-ui';
+import { ActionBus } from '@viewdo/x-app';
 
 ActionBus.emit('<topic>', {
   command: "<command>",

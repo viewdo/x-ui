@@ -1,9 +1,9 @@
-<x-use script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
+<x-content-reference script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
   style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
-</x-use>
-<x-use
+</x-content-reference>
+<x-content-reference
   script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
-</x-use>
+</x-content-reference>
 <x-audio-music-load mode="load"
   track-id="music"
   src="/assets/sample-music-1.mp3"> </x-audio-music-load>
@@ -45,20 +45,20 @@
   </p>
   <div class="collapse"
     id="loadSource">
-    <x-markdown>
+    <x-content-md>
       <script type="text/markdown">
         ```html
-        <x-view-do ...>
+        <x-app-view-do ...>
           <x-audio-music-load mode="load" track-id="music" src="/assets/sample-music-1.mp3"> </x-audio-music-load>
           <x-audio-sound-load track-id="cheer" src="/assets/crowd-cheer.wav"> </x-audio-sound-load>
           ...
-        </x-view-do>
+        </x-app-view-do>
         ```
 
         > For the music, we set the mode to **load** so it does not play
         > right away.
       </script>
-    </x-markdown>
+    </x-content-md>
   </div>
 
   <h3>Then: Activate</h3>
@@ -109,7 +109,7 @@
   </p>
   <div class="collapse"
     id="buttonSource">
-    <x-markdown>
+    <x-content-md>
       <script type="text/markdown">
         ```html
         <x-action-activator activate="OnElementEvent" multiple>
@@ -125,7 +125,7 @@
         > We set the activator to **multiple** so it allows us to send
         > the same action more than once. By default, this is not allowed.
       </script>
-    </x-markdown>
+    </x-content-md>
   </div>
 
   <footer>

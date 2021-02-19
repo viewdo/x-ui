@@ -157,7 +157,7 @@ Now let’s move out of theory any into our new HTML Elements.
 
 ## Views and Dos
 
-In our examples above, we discussed routes and sub-routes. The routes are expressed in our Experience UI using the **`<x-view>`** tag and their sub-routes would be **`<x-view-do>`** tags.
+In our examples above, we discussed routes and sub-routes. The routes are expressed in our Experience UI using the **`<x-app-view>`** tag and their sub-routes would be **`<x-app-view-do>`** tags.
 
 The default visit-requirement is ‘once’, so it can be omitted. Also, if the 'when’ property exists, the visit requirement is always derived from that expression, leaving few occasions where we have to express the visit-strategy.
 
@@ -168,50 +168,50 @@ These tags are explained in detail within their own component requirements, but 
 **Example View.DO Site:**
 
 ```html
-<x-ui>
-  <x-view path="/start"
+<x-app>
+  <x-app-view path="/start"
     page-title="Home">
-    <x-view-do url="/welcome"
+    <x-app-view-do url="/welcome"
       visit="always">
       ...
-    </x-view-do>
-    <x-view-do url="/get-name"
+    </x-app-view-do>
+    <x-app-view-do url="/get-name"
       page-title="What's your name?"
       when="name == null"
       type="input">
       ...
-    </x-view-do>
-    <x-view-do url="/hi-name"
+    </x-app-view-do>
+    <x-app-view-do url="/hi-name"
       page-title="Hello!">
       ...
-    </x-view-do>
-    <x-view-do url="/video-intro"
+    </x-app-view-do>
+    <x-app-view-do url="/video-intro"
       visit="optional"
       type="video">
       ...
-    </x-view-do>
-    <x-view url="/about"
+    </x-app-view-do>
+    <x-app-view url="/about"
       page-title="About Us">
-      <x-view-do url="/meet-mike"
+      <x-app-view-do url="/meet-mike"
         page-title="About Mike">
         ...
-      </x-view-do>
-      <x-view-do url="/meet-paul"
+      </x-app-view-do>
+      <x-app-view-do url="/meet-paul"
         page-title="About Paul">
         ...
-      </x-view-do>
-      <x-view-do url="/meet-jason"
+      </x-app-view-do>
+      <x-app-view-do url="/meet-jason"
         page-title="About Jason">
         ...
-      </x-view-do>
+      </x-app-view-do>
       <x-do url="/meet-max"
         page-title="About Max"
         ...>
-      </x-view-do>
+      </x-app-view-do>
       ... home page content
-    </x-view>
-  </x-view>
-</x-ui>
+    </x-app-view>
+  </x-app-view>
+</x-app>
 ```
 
 This structure would first ask the newcomer’s name, then use it with a welcome message. It would offer a link to our intro video, but would just go home when they clicked **next**.

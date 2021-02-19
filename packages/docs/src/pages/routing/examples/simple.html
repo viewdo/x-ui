@@ -37,31 +37,31 @@
   </head>
 
   <body>
-    <x-ui app-title="My HTML App" start="/home" root="/simple.html#">
+    <x-app app-title="My HTML App" start="/home" root="/simple.html#">
       <nav>
-        <x-link class="nav-link" href="/home" active-class="active"> Home
-        </x-link>
+        <x-app-link class="nav-link" href="/home" active-class="active"> Home
+        </x-app-link>
 
-        <x-link class="nav-link" href="/about" active-class="active"> About
-        </x-link>
+        <x-app-link class="nav-link" href="/about" active-class="active"> About
+        </x-app-link>
       </nav>
-      <x-view url="/home" page-title="Home">
+      <x-app-view url="/home" page-title="Home">
         <div class="container" slot="content">
           <h1>Home</h1>
           <hr />
           <h2>Hello World!</h2>
           <p>Now you have a basic content router.</p>
         </div>
-      </x-view>
-      <x-view url="/about" page-title="About" x-cloak>
+      </x-app-view>
+      <x-app-view url="/about" page-title="About" x-cloak>
         <div class="container" slot="content">
           <h1>About</h1>
           <hr />
           <h2>About World!</h2>
           <h2>You now have a multi-page app!</h2>
         </div>
-      </x-view>
-    </x-ui>
+      </x-app-view>
+    </x-app>
   </body>
 
 </html>

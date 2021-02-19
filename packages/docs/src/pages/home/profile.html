@@ -18,9 +18,14 @@
     <label class="form-check-label" for="audioSwitch">Audio</label>
   </div>
   <div class="form-check form-switch">
-    <x-ui-autoplay classes="form-check-input" input-id="autoPlaySwitch">
-    </x-ui-autoplay>
+    <x-app-autoplay classes="form-check-input" input-id="autoPlaySwitch">
+    </x-app-autoplay>
     <label class="form-check-label" for="autoPlaySwitch">Auto-play</label>
+  </div>
+  <div class="form-check form-switch">
+    <x-app-theme-dark classes="form-check-input" input-id="themeSwitch">
+    </x-app-theme-dark>
+    <label class="form-check-label" for="themeSwitch">Dark-Mode</label>
   </div>
   <x-data-show when="'{cookie:consent}' == 'true'">
     <h3>You gave us consent to set a cookie.</h3>
@@ -35,8 +40,8 @@
   </x-data-show>
 
   <footer>
-    <x-link href="/home">
+    <x-app-link href="/home">
       <button type="button" class="btn btn-primary">OK</button>
-    </x-link>
+    </x-app-link>
   </footer>
 </div>
