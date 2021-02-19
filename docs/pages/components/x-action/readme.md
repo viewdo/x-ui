@@ -56,7 +56,7 @@ For more complex data shapes, you can define the data parameters as JSON in a ch
 
 ```mermaid
 graph TD;
-  x-view-do --> x-action-activator
+  x-app-view-do --> x-action-activator
   x-action-activator --> x-action
 
   style x-action fill:#f9f,stroke:#333,stroke-width:1px

@@ -3,7 +3,7 @@ jest.mock('../../../services/logging')
 import { newSpecPage } from '@stencil/core/testing';
 import { actionBus, eventBus } from '../../..';
 import { clearDataProviders, getDataProvider } from '../../../services/data/providers/factory';
-import { XUI } from '../../x-ui/x-ui';
+import { XApp } from '../../x-app/x-app';
 import { XDataProviderCookie } from '../x-data-provider-cookie';
 
 describe('x-data-provider-cookie', () => {
@@ -30,14 +30,14 @@ describe('x-data-provider-cookie', () => {
 
   it('renders a dialog, click consent', async () => {
     const page = await newSpecPage({
-      components: [XUI, XDataProviderCookie],
+      components: [XApp, XDataProviderCookie],
       html: `
-        <x-ui>
+        <x-app>
           <x-data-provider-cookie>
             <button x-accept>Accept</button>
             <button x-reject>Reject</button>
           </x-data-provider-cookie>
-        </x-ui>`,
+        </x-app>`,
     })
 
     const subject = page.body.querySelector('x-data-provider-cookie')!
@@ -49,7 +49,7 @@ describe('x-data-provider-cookie', () => {
     await page.waitForChanges()
 
     expect(page.root).toEqualHtml(`
-      <x-ui>
+      <x-app>
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -60,7 +60,7 @@ describe('x-data-provider-cookie', () => {
           <button x-accept>Accept</button>
           <button x-reject>Reject</button>
         </x-data-provider-cookie>
-      </x-ui>
+      </x-app>
     `)
 
     const provider = await getDataProvider('cookie')
@@ -76,14 +76,14 @@ describe('x-data-provider-cookie', () => {
 
   it('renders a dialog, click reject', async () => {
     const page = await newSpecPage({
-      components: [XUI, XDataProviderCookie],
+      components: [XApp, XDataProviderCookie],
       html: `
-        <x-ui>
+        <x-app>
           <x-data-provider-cookie>
             <button x-accept>Accept</button>
             <button x-reject>Reject</button>
           </x-data-provider-cookie>
-        </x-ui>`,
+        </x-app>`,
     })
 
     const subject = page.body.querySelector('x-data-provider-cookie')!
@@ -95,7 +95,7 @@ describe('x-data-provider-cookie', () => {
     await page.waitForChanges()
 
     expect(page.root).toEqualHtml(`
-      <x-ui>
+      <x-app>
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
@@ -106,7 +106,7 @@ describe('x-data-provider-cookie', () => {
           <button x-accept>Accept</button>
           <button x-reject>Reject</button>
         </x-data-provider-cookie>
-      </x-ui>
+      </x-app>
     `)
 
     const provider = await getDataProvider('cookie')

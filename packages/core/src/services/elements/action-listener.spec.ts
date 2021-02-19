@@ -1,10 +1,10 @@
-import { MockWindow } from '@stencil/core/mock-doc';
-import { newSpecPage } from '@stencil/core/testing';
-import { EventEmitter } from '../actions/event-emitter';
-import { sleep } from '../utils/promise-utils';
-import { ElementsActionListener } from './action-listener';
-import { ELEMENTS_COMMANDS, ELEMENTS_TOPIC } from './interfaces';
-import { clearReferences, hasReference, markReference } from './references';
+import { MockWindow } from '@stencil/core/mock-doc'
+import { newSpecPage } from '@stencil/core/testing'
+import { EventEmitter } from '../actions/event-emitter'
+import { sleep } from '../utils/promise-utils'
+import { ElementsActionListener } from './action-listener'
+import { ELEMENTS_COMMANDS, ELEMENTS_TOPIC } from './interfaces'
+import { clearReferences, hasReference, markReference } from './references'
 
 describe('elements-action-listener:', () => {
   let actionBus: EventEmitter
@@ -23,7 +23,6 @@ describe('elements-action-listener:', () => {
 
     clearReferences()
   })
-
 
   it('elementToggleClass ', async () => {
     const page = await newSpecPage({
@@ -214,8 +213,6 @@ describe('elements-action-listener:', () => {
       },
     })
 
-    await sleep(300)
-
     expect(fakeWindow.document.body.innerHTML).toBe('<h1 hidden="">Hello</h1>')
 
     actionBus.emit(ELEMENTS_TOPIC, {
@@ -228,8 +225,6 @@ describe('elements-action-listener:', () => {
       },
     })
 
-    await sleep(300)
-
     expect(fakeWindow.document.body.innerHTML).toBe('<h1 hidden="true">Hello</h1>')
 
     actionBus.emit(ELEMENTS_TOPIC, {
@@ -240,8 +235,6 @@ describe('elements-action-listener:', () => {
         attribute: 'hidden',
       },
     })
-
-    await sleep(300)
 
     expect(fakeWindow.document.body.innerHTML).toBe('<h1>Hello</h1>')
   })

@@ -11,7 +11,7 @@ import { onAudioStateChange } from '../../services';
   shadow: false,
 })
 export class XAudioEnabled {
-  private slider?: HTMLInputElement
+  private checkbox?: HTMLInputElement
   private muteSubscription!: () => void
   @State() enabled!: boolean
 
@@ -34,7 +34,7 @@ export class XAudioEnabled {
   }
 
   private toggle() {
-    audioState.enabled = this.slider?.checked || false
+    audioState.enabled = this.checkbox?.checked || false
   }
 
   disconnectedCallback() {
@@ -49,7 +49,7 @@ export class XAudioEnabled {
           class={this.classes}
           id={this.inputId}
           ref={(e) => {
-            this.slider = e
+            this.checkbox = e
           }}
           onChange={() => this.toggle()}
           checked={this.enabled}

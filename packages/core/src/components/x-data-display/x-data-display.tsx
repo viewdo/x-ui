@@ -4,7 +4,6 @@ import { removeAllChildNodes } from '../../services/elements/functions';
 
 /**
  *  @system data
- *  @system content
  */
 @Component({
   tag: 'x-data-display',
@@ -37,7 +36,7 @@ export class XDataDisplay {
   @Prop({ mutable: true }) noRender = false
 
   private get router(): RouterService | undefined {
-    return this.el.closest('x-ui')?.router
+    return this.el.closest('x-app')?.router
   }
 
   private get childTemplate(): HTMLTemplateElement | null {

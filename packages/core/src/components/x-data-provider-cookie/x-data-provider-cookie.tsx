@@ -11,7 +11,7 @@ import {
 } from '../..';
 
 /**
- *  @system providers
+ *  @system data
  */
 @Component({
   tag: 'x-data-provider-cookie',

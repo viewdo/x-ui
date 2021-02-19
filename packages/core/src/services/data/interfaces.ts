@@ -6,6 +6,7 @@ export interface IDataProvider {
   changed: EventEmitter
   get(key: string): Promise<string | null>
   set(key: string, value: string): Promise<void>
+  // keys(): Promise<string[]>
 }
 
 export type ExpressionContext = Record<string, any>

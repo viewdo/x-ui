@@ -1,11 +1,11 @@
 jest.mock('../../logging')
 
-import { newSpecPage } from '@stencil/core/testing'
-import { XUI } from '../../../components/x-ui/x-ui'
-import { actionBus, eventBus } from '../../actions'
-import { CookieProvider } from './cookie'
-import { addDataProvider, clearDataProviders, getDataProvider, removeDataProvider } from './factory'
-import { InMemoryProvider } from './memory'
+import { newSpecPage } from '@stencil/core/testing';
+import { XApp } from '../../../components/x-app/x-app';
+import { actionBus, eventBus } from '../../actions';
+import { CookieProvider } from './cookie';
+import { addDataProvider, clearDataProviders, getDataProvider, removeDataProvider } from './factory';
+import { InMemoryProvider } from './memory';
 
 describe('provider-factory', () => {
   let custom: InMemoryProvider
@@ -41,8 +41,8 @@ describe('provider-factory', () => {
 
   it('sessionProvider: is functional', async () => {
     const page = await newSpecPage({
-      components: [XUI],
-      html: '<x-ui></x-ui>',
+      components: [XApp],
+      html: '<x-app></x-app>',
       supportsShadowDom: true,
     })
     const provider = await getDataProvider('session')
@@ -59,8 +59,8 @@ describe('provider-factory', () => {
 
   it('localStorage: is functional', async () => {
     const page = await newSpecPage({
-      components: [XUI],
-      html: '<x-ui></x-ui>',
+      components: [XApp],
+      html: '<x-app></x-app>',
       supportsShadowDom: true,
     })
     await page.waitForChanges()
@@ -79,8 +79,8 @@ describe('provider-factory', () => {
 
   it('cookieProvider: is functional', async () => {
     const page = await newSpecPage({
-      components: [XUI],
-      html: '<x-ui></x-ui>',
+      components: [XApp],
+      html: '<x-app></x-app>',
       supportsShadowDom: true,
     })
 

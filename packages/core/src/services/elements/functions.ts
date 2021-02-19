@@ -1,8 +1,8 @@
 /* istanbul ignore file */
 
-import { evaluatePredicate, hasExpression, resolveExpression } from '../data'
-import { debugIf } from '../logging'
-import { TimedNode } from './interfaces'
+import { evaluatePredicate, hasExpression, resolveExpression } from '../data';
+import { debugIf } from '../logging';
+import { TimedNode } from './interfaces';
 
 export async function resolveChildElementXAttributes(element: HTMLElement) {
   resolveChildXHideWhenAttributes(element)
@@ -201,12 +201,12 @@ export function resolveElementChildTimedNodesByTime(
 ) {
   timedNodes.forEach((node) => {
     if (node.start > -1 && time >= node.start && (node.end > -1 ? time < node.end : true)) {
-      debugIf(debug, `x-view-do: node ${node.element.id} is after start: ${node.start} before end: ${node.end}`)
+      debugIf(debug, `x-app-view-do: node ${node.element.id} is after start: ${node.start} before end: ${node.end}`)
       // Time is after start and before end, if it exists
       if (node.classIn && !node.element.classList.contains(node.classIn)) {
         debugIf(
           debug,
-          `x-view-do: node ${node.element.id} is after start: ${node.start} before end: ${node.end} [adding classIn: ${node.classIn}]`,
+          `x-app-view-do: node ${node.element.id} is after start: ${node.start} before end: ${node.end} [adding classIn: ${node.classIn}]`,
         )
         node.element.classList.add(node.classIn)
       }
@@ -214,7 +214,7 @@ export function resolveElementChildTimedNodesByTime(
       if (node.element.hasAttribute('hidden')) {
         debugIf(
           debug,
-          `x-view-do: node ${node.element.id} is after start: ${node.start} before end: ${node.end} [removing hidden attribute]`,
+          `x-app-view-do: node ${node.element.id} is after start: ${node.start} before end: ${node.end} [removing hidden attribute]`,
         )
         // Otherwise, if there's a hidden attribute, remove it
         node.element.removeAttribute('hidden')
@@ -223,11 +223,11 @@ export function resolveElementChildTimedNodesByTime(
 
     if (node.end > -1 && time > node.end) {
       // Time is after end, if it exists
-      debugIf(debug, `x-view-do: node ${node.element.id} is after end: ${node.end}`)
+      debugIf(debug, `x-app-view-do: node ${node.element.id} is after end: ${node.end}`)
       if (node.classIn && node.element.classList.contains(node.classIn)) {
         debugIf(
           debug,
-          `x-view-do: node ${node.element.id} is after end: ${node.end}  [removing classIn: ${node.classIn}]`,
+          `x-app-view-do: node ${node.element.id} is after end: ${node.end}  [removing classIn: ${node.classIn}]`,
         )
         // Remove the in class, if it exists
         node.element.classList.remove(node.classIn)
@@ -238,13 +238,13 @@ export function resolveElementChildTimedNodesByTime(
         if (!node.element.classList.contains(node.classOut)) {
           debugIf(
             debug,
-            `x-view-do: node ${node.element.id} is after end: ${node.end} [adding classOut: ${node.classOut}]`,
+            `x-app-view-do: node ${node.element.id} is after end: ${node.end} [adding classOut: ${node.classOut}]`,
           )
           node.element.classList.add(node.classOut)
         }
       } else if (!node.element.hasAttribute('hidden')) {
         // Otherwise, if there's no hidden attribute, add it
-        debugIf(debug, `x-view-do: node ${node.element.id} is after end: ${node.end} [adding hidden attribute]`)
+        debugIf(debug, `x-app-view-do: node ${node.element.id} is after end: ${node.end} [adding hidden attribute]`)
         node.element.setAttribute('hidden', '')
       }
     }

@@ -20,49 +20,49 @@ The **activate** attribute define the strategy for activating all child actions,
 
 #### OnEnter
 
-The **OnEnter** activation-strategy only works when this element is a child of [**`<x-view-do>`**](/components/x-view-do) . The child actions will fire when the parent route is activated and the contents are displayed.
+The **OnEnter** activation-strategy only works when this element is a child of [**`<x-app-view-do>`**](/components/x-app-view-do) . The child actions will fire when the parent route is activated and the contents are displayed.
 
 ```html
-<x-view-do ...>
+<x-app-view-do ...>
   <x-action-activator activate="OnEnter">
     <x-action ...></x-action>
     <x-action ...></x-action>
     <x-action ...></x-action>
   </x-action-activator>
-</x-view-do>
+</x-app-view-do>
 ```
 
 #### OnExit
 
-The **OnEnter** activation-strategy only works when this element is a child of **`<x-view-do>`**. The child actions will fire when the parent route is de-activated and the next route is displayed.
+The **OnEnter** activation-strategy only works when this element is a child of **`<x-app-view-do>`**. The child actions will fire when the parent route is de-activated and the next route is displayed.
 
 ```html
-<x-view-do ...>
+<x-app-view-do ...>
   <x-action-activator activate="OnExit">
     <x-action ...></x-action>
     <x-action ...></x-action>
     <x-action ...></x-action>
   </x-action-activator>
-</x-view-do>
+</x-app-view-do>
 ```
 
 #### AtTime
 
-The **AtTime** activation-strategy only work when this element is a child of [**`<x-view-do>`**](/components/x-view-do) . The child actions will fire when the parent route has been activated for the given time within the **time** attribute.
+The **AtTime** activation-strategy only work when this element is a child of [**`<x-app-view-do>`**](/components/x-app-view-do) . The child actions will fire when the parent route has been activated for the given time within the **time** attribute.
 
 ```html
-<x-view-do ...>
+<x-app-view-do ...>
   <x-action-activator activate="AtTime" time="3">
     <x-action ...></x-action>
     <x-action ...></x-action>
     <x-action ...></x-action>
   </x-action-activator>
-</x-view-do>
+</x-app-view-do>
 ```
 
 #### OnElementEvent
 
-The **OnElementEvent** activation-strategy can be used anywhere within the **\<x-ui\>** container. The child actions will fire when the target element raises the target event.
+The **OnElementEvent** activation-strategy can be used anywhere within the **\<x-app\>** container. The child actions will fire when the target element raises the target event.
 
 ```html
 <x-action-activator activate="OnElementEvent" target-element="#submit" target-event="click" multiple>

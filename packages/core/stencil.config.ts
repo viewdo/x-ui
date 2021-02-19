@@ -1,6 +1,6 @@
-import { Config } from '@stencil/core'
-import { sass } from '@stencil/sass'
-import { version } from './package.json'
+import { Config } from '@stencil/core';
+import { sass } from '@stencil/sass';
+import { version } from './package.json';
 
 // Const scssVariables = 'src/scss/variables.scss';
 const config: Config = {
@@ -33,7 +33,7 @@ const config: Config = {
     },
     {
       type: 'docs-vscode',
-      file: './dist/custom-elements/custom-elements.json',
+      file: 'dist/custom-elements/custom-elements.json',
     },
     {
       type: 'docs-custom',
@@ -47,7 +47,7 @@ const config: Config = {
     },
     {
       type: 'docs-json',
-      file: '../../docs/data/components.json',
+      file: '../../docs/assets/components.json',
     },
   ],
 }
@@ -73,12 +73,13 @@ const wwwOutput: any = {
   ],
 }
 
-if (!config.devMode) {
-  wwwOutput.serviceWorker = {
-    globPatterns: ['**/*.{js,css,json,html,md,mdx,wav,ico,mp3}'],
-  }
-}
+// if (!config.devMode) {
+//   wwwOutput.serviceWorker = {
+//     globPatterns: ['**/*.{js,css,json,html,md,mdx,wav,ico,mp3}'],
+//   }
+// }
 
 config.outputTargets?.push(wwwOutput)
 
-export { config }
+export { config };
+

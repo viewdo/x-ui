@@ -1,0 +1,17 @@
+:root {
+  [hidden],
+  [x-cloak],
+  [x-hide],
+  .hide {
+    display: none;
+  }
+
+  x-app-view.active-route + x-app-view {
+    display: none;
+  }
+
+}
+
+:host {
+  display: block;
+}

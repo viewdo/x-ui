@@ -90,8 +90,8 @@ export class XActionActivator {
     return this.el.querySelectorAll('input,select,textarea')
   }
 
-  private get parent(): HTMLXViewDoElement | HTMLXViewElement | null {
-    return this.el.closest('x-view-do') || this.el.closest('x-view')
+  private get parent(): HTMLXAppViewDoElement | HTMLXAppViewElement | null {
+    return this.el.closest('x-app-view-do') || this.el.closest('x-app-view')
   }
 
   private get childActions(): IActionElement[] {

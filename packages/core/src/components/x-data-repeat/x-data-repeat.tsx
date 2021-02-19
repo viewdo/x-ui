@@ -5,7 +5,6 @@ import { arrify } from '../../services/utils/misc-utils';
 
 /**
  *  @system data
- *  @system content
  */
 @Component({
   tag: 'x-data-repeat',
@@ -50,7 +49,7 @@ export class XDataRepeat {
   @Prop() debug = false
 
   private get router(): RouterService | undefined {
-    return this.el.closest('x-ui')?.router
+    return this.el.closest('x-app')?.router
   }
 
   get childTemplate(): HTMLTemplateElement | null {

@@ -25,12 +25,12 @@ Once in-place, the **`<x-audio-player>`** listens on the **audio** topic for com
 To operate the player, it is easiest to just use the **`<x-audio-load-*>`** components to pre-load the audio. Then declare the actions using the [**`<x-action-activator>`**](/components/x-action-activator) component.
 
 ```html
-<x-view-do>
+<x-app-view-do>
   <x-audio-sound-load track-id="<unique-id>" src="<url>"> </x-audio-sound-load>
   <x-action-activator ...>
     <x-audio-sound-action command="<command>" track-id="<id>" value="<value>"></x-audio-sound-action>
   </x-action-activator>
-</x-view-do>
+</x-app-view-do>
 ```
 
 ### Commands

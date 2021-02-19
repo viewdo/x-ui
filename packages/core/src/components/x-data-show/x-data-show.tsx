@@ -1,9 +1,8 @@
-import { Component, h, Host, Prop, State } from '@stencil/core'
-import { DATA_EVENTS, evaluatePredicate, eventBus, ROUTE_EVENTS } from '../..'
+import { Component, h, Host, Prop, State } from '@stencil/core';
+import { DATA_EVENTS, evaluatePredicate, eventBus, ROUTE_EVENTS } from '../..';
 
 /**
  *  @system data
- *  @system content
  */
 @Component({
   tag: 'x-data-show',
