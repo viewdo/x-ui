@@ -1,0 +1,38 @@
+import { Config } from '@stencil/core';
+import { sass } from '@stencil/sass';
+
+// Const scssVariables = 'src/scss/variables.scss';
+const config: Config = {
+  namespace: 'lib',
+  plugins: [sass()],
+  preamble: 'view.DO 2021',
+  hashFileNames: false,
+  devServer: {
+    openBrowser: false,
+    reloadStrategy: 'pageReload',
+    port: 3002,
+    root: '../../docs',
+  },
+  outputTargets: []
+
+}
+
+const wwwOutput: any = {
+  type: 'www',
+  dir: '../../docs',
+  buildDir: 'dist',
+  empty: false,
+  serviceWorker: null,
+  indexHtml: 'index.html'
+}
+
+// if (!config.devMode) {
+//   wwwOutput.serviceWorker = {
+//     globPatterns: ['**/*.{js,css,json,html,md,mdx,wav,ico,mp3}'],
+//   }
+// }
+
+config.outputTargets?.push(wwwOutput)
+
+export { config };
+
