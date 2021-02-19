@@ -7,7 +7,7 @@ const config: Config = {
   namespace: 'x-ui',
   plugins: [sass()],
   preamble: 'view.DO 2021',
-  hashFileNames: false,
+  hashFileNames: true,
   devServer: {
     openBrowser: false,
     reloadStrategy: 'pageReload',

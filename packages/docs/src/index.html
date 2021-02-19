@@ -67,20 +67,34 @@
       <x-app-theme></x-app-theme>
       <x-content-reference
         style-src="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
-        script-src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
-      >
+        script-src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js">
       </x-content-reference>
       <nav x-cloak class="navbar">
         <div class="container container-fluid">
-          <h1 class="navbar-brand">
+          <h1 class="navbar-brand nav-fill">
             <a
               href="/home"
               data-intro="This page uses the <b>x-app-view</b> component. This component display content for a given route.<br/><br/> Check out the <a href='components/x-app-view'>documentation</a> to see what else you can do."
-              title="view.DO Experience UI HTML"
-            >
+              title="view.DO Experience UI HTML">
               &lt;x-ui/&gt;
             </a>
           </h1>
+          <a
+            href="https://github.com/viewdo/x-ui"
+            title="Source on GitHub"
+            target="_blank"
+            class="nav-link fs-2"
+            rel="noopener">
+            <i class="ri-github-line"></i>
+          </a>
+          <a
+            href="https://www.npmjs.com/package/@viewdo/x-ui"
+            title="Package on NPM"
+            target="_blank"
+            class="nav-link fs-2"
+            rel="noopener">
+            <i class="ri-npmjs-line"></i>
+          </a>
         </div>
       </nav>
       <nav class="navbar-nav bg-dark sticky-top">
@@ -136,16 +150,7 @@
             <i class="ri-git-pull-request-line"></i>
           </x-app-link-->
 
-          <a
-            href="https://github.com/viewdo/x-ui"
-            title="Check out the source on GitHub"
-            target="_blank"
-            class="nav-link flex-fill tip"
-            rel="noopener"
-          >
-            <i class="ri-github-line"></i>
-            <span>Check out GitHub</span>
-          </a>
+
           <x-app-link
             href="/home/profile"
             title="Updated your profile"
