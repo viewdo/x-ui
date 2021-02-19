@@ -6,7 +6,7 @@ import { AUDIO_EVENTS } from './interfaces';
 import { trackPlayed } from './tracked';
 
 export class AudioTrack extends AudioInfo {
-  private readonly sound: Howl
+  private readonly sound?: Howl
   events: EventEmitter = new EventEmitter()
 
   static createSound = (
@@ -16,14 +16,16 @@ export class AudioTrack extends AudioInfo {
     onerror?: (id: number, error: any) => void,
   ) => {
     const { loop, src, type } = audio
-    return new Howl({
-      src,
-      loop: type === 'music' ? loop : false,
-      onload,
-      onend,
-      onloaderror: onerror,
-      onplayerror: onerror,
-    })
+    if (src && type) {
+      return new Howl({
+        src,
+        loop: type === 'music' ? loop : false,
+        onload,
+        onend,
+        onloaderror: onerror,
+        onplayerror: onerror,
+      })
+    }
   }
 
   constructor(audio: AudioInfo, private readonly baseVolume: number = 1, private readonly fadeSpeed: number = 2) {
@@ -33,6 +35,8 @@ export class AudioTrack extends AudioInfo {
     const events = this.events
 
     const { trackId } = audio
+
+    if (trackId == null || this.src == null) return;
 
     this.sound = AudioTrack.createSound(
       audio,
@@ -48,21 +52,23 @@ export class AudioTrack extends AudioInfo {
         events.emit(AUDIO_EVENTS.Errored, trackId)
       },
     )
-    this.baseVolume = baseVolume || this.sound.volume()
+    if(this.sound) {
+     this.baseVolume = baseVolume || this.sound?.volume()
+    }
   }
 
   get state() {
-    return this.sound.state()
+    return this.sound?.state()
   }
 
   get playing() {
-    return this.sound.playing()
+    return this.sound?.playing()
   }
 
   play() {
-    this.sound.volume(0)
-    this.sound.play()
-    this.sound.fade(0, this.baseVolume, this.fadeSpeed)
+    this.sound?.volume(0)
+    this.sound?.play()
+    this.sound?.fade(0, this.baseVolume, this.fadeSpeed)
     this.events.emit(AUDIO_EVENTS.Played, this.trackId)
     if (this.track) {
       trackPlayed(this.trackId)
@@ -70,23 +76,23 @@ export class AudioTrack extends AudioInfo {
   }
 
   stop() {
-    this.sound.fade(this.baseVolume, 0, this.fadeSpeed)
-    this.sound.stop()
+    this.sound?.fade(this.baseVolume, 0, this.fadeSpeed)
+    this.sound?.stop()
     this.events.emit(AUDIO_EVENTS.Stopped, this.trackId)
   }
 
   pause() {
-    this.sound.pause()
+    this.sound?.pause()
     this.events.emit(AUDIO_EVENTS.Paused, this.trackId)
   }
 
   mute(mute:boolean) {
-    this.sound.mute(mute)
+    this.sound?.mute(mute)
     this.events.emit(AUDIO_EVENTS.Muted, this.trackId)
   }
 
   resume() {
-    this.sound.play()
+    this.sound?.play()
     this.events.emit(AUDIO_EVENTS.Resumed, this.trackId)
   }
 
@@ -101,12 +107,12 @@ export class AudioTrack extends AudioInfo {
   }
 
   seek(time: number) {
-    this.sound.seek(time)
+    this.sound?.seek(time)
   }
 
   destroy() {
     this.events.emit(AUDIO_EVENTS.Discarded, this.trackId)
-    this.sound.unload()
+    this.sound?.unload()
     this.events.removeAllListeners()
   }
 }

@@ -18,7 +18,6 @@
       </template>
     </x-data-repeat>
   </ul>
-  <x-content-md src="/pages/components/{route:component?x-app}/readme.md"> </x-content-md>
-  <h5>Learn More:</h5>
-  <x-content-include src="/pages/guides.html"></x-content-include>
+  <x-content-md render-if="{route:component}" src="/pages/components/{route:component}/readme.md"> </x-content-md>
+
 </div>

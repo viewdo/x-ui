@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 
-import { LocationSegments } from '../interfaces'
-import { parsePath, parseQueryString } from './path-utils'
+import { LocationSegments } from '../interfaces';
+import { parsePath, parseQueryString } from './path-utils';
 
 export const isAbsolute = (pathname: string) => pathname?.startsWith('/') || false
 
@@ -180,15 +180,15 @@ export const createLocation = (
     // Resolve incomplete/relative pathname relative to current location.
     if (!location.pathname) {
       location.pathname = currentLocation.pathname
-    } else if (!location.pathname.startsWith('/')) {
+    } else if (!location.pathname?.startsWith('/')) {
       location.pathname = resolvePathname(location.pathname, currentLocation.pathname)
     }
   } else if (!location.pathname) {
     location.pathname = '/'
   }
 
-  location.query = parseQueryString(location.search || '')
-  location.pathParts = location.pathname.split('/')
-  location.hashParts = location.hash?.split('/')
+  location.query = parseQueryString(location.search || '') || {}
+  location.pathParts = location.pathname?.split('/') || []
+  location.hashParts = location.hash?.split('/') || []
   return location
 }

@@ -7,18 +7,11 @@
 <div class="container container-fluid mx-auto">
   <x-data-display x-show-when="{storage:name}">
     <template>
-      <h3>Content for {storage:name}</h3>
+      <h1>Dynamic Data for {storage:name}</h1>
     </template>
   </x-data-display>
 
-  <x-data-display>
-    <template>
-      <h2>Spirit Animal: <a href="/content/data/storage">{storage:animal} </a>
-      </h2>
-    </template>
-  </x-data-display>
-
-  <h3>Visits in session:</h3>
+  <h2>Visits in Session:</h2>
   <ul>
     <x-data-repeat items="{session:visits}">
       <template>
@@ -27,26 +20,11 @@
     </x-data-repeat>
   </ul>
 
-  <h3>Visits in storage:</h3>
+  <h2>Visits in Storage:</h2>
   <ul>
     <x-data-repeat items="{storage:visits}">
       <template>
         <li>{data:item}</li>
-      </template>
-    </x-data-repeat>
-  </ul>
-
-  <h3>Muppets:</h3>
-  <ul>
-    <x-data-repeat items-src="/assets/items.json">
-      <template>
-        <li style="
-            color: {
-              data: color;
-            }
-          ">
-          {data:name}
-        </li>
       </template>
     </x-data-repeat>
   </ul>
@@ -57,10 +35,7 @@
 
   <footer>
     <a slot="start"
-      href="/content/data"
-      class="btn btn-light btn-lg"> &lt; Using Data </a>
-    <a slot="end"
-      href="/content/data/expressions"
-      class="btn btn-primary btn-lg"> Data Expressions &gt; </a>
+      href="/data"
+      class="btn btn-light"> &lt; Data </a>
   </footer>
 </div>

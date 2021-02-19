@@ -38,4 +38,4 @@ Arguments:
 
 ### `register-provider`
 
-Register a new data-provider. See [Data Providers](/content/data/providers) for more information.
+Register a new data-provider. See [Data Providers](/data/providers) for more information.

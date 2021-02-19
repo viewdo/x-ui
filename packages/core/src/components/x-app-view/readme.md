@@ -1,6 +1,6 @@
 # X-APP
 
-The View component is a child component for the **`<x-app>`** component for adding a page-route. It is a container element that displays its inner HTML for a given route or sub-route. This provides a declarative mechanism for in-page content/component routing by URL.
+The View component is a child component for the **`<x -app>`** component for adding a page-route. It is a container element that displays its inner HTML for a given route or sub-route. This provides a declarative mechanism for in-page content/component routing by URL.
 
 > This component enables single-page app functionality, with full path routing without scripting.
 

@@ -12,15 +12,16 @@
   <x-content-md>
     <script type="text/markdown">
       ```html
-      <x-app-view-do url="/events" visit="optional">
-        <x-action-activator activate="OnEnter">
-          <x-action topic="document" command="alert" data='{"message": "Testing on-enter action"}'></x-action>
-        </x-action-activator>
-        <x-action-activator activate="OnExit">
-          <x-action topic="document" command="alert" data='{"message": "Testing on-exit action"}'></x-action>
-        </x-action-activator>
-        ... content ...
-      </x-app-view-do>
+      <x-action-activator activate="OnEnter">
+        <x-action topic="interface"
+          command="log"
+          data-message="Testing on-enter action"></x-action>
+      </x-action-activator>
+      <x-action-activator activate="OnExit">
+        <x-action topic="interface"
+          command="log"
+          data-message="Testing on-exit action"></x-action>
+      </x-action-activator>
       ```
     </script>
   </x-content-md>

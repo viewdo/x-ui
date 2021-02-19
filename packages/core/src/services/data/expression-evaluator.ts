@@ -1,11 +1,11 @@
-import { Parser } from 'expr-eval'
-import { warn } from '../logging'
-import { hasVisited } from '../navigation/visits'
-import { requireValue } from '../utils/misc-utils'
-import { toBoolean } from '../utils/string-utils'
-import { ExpressionContext } from './interfaces'
-import { addDataProvider, getDataProvider, removeDataProvider } from './providers/factory'
-import { DataItemProvider } from './providers/item'
+import { Parser } from 'expr-eval';
+import { warn } from '../logging';
+import { hasVisited } from '../navigation/visits';
+import { requireValue } from '../utils/misc-utils';
+import { toBoolean } from '../utils/string-utils';
+import { ExpressionContext } from './interfaces';
+import { addDataProvider, getDataProvider, removeDataProvider } from './providers/factory';
+import { DataItemProvider } from './providers/item';
 
 const expressionRegEx = /{([\w-]*):([\w_]*)(?:\.([\w_.-]*))?(?:\?([\w_.-]*))?}/g
 const expressionEvaluator = new Parser()

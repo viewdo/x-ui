@@ -1,4 +1,4 @@
-# X-MARKDOWN
+# X-CONTENT-MD
 
 ## Usage
 
@@ -71,6 +71,7 @@ By default, there is no styling. The HTML is rendered to the page without styles
 | ---------- | ----------- | ------------------------------------------------------------------------------------------------------------ | --------------------- | ----------- |
 | `baseUrl`  | `base-url`  | Base Url for embedded links                                                                                  | `string \| undefined` | `undefined` |
 | `noRender` | `no-render` | If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute. | `boolean`             | `false`     |
+| `renderIf` | `render-if` | If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute. | `string \| undefined` | `undefined` |
 | `src`      | `src`       | Remote Template URL                                                                                          | `string \| undefined` | `undefined` |
 
 

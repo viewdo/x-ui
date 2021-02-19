@@ -1,14 +1,14 @@
-import { MockWindow } from '@stencil/core/mock-doc'
-import { Howler } from 'howler'
-import { EventAction, EventEmitter } from '../actions'
-import { debugIf } from '../logging'
-import { ROUTE_EVENTS } from '../routing'
-import { AudioTrack } from './audio'
-import { AudioInfo } from './audio-info'
-import { AudioRequest } from './audio-request'
-import { AudioType, AUDIO_COMMANDS, AUDIO_EVENTS, AUDIO_TOPIC, DiscardStrategy, LoadStrategy } from './interfaces'
-import { audioState, onAudioStateChange } from './state'
-import { hasPlayed } from './tracked'
+import { MockWindow } from '@stencil/core/mock-doc';
+import { Howler } from 'howler';
+import { EventAction, EventEmitter } from '../actions';
+import { debugIf } from '../logging';
+import { ROUTE_EVENTS } from '../routing';
+import { AudioTrack } from './audio';
+import { AudioInfo } from './audio-info';
+import { AudioRequest } from './audio-request';
+import { AudioType, AUDIO_COMMANDS, AUDIO_EVENTS, AUDIO_TOPIC, DiscardStrategy, LoadStrategy } from './interfaces';
+import { audioState, onAudioStateChange } from './state';
+import { hasPlayed } from './tracked';
 
 export class AudioActionListener {
   public enabledKey = 'audio'
@@ -69,6 +69,7 @@ export class AudioActionListener {
   }
 
   public isPlaying(): boolean {
+    if (!this.onDeck) return false
     return Boolean(this.onDeck[AudioType.Music]?.playing) || Boolean(this.onDeck[AudioType.Sound]?.playing)
   }
 
@@ -76,10 +77,10 @@ export class AudioActionListener {
     return (
       this.onDeck[AudioType.Music] != null ||
       this.onDeck[AudioType.Sound] != null ||
-      this.queued[AudioType.Music].length > 0 ||
-      this.queued[AudioType.Sound].length > 0 ||
-      this.loaded[AudioType.Music].length > 0 ||
-      this.loaded[AudioType.Sound].length > 0
+      this.queued[AudioType.Music]?.length > 0 ||
+      this.queued[AudioType.Sound]?.length > 0 ||
+      this.loaded[AudioType.Music]?.length > 0 ||
+      this.loaded[AudioType.Sound]?.length > 0
     )
   }
 
@@ -120,6 +121,7 @@ export class AudioActionListener {
   // Private members
 
   private commandReceived(command: string, data: AudioInfo | AudioRequest | boolean) {
+
     switch (command) {
       case AUDIO_COMMANDS.Enable: {
         this.enable()
@@ -188,6 +190,7 @@ export class AudioActionListener {
   }
 
   private createQueuedAudioFromTrack(data: AudioInfo) {
+
     const audio = new AudioTrack(data)
 
     audio.events.once(AUDIO_EVENTS.Ended, () => {
@@ -230,6 +233,8 @@ export class AudioActionListener {
   }
 
   private routeChanged() {
+    if (!this.hasAudio()) return
+
     // Discard any route-based audio
     this.discardActive(AudioType.Sound, DiscardStrategy.Route)
     this.discardTracksFromQueue(AudioType.Sound, DiscardStrategy.Route)
@@ -244,7 +249,7 @@ export class AudioActionListener {
 
   private loadTrack(audio: AudioTrack) {
     const { type } = audio
-    if (!this.loaded[type].includes(audio)) {
+    if (!this.loaded[type]?.includes(audio)) {
       this.loaded[type].push(audio)
       this.eventBus.emit(AUDIO_TOPIC, AUDIO_EVENTS.Loaded, audio.trackId)
     }
@@ -252,7 +257,7 @@ export class AudioActionListener {
 
   private addTrackToQueue(audio: AudioTrack) {
     const { type } = audio
-    if (!this.queued[type].includes(audio)) {
+    if (!this.queued[type]?.includes(audio)) {
       this.queued[type].push(audio)
       this.eventBus.emit(AUDIO_TOPIC, AUDIO_EVENTS.Queued, audio.trackId)
     }
@@ -263,7 +268,7 @@ export class AudioActionListener {
   }
 
   private getNextAudioFromQueue(type: AudioType) {
-    const audio = this.queued[type].pop()
+    const audio = this.queued[type]?.pop()
     if (audio) {
       this.eventBus.emit(AUDIO_TOPIC, AUDIO_EVENTS.Dequeued, audio.trackId)
     }
@@ -273,12 +278,12 @@ export class AudioActionListener {
 
   private discardTracksFromQueue(type: AudioType, ...reasons: DiscardStrategy[]) {
     const eligibleAudio = (audio: AudioTrack) => !reasons.includes(audio.discard)
-    this.queued[type] = this.queued[type].filter((i) => eligibleAudio(i))
+    this.queued[type] = this.queued[type]?.filter((i) => eligibleAudio(i))
   }
 
   private discardTracksFromLoaded(type: AudioType, ...reasons: DiscardStrategy[]) {
     const eligibleAudio = (audio: AudioTrack) => !reasons.includes(audio.discard)
-    this.loaded[type] = this.loaded[type].filter((i) => eligibleAudio(i))
+    this.loaded[type] = this.loaded[type]?.filter((i) => eligibleAudio(i))
   }
 
   // AudioTrack workflow

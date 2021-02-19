@@ -347,6 +347,10 @@ export namespace Components {
          */
         "noRender": boolean;
         /**
+          * If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.
+         */
+        "renderIf"?: string;
+        /**
           * Remote Template URL
          */
         "src"?: string;
@@ -933,6 +937,10 @@ declare namespace LocalJSX {
           * If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.
          */
         "noRender"?: boolean;
+        /**
+          * If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.
+         */
+        "renderIf"?: string;
         /**
           * Remote Template URL
          */

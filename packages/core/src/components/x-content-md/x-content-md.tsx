@@ -8,6 +8,7 @@ import {
   ROUTE_EVENTS,
   warn
 } from '../..';
+import { evaluatePredicate } from '../../services';
 import { render } from './markdown.worker';
 
 /**
@@ -36,8 +37,14 @@ export class XContentMD {
    * To fetch the contents change to false or remove
    * attribute.
    */
-
   @Prop({ mutable: true }) noRender = false
+
+   /**
+   * If set, disables auto-rendering of this instance.
+   * To fetch the contents change to false or remove
+   * attribute.
+   */
+  @Prop({ mutable: true }) renderIf?: string
 
   private get router(): RouterService | null {
     return this.el.closest('x-app')?.router || null
@@ -61,6 +68,10 @@ export class XContentMD {
 
   private async resolveContent() {
     if (this.noRender) {
+      return
+    }
+
+    if(await evaluatePredicate(this.renderIf || 'true') == false){
       return
     }
 

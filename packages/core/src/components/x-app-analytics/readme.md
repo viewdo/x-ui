@@ -1,4 +1,4 @@
-# X-UI-ANALYTICS
+# X-APP-ANALYTICS
 
 The `<x-app-analytics>` component delegates internal analytics commands to DOM events
 allowing developers to connect events to any analytics provider.

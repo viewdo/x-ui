@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-import { LocationSegments } from '../interfaces'
+import { LocationSegments } from '../interfaces';
 /**
  * Ensures basename
  * @param path
@@ -21,11 +21,11 @@ export const hasBasename = (path: string, prefix: string) => new RegExp(`^${pref
 export const stripBasename = (path: string, prefix: string) =>
   hasBasename(path, prefix) ? path.slice(prefix.length) : path
 
-export const stripTrailingSlash = (path: string) => (path.endsWith('/') ? path.slice(0, -1) : path)
+export const stripTrailingSlash = (path: string) => (path?.endsWith('/') ? path.slice(0, -1) : path)
 
-export const addLeadingSlash = (path: string) => (path.startsWith('/') ? path : `/${path}`)
+export const addLeadingSlash = (path: string) => (path?.startsWith('/') ? path : `/${path}`)
 
-export const stripLeadingSlash = (path: string) => (path.startsWith('/') ? path.slice(1) : path)
+export const stripLeadingSlash = (path: string) => (path?.startsWith('/') ? path.slice(1) : path)
 
 export function parsePath(path = '/'): LocationSegments {
   let pathname = path
@@ -59,11 +59,11 @@ export function createPath(location: LocationSegments) {
   let path = pathname || '/'
 
   if (search && search !== '?') {
-    path += search.startsWith('?') ? search : `?${search}`
+    path += search?.startsWith('?') ? search : `?${search}`
   }
 
   if (hash && hash !== '#') {
-    path += hash.startsWith('#') ? hash : `#${hash}`
+    path += hash?.startsWith('#') ? hash : `#${hash}`
   }
 
   return path

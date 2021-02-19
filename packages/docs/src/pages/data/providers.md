@@ -1,28 +1,25 @@
 # Data Providers
 
-> The Data Provider system is a way to normalize data access for use within Data Expressions.
-
-- Browser Session: **session**
-- Browser Storage: **storage**
-- Cookies: **cookie**
-- Route: **route**
-- Query: **query**
-- Inline Data: **data**
-
 Data Providers _provide_ the underlying data-store for expressions to resolve using data from a variety of sources. Also, since custom providers can be added, you can extend your HTML with customizations, personalization and route-conditions with ANY data-set.
 
-**Expression Format:** `{ provider : key ? default }`
-The provider is the name of the store and the key is the data-item key. There is an option 'default' value that can be provided after a question-mark.
+> The Data Provider system is a way to normalize data access for use within Data Expressions.
 
-**Example:**
-
-```
-{storage:name?Friend}
-```
 
 ## Built-in Data Providers
 
-There are data-providers already created for sessionStorage, localStorage and cookies. The first two automatically are registered. The cookie provider is optional.
+There are data-providers already created for sessionStorage, localStorage and cookies. The first two automatically are registered. The cookie provider is optional.'
+
+* Browser Session: **session**
+* Browser Storage: **storage**
+* Cookies: **cookie**
+* Route: **route**
+* Query: **query**
+* Inline Data: **data**
+
+
+**Example:**
+
+  `{storage:name?Friend}`
 
 ### Session Storage
 
@@ -54,14 +51,12 @@ The cookie provider is registered using a special component **`<x-data-provider-
 
 You can extend this system by adding your own provider, using a Data Provider Event Action.
 
-The system listens for custom events in the data topic: **xui:action-events:data**
-
 To register a provider, provide a unique name and an instance that implements IDataProvider and that data will become available within the expression system.
 
 **Custom Event to Register a Provider:**
 
 ```typescript
-new CustomEvent('actionEvent', {
+new CustomEvent('x:actions', {
   detail: {
     topic: 'data'
     command: "register-provider",
@@ -87,12 +82,12 @@ export interface IDataProvider {
 
 ### Data Changed Event
 
-To notify the system that your underlying data has changed, the interface includes a simple event emitter. Emit 'data-changed' from your **changed** emitter and all elements using your value will re-render with the new data value.
+To notify the system that your underlying data has changed, the interface includes a simple event emitter. Emit 'data-changed' from an emitter and all elements using your value will re-render with the new data value.
 
 ### Sample Data Provider
 
 ```typescript
-import { DATA_EVENTS, IDataProvider, EventEmitter } from '@viewdo/x-app'
+import { DATA_EVENTS, IDataProvider, EventEmitter } from '@viewdo/x-ui'
 
 export class MyProvider implements IDataProvider {
   data = {}
@@ -120,8 +115,9 @@ All that is needed by the data-system is a custom event with an instance of your
 
 ```javascript
 const customProvider = new MyProvider(); // IDataProvider
-const event = new CustomEvent('xui:action-events:data', {
+const event = new CustomEvent('x:actions', {
   detail: {
+    topic: 'data',
     command: 'register-provider'
     data: {
       name: 'my_provider,
@@ -152,7 +148,7 @@ export class MyDataProvider {
    * and register the provider for use in expressions.
    */
   @Event({
-    eventName: 'xui:action-events:data',
+    eventName: 'x:events',
     bubbles: true,
     composed: true,
   })

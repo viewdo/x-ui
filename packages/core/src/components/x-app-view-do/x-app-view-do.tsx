@@ -5,16 +5,11 @@ import {
   DATA_EVENTS,
   debugIf,
   eventBus,
-
-
   MatchResults,
   recordVisit,
   Route,
-  VideoActionListener, videoState,
-
-
-
-
+  VideoActionListener,
+  videoState,
   VisitStrategy,
   warn
 } from '../..';
@@ -168,16 +163,16 @@ export class XAppViewDo {
     })
   }
 
-  private activateActions(
+  private async activateActions(
     forEvent: ActionActivationStrategy,
     filter: (activator: HTMLXActionActivatorElement) => boolean = (_a) => true,
   ) {
-    this.actionActivators
+    await Promise.all(this.actionActivators
       .filter((activator) => activator.activate === forEvent)
       .filter(filter)
-      .forEach(async (activator) => {
+      .map(async (activator) => {
         await activator.activateActions()
-      })
+      }))
   }
 
   async componentWillRender() {
@@ -200,7 +195,7 @@ export class XAppViewDo {
   }
 
   private async activateView() {
-    this.activateActions(ActionActivationStrategy.OnEnter)
+    await this.activateActions(ActionActivationStrategy.OnEnter)
     await this.setupTimer()
     await this.route.loadCompleted()
     await this.captureChildElements()
@@ -287,16 +282,16 @@ export class XAppViewDo {
       this.elementTimer.beginInternalTimer()
     }
 
-    this.elementTimer.on(TIMER_EVENTS.OnInterval, (time: number) => {
-      this.activateActions(ActionActivationStrategy.AtTime, (activator) =>
+    this.elementTimer.on(TIMER_EVENTS.OnInterval, async (time: number) => {
+      await this.activateActions(ActionActivationStrategy.AtTime, (activator) =>
         activator.time ? time >= activator.time : false,
       )
     })
 
-    this.elementTimer.on(TIMER_EVENTS.OnEnd, () => {
+    this.elementTimer.on(TIMER_EVENTS.OnEnd, async () => {
       if (videoState.autoplay) {
         this.cleanup()
-        this.next('timer', TIMER_EVENTS.OnEnd)
+        await this.next('timer', TIMER_EVENTS.OnEnd)
       }
     })
   }
@@ -325,14 +320,14 @@ export class XAppViewDo {
     this.route?.router.history.goBack()
   }
 
-  private next(element: string, eventName: string, route?: string | null) {
+  private async next(element: string, eventName: string, route?: string | null) {
     debugIf(this.debug, `x-app-view-do: next fired from ${element}:${eventName}`)
 
     const valid = getChildInputValidity(this.el)
     if (valid) {
       recordVisit(this.visit, this.url)
       this.cleanup()
-      this.activateActions(ActionActivationStrategy.OnExit)
+      await this.activateActions(ActionActivationStrategy.OnExit)
       if (route) {
         this.route.goToRoute(route)
       } else {

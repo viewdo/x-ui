@@ -34,7 +34,7 @@ export class XLink {
    * Only active on the exact href match
    * no not on child routes
    */
-  @Prop() exact = true
+  @Prop() exact = false
 
   /**
    * Only active on the exact href match

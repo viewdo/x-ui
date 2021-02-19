@@ -21,7 +21,7 @@ The element should be used in-place of an **`a`** tag to navigate without refres
 | ------------------- | -------------- | ------------------------------------------------------------------ | --------- | --------------- |
 | `activeClass`       | `active-class` | The class to add when this HREF is active in the browser           | `string`  | `'link-active'` |
 | `debug`             | `debug`        |                                                                    | `boolean` | `false`         |
-| `exact`             | `exact`        | Only active on the exact href match no not on child routes         | `boolean` | `true`          |
+| `exact`             | `exact`        | Only active on the exact href match no not on child routes         | `boolean` | `false`         |
 | `href` _(required)_ | `href`         | The destination route for this link                                | `string`  | `undefined`     |
 | `strict`            | `strict`       | Only active on the exact href match using every aspect of the URL. | `boolean` | `true`          |
 

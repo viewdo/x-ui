@@ -13,11 +13,8 @@ body {
   --dark: #475b86;
   --success: #44883e;
   --info: #1a658f;
-
   --nav-bg: #5b7f95;
-
   --primary-bg: #483f61;
-
   --content-max-width: 950px;
 
   font-family: 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
@@ -33,14 +30,11 @@ body.dark {
   --accent: #fdd757;
   --text-color: #ffffff;
   --background-color: #2f3030;
-
   --light: #6f7070;
   --dark: #3f4f6e;
   --success: #23461f;
   --info: #0c3349;
-
   --nav-bg: #374663;
-
   --bs-primary: var(--primary);
   --bs-secondary: var(--secondary);
   --bs-success: var(--success);
@@ -67,12 +61,17 @@ nav .navbar-brand a,
 nav .navbar-brand a:any-link {
   color: white;
   font-family: 'Nunito', sans-serif, 'Ubuntu Mono', monospace;
-  font-size: 8vw;
+  font-size: 4rem;
   font-weight: 500;
   margin: 0;
 }
 nav .navbar-brand a:hover {
   text-decoration: none;
+}
+
+nav.bg-dark i {
+  font-size: 1.5rem;
+  color: white;
 }
 
 .brand {
@@ -88,6 +87,14 @@ b.brand {
   border-radius: 5px;
   color: white;
   background: var(--dark);
+}
+
+a.link-active:link,
+a.link-active:active,
+a.link-active:visited,
+a.link-active * {
+  color: var(--accent)!important;
+  font-weight: 600;
 }
 
 .accent a,
@@ -171,6 +178,7 @@ a:active {
   text-decoration: none;
   font-weight: 400;
 }
+
 a:hover {
   color: var(--accent);
   text-decoration: underline;
@@ -219,7 +227,7 @@ code {
   font-family: 'Courier New', Courier, monospace;
 }
 
-/* X-UI ---------------*/
+/* X-APP ---------------*/
 x-app {
   height: 100vh;
   width: 100%;
@@ -260,26 +268,15 @@ x-content-md p code {
 }
 x-content-md ul {
   list-style: none; /* Remove default bullets */
+  padding-left: 0;
 }
-x-content-md ul li::before {
-  content: "→";
-  font-weight: bold;
-  display: inline-block;
-  width: 1em;
-  margin-left: -1em;
-}
-
-x-content-md ul li.required::before {
-  color: red;
+x-content-md ul li {
+  list-style-type: none;
+  padding-left: .1em;
 }
 
 x-content-md ul li.data::before {
   content: "⇶";
-}
-
-.active-route-exact .modal,
-x-app-view-do .modal {
-  display: block;
 }
 
 x-app-view.active-route + x-app-view {
@@ -314,12 +311,6 @@ footer [slot='start'] {
   float: left;
 }
 
-.modal-dialog {
-  margin: 10em auto;
-}
-.modal-content {
-  background-color: var(--background-color);
-}
 
 /* Bootstrap ------------------*/
 
@@ -418,4 +409,53 @@ a.btn-info:any-link {
 
 .form-floating > label {
   color: #000;
+}
+
+
+/* setup tooltips */
+.tip {
+  display: flex;
+  position: relative;
+}
+
+.tip span {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.tip span {
+	border: 2px solid var(--accent);
+  border-radius: 2px;
+  background:  var(--background-color);
+  color: var(--text-color)!important;
+  padding: 6px 10px;
+  white-space: nowrap;
+  left: -50%;
+  top: 3rem;
+}
+.tip span.right {
+  right: 0;
+  left:auto;
+}
+.tip span.left {
+  left: 0;
+  right:auto;
+}
+
+/* expand */
+.tip:before {
+  transform: scale3d(.2,.2,1);
+  transition: all .2s ease-in-out;
+}
+.tip span {
+  transform: translate3d(0,6px,0);
+  transition: all .1s ease-in-out;
+}
+.tip:hover:before,
+.tip:hover span {
+  opacity: 1;
+  transform: scale3d(1,1,1);
+}
+.tip:hover span {
+  transition: all .2s .1s ease-in-out;
 }

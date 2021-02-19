@@ -69,7 +69,8 @@
   <p>
     <x-action-activator activate="OnElementEvent"
       multiple>
-      <x-audio-music-action command="pause"
+      <x-audio-music-action
+       command="pause"
         track-id="music"> </x-audio-music-action>
       <button type="button"
         class="btn btn-info text-white">
@@ -79,8 +80,10 @@
     </x-action-activator>
     <x-action-activator activate="OnElementEvent"
       multiple>
-      <x-audio-music-action command="resume"
-        track-id="music"> </x-audio-music-action>
+      <x-audio-music-action
+        command="resume"
+        track-id="music">
+      </x-audio-music-action>
       <button type="button"
         class="btn btn-info text-white">
         <i class="ri-play-circle-line"></i>
@@ -89,9 +92,11 @@
     </x-action-activator>
     <x-action-activator activate="OnElementEvent"
       multiple>
-      <x-audio-music-action command="seek"
+      <x-audio-music-action
+        command="seek"
         track-id="music"
-        value="60"> </x-audio-music-action>
+        value="60">
+      </x-audio-music-action>
       <button type="button"
         class="btn btn-info text-white">
         <i class="ri-arrow-right-circle-line"></i>

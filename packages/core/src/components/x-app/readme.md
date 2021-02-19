@@ -1,6 +1,6 @@
-# X-UI
+# X-APP
 
-The root component is the base container for the view-engine and its child components. This element should contain root-level HTML that is global to every view along with x-app-view components placed within any global-html.
+The root component is the base container for the view-engine and its child components. This element should contain root-level HTML that is global to every view along with [**`<x-app-view>`**](/components/x-app-view) components placed within any global-html.
 
 ## Usage
 
@@ -32,7 +32,7 @@ The following attributes are queried to resolve certain data-values or show/hide
 
 #### Cloak: [x-cloak]
 
-For each child element with this attribute, the value of the attribute is removed when the XApp component is fully loaded. This
+For each child element with this attribute, the value of the attribute is removed when this component is fully loaded. This
 attribute is target in css for `display:none`.
 
 ```html
