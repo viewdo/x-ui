@@ -6,14 +6,5 @@ dist
 loader
 .eslintcache
 
-
-examples/data-provider/.gitignore
-examples/data-provider/LICENSE
-examples/data-provider/package.json
-examples/data-provider/stencil.config.ts
-examples/data-provider/tsconfig.json
-examples/data-provider/src/components.d.ts
-examples/data-provider/src/index.html
-examples/data-provider/src/index.ts
-examples/data-provider/src/components/x-data-provider/readme.md
-examples/data-provider/src/components/x-data-provider/x-data-provider.tsx
+docs/
+examples/data-provider
