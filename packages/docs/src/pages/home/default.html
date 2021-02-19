@@ -1,0 +1,226 @@
+<!-- Tour -->
+<x-use no-wait
+  script-src="https://unpkg.com/intro.js/minified/intro.min.js"
+  style-src="https://unpkg.com/intro.js/minified/introjs.min.css">
+</x-use>
+<div class="container container-fluid container-md mx-auto">
+  <h1>Turbo-charge your HTML</h1>
+  <h2>Modern web-application functionality without leaving the comfort of HTML.
+  </h2>
+
+  <p class="p-2 lead accent"
+    style="display: flex; flex-direction: row; gap: 1ch"
+    data-intro="This intro script was referenced conditionally, keeping the page weight down if this exact page isn't rendered. Check out the <b>x-use</b> element. <br/><br/> <a href='components/x-use?group=content'>Learn more</a>. ">
+    <i class="ri-play-line fs-1"></i>
+    <span>
+      This app was created using <b>&lt;x-ui/&gt;</b>. View-source or
+      <a class="fw-300"
+        href
+        onclick="introJs().start();return false"> take the tour</a> to see how
+      complex routing,
+      guided navigation, automatic presentations, data-binding and more is made
+      possible!
+    </span>
+  </p>
+
+  <div class="float-end ms-3 mt-2 d-none d-sm-block"
+    data-intro="This content was fetched asynchronously from a separate file using 'content-src' with the parent <b>x-include</b> element. <br/><br/> <a href='components/x-include?group=navigation'>Learn more</a>.">
+    <x-include src="/pages/guides.html"></x-include>
+  </div>
+
+  <h2>What is it?</h2>
+  <p class="lead">
+    <b class="brand">&lt;x-ui/&gt;</b> is a set of custom HTML elements (Web
+    Components, made with
+    <a href="https://stenciljs.com"
+      rel="noreferrer"
+      target="_blank">Stencil JS</a>). They add features typically only
+    available in JavaScript frameworks, to static HTML, with many features
+    focused on creating web experiences without a
+    build-process.
+  </p>
+
+  <h2>What it is not.</h2>
+  <p>
+    <b class="brand">&lt;x-ui/&gt;</b> experience elements add functionality,
+    NOT design. These elements work with your
+    design and since it is just HTML, you can use it with any component or UI
+    library you want.
+  </p>
+
+  <h3>No Framework Necessary</h3>
+  <p>
+    Without transpilation or a framework or even a build-process, you get the
+    same time-saving techniques like
+    shared-layouts, URL-based routing, data-binding, partials and much more,
+    using elements directly in HTML.
+  </p>
+
+  <div hidden>
+    <h3>Features:</h3>
+    <div class="accordion accordion-flush"
+      id="specialFeatures">
+      <div class="accordion-item">
+        <h4 class="accordion-header"
+          id="headingOne">
+          <button class="accordion-button collapsed fs-5"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseOne"
+            aria-expanded="false"
+            aria-controls="collapseOne">
+            <i class="ri-route-line me-5"></i>
+            Single-Page URL Routing
+          </button>
+        </h4>
+        <div id="collapseOne"
+          class="accordion-collapse collapse"
+          aria-labelledby="headingOne"
+          data-bs-parent="#specialFeatures">
+          <div class="accordion-body">
+            <ul>
+              <li>Declarative Routing directly in HTML (no scripting)</li>
+              <li>Variable Data Routes & Remote Data-Driven Content</li>
+              <li>Data Provider System</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h4 class="accordion-header"
+          id="headingTwo">
+          <button class="accordion-button collapsed fs-5"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseTwo"
+            aria-expanded="false"
+            aria-controls="collapseTwo">
+            <i class="ri-direction-line me-5"></i>
+            Guided Navigation
+          </button>
+        </h4>
+        <div id="collapseTwo"
+          class="accordion-collapse collapse"
+          aria-labelledby="headingTwo"
+          data-bs-parent="#specialFeatures">
+          <div class="accordion-body">
+            <ul>
+              <li>Automatic Back & Forward Resolution</li>
+              <li>Sequenced Content: present, educate, inform</li>
+              <li>Sequenced Input: surveys, quiz and display results</li>
+              <li>Sequenced Video: interactive video story-telling</li>
+              <li>Expression-based View &amp; Conditions</li>
+              <li>Stateful: pick up where a user left-off</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h4 class="accordion-header"
+          id="headingThree">
+          <button class="accordion-button collapsed fs-5"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseThree"
+            aria-expanded="false"
+            aria-controls="collapseThree">
+            <i class="ri-empathize-line me-5"></i>
+            Embedded Data
+          </button>
+        </h4>
+        <div id="collapseThree"
+          class="accordion-collapse collapse"
+          aria-labelledby="headingThree"
+          data-bs-parent="#specialFeatures">
+          <div class="accordion-body">
+            <ul>
+              <li>Data Tags to render personalized data from a variety of
+                sources
+              </li>
+              <li>Use HTML to access data from your API</li>
+              <li>Capture attention and data, with smart workflows to replace
+                boring forms.</li>
+              <li>Personalize the content for each of your visitors.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div hidden
+        class="accordion-item">
+        <h4 class="accordion-header"
+          id="headingFour">
+          <button class="accordion-button collapsed fs-5"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseFour"
+            aria-expanded="false"
+            aria-controls="collapseThree">
+            <i class="ri-slideshow-line me-5"></i>
+            Made for Presentations
+          </button>
+        </h4>
+        <div id="collapseFour"
+          class="accordion-collapse collapse"
+          aria-labelledby="headingFour"
+          data-bs-parent="#specialFeatures">
+          <div class="accordion-body">
+            <ul>
+              <li>Interactive Videos</li>
+              <li>Queued, Timed & Event-based Actions</li>
+              <li>Animated Transitions</li>
+              <li>Background Music & Voice-Overs</li>
+              <li>Animation Hooks</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <h2>Built with Love</h2>
+  <ul>
+    <li>
+      <b>Fast:</b> Lightweight and
+      <a href="https://developers.google.com/speed/pagespeed/insights/?url=https://demo.x-ui.dev&tab=desktop"
+        rel="noreferrer"
+        target="_blank">
+        lightening fast</a>: No Framework & Lazy Loaded
+    </li>
+    <li><b>Themeable:</b> BYO UI and themes. <b class="brand">&lt;x-ui/&gt;</b>
+      stays out of the way.</li>
+    <li><b>Extensible:</b> BYO Data with a plugin system to easily connect your
+      data</li>
+    <li><b>Typed:</b> Built with TypeScript so you can enjoy completely typed
+      components</li>
+    <li><b>Portable:</b> Native web components with hooks to integrate with any
+      framework</li>
+    <li><b>Trackable:</b> Analytics & Behavior Tracking Plugins</li>
+    <li><b>Extensible:</b> The provider system makes it easy to integrate with
+      anything.</li>
+  </ul>
+
+  <x-data-display>
+    <template>
+      <h3 class="mt-5">It's not magic {storage:name}, it's view.DO!</h3>
+    </template>
+  </x-data-display>
+
+  <a href="https://view.do"
+    target="_blank"
+    rel="noopener"
+    title="view.DO Homepage">
+    <img id="viewdo-logo"
+      loading="lazy"
+      alt="view.DO Logo"
+      src="https://static.view.do/view-do/viewdo-logo-color.svg"
+      width="200vw"
+      height="100" />
+  </a>
+
+  <footer>
+    <a slot="end"
+      href="/start"
+      anchor-title="Get Started">
+      <button class="btn btn-primary btn-lg">Get Started &gt;</button>
+    </a>
+  </footer>
+</div>

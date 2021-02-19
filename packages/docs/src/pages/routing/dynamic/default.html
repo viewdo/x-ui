@@ -1,0 +1,87 @@
+<x-use
+  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
+  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css"
+>
+</x-use>
+<x-use script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js"> </x-use>
+<div class="container container-fluid mx-auto">
+  <h1>Dynamic Routes</h1>
+  <p class="lead">Data-driven, dynamic routing for HTML.</p>
+
+  <h2>How it Works</h2>
+  <p>
+    This router supports segment and query-string variables and we provide a simple, declarative method for using that
+    data in your application. By using special (Node.js Express-based) notation in the
+    <a href="/components/x-view">
+      <b>&lt;x-view&gt;</b>
+    </a>
+    element's <b>URL</b> attribute, the route data becomes available in our unified
+    <a href="/data/expressions">data expression</a> system.
+  </p>
+  <p>
+    Routes can express dynamic parameters, to provide data-driven views You can even use that data in your HTML, again
+    with no code.
+  </p>
+
+  <h3>Contrived Example</h3>
+  <p>This page's child-routes demonstrate how dynamic, data-driven routes can be used with this routing system.</p>
+  <div class="button-nav">
+    <a href="/routing/dynamic/item/cake" class="btn btn-secondary">
+      <i class="ri-cake-2-line"></i>
+      Cake
+    </a>
+
+    <a href="/routing/dynamic/item/wine" class="btn btn-secondary">
+      <i class="ri-goblet-fill"></i>
+      Wine
+    </a>
+
+    <x-data-display hidden x-show-when="{storage:favorite}">
+      <template>
+        <a href="/routing/dynamic/item/{storage:favorite}" class="btn btn-secondary">
+          <i class="ri-user-heart-line"></i>
+          {storage:favorite}
+        </a>
+      </template>
+    </x-data-display>
+
+    <a href="/routing/dynamic/custom" x-hide-when="{storage:favorite}" class="btn btn-secondary">
+      <i class="ri-discuss-line"></i>
+      Custom Item
+    </a>
+  </div>
+
+  <div class="mt-3">
+    <button
+      class="btn btn-light"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#loadSource"
+      aria-expanded="false"
+      aria-controls="loadSource"
+    >
+      <i class="ri-code-s-slash-line"></i>
+      Toggle Source
+    </button>
+  </div>
+  <div class="collapse" id="loadSource">
+    <x-markdown>
+      <script type="text/markdown">
+        ```html
+        <x-view url="/data" page-title="Data List">
+          <x-view url="/item/:foodKey" page-title="{route:foodKey} Details">
+            ... content that uses foodKey to render ...
+          </x-view>
+
+          <a href="/routing/dynamic/item/cake">Cake</a>
+          <a href="/routing/dynamic/item/wine">Wine</a>
+        </x-view>
+        ```
+      </script>
+    </x-markdown>
+  </div>
+
+  <footer>
+    <a slot="start" href="/routing" class="btn btn-light"> &lt; Routing </a>
+  </footer>
+</div>
