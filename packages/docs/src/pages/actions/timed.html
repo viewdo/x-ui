@@ -1,0 +1,36 @@
+<x-use script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
+  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
+</x-use>
+<x-use
+  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
+</x-use>
+<div class="container container-fluid mx-auto">
+  <h1>Time Activation</h1>
+  <p>
+    Timed actions work using the <a href="/components/x-view-do"><b>&lt;x-view-do/&gt;</b></a> element time system.
+    This system allows developers to fire off actions at a given time, in seconds from route entry.
+  </p>
+
+  <h2>Time: <span x-time-to></span></h2>
+
+  <blockquote>You should see a console log message after 3 seconds.</blockquote>
+
+  <h3>Source</h3>
+  <x-markdown>
+    <script type="text/markdown">
+      ```html
+      <x-action-activator activate="AtTime" time="3">
+        <x-action topic="interface"
+          command="console"
+          data-message="3-seconds has passed."></x-action>
+      </x-action-activator>
+      ```
+    </script>
+  </x-markdown>
+
+  <footer>
+    <button slot="start"
+      x-next="/actions"
+      class="btn btn-light">&lt; Back</button>
+  </footer>
+</div>
