@@ -74,7 +74,7 @@
     elements with their command and track-id.
   </p>
   <p>
-    <x-action-activator activate="OnElementEvent" multiple>
+    <x-action-activator activate="OnElementEvent">
       <x-audio-sound-action command="start" track-id="cheer"></x-audio-sound-action>
       <button class="btn btn-info text-white">
         <i class="ri-play-circle-line"></i>
@@ -106,7 +106,7 @@
     <x-content-md>
       <script type="text/markdown">
         ```html
-        <x-action-activator activate="OnElementEvent" multiple>
+        <x-action-activator activate="OnElementEvent">
           <x-audio-sound-action command="start" track-id="cheer"> </x-audio-sound-action>
           <button class="btn btn-info text-white">Play Sound</button>
         </x-action-activator>

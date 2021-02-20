@@ -43,7 +43,7 @@
   </p>
 
   <div>
-    <a hidden href="/routing/examples/simple.html" target="_blank" class="btn btn-secondary float-end">
+    <a href="/pages/routing/examples/simple.html" target="_blank" class="btn btn-secondary float-end">
       <i class="ri-external-link-line"></i>
       Visit Demo</a
     >
@@ -63,15 +63,15 @@
     <x-content-md>
       <script type="text/markdown">
         ```html
-        <x-app app-title="My HTML App" start-url="home" mode="hash">
-          <x-app-view url="home" page-title="Home">
+        <x-app app-title="My HTML App" start-url="/home">
+          <x-app-view url="/home" page-title="Home">
             <div class="container" slot="content">
               <h1>Home</h1>
               <hr />
               <h2>Hello World!</h2>
               <p>Now you have a basic content router.</p>
 
-              <a href="home/nested">Nested Page</a>
+              <a href="/home/nested">Nested Page</a>
               <a href="about">Sibling Page</a>
             </div>
             <x-app-view url="nested" page-title="Nested" x-cloak>
@@ -84,11 +84,11 @@
               </div>
             </x-app-view>
           </x-app-view>
-          <x-app-view url="about" page-title="About" x-cloak>
+          <x-app-view url="/about" page-title="About" x-cloak>
             <div class="container" slot="content">
               <h1>Sibling Page</h1>
               <h2>You now have a multi-page app!</h2>
-              <a href="">Back to Home</a>
+              <a href="/home">Back to Home</a>
             </div>
           </x-app-view>
         </x-app>

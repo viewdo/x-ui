@@ -84,6 +84,7 @@ export class XAppView {
 
   private isChild(element: HTMLElement) {
     return element.parentElement?.closest('x-app-view') === this.el || false
+      && element.parentElement?.closest('x-view-do') == null
   }
 
   private get childViewDos(): HTMLXAppViewDoElement[] {
@@ -98,6 +99,7 @@ export class XAppView {
 
   private get actionActivators(): HTMLXActionActivatorElement[] {
     return Array.from(this.el.querySelectorAll('x-action-activator'))
+      .filter((e) => this.isChild(e))
   }
 
   componentWillLoad() {
@@ -167,11 +169,11 @@ export class XAppView {
           this.activateView(this.match.url)
         }
       }
-      await resolveChildElementXAttributes(this.el)
+
     } else {
-      this.resetContent()
       if (this.route.previousMatch?.isExact) {
         await this.activateActions(ActionActivationStrategy.OnExit)
+        this.resetContent()
       }
     }
   }
@@ -200,7 +202,7 @@ export class XAppView {
         this.el.classList.add(c)
       })
     }
-
+    await resolveChildElementXAttributes(this.el)
     this.route.captureInnerLinks()
     await this.route.loadCompleted()
   }
@@ -231,6 +233,7 @@ export class XAppView {
         if (this.route.transition) content.className = this.route.transition
         this.route.captureInnerLinks(content)
         this.el.append(content)
+        await resolveChildElementXAttributes(this.el)
       } else {
         warn(`x-app-view: ${this.url} Unable to retrieve from ${this.contentSrc}`)
       }

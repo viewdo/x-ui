@@ -46,19 +46,12 @@ export class XActionActivator {
    */
   @Prop() debug = false
 
-  /**
-   * Allow the actions to fire more than once per the event.
-   */
-  @Prop() multiple = false
 
   /**
    *
    */
   @Method()
   async activateActions(): Promise<void> {
-    if (!this.multiple && this.activated) {
-      return Promise.resolve()
-    }
 
     const values: Record<string,any> = {}
 

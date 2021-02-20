@@ -43,10 +43,6 @@ export namespace Components {
          */
         "debug": boolean;
         /**
-          * Allow the actions to fire more than once per the event.
-         */
-        "multiple": boolean;
-        /**
           * The element to watch for events when using the OnElementEvent activation strategy. This element uses the HTML Element querySelector function to find the element.  For use with activate="OnElementEvent" Only!
          */
         "targetElement"?: string;
@@ -629,10 +625,6 @@ declare namespace LocalJSX {
           * Turn on debug statements for load, update and render events.
          */
         "debug"?: boolean;
-        /**
-          * Allow the actions to fire more than once per the event.
-         */
-        "multiple"?: boolean;
         /**
           * The element to watch for events when using the OnElementEvent activation strategy. This element uses the HTML Element querySelector function to find the element.  For use with activate="OnElementEvent" Only!
          */

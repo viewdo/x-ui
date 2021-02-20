@@ -40,6 +40,7 @@ body.dark {
   --bs-secondary: var(--secondary);
   --bs-success: var(--success);
   --bs-info: var(--info);
+  text-shadow: none;
 }
 
 nav {
@@ -73,6 +74,7 @@ nav .navbar-brand a:hover {
 nav.bg-dark i {
   font-size: 1.5rem;
   color: white;
+
 }
 
 .brand {
@@ -114,16 +116,28 @@ a.link-active * {
   filter: brightness(0) invert(1);
 }
 
+
 .dark .introjs-tooltip {
   background-color: var(--background-color);
   color: var(--text-color);
 }
 
+.dark code[class*=language-],
+.dark pre[class*=language-] {
+  color: var(--text-color);
+  background-color: rgb(92, 88, 88);
+  text-shadow: none;
+}
+.dark .token {
+  filter: brightness(2);
+}
+
+
+
 /* ELEMENTS ------ */
 
 h1 {
   font-family: 'Nunito', sans-serif, 'Ubuntu Mono';
-  margin: 1em 1em 0 0;
   font-size: 2rem;
 }
 

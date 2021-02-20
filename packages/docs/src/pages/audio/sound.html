@@ -15,7 +15,7 @@
 
   <h2>Add sound-effects or voice-overs declaratively</h2>
   <p>
-    Sounds are a little different than music. We don't loop sounds and they need to play on-demand. There are multiple
+    Sounds are a little different than music. We don't loop sounds and they need to play on-demand. There are
     ways to trigger them, but this page attaches them to a button.
   </p>
 
@@ -69,7 +69,7 @@
     elements with the command, and track-id.
   </p>
   <p>
-    <x-action-activator activate="OnElementEvent" multiple>
+    <x-action-activator activate="OnElementEvent">
       <x-audio-sound-action command="start" track-id="buzzer"> </x-audio-sound-action>
       <button type="button" class="btn btn-info text-white">
         <i class="ri-play-circle-line"></i>
@@ -94,7 +94,7 @@
     <x-content-md>
       <script type="text/markdown">
         ```html
-        <x-action-activator activate="OnElementEvent" multiple>
+        <x-action-activator activate="OnElementEvent">
           <x-audio-sound-action command="start" track-id="buzzer"> </x-audio-sound-action>
           <button type="button" class="btn btn-info">Sound</button>
         </x-action-activator>

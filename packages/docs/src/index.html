@@ -71,7 +71,7 @@
       </x-content-reference>
       <nav x-cloak class="navbar">
         <div class="container container-fluid">
-          <h1 class="navbar-brand nav-fill">
+          <h1 class="navbar-brand flex-grow-1 ">
             <a
               href="/home"
               data-intro="This page uses the <b>x-app-view</b> component. This component display content for a given route.<br/><br/> Check out the <a href='/components/x-app-view'>documentation</a> to see what else you can do."
@@ -79,7 +79,8 @@
               &lt;x-ui/&gt;
             </a>
           </h1>
-          <a
+          <div class="d-none d-sm-flex flex-row">
+            <a
             href="https://github.com/viewdo/x-ui"
             title="Source on GitHub"
             target="_blank"
@@ -95,19 +96,21 @@
             rel="noopener">
             <i class="ri-npmjs-line"></i>
           </a>
-          <x-app-link
+          <a
             href="/home/profile"
             title="Updated your profile"
             class="nav-link text-white fs-2"
             data-intro="Go here to change the theme and update preferences."
           >
             <i class="ri-user-5-line"></i>
-          </x-app-link>
+          </a>
+          </div>
+
         </div>
       </nav>
       <nav class="navbar-nav bg-dark sticky-top">
         <div class="container container-fluid d-flex flex-row">
-          <x-app-link class="nav-link flex-fill tip" title="Get Started" href="/start">
+          <x-app-link class="nav-link flex-fill tip ps-2" title="Get Started" href="/start">
             <i class="ri-rocket-line"></i>
             <span class="left">Get Started</span>
           </x-app-link>
@@ -137,7 +140,7 @@
             <span>Declarative Actions</span>
           </x-app-link>
 
-          <x-app-link class="nav-link flex-fill tip" title="All Components" href="/components">
+          <x-app-link class="nav-link flex-shrink-0 tip pe-2" title="All Components" href="/components">
             <i class="ri-settings-6-line"></i>
             <span class="right">All Components</span>
           </x-app-link>

@@ -29,7 +29,7 @@
       }
     </style>
     <!-- Experience UI -->
-    <script type="module" src="/x-ui/x-ui.esm.js"></script>
+    <script type="module" src="/dist/x-ui.esm.js"></script>
     <!--
           HIYA! Right-click to save this file locally.  Uncomment the script
           reference below, and remove the one above.
@@ -38,7 +38,7 @@
   </head>
 
   <body>
-    <x-app app-title="My HTML App" start-url="home" root="/routing/examples/nested.html/#">
+    <x-app app-title="My HTML App" start-url="/home" root="/pages/routing/examples/nested.html/#">
       <nav>
         <x-app-link class="nav-link" href="/home" active-class="active"> Home </x-app-link>
 
@@ -53,12 +53,12 @@
 
           <a href="/home/nested">Nested</a>
         </div>
-        <x-app-view url="/nested" page-title="Nested" x-cloak>
+        <x-app-view url="nested" page-title="Nested" x-cloak>
           <div class="container" slot="content">
             <h1>Home / Nested</h1>
             <hr />
             <h2>A child page</h2>
-
+<h3>Test</h3>
             <a href="/home">Back to Home</a>
           </div>
         </x-app-view>
