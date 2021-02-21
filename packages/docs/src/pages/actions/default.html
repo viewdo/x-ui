@@ -50,8 +50,16 @@
   </blockquote>
 
   <h3>Declarative Activation</h3>
+
+  <p>
+    Actions can also be expressed using the
+    <a href="/components/x-action"><b>&lt;x-action&gt;</b></a>
+    element. They should be wrapped within an Action Activator
+    <a href="/components/x-action-activator"><b>&lt;x-action-activator&gt;</b></a>
+    element to define how and when the actions within are activated.
+  </p>
   <button
-    class="btn btn-light float-end mb-2 ms-2"
+    class="btn btn-light mb-2"
     type="button"
     data-bs-toggle="collapse"
     data-bs-target="#loadSource"
@@ -61,26 +69,23 @@
     <i class="ri-code-s-slash-line"></i>
     Toggle Source
   </button>
-  <p>
-    Actions can also be expressed using the
-    <a href="/components/x-action"><b>&lt;x-action&gt;</b></a>
-    element. They should be wrapped within an Action Activator
-    <a href="/components/x-action-activator"><b>&lt;x-action-activator&gt;</b></a>
-    element to define how and when the actions within are activated.
-  </p>
-
   <div class="collapse" id="loadSource">
     <x-content-md>
       <script type="text/markdown">
         ```html
         <x-action-activator activate="...">
-          <x-action topic="interface" command="log" data-message="Testing on-enter action"></x-action>
+          <x-action topic="interface"
+            command="log"
+            data-message="Testing on-enter action"
+          ></x-action>
         </x-action-activator>
         ```
       </script>
     </x-content-md>
   </div>
 
+  <h4>Advanced Activations</h4>
+  <p>There are more ways to activate actions declaratively. Read more about them here.</p>
   <div class="button-nav">
     <a href="/actions/activation/events" class="btn btn-info text-white">Event Activation </a>
     <a href="/actions/activation/timed" class="btn btn-info text-white">Timed Activation </a>
@@ -88,8 +93,13 @@
   </div>
 
   <h3>Script Activation</h3>
+
+  <p>
+    Actions can be sent to the Action Bus using a standard HTML CustomEvent with the properties above, using the event
+    name: <b>x:actions</b>
+  </p>
   <button
-    class="btn btn-light float-end mb-2 ms-2"
+    class="btn btn-light mb-2"
     type="button"
     data-bs-toggle="collapse"
     data-bs-target="#loadManualSource"
@@ -99,11 +109,6 @@
     <i class="ri-code-s-slash-line"></i>
     Toggle Source
   </button>
-  <p>
-    Actions can be sent to the Action Bus using a standard HTML CustomEvent with the properties above, using the event
-    name: <b>x:actions</b>
-  </p>
-
   <div class="collapse" id="loadManualSource">
     <x-content-md>
       <script type="text/markdown">
@@ -124,8 +129,13 @@
   </div>
 
   <h3>Mixed Activation</h3>
+
+  <p>
+    You can also activate an action directly with JavaScript, using the x-action element's
+    <b>activateAction()</b> function.
+  </p>
   <button
-    class="btn btn-light float-end mb-2 ms-2"
+    class="btn btn-light mb-2"
     type="button"
     data-bs-toggle="collapse"
     data-bs-target="#loadMixedSource"
@@ -135,15 +145,15 @@
     <i class="ri-code-s-slash-line"></i>
     Toggle Source
   </button>
-  <p>
-    You can also activate an action directly with JavaScript, using the x-action element's
-    <b>activateAction()</b> function.
-  </p>
   <div id="loadMixedSource" class="collapse">
     <x-content-md>
       <script type="text/markdown">
         ```html
-        <x-action topic="interface" id="actionlog" command="console" data-message="Testing on-enter action"> </x-action>
+        <x-action topic="interface"
+          id="actionlog"
+          command="console"
+          data-message="Testing on-enter action">
+        </x-action>
         ```
 
         ```javascript
@@ -158,15 +168,16 @@
     Listeners execute functions or perform tasks based on the action commands. Check out the built-in actions in the
     documentation below.
   </p>
-  <ul>
-    <li><a href="/actions/data">Data Actions</a></li>
-    <li><a href="/actions/navigation">Navigation Actions</a></li>
-    <li><a href="/actions/interface">Interface Actions</a></li>
-    <li><a href="/actions/elements">Elements Actions</a></li>
-    <li><a href="/actions/analytics">Analytics Actions</a></li>
-    <li><a href="/actions/audio">Audio Actions</a></li>
-    <li><a href="/actions/video">Video Actions</a></li>
-    <li hidden><a href="/actions/custom">Custom Actions</a></li>
+
+  <div class="button-nav">
+    <a class="btn btn-info" href="/actions/data">Data Actions</a>
+    <a class="btn btn-info" href="/actions/navigation">Navigation Actions</a>
+    <a class="btn btn-info" href="/actions/interface">Interface Actions</a>
+    <a class="btn btn-info" href="/actions/elements">Elements Actions</a>
+    <a class="btn btn-info" href="/actions/analytics">Analytics Actions</a>
+    <a class="btn btn-info" href="/actions/audio">Audio Actions</a>
+    <a class="btn btn-info" href="/actions/video">Video Actions</a>
+    <a class="btn btn-info" href="/actions/custom">Custom Actions</a>
   </ul>
 
   <footer>

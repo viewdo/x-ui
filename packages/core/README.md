@@ -42,9 +42,9 @@ Now you can use any of the application components we built to make your pages fu
 
 Expressing functionality declaratively has been the vision for most frameworks for years now. Frameworks like Blazor and React edge closer towards that goal, but much of the setup and decisions around tooling is complex on its own. This can be a huge barrier for many that just want to make a website.
 
-> These components strive to enable creators from diverse backgrounds and technical and non-technical skill-sets to easily create robust web-experiences, quickly. Without a ton of tooling decisions or an opinionated frameworks.
+Declarative semantics are more approachable for non-developers. In fact, it is designers who push the limits of the web, creating designs developers never thought possible with just CSS and HTML.
 
-HTML and CSS, declarative in nature are both much more approachable for non-developers. In fact, we have watched designers do things developers never thought possible with just these two languages. So why bring JavaScript into it?
+> These components strive to enable creators from diverse backgrounds and skill-sets to create robust experiences, using the semantics they already understand.
 
 Functionality is easier to express _and_ understand when it's format is declarative. Conversely, scripting languages like JavaScript are imperative by nature and take more time to grok and more systems to learn.
 
