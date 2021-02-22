@@ -8,31 +8,31 @@
 >
 </x-content-reference>
 <div class="container container-fluid mx-auto">
-  <x-data-display x-show-when="{storage:name}">
+  <x-data-display x-show-when="{{storage:name}}">
     <template>
-      <h1>Dynamic Data for {storage:name}</h1>
+      <h1>Dynamic Data for {{storage:name}}</h1>
     </template>
   </x-data-display>
 
   <h2>Visits in Session:</h2>
   <ul>
-    <x-data-repeat items="{session:visits}">
+    <x-data-repeat items="{{session:visits}}">
       <template>
-        <li>{data:item}</li>
+        <li>{{data:item}}</li>
       </template>
     </x-data-repeat>
   </ul>
 
   <h2>Visits in Storage:</h2>
   <ul>
-    <x-data-repeat items="{storage:visits}">
+    <x-data-repeat items="{{storage:visits}}">
       <template>
-        <li>{data:item}</li>
+        <li>{{data:item}}</li>
       </template>
     </x-data-repeat>
   </ul>
 
-  <h2 hidden x-show-when="'{storage:animal}' == 'dog'">I only show up when your spirit-animal is 'dog'</h2>
+  <h2 hidden x-show-when="'{{storage:animal}}' == 'dog'">I only show up when your spirit-animal is 'dog'</h2>
 
   <footer>
     <a slot="start" href="/data" class="btn btn-light"> &lt; Data </a>

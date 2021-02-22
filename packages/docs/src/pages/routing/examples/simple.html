@@ -13,19 +13,20 @@
       crossorigin="anonymous"
     />
 
-    <title>Loading...</title>
+    <title>App</title>
     <style>
       [x-cloak] {
         display: none;
       }
-
       nav {
-        display: flex;
-        flex-direction: row;
+        border-bottom: 1px solid black;
       }
-
+      nav h1 {
+        display: inline-block;
+      }
       a.active:any-link {
         text-decoration: none;
+        color: #000;
       }
     </style>
     <!-- Experience UI -->
@@ -38,28 +39,30 @@
   </head>
 
   <body>
-    <x-app app-title="My HTML App" start-url="/home" root="/pages/routing/examples/simple.html#/">
-      <nav>
-        <x-app-link class="nav-link" href="/home" active-class="active"> Home </x-app-link>
-
+    <x-app app-title="App" start-url="/home" root="/pages/routing/examples/simple.html#/">
+      <nav class="nav d-flex flex-row">
+        <x-app-link class="nav-link" href="/home" exact active-class="active"> Home </x-app-link>
         <x-app-link class="nav-link" href="/about" active-class="active"> About </x-app-link>
       </nav>
-      <x-app-view url="/home" page-title="Home">
-        <div class="container" slot="content">
+      <div class="container">
+        <x-app-view url="/home" page-title="Home" debug>
           <h1>Home</h1>
           <hr />
-          <h2>Hello World!</h2>
-          <p>Now you have a basic content router.</p>
-        </div>
-      </x-app-view>
-      <x-app-view url="/about" page-title="About" x-cloak>
-        <div class="container" slot="content">
+          <div slot="content">
+            <h2>Hello World!</h2>
+            <p>Now you have a basic content router.</p>
+          </div>
+        </x-app-view>
+        <x-app-view url="/about" page-title="About" x-cloak>
           <h1>About</h1>
           <hr />
-          <h2>About World!</h2>
-          <h2>You now have a multi-page app!</h2>
-        </div>
-      </x-app-view>
+          <div slot="content">
+            <h2>About World!</h2>
+            <p>AND an about page.</p>
+          </div>
+        </x-app-view>
+      </div>
+
     </x-app>
   </body>
 </html>

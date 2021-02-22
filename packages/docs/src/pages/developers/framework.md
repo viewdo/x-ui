@@ -119,7 +119,7 @@ import {
 } from '@viewdo/x-ui';
 
 const SendMessageButton = (props) => (
-  <ion-fab-button {...props}>
+  <ion-fab-button {{...props}}>
     <ion-icon name='send' />
   </ion-fab-button>
 );

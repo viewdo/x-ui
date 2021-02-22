@@ -19,7 +19,7 @@ There are data-providers already created for sessionStorage, localStorage and co
 
 **Example:**
 
-  `{storage:name?Friend}`
+  `{{storage:name?Friend}}`
 
 ### Session Storage
 
@@ -68,7 +68,7 @@ new CustomEvent('x:actions', {
 })
 ```
 
-Then, assuming your instance has a data item with key **name**, your HTML can use this value in an the expression: `{my_provider:name}`
+Then, assuming your instance has a data item with key **name**, your HTML can use this value in an the expression: `{{my_provider:name}}`
 
 **Data Provider Interface:**
 

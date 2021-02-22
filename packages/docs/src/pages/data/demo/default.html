@@ -8,25 +8,25 @@
 >
 </x-content-reference>
 <div class="container container-fluid mx-auto">
-  <x-data-display x-show-when="{storage:name}">
+  <x-data-display x-show-when="{{storage:name}}">
     <template>
-      <h3>Content for {storage:name}</h3>
+      <h3>Content for {{storage:name}}</h3>
     </template>
   </x-data-display>
 
-  <x-data-display when="{session:favorite}">
+  <x-data-display when="{{session:favorite}}">
     <template>
-      <h2>Favorite thing: <a href="/data/session-data"> {session:favorite}</a></h2>
+      <h2>Favorite thing: <a href="/data/session-data"> {{session:favorite}}</a></h2>
     </template>
   </x-data-display>
 
   <x-data-display>
     <template>
-      <h2>Spirit Animal: <a href="/data/storage-data">{storage:animal} </a></h2>
+      <h2>Spirit Animal: <a href="/data/storage-data">{{storage:animal}} </a></h2>
     </template>
   </x-data-display>
 
-  <h2 hidden x-show-when="'{storage:animal}' == 'dog'">I only show up when your spirit-animal is 'dog'</h2>
+  <h2 hidden x-show-when="'{{storage:animal}}' == 'dog'">I only show up when your spirit-animal is 'dog'</h2>
 
   <x-data-provider-cookie x-cloak>
     <div class="container container-fluid" style="clear: both">

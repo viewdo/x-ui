@@ -15,17 +15,20 @@
 
   <h3>First: Install the Package</h3>
   <p>Run the install command of your favorite Node package manager.</p>
-  <x-content-md>
+  <x-content-markdown>
     <script type="text/markdown">
       ```bash
         npm i @viewdo/x-ui
       ```
     </script>
-  </x-content-md>
+  </x-content-markdown>
 
   <h3>Then: Add Script References</h3>
   <p>Add the following script tags to the head:</p>
-  <x-content-md src="/pages/start/ref-npm.md"> </x-content-md>
+  <x-content-markdown src="/pages/start/ref-npm.md"> </x-content-markdown>
+  <p class="note">
+    Only one of these scripts are imported. Which depends on the browser's support for ESM modules.
+  </p>
 
   <footer>
     <button slot="start" x-back class="btn btn-light btn-lg">&lt; Back</button>

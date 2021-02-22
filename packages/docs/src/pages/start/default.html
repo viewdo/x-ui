@@ -8,68 +8,53 @@
 >
 </x-content-reference>
 <div class="container container-fluid mx-auto">
-  <h1>Installation Instructions</h1>
+  <h1>Get Ready to Go</h1>
 
-  <p>This guide will walk you through the core systems and their components.</p>
-
-  <h2>Now</h2>
-  <p>All you need to start, is a script reference in the head of your page.</p>
-
-  <div x-hide-when="'{storage:installed}' != 'cdn'">
-    <button
-        class="btn btn-light float-end"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#loadCDNSource"
-        aria-expanded="false"
-        aria-controls="loadCDNSource"
-      >
-        <i class="ri-code-s-slash-line"></i>
-        Toggle Source
-      </button>
-    <h3>CDN Example</h3>
-    <p>You opted for the CDN reference. Open the source below to see how it should look in your page.</p>
-
-    <div class="collapse" id="loadCDNSource">
-      <x-content-md src="/pages/start/ref-cdn.md"> </x-content-md>
-    </div>
-    <p>If you would prefer to download the files and serve them from your webserver, opt for the NPM installation method:</p>
-    <a href="/start/npm" class="btn btn-secondary"> Switch to NPM </a>
+  <div x-hide-when="'{{storage:installed}}' != 'npm'">
+    <h2>Local Reference</h2>
+    <x-action-activator debug>
+      <x-action topic="data"
+        command="set-data"
+        data-provider="storage"
+        data-installed="cdn"></x-action>
+      </x-action>
+      <button class="btn btn-light btn-sm float-end">Switch to Remote</button>
+    </x-action-activator>
+    <p>Only the script reference is required to get started using these elements.</p>
+    <x-content-markdown src="/pages/start/ref-npm.md"> </x-content-markdown>
   </div>
 
-  <div x-hide-when="'{storage:installed}' != 'npm'">
-    <h3>NPM Example</h3>
-    <p>You opted for a local reference.</p>
-    <div>
-      <a href="/start/cdn" class="btn btn-secondary float-end"> Switch to CDN </a>
-      <button
-        class="btn btn-light"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#loadCDNSource"
-        aria-expanded="false"
-        aria-controls="loadCDNSource"
-      >
-        <i class="ri-code-s-slash-line"></i>
-        Toggle Source
-      </button>
-    </div>
-
-    <div class="collapse" id="loadCDNSource">
-      <x-content-md src="/pages/start/ref-npm.md"> </x-content-md>
-    </div>
+  <div x-hide-when="'{{storage:installed}}' != 'cdn'">
+    <h2>Remote Reference</h2>
+    <x-action-activator debug>
+      <x-action topic="data"
+        command="set-data"
+        data-provider="storage"
+        data-installed="npm"></x-action>
+      </x-action>
+      <button class="btn btn-light btn-sm float-end">Switch to Local</button>
+    </x-action-activator>
+    <p>Only the script reference is required to get started using these elements.</p>
+    <x-content-markdown src="/pages/start/ref-cdn.md"> </x-content-markdown>
   </div>
+
+  <h3>Once Referenced</h3>
+  <p>You can use one or more of these components immediately by adding the elements to your page.</p>
+  <p></p>
+  <x-markdown>
+    <script type="text/markdown">
+      <x-app app-title="My HTML App" start-url="/home">
+      </x-app>
+    </script>
+  </x-markdown>
 
   <h2>Learn More</h2>
-  <p>You can use most of these elements independently, but some only work as children of other elements.</p>
+  <p>This guide will walk you through the core systems and their components.</p>
+  <a href="/routing" class="btn btn-primary btn-lg">Routing</a>
 
-  <h3>Jump to Topic</h3>
+  <h3>Or Jump to Topic</h3>
   <p>You can skip ahead to the are you are most interested in.</p>
   <div class="button-nav">
-    <a href="/routing" class="btn btn-info text-white">
-      <i class="ri-route-line"></i>
-      Routing
-    </a>
     <a href="/navigation" class="btn btn-info text-white">
       <i class="ri-route-line"></i>
       Navigation
@@ -91,9 +76,4 @@
       Presentations
     </a>
   </div>
-
-  <footer>
-    <a slot="start" href="/home" class="btn btn-light btn-lg">&lt; Home</a>
-    <a slot="end" href="/routing" class="btn btn-primary btn-lg">Routing &gt; </a>
-  </footer>
 </div>

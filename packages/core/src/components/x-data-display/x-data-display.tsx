@@ -22,7 +22,7 @@ export class XDataDisplay {
 
   /**
    The data expression to obtain a value for rendering as inner-text for this element.
-   @example {session:user.name}
+   {{session:user.name}}
    @default null
    */
   @Prop() text?: string

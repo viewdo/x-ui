@@ -25,7 +25,7 @@ export class XDataProviderCookie {
   /**
    * An expression that tells this component how to determine if
    * the user has previously consented.
-   * @example {storage:consented}
+   * {{{storage:consented}}}
    */
   @Prop() hideWhen?: string
 

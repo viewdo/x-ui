@@ -273,28 +273,28 @@ x-app > x-app-view {
   margin-left: auto !important;
 }
 
-x-content-md pre {
+x-content-markdown pre {
   clear: both;
   margin-top: 1rem;
 }
-x-content-md h3 code {
+x-content-markdown h3 code {
   font-size: larger;
   font-weight: 700;
 }
-x-content-md p code {
+x-content-markdown p code {
   font-size: larger;
   font-weight: 700;
 }
-x-content-md ul {
+x-content-markdown ul {
   list-style: none; /* Remove default bullets */
   padding-left: 0;
 }
-x-content-md ul li {
+x-content-markdown ul li {
   list-style-type: none;
   padding-left: 0.1em;
 }
 
-x-content-md ul li.data::before {
+x-content-markdown ul li.data::before {
   content: '⇶';
 }
 

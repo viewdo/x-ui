@@ -65,7 +65,7 @@ describe('x-data-display', () => {
               { "name": "Forrest" }
               </script>
               <template>
-                <p>Hello {data:name}!</p>
+                <p>Hello {{data:name}}!</p>
               </template>
              </x-data-display>`,
     })
@@ -88,7 +88,7 @@ describe('x-data-display', () => {
       components: [XDataDisplay],
       html: `<x-data-display>
               <template>
-                <p>Hello {session:name}!</p>
+                <p>Hello {{session:name}}!</p>
               </template>
              </x-data-display>`,
     })

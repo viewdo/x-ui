@@ -4,7 +4,7 @@
   <x-action-activator activate="OnElementEvent" target-element="#name" target-event="change">
     <x-action topic="data" command="set-data" data='{"provider": "storage"}'> </x-action>
     <div class="form-floating mb-3">
-      <input type="text" required class="form-control" id="name" x-value-from="{storage:name}" />
+      <input type="text" required class="form-control" id="name" x-value-from="{{storage:name}}" />
       <label for="floatingInput">Nickname</label>
     </div>
   </x-action-activator>
@@ -20,7 +20,7 @@
     <x-app-theme-dark classes="form-check-input" input-id="themeSwitch"> </x-app-theme-dark>
     <label class="form-check-label" for="themeSwitch">Dark-Mode</label>
   </div>
-  <x-data-show hidden when="'{cookie:consent}' == 'true'">
+  <x-data-show hidden when="'{{cookie:consent}}' == 'true'">
     <h3>You gave us consent to set a cookie.</h3>
     <p>This is just an example and not meant to be taken seriously.</p>
     <x-action-activator target-element="#consent">

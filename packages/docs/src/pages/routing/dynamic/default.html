@@ -39,16 +39,16 @@
       Wine
     </a>
 
-    <x-data-display hidden x-show-when="{storage:favorite}">
+    <x-data-display hidden x-show-when="{{storage:favorite}}">
       <template>
-        <a href="/routing/dynamic/item/{storage:favorite}" class="btn btn-secondary">
+        <a href="/routing/dynamic/item/{{storage:favorite}}" class="btn btn-secondary">
           <i class="ri-user-heart-line"></i>
-          {storage:favorite}
+          {{storage:favorite}}
         </a>
       </template>
     </x-data-display>
 
-    <a href="/routing/dynamic/custom" x-hide-when="{storage:favorite}" class="btn btn-secondary">
+    <a href="/routing/dynamic/custom" x-hide-when="{{storage:favorite}}" class="btn btn-secondary">
       <i class="ri-discuss-line"></i>
       Custom Item
     </a>
@@ -68,11 +68,11 @@
     </button>
   </div>
   <div class="collapse" id="loadSource">
-    <x-content-md>
+    <x-content-markdown>
       <script type="text/markdown">
         ```html
         <x-app-view url="/data" page-title="Data List">
-          <x-app-view url="/item/:foodKey" page-title="{route:foodKey} Details">
+          <x-app-view url="/item/:foodKey" page-title="{{route:foodKey}} Details">
             ... content that uses foodKey to render ...
           </x-app-view>
 
@@ -81,7 +81,7 @@
         </x-app-view>
         ```
       </script>
-    </x-content-md>
+    </x-content-markdown>
   </div>
 
   <footer>

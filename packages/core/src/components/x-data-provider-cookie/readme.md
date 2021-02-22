@@ -35,10 +35,10 @@ Alternatively, you can skip this by including the 'skip-consent' attribute.
 
 ## Properties
 
-| Property      | Attribute      | Description                                                                                             | Type                  | Default     |
-| ------------- | -------------- | ------------------------------------------------------------------------------------------------------- | --------------------- | ----------- |
-| `hideWhen`    | `hide-when`    | An expression that tells this component how to determine if the user has previously consented.          | `string \| undefined` | `undefined` |
-| `skipConsent` | `skip-consent` | When skipConsent is true, the accept-cookies banner will not be displayed before accessing cookie-data. | `boolean`             | `false`     |
+| Property      | Attribute      | Description                                                                                                            | Type                  | Default     |
+| ------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------- | --------------------- | ----------- |
+| `hideWhen`    | `hide-when`    | An expression that tells this component how to determine if the user has previously consented. {{{storage:consented}}} | `string \| undefined` | `undefined` |
+| `skipConsent` | `skip-consent` | When skipConsent is true, the accept-cookies banner will not be displayed before accessing cookie-data.                | `boolean`             | `false`     |
 
 
 ## Events

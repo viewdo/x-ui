@@ -6,5 +6,3 @@
   ...
 </head>
 ```
-
-> Only one of these scripts are imported. Which depends on the browser's support for ESM modules.

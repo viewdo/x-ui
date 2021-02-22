@@ -7,7 +7,7 @@ import { ExpressionContext } from './interfaces';
 import { addDataProvider, getDataProvider, removeDataProvider } from './providers/factory';
 import { DataItemProvider } from './providers/item';
 
-const expressionRegEx = /{([\w-]*):([\w_]*)(?:\.([\w_.-]*))?(?:\?([\w_.-]*))?}/g
+const expressionRegEx = /\{\{([\w-]*):([\w_]*)(?:\.([\w_.-]*))?(?:\?([\w_.-]*))?\}\}/g
 const expressionEvaluator = new Parser()
 
 expressionEvaluator.functions.didVisit = (url: string) => hasVisited(url)
@@ -18,7 +18,7 @@ export function hasExpression(valueExpression: string) {
 }
 
 /**
- * This function replaces all {provider:key} values with the actual values
+ * This function replaces all {{provider:key}} values with the actual values
  * from the expressed provider & key. This is used by {evaluateExpression}
  * before it is sent to {evaluate} for calculation.
  *

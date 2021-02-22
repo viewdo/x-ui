@@ -1,5 +1,5 @@
-import { newSpecPage } from '@stencil/core/testing'
-import { XDataRepeat } from '../x-data-repeat'
+import { newSpecPage } from '@stencil/core/testing';
+import { XDataRepeat } from '../x-data-repeat';
 
 describe('x-data-repeat', () => {
   it('renders', async () => {
@@ -18,7 +18,7 @@ describe('x-data-repeat', () => {
     const page = await newSpecPage({
       components: [XDataRepeat],
       html: `<x-data-repeat items="[1,2,3]">
-              <template><b>{data:item}</b></template>
+              <template><b>{{data:item}}</b></template>
              </x-data-repeat>`,
       supportsShadowDom: false,
     })

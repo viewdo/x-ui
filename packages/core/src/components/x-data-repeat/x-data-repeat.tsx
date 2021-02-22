@@ -20,7 +20,7 @@ export class XDataRepeat {
 
   /**
    The array-string or data expression to obtain a collection for rendering the template.
-   @example {session:cart.items}
+   {{session:cart.items}}
    */
   @Prop() items?: string
 

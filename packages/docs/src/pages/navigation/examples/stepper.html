@@ -121,8 +121,8 @@
         <div slot="content">
           <p>Click the link below to begin.</p>
 
-          <a class="btn btn-primary" href="/survey" x-hide-when="{storage:food}">Take Survey</a>
-          <a class="btn btn-light" href="/survey/step-1" hidden x-show-when="{storage:food}">Retake Survey</a>
+          <a class="btn btn-primary" href="/survey" x-hide-when="{{storage:food}}">Take Survey</a>
+          <a class="btn btn-light" href="/survey/step-1" hidden x-show-when="{{storage:food}}">Retake Survey</a>
         </div>
       </x-app-view>
 
@@ -130,7 +130,7 @@
         <x-content-reference style-src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css">
         </x-content-reference>
         <h2>Survey</h2>
-        <div class="step" x-class="completed" x-class-when="{storage:nickname}">
+        <div class="step" x-class="completed" x-class-when="{{storage:nickname}}">
           <div class="stepper">
             <div class="circle"></div>
             <div class="line"></div>
@@ -138,11 +138,11 @@
           <div class="form">
             <h3>
               Step 1
-              <span x-hide-when="!{storage:nickname}">
+              <span x-hide-when="!{{storage:nickname}}">
                 <a href="/survey/step-1">✔️</a>
               </span>
             </h3>
-            <x-app-view-do when="!{storage:nickname}" url="step-1" page-title="Step 1">
+            <x-app-view-do when="!{{storage:nickname}}" url="step-1" page-title="Step 1">
               <div slot="content" class="form-group">
                 <label class="form-label" for="name">Nick Name</label>
                 <input
@@ -152,7 +152,7 @@
                   id="name"
                   onblur="localStorage.setItem('nickname', this.value)"
                   onchange="localStorage.setItem('nickname', this.value)"
-                  x-value-from="{storage:nickname}"
+                  x-value-from="{{storage:nickname}}"
                   tabindex="0"
                 />
 
@@ -161,7 +161,7 @@
             </x-app-view-do>
           </div>
         </div>
-        <div class="step" x-class="completed" x-class-when="{storage:show}">
+        <div class="step" x-class="completed" x-class-when="{{storage:show}}">
           <div class="stepper">
             <div class="circle"></div>
             <div class="line"></div>
@@ -169,11 +169,11 @@
           <div>
             <h3>
               Step 2
-              <span x-hide-when="!{storage:show}">
+              <span x-hide-when="!{{storage:show}}">
                 <a href="/survey/step-2">✔️</a>
               </span>
             </h3>
-            <x-app-view-do when="!{storage:show}" url="step-2" page-title="Step 2">
+            <x-app-view-do when="!{{storage:show}}" url="step-2" page-title="Step 2">
               <div slot="content">
                 <label class="form-label" for="show">TV Show</label>
                 <input
@@ -183,7 +183,7 @@
                   class="form-control mb-3"
                   onblur="localStorage.setItem('show', this.value)"
                   onchange="localStorage.setItem('show', this.value)"
-                  x-value-from="{storage:show}"
+                  x-value-from="{{storage:show}}"
                   tabindex="0"
                 />
                 <a class="btn btn-primary" x-next="step-3">Next</a>
@@ -191,18 +191,18 @@
             </x-app-view-do>
           </div>
         </div>
-        <div class="step" x-class="completed" x-class-when="{storage:food}">
+        <div class="step" x-class="completed" x-class-when="{{storage:food}}">
           <div class="stepper">
             <div class="circle"></div>
           </div>
           <div>
             <h3>
               Step 3
-              <span x-hide-when="!{storage:food}">
+              <span x-hide-when="!{{storage:food}}">
                 <a href="/survey/step-3">✔️</a>
               </span>
             </h3>
-            <x-app-view-do when="!{storage:food}" url="step-3" page-title="Step 3">
+            <x-app-view-do when="!{{storage:food}}" url="step-3" page-title="Step 3">
               <div slot="content">
                 <label class="form-label" for="show">Food or Snack</label>
                 <input
@@ -212,7 +212,7 @@
                   class="form-control mb-3"
                   onblur="localStorage.setItem('food', this.value)"
                   onchange="localStorage.setItem('food', this.value)"
-                  x-value-from="{storage:food}"
+                  x-value-from="{{storage:food}}"
                   tabindex="0"
                 />
 

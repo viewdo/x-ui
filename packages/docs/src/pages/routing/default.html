@@ -10,12 +10,11 @@
 <div class="container container-fluid mx-auto">
   <h1>Routing</h1>
   <p class="lead">
-    Content routing is a declarative approach to the features of a multi-page using a single HTML file.
+    Url routing adds URL-based navigation to your single-page's content.
   </p>
   <p>
-    Once configured, the browser URL will determine what content is fetched and rendered. You can choose between 'hash'
-    or 'browser' paths. Hash-paths require no extra server-configuration where the browser-mode, does need a rewriting
-    proxy.
+    Once configured, the browser URL will determine what content is rendered, allowing users to
+    bookmark and link to multiple "pages", managed as a single file.
   </p>
 
   <h2>How it works</h2>
@@ -24,82 +23,71 @@
     <a href="/components/x-app-view">
       <b>&lt;x-app-view&gt;</b>
     </a>
-    or
-    <a href="/components/x-app-view-do">
-      <b>&lt;x-app-view-do&gt;</b>
-    </a>
-    elements and setting the <b>url</b>, the contained-content won't be displayed until the URL path matches the path
+    element and setting the <b>url</b> attribute, the contained-content won't be displayed until the URL path matches the path
     set in the <b>url</b> attribute.
   </p>
   <p>
-    These elements work very similarly to typical web frameworks, minus the framework. You can organize HTML fragments
-    as separate files where it makes sense.
+    Parent routes can have content shared for child routes, like a child-menu or sub-nav.
   </p>
 
   <h3>Simple Example</h3>
+  <a href="/pages/routing/examples/simple.html" target="_blank" class="btn btn-light float-end">
+    <i class="ri-external-link-line"></i>
+    Visit Demo</a>
   <p>
     The following example shows a very simple routing implementation. it is used throughout this document, but you can
     also see a concise example here:
   </p>
+  <x-content-markdown>
+    <script type="text/markdown">
+      ```html
+      <x-app app-title="My HTML App" start-url="/home">
+        <header>
+          <!-- visible to all pages -->
+          App Name
+        </header>
+        <x-app-view url="/home" page-title="Home">
+          <nav class="subnav">
+            <!-- visible to all /home/* routes -->
+            <h1>Home</h1>
+          </nav>
+          <div class="container" slot="content">
 
-  <div>
-    <a href="/pages/routing/examples/simple.html" target="_blank" class="btn btn-secondary float-end">
-      <i class="ri-external-link-line"></i>
-      Visit Demo</a
-    >
-    <button
-      class="btn btn-light"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#loadSource"
-      aria-expanded="false"
-      aria-controls="loadSource"
-    >
-      <i class="ri-code-s-slash-line"></i>
-      Toggle Source
-    </button>
-  </div>
-  <div class="collapse" id="loadSource">
-    <x-content-md>
-      <script type="text/markdown">
-        ```html
-        <x-app app-title="My HTML App" start-url="/home">
-          <x-app-view url="/home" page-title="Home">
+            <hr />
+            <h2>Hello World!</h2>
+            <p>Now you have a basic content router.</p>
+
+            <a href="/home/nested">Nested Page</a>
+            <a href="about">Sibling Page</a>
+          </div>
+          <x-app-view url="nested" page-title="Nested" x-cloak>
             <div class="container" slot="content">
-              <h1>Home</h1>
+              <h1>Nested</h1>
               <hr />
-              <h2>Hello World!</h2>
-              <p>Now you have a basic content router.</p>
+              <h2>A child page</h2>
 
-              <a href="/home/nested">Nested Page</a>
-              <a href="about">Sibling Page</a>
-            </div>
-            <x-app-view url="nested" page-title="Nested" x-cloak>
-              <div class="container" slot="content">
-                <h1>Nested</h1>
-                <hr />
-                <h2>A child page</h2>
-
-                <a href="">Back to Home</a>
-              </div>
-            </x-app-view>
-          </x-app-view>
-          <x-app-view url="/about" page-title="About" x-cloak>
-            <div class="container" slot="content">
-              <h1>Sibling Page</h1>
-              <h2>You now have a multi-page app!</h2>
-              <a href="/home">Back to Home</a>
+              <a href="">Back to Home</a>
             </div>
           </x-app-view>
-        </x-app>
-        ```
-      </script>
-    </x-content-md>
-    <blockquote>
-      <b>PRO-TIP:</b> Content that that should only appear on a route, and not a child-route should be inserted using
-      the <b>slot="content"</b> attribute.
-    </blockquote>
-  </div>
+        </x-app-view>
+        <x-app-view url="/about" page-title="About" x-cloak>
+          <div class="container" slot="content">
+            <h1>Sibling Page</h1>
+            <h2>You now have a multi-page app!</h2>
+            <a href="/home">Back to Home</a>
+          </div>
+        </x-app-view>
+      </x-app>
+      ```
+      > **TIP:** Content that that should only appear on a route, and not a child-route should be inserted using
+      the `slot="content"` attribute.
+    </script>
+  </x-content-markdown>
+  <blockquote>
+    <b>PRO-TIP:</b> Content that that should only appear on a route, and not a child-route should be inserted using
+    the <b>slot="content"</b> attribute.
+  </blockquote>
+
 
   <h3>Advanced Examples</h3>
   <p>

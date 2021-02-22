@@ -10,7 +10,7 @@
       class="form-control"
       onblur="localStorage.setItem('favorite', this.value)"
       onchange="localStorage.setItem('favorite', this.value)"
-      x-value-from="{storage:favorite}"
+      x-value-from="{{storage:favorite}}"
     />
     <label for="floatingInput">Favorite Food</label>
   </div>

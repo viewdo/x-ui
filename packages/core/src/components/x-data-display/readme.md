@@ -5,7 +5,7 @@ Render data directly into HTML using declarative expressions. This element rende
 ## Usage
 
 ```html
-<x-data-display text="{expression}"> </x-data-display>
+<x-data-display text="{{expression}}"> </x-data-display>
 ```
 
 The expression can be any string or an expression with tokens from a registered provider.
@@ -17,7 +17,7 @@ This component supports HTML string interpolation within a child template tag. T
 ```html
 <x-data-display>
   <template>
-    <h1>Hello {expression}!</h1>
+    <h1>Hello {{expression}}!</h1>
   </template>
 </x-data-display>
 ```
@@ -31,7 +31,7 @@ This component supports HTML string interpolation within a child template tag. T
 ```html
 <x-data-display>
   <template>
-    <h1>Hello {session:name}!</h1>
+    <h1>Hello {{session:name}}!</h1>
   </template>
 </x-data-display>
 ```
@@ -42,7 +42,7 @@ This component supports HTML string interpolation within a child template tag. T
 **data-key**: the data value key within the provider \*
 **default**: optional default value if the provider's key is empty.
 
-\* _If there are any dots in the key, the evaluator attempts to parse the base value as JSON, then uses the dot-notation to select a value from the object. For example, the expression `{session:user.name}` means the session value 'user' is a JSON object, parse it and replace with the 'name' property._
+\* _If there are any dots in the key, the evaluator attempts to parse the base value as JSON, then uses the dot-notation to select a value from the object. For example, the expression `{{session:user.name}}` means the session value 'user' is a JSON object, parse it and replace with the 'name' property._
 
 > See [data expressions](/data/expressions) for full documentation
 
@@ -65,7 +65,7 @@ This component supports HTML string interpolation within a child template tag. T
 | Property   | Attribute   | Description                                                                                                  | Type                  | Default     |
 | ---------- | ----------- | ------------------------------------------------------------------------------------------------------------ | --------------------- | ----------- |
 | `noRender` | `no-render` | If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute. | `boolean`             | `false`     |
-| `text`     | `text`      | The data expression to obtain a value for rendering as inner-text for this element.                          | `string \| undefined` | `undefined` |
+| `text`     | `text`      | The data expression to obtain a value for rendering as inner-text for this element. {{session:user.name}}    | `string \| undefined` | `undefined` |
 
 
 ----------------------------------------------
