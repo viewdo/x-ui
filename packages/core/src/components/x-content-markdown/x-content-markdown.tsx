@@ -1,4 +1,4 @@
-import { Component, Element, h, Host, Prop, State } from '@stencil/core';
+import { Component, h, Element, Host, Prop, State } from '@stencil/core';
 import {
   DATA_EVENTS,
   eventBus,
@@ -15,11 +15,11 @@ import { render } from './markdown.worker';
  *  @system content
  */
 @Component({
-  tag: 'x-content-md',
+  tag: 'x-content-markdown',
   shadow: false,
 })
-export class XContentMD {
-  @Element() el!: HTMLXContentMdElement
+export class XContentMarkdown {
+  @Element() el!: HTMLXContentMarkdownElement
   @State() content?: string
 
   /**
@@ -105,9 +105,9 @@ export class XContentMD {
         return await render(data);
       }
 
-      warn(`x-content-md: unable to retrieve from ${this.src}`)
+      warn(`x-content-markdown: unable to retrieve from ${this.src}`)
     } catch {
-      warn(`x-content-md: unable to retrieve from ${this.src}`)
+      warn(`x-content-markdown: unable to retrieve from ${this.src}`)
     }
   }
 

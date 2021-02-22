@@ -1,10 +1,10 @@
-# X-CONTENT-MD
+# X-CONTENT-MARKDOWN
 
 ## Usage
 
 ```html
 <!-- Simply set the `src` attribute and win -->
-<x-content-md src="https://example.com/markdown.md"></x-content-md>
+<x-content-markdown src="https://example.com/markdown.md"></x-content-markdown>
 ```
 
 ### Inline Markdown
@@ -13,12 +13,12 @@ You also use markdown inline.
 
 ```html
 <!-- Do not set the `src` attribute -->
-<x-content-md>
+<x-content-markdown>
   <!-- Write your markdown inside a `<script type="text/markdown">` tag -->
   <script type="text/markdown">
     # **This** is my [markdown](https://example.com)
   </script>
-</x-content-md>
+</x-content-markdown>
 ```
 
 ### Delayed Rendering
@@ -26,7 +26,7 @@ You also use markdown inline.
 When using this component, you may want to delay the fetch until the content is needed. The **no-render** attribute will prevent the HTML from being fetched until that attribute is removed.
 
 ```html
-<x-content-md id="markdown" src="<url-to-html>" no-render> </x-content-md>
+<x-content-markdown id="markdown" src="<url-to-html>" no-render> </x-content-markdown>
 ```
 
 You can remove the attribute programmatically to force the fetch:
