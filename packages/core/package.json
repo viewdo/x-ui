@@ -53,6 +53,6 @@
     "@stencil/sass": "1.4.1",
     "@stencil/store": "1.4.1",
     "@types/howler": "2.2.1",
-    "workbox-build": "6.1.0"
+    "workbox-build": "6.1.1"
   }
 }
