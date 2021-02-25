@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-import { LocationSegments } from '../interfaces';
+import { LocationSegments } from '../interfaces'
 /**
  * Ensures basename
  * @param path
@@ -9,17 +9,26 @@ import { LocationSegments } from '../interfaces';
  */
 export function ensureBasename(path: string, prefix: string) {
   let result = hasBasename(path, prefix) ? path : `${prefix}/${path}`
-  return stripTrailingSlash(addLeadingSlash(result).replace(/[/]{2,}/gi, '/'))
+  result = stripTrailingSlash(result.replace(/[/]{2,}/gi, '/'))
+  return addLeadingSlash(result)
 }
 /**
  * Paths has basename
  * @param path
  * @param prefix
  */
-export const hasBasename = (path: string, prefix: string) => path.startsWith(prefix) || new RegExp(`^${prefix}(\\/|\\?|#|$)`, 'i').test(path)
+export const hasBasename = (path: string, prefix: string) =>
+  path.startsWith(prefix) || new RegExp(`^${prefix}(\\/|\\?|#|$)`, 'i').test(path)
 
-export const stripBasename = (path: string, prefix: string) =>
-  hasBasename(path, prefix) ? path.slice(prefix.length) : path
+export const stripBasename = (path: string, prefix: string, hash: boolean) => {
+  let stripped = hasBasename(path, prefix) ? path.slice(prefix.length) : path
+  if (isFilename(path) || hash) {
+    return '#' + addLeadingSlash(stripped)
+  }
+  return addLeadingSlash(stripped)
+}
+
+export const isFilename = (path: string) => path.includes('.')
 
 export const stripTrailingSlash = (path: string) => (path?.endsWith('/') ? path.slice(0, -1) : path)
 

@@ -52,8 +52,8 @@ Using the `<x-app-analytics>` is simple, but does require some scripting.
 
 | Event                         | Description              | Type               |
 | ----------------------------- | ------------------------ | ------------------ |
+| `page-view`                   | Page views.              | `CustomEvent<any>` |
 | `x:analytics:event`           | Raised analytics events. | `CustomEvent<any>` |
-| `x:analytics:page-view`       | Page views.              | `CustomEvent<any>` |
 | `x:analytics:view-percentage` | View percentage views.   | `CustomEvent<any>` |
 
 

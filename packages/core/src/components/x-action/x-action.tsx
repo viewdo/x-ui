@@ -1,6 +1,6 @@
 import { Component, Element, h, Host, Method, Prop } from '@stencil/core';
 import { EventAction, IActionElement, warn } from '../..';
-import { actionBus } from '../../services';
+import { actionBus, ActionTopicType } from '../../services';
 
 /**
  * This element just holds data to express the actionEvent to fire. This element
@@ -20,17 +20,13 @@ export class XAction implements IActionElement {
    *
    * data: []
    */
-  @Prop() topic?: 'data' | 'routing' | 'document' | 'audio' | 'video'
+  @Prop() topic?: ActionTopicType
 
   /**
    * The command to execute.
    */
   @Prop() command?: string
 
- /**
-  * Data binding for JSX binding
-  */
- @Prop() data?: Record<string,any>
 
   /**
    * Get the underlying actionEvent instance. Used by the x-action-activator element.
@@ -51,16 +47,12 @@ export class XAction implements IActionElement {
     let data: Record<string, any> =  { ...this.el.dataset }
 
     if (this.childScript) {
-      Object.assign(data, JSON.parse(this.childScript?.textContent || '{}'))
+      Object.assign(data, JSON.parse(this.childScript!.textContent || '{}'))
     }
 
     this.childInputs.forEach((el: any, index: number) => {
       data![el.id||el.name||index] = el.value || el.checked
     })
-
-    if (this.data) {
-      Object.assign(data, this.data)
-    }
 
     return {
       topic: this.topic,
@@ -98,8 +90,6 @@ export class XAction implements IActionElement {
     if (this.parent === null) {
       warn('The x-action component must be wrapped with an x-action-activator component to work.')
     }
-
-
   }
 
   render() {

@@ -16,7 +16,7 @@ Let’s take what we know about experiences and make some assumptions to simplif
 
 Let’s assume all experiences end with static content that has flat navigation. Let’s also assume this content lives at a base-route.
 
-```
+```yaml
 Path: /home
 Content: static html
 Navigation: static
@@ -26,7 +26,7 @@ Let’s also assume presentation content must live as sub-routes under their dec
 
 Let also say before we present our static content, the user must first visit each of the sub-routes defined in the order they are listed.
 
-```
+```yaml
 Path: /home/step-1
 Content: presentational
 Navigation: guided
@@ -130,21 +130,21 @@ We are going to add a new strategy called **When**. The **When** visit strategy 
 - When true, the visit strategy is **Once**
 - When false, the visit strategy is **Optional**
 
-**Example: Sub Route Required w/Data equal to a Value**
+### Example: Sub Route Required w/Data equal to a Value
 
 ```yaml
 Path: /home/choice-red
 When: color = red
 ```
 
-**Example: Sub Route Required w/Data is set**
+### Example: Sub Route Required w/Data is set
 
 ```yaml
 Path: /home/answer-exists
 When: answer != null
 ```
 
-**Example: Sub Route Required w/Multiple Data Conditions**
+### Example: Sub Route Required w/Multiple Data Conditions
 
 ```yaml
 Path: /home/complex-example

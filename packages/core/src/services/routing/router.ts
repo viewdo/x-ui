@@ -1,15 +1,15 @@
-import { RafCallback } from '@stencil/core/internal';
-import { captureElementsEventOnce } from '..';
-import { IEventEmitter } from '../actions';
-import { addDataProvider } from '../data/providers/factory';
-import { NavigationActionListener } from '../navigation/action-listener';
-import { RoutingDataProvider } from './data-provider';
-import { HistoryService } from './history';
-import { LocationSegments, MatchOptions, MatchResults, RouteViewOptions } from './interfaces';
-import { Route } from './route';
-import { isAbsolute, locationsAreEqual, resolvePathname } from './utils/location-utils';
-import { matchPath } from './utils/match-path';
-import { ensureBasename } from './utils/path-utils';
+import { RafCallback } from '@stencil/core/internal'
+import { captureElementsEventOnce } from '..'
+import { IEventEmitter } from '../actions'
+import { addDataProvider } from '../data/providers/factory'
+import { NavigationActionListener } from '../navigation/action-listener'
+import { RoutingDataProvider } from './data-provider'
+import { HistoryService } from './history'
+import { LocationSegments, MatchOptions, MatchResults, RouteViewOptions } from './interfaces'
+import { Route } from './route'
+import { isAbsolute, locationsAreEqual, resolvePathname } from './utils/location-utils'
+import { matchPath } from './utils/match-path'
+import { addLeadingSlash, ensureBasename, stripBasename } from './utils/path-utils'
 
 export class RouterService {
   public location!: LocationSegments
@@ -23,11 +23,12 @@ export class RouterService {
     events: IEventEmitter,
     actions: IEventEmitter,
     public root: string = '',
-    public appTitle?: string,
-    public transition?: string,
+    public appTitle: string = '',
+    public transition: string = '',
     public scrollTopOffset = 0,
+    private useHash = false,
   ) {
-    this.history = new HistoryService(win, root)
+    this.history = new HistoryService(win, root, useHash)
     this.listener = new NavigationActionListener(this, events, actions)
 
     this.removeHandler = this.history.listen((location: LocationSegments) => {
@@ -49,7 +50,7 @@ export class RouterService {
     addDataProvider('query', new RoutingDataProvider((key: string) => this.location?.query[key]))
   }
 
-  viewsUpdated = (options: RouteViewOptions = {}) => {
+  viewsUpdated(options: RouteViewOptions = {}) {
     if (options.scrollToId) {
       const elm = this.win.document.querySelector('#' + options.scrollToId)
       if (elm) {
@@ -60,6 +61,12 @@ export class RouterService {
     this.scrollTo(options.scrollTopOffset || this.scrollTopOffset)
   }
 
+  finalize(startUrl: string) {
+    if (startUrl && startUrl.length > 1 && this.location?.pathname === '/') {
+      this.goToRoute(startUrl)
+    }
+  }
+
   goBack() {
     this.history.goBack()
   }
@@ -67,7 +74,7 @@ export class RouterService {
   goToParentRoute() {
     const parentSegments = this.history.location.pathParts?.slice(0, -1)
     if (parentSegments) {
-      this.goToRoute(parentSegments.join('/'))
+      this.goToRoute(addLeadingSlash(parentSegments.join('/')))
     } else {
       this.goBack()
     }
@@ -88,7 +95,7 @@ export class RouterService {
   }
 
   goToRoute(path: string) {
-    this.history.push(path)
+    this.history.push(stripBasename(path, this.root, this.useHash))
   }
 
   matchPath(options: MatchOptions = {}): MatchResults | null {
@@ -110,7 +117,7 @@ export class RouterService {
   captureInnerLinks(root: HTMLElement, fromPath?: string) {
     captureElementsEventOnce<HTMLAnchorElement, MouseEvent>(
       root,
-      `a`,
+      `a[href]`,
       'click',
       (el: HTMLAnchorElement, ev: MouseEvent) => {
         if (this.isModifiedEvent(ev) || !this?.history) return true
@@ -129,7 +136,7 @@ export class RouterService {
     if (fromPath && route.startsWith(fromPath) && route.includes('#')) {
       const elId = toPath.substr(toPath.indexOf('#'))
       this.win.document?.querySelector(elId)?.scrollIntoView({
-        behavior: 'smooth'
+        behavior: 'smooth',
       })
       return
     }

@@ -1,4 +1,4 @@
-import { Component, h, Element, Host, Prop, State } from '@stencil/core';
+import { Component, Element, forceUpdate, h, Host, Prop, State } from '@stencil/core';
 import {
   DATA_EVENTS,
   eventBus,
@@ -19,8 +19,10 @@ import { render } from './markdown.worker';
   shadow: false,
 })
 export class XContentMarkdown {
+  private dataChangedSubscription!: () => void
+  private routeChangedSubscription!: () => void
   @Element() el!: HTMLXContentMarkdownElement
-  @State() content?: string
+  @State() content?: string | null = null
 
   /**
    * Remote Template URL
@@ -46,6 +48,7 @@ export class XContentMarkdown {
    */
   @Prop({ mutable: true }) renderIf?: string
 
+
   private get router(): RouterService | null {
     return this.el.closest('x-app')?.router || null
   }
@@ -55,67 +58,73 @@ export class XContentMarkdown {
   }
 
   async componentWillLoad() {
-    eventBus.on(DATA_EVENTS.DataChanged, async () => {
-      await this.resolveContent()
+    this.dataChangedSubscription = eventBus.on(DATA_EVENTS.DataChanged, () => {
+      forceUpdate(this.el)
     })
 
-    eventBus.on(ROUTE_EVENTS.RouteChanged, async () => {
-      await this.resolveContent()
+    this.routeChangedSubscription = eventBus.on(ROUTE_EVENTS.RouteChanged, () => {
+      forceUpdate(this.el)
     })
+  }
 
-    await this.resolveContent()
+  async componentWillRender() {
+    this.content = await this.resolveContent()
   }
 
   private async resolveContent() {
     if (this.noRender) {
-      return
+      return null
     }
 
-    if(await evaluatePredicate(this.renderIf || 'true') == false){
-      return
+    //const renderValue = await evaluateExpression(this.renderIf || 'true')
+    let shouldRender = true;
+    if (this.renderIf) {
+      shouldRender = await evaluatePredicate(this.renderIf)
+    }
+    if(!shouldRender) {
+      return null
     }
 
     let content = ''
     if (this.src) {
-      content = await this.getContentFromSrc() || ''
+      content = await this.getContentFromSrc()
     } else if (this.childScript) {
-      content = await this.getContentFromScript() || ''
+      content = await this.getContentFromScript()
     }
 
     const div = document.createElement('div')
     div.innerHTML = content
-    this.highlight(div)
-    this.content = div.innerHTML
-  }
 
-  async componentDidRender() {
-    await resolveChildElementXAttributes(this.el)
+    await resolveChildElementXAttributes(div)
     if (this.router) {
-      this.router!.captureInnerLinks(this.el)
+      this.router!.captureInnerLinks(div)
     }
+
+    this.highlight(div)
+    return div.innerHTML
   }
 
   private async getContentFromSrc() {
-    if (!this.src) return
     try {
-      const src = await resolveExpression(this.src)
-      const response = await fetch(src)
+      const src = await resolveExpression(this.src!)
+      const response = await window.fetch(src)
       if (response.status === 200) {
         const data = await response.text()
-        return await render(data);
+        return await render(data) || ''
       }
 
       warn(`x-content-markdown: unable to retrieve from ${this.src}`)
     } catch {
       warn(`x-content-markdown: unable to retrieve from ${this.src}`)
     }
+    return ''
   }
 
   private async getContentFromScript() {
     const element = this.childScript
-    if (!element?.textContent) return
+    if (!element?.textContent) return ''
     const md = this.dedent(element.textContent)
-    return await render(md)
+    return await render(md) || ''
   }
 
   private dedent(innerText: string) {
@@ -138,15 +147,16 @@ export class XContentMarkdown {
     }
   }
 
-  render() {
-    if (this.content) {
-      return (
-        <Host>
-          <div innerHTML={this.content}></div>
-        </Host>
-      )
-    }
+  disconnectedCallback() {
+    this.dataChangedSubscription()
+    this.routeChangedSubscription()
+  }
 
-    return <Host hidden></Host>
+  render() {
+    return (
+      <Host hidden={!this.content}>
+        { this.content ? <div innerHTML={this.content}></div> : null }
+      </Host>
+    )
   }
 }

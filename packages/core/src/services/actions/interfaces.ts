@@ -36,3 +36,13 @@ export type IEvents = Record<string, Listener[]>
 export interface IActionElement {
   getAction(): Promise<EventAction<any> | null>
 }
+
+export enum ActionTopicType {
+  data = 'data',
+  analytics = 'analytics',
+  elements = 'elements',
+  interface = 'interface',
+  navigation = 'navigation',
+  audio = 'audio',
+  video = 'video',
+}

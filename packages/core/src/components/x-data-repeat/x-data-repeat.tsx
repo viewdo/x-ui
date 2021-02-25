@@ -1,4 +1,4 @@
-import { Component, Element, h, Host, Prop, State } from '@stencil/core';
+import { Component, Element, forceUpdate, h, Host, Prop, State } from '@stencil/core';
 import jsonata from 'jsonata';
 import { DATA_EVENTS, debugIf, eventBus, hasExpression, resolveExpression, RouterService, ROUTE_EVENTS, warnIf } from '../../services';
 import { arrify } from '../../services/utils/misc-utils';
@@ -8,15 +8,15 @@ import { arrify } from '../../services/utils/misc-utils';
  */
 @Component({
   tag: 'x-data-repeat',
-  shadow: false,
+  shadow: true,
 })
 export class XDataRepeat {
   private subscriptionData!: () => void
   private subscriptionRoutes!: () => void
   @Element() el!: HTMLXDataRepeatElement
-  @State() resolvedItems: any[] = []
   @State() innerTemplate!: string
   @State() resolvedTemplate!: string
+  private contentKey!:string
 
   /**
    The array-string or data expression to obtain a collection for rendering the template.
@@ -62,12 +62,12 @@ export class XDataRepeat {
 
   async componentWillLoad() {
     debugIf(this.debug, 'x-data-repeat: loading')
-    this.subscriptionData = eventBus.on(DATA_EVENTS.DataChanged, async () => {
-      await this.resolveHtml()
+    this.subscriptionData = eventBus.on(DATA_EVENTS.DataChanged, () => {
+      forceUpdate(this.el)
     })
 
-    this.subscriptionRoutes = eventBus.on(ROUTE_EVENTS.RouteChanged, async () => {
-      await this.resolveHtml()
+    this.subscriptionRoutes = eventBus.on(ROUTE_EVENTS.RouteChanged, () => {
+      forceUpdate(this.el)
     })
 
     if (this.childTemplate === null) {
@@ -76,7 +76,76 @@ export class XDataRepeat {
       this.innerTemplate = this.childTemplate.innerHTML
     }
 
-    await this.resolveHtml()
+    this.contentKey = `data-content`;
+  }
+
+  async componentWillRender(){
+    if (!this.innerTemplate) return
+
+    const remoteContent = this.el.querySelector(`.${this.contentKey}`);
+    remoteContent?.remove();
+    const items = await this.resolveItems()
+    const innerContent = await this.resolveHtml(items)
+    if (innerContent) {
+      const content = this.el.ownerDocument.createElement('div');
+      content.className = this.contentKey!
+      content.innerHTML = innerContent
+      content.slot = "content"
+      this.router?.captureInnerLinks(content)
+      this.el.append(content)
+    }
+  }
+
+  private async resolveHtml(items:any[]) {
+    debugIf(this.debug, 'x-data-repeat: resolving html')
+    if (this.noRender) {
+      return null
+    }
+
+    // DebugIf(this.debug, `x-data-repeat: innerItems ${JSON.stringify(this.resolvedItems || [])}`);
+    if (this.innerTemplate) {
+      let resolvedTemplate = ''
+
+      return await items.reduce(
+        (previousPromise: Promise<any>, item: any) =>
+          previousPromise.then(async () =>
+            resolveExpression(this.innerTemplate.slice(), item).then((html) => {
+              resolvedTemplate += html
+              return resolvedTemplate
+            }),
+          ), Promise.resolve())
+    }
+    return null
+  }
+
+  private async resolveItems(){
+    let items = []
+    if (this.childScript) {
+      try {
+        const text = this.childScript.textContent?.replace('\n','')
+        items = arrify(JSON.parse(text || '[]'))
+      } catch (error) {
+        warnIf(this.debug, `x-data-repeat: unable to deserialize JSON: ${error}`)
+      }
+    } else if (this.itemsSrc) {
+      items = await this.fetchJson()
+    } else if (this.items) {
+      items = await this.resolveItemsExpression()
+    } else {
+      warnIf(this.debug,'x-data-repeat: you must include at least one of the following: items, json-src or a <script> element with a JSON array.',
+      )
+    }
+    if (this.filter) {
+      let filterString = this.filter.slice()
+      if (hasExpression(filterString)) {
+        filterString = await resolveExpression(filterString)
+      }
+
+      const filter = jsonata(filterString)
+      debugIf(this.debug, `x-data-repeat: filtering: ${filterString}`)
+      items = arrify(filter.evaluate(items))
+    }
+    return items
   }
 
   private async fetchJson() {
@@ -84,13 +153,13 @@ export class XDataRepeat {
       debugIf(this.debug, `x-data-repeat: fetching items from ${this.itemsSrc}`)
 
       if (!this.itemsSrc) {
-        return
+        return []
       }
 
-      const response = await fetch(this.itemsSrc)
+      const response = await window.fetch(this.itemsSrc)
       if (response.status === 200) {
         const data = await response.json()
-        this.resolvedItems = arrify(data)
+        return arrify(data)
         // DebugIf(this.debug, `x-data-repeat: remote items: ${JSON.stringify(data)}`);
       } else {
         warnIf(this.debug, `x-data-repeat: Unable to retrieve from ${this.itemsSrc}`)
@@ -98,9 +167,11 @@ export class XDataRepeat {
     } catch {
       warnIf(this.debug, `x-data-repeat: Unable to parse response from ${this.itemsSrc}`)
     }
+    return []
   }
 
   private async resolveItemsExpression() {
+    let items = []
     try {
       let itemsString = this.items
       if (itemsString && hasExpression(itemsString)) {
@@ -108,66 +179,15 @@ export class XDataRepeat {
         debugIf(this.debug, `x-data-repeat: items resolved to ${itemsString}`)
       }
 
-      this.resolvedItems = itemsString ? JSON.parse(itemsString) : []
+      items = itemsString ? JSON.parse(itemsString) : []
     } catch (error) {
       warnIf(this.debug, `x-data-repeat: unable to deserialize JSON: ${error}`)
     }
-  }
-
-  private async resolveHtml() {
-    debugIf(this.debug, 'x-data-repeat: resolving html')
-    if (this.noRender) {
-      return
-    }
-
-    if (this.childScript !== null) {
-      try {
-        this.resolvedItems = arrify(JSON.parse(this.childScript.textContent || '[]'))
-      } catch (error) {
-        warnIf(this.debug, `x-data-repeat: unable to deserialize JSON: ${error}`)
-      }
-    } else if (this.itemsSrc) {
-      await this.fetchJson()
-    } else if (this.items) {
-      await this.resolveItemsExpression()
-    } else {
-      warnIf(
-        this.debug,
-        'x-data-repeat: you must include at least one of the following: items, json-src or a <script> element with a JSON array.',
-      )
-    }
-
-    // DebugIf(this.debug, `x-data-repeat: innerItems ${JSON.stringify(this.resolvedItems || [])}`);
-    if (this.resolvedItems && this.innerTemplate) {
-      let resolvedTemplate = ''
-      let items = this.resolvedItems
-
-      if (this.filter) {
-        let filterString = this.filter.slice()
-        if (hasExpression(filterString)) {
-          filterString = await resolveExpression(filterString)
-        }
-
-        const filter = jsonata(filterString)
-        debugIf(this.debug, `x-data-repeat: filtering: ${filterString}`)
-        items = arrify(filter.evaluate(this.resolvedItems))
-      }
-
-      this.resolvedTemplate = await items.reduce(
-        (previousPromise, item) =>
-          previousPromise.then(async () =>
-            resolveExpression(this.innerTemplate.slice(), item).then((html) => {
-              resolvedTemplate += html
-              return resolvedTemplate
-            }),
-          ),
-        Promise.resolve(),
-      )
-    }
+    return items
   }
 
   componentDidRender() {
-    this.router?.captureInnerLinks(this.el)
+
   }
 
   disconnectedCallback() {
@@ -176,6 +196,10 @@ export class XDataRepeat {
   }
 
   render() {
-    return <Host innerHTML={this.resolvedTemplate}></Host>
+    return (
+      <Host>
+        <slot name="content"></slot>
+      </Host>
+    )
   }
 }

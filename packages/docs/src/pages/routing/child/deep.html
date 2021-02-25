@@ -1,11 +1,9 @@
 <x-content-reference
   script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
-  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css"
->
+  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
 </x-content-reference>
 <x-content-reference
-  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js"
->
+  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
 </x-content-reference>
 <div class="container container-fluid mx-auto">
   <h1>Deep Nested Routing</h1>
@@ -26,38 +24,20 @@
 
   <h3>Deep Nested Example</h3>
   <p>Check out the HTML declared to create this route.</p>
-  <div>
-    <a hidden href="/routing/examples/nested.html" target="_blank" class="btn btn-secondary float-end">
-      <i class="ri-external-link-line"></i>
-      Visit Demo</a
-    >
-    <button
-      class="btn btn-light"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#flatSource"
-      aria-expanded="false"
-      aria-controls="flatSource"
-    >
-      <i class="ri-code-s-slash-line"></i>
-      Toggle Source
-    </button>
-  </div>
-  <div class="collapse" id="flatSource">
-    <x-content-markdown>
-      <script type="text/markdown">
-        ```html
-        <x-app-view url="routing" page-title="Routing">
-          <x-app-view url="nested" page-title="Nested">
-            <x-app-view url="deep" page-title="Deep Nesting"> ... THIS PAGE .... </x-app-view>
-            ... nested content ...
-          </x-app-view>
-          ... routing content ...
+
+  <x-content-markdown>
+    <script type="text/markdown">
+      ```html
+      <x-app-view url="routing" page-title="Routing">
+        <x-app-view url="nested" page-title="Nested">
+          <x-app-view url="deep" page-title="Deep Nesting"> ... THIS PAGE .... </x-app-view>
+          ... nested content ...
         </x-app-view>
-        ```
-      </script>
-    </x-content-markdown>
-  </div>
+        ... routing content ...
+      </x-app-view>
+      ```
+    </script>
+  </x-content-markdown>
   <footer>
     <a slot="start" href="/routing/child">
       <button class="btn btn-light">&lt; Back</button>

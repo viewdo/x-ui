@@ -45,36 +45,19 @@
     </a>
     components to "lazy-load" the inner-html when the route is activated.
   </p>
-  <div>
-    <button
-      class="btn btn-light"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#loadRemoteSource"
-      aria-expanded="false"
-      aria-controls="loadRemoteSource"
-    >
-      <i class="ri-code-s-slash-line"></i>
-      Toggle Source
-    </button>
-  </div>
-  <div class="collapse" id="loadRemoteSource">
-    <x-content-markdown>
-      <script type="text/markdown">
-        ```html
-        <x-app-view url="page-1" page-title="Page 1" content-src="/pages/page-1.html">
-          <h1>Page 1</h1>
-          ...
-        </x-app-view>
-        ```
-      </script>
-    </x-content-markdown>
-    <blockquote>
-      <b>PRO-TIP:</b>
-      A mixture of inline and remote content can be used within the same route. Be sure to include the
-      <b>slot="content"</b> attribute for content that should not show on child-routes.
-    </blockquote>
-  </div>
+
+  <x-content-markdown>
+    <script type="text/markdown">
+      ```html
+      <x-app-view url="page-1" page-title="Page 1" content-src="/pages/page-1.html"> </x-app-view>
+      ```
+    </script>
+  </x-content-markdown>
+  <blockquote>
+    <b>TIP:</b>
+    A mixture of inline and remote content can be used within the same route. Be sure to include the
+    <b>slot="content"</b> attribute for content that should not show on child-routes.
+  </blockquote>
 
   <h3>Lazy Content</h3>
   <p>

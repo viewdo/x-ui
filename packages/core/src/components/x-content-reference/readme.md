@@ -99,15 +99,14 @@ If inline is present, the source would be nested inside this element, otherwise 
 
 ## Properties
 
-| Property                | Attribute    | Description                                                                                                  | Type                  | Default     |
-| ----------------------- | ------------ | ------------------------------------------------------------------------------------------------------------ | --------------------- | ----------- |
-| `inline` _(required)_   | `inline`     | When inline the link/script tags are rendered in-place rather than added to the head.                        | `boolean`             | `undefined` |
-| `module` _(required)_   | `module`     | Import the script file as a module.                                                                          | `boolean`             | `undefined` |
-| `noModule` _(required)_ | `no-module`  | Declare the script only for use when modules aren't supported                                                | `boolean`             | `undefined` |
-| `noRender`              | `no-render`  | If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute. | `boolean`             | `false`     |
-| `noWait` _(required)_   | `no-wait`    | INTERNAL - disables the DOM onload await to finish rendering                                                 | `boolean`             | `undefined` |
-| `scriptSrc`             | `script-src` | The script file to reference.                                                                                | `string \| undefined` | `undefined` |
-| `styleSrc`              | `style-src`  | The css file to reference                                                                                    | `string \| undefined` | `undefined` |
+| Property              | Attribute    | Description                                                                                                  | Type                  | Default     |
+| --------------------- | ------------ | ------------------------------------------------------------------------------------------------------------ | --------------------- | ----------- |
+| `inline`              | `inline`     | When inline the link/script tags are rendered in-place rather than added to the head.                        | `boolean`             | `false`     |
+| `module` _(required)_ | `module`     | Import the script file as a module.                                                                          | `boolean`             | `undefined` |
+| `noModule`            | `no-module`  | Declare the script only for use when modules aren't supported                                                | `boolean`             | `false`     |
+| `noRender`            | `no-render`  | If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute. | `boolean`             | `false`     |
+| `scriptSrc`           | `script-src` | The script file to reference.                                                                                | `string \| undefined` | `undefined` |
+| `styleSrc`            | `style-src`  | The css file to reference                                                                                    | `string \| undefined` | `undefined` |
 
 
 ----------------------------------------------

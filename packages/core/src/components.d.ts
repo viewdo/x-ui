@@ -5,8 +5,8 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { ActionTopicType, RouterService } from "./services";
 import { ActionActivationStrategy, CookieConsent, DiscardStrategy, EventAction, LoadStrategy, VisitStrategy } from ".";
-import { RouterService } from "./services";
 import { RouterService as RouterService1 } from "./services/routing/router";
 import { AUDIO_COMMANDS } from "./services/audio/interfaces";
 export namespace Components {
@@ -15,10 +15,6 @@ export namespace Components {
           * The command to execute.
          */
         "command"?: string;
-        /**
-          * Data binding for JSX binding
-         */
-        "data"?: Record<string,any>;
         /**
           * Get the underlying actionEvent instance. Used by the x-action-activator element.
          */
@@ -30,7 +26,7 @@ export namespace Components {
         /**
           * This is the topic this action-command is targeting.  data: []
          */
-        "topic"?: 'data' | 'routing' | 'document' | 'audio' | 'video';
+        "topic"?: ActionTopicType;
     }
     interface XActionActivator {
         /**
@@ -69,6 +65,10 @@ export namespace Components {
          */
         "debug": boolean;
         /**
+          * Use hash routes to on the client-side. Default is to use folder-paths. This requires a smart server-side proxy that rewrites all requests to the HTML file.
+         */
+        "hash": boolean;
+        /**
           * The wait-time, in milliseconds to wait for un-registered data providers found in an expression. This is to accommodate a possible lag between evaluation before the first view-do 'when' predicate an the registration process.
          */
         "providerTimeout": number;
@@ -87,7 +87,7 @@ export namespace Components {
         /**
           * This is the start path a user should land on when they first land on this app.
          */
-        "startUrl"?: string;
+        "startUrl": string;
         /**
           * Navigation transition between routes. This is a CSS animation class.
          */
@@ -201,6 +201,18 @@ export namespace Components {
           * The url for this route, including the parent's routes.
          */
         "url": string;
+        /**
+          * Provider the end event name. Default is ended
+         */
+        "videoEndEvent": string;
+        /**
+          * Provide the element selector for the providing media object that can provide time and end events. Default is video
+         */
+        "videoTarget": string;
+        /**
+          * Provide the time-event name. Default is timeupdate
+         */
+        "videoTimeEvent": string;
         /**
           * The visit strategy for this do. once: persist the visit and never force it again always: do not persist, but don't don't show again in-session optional: do not force this view-do ever. It will be available by URL
          */
@@ -333,7 +345,7 @@ export namespace Components {
          */
         "src": string;
     }
-    interface XContentMd {
+    interface XContentMarkdown {
         /**
           * Base Url for embedded links
          */
@@ -369,10 +381,6 @@ export namespace Components {
          */
         "noRender": boolean;
         /**
-          * INTERNAL - disables the DOM onload await to finish rendering
-         */
-        "noWait": boolean;
-        /**
           * The script file to reference.
          */
         "scriptSrc"?: string;
@@ -387,16 +395,14 @@ export namespace Components {
          */
         "noRender": boolean;
         /**
-          * The data expression to obtain a value for rendering as inner-text for this element.
-          * @example {session:user.name}
+          * The data expression to obtain a value for rendering as inner-text for this element. {{session:user.name}}
           * @default null
          */
         "text"?: string;
     }
     interface XDataProviderCookie {
         /**
-          * An expression that tells this component how to determine if the user has previously consented.
-          * @example {storage:consented}
+          * An expression that tells this component how to determine if the user has previously consented. {{{storage:consented}}}
          */
         "hideWhen"?: string;
         /**
@@ -414,8 +420,7 @@ export namespace Components {
          */
         "filter"?: string;
         /**
-          * The array-string or data expression to obtain a collection for rendering the template.
-          * @example {session:cart.items}
+          * The array-string or data expression to obtain a collection for rendering the template. {{session:cart.items}}
          */
         "items"?: string;
         /**
@@ -430,8 +435,7 @@ export namespace Components {
     }
     interface XDataShow {
         /**
-          * The data expression to obtain a predicate for conditionally rendering the inner-contents of this element.
-          * @example {session:user.name}
+          * The data expression to obtain a predicate for conditionally rendering the inner-contents of this element. {{session:user.name}}
          */
         "when": string;
     }
@@ -539,11 +543,11 @@ declare global {
         prototype: HTMLXContentIncludeElement;
         new (): HTMLXContentIncludeElement;
     };
-    interface HTMLXContentMdElement extends Components.XContentMd, HTMLStencilElement {
+    interface HTMLXContentMarkdownElement extends Components.XContentMarkdown, HTMLStencilElement {
     }
-    var HTMLXContentMdElement: {
-        prototype: HTMLXContentMdElement;
-        new (): HTMLXContentMdElement;
+    var HTMLXContentMarkdownElement: {
+        prototype: HTMLXContentMarkdownElement;
+        new (): HTMLXContentMarkdownElement;
     };
     interface HTMLXContentReferenceElement extends Components.XContentReference, HTMLStencilElement {
     }
@@ -593,7 +597,7 @@ declare global {
         "x-audio-sound-action": HTMLXAudioSoundActionElement;
         "x-audio-sound-load": HTMLXAudioSoundLoadElement;
         "x-content-include": HTMLXContentIncludeElement;
-        "x-content-md": HTMLXContentMdElement;
+        "x-content-markdown": HTMLXContentMarkdownElement;
         "x-content-reference": HTMLXContentReferenceElement;
         "x-data-display": HTMLXDataDisplayElement;
         "x-data-provider-cookie": HTMLXDataProviderCookieElement;
@@ -608,13 +612,9 @@ declare namespace LocalJSX {
          */
         "command"?: string;
         /**
-          * Data binding for JSX binding
-         */
-        "data"?: Record<string,any>;
-        /**
           * This is the topic this action-command is targeting.  data: []
          */
-        "topic"?: 'data' | 'routing' | 'document' | 'audio' | 'video';
+        "topic"?: ActionTopicType;
     }
     interface XActionActivator {
         /**
@@ -652,11 +652,15 @@ declare namespace LocalJSX {
          */
         "debug"?: boolean;
         /**
-          * These events are **`<x-app/>`** command-requests for action handlers to perform tasks. Any handles should cancel the event.
+          * Use hash routes to on the client-side. Default is to use folder-paths. This requires a smart server-side proxy that rewrites all requests to the HTML file.
+         */
+        "hash"?: boolean;
+        /**
+          * These events are **`<x-app>`** command-requests for action handlers to perform tasks. Any handles should cancel the event.
          */
         "onX:actions"?: (event: CustomEvent<any>) => void;
         /**
-          * Listen for events that occurred within the **`<x-app/>`** system.
+          * Listen for events that occurred within the **`<x-app>`** system.
          */
         "onX:events"?: (event: CustomEvent<any>) => void;
         /**
@@ -686,13 +690,13 @@ declare namespace LocalJSX {
     }
     interface XAppAnalytics {
         /**
+          * Page views.
+         */
+        "onPage-view"?: (event: CustomEvent<any>) => void;
+        /**
           * Raised analytics events.
          */
         "onX:analytics:event"?: (event: CustomEvent<any>) => void;
-        /**
-          * Page views.
-         */
-        "onX:analytics:page-view"?: (event: CustomEvent<any>) => void;
         /**
           * View percentage views.
          */
@@ -804,6 +808,18 @@ declare namespace LocalJSX {
           * The url for this route, including the parent's routes.
          */
         "url": string;
+        /**
+          * Provider the end event name. Default is ended
+         */
+        "videoEndEvent"?: string;
+        /**
+          * Provide the element selector for the providing media object that can provide time and end events. Default is video
+         */
+        "videoTarget"?: string;
+        /**
+          * Provide the time-event name. Default is timeupdate
+         */
+        "videoTimeEvent"?: string;
         /**
           * The visit strategy for this do. once: persist the visit and never force it again always: do not persist, but don't don't show again in-session optional: do not force this view-do ever. It will be available by URL
          */
@@ -920,7 +936,7 @@ declare namespace LocalJSX {
          */
         "src": string;
     }
-    interface XContentMd {
+    interface XContentMarkdown {
         /**
           * Base Url for embedded links
          */
@@ -942,7 +958,7 @@ declare namespace LocalJSX {
         /**
           * When inline the link/script tags are rendered in-place rather than added to the head.
          */
-        "inline": boolean;
+        "inline"?: boolean;
         /**
           * Import the script file as a module.
          */
@@ -950,15 +966,11 @@ declare namespace LocalJSX {
         /**
           * Declare the script only for use when modules aren't supported
          */
-        "noModule": boolean;
+        "noModule"?: boolean;
         /**
           * If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.
          */
         "noRender"?: boolean;
-        /**
-          * INTERNAL - disables the DOM onload await to finish rendering
-         */
-        "noWait": boolean;
         /**
           * The script file to reference.
          */
@@ -974,16 +986,14 @@ declare namespace LocalJSX {
          */
         "noRender"?: boolean;
         /**
-          * The data expression to obtain a value for rendering as inner-text for this element.
-          * @example {session:user.name}
+          * The data expression to obtain a value for rendering as inner-text for this element. {{session:user.name}}
           * @default null
          */
         "text"?: string;
     }
     interface XDataProviderCookie {
         /**
-          * An expression that tells this component how to determine if the user has previously consented.
-          * @example {storage:consented}
+          * An expression that tells this component how to determine if the user has previously consented. {{{storage:consented}}}
          */
         "hideWhen"?: string;
         /**
@@ -1005,8 +1015,7 @@ declare namespace LocalJSX {
          */
         "filter"?: string;
         /**
-          * The array-string or data expression to obtain a collection for rendering the template.
-          * @example {session:cart.items}
+          * The array-string or data expression to obtain a collection for rendering the template. {{session:cart.items}}
          */
         "items"?: string;
         /**
@@ -1021,8 +1030,7 @@ declare namespace LocalJSX {
     }
     interface XDataShow {
         /**
-          * The data expression to obtain a predicate for conditionally rendering the inner-contents of this element.
-          * @example {session:user.name}
+          * The data expression to obtain a predicate for conditionally rendering the inner-contents of this element. {{session:user.name}}
          */
         "when": string;
     }
@@ -1044,7 +1052,7 @@ declare namespace LocalJSX {
         "x-audio-sound-action": XAudioSoundAction;
         "x-audio-sound-load": XAudioSoundLoad;
         "x-content-include": XContentInclude;
-        "x-content-md": XContentMd;
+        "x-content-markdown": XContentMarkdown;
         "x-content-reference": XContentReference;
         "x-data-display": XDataDisplay;
         "x-data-provider-cookie": XDataProviderCookie;
@@ -1073,7 +1081,7 @@ declare module "@stencil/core" {
             "x-audio-sound-action": LocalJSX.XAudioSoundAction & JSXBase.HTMLAttributes<HTMLXAudioSoundActionElement>;
             "x-audio-sound-load": LocalJSX.XAudioSoundLoad & JSXBase.HTMLAttributes<HTMLXAudioSoundLoadElement>;
             "x-content-include": LocalJSX.XContentInclude & JSXBase.HTMLAttributes<HTMLXContentIncludeElement>;
-            "x-content-md": LocalJSX.XContentMd & JSXBase.HTMLAttributes<HTMLXContentMdElement>;
+            "x-content-markdown": LocalJSX.XContentMarkdown & JSXBase.HTMLAttributes<HTMLXContentMarkdownElement>;
             "x-content-reference": LocalJSX.XContentReference & JSXBase.HTMLAttributes<HTMLXContentReferenceElement>;
             "x-data-display": LocalJSX.XDataDisplay & JSXBase.HTMLAttributes<HTMLXDataDisplayElement>;
             "x-data-provider-cookie": LocalJSX.XDataProviderCookie & JSXBase.HTMLAttributes<HTMLXDataProviderCookieElement>;

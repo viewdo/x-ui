@@ -4,10 +4,10 @@ export const ANALYTICS_TOPIC = 'analytics'
 
 export enum ANALYTICS_COMMANDS {
   SendEvent = 'send-event',
-  SendViewPercentage = 'send-view-percentage',
+  SendViewTime = 'send-view-time',
   SendPageView = 'send-page-view',
 }
 
 export enum ANALYTICS_EVENTS {
-  ListenerRegistered = 'listener-registered',
+  ListenerRegistered = 'analytics:listener-registered',
 }

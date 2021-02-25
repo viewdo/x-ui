@@ -1,7 +1,7 @@
-import { RafCallback } from '@stencil/core'
-import { newSpecPage } from '@stencil/core/testing'
-import { EventEmitter } from '../actions/event-emitter'
-import { RouterService } from './router'
+import { RafCallback } from '@stencil/core';
+import { newSpecPage } from '@stencil/core/testing';
+import { EventEmitter } from '../actions/event-emitter';
+import { RouterService } from './router';
 
 describe('router', () => {
   let actionBus: EventEmitter
@@ -11,8 +11,9 @@ describe('router', () => {
   const startPage = async (url: string = '') => {
     return await newSpecPage({
       components: [],
-      html: `<div style="margin-top:1000px"><a name="test" href="/home"><h1>Test Header</h1></a></div>`,
+      html: `<div style="margin-top:3000px"><a name="test" href="/home"><h1>Test Header</h1></a></div>`,
       url: 'http://localhost' + url,
+
     })
   }
 

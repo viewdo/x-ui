@@ -25,10 +25,19 @@
 
   <h3>Then: Add Script References</h3>
   <p>Add the following script tags to the head:</p>
-  <x-content-markdown src="/pages/start/ref-npm.md"> </x-content-markdown>
-  <p class="note">
-    Only one of these scripts are imported. Which depends on the browser's support for ESM modules.
-  </p>
+  <x-content-markdown>
+    <script type="text/markdown">
+      ```html
+      <head>
+        ...
+        <script type="module" src="/node_modules/@viewdo/x-ui/dist/x-ui.esm.js">
+        <script nomodule src="/node_modules/@viewdo/x-ui/dist/x-ui.js">
+        ...
+      </head>
+      ```
+    </script>
+  </x-content-markdown>
+  <p class="note">Only one of these scripts are imported. Which depends on the browser's support for ESM modules.</p>
 
   <footer>
     <button slot="start" x-back class="btn btn-light btn-lg">&lt; Back</button>

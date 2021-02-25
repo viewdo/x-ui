@@ -9,12 +9,10 @@
 </x-content-reference>
 <div class="container container-fluid mx-auto">
   <h1>Routing</h1>
-  <p class="lead">
-    Url routing adds URL-based navigation to your single-page's content.
-  </p>
+  <p class="lead">Url routing adds URL-based navigation to your single-page's content.</p>
   <p>
-    Once configured, the browser URL will determine what content is rendered, allowing users to
-    bookmark and link to multiple "pages", managed as a single file.
+    Once configured, the browser URL will determine what content is rendered, allowing users to bookmark and link to
+    multiple "pages", managed as a single file.
   </p>
 
   <h2>How it works</h2>
@@ -23,17 +21,16 @@
     <a href="/components/x-app-view">
       <b>&lt;x-app-view&gt;</b>
     </a>
-    element and setting the <b>url</b> attribute, the contained-content won't be displayed until the URL path matches the path
-    set in the <b>url</b> attribute.
+    element and setting the <b>url</b> attribute, the contained-content won't be displayed until the URL path matches
+    the path set in the <b>url</b> attribute.
   </p>
-  <p>
-    Parent routes can have content shared for child routes, like a child-menu or sub-nav.
-  </p>
+  <p>Parent routes can have content shared for child routes, like a child-menu or sub-nav.</p>
 
   <h3>Simple Example</h3>
-  <a href="/pages/routing/examples/simple.html" target="_blank" class="btn btn-light float-end">
+  <a href="/pages/routing/examples/simple.html" target="_blank" class="btn btn-light float-end my-2 ms-2">
     <i class="ri-external-link-line"></i>
-    Visit Demo</a>
+    Visit Demo</a
+  >
   <p>
     The following example shows a very simple routing implementation. it is used throughout this document, but you can
     also see a concise example here:
@@ -52,7 +49,6 @@
             <h1>Home</h1>
           </nav>
           <div class="container" slot="content">
-
             <hr />
             <h2>Hello World!</h2>
             <p>Now you have a basic content router.</p>
@@ -79,15 +75,11 @@
         </x-app-view>
       </x-app>
       ```
+
       > **TIP:** Content that that should only appear on a route, and not a child-route should be inserted using
-      the `slot="content"` attribute.
+      > the `slot="content"` attribute.
     </script>
   </x-content-markdown>
-  <blockquote>
-    <b>PRO-TIP:</b> Content that that should only appear on a route, and not a child-route should be inserted using
-    the <b>slot="content"</b> attribute.
-  </blockquote>
-
 
   <h3>Advanced Examples</h3>
   <p>

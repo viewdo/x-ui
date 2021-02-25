@@ -1,11 +1,9 @@
 <x-content-reference
   script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
-  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css"
->
+  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
 </x-content-reference>
 <x-content-reference
-  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js"
->
+  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
 </x-content-reference>
 <div class="container container-fluid mx-auto">
   <h1>Route-based Content</h1>
@@ -15,77 +13,58 @@
     <template>
       <h2>Learn About '{{route:item}}'</h2>
       <p>{{storage:name}}, you picked one of my favorite things!</p>
-      <img style="width: 100%" src="https://source.unsplash.com/random/500x200?{{route:item}}" />
+      <img style="width: 75%"
+        src="https://source.unsplash.com/random/500x200?{{route:item}}" />
     </template>
   </x-data-display>
 
   <h2>Under the Hood</h2>
   <p>
-    Check out how <b class="brand">&lt;x-ui/&gt;</b> makes it easy to use route and query-string data directly in your
+    Check out how <b class="brand">&lt;x-ui/&gt;</b> makes it easy to use route
+    and query-string data directly in your
     content.
   </p>
 
-  <h3>Route Definition</h3>
-  <p></p>
-  <div>
-    <button
-      class="btn btn-light"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#loadRouteSource"
-      aria-expanded="false"
-      aria-controls="loadRouteSource"
-    >
-      <i class="ri-code-s-slash-line"></i>
-      Toggle Source
-    </button>
-  </div>
-  <div class="collapse" id="loadRouteSource">
-    <x-content-markdown>
-      <script type="text/markdown">
-        ```html
-        <x-app-view url="/data" page-title="Data Routes">
-          <x-app-view url="/:item" page-title="Info on {{route:item}}"> ... this content ... </x-app-view>
-        </x-app-view>
-        ```
-      </script>
-    </x-content-markdown>
-  </div>
+  <x-content-markdown>
+    <script type="text/markdown">
+      ```html
+      <h1>Learn about <x-data-display text="{{route:item}}"></x-data-display></h1>
+      <p>
+        {{storage:name}}, you picked one of my favorite things
+        <span x-hide-when="!{{query:with}}"> AND you want a side of {{query:with}}.</span>
+        Amazing.
+      </p>
+      <x-data-display>
+        <template>
+          <h2>Learn About '{{route:item}}'</h2>
+          <p>{{storage:name}}, you picked one of my favorite things!</p>
+          <img style="width: 50%"
+            src="https://source.unsplash.com/random/500x200?{{route:item}}" />
+        </template>
+      </x-data-display>
+      ```
+    </script>
+  </x-content-markdown>
 
-  <h3>Route Content</h3>
+  <h2>Route Definition</h2>
   <p></p>
-  <div>
-    <button
-      class="btn btn-light"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#loadSource"
-      aria-expanded="false"
-      aria-controls="loadSource"
-    >
-      <i class="ri-code-s-slash-line"></i>
-      Toggle Source
-    </button>
-  </div>
-  <div class="collapse" id="loadSource">
-    <x-content-markdown>
-      <script type="text/markdown">
-        ```html
-        <h1>Learn about <x-data-display text="{{route:item}}"></x-data-display></h1>
-        <x-data-display>
-          <template> </template>
-        </x-data-display>
-        <p>
-          {{storage:name}}, you picked one of my favorite things
-          <span x-hide-when="!{{query:with}}"> AND you want a side of {{query:with}}.</span>
-          Amazing.
-        </p>
-        ```
-      </script>
-    </x-content-markdown>
-  </div>
+
+  <x-content-markdown>
+    <script type="text/markdown">
+      ```html
+      <x-app-view url="/data" page-title="Data Routes">
+        <x-app-view url="/:item"
+          page-title="Info on {{route:item}}">
+          ... this content ...
+        </x-app-view>
+      </x-app-view>
+      ```
+    </script>
+  </x-content-markdown>
+
 
   <footer>
-    <a slot="start" href="/routing/dynamic" class="btn btn-light"> &lt; Back </a>
+    <a slot="start" href="/routing/dynamic" class="btn btn-light"> &lt; Back
+    </a>
   </footer>
 </div>

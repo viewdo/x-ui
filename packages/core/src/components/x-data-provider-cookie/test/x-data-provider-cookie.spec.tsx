@@ -50,9 +50,6 @@ describe('x-data-provider-cookie', () => {
 
     expect(page.root).toEqualHtml(`
       <x-app>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
         <x-data-provider-cookie hidden="">
           <mock:shadow-root>
             <slot></slot>
@@ -96,9 +93,6 @@ describe('x-data-provider-cookie', () => {
 
     expect(page.root).toEqualHtml(`
       <x-app>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
         <x-data-provider-cookie hidden="">
           <mock:shadow-root>
             <slot></slot>

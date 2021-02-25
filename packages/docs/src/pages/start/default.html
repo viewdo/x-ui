@@ -1,18 +1,16 @@
 <x-content-reference
   script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
-  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css"
->
+  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
 </x-content-reference>
 <x-content-reference
-  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js"
->
+  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
 </x-content-reference>
 <div class="container container-fluid mx-auto">
   <h1>Get Ready to Go</h1>
 
   <div x-hide-when="'{{storage:installed}}' != 'npm'">
     <h2>Local Reference</h2>
-    <x-action-activator debug>
+    <x-action-activator>
       <x-action topic="data"
         command="set-data"
         data-provider="storage"
@@ -20,8 +18,20 @@
       </x-action>
       <button class="btn btn-light btn-sm float-end">Switch to Remote</button>
     </x-action-activator>
-    <p>Only the script reference is required to get started using these elements.</p>
-    <x-content-markdown src="/pages/start/ref-npm.md"> </x-content-markdown>
+    <p>Only the script reference is required to get started using these
+      elements.</p>
+    <x-content-markdown>
+      <script type="text/markdown">
+        ```html
+        <head>
+          ...
+          <script type="module" src="/node_modules/@viewdo/x-ui/dist/x-ui.esm.js">
+          <script nomodule src="/node_modules/@viewdo/x-ui/dist/x-ui.js">
+          ...
+        </head>
+        ```
+      </script>
+    </x-content-markdown>
   </div>
 
   <div x-hide-when="'{{storage:installed}}' != 'cdn'">
@@ -30,33 +40,47 @@
       <x-action topic="data"
         command="set-data"
         data-provider="storage"
-        data-installed="npm"></x-action>
+        data-installed="npm">
       </x-action>
       <button class="btn btn-light btn-sm float-end">Switch to Local</button>
     </x-action-activator>
-    <p>Only the script reference is required to get started using these elements.</p>
-    <x-content-markdown src="/pages/start/ref-cdn.md"> </x-content-markdown>
+    <p>Only the script reference is required to get started using these
+      elements.</p>
+    <x-content-markdown>
+      <script type='text/markdown'>
+        ```html
+        <head>
+         ...
+         <script type="module" src="https://unpkg.com/@viewdo/x-ui/dist/x-ui/x-ui.esm.js">
+         <script nomodule src="https://unpkg.com/@viewdo/x-ui/dist/x-ui/x-ui.js">
+         ...
+        </head>
+        ```
+      </script>
+    </x-content-markdown>
   </div>
 
   <h3>Once Referenced</h3>
-  <p>You can use one or more of these components immediately by adding the elements to your page.</p>
+  <p>You can use one or more of these components immediately by adding the
+    elements to your page.</p>
   <p></p>
-  <x-markdown>
+  <x-content-markdown>
     <script type="text/markdown">
+      ```html
       <x-app app-title="My HTML App" start-url="/home">
       </x-app>
+      ```
     </script>
-  </x-markdown>
-
-  <h2>Learn More</h2>
-  <p>This guide will walk you through the core systems and their components.</p>
-  <a href="/routing" class="btn btn-primary btn-lg">Routing</a>
-
-  <h3>Or Jump to Topic</h3>
+  </x-content-markdown>
+  <h3>Jump to Topic</h3>
   <p>You can skip ahead to the are you are most interested in.</p>
   <div class="button-nav">
-    <a href="/navigation" class="btn btn-info text-white">
+    <a href="/routing" class="btn btn-info text-white">
       <i class="ri-route-line"></i>
+      Routing
+    </a>
+    <a href="/navigation" class="btn btn-info text-white">
+      <i class="ri-compass-3-line"></i>
       Navigation
     </a>
     <a href="/content" class="btn btn-info text-white">
@@ -76,4 +100,13 @@
       Presentations
     </a>
   </div>
+
+  <h2>Learn More</h2>
+  <p>This guide will walk you through the core systems and their components.</p>
+
+
+  <footer>
+    <a slot="end" href="/routing" class="btn btn-primary btn-lg">Learn: Routing
+      &gt;</a>
+  </footer>
 </div>

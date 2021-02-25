@@ -16,31 +16,31 @@ export class AnalyticsActionListener {
     )
     this.removeSubscription.push(
       this.events.on(ROUTE_EVENTS.RouteChanged, (location: LocationSegments) => {
-        this.handlePageView?.call(window, location)
+        this.handlePageView(location)
       }),
     )
 
-    this.events.emit(ANALYTICS_EVENTS.ListenerRegistered)
+    this.events.emit(ANALYTICS_EVENTS.ListenerRegistered, this)
   }
 
-  handleEvent?: (data: any) => void
-  handleViewPercent?: (data: any) => void
-  handlePageView?: (data: any) => void
+  handleEvent: (data: any) => void = (_d) => {}
+  handleViewTime: (data: any) => void = (_d) => {}
+  handlePageView: (data: any) => void = (_d) => {}
 
   private handleEventAction(eventAction: EventAction<any>) {
     debugIf(interfaceState.debug, `analytics-listener: action received ${JSON.stringify(eventAction)}`)
 
     switch (eventAction.command) {
       case ANALYTICS_COMMANDS.SendEvent: {
-        this.handleEvent?.call(window, eventAction.data)
+        this.handleEvent(eventAction.data)
         break
       }
-      case ANALYTICS_COMMANDS.SendViewPercentage: {
-        this.handleViewPercent?.call(window, eventAction.data)
+      case ANALYTICS_COMMANDS.SendViewTime: {
+        this.handleViewTime(eventAction.data)
         break
       }
       case ANALYTICS_COMMANDS.SendPageView: {
-        this.handlePageView?.call(window, eventAction.data)
+        this.handlePageView(eventAction.data)
         break
       }
     }
