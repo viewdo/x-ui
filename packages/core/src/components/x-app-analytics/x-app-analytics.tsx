@@ -1,6 +1,7 @@
 import { Component, Event, EventEmitter } from '@stencil/core';
 import { actionBus, eventBus } from '../../services/actions';
 import { AnalyticsActionListener } from '../../services/analytics/action-listener';
+import { LocationSegments } from '../../services/routing/interfaces';
 
 /**
  *
@@ -28,7 +29,7 @@ export class XAppAnalytics {
    * Page views.
    */
   @Event({
-    eventName: 'x:analytics:page-view',
+    eventName: 'page-view',
     composed: false,
     cancelable: false,
     bubbles: false,
@@ -48,8 +49,10 @@ export class XAppAnalytics {
   componentWillLoad() {
     this.listener = new AnalyticsActionListener(actionBus, eventBus)
     this.listener.handleEvent = (e) => this.event.emit(e)
-    this.listener.handlePageView = (e) => this.pageView.emit(e)
-    this.listener.handleViewPercent = (e) => this.viewPercentage.emit(e)
+    this.listener.handlePageView = (e:LocationSegments) =>
+      this.pageView.emit(`${e.pathname}?${e.search}`)
+    this.listener.handleViewTime = (e) =>
+      this.viewPercentage.emit(e)
   }
 
   disconnectedCallback() {

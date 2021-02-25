@@ -74,7 +74,6 @@ nav .navbar-brand a:hover {
 nav.bg-dark i {
   font-size: 1.5rem;
   color: white;
-
 }
 
 .brand {
@@ -116,14 +115,13 @@ a.link-active * {
   filter: brightness(0) invert(1);
 }
 
-
 .dark .introjs-tooltip {
   background-color: var(--background-color);
   color: var(--text-color);
 }
 
-.dark code[class*=language-],
-.dark pre[class*=language-] {
+.dark code[class*='language-'],
+.dark pre[class*='language-'] {
   color: var(--text-color);
   background-color: rgb(92, 88, 88);
   text-shadow: none;
@@ -131,8 +129,6 @@ a.link-active * {
 .dark .token {
   filter: brightness(2);
 }
-
-
 
 /* ELEMENTS ------ */
 

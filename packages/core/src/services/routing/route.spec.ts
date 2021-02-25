@@ -1,9 +1,9 @@
-import { RafCallback, SpecPage } from '@stencil/core/internal'
-import { newSpecPage } from '@stencil/core/testing'
-import { EventEmitter } from '../actions/event-emitter'
-import { MatchResults } from './interfaces'
-import { Route } from './route'
-import { RouterService } from './router'
+import { RafCallback, SpecPage } from '@stencil/core/internal';
+import { newSpecPage } from '@stencil/core/testing';
+import { EventEmitter } from '../actions/event-emitter';
+import { MatchResults } from './interfaces';
+import { Route } from './route';
+import { RouterService } from './router';
 
 describe('route', () => {
   let actionBus: EventEmitter
@@ -84,7 +84,7 @@ describe('route', () => {
     page = await startPage('/route/Widget')
     router = new RouterService(page.win, writeTask, eventBus, actionBus, '', 'App')
     const routeElement = page.body.querySelector('div')!
-    let subject = router.createRoute(routeElement, '/route/:product', true, '{route:product}', null, 0, () => {})
+    let subject = router.createRoute(routeElement, '/route/:product', true, '{{route:product}}', null, 0, () => {})
 
     subject.adjustTitle()
 

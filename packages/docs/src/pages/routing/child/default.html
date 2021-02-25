@@ -28,7 +28,36 @@
 
   <h3>Child Routes Example</h3>
   <p>Child routes <em>'nested'</em> or <em>'flat'</em> format, depending on your taste.</p>
-  <p>
+
+  <h4>Nested Declaration</h4>
+  <p>Routes contain child-routes to semantically express their relationship using HTML.</p>
+
+  <x-content-markdown>
+    <script type="text/markdown">
+      ```html
+      <x-app-view url="/home" page-title="Home">
+        <x-app-view url="about" page-title="About"> ... about content ... </x-app-view>
+      </x-app-view>
+      ```
+    </script>
+  </x-content-markdown>
+
+  <h4>Flat Declaration</h4>
+  <p>You can also declare routes without nesting the elements, and use the <b>url</b> path explicitly.</p>
+
+  <x-content-markdown>
+    <script type="text/markdown">
+      ```html
+      <x-app-view url="home" page-title="Home"> ... home content ... </x-app-view>
+
+      <x-app-view url="home/about" page-title="About"> ... about content ... </x-app-view>
+      ```
+    </script>
+  </x-content-markdown>
+
+  <h3>See Sample</h3>
+  <p>Visit a deep nested route to see how it works.</p>
+  <div class="button-nav">
     <a hidden href="/routing/examples/nested.html" target="_blank" class="btn btn-secondary float-end">
       <i class="ri-external-link-line"></i>
       Visit Demo</a
@@ -37,61 +66,6 @@
       <i class="ri-treasure-map-fill"></i>
       Deep Nested Route
     </a>
-  </p>
-
-  <h4>Nested Declaration</h4>
-  <p>Routes contain child-routes to semantically express their relationship using HTML.</p>
-  <div>
-    <button
-      class="btn btn-light"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#semanticSource"
-      aria-expanded="false"
-      aria-controls="semanticSource"
-    >
-      <i class="ri-code-s-slash-line"></i>
-      Toggle Source
-    </button>
-  </div>
-  <div class="collapse" id="semanticSource">
-    <x-content-markdown>
-      <script type="text/markdown">
-        ```html
-        <x-app-view url="home" page-title="Home">
-          <x-app-view url="about" page-title="About"> ... about content ... </x-app-view>
-          ... end-url = home/about ...
-        </x-app-view>
-        ```
-      </script>
-    </x-content-markdown>
-  </div>
-
-  <h4>Flat Declaration</h4>
-  <p>You can also declare routes without nesting the elements, and use the <b>url</b> path explicitly.</p>
-  <div>
-    <button
-      class="btn btn-light"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#flatSource"
-      aria-expanded="false"
-      aria-controls="flatSource"
-    >
-      <i class="ri-code-s-slash-line"></i>
-      Toggle Source
-    </button>
-  </div>
-  <div class="collapse" id="flatSource">
-    <x-content-markdown>
-      <script type="text/markdown">
-        ```html
-        <x-app-view url="home" page-title="Home"> ... home content ... </x-app-view>
-
-        <x-app-view url="home/about" page-title="About"> ... about content ... </x-app-view>
-        ```
-      </script>
-    </x-content-markdown>
   </div>
 
   <footer>

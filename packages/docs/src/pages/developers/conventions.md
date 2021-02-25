@@ -1,6 +1,6 @@
-## Markup
+# Markup
 
-The properties of a X-HTML object are **reflected** as attributes of the corresponding tag.
+The properties of a X-UI elements object are **reflected** as attributes of the corresponding tag.
 
 Changing the value of a property changes the value of the corresponding attribute and vice-versa. There are a few exceptions, however. Some attributes are used only to set the initial value of a property and are not updated subsequently. That's the case in particular for attributes that reflect the "state" of an element, rather than its configuration. For example, the `value` property is typically not reflected. This convention is consistent with the behavior of native web elements.
 

@@ -94,20 +94,21 @@ Input-type elements (input, textarea and select) can specify a data expression f
 | `animationInterval`   | `animation-interval` | The interval, in milliseconds to use with the element-timer (used in place for a video) when timing animations in  x-app-view-do elements.                                                                                      | `number`              | `500`       |
 | `appTitle`            | `app-title`          | This is the application / site title. If the views or dos have titles, this is added as a suffix.                                                                                                                               | `string \| undefined` | `undefined` |
 | `debug`               | `debug`              | Turn on debugging to get helpful messages from the routing, data and action systems.                                                                                                                                            | `boolean`             | `false`     |
+| `hash`                | `hash`               | Use hash routes to on the client-side. Default is to use folder-paths. This requires a smart server-side proxy that rewrites all requests to the HTML file.                                                                     | `boolean`             | `false`     |
 | `providerTimeout`     | `provider-timeout`   | The wait-time, in milliseconds to wait for un-registered data providers found in an expression. This is to accommodate a possible lag between evaluation before the first view-do 'when' predicate an the registration process. | `number`              | `500`       |
-| `root`                | `root`               | This is the root path that the actual page is, if it isn't '/', then the router needs to know where to begin creating paths.                                                                                                    | `string`              | `''`        |
+| `root`                | `root`               | This is the root path that the actual page is, if it isn't '/', then the router needs to know where to begin creating paths.                                                                                                    | `string`              | `'/'`       |
 | `router` _(required)_ | --                   | This is the router service instantiated with this component.                                                                                                                                                                    | `RouterService`       | `undefined` |
 | `scrollTopOffset`     | `scroll-top-offset`  | Header height or offset for scroll-top on this and all views.                                                                                                                                                                   | `number \| undefined` | `undefined` |
-| `startUrl`            | `start-url`          | This is the start path a user should land on when they first land on this app.                                                                                                                                                  | `string \| undefined` | `undefined` |
+| `startUrl`            | `start-url`          | This is the start path a user should land on when they first land on this app.                                                                                                                                                  | `string`              | `'/'`       |
 | `transition`          | `transition`         | Navigation transition between routes. This is a CSS animation class.                                                                                                                                                            | `string \| undefined` | `undefined` |
 
 
 ## Events
 
-| Event       | Description                                                                                                                 | Type               |
-| ----------- | --------------------------------------------------------------------------------------------------------------------------- | ------------------ |
-| `x:actions` | These events are **`<x-app/>`** command-requests for action handlers to perform tasks. Any handles should cancel the event. | `CustomEvent<any>` |
-| `x:events`  | Listen for events that occurred within the **`<x-app/>`** system.                                                           | `CustomEvent<any>` |
+| Event       | Description                                                                                                                | Type               |
+| ----------- | -------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| `x:actions` | These events are **`<x-app>`** command-requests for action handlers to perform tasks. Any handles should cancel the event. | `CustomEvent<any>` |
+| `x:events`  | Listen for events that occurred within the **`<x-app>`** system.                                                           | `CustomEvent<any>` |
 
 
 ----------------------------------------------

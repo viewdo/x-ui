@@ -15,6 +15,20 @@ export class HistoryService {
   scrollHistory: ScrollHistory
   previousLocation!: LocationSegments
 
+  constructor(public win: Window, private basename: string, private useHash: boolean = false) {
+    this.events = new EventEmitter()
+    this.location = this.getDOMLocation(this.getHistoryState())
+    this.previousLocation = this.location
+    this.allKeys.push(this.location.key)
+    this.scrollHistory = new ScrollHistory(win)
+
+    this.push(this.location.pathname)
+
+    this.win.addEventListener('popstate', (e) => {
+      this.handlePop(this.getDOMLocation(e.state))
+    })
+  }
+
   private getHistoryState() {
     return this.win.history.state || {}
   }
@@ -31,24 +45,10 @@ export class HistoryService {
     )
 
     if (this.basename) {
-      path = stripBasename(path, this.basename)
+      path = stripBasename(path, this.basename, this.useHash)
     }
 
     return createLocation(path, state, key || createKey(6))
-  }
-
-  constructor(public win: Window, private basename: string) {
-    this.events = new EventEmitter()
-    this.location = this.getDOMLocation(this.getHistoryState())
-    this.previousLocation = this.location
-    this.allKeys.push(this.location.key)
-    this.scrollHistory = new ScrollHistory(win)
-
-    this.push(this.location.pathname)
-
-    this.win.addEventListener('popstate', (e) => {
-      this.handlePop(this.getDOMLocation(e.state))
-    })
   }
 
   handlePop(location: LocationSegments) {

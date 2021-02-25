@@ -28,6 +28,21 @@
 
   <h3>Contrived Example</h3>
   <p>This page's child-routes demonstrate how dynamic, data-driven routes can be used with this routing system.</p>
+  <x-content-markdown>
+    <script type="text/markdown">
+      ```html
+      <x-app-view url="/data" page-title="Data List">
+        <x-app-view url="/item/:foodKey" page-title="{{route:foodKey}} Details">
+          ... content that uses foodKey to render ...
+        </x-app-view>
+
+        <a href="/routing/dynamic/item/cake">Cake</a>
+        <a href="/routing/dynamic/item/wine">Wine</a>
+      </x-app-view>
+      ```
+    </script>
+  </x-content-markdown>
+
   <div class="button-nav">
     <a href="/routing/dynamic/item/cake" class="btn btn-secondary">
       <i class="ri-cake-2-line"></i>
@@ -52,36 +67,6 @@
       <i class="ri-discuss-line"></i>
       Custom Item
     </a>
-  </div>
-
-  <div class="mt-3">
-    <button
-      class="btn btn-light"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#loadSource"
-      aria-expanded="false"
-      aria-controls="loadSource"
-    >
-      <i class="ri-code-s-slash-line"></i>
-      Toggle Source
-    </button>
-  </div>
-  <div class="collapse" id="loadSource">
-    <x-content-markdown>
-      <script type="text/markdown">
-        ```html
-        <x-app-view url="/data" page-title="Data List">
-          <x-app-view url="/item/:foodKey" page-title="{{route:foodKey}} Details">
-            ... content that uses foodKey to render ...
-          </x-app-view>
-
-          <a href="/routing/dynamic/item/cake">Cake</a>
-          <a href="/routing/dynamic/item/wine">Wine</a>
-        </x-app-view>
-        ```
-      </script>
-    </x-content-markdown>
   </div>
 
   <footer>

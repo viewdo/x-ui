@@ -23,7 +23,7 @@ import { ElementsActionListener } from '../../services/elements/action-listener'
 @Component({
   tag: 'x-app',
   styleUrl: 'x-app.scss',
-  shadow: true,
+  shadow: false,
 })
 export class XApp {
   private eventSubscription!: () => void
@@ -44,7 +44,7 @@ export class XApp {
    * if it isn't '/', then the router needs to know
    * where to begin creating paths.
    */
-  @Prop() root:string = ''
+  @Prop() root:string = '/'
 
 
   /**
@@ -64,7 +64,7 @@ export class XApp {
    * This is the start path a user should
    * land on when they first land on this app.
    */
-  @Prop() startUrl?: string
+  @Prop() startUrl: string = '/'
 
   /**
    * Turn on debugging to get helpful messages from the
@@ -73,20 +73,31 @@ export class XApp {
   @Prop() debug = false
 
   /**
+   * Use hash routes to on the client-side. Default
+   * is to use folder-paths. This requires a smart
+   * server-side proxy that rewrites all requests to
+   * the HTML file.
+   */
+  @Prop() hash = false
+
+  /**
    * Header height or offset for scroll-top on this
    * and all views.
    */
   @Prop() scrollTopOffset?: number
 
   /**
-   * The wait-time, in milliseconds to wait for un-registered data providers
-   * found in an expression. This is to accommodate a possible lag between
-   * evaluation before the first view-do 'when' predicate an the registration process.
+   * The wait-time, in milliseconds to wait for
+   * un-registered data providers found in an expression.
+   * This is to accommodate a possible lag between
+   * evaluation before the first view-do 'when' predicate
+   * an the registration process.
    */
   @Prop() providerTimeout: number = 500
 
   /**
-   * The interval, in milliseconds to use with the element-timer (used in place for a video)
+   * The interval, in milliseconds to use with the
+   * element-timer (used in place for a video)
    * when timing animations in  x-app-view-do elements.
    */
   @Prop() animationInterval: number = 500
@@ -100,27 +111,10 @@ export class XApp {
     actionBus.emit(action.topic, action)
   }
 
-  @Listen('swUpdate', { target: 'window' })
-  async onServiceWorkerUpdate() {
-    const registration = await navigator.serviceWorker.getRegistration()
-
-    if (!registration?.waiting) {
-      // If there is no waiting registration, this is the first service
-      // worker being installed.
-      return
-    }
-
-    const refresh = confirm('New Version Available. Reload?')
-
-    if (refresh) {
-      registration.waiting.postMessage('skipWaiting')
-      location.reload()
-    }
-  }
-
   /**
-   * These events are **`<x-app/>`** command-requests for action handlers
-   * to perform tasks. Any handles should cancel the event.
+   * These events are **`<x-app>`** command-requests for
+   * action handlers to perform tasks. Any handles should
+   * cancel the event.
    */
   @Event({
     eventName: 'x:actions',
@@ -130,7 +124,7 @@ export class XApp {
   }) actions!: EventEmitter
 
   /**
-   * Listen for events that occurred within the **`<x-app/>`**
+   * Listen for events that occurred within the **`<x-app>`**
    * system.
    */
   @Event({
@@ -180,6 +174,7 @@ export class XApp {
 
     debugIf(this.debug, `x-app: found ${this.childViews.length} child views`)
     this.childViews.forEach((v) => {
+      v.url = this.router.normalizeChildUrl(v.url, this.router.root)
       v.transition = v.transition || this.transition
     })
 
@@ -204,10 +199,7 @@ export class XApp {
       })
     }
 
-    if (this.startUrl && this.startUrl !== '/' &&
-      (this.router.location?.pathname === '/' || this.router.location?.pathname == '')) {
-      this.router.goToRoute(this.startUrl)
-    }
+    this.router.finalize(this.startUrl)
   }
 
   private async performLoadElementManipulation(element: HTMLElement) {

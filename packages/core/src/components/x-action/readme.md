@@ -68,11 +68,10 @@ graph TD;
 
 ## Properties
 
-| Property  | Attribute | Description                                                   | Type                                                                   | Default     |
-| --------- | --------- | ------------------------------------------------------------- | ---------------------------------------------------------------------- | ----------- |
-| `command` | `command` | The command to execute.                                       | `string \| undefined`                                                  | `undefined` |
-| `data`    | --        | Data binding for JSX binding                                  | `undefined \| { [x: string]: any; }`                                   | `undefined` |
-| `topic`   | `topic`   | This is the topic this action-command is targeting.  data: [] | `"audio" \| "data" \| "document" \| "routing" \| "video" \| undefined` | `undefined` |
+| Property  | Attribute | Description                                                   | Type                                                                                                                                                                                                      | Default     |
+| --------- | --------- | ------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `command` | `command` | The command to execute.                                       | `string \| undefined`                                                                                                                                                                                     | `undefined` |
+| `topic`   | `topic`   | This is the topic this action-command is targeting.  data: [] | `ActionTopicType.analytics \| ActionTopicType.audio \| ActionTopicType.data \| ActionTopicType.elements \| ActionTopicType.interface \| ActionTopicType.navigation \| ActionTopicType.video \| undefined` | `undefined` |
 
 
 ## Methods

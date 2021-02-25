@@ -1,9 +1,9 @@
-import { eventBus } from '..';
-import { hasExpression, resolveExpression } from '../data/expression-evaluator';
-import { MatchResults, RouteViewOptions, ROUTE_EVENTS } from './interfaces';
-import { RouterService } from './router';
-import { isAbsolute } from './utils/location-utils';
-import { matchesAreEqual } from './utils/match-path';
+import { ActionActivationStrategy, eventBus, resolveChildElementXAttributes } from '..'
+import { hasExpression, resolveExpression } from '../data/expression-evaluator'
+import { MatchResults, RouteViewOptions, ROUTE_EVENTS } from './interfaces'
+import { RouterService } from './router'
+import { isAbsolute } from './utils/location-utils'
+import { matchesAreEqual } from './utils/match-path'
 
 export class Route {
   private readonly subscription: () => void
@@ -38,12 +38,18 @@ export class Route {
     matchSetter(this.match)
   }
 
-  normalizeChildUrl(childUrl: string) {
+  public normalizeChildUrl(childUrl: string) {
     if (isAbsolute(childUrl)) return childUrl
     return this.router.normalizeChildUrl(childUrl, this.path)
   }
 
-  async loadCompleted() {
+  public didExit() {
+    return !!this.match?.isExact && !matchesAreEqual(this.match, this.previousMatch)
+  }
+
+  public async loadCompleted() {
+    this.adjustClasses()
+
     let routeViewOptions: RouteViewOptions = {}
 
     if (this.router.history && this.router.history.location.hash) {
@@ -55,16 +61,39 @@ export class Route {
         scrollTopOffset: this.scrollTopOffset,
       }
     }
+    await this.adjustTitle()
 
     // If this is an independent route and it matches then routes have updated.
     // If the only change to location is a hash change then do not scroll.
     if (this.match?.isExact) {
-      if (!matchesAreEqual(this.match, this.previousMatch) && this.router.viewsUpdated) {
+      if (!matchesAreEqual(this.match, this.previousMatch)) {
+        this.captureInnerLinks()
+        await resolveChildElementXAttributes(this.routeElement)
+        this.routeElement.querySelectorAll('[no-render]').forEach((el: any) => {
+          el.removeAttribute('no-render')
+        })
         this.router.viewsUpdated(routeViewOptions)
       }
-
-      await this.adjustTitle()
     }
+  }
+
+  toggleClass(className: string, force: boolean) {
+    const exists = this.routeElement.classList.contains(className)
+    if (exists && force == false) this.routeElement.classList.remove(className)
+    if (!exists && force) this.routeElement.classList.add(className)
+  }
+
+  private adjustClasses() {
+    const match = this.match != null
+    const exact = this.match?.isExact || false
+    if (this.transition) {
+      this.transition.split(' ').forEach((t) => {
+        this.toggleClass(t, match)
+      })
+    }
+
+    this.toggleClass('active-route', match)
+    this.toggleClass('active-route-exact', exact)
   }
 
   public captureInnerLinks(root?: HTMLElement) {
@@ -88,9 +117,24 @@ export class Route {
     }
   }
 
-  goToRoute(path: string) {
+  public goToRoute(path: string) {
     const route = !isAbsolute(path) ? this.router.resolvePathname(path, this.path) : path
     this.router.goToRoute(route)
+  }
+
+  public async activateActions(
+    actionActivators: HTMLXActionActivatorElement[],
+    forEvent: ActionActivationStrategy,
+    filter: (activator: HTMLXActionActivatorElement) => boolean = (_a) => true,
+  ) {
+    await Promise.all(
+      actionActivators
+        .filter((activator) => activator.activate === forEvent)
+        .filter(filter)
+        .map(async (activator) => {
+          await activator.activateActions()
+        }),
+    )
   }
 
   public destroy() {

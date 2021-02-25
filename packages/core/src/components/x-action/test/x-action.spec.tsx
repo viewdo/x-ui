@@ -1,9 +1,15 @@
 jest.mock('../../../services/logging')
 
 import { newSpecPage } from '@stencil/core/testing';
+import { actionBus } from '../../../services';
+import { EventAction } from '../../../services/actions/interfaces';
 import { XAction } from '../x-action';
 
 describe('x-action', () => {
+
+afterAll(() =>{
+  actionBus.removeAllListeners()
+})
 
   it('renders', async () => {
     const page = await newSpecPage({
@@ -76,13 +82,45 @@ describe('x-action', () => {
     expect(event).not.toBeNull()
   })
 
+  it('x-action: sendAction', async () => {
+    let msg: EventAction<any>|null = null
+    actionBus.on('navigation', (a)=> {
+      msg = a;
+    })
+    const page = await newSpecPage({
+      components: [XAction],
+      html: `<x-action topic="navigation" command="go-to"></x-action>`,
+      supportsShadowDom: false,
+    })
+    expect(page.root).toEqualHtml(
+      `<x-action topic="navigation" command="go-to">
+       </x-action>`,
+    )
+
+    const action = page.body.querySelector('x-action')
+
+    expect(action).not.toBeNull()
+
+    const event = await action?.getAction()
+
+    expect(event).not.toBeNull()
+
+    action?.sendAction({
+      url: "/test"
+    })
+
+    await page.waitForChanges();
+
+    expect(msg).not.toBeUndefined()
+
+  })
+
   it('x-action: getAction param data', async () => {
     const page = await newSpecPage({
       components: [XAction],
       html: `<x-action topic="navigation" command="go-to" data-name="Bill"></x-action>`,
       supportsShadowDom: false,
     })
-
 
     const action = page.body.querySelector('x-action')
 
@@ -120,13 +158,46 @@ describe('x-action', () => {
     expect(event?.topic).toBe('test')
     expect(event?.command).toBe('feed-me')
     expect(event?.data.name).toBe('willy')
+
+
   })
+
+  it('x-action: data from empty script', async () => {
+    const page = await newSpecPage({
+      components: [XAction],
+      html: `<x-action topic="test" command="feed-me">
+              <script></script>
+             </x-action>`,
+      supportsShadowDom: false,
+    })
+    expect(page.root).toEqualHtml(
+      `<x-action topic="test" command="feed-me">
+        <script></script>
+       </x-action>`,
+    )
+
+    const action = page.body.querySelector('x-action')
+
+    expect(action).not.toBeNull()
+
+    const event = await action?.getAction()
+
+    expect(event).not.toBeNull()
+
+    expect(event?.topic).toBe('test')
+    expect(event?.command).toBe('feed-me')
+
+
+  })
+
 
   it('x-action: getAction data from input', async () => {
     const page = await newSpecPage({
       components: [XAction],
       html: `<x-action topic="navigation" command="go-to">
               <input type="text" name="username" value="user1"/>
+              <input type="text" id="email" value="u@foo.com"/>
+              <input type="text" value="3"/>
             </x-action>`,
       supportsShadowDom: false,
     })
@@ -141,6 +212,8 @@ describe('x-action', () => {
     expect(event!.data).not.toBeNull()
     expect(event!.data!.username).not.toBeNull()
     expect(event!.data!.username).toBe('user1')
+    expect(event!.data!.email).toBe('u@foo.com')
+    expect(event!.data!['2']).toBe('3')
   })
 
   it('x-action: getAction data from hidden input', async () => {

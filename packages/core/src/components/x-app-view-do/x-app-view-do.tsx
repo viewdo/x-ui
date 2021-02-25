@@ -24,6 +24,7 @@ import {
 
 /**
  *  @system routing
+ *  @system presentation
  */
 @Component({
   tag: 'x-app-view-do',
@@ -111,6 +112,27 @@ export class XAppViewDo {
    */
   @Prop() debug = false
 
+  /**
+   * Provide the element selector for the
+   * providing media object that can provide
+   * time and end events. Default is video
+   */
+  @Prop() videoTarget:string = 'video'
+
+  /**
+   * Provide the time-event name.
+   * Default is timeupdate
+   */
+  @Prop() videoTimeEvent:string = 'timeupdate'
+
+  /**
+   * Provider the end event name.
+   * Default is ended
+   */
+  @Prop() videoEndEvent:string = 'ended'
+
+
+
   private get duration() {
     return this.childVideo?.duration || this.nextAfter
   }
@@ -124,7 +146,7 @@ export class XAppViewDo {
   }
 
   private get childVideo(): HTMLVideoElement | null {
-    return this.el.querySelector('vm-player,video')
+    return this.el.querySelector(this.videoTarget)
   }
 
   private get actionActivators(): HTMLXActionActivatorElement[] {
@@ -152,55 +174,32 @@ export class XAppViewDo {
       this.transition || this.parentView.transition || null,
       this.scrollTopOffset || 0,
       (match:MatchResults|null) => {
-        this.match = match
+        this.match = match ? {...match} : null
       },
     )
-    this.match = this.route.match
 
     this.dataChangedSubscription = eventBus.on(DATA_EVENTS.DataChanged, async () => {
       debugIf(this.debug, 'x-app-view-do: data changed ')
-      await resolveChildElementXAttributes(this.el)
+      if (this.match?.isExact)
+        await resolveChildElementXAttributes(this.el)
     })
-  }
 
-  private async activateActions(
-    forEvent: ActionActivationStrategy,
-    filter: (activator: HTMLXActionActivatorElement) => boolean = (_a) => true,
-  ) {
-    await Promise.all(this.actionActivators
-      .filter((activator) => activator.activate === forEvent)
-      .filter(filter)
-      .map(async (activator) => {
-        await activator.activateActions()
-      }))
+    this.contentKey = `remote-content-${slugify(this.contentSrc || 'none')}`;
   }
 
   async componentWillRender() {
     debugIf(this.debug, `x-app-view-do: ${this.url} will render`)
-    await this.resolveView()
-  }
-
-  private async resolveView() {
-    debugIf(this.debug, `x-app-view-do: ${this.url} resolve view called`)
 
     if (this.match?.isExact) {
       debugIf(this.debug, `x-app-view-do: ${this.url} on-enter`)
       await this.fetchHtml()
-      await this.activateView()
+      await this.captureChildElements()
+      await this.setupTimer()
       this.el.removeAttribute('hidden')
     } else {
-      if (this.route.previousMatch?.isExact) {
-        await this.activateActions(ActionActivationStrategy.OnExit)
-      }
-      this.cleanup()
       this.el.setAttribute('hidden', '')
+      this.cleanup()
     }
-  }
-
-  private async activateView() {
-    await this.setupTimer()
-    await this.route.loadCompleted()
-    await this.captureChildElements()
   }
 
   private async fetchHtml() {
@@ -208,17 +207,14 @@ export class XAppViewDo {
       return
     }
 
-    this.contentKey = `remote-content-${slugify(this.contentSrc)}`
-
     try {
-      const response = await fetch(this.contentSrc)
+      const response = await window.fetch(this.contentSrc)
       if (response.status === 200) {
         const innerContent = await response.text()
         const content = this.el.ownerDocument.createElement('div')
         content.slot = 'content'
         content.id = this.contentKey!
         content.innerHTML = innerContent
-        if (this.route.transition) content.className = this.route.transition
         await resolveChildElementXAttributes(content)
         this.el.append(content)
       } else {
@@ -227,6 +223,50 @@ export class XAppViewDo {
     } catch {
       warn(`x-app-view-do: ${this.url} Unable to retrieve from ${this.contentSrc}`)
     }
+  }
+
+  private async setupTimer() {
+    const video = this.childVideo
+
+    this.elementTimer = new ElementTimer(
+      this.el,
+      this.duration,
+      this.debug)
+
+    if (video) {
+      this.videoListener = new VideoActionListener(window, video, eventBus, actionBus, this.debug)
+
+      video.addEventListener(this.videoTimeEvent, () => {
+        this.elementTimer!.emit(
+          TIMER_EVENTS.OnInterval,
+          video.currentTime)
+      })
+
+      video.addEventListener(this.videoEndEvent, () => {
+        this.elementTimer!.emit(
+          TIMER_EVENTS.OnEnd)
+      })
+
+      if (videoState.autoplay) {
+        await video?.play()
+      }
+    } else {
+      this.elementTimer.beginInternalTimer()
+    }
+
+    this.elementTimer.on(TIMER_EVENTS.OnInterval, async (time: number) => {
+      await this.route.activateActions(
+        this.actionActivators,
+        ActionActivationStrategy.AtTime, (activator) =>
+        activator.time ? time >= activator.time : false,
+      )
+    })
+
+    this.elementTimer.on(TIMER_EVENTS.OnEnd, async () => {
+      if (videoState.autoplay) {
+        await this.next('timer', TIMER_EVENTS.OnEnd)
+      }
+    })
   }
 
   private async captureChildElements() {
@@ -243,78 +283,11 @@ export class XAppViewDo {
     captureXLinkClickEvent(this.el, (tag, route) => {
       this.next(tag, 'clicked', route)
     })
-
-    await resolveChildElementXAttributes(this.el)
-
-    this.route.captureInnerLinks()
-  }
-
-  private async setupTimer() {
-    const video = this.childVideo
-
-    const timeUpdateEvent = 'vmCurrentTimeChange'
-
-    this.elementTimer = new ElementTimer(
-      this.el,
-      this.duration,
-      this.debug)
-
-    if (video) {
-      this.videoListener = new VideoActionListener(window, video, eventBus, actionBus, this.debug)
-
-      video.addEventListener(timeUpdateEvent, () => {
-        this.elementTimer!.emit(
-          TIMER_EVENTS.OnInterval,
-          video.currentTime)
-      })
-
-      video.addEventListener('vmPlaybackEnded', () => {
-        this.elementTimer!.emit(
-          TIMER_EVENTS.OnEnd)
-      })
-
-      video.addEventListener('end', () => {
-        this.elementTimer!.emit(
-          TIMER_EVENTS.OnEnd)
-      })
-
-      if (videoState.autoplay) {
-        await video?.play()
-      }
-    } else {
-      this.elementTimer.beginInternalTimer()
-    }
-
-    this.elementTimer.on(TIMER_EVENTS.OnInterval, async (time: number) => {
-      await this.activateActions(ActionActivationStrategy.AtTime, (activator) =>
-        activator.time ? time >= activator.time : false,
-      )
-    })
-
-    this.elementTimer.on(TIMER_EVENTS.OnEnd, async () => {
-      if (videoState.autoplay) {
-        this.cleanup()
-        await this.next('timer', TIMER_EVENTS.OnEnd)
-      }
-    })
-  }
-
-  async componentDidRender() {
-    debugIf(this.debug, `x-app-view-do: ${this.url} did render`)
-    if (this.match?.isExact)
-      await this.activateActions(ActionActivationStrategy.OnEnter)
-
-  }
-
-  private resetContent() {
-    const remoteContent = this.el.querySelector(`#${this.contentKey}`)
-    remoteContent?.remove()
-    this.contentKey = null
-    this.match = null
   }
 
   private cleanup() {
-    this.resetContent()
+    const remoteContent = this.el.querySelector(`#${this.contentKey}`)
+    remoteContent?.remove()
     this.childVideo?.pause()
     this.videoListener?.destroy()
     this.elementTimer?.destroy()
@@ -328,7 +301,6 @@ export class XAppViewDo {
 
   private async next(element: string, eventName: string, route?: string | null) {
     debugIf(this.debug, `x-app-view-do: next fired from ${element}:${eventName}`)
-
     const valid = getChildInputValidity(this.el)
     if (valid) {
       recordVisit(this.visit, this.url)
@@ -341,19 +313,35 @@ export class XAppViewDo {
     }
   }
 
-  disconnectedCallback() {
-    this.dataChangedSubscription()
-    this.route.destroy()
-  }
-
   render() {
     debugIf(this.debug, `x-app-view-do: ${this.url} render`)
-
     return (
-      <Host class={this.route?.transition || ''}>
+      <Host>
         <slot />
         <slot name="content" />
       </Host>
     )
   }
+
+  async componentDidRender() {
+    debugIf(this.debug, `x-app-view-do: ${this.url} did render`)
+    if (this.match?.isExact) {
+      await this.route?.activateActions(
+        this.actionActivators,
+        ActionActivationStrategy.OnEnter)
+    } else if (this.route?.didExit()) {
+      await this.route?.activateActions(
+        this.actionActivators,
+         ActionActivationStrategy.OnExit)
+    }
+    await this.route.loadCompleted()
+  }
+
+  disconnectedCallback() {
+    this.cleanup()
+    this.dataChangedSubscription()
+    this.route.destroy()
+  }
+
+
 }
