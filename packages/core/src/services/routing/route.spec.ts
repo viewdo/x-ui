@@ -1,9 +1,9 @@
-import { RafCallback, SpecPage } from '@stencil/core/internal';
-import { newSpecPage } from '@stencil/core/testing';
-import { EventEmitter } from '../actions/event-emitter';
-import { MatchResults } from './interfaces';
-import { Route } from './route';
-import { RouterService } from './router';
+import { RafCallback, SpecPage } from '@stencil/core/internal'
+import { newSpecPage } from '@stencil/core/testing'
+import { EventEmitter } from '../actions/event-emitter'
+import { MatchResults } from './interfaces'
+import { Route } from './route'
+import { RouterService } from './router'
 
 describe('route', () => {
   let actionBus: EventEmitter
@@ -40,7 +40,7 @@ describe('route', () => {
 
     await page.waitForChanges()
 
-    subject.loadCompleted()
+    await subject.loadCompleted()
 
     subject.captureInnerLinks(page.body)
     await page.waitForChanges()
@@ -119,7 +119,7 @@ describe('route', () => {
       url: '/route',
     }
 
-    subject.loadCompleted()
+    await subject.loadCompleted()
 
     expect(page.doc.title).toBe('App')
   })
@@ -138,7 +138,7 @@ describe('route', () => {
       url: '/route',
     }
 
-    subject.loadCompleted()
+    await subject.loadCompleted()
 
     expect(page.doc.title).toBe('Page | Neat!')
   })

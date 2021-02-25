@@ -10,7 +10,6 @@ describe('x-data-repeat', () => {
     jest.resetAllMocks()
   })
 
-
   it('renders', async () => {
     const page = await newSpecPage({
       components: [XDataRepeat],

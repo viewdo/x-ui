@@ -1,13 +1,17 @@
 jest.mock('../../logging')
 
-import { DefaultInterfaceProvider } from './default';
-import { getInterfaceProvider, setInterfaceProvider } from './factory';
+import { DefaultInterfaceProvider } from './default'
+import { getInterfaceProvider, setInterfaceProvider } from './factory'
 
 describe('provider-factory', () => {
   let custom: DefaultInterfaceProvider
 
   beforeEach(() => {
     custom = new DefaultInterfaceProvider()
+  })
+
+  afterEach(() => {
+    custom.destroy()
   })
 
   it('getProvider: should return default', async () => {
@@ -20,6 +24,4 @@ describe('provider-factory', () => {
     const provider = getInterfaceProvider()
     expect(provider).toBe(custom)
   })
-
-
 })

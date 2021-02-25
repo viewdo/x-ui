@@ -28,6 +28,11 @@ describe('video-action-listener:', () => {
     })
   })
 
+  afterAll(() => {
+    eventBus.removeAllListeners()
+    actionBus.removeAllListeners()
+    subject.destroy()
+  })
   it('video: play, pause, resume, mute', async () => {
     let isPlaying = false
 

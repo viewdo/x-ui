@@ -54,5 +54,11 @@
     "@stencil/store": "1.4.1",
     "@types/howler": "2.2.1",
     "workbox-build": "6.1.1"
+  },
+  "jest": {
+    "preset": "@stencil/core/testing",
+    "globals": {
+      "NODE_ENV": "test"
+    }
   }
 }

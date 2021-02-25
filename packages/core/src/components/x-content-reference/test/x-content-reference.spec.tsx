@@ -3,17 +3,14 @@ import { elementsStateReset } from '../../../services';
 import { hasReference } from '../../../services/elements/references';
 import { XContentReference } from '../x-content-reference';
 
+jest.setTimeout(1000)
 
 describe('x-content-reference', () => {
 
-  beforeEach(() => {
+  afterEach(() =>{
     elementsStateReset()
   })
 
-  afterEach(() => {
-    jest.runOnlyPendingTimers()
-    jest.useRealTimers()
-  })
 
   it('renders', async () => {
     const page = await newSpecPage({
@@ -31,7 +28,6 @@ describe('x-content-reference', () => {
       components: [XContentReference],
       html: `<x-content-reference script-src="https://foo.js" inline></x-content-reference>`,
     })
-
     await page.waitForChanges()
     expect(page.root).toEqualHtml(`
       <x-content-reference script-src="https://foo.js" inline><script src="https://foo.js"></script>
@@ -63,7 +59,6 @@ describe('x-content-reference', () => {
        <x-content-reference inline module script-src="https://foo.jsm"></x-content-reference>
       `,
     })
-
     await page.waitForChanges()
 
     expect(page.root).toEqualHtml(`
@@ -83,7 +78,6 @@ describe('x-content-reference', () => {
        <x-content-reference inline no-module script-src="https://foo.jsm"></x-content-reference>
       `,
     })
-
     await page.waitForChanges()
 
     expect(page.root).toEqualHtml(`
@@ -103,7 +97,6 @@ describe('x-content-reference', () => {
       <x-content-reference style-src="https://foo.css" inline></x-content-reference>
       <x-content-reference style-src="https://foo.css" inline></x-content-reference>`,
     })
-
     await page.waitForChanges()
     expect(page.root).toEqualHtml(`
       <x-content-reference style-src="https://foo.css" inline="">

@@ -1,7 +1,7 @@
-import { RafCallback } from '@stencil/core';
-import { newSpecPage } from '@stencil/core/testing';
-import { EventEmitter } from '../actions/event-emitter';
-import { RouterService } from './router';
+import { RafCallback } from '@stencil/core'
+import { newSpecPage } from '@stencil/core/testing'
+import { EventEmitter } from '../actions/event-emitter'
+import { RouterService } from './router'
 
 describe('router', () => {
   let actionBus: EventEmitter
@@ -13,13 +13,17 @@ describe('router', () => {
       components: [],
       html: `<div style="margin-top:3000px"><a name="test" href="/home"><h1>Test Header</h1></a></div>`,
       url: 'http://localhost' + url,
-
     })
   }
 
   beforeEach(async () => {
     actionBus = new EventEmitter()
     eventBus = new EventEmitter()
+  })
+
+  afterEach(() => {
+    actionBus.removeAllListeners()
+    eventBus.removeAllListeners()
   })
 
   const testNormalize = (subject: RouterService) => {
@@ -86,6 +90,8 @@ describe('router', () => {
     testGoToPath(subject)
     testNormalize(subject)
     testMatch(subject)
+
+    subject.destroy()
   })
 
   it('initialized: path = /home', async () => {
@@ -97,6 +103,8 @@ describe('router', () => {
     testGoToPath(subject)
     testNormalize(subject)
     testMatch(subject)
+
+    subject.destroy()
   })
 
   it('match-path: browser | path = /item/:item ', async () => {
@@ -112,6 +120,8 @@ describe('router', () => {
     expect(results).not.toBeNull()
     expect(results?.params.item).not.toBeNull()
     expect(results?.params.item).toBe('food')
+
+    subject.destroy()
   })
 
   it('router-service: scrollTop ', async () => {
@@ -130,7 +140,7 @@ describe('router', () => {
     })
 
     subject.scrollTo(0)
-
+    subject.destroy()
     // TODO: We need a way to detect page scrolls in this mock object
     // expect(didScroll).toBe(true)
   })

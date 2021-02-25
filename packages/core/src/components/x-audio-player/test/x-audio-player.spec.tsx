@@ -46,7 +46,8 @@ describe('x-audio-player', () => {
     audioStore.dispose()
   })
 
-  AudioTrack.createSound = (info: AudioInfo, onload, onend, onerror) => {
+  //@ts-ignore
+  AudioTrack.createSound = (info: AudioInfo, onload: () => void, onend:() => void, onerror:() => void) => {
     const instance = Object.assign(info, audio, {
       onload,
       onend,

@@ -334,7 +334,7 @@ export class XAppViewDo {
         this.actionActivators,
          ActionActivationStrategy.OnExit)
     }
-    await this.route.loadCompleted()
+    await this.route?.loadCompleted()
   }
 
   disconnectedCallback() {

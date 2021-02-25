@@ -1,15 +1,23 @@
 import { debounce } from './misc-utils'
-import { sleep } from './promise-utils'
 
 describe('misc_utils.debounce', () => {
-  test('executes correctly', () => {
+  beforeEach(() => {
+    jest.useFakeTimers()
+    jest.runOnlyPendingTimers()
+  })
+
+  afterEach(() => {
+    jest.useRealTimers()
+  })
+
+  test('executes correctly', async () => {
     let result = false
     const func = () => {
       result = true
     }
     const subject = debounce(300, func, true)
     subject()
-    sleep(300)
+    jest.advanceTimersByTime(300)
 
     expect(result)
   })

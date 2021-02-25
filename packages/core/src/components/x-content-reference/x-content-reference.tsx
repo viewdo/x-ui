@@ -56,13 +56,13 @@ export class XContentReference {
         const link = this.el.ownerDocument.createElement('link')
         link.href = url
         link.rel = 'stylesheet'
-        link.addEventListener('load', registered)
+        link.addEventListener('load', () => registered())
         try {
           element.append(link)
         } catch (error) {
           reject(error)
         }
-        setTimeout(registered, 500)
+        setTimeout(() => registered(), 500)
       })
     }
   }
@@ -84,14 +84,14 @@ export class XContentReference {
           script.setAttribute('nomodule', '')
         }
 
-        script.addEventListener('load', registered)
+        script.addEventListener('load', () => registered())
 
         try {
           element.append(script)
         } catch (error) {
           reject(error)
         }
-        setTimeout(registered, 500)
+        setTimeout(() => registered(), 500)
       })
     }
   }

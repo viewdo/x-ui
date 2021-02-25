@@ -1,3 +1,5 @@
+jest.mock('../../../services/logging')
+
 import { newSpecPage } from '@stencil/core/testing';
 import { XAppViewDo } from '../../x-app-view-do/x-app-view-do';
 import { XAppView } from '../../x-app-view/x-app-view';

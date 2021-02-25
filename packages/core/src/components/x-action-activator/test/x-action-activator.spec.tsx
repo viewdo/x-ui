@@ -1,12 +1,15 @@
 jest.mock('../../../services/logging')
 
 import { newSpecPage } from '@stencil/core/testing';
-import { actionBus, EventAction, eventBus, sleep } from '../../../services';
+import { actionBus, EventAction, eventBus } from '../../../services';
 import { XAction } from '../../x-action/x-action';
 import { XActionActivator } from '../x-action-activator';
 
 describe('x-action-activator', () => {
-  beforeAll(() => {
+  beforeAll(()=> {
+  })
+
+  afterAll(() => {
     actionBus.removeAllListeners()
     eventBus.removeAllListeners()
   })
@@ -69,7 +72,7 @@ describe('x-action-activator', () => {
 
     button?.click()
 
-    await sleep(100)
+    await page.waitForChanges()
 
     expect(command).toBe('pass')
 
@@ -103,7 +106,7 @@ describe('x-action-activator', () => {
 
     button?.click()
 
-    await sleep(100)
+    await page.waitForChanges()
 
     expect(eventAction!.command).toBe('pass')
     expect(eventAction!.data).not.toBeNull()
@@ -136,7 +139,7 @@ describe('x-action-activator', () => {
 
     link?.click()
 
-    await sleep(100)
+    await page.waitForChanges()
 
     expect(command).toBe('pass')
   })
@@ -163,7 +166,7 @@ describe('x-action-activator', () => {
 
     link?.click()
 
-    await sleep(100)
+    await page.waitForChanges()
 
     expect(command).toBeNull()
   })

@@ -1,3 +1,5 @@
+jest.mock('../../../services/logging')
+
 import { newSpecPage } from '@stencil/core/testing';
 import { actionBus, DATA_EVENTS, eventBus, InMemoryProvider } from '../../..';
 import { addDataProvider } from '../../../services/data/providers/factory';

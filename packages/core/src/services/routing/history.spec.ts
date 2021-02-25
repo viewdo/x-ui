@@ -20,6 +20,7 @@ describe('history-service', () => {
     const subject = new HistoryService(page.win, '')
     expect(subject.location).not.toBeNull()
     expect(subject.location.pathname).toBe('/')
+    subject.destroy()
   })
 
   it('initialize: browser /home ', async () => {
@@ -27,6 +28,7 @@ describe('history-service', () => {
     const subject = new HistoryService(page.win, '')
     expect(subject.location).not.toBeNull()
     expect(subject.location.pathname).toBe('/home')
+    subject.destroy()
   })
 
   it('initialize: browser @base/home ', async () => {
@@ -52,5 +54,6 @@ describe('history-service', () => {
     subject.replace('/replaced')
     expect(subject.location.pathname).toBe('/replaced')
     expect(currentLocation!.pathname).toBe('/replaced')
+    subject.destroy()
   })
 })

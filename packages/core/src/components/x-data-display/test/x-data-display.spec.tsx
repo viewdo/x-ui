@@ -13,6 +13,10 @@ describe('x-data-display', () => {
     addDataProvider('session', session)
   })
 
+  afterEach(() => {
+
+  })
+
   it('renders simple strings', async () => {
     const page = await newSpecPage({
       components: [XDataDisplay],
