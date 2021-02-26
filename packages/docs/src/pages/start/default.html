@@ -14,7 +14,7 @@
       <x-action topic="data"
         command="set-data"
         data-provider="storage"
-        data-installed="cdn"></x-action>
+        data-installed="cdn">
       </x-action>
       <button class="btn btn-light btn-sm float-end">Switch to Remote</button>
     </x-action-activator>
@@ -36,7 +36,7 @@
 
   <div x-hide-when="'{{storage:installed}}' != 'cdn'">
     <h2>Remote Reference</h2>
-    <x-action-activator debug>
+    <x-action-activator>
       <x-action topic="data"
         command="set-data"
         data-provider="storage"
