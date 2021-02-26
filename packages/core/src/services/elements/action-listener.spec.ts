@@ -15,6 +15,11 @@ describe('elements-action-listener:', () => {
     eventBus = new EventEmitter()
   })
 
+  afterAll(() => {
+    actionBus.removeAllListeners()
+    eventBus.removeAllListeners()
+  })
+
   it('references ', async () => {
     const url = 'https://some-url.com'
     markReference(url)
@@ -237,5 +242,29 @@ describe('elements-action-listener:', () => {
     })
 
     expect(fakeWindow.document.body.innerHTML).toBe('<h1>Hello</h1>')
+  })
+
+  it('interface listener: CallElementFun', async () => {
+    const fakeWindow = new MockWindow(
+      `<html>
+      <body>
+      <h1>Hello</h1>
+      <button />
+      </body>
+      </html>`,
+    )
+
+    const interfaceListener = new ElementsActionListener()
+    interfaceListener.initialize(fakeWindow.window, actionBus, eventBus)
+
+    actionBus.emit(ELEMENTS_TOPIC, {
+      topic: ELEMENTS_TOPIC,
+      command: ELEMENTS_COMMANDS.ElementCallMethod,
+      data: {
+        selector: 'button',
+        method: 'click',
+        data: null,
+      },
+    })
   })
 })
