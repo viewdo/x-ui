@@ -1,8 +1,8 @@
-import { MockWindow } from '@stencil/core/mock-doc';
-import { IEventEmitter } from '../../actions/interfaces';
-import { log, warn } from '../../logging';
-import { INTERFACE_EVENTS } from '../interfaces';
-import { interfaceState, onInterfaceChange } from '../state';
+import { MockWindow } from '@stencil/core/mock-doc'
+import { IEventEmitter } from '../../actions/interfaces'
+import { log, warn } from '../../common/logging'
+import { INTERFACE_EVENTS } from '../interfaces'
+import { interfaceState, onInterfaceChange } from '../state'
 
 export class DefaultInterfaceProvider {
   private disposeThemeSubscription!: () => void
@@ -23,23 +23,23 @@ export class DefaultInterfaceProvider {
   log(args: any) {
     const { message } = args
     if (message) {
-      log(message);
+      log(message)
     } else {
-      console.table(args);
+      console.table(args)
     }
   }
 
   warn(args: any) {
     const { message } = args
     if (message) {
-      warn(message);
+      warn(message)
     } else {
-      console.table(args);
+      console.table(args)
     }
   }
 
   dir(args: any) {
-    console.dir(args);
+    console.dir(args)
   }
 
   destroy() {

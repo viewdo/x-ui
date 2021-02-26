@@ -1,4 +1,4 @@
-import { storageAvailable } from '../data/utils/browser-utils'
+import { storageAvailable } from '../data/browser/browser-utils';
 
 const AppScrollKey = 'scrollPositions'
 export class ScrollHistory {

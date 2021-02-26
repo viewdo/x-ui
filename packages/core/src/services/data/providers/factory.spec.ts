@@ -3,7 +3,7 @@ jest.mock('../../logging')
 import { newSpecPage } from '@stencil/core/testing';
 import { XApp } from '../../../components/x-app/x-app';
 import { actionBus, eventBus } from '../../actions';
-import { CookieProvider } from './cookie';
+import { CookieProvider } from '../cookies/cookie';
 import { addDataProvider, clearDataProviders, getDataProvider, removeDataProvider } from './factory';
 import { InMemoryProvider } from './memory';
 

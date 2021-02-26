@@ -1,15 +1,15 @@
 import { RafCallback } from '@stencil/core/internal'
-import { captureElementsEventOnce } from '..'
 import { IEventEmitter } from '../actions'
 import { addDataProvider } from '../data/providers/factory'
-import { NavigationActionListener } from '../navigation/action-listener'
+import { captureElementsEventOnce } from '../elements/functions'
+import { NavigationActionListener } from '../navigation/actions'
 import { RoutingDataProvider } from './data-provider'
 import { HistoryService } from './history'
 import { LocationSegments, MatchOptions, MatchResults, RouteViewOptions } from './interfaces'
 import { Route } from './route'
-import { isAbsolute, locationsAreEqual, resolvePathname } from './utils/location-utils'
-import { matchPath } from './utils/match-path'
-import { addLeadingSlash, ensureBasename, stripBasename } from './utils/path-utils'
+import { isAbsolute, locationsAreEqual, resolvePathname } from './utils/location'
+import { addLeadingSlash, ensureBasename, stripBasename } from './utils/path'
+import { matchPath } from './utils/path-match'
 
 export class RouterService {
   public location!: LocationSegments
@@ -48,6 +48,10 @@ export class RouterService {
 
     addDataProvider('route', new RoutingDataProvider((key: string) => this.location?.params[key]))
     addDataProvider('query', new RoutingDataProvider((key: string) => this.location?.query[key]))
+  }
+
+  adjustRootViewUrls(url: string, hash: boolean): string {
+    return stripBasename(url, this.root, hash)
   }
 
   viewsUpdated(options: RouteViewOptions = {}) {

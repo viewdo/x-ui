@@ -1,4 +1,4 @@
-import { debugIf } from '../../logging'
+import { debugIf } from '../../common/logging'
 import { interfaceState } from '../state'
 
 let provider: any | null

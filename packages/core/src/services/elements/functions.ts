@@ -1,8 +1,8 @@
 /* istanbul ignore file */
 
-import { evaluatePredicate, hasExpression, resolveExpression } from '../data';
-import { debugIf } from '../logging';
-import { TimedNode } from './interfaces';
+import { debugIf } from '../common/logging'
+import { evaluatePredicate, hasExpression, resolveExpression } from '../data'
+import { TimedNode } from './interfaces'
 
 export async function resolveChildElementXAttributes(element: HTMLElement) {
   resolveChildXHideWhenAttributes(element)

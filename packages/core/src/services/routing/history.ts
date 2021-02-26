@@ -1,10 +1,10 @@
-import { EventEmitter, IEventEmitter } from '../actions'
-import { Listener } from '../actions/interfaces'
-import { warnIf } from '../logging'
-import { LocationSegments } from './interfaces'
-import { ScrollHistory } from './scroll-history'
-import { createKey, createLocation, locationsAreEqual } from './utils/location-utils'
-import { createPath, ensureBasename, hasBasename, stripBasename } from './utils/path-utils'
+import { EventEmitter, IEventEmitter } from '../actions';
+import { Listener } from '../actions/interfaces';
+import { warnIf } from '../common/logging';
+import { LocationSegments } from './interfaces';
+import { ScrollHistory } from './scroll-history';
+import { createKey, createLocation, locationsAreEqual } from './utils/location';
+import { createPath, ensureBasename, hasBasename, stripBasename } from './utils/path';
 
 const KeyLength = 6
 

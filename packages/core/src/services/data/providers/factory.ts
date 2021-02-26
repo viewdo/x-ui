@@ -1,7 +1,7 @@
+import { sleep } from '../../common'
+import { debugIf } from '../../common/logging'
+import { requireValue } from '../../common/requireValue'
 import { interfaceState } from '../../interface'
-import { debugIf } from '../../logging'
-import { sleep } from '../../utils'
-import { requireValue } from '../../utils/misc-utils'
 import { IDataProvider } from '../interfaces'
 
 type DataProviders = Record<string, IDataProvider>

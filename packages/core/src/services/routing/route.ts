@@ -1,9 +1,10 @@
-import { ActionActivationStrategy, eventBus, resolveChildElementXAttributes } from '..'
-import { hasExpression, resolveExpression } from '../data/expression-evaluator'
-import { MatchResults, RouteViewOptions, ROUTE_EVENTS } from './interfaces'
-import { RouterService } from './router'
-import { isAbsolute } from './utils/location-utils'
-import { matchesAreEqual } from './utils/match-path'
+import { ActionActivationStrategy, eventBus } from '../actions';
+import { hasExpression, resolveExpression } from '../data';
+import { resolveChildElementXAttributes } from '../elements';
+import { MatchResults, RouteViewOptions, ROUTE_EVENTS } from './interfaces';
+import { RouterService } from './router';
+import { isAbsolute } from './utils/location';
+import { matchesAreEqual } from './utils/path-match';
 
 export class Route {
   private readonly subscription: () => void

@@ -1,6 +1,9 @@
 /* istanbul ignore file */
 
-import { Path } from './utils'
+import { LocationSegments } from '../common/interfaces';
+import { Path } from './utils';
+
+export { LocationSegments };
 
 export enum ROUTE_EVENTS {
   RouteChanged = 'route-changed',
@@ -19,18 +22,7 @@ export interface RouteSubscription {
   groupIndex?: number
 }
 
-export interface LocationSegments {
-  params: Record<string, any>
-  pathname: string
-  query: Record<string, any>
-  key: string
-  scrollPosition?: [number, number]
-  search?: string
-  hash?: string
-  state?: any
-  pathParts?: string[]
-  hashParts?: string[]
-}
+
 
 export type LocationSegmentPart = 'pathname' | 'search' | 'hash' | 'state' | 'key'
 
