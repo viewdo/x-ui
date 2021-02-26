@@ -1,15 +1,32 @@
 jest.mock('../../../services/logging')
 
-import { newSpecPage } from '@stencil/core/testing'
-import { XDataShow } from '../x-data-show'
+import { newSpecPage } from '@stencil/core/testing';
+import { eventBus, InMemoryProvider } from '../../..';
+import { DATA_EVENTS } from '../../../services/data/interfaces';
+import { addDataProvider } from '../../../services/data/providers/factory';
+import { XDataShow } from '../x-data-show';
 
 describe('x-data-show', () => {
+  let session: InMemoryProvider
+
+  beforeEach(() => {
+    session = new InMemoryProvider()
+    addDataProvider('session', session)
+  })
+
+  afterEach(() => {
+    eventBus.removeAllListeners()
+    jest.resetAllMocks()
+  })
+
   it('renders hidden by default', async () => {
     const page = await newSpecPage({
       components: [XDataShow],
       html: `<x-data-show when="false"><p>Hide Me</p></x-data-show>`,
-      supportsShadowDom: false,
     })
+
+    await page.waitForChanges()
+
     expect(page.root).toEqualHtml(`
       <x-data-show when="false" hidden="">
         <p>
@@ -17,6 +34,9 @@ describe('x-data-show', () => {
         </p>
       </x-data-show>
     `)
+
+    const subject = page.body.querySelector('x-data-show')
+    subject?.remove()
   })
 
   it('renders', async () => {
@@ -32,5 +52,39 @@ describe('x-data-show', () => {
         </p>
       </x-data-show>
     `)
+
+    const subject = page.body.querySelector('x-data-show')
+    subject?.remove()
+  })
+
+  it('renders & changes live', async () => {
+    const page = await newSpecPage({
+      components: [XDataShow],
+      html: `<x-data-show when="{{session:show}}"><p>Show Me</p></x-data-show>`,
+      supportsShadowDom: false,
+    })
+    expect(page.root).toEqualHtml(`
+      <x-data-show when="{{session:show}}" hidden="">
+        <p>
+          Show Me
+        </p>
+      </x-data-show>
+    `)
+
+    await session.set('show', 'true')
+    eventBus.emit(DATA_EVENTS.DataChanged, {})
+
+    await page.waitForChanges()
+
+    expect(page.root).toEqualHtml(`
+      <x-data-show when="{{session:show}}">
+        <p>
+          Show Me
+        </p>
+      </x-data-show>
+    `)
+
+    const subject = page.body.querySelector('x-data-show')
+    subject?.remove()
   })
 })

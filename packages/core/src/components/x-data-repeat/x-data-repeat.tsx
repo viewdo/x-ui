@@ -152,20 +152,14 @@ export class XDataRepeat {
     try {
       debugIf(this.debug, `x-data-repeat: fetching items from ${this.itemsSrc}`)
 
-      if (!this.itemsSrc) {
-        return []
-      }
-
-      const response = await window.fetch(this.itemsSrc)
+      const response = await window.fetch(this.itemsSrc!)
       if (response.status === 200) {
         const data = await response.json()
         return arrify(data)
-        // DebugIf(this.debug, `x-data-repeat: remote items: ${JSON.stringify(data)}`);
-      } else {
-        warnIf(this.debug, `x-data-repeat: Unable to retrieve from ${this.itemsSrc}`)
       }
-    } catch {
       warnIf(this.debug, `x-data-repeat: Unable to parse response from ${this.itemsSrc}`)
+    } catch (err) {
+      warnIf(this.debug, `x-data-repeat: Unable to parse response from ${this.itemsSrc}: ${err}`)
     }
     return []
   }

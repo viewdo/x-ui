@@ -1,8 +1,8 @@
-import { newSpecPage } from '@stencil/core/testing';
-import { EventEmitter } from '../actions/event-emitter';
-import { InterfaceActionListener } from './action-listener';
-import { INTERFACE_COMMANDS, INTERFACE_TOPIC } from './interfaces';
-import { clearInterfaceProvider, getInterfaceProvider } from './providers/factory';
+import { newSpecPage } from '@stencil/core/testing'
+import { EventEmitter } from '../actions/event-emitter'
+import { InterfaceActionListener } from './action-listener'
+import { INTERFACE_COMMANDS, INTERFACE_TOPIC } from './interfaces'
+import { clearInterfaceProvider, getInterfaceProvider } from './providers/factory'
 
 let called = false
 class MockProvider {
@@ -97,4 +97,38 @@ describe('interface-action-listener:', () => {
     subject.destroy()
   })
 
+  it('log, warn and dir', async () => {
+    const page = await newSpecPage({
+      components: [],
+      html: `<div></div>`,
+    })
+    const subject = new InterfaceActionListener()
+    subject.initialize(page.win, actionBus, eventBus)
+
+    actionBus.emit(INTERFACE_TOPIC, {
+      topic: INTERFACE_TOPIC,
+      command: INTERFACE_COMMANDS.Log,
+      data: {
+        message: 'do not log in tests!',
+      },
+    })
+
+    actionBus.emit(INTERFACE_TOPIC, {
+      topic: INTERFACE_TOPIC,
+      command: 'warn',
+      data: {
+        message: 'do not log in tests!',
+      },
+    })
+
+    actionBus.emit(INTERFACE_TOPIC, {
+      topic: INTERFACE_TOPIC,
+      command: 'dir',
+      data: {
+        message: 'do not log in tests!',
+      },
+    })
+
+    subject.destroy()
+  })
 })

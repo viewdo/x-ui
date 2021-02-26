@@ -1,6 +1,8 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { actionBus, eventBus } from '../../..';
+import { actionBus, DATA_EVENTS, eventBus } from '../../..';
+import { ROUTE_EVENTS } from '../../../services/routing/interfaces';
 import { XDataRepeat } from '../x-data-repeat';
+import remoteData from './data.json';
 
 describe('x-data-repeat', () => {
 
@@ -115,6 +117,148 @@ describe('x-data-repeat', () => {
           <b>1</b>
           <b>2</b>
           <b>3</b>
+        </div>
+      </x-data-repeat>
+    `)
+
+    const subject = page.body.querySelector('x-data-repeat')
+    subject?.remove()
+  })
+
+  it('renders and responds to changing data', async () => {
+
+    const page = await newSpecPage({
+      components: [XDataRepeat],
+    })
+
+    page.win.fetch = jest.fn().mockImplementationOnce(() => Promise.resolve({
+      status: 200,
+      json: () => Promise.resolve([1,2,3])
+    }))
+    .mockImplementationOnce(() => Promise.resolve({
+      status: 200,
+      json: () => Promise.resolve([1,2,3,4,5])
+    }))
+
+    await page.setContent(`<x-data-repeat items-src="items.json">
+        <template><b>{{data:item}}</b></template>
+      </x-data-repeat>`)
+
+    await page.waitForChanges()
+
+    expect(page.root).toEqualHtml(`
+      <x-data-repeat items-src="items.json">
+        <mock:shadow-root>
+          <slot name="content"></slot>
+        </mock:shadow-root>
+        <template><b>{{data:item}}</b></template>
+        <div class="data-content">
+          <b>1</b>
+          <b>2</b>
+          <b>3</b>
+        </div>
+      </x-data-repeat>
+    `)
+
+    eventBus.emit(DATA_EVENTS.DataChanged, {})
+
+    await page.waitForChanges()
+
+    expect(page.root).toEqualHtml(`
+      <x-data-repeat items-src="items.json">
+        <mock:shadow-root>
+          <slot name="content"></slot>
+        </mock:shadow-root>
+        <template><b>{{data:item}}</b></template>
+        <div class="data-content">
+          <b>1</b>
+          <b>2</b>
+          <b>3</b>
+          <b>4</b>
+          <b>5</b>
+        </div>
+      </x-data-repeat>
+    `)
+
+    const subject = page.body.querySelector('x-data-repeat')
+    subject?.remove()
+  })
+
+  it('handles erroring remote data', async () => {
+
+    const page = await newSpecPage({
+      components: [XDataRepeat],
+    })
+
+    page.win.fetch = jest.fn().mockImplementationOnce(() => Promise.resolve({
+      status: 404,
+      json: () => Promise.resolve(null)
+    }))
+    .mockImplementationOnce(() => Promise.resolve({
+      status: 200,
+      json: () => Promise.reject('error')
+    }))
+
+    await page.setContent(`<x-data-repeat items-src="items.json">
+        <template><b>{{data:item}}</b></template>
+      </x-data-repeat>`)
+
+    await page.waitForChanges()
+
+    expect(page.root).toEqualHtml(`
+      <x-data-repeat items-src="items.json">
+        <mock:shadow-root>
+          <slot name="content"></slot>
+        </mock:shadow-root>
+        <template><b>{{data:item}}</b></template>
+      </x-data-repeat>
+    `)
+
+    eventBus.emit(ROUTE_EVENTS.RouteChanged, {})
+
+    await page.waitForChanges()
+
+    expect(page.root).toEqualHtml(`
+      <x-data-repeat items-src="items.json">
+        <mock:shadow-root>
+          <slot name="content"></slot>
+        </mock:shadow-root>
+        <template><b>{{data:item}}</b></template>
+      </x-data-repeat>
+    `)
+
+    const subject = page.body.querySelector('x-data-repeat')
+    subject?.remove()
+  })
+
+  it('filter remote json', async () => {
+
+    const page = await newSpecPage({
+      components: [XDataRepeat],
+    })
+
+    page.win.fetch = jest.fn().mockImplementation(() => Promise.resolve({
+      status: 200,
+      json: () => Promise.resolve(remoteData)
+    }))
+
+    await page.setContent(`<x-data-repeat items-src="data.json" filter="[Account.Order.Product.SKU]">
+        <template><b>{{data:item}}</b></template>
+      </x-data-repeat>`)
+
+    await page.waitForChanges()
+
+    expect(page.root).toEqualHtml(`
+      <x-data-repeat items-src="data.json" filter="[Account.Order.Product.SKU]">
+        <mock:shadow-root>
+          <slot name="content"></slot>
+        </mock:shadow-root>
+        <template><b>{{data:item}}</b></template>
+        <div class="data-content">
+          <b>0406654608</b>
+          <b>0406634348</b>
+          <b>040657863</b>
+          <b>0406654603</b>
         </div>
       </x-data-repeat>
     `)

@@ -1,4 +1,4 @@
-import { Component, Element, h, Host, Prop, State } from '@stencil/core';
+import { Component, Element, forceUpdate, h, Host, Prop, State } from '@stencil/core';
 import { DATA_EVENTS, eventBus, resolveChildElementXAttributes, resolveExpression, RouterService, ROUTE_EVENTS, warn } from '../../services';
 import { removeAllChildNodes } from '../../services/elements/functions';
 
@@ -48,12 +48,12 @@ export class XDataDisplay {
   }
 
   async componentWillLoad() {
-    this.subscriptionData = eventBus.on(DATA_EVENTS.DataChanged, async () => {
-      await this.resolveTemplate()
+    this.subscriptionData = eventBus.on(DATA_EVENTS.DataChanged, () => {
+      forceUpdate(this.el)
     })
 
-    this.subscriptionRoutes = eventBus.on(ROUTE_EVENTS.RouteChanged, async () => {
-      await this.resolveTemplate()
+    this.subscriptionRoutes = eventBus.on(ROUTE_EVENTS.RouteChanged, () => {
+      forceUpdate(this.el)
     })
 
     if (this.childTemplate !== null) {
@@ -68,8 +68,13 @@ export class XDataDisplay {
       }
     }
 
-    await this.resolveTemplate()
     removeAllChildNodes(this.el)
+  }
+
+  async componentWillRender() {
+    this.resetContent()
+    await this.resolveTemplate()
+    this.setContent()
   }
 
   private async resolveTemplate() {
@@ -98,11 +103,6 @@ export class XDataDisplay {
     await resolveChildElementXAttributes(span)
     this.router?.captureInnerLinks(span)
     this.el.append(span)
-  }
-
-  async componentWillRender() {
-    this.resetContent()
-    this.setContent()
   }
 
   disconnectedCallback() {
