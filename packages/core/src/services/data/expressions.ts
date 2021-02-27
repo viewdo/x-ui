@@ -1,16 +1,12 @@
-import { Parser } from 'expr-eval'
+import { evalExpression } from '../../workers/expr-eval.worker'
 import { warn } from '../common/logging'
 import { requireValue } from '../common/requireValue'
 import { toBoolean } from '../common/strings'
-import { hasVisited } from '../navigation/visits'
 import { ExpressionContext } from './interfaces'
 import { addDataProvider, getDataProvider, removeDataProvider } from './providers/factory'
 import { DataItemProvider } from './providers/item'
 
 const expressionRegEx = /\{\{([\w-]*):([\w_]*)(?:\.([\w_.-]*))?(?:\?([\w_.-]*))?\}\}/g
-const expressionEvaluator = new Parser()
-
-expressionEvaluator.functions.didVisit = (url: string) => hasVisited(url)
 
 export function hasExpression(valueExpression: string) {
   requireValue(valueExpression, 'valueExpression')
@@ -87,12 +83,15 @@ export async function resolveExpression(valueExpression: string, data?: any): Pr
  * @param {string} expression A js-based expression for value comparisons or calculations
  * @param {object} context An object holding any variables for the expression.
  */
-export function evaluate(expression: string, context: ExpressionContext = {}): number | boolean | string {
+export async function evaluate(
+  expression: string,
+  context: ExpressionContext = {},
+): Promise<number | boolean | string> {
   requireValue(expression, 'expression')
   try {
     context.null = null
     context.empty = ''
-    return expressionEvaluator.evaluate(expression.toLowerCase(), context)
+    return await evalExpression(expression.toLowerCase(), context)
   } catch (error) {
     warn(`An exception was raised evaluating expression '${expression}': ${error}`)
     return expression
@@ -136,7 +135,7 @@ export async function evaluatePredicate(expression: string, context: ExpressionC
   try {
     context.null = null
     context.empty = ''
-    const result = expressionEvaluator.evaluate(detokenizedExpression, context)
+    const result = await evalExpression(detokenizedExpression, context)
     if (typeof result === 'boolean') {
       return result
     }

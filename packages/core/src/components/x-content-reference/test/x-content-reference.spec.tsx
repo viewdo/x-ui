@@ -1,16 +1,15 @@
-import { newSpecPage } from '@stencil/core/testing';
-import { elementsStateReset } from '../../../services';
-import { hasReference } from '../../../services/elements/references';
-import { XContentReference } from '../x-content-reference';
+jest.mock('../../../workers/expr-eval.worker')
+
+import { newSpecPage } from '@stencil/core/testing'
+import { elementsStateReset, hasReference } from '../../../services/elements'
+import { XContentReference } from '../x-content-reference'
 
 jest.setTimeout(1000)
 
 describe('x-content-reference', () => {
-
-  afterEach(() =>{
+  afterEach(() => {
     elementsStateReset()
   })
-
 
   it('renders', async () => {
     const page = await newSpecPage({
@@ -71,8 +70,7 @@ describe('x-content-reference', () => {
   })
 
   it('renders no-module scripts', async () => {
-
-   const page = await newSpecPage({
+    const page = await newSpecPage({
       components: [XContentReference],
       html: `
        <x-content-reference inline no-module script-src="https://foo.jsm"></x-content-reference>
@@ -88,7 +86,6 @@ describe('x-content-reference', () => {
 
     expect(hasReference('https://foo.jsm')).toBeTruthy()
   })
-
 
   it('prevents duplicates styles', async () => {
     const page = await newSpecPage({

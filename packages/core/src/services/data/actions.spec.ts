@@ -1,10 +1,10 @@
-jest.mock('../logging')
+jest.mock('../common/logging')
 
-import { EventEmitter } from '..';
-import { DataListener } from './actions';
-import { DATA_COMMANDS, DATA_TOPIC, IDataProvider } from './interfaces';
-import { clearDataProviders, getDataProvider, getDataProviders } from './providers/factory';
-import { InMemoryProvider } from './providers/memory';
+import { EventEmitter } from '../actions/event-emitter'
+import { DataListener } from './actions'
+import { DATA_COMMANDS, DATA_TOPIC, IDataProvider } from './interfaces'
+import { clearDataProviders, getDataProvider, getDataProviders } from './providers/factory'
+import { InMemoryProvider } from './providers/memory'
 
 class MockDataProvider extends InMemoryProvider {
   setItem(x: string, y: string) {

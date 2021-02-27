@@ -1,5 +1,5 @@
-import * as promise_utils from './promises'
-import { findAsyncSequential } from './promises'
+
+import { findAsyncSequential, sleep } from './promises'
 // @ponicode
 describe('promise_utils.sleep', () => {
   beforeAll(() => {
@@ -10,19 +10,19 @@ describe('promise_utils.sleep', () => {
     jest.useRealTimers()
   })
   test('0', () => {
-    promise_utils.sleep(100)
+    sleep(100)
   })
 
   test('1', () => {
-    promise_utils.sleep(1)
+    sleep(1)
   })
 
   test('2', () => {
-    promise_utils.sleep(0)
+    sleep(0)
   })
 
   test('3', () => {
-    promise_utils.sleep(NaN)
+    sleep(NaN)
   })
 })
 

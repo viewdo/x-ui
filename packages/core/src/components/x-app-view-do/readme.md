@@ -1,14 +1,14 @@
 # X-APP-DO
 
-The **`<x-app-view-do>`** element represents a specialized child-route that for its parent [**`<x-app-view>`**](/components/x-app-view) route. It represents a sub-route that has special presentation and workflow behaviors.
+The [\<x-app-view-do\>](/components/x-app-view-do) element represents a specialized child-route that for its parent [\<x-app-view\>](/components/x-app-view) route. It represents a sub-route that has special presentation and workflow behaviors.
 
-> **`<x-app-view-do>`** are essentially **to-do** items for the parent route.
+> [\<x-app-view-do\>](/components/x-app-view-do) are essentially **to-do** items for the parent route.
 
 They are used to create presentation, wizards, input workflows, or step by step instructions or wherever you want guided or automatic navigation. These are the only routes that support [audio](/audio), [video](/video) and [declarative actions](/actions).
 
 ## Usage
 
-Much like its parent, [**`<x-app-view>`**](/components/x-app-view), basic routing information is required.
+Much like its parent, [\<x-app-view\>](/components/x-app-view), basic routing information is required.
 
 ```html
 <x-app-view ...>
@@ -33,13 +33,13 @@ Much like its parent, [**`<x-app-view>`**](/components/x-app-view), basic routin
 
 ### How it works
 
-When the parent [**`<x-app-view>`**](/components/x-app-view)'s route is activated, before rendering, it:
+When the parent [\<x-app-view\>](/components/x-app-view)'s route is activated, before rendering, it:
 
-1. Lists all direct-child **`<x-app-view-do>`** items, one at a time in sequence.
+1. Lists all direct-child [\<x-app-view-do\>](/components/x-app-view-do) items, one at a time in sequence.
 2. Finds the first unvisited route respecting the **'visit'** requirement or [**'when'** predicate](/expression), if present.
 
    * **If found**: It pushes the page state to its url, thus activated the child route.
-   * **Otherwise**: The [**`<x-app-view>`**](/components/x-app-view) is satisfied and can now render its own contents.
+   * **Otherwise**: The [\<x-app-view\>](/components/x-app-view) is satisfied and can now render its own contents.
 
 ## Samples
 
@@ -87,7 +87,7 @@ This route will be activated only through navigation. This is helpful for opt-in
 <x-app-view-do url="/learn-more" page-title="Watch a video" visit="optional"> ... </x-app-view-do>
 ```
 
-> **Important**: When linking from a **`<x-app-view-do>`** to another any other route, you using a **`<x-app-link>`**, validation and visit tracking is not performed. To mark the current route 'visited', add a **'x-next'** attribute to any clickable element.
+> **Important**: When linking from a [\<x-app-view-do\>](/components/x-app-view-do) to another any other route, you using a [\<x-app-link\>](/components/x-app-link), validation and visit tracking is not performed. To mark the current route 'visited', add a **'x-next'** attribute to any clickable element.
 
 #### Presentation Features
 
@@ -177,7 +177,7 @@ Input-type elements (input, textarea and select) can specify a data expression f
 
 ### Time-Presentation Child Attribute Resolution
 
-The [**`<x-app-view-do>`**](/components/x-app-view-do) element is always keeping track of time once its route is active. As such, you can create timed-based actions using special attributes placed on any child element.
+The [\<x-app-view-do\>](/components/x-app-view-do) element is always keeping track of time once its route is active. As such, you can create timed-based actions using special attributes placed on any child element.
 
 > ℹ️) If a video element is detected, its time is used, allowing pause & play.
 
@@ -215,7 +215,7 @@ When used with x-out-class, this attribute adds the specified class and removes 
 
 #### Time To: [x-time-to]
 
-This attribute instructs [**`<x-app-view-do>`**](/components/x-app-view-do) to inject the current time to the named attributes. In this example's case 'value' will be updated.
+This attribute instructs [\<x-app-view-do\>](/components/x-app-view-do) to inject the current time to the named attributes. In this example's case 'value' will be updated.
 
 ```html
 <any value="" x-time-to="value" />
@@ -223,7 +223,7 @@ This attribute instructs [**`<x-app-view-do>`**](/components/x-app-view-do) to i
 
 #### Time Percentage To: [x-percentage-to]
 
-This attribute instructs [**`<x-app-view-do>`**](/components/x-app-view-do) to inject the current time percentage (based on the **next-after** attribute or the video-duration) to the named attributes. In this example's case 'value' will be updated.
+This attribute instructs [\<x-app-view-do\>](/components/x-app-view-do) to inject the current time percentage (based on the **next-after** attribute or the video-duration) to the named attributes. In this example's case 'value' will be updated.
 
 ```html
 <any value="" x-percentage-to="value" />

@@ -1,6 +1,6 @@
 # X-AUDIO-LOAD-MUSIC
 
-This component declares audio used within this **`<x-app-view-do>`** route. The **`<x-audio-music-load>`** represents audio files and play behaviors. They are all sent to the global-audio player to pre-load or play when the route is active. The player manages them according to their settings.
+This component declares audio used within this [\<x-app-view-do\>](/components/x-app-view-do) route. The [\<x-audio-music-load\>](/components/x-audio-music-load) represents audio files and play behaviors. They are all sent to the global-audio player to pre-load or play when the route is active. The player manages them according to their settings.
 
 ## Usage
 
@@ -35,7 +35,7 @@ This component declares audio used within this **`<x-app-view-do>`** route. The 
 
 * **queue**: (default) plays after the previous audio is complete or when it's requested.
 * **play**: stop any playing audio and play now, buffering be-damned.
-* **wait**: wait for an event action before playing, any currently playing audio continues.
+* **wait**: wait for an action before playing, any currently playing audio continues.
 
 #### Discard
 

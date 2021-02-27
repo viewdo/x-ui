@@ -1,6 +1,9 @@
-import { Component, Element, forceUpdate, h, Host, Prop, State } from '@stencil/core';
-import { DATA_EVENTS, eventBus, resolveChildElementXAttributes, resolveExpression, RouterService, ROUTE_EVENTS, warn } from '../../services';
-import { removeAllChildNodes } from '../../services/elements/functions';
+import { Component, Element, forceUpdate, h, Host, Prop, State } from '@stencil/core'
+import { eventBus } from '../../services/actions'
+import { warn } from '../../services/common/logging'
+import { DATA_EVENTS, resolveExpression } from '../../services/data'
+import { removeAllChildNodes, resolveChildElementXAttributes } from '../../services/elements'
+import { RouterService, ROUTE_EVENTS } from '../../services/routing'
 
 /**
  *  @system data
@@ -18,7 +21,6 @@ export class XDataDisplay {
   @State() resolvedTemplate?: string
   @State() innerData: any
   @State() value?: string
-
 
   /**
    The data expression to obtain a value for rendering as inner-text for this element.
@@ -111,6 +113,10 @@ export class XDataDisplay {
   }
 
   render() {
-    return <Host><slot /></Host>
+    return (
+      <Host>
+        <slot />
+      </Host>
+    )
   }
 }

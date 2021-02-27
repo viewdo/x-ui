@@ -1,14 +1,14 @@
 # X-ACTION
 
-This element holds the data that **is** the Event Action submitted through [Actions Bus](/actions).
+This element holds the data that **is** the Action submitted through [Actions](/actions).
 
 ## Usage
 
-This element does not activate these actions automatically. They need to be activated through script, or by wrapping them in an **`<x-action-activator>`** tag. The parent tag defines how and when the child actions are submitted through [Actions](/actions).
+This element does not activate these actions automatically. They need to be activated through script, or by wrapping them in an [\<x-action-activator\>](/components/x-action-activator) tag. The parent tag defines how and when the child actions are submitted through [Actions](/actions).
 
 ### Attribute Data
 
-For most action-argument data, it is easies to specify them as key-value pairs using the `data-*` attributes within the **`x-action`** tag. The name of the argument should be prefixed with `data-`. A
+For most action-argument data, it is easies to specify them as key-value pairs using the `data-*` attributes within the `x-action` tag. The name of the argument should be prefixed with `data-`. A
 
 ```html
 <x-action topic="<topic>" 
@@ -21,7 +21,7 @@ For most action-argument data, it is easies to specify them as key-value pairs u
 
 ### Nested Input Data
 
-For most data, it is easy to specify key-value pairs using the `data-*` attributes within the **`x-action`** tag.
+For most data, it is easy to specify key-value pairs using the `data-*` attributes within the `x-action` tag.
 
 ```html
 <x-action topic="<topic>" 
@@ -50,7 +50,7 @@ For more complex data shapes, you can define the data parameters as JSON in a ch
 
 ### Depends on
 
-* **`<x-action-activator>`**
+* [\<x-action-activator\>](/components/x-action-activator)
 
 ### Graph
 
@@ -88,7 +88,7 @@ Type: `Promise<EventAction<any> | null>`
 
 ### `sendAction(data?: Record<string, any> | undefined) => Promise<void>`
 
-Send this action to the the Action Bus.
+Send this action to the the action messaging system.
 
 #### Returns
 

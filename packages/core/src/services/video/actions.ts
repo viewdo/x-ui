@@ -1,14 +1,13 @@
-import { MockWindow } from '@stencil/core/mock-doc';
-import { debugIf } from 'services/common/logging';
-import { EventAction, IEventEmitter } from '../actions';
-import { VIDEO_COMMANDS, VIDEO_EVENTS, VIDEO_TOPIC } from './interfaces';
-import { onVideoChange, videoState } from './state';
+import { EventAction, IEventEmitter } from '../actions'
+import { debugIf } from '../common/logging'
+import { VIDEO_COMMANDS, VIDEO_EVENTS, VIDEO_TOPIC } from './interfaces'
+import { onVideoChange, videoState } from './state'
 
 export class VideoActionListener {
   disposeHandle: () => void
   private disposeAutoPlaySubscription!: () => void
   constructor(
-    win: Window | MockWindow,
+    win: Window,
     private childVideo: HTMLVideoElement,
     private eventBus: IEventEmitter,
     private actionBus: IEventEmitter,

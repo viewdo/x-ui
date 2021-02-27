@@ -1,10 +1,11 @@
-jest.mock('../../../services/logging')
+jest.mock('../../../services/common/logging')
+jest.mock('../../../workers/expr-eval.worker')
 
-import { newSpecPage } from '@stencil/core/testing';
-import { actionBus, eventBus } from '../../..';
-import { clearDataProviders, getDataProvider } from '../../../services/data/providers/factory';
-import { XApp } from '../../x-app/x-app';
-import { XDataProviderCookie } from '../x-data-provider-cookie';
+import { newSpecPage } from '@stencil/core/testing'
+import { actionBus, eventBus } from '../../../services/actions'
+import { clearDataProviders, getDataProvider } from '../../../services/data/providers/factory'
+import { XApp } from '../../x-app/x-app'
+import { XDataProviderCookie } from '../x-data-provider-cookie'
 
 describe('x-data-provider-cookie', () => {
   afterEach(() => {
@@ -17,8 +18,8 @@ describe('x-data-provider-cookie', () => {
     const page = await newSpecPage({
       components: [XDataProviderCookie],
       html: `<x-data-provider-cookie hide-when="true">
-          </x-data-provider-cookie>`
-    });
+          </x-data-provider-cookie>`,
+    })
     expect(page.root).toEqualHtml(`
     <x-data-provider-cookie hidden="" hide-when="true">
       <mock:shadow-root>
@@ -68,7 +69,6 @@ describe('x-data-provider-cookie', () => {
     expect(value).toBe('true')
 
     subject?.remove()
-
   })
 
   it('renders a dialog, click reject', async () => {

@@ -1,13 +1,12 @@
-jest.mock('../../../services/logging')
+jest.mock('../../../services/common/logging')
 
-import { newSpecPage } from '@stencil/core/testing';
-import { actionBus, EventAction, eventBus } from '../../../services';
-import { XAction } from '../../x-action/x-action';
-import { XActionActivator } from '../x-action-activator';
+import { newSpecPage } from '@stencil/core/testing'
+import { actionBus, EventAction, eventBus } from '../../../services/actions'
+import { XAction } from '../../x-action/x-action'
+import { XActionActivator } from '../x-action-activator'
 
 describe('x-action-activator', () => {
-  beforeAll(()=> {
-  })
+  beforeAll(() => {})
 
   afterAll(() => {
     actionBus.removeAllListeners()
@@ -99,7 +98,7 @@ describe('x-action-activator', () => {
 
     const button = page.body.querySelector('button')
 
-    let eventAction: EventAction<any>|null = null
+    let eventAction: EventAction<any> | null = null
     actionBus.on('test', (e) => {
       eventAction = e
     })
@@ -170,6 +169,4 @@ describe('x-action-activator', () => {
 
     expect(command).toBeNull()
   })
-
-
 })

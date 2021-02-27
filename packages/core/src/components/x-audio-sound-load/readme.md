@@ -1,6 +1,6 @@
 # X-AUDIO-LOAD-SOUND
 
-This component declares audio used within this **`<x-app-view-do>`** route. The **`<x-audio-sound-load>`** represents audio files and play behaviors. They are all sent to the global-audio player to pre-load or play when the route is active. The player manages them according to their settings.
+This component declares audio used within this [\<x-app-view-do\>](/components/x-app-view-do) route. The [\<x-audio-sound-load\>](/components/x-audio-sound-load) represents audio files and play behaviors. They are all sent to the global-audio player to pre-load or play when the route is active. The player manages them according to their settings.
 
 ## Usage
 
@@ -21,7 +21,7 @@ This component declares audio used within this **`<x-app-view-do>`** route. The 
 
 ## Timed
 
-For timed audio, the audio is sent up front for pre-loading. Then at the given time, a separate **`<x-audio-sound-action>`** event is dispatched to play it at a given time. This way, the audio is likely to play on time without any buffering.
+For timed audio, the audio is sent up front for pre-loading. Then at the given time, a separate [\<x-audio-sound-action\>](/components/x-audio-sound-action) event is dispatched to play it at a given time. This way, the audio is likely to play on time without any buffering.
 
 The following demonstrates how to load a track, and wait 10 seconds until it plays. It's important to remember this time can be paused by the user, so it's could be any amount of time if a video is playing.
 
@@ -38,7 +38,7 @@ The following demonstrates how to load a track, and wait 10 seconds until it pla
 
 * **queue**: (default) plays after the previous audio is complete or when it's requested.
 * **play**: stop any playing audio and play now, buffering be-damned.
-* **wait**: wait for an event action before playing, any currently playing audio continues.
+* **wait**: wait for an action before playing, any currently playing audio continues.
 
 #### Discard
 

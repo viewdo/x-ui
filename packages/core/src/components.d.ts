@@ -5,10 +5,12 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { ActionTopicType, RouterService } from "./services";
-import { ActionActivationStrategy, CookieConsent, DiscardStrategy, EventAction, LoadStrategy, VisitStrategy } from ".";
-import { RouterService as RouterService1 } from "./services/routing/router";
+import { ActionActivationStrategy, ActionTopicType, EventAction } from "./services/actions";
+import { RouterService } from "./services/routing";
+import { VisitStrategy } from "./services/navigation";
+import { DiscardStrategy, LoadStrategy } from "./services/audio";
 import { AUDIO_COMMANDS } from "./services/audio/interfaces";
+import { CookieConsent } from "./services/data";
 export namespace Components {
     interface XAction {
         /**
@@ -20,7 +22,7 @@ export namespace Components {
          */
         "getAction": () => Promise<EventAction<any> | null>;
         /**
-          * Send this action to the the Action Bus.
+          * Send this action to the the action messaging system.
          */
         "sendAction": (data?: Record<string, any> | undefined) => Promise<void>;
         /**
@@ -242,7 +244,7 @@ export namespace Components {
          */
         "getAction": () => Promise<EventAction<any>>;
         /**
-          * Send this action to the the Action Bus.
+          * Send this action to the the action messaging system.
          */
         "sendAction": (data?: Record<string, any> | undefined) => Promise<void>;
         /**
@@ -301,7 +303,7 @@ export namespace Components {
          */
         "getAction": () => Promise<EventAction<any>>;
         /**
-          * Send this action to the the Action Bus.
+          * Send this action to the the action messaging system.
          */
         "sendAction": (data?: Record<string, any> | undefined) => Promise<void>;
         /**

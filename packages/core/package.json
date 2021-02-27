@@ -3,24 +3,24 @@
   "version": "0.1.21",
   "description": "view.DO <x-ui/>",
   "author": "view.DO Tech <tech@view.do> (https://view.do)",
-  "private": false,
-  "license": "MIT",
-  "homepage": "https://demo.x-ui.dev",
+  "homepage": "https://x-ui.dev",
   "repository": {
     "type": "git",
     "url": "https://github.com/viewdo/x-ui",
     "directory": "packages/core"
   },
+  "private": false,
+  "sideEffects": false,
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/viewdo/x-ui/issues",
     "email": "tech@view.do"
   },
   "main": "dist/index.cjs.js",
-  "sideEffects": false,
   "module": "dist/custom-elements/index.js",
   "es2015": "dist/esm/index.js",
   "es2017": "dist/esm/index.js",
-  "types": "dist/types/index.d.ts",
+  "types": "dist/types/components.d.ts",
   "loader": "dist/loader",
   "collection": "dist/collection/collection-manifest.json",
   "collection:main": "dist/collection/index.js",
@@ -34,7 +34,7 @@
     "watch": "stencil build --docs --dev --watch --www",
     "gen": "stencil generate",
     "--- production ---": "---------------",
-    "build": "stencil build --docs --www",
+    "build": "stencil build --docs --www --dist",
     "build:watch": "stencil build --docs --www --watch",
     "--- test ---": "---------------",
     "test": "stencil test --spec --coverage",
@@ -44,15 +44,15 @@
   },
   "dependencies": {
     "expr-eval": "^2.0.2",
-    "howler": "^2.2.1",
-    "jsonata": "^1.8.4",
-    "remarkable": "^2.0.1"
+    "howler": "^2.2.1"
   },
   "devDependencies": {
     "@stencil/core": "2.4.0",
     "@stencil/sass": "1.4.1",
     "@stencil/store": "1.4.1",
     "@types/howler": "2.2.1",
+    "jsonata": "^1.8.4",
+    "remarkable": "^2.0.1",
     "workbox-build": "6.1.1"
   },
   "jest": {

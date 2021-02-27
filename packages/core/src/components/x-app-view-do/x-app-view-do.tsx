@@ -1,26 +1,20 @@
-import { Component, Element, h, Host, Prop, State } from '@stencil/core';
-import {
-  ActionActivationStrategy,
-  actionBus,
-  DATA_EVENTS,
-  debugIf,
-  eventBus,
-  MatchResults,
-  recordVisit,
-  Route,
-  VideoActionListener,
-  videoState,
-  VisitStrategy,
-  warn
-} from '../..';
-import { slugify } from '../../services';
+import { Component, Element, h, Host, Prop, State } from '@stencil/core'
+import { ActionActivationStrategy, actionBus, eventBus } from '../../services/actions'
+import { debugIf, slugify } from '../../services/common'
+import { warn } from '../../services/common/logging'
+import { DATA_EVENTS } from '../../services/data'
 import {
   captureXBackClickEvent,
   captureXLinkClickEvent,
-  captureXNextClickEvent, ElementTimer,
-  getChildInputValidity, resolveChildElementXAttributes,
-  TIMER_EVENTS
-} from '../../services/elements';
+  captureXNextClickEvent,
+  ElementTimer,
+  getChildInputValidity,
+  resolveChildElementXAttributes,
+  TIMER_EVENTS,
+} from '../../services/elements'
+import { recordVisit, VisitStrategy } from '../../services/navigation'
+import { MatchResults, Route } from '../../services/routing'
+import { VideoActionListener, videoState } from '../../services/video'
 
 /**
  *  @system routing
@@ -65,13 +59,13 @@ export class XAppViewDo {
    * routes.
    *
    */
-  @Prop({ mutable: true, reflect: true}) url!: string
+  @Prop({ mutable: true, reflect: true }) url!: string
 
   /**
    * The url for this route should only be matched
    * when it is exact.
    */
-  @Prop() exact:boolean = true
+  @Prop() exact: boolean = true
 
   /**
    * The visit strategy for this do.
@@ -117,21 +111,19 @@ export class XAppViewDo {
    * providing media object that can provide
    * time and end events. Default is video
    */
-  @Prop() videoTarget:string = 'video'
+  @Prop() videoTarget: string = 'video'
 
   /**
    * Provide the time-event name.
    * Default is timeupdate
    */
-  @Prop() videoTimeEvent:string = 'timeupdate'
+  @Prop() videoTimeEvent: string = 'timeupdate'
 
   /**
    * Provider the end event name.
    * Default is ended
    */
-  @Prop() videoEndEvent:string = 'ended'
-
-
+  @Prop() videoEndEvent: string = 'ended'
 
   private get duration() {
     return this.childVideo?.duration || this.nextAfter
@@ -173,18 +165,17 @@ export class XAppViewDo {
       this.pageTitle,
       this.transition || this.parentView.transition || null,
       this.scrollTopOffset || 0,
-      (match:MatchResults|null) => {
-        this.match = match ? {...match} : null
+      (match: MatchResults | null) => {
+        this.match = match ? { ...match } : null
       },
     )
 
     this.dataChangedSubscription = eventBus.on(DATA_EVENTS.DataChanged, async () => {
       debugIf(this.debug, 'x-app-view-do: data changed ')
-      if (this.match?.isExact)
-        await resolveChildElementXAttributes(this.el)
+      if (this.match?.isExact) await resolveChildElementXAttributes(this.el)
     })
 
-    this.contentKey = `remote-content-${slugify(this.contentSrc || 'none')}`;
+    this.contentKey = `remote-content-${slugify(this.contentSrc || 'none')}`
   }
 
   async componentWillRender() {
@@ -228,23 +219,17 @@ export class XAppViewDo {
   private async setupTimer() {
     const video = this.childVideo
 
-    this.elementTimer = new ElementTimer(
-      this.el,
-      this.duration,
-      this.debug)
+    this.elementTimer = new ElementTimer(this.el, this.duration, this.debug)
 
     if (video) {
       this.videoListener = new VideoActionListener(window, video, eventBus, actionBus, this.debug)
 
       video.addEventListener(this.videoTimeEvent, () => {
-        this.elementTimer!.emit(
-          TIMER_EVENTS.OnInterval,
-          video.currentTime)
+        this.elementTimer!.emit(TIMER_EVENTS.OnInterval, video.currentTime)
       })
 
       video.addEventListener(this.videoEndEvent, () => {
-        this.elementTimer!.emit(
-          TIMER_EVENTS.OnEnd)
+        this.elementTimer!.emit(TIMER_EVENTS.OnEnd)
       })
 
       if (videoState.autoplay) {
@@ -254,12 +239,16 @@ export class XAppViewDo {
       this.elementTimer.beginInternalTimer()
     }
 
+    const activated: any = []
     this.elementTimer.on(TIMER_EVENTS.OnInterval, async (time: number) => {
-      await this.route.activateActions(
-        this.actionActivators,
-        ActionActivationStrategy.AtTime, (activator) =>
-        activator.time ? time >= activator.time : false,
-      )
+      await this.route.activateActions(this.actionActivators, ActionActivationStrategy.AtTime, (activator) => {
+        if (activated.includes(activator)) return false
+        if (activator.time && time >= activator.time) {
+          activated.push(activator)
+          return true
+        }
+        return false
+      })
     })
 
     this.elementTimer.on(TIMER_EVENTS.OnEnd, async () => {
@@ -326,13 +315,9 @@ export class XAppViewDo {
   async componentDidRender() {
     debugIf(this.debug, `x-app-view-do: ${this.url} did render`)
     if (this.match?.isExact) {
-      await this.route?.activateActions(
-        this.actionActivators,
-        ActionActivationStrategy.OnEnter)
+      await this.route?.activateActions(this.actionActivators, ActionActivationStrategy.OnEnter)
     } else if (this.route?.didExit()) {
-      await this.route?.activateActions(
-        this.actionActivators,
-         ActionActivationStrategy.OnExit)
+      await this.route?.activateActions(this.actionActivators, ActionActivationStrategy.OnExit)
     }
     await this.route?.loadCompleted()
   }
@@ -342,6 +327,4 @@ export class XAppViewDo {
     this.dataChangedSubscription()
     this.route.destroy()
   }
-
-
 }

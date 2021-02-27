@@ -1,11 +1,12 @@
-jest.mock('../logging')
+jest.mock('../common/logging')
+jest.mock('../../workers/expr-eval.worker')
 
-import { actionBus, eventBus } from '../actions';
-import { addDataProvider } from '../data/providers/factory';
-import { InMemoryProvider } from '../data/providers/memory';
-import { IViewDo, VisitStrategy } from './interfaces';
-import { resolveNext } from './next';
-import { clearVisits, markVisit } from './visits';
+import { actionBus, eventBus } from '../actions'
+import { addDataProvider } from '../data/providers/factory'
+import { InMemoryProvider } from '../data/providers/memory'
+import { IViewDo, VisitStrategy } from './interfaces'
+import { resolveNext } from './next'
+import { clearVisits, markVisit } from './visits'
 
 describe('next-resolver: find next', () => {
   let toDos: IViewDo[]

@@ -1,5 +1,7 @@
-import { Component, Element, forceUpdate, h, Host, Prop, State } from '@stencil/core';
-import { DATA_EVENTS, evaluatePredicate, eventBus, ROUTE_EVENTS } from '../..';
+import { Component, Element, forceUpdate, h, Host, Prop, State } from '@stencil/core'
+import { eventBus } from '../../services/actions'
+import { DATA_EVENTS, evaluatePredicate } from '../../services/data'
+import { ROUTE_EVENTS } from '../../services/routing'
 
 /**
  *  @system data
@@ -34,7 +36,6 @@ export class XDataShow {
   async componentWillRender() {
     this.show = await evaluatePredicate(this.when)
   }
-
 
   disconnectedCallback() {
     this.subscriptionData()

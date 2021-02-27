@@ -1,39 +1,39 @@
-import { Component, h, Host, Prop, State } from '@stencil/core';
-import { interfaceState, onInterfaceChange } from '../../services/interface';
+import { Component, h, Host, Prop, State } from '@stencil/core'
+import { interfaceState, onInterfaceChange } from '../../services/interface'
 
 @Component({
   tag: 'x-app-theme-dark',
   shadow: false,
 })
 export class XAppThemeDark {
-  private subscriptionDispose!: () => void;
+  private subscriptionDispose!: () => void
 
-  @State() dark: boolean = false;
-
-  /**
-  * The class to add to the inner input.
-  */
-  @Prop() classes?: string;
+  @State() dark: boolean = false
 
   /**
-  * The inner input ID
-  */
-  @Prop() inputId?: string;
+   * The class to add to the inner input.
+   */
+  @Prop() classes?: string
+
+  /**
+   * The inner input ID
+   */
+  @Prop() inputId?: string
 
   componentWillLoad() {
     this.dark = interfaceState.theme == 'dark'
     this.subscriptionDispose = onInterfaceChange('theme', (theme) => {
-      this.toggleDarkTheme(theme === 'dark');
-    });
+      this.toggleDarkTheme(theme === 'dark')
+    })
   }
 
   private toggleDarkTheme(dark: boolean) {
-    this.dark = dark;
-    interfaceState.theme = this.dark ? 'dark' : 'light';
+    this.dark = dark
+    interfaceState.theme = this.dark ? 'dark' : 'light'
   }
 
   disconnectedCallback() {
-    this.subscriptionDispose();
+    this.subscriptionDispose()
   }
 
   render() {
@@ -47,7 +47,6 @@ export class XAppThemeDark {
           checked={this.dark}
         />
       </Host>
-    );
+    )
   }
-
 }

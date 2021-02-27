@@ -1,11 +1,11 @@
 # X-APP-ANALYTICS
 
-The `<x-app-analytics>` component delegates internal analytics commands to DOM events
+The [\<x-app-analytics\>](/components/x-app-analytics) component delegates internal analytics commands to DOM events
 allowing developers to connect events to any analytics provider.
 
 ## Usage
 
-Using the `<x-app-analytics>` is simple, but does require some scripting.
+Using the [\<x-app-analytics\>](/components/x-app-analytics) is simple, but does require some scripting.
 
 ### GTM Example
 

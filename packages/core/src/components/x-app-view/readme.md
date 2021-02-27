@@ -1,6 +1,6 @@
 # X-APP
 
-The View component is a child component for the **`<x -app>`** component for adding a page-route. It is a container element that displays its inner HTML for a given route or sub-route. This provides a declarative mechanism for in-page content/component routing by URL.
+The View component is a child component for the `<x -app>` component for adding a page-route. It is a container element that displays its inner HTML for a given route or sub-route. This provides a declarative mechanism for in-page content/component routing by URL.
 
 > This component enables single-page app functionality, with full path routing without scripting.
 
@@ -37,9 +37,9 @@ Views can hold any HTML, including View components. This implicitly creates chil
 
 ### Child View-Dos
 
-The contained HTML is parsed before rendering and special handling is given if any child elements are **`<x-app-view-do>`** elements. Before rendering its own HTML, this component iterates the collection and evaluates their conditions (_when_ attribute) looking for the first **`<x-app-view-do>`** that should be displayed, using the order they are declared. If and when a non-visited **`<x-app-view-do>`** is found, its route is activated and subsequently marked as visited.
+The contained HTML is parsed before rendering and special handling is given if any child elements are [\<x-app-view-do\>](/components/x-app-view-do) elements. Before rendering its own HTML, this component iterates the collection and evaluates their conditions (_when_ attribute) looking for the first [\<x-app-view-do\>](/components/x-app-view-do) that should be displayed, using the order they are declared. If and when a non-visited [\<x-app-view-do\>](/components/x-app-view-do) is found, its route is activated and subsequently marked as visited.
 
-**`<x-app-view-do>`** components each have their own **visit** strategies, but each of them need only return to their parent URL when completed. The parent performs the above evaluation until each child **`<x-app-view-do>`** element has been visited or is excluded by its rule (_when_ attribute).
+[\<x-app-view-do\>](/components/x-app-view-do) components each have their own **visit** strategies, but each of them need only return to their parent URL when completed. The parent performs the above evaluation until each child [\<x-app-view-do\>](/components/x-app-view-do) element has been visited or is excluded by its rule (_when_ attribute).
 
 At that point, the inner HTML content is finally revealed. Using this convention, you can declaratively create a workflow of pages that must be visited to reach a destination.
 

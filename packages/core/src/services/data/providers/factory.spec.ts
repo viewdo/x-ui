@@ -1,11 +1,12 @@
-jest.mock('../../logging')
+jest.mock('../../common/logging')
+jest.mock('../../../workers/expr-eval.worker')
 
-import { newSpecPage } from '@stencil/core/testing';
-import { XApp } from '../../../components/x-app/x-app';
-import { actionBus, eventBus } from '../../actions';
-import { CookieProvider } from '../cookies/cookie';
-import { addDataProvider, clearDataProviders, getDataProvider, removeDataProvider } from './factory';
-import { InMemoryProvider } from './memory';
+import { newSpecPage } from '@stencil/core/testing'
+import { XApp } from '../../../components/x-app/x-app'
+import { actionBus, eventBus } from '../../actions'
+import { CookieProvider } from '../cookies/cookie'
+import { addDataProvider, clearDataProviders, getDataProvider, removeDataProvider } from './factory'
+import { InMemoryProvider } from './memory'
 
 describe('provider-factory', () => {
   let custom: InMemoryProvider

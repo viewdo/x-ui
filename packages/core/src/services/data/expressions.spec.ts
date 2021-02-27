@@ -1,9 +1,10 @@
-jest.mock('../logging')
+jest.mock('../common/logging')
+jest.mock('../../workers/expr-eval.worker')
 
-import { clearVisits, markVisit } from '../navigation/visits';
-import { evaluate, evaluateExpression, evaluatePredicate, resolveExpression } from './expressions';
-import { addDataProvider } from './providers/factory';
-import { InMemoryProvider } from './providers/memory';
+import { clearVisits, markVisit } from '../navigation/visits'
+import { evaluate, evaluateExpression, evaluatePredicate, resolveExpression } from './expressions'
+import { addDataProvider } from './providers/factory'
+import { InMemoryProvider } from './providers/memory'
 
 describe('resolveExpression', () => {
   let session: InMemoryProvider
@@ -139,6 +140,8 @@ describe('evaluatePredicate [session]', () => {
     session = new InMemoryProvider()
     addDataProvider('session', session)
   })
+
+  afterEach(() => {})
 
   it('evaluates simple predicate with data-provider values', async () => {
     await session.set('a', '1')

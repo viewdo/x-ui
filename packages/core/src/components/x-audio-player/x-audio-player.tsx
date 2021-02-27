@@ -1,10 +1,12 @@
-import { Component, Element, h, Host, Prop, State } from '@stencil/core';
-import { actionBus, audioState, eventBus, warn } from '../..';
-import { AudioActionListener } from '../../services/audio/action-listener';
-import { AUDIO_TOPIC } from '../../services/audio/interfaces';
+import { Component, Element, h, Host, Prop, State } from '@stencil/core'
+import { actionBus, eventBus } from '../../services/actions'
+import { audioState } from '../../services/audio'
+import { AudioActionListener } from '../../services/audio/actions'
+import { AUDIO_TOPIC } from '../../services/audio/interfaces'
+import { debugIf, warn } from '../../services/common'
 
 /**
- *
+ * Use this element only once per page to enable audio features.
  * @system audio
  */
 @Component({
@@ -40,6 +42,7 @@ export class XAudioPlayer {
       warn('x-audio-player: duplicate players have no effect')
       return
     }
+    debugIf(this.debug, 'x-audio-player: loading')
 
     this.listener = new AudioActionListener(window, eventBus, actionBus, this.debug)
 
@@ -60,6 +63,8 @@ export class XAudioPlayer {
   }
 
   render() {
+    debugIf(this.debug, 'x-audio-player: loaded')
+
     if (!this.display) {
       return <Host></Host>
     }

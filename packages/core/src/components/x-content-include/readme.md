@@ -23,7 +23,7 @@ const include = document.querySelector("#include);
 include.removeAttribute('no-render');
 ```
 
-Or, just include it in one of the components [**`<x-app-view>`**](/components/x-app-view) or [**`<x-app-view-do>`**](/components/x-app-view-do). These components remove any **no-render** attributes on child elements once their route is activated, giving us lazy-loaded routes with this component.
+Or, just include it in one of the components [\<x-app-view\>](/components/x-app-view) or [\<x-app-view-do\>](/components/x-app-view-do). These components remove any **no-render** attributes on child elements once their route is activated, giving us lazy-loaded routes with this component.
 
 <!-- Auto Generated Below -->
 

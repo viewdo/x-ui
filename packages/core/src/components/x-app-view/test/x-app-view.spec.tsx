@@ -1,9 +1,10 @@
-jest.mock('../../../services/logging')
+jest.mock('../../../services/common/logging')
+jest.mock('../../../workers/expr-eval.worker')
 
-import { newSpecPage } from '@stencil/core/testing';
-import { actionBus, eventBus } from '../../..';
-import { XApp } from '../../x-app/x-app';
-import { XAppView } from '../x-app-view';
+import { newSpecPage } from '@stencil/core/testing'
+import { actionBus, eventBus } from '../../../services/actions'
+import { XApp } from '../../x-app/x-app'
+import { XAppView } from '../x-app-view'
 
 describe('x-app-view', () => {
   afterEach(() => {
@@ -15,14 +16,12 @@ describe('x-app-view', () => {
   it('renders', async () => {
     const page = await newSpecPage({
       components: [XApp, XAppView],
-      html:
-      `<x-app >
+      html: `<x-app >
         <x-app-view url='/'>
         </x-app-view>
        </x-app>`,
-       autoApplyChanges: true
+      autoApplyChanges: true,
     })
-
 
     expect(page.root).toEqualHtml(`
       <x-app>
@@ -40,24 +39,24 @@ describe('x-app-view', () => {
   })
 
   it('renders remote content', async () => {
-
     const page = await newSpecPage({
       components: [XApp, XAppView],
-      url: 'http://test/test'    ,
+      url: 'http://test/test',
     })
 
-    page.win.fetch = jest.fn().mockImplementation(() => Promise.resolve({
-      status: 200,
-      text: () => Promise.resolve(`<h1>HI WORLD!</h1>`)
-    }))
+    page.win.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve({
+        status: 200,
+        text: () => Promise.resolve(`<h1>HI WORLD!</h1>`),
+      }),
+    )
 
-    page.setContent( `
+    page.setContent(`
     <x-app>
       <x-app-view content-src="fake.html" url="/test">
       </x-app-view>
     </x-app>
     `)
-
 
     await page.waitForChanges()
 
@@ -79,22 +78,22 @@ describe('x-app-view', () => {
 
     const subject = page.body.querySelector('x-app')
     subject?.remove()
-
   })
 
   it('removes remote content after navigation', async () => {
-
     const page = await newSpecPage({
       components: [XApp, XAppView],
-      url: 'http://test/test'    ,
+      url: 'http://test/test',
     })
 
-    page.win.fetch = jest.fn().mockImplementation(() => Promise.resolve({
-      status: 200,
-      text: () => Promise.resolve(`<h1>HI WORLD!</h1>`)
-    }))
+    page.win.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve({
+        status: 200,
+        text: () => Promise.resolve(`<h1>HI WORLD!</h1>`),
+      }),
+    )
 
-    page.setContent( `
+    page.setContent(`
     <x-app>
       <x-app-view content-src="fake.html" url="/test">
       </x-app-view>
@@ -103,7 +102,6 @@ describe('x-app-view', () => {
       </x-app-view>
     </x-app>
     `)
-
 
     await page.waitForChanges()
 
@@ -156,6 +154,5 @@ describe('x-app-view', () => {
 
     const subject = page.body.querySelector('x-app')
     subject?.remove()
-
   })
 })

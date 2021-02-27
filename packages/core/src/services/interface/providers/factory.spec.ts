@@ -1,4 +1,5 @@
-jest.mock('../../logging')
+jest.mock('../../common/logging')
+jest.mock('../../../workers/expr-eval.worker')
 
 import { DefaultInterfaceProvider } from './default'
 import { getInterfaceProvider, setInterfaceProvider } from './factory'

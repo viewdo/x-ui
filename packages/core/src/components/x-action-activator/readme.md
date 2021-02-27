@@ -1,10 +1,10 @@
 # X-ACTION-ACTIVATOR
 
-This element defines how and when a group of Actions, defined with the **`<x-action>`** element, are submitted through [Actions Bus](/actions).
+This element defines how and when a group of Actions, defined with the [\<x-action\>](/components/x-action) element, are submitted through the [actions system](/actions).
 
 ## Usage
 
-This element should only ever contain child **`<x-action>`** tags. The attributes tells the parent The parent tag defines how and when the child actions are submitted through [Actions Bus](/actions/bus).
+This element should only ever contain child [\<x-action\>](/components/x-action) tags. The attributes tells the parent The parent tag defines how and when the child actions are submitted through the [actions system](/actions).
 
 ```html
 <x-action-activator activate="<activation-strategy>" ... supporting attributes ...>
@@ -20,7 +20,7 @@ The **activate** attribute define the strategy for activating all child actions,
 
 #### OnEnter
 
-The **OnEnter** activation-strategy only works when this element is a child of [**`<x-app-view-do>`**](/components/x-app-view-do) . The child actions will fire when the parent route is activated and the contents are displayed.
+The **OnEnter** activation-strategy only works when this element is a child of [\<x-app-view-do\>](/components/x-app-view-do) . The child actions will fire when the parent route is activated and the contents are displayed.
 
 ```html
 <x-app-view-do ...>
@@ -34,7 +34,7 @@ The **OnEnter** activation-strategy only works when this element is a child of [
 
 #### OnExit
 
-The **OnEnter** activation-strategy only works when this element is a child of **`<x-app-view-do>`**. The child actions will fire when the parent route is de-activated and the next route is displayed.
+The **OnEnter** activation-strategy only works when this element is a child of [\<x-app-view-do\>](/components/x-app-view-do). The child actions will fire when the parent route is de-activated and the next route is displayed.
 
 ```html
 <x-app-view-do ...>
@@ -48,7 +48,7 @@ The **OnEnter** activation-strategy only works when this element is a child of *
 
 #### AtTime
 
-The **AtTime** activation-strategy only work when this element is a child of [**`<x-app-view-do>`**](/components/x-app-view-do) . The child actions will fire when the parent route has been activated for the given time within the **time** attribute.
+The **AtTime** activation-strategy only work when this element is a child of [\<x-app-view-do\>](/components/x-app-view-do) . The child actions will fire when the parent route has been activated for the given time within the **time** attribute.
 
 ```html
 <x-app-view-do ...>

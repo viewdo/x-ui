@@ -1,4 +1,5 @@
-import { Component, Element, Event, EventEmitter, h, Host, Prop, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Host, Prop, State } from '@stencil/core'
+import { EventAction } from '../../services/actions'
 import {
   CookieConsent,
   CookieProvider,
@@ -6,9 +7,8 @@ import {
   DATA_COMMANDS,
   DATA_TOPIC,
   evaluatePredicate,
-  EventAction,
-  IDataProvider
-} from '../..';
+  IDataProvider,
+} from '../../services/data'
 
 /**
  *  @system data
@@ -43,7 +43,8 @@ export class XDataProviderCookie {
     bubbles: true,
     composed: true,
     cancelable: true,
-  }) didConsent!: EventEmitter<CookieConsent>
+  })
+  didConsent!: EventEmitter<CookieConsent>
 
   private get consentKey() {
     return 'consent'
@@ -79,13 +80,13 @@ export class XDataProviderCookie {
   componentDidLoad() {
     if (!this.hide) {
       const acceptElement = this.el.querySelector('*[x-accept]')
-      acceptElement?.addEventListener('click', async (e:any) => {
+      acceptElement?.addEventListener('click', async (e: any) => {
         e.preventDefault()
         await this.handleConsentResponse(true)
       })
 
       const rejectElement = this.el.querySelector('*[x-reject]')
-      rejectElement?.addEventListener('click', async (e:any) => {
+      rejectElement?.addEventListener('click', async (e: any) => {
         e.preventDefault()
         await this.handleConsentResponse(false)
       })

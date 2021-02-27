@@ -1,9 +1,9 @@
-import { Component, h, Host, Prop, State } from '@stencil/core';
-import { videoState } from '../..';
-import { onVideoChange } from '../../services';
+import { Component, h, Host, Prop, State } from '@stencil/core'
+import { onVideoChange, videoState } from '../../services/video'
 
 /**
- * @system presentation
+ * @system video
+ * @deps video
  */
 @Component({
   tag: 'x-app-autoplay',

@@ -1,11 +1,12 @@
-jest.mock('../../../services/logging')
+jest.mock('../../../services/common/logging')
+jest.mock('../../../workers/expr-eval.worker')
 
-import { newSpecPage } from '@stencil/core/testing';
-import { eventBus } from '../../..';
-import { DATA_EVENTS } from '../../../services/data/interfaces';
-import { addDataProvider } from '../../../services/data/providers/factory';
-import { InMemoryProvider } from '../../../services/data/providers/memory';
-import { XDataDisplay } from '../x-data-display';
+import { newSpecPage } from '@stencil/core/testing'
+import { eventBus } from '../../../services/actions'
+import { DATA_EVENTS } from '../../../services/data/interfaces'
+import { addDataProvider } from '../../../services/data/providers/factory'
+import { InMemoryProvider } from '../../../services/data/providers/memory'
+import { XDataDisplay } from '../x-data-display'
 
 describe('x-data-display', () => {
   let session: InMemoryProvider
@@ -67,7 +68,6 @@ describe('x-data-display', () => {
     const subject = page.body.querySelector('x-data-display')
     subject?.remove()
   })
-
 
   it('renders inline data to child template', async () => {
     const page = await newSpecPage({

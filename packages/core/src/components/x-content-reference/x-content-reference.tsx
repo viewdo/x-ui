@@ -1,5 +1,5 @@
-import { Component, Element, Prop } from '@stencil/core';
-import { hasReference, markReference } from '../../services';
+import { Component, Element, Prop } from '@stencil/core'
+import { hasReference, markReference } from '../../services/elements'
 
 /**
  *  @system content
@@ -48,7 +48,7 @@ export class XContentReference {
   private async getStylePromise(element: HTMLHeadElement) {
     if (this.styleSrc && !hasReference(this.styleSrc)) {
       const url = this.styleSrc
-      return  new Promise((resolve, reject) => {
+      return new Promise((resolve, reject) => {
         const registered = () => {
           markReference(url)
           resolve({})

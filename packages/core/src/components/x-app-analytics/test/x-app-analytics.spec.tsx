@@ -1,18 +1,18 @@
-jest.mock('../../../services/logging')
+jest.mock('../../../services/common/logging')
+jest.mock('../../../workers/expr-eval.worker')
 
-import { newSpecPage } from '@stencil/core/testing';
-import { XAppViewDo } from '../../x-app-view-do/x-app-view-do';
-import { XAppView } from '../../x-app-view/x-app-view';
-import { XApp } from '../../x-app/x-app';
-import { XAppAnalytics } from '../x-app-analytics';
+import { newSpecPage } from '@stencil/core/testing'
+import { XAppViewDo } from '../../x-app-view-do/x-app-view-do'
+import { XAppView } from '../../x-app-view/x-app-view'
+import { XApp } from '../../x-app/x-app'
+import { XAppAnalytics } from '../x-app-analytics'
 
 describe('x-app-analytics', () => {
   it('renders', async () => {
     const page = await newSpecPage({
       components: [XApp, XAppView, XAppViewDo, XAppAnalytics],
       url: 'http://test/',
-      html:
-      `<x-app>
+      html: `<x-app>
         <x-app-view url='/start'>
           <x-app-view-do url="step-1">
             <a id='s1' x-next>NEXT</a>
@@ -32,7 +32,7 @@ describe('x-app-analytics', () => {
 
     const pageView = []
     //@ts-ignore
-    analytics!.addEventListener('page-view', (e:CustomEvent<string>)=> {
+    analytics!.addEventListener('page-view', (e: CustomEvent<string>) => {
       pageView.push(e.detail)
     })
 
@@ -50,6 +50,5 @@ describe('x-app-analytics', () => {
 
     const subject = page.body.querySelector('x-app')
     subject?.remove()
-
-  });
-});
+  })
+})

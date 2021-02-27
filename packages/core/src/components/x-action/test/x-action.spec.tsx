@@ -1,15 +1,13 @@
-jest.mock('../../../services/logging')
+jest.mock('../../../services/common/logging')
 
-import { newSpecPage } from '@stencil/core/testing';
-import { actionBus } from '../../../services';
-import { EventAction } from '../../../services/actions/interfaces';
-import { XAction } from '../x-action';
+import { newSpecPage } from '@stencil/core/testing'
+import { actionBus, EventAction } from '../../../services/actions'
+import { XAction } from '../x-action'
 
 describe('x-action', () => {
-
-afterAll(() =>{
-  actionBus.removeAllListeners()
-})
+  afterAll(() => {
+    actionBus.removeAllListeners()
+  })
 
   it('renders', async () => {
     const page = await newSpecPage({
@@ -83,9 +81,9 @@ afterAll(() =>{
   })
 
   it('x-action: sendAction', async () => {
-    let msg: EventAction<any>|null = null
-    actionBus.on('navigation', (a)=> {
-      msg = a;
+    let msg: EventAction<any> | null = null
+    actionBus.on('navigation', (a) => {
+      msg = a
     })
     const page = await newSpecPage({
       components: [XAction],
@@ -106,13 +104,12 @@ afterAll(() =>{
     expect(event).not.toBeNull()
 
     action?.sendAction({
-      url: "/test"
+      url: '/test',
     })
 
-    await page.waitForChanges();
+    await page.waitForChanges()
 
     expect(msg).not.toBeUndefined()
-
   })
 
   it('x-action: getAction param data', async () => {
@@ -158,8 +155,6 @@ afterAll(() =>{
     expect(event?.topic).toBe('test')
     expect(event?.command).toBe('feed-me')
     expect(event?.data.name).toBe('willy')
-
-
   })
 
   it('x-action: data from empty script', async () => {
@@ -186,10 +181,7 @@ afterAll(() =>{
 
     expect(event?.topic).toBe('test')
     expect(event?.command).toBe('feed-me')
-
-
   })
-
 
   it('x-action: getAction data from input', async () => {
     const page = await newSpecPage({
@@ -257,6 +249,4 @@ afterAll(() =>{
     expect(event!.data!.agree).not.toBeNull()
     expect(event!.data!.agree).toBe(false)
   })
-
-
 })

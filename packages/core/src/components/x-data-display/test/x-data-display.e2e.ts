@@ -1,4 +1,4 @@
-jest.mock('../../../services/logging')
+jest.mock('../../../services/common/logging')
 
 import { newE2EPage } from '@stencil/core/testing'
 

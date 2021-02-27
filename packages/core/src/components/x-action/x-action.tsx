@@ -1,6 +1,6 @@
-import { Component, Element, h, Host, Method, Prop } from '@stencil/core';
-import { EventAction, IActionElement, warn } from '../..';
-import { actionBus, ActionTopicType } from '../../services';
+import { Component, Element, h, Host, Method, Prop } from '@stencil/core'
+import { actionBus, ActionTopicType, EventAction, IActionElement } from '../../services/actions'
+import { warn } from '../../services/common/logging'
 
 /**
  * This element just holds data to express the actionEvent to fire. This element
@@ -13,7 +13,6 @@ import { actionBus, ActionTopicType } from '../../services';
   shadow: false,
 })
 export class XAction implements IActionElement {
-
   @Element() el!: HTMLXActionElement
   /**
    * This is the topic this action-command is targeting.
@@ -26,7 +25,6 @@ export class XAction implements IActionElement {
    * The command to execute.
    */
   @Prop() command?: string
-
 
   /**
    * Get the underlying actionEvent instance. Used by the x-action-activator element.
@@ -43,15 +41,14 @@ export class XAction implements IActionElement {
       return null
     }
 
-
-    let data: Record<string, any> =  { ...this.el.dataset }
+    let data: Record<string, any> = { ...this.el.dataset }
 
     if (this.childScript) {
       Object.assign(data, JSON.parse(this.childScript!.textContent || '{}'))
     }
 
     this.childInputs.forEach((el: any, index: number) => {
-      data![el.id||el.name||index] = el.value || el.checked
+      data![el.id || el.name || index] = el.value || el.checked
     })
 
     return {
@@ -62,15 +59,14 @@ export class XAction implements IActionElement {
   }
 
   /**
-   * Send this action to the the Action Bus.
+   * Send this action to the the action messaging system.
    */
   @Method()
-  async sendAction(data?:Record<string,any>) {
+  async sendAction(data?: Record<string, any>) {
     const action = await this.getAction()
     if (action) {
-      if (data)
-        Object.assign(action.data, data)
-      actionBus.emit(action.topic, action);
+      if (data) Object.assign(action.data, data)
+      actionBus.emit(action.topic, action)
     }
   }
 

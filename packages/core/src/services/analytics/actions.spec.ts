@@ -1,8 +1,11 @@
-jest.mock('../logging')
+jest.mock('../../workers/expr-eval.worker')
 
-import { EventEmitter, ROUTE_EVENTS } from '..';
-import { AnalyticsActionListener } from './actions';
-import { ANALYTICS_COMMANDS, ANALYTICS_EVENTS, ANALYTICS_TOPIC } from './interfaces';
+jest.mock('../common/logging')
+
+import { EventEmitter } from '../actions/event-emitter'
+import { ROUTE_EVENTS } from '../routing'
+import { AnalyticsActionListener } from './actions'
+import { ANALYTICS_COMMANDS, ANALYTICS_EVENTS, ANALYTICS_TOPIC } from './interfaces'
 
 describe('analytics-listener', () => {
   let subject: AnalyticsActionListener | null = null

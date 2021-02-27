@@ -1,10 +1,8 @@
-import { AudioRequest, AudioType, EventEmitter } from '../..';
+import { AudioRequest, AudioType } from '../'
+import { EventEmitter } from '../../actions/event-emitter'
 
 export class AudioActionListener {
-  constructor(
-    public eventBus: EventEmitter,
-    public actionBus: EventEmitter,
-    public debug: boolean = false) {
+  constructor(public eventBus: EventEmitter, public actionBus: EventEmitter, public debug: boolean = false) {
     this.events = new EventEmitter()
   }
 

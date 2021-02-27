@@ -1,10 +1,13 @@
+jest.mock('../../workers/expr-eval.worker')
+
 import { newSpecPage, SpecPage } from '@stencil/core/testing'
 import { EventEmitter } from '../actions/event-emitter'
 import { sleep } from '../common'
-import { AudioActionListener, AudioInfo, AUDIO_COMMANDS } from '../index'
 import { ROUTE_EVENTS } from '../routing/interfaces'
+import { AudioActionListener } from './actions'
 import { AudioTrack } from './audio'
-import { AudioType, AUDIO_EVENTS, AUDIO_TOPIC, DiscardStrategy, LoadStrategy } from './interfaces'
+import { AudioInfo } from './audio-info'
+import { AudioType, AUDIO_COMMANDS, AUDIO_EVENTS, AUDIO_TOPIC, DiscardStrategy, LoadStrategy } from './interfaces'
 import { clearTracked } from './tracked'
 
 describe('audio-listener:', () => {

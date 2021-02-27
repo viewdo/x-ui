@@ -1,3 +1,5 @@
+jest.mock('../../workers/expr-eval.worker')
+
 import { RafCallback, SpecPage } from '@stencil/core/internal'
 import { newSpecPage } from '@stencil/core/testing'
 import { EventEmitter } from '../actions/event-emitter'

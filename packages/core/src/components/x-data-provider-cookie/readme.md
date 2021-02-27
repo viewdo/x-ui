@@ -10,7 +10,7 @@ Provider Key: '**cookie**'
 
 `{cookie:(key)}`
 
-When included on the page, this component automatically shows a banner to collect consent from the user. You MUST supply clickable elements and decorate them with **x-accept** and **x-reject** attributes, respecting the the user's decision.
+When included on the page, this component automatically shows a banner to collect consent from the user. You MUST supply clickable elements and decorate them with **x-accept** and **x-reject** attributes, respecting the user's decision.
 
 The component listens for their click events and acts accordingly.
 

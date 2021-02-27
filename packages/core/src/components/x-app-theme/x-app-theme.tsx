@@ -1,5 +1,5 @@
-import { Component, Element } from '@stencil/core';
-import { interfaceState, onInterfaceChange } from '../../services/interface';
+import { Component, Element } from '@stencil/core'
+import { interfaceState, onInterfaceChange } from '../../services/interface'
 
 @Component({
   tag: 'x-app-theme',
@@ -20,7 +20,7 @@ export class XAppTheme {
       const prefersDark = window?.matchMedia('(prefers-color-scheme: dark)')
       if (prefersDark?.addEventListener) {
         prefersDark.addEventListener('change', (ev) => {
-          this.toggleDarkTheme(ev.matches);
+          this.toggleDarkTheme(ev.matches)
         })
         this.toggleDarkTheme(prefersDark.matches)
       }
@@ -34,5 +34,4 @@ export class XAppTheme {
   disconnectedCallback() {
     this.subscriptionDispose()
   }
-
 }

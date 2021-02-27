@@ -129,8 +129,9 @@ export class RouterService {
         if (!el.href.includes(location.origin) || el.target) return true
 
         ev.preventDefault()
+
         const path = el.href.replace(location.origin, '')
-        return this.handleRouteLinkClick(path, fromPath)
+        return this.handleRouteLinkClick(path, fromPath || this.location.pathname)
       },
     )
   }

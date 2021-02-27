@@ -1,16 +1,10 @@
-
-import { Component, Element, forceUpdate, h, Host, Prop, State } from '@stencil/core';
-import {
-  DATA_EVENTS,
-  eventBus,
-  resolveChildElementXAttributes,
-  resolveExpression,
-  RouterService,
-  ROUTE_EVENTS,
-  warn
-} from '../..';
-import { evaluatePredicate } from '../../services';
-import { render } from './markdown.worker';
+import { Component, Element, forceUpdate, h, Host, Prop, State } from '@stencil/core'
+import { eventBus } from '../../services/actions'
+import { warn } from '../../services/common/logging'
+import { DATA_EVENTS, evaluatePredicate, resolveExpression } from '../../services/data'
+import { resolveChildElementXAttributes } from '../../services/elements'
+import { RouterService, ROUTE_EVENTS } from '../../services/routing'
+import { renderMarkdown } from '../../workers/remarkable.worker'
 
 /**
  *  @system content
@@ -42,13 +36,12 @@ export class XContentMarkdown {
    */
   @Prop({ mutable: true }) noRender = false
 
-   /**
+  /**
    * If set, disables auto-rendering of this instance.
    * To fetch the contents change to false or remove
    * attribute.
    */
   @Prop({ mutable: true }) renderIf?: string
-
 
   private get router(): RouterService | null {
     return this.el.closest('x-app')?.router || null
@@ -78,11 +71,11 @@ export class XContentMarkdown {
     }
 
     //const renderValue = await evaluateExpression(this.renderIf || 'true')
-    let shouldRender = true;
+    let shouldRender = true
     if (this.renderIf) {
       shouldRender = await evaluatePredicate(this.renderIf)
     }
-    if(!shouldRender) {
+    if (!shouldRender) {
       return null
     }
 
@@ -111,7 +104,7 @@ export class XContentMarkdown {
       const response = await window.fetch(src)
       if (response.status === 200) {
         const data = await response.text()
-        return await render(data) || ''
+        return (await renderMarkdown(data)) || ''
       }
 
       warn(`x-content-markdown: unable to retrieve from ${this.src}`)
@@ -125,7 +118,7 @@ export class XContentMarkdown {
     const element = this.childScript
     if (!element?.textContent) return ''
     const md = this.dedent(element.textContent)
-    return await render(md) || ''
+    return (await renderMarkdown(md)) || ''
   }
 
   private dedent(innerText: string) {
@@ -154,10 +147,6 @@ export class XContentMarkdown {
   }
 
   render() {
-    return (
-      <Host hidden={!this.content}>
-        { this.content ? <div innerHTML={this.content}></div> : null }
-      </Host>
-    )
+    return <Host hidden={!this.content}>{this.content ? <div innerHTML={this.content}></div> : null}</Host>
   }
 }

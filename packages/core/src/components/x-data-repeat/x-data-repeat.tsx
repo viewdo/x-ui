@@ -1,8 +1,10 @@
-import { Component, Element, forceUpdate, h, Host, Prop, State } from '@stencil/core';
-import jsonata from 'jsonata';
-import { DATA_EVENTS, debugIf, eventBus, hasExpression, resolveExpression, RouterService, ROUTE_EVENTS, warnIf } from '../../services';
-import { arrify } from '../../services/utils/misc-utils';
-
+import { Component, Element, forceUpdate, h, Host, Prop, State } from '@stencil/core'
+import { eventBus } from '../../services/actions'
+import { debugIf, warnIf } from '../../services/common'
+import { arrify } from '../../services/common/arrify'
+import { DATA_EVENTS, hasExpression, resolveExpression } from '../../services/data'
+import { RouterService, ROUTE_EVENTS } from '../../services/routing'
+import { filterData } from '../../workers/jsonata.worker'
 /**
  *  @system data
  */
@@ -16,7 +18,7 @@ export class XDataRepeat {
   @Element() el!: HTMLXDataRepeatElement
   @State() innerTemplate!: string
   @State() resolvedTemplate!: string
-  private contentKey!:string
+  private contentKey!: string
 
   /**
    The array-string or data expression to obtain a collection for rendering the template.
@@ -76,27 +78,27 @@ export class XDataRepeat {
       this.innerTemplate = this.childTemplate.innerHTML
     }
 
-    this.contentKey = `data-content`;
+    this.contentKey = `data-content`
   }
 
-  async componentWillRender(){
+  async componentWillRender() {
     if (!this.innerTemplate) return
 
-    const remoteContent = this.el.querySelector(`.${this.contentKey}`);
-    remoteContent?.remove();
+    const remoteContent = this.el.querySelector(`.${this.contentKey}`)
+    remoteContent?.remove()
     const items = await this.resolveItems()
     const innerContent = await this.resolveHtml(items)
     if (innerContent) {
-      const content = this.el.ownerDocument.createElement('div');
+      const content = this.el.ownerDocument.createElement('div')
       content.className = this.contentKey!
       content.innerHTML = innerContent
-      content.slot = "content"
+      content.slot = 'content'
       this.router?.captureInnerLinks(content)
       this.el.append(content)
     }
   }
 
-  private async resolveHtml(items:any[]) {
+  private async resolveHtml(items: any[]) {
     debugIf(this.debug, 'x-data-repeat: resolving html')
     if (this.noRender) {
       return null
@@ -113,16 +115,18 @@ export class XDataRepeat {
               resolvedTemplate += html
               return resolvedTemplate
             }),
-          ), Promise.resolve())
+          ),
+        Promise.resolve(),
+      )
     }
     return null
   }
 
-  private async resolveItems(){
+  private async resolveItems() {
     let items = []
     if (this.childScript) {
       try {
-        const text = this.childScript.textContent?.replace('\n','')
+        const text = this.childScript.textContent?.replace('\n', '')
         items = arrify(JSON.parse(text || '[]'))
       } catch (error) {
         warnIf(this.debug, `x-data-repeat: unable to deserialize JSON: ${error}`)
@@ -132,7 +136,9 @@ export class XDataRepeat {
     } else if (this.items) {
       items = await this.resolveItemsExpression()
     } else {
-      warnIf(this.debug,'x-data-repeat: you must include at least one of the following: items, json-src or a <script> element with a JSON array.',
+      warnIf(
+        this.debug,
+        'x-data-repeat: you must include at least one of the following: items, json-src or a <script> element with a JSON array.',
       )
     }
     if (this.filter) {
@@ -141,9 +147,8 @@ export class XDataRepeat {
         filterString = await resolveExpression(filterString)
       }
 
-      const filter = jsonata(filterString)
       debugIf(this.debug, `x-data-repeat: filtering: ${filterString}`)
-      items = arrify(filter.evaluate(items))
+      items = await filterData(filterString, items)
     }
     return items
   }
@@ -180,9 +185,7 @@ export class XDataRepeat {
     return items
   }
 
-  componentDidRender() {
-
-  }
+  componentDidRender() {}
 
   disconnectedCallback() {
     this.subscriptionData()

@@ -1,9 +1,12 @@
-import { Component, Element, forceUpdate, h, Host, Prop, State } from '@stencil/core';
-import { debugIf, eventBus, MatchResults, RouterService, ROUTE_EVENTS } from '../..';
+import { Component, Element, forceUpdate, h, Host, Prop, State } from '@stencil/core'
+import { eventBus } from '../../services/actions'
+import { debugIf } from '../../services/common'
+import { MatchResults, RouterService, ROUTE_EVENTS } from '../../services/routing'
 
 /**
- *  @system navigation
- *  @system routing
+ * @system navigation
+ * @deps routing
+ * @deps actions
  */
 @Component({
   tag: 'x-app-link',
@@ -47,14 +50,12 @@ export class XLink {
    */
   @Prop() debug = false
 
-
   get parentUrl() {
     return this.el.closest('x-app-view-do')?.url || this.el.closest('x-app-view')?.url
   }
 
   componentWillLoad() {
-    if (this.router)
-      this.href = this.router!.resolvePathname(this.href, this.parentUrl || '/')
+    if (this.router) this.href = this.router!.resolvePathname(this.href, this.parentUrl || '/')
 
     this.subscriptionDispose = eventBus.on(ROUTE_EVENTS.RouteChanged, () => {
       const match = this.router!.matchPath({
@@ -95,21 +96,25 @@ export class XLink {
     debugIf(this.debug, `x-app-link: ${this.href} matched: ${this.match != null}`)
 
     const classes = {
-        [this.activeClass]: this.match !== null
+      [this.activeClass]: this.match !== null,
     }
 
     let anchorAttributes: Record<string, any> = {
       title: this.el.title,
       role: this.el.getAttribute('aria-role'),
-      id: this.el.id
+      id: this.el.id,
     }
 
     return (
       <Host>
-        <a href={this.href} title={this.el.title}
+        <a
+          href={this.href}
+          title={this.el.title}
           {...anchorAttributes}
           x-attached-click
-          class={classes} onClick={(e:MouseEvent) => this.handleClick(e)}>
+          class={classes}
+          onClick={(e: MouseEvent) => this.handleClick(e)}
+        >
           <slot />
         </a>
       </Host>

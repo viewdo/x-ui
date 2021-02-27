@@ -1,9 +1,11 @@
-jest.mock('../../../services/logging')
-jest.mock('../../../services/audio/action-listener')
+jest.mock('../../../services/common/logging')
+jest.mock('../../../services/audio/actions')
 
-import { newSpecPage } from '@stencil/core/testing';
-import { actionBus, AudioInfo, audioState, audioStore, AudioTrack, AudioType, DiscardStrategy, eventBus, interfaceStore } from '../../..';
-import { XAudioPlayer } from '../x-audio-player';
+import { newSpecPage } from '@stencil/core/testing'
+import { actionBus, eventBus } from '../../../services/actions'
+import { audioState, audioStore, AudioTrack, AudioType, DiscardStrategy } from '../../../services/audio'
+import { interfaceStore } from '../../../services/interface'
+import { XAudioPlayer } from '../x-audio-player'
 
 type Audio = {
   play: () => number
@@ -47,7 +49,7 @@ describe('x-audio-player', () => {
   })
 
   //@ts-ignore
-  AudioTrack.createSound = (info: AudioInfo, onload: () => void, onend:() => void, onerror:() => void) => {
+  AudioTrack.createSound = (info: AudioInfo, onload: any, onend: any, onerror: any) => {
     const instance = Object.assign(info, audio, {
       onload,
       onend,
@@ -62,12 +64,13 @@ describe('x-audio-player', () => {
       components: [XAudioPlayer],
       html: `<x-audio-player></x-audio-player>`,
     })
+
+    await page.waitForChanges()
     expect(page.root).toEqualHtml(`
     <x-audio-player>
       <mock:shadow-root></mock:shadow-root>
     </x-audio-player>
     `)
-    await page.waitForChanges()
   })
 
   it('reacts to audioState changes', async () => {

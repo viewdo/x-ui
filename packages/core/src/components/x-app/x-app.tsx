@@ -1,25 +1,19 @@
-import { Component, Element, Event, EventEmitter, h, Host, Listen, Prop, State, writeTask } from '@stencil/core';
-import {
-  actionBus,
-  DataListener,
-  debugIf,
-  elementsState,
-  EventAction,
-  eventBus,
-  IEventActionListener,
-  InterfaceActionListener,
-  interfaceState,
-  LocationSegments,
-  log,
-  resolveChildElementXAttributes,
-  RouterService
-} from '../../services';
-import { clearDataProviders } from '../../services/data/providers/factory';
-import { ElementsActionListener } from '../../services/elements/action-listener';
-import { stripBasename } from '../../services/routing/utils/path-utils';
+import { Component, Element, Event, EventEmitter, h, Host, Listen, Prop, State, writeTask } from '@stencil/core'
+import { actionBus, EventAction, eventBus, IEventActionListener } from '../../services/actions'
+import { debugIf, log } from '../../services/common/logging'
+import { clearDataProviders, DataListener } from '../../services/data'
+import { ElementsActionListener, elementsState, resolveChildElementXAttributes } from '../../services/elements'
+import { InterfaceActionListener, interfaceState } from '../../services/interface'
+import { LocationSegments, RouterService } from '../../services/routing'
 
 /**
- *  @system routing
+ * @system routing
+ * @deps actions
+ * @deps data
+ * @deps elements
+ * @deps interface
+ * @deps routing
+ *
  */
 @Component({
   tag: 'x-app',
@@ -45,8 +39,7 @@ export class XApp {
    * if it isn't '/', then the router needs to know
    * where to begin creating paths.
    */
-  @Prop() root:string = '/'
-
+  @Prop() root: string = '/'
 
   /**
    * Navigation transition between routes.
@@ -122,7 +115,8 @@ export class XApp {
     composed: true,
     cancelable: true,
     bubbles: false,
-  }) actions!: EventEmitter
+  })
+  actions!: EventEmitter
 
   /**
    * Listen for events that occurred within the **`<x-app>`**
@@ -133,13 +127,13 @@ export class XApp {
     composed: true,
     cancelable: false,
     bubbles: true,
-  }) events!: EventEmitter
+  })
+  events!: EventEmitter
 
   private get childViews(): HTMLXAppViewElement[] {
-    return Array.from(this.el.querySelectorAll('x-app-view')||[])
-      .filter(e => {
-        return e.parentElement?.closest('x-app-view') == null
-      })
+    return Array.from(this.el.querySelectorAll('x-app-view') || []).filter((e) => {
+      return e.parentElement?.closest('x-app-view') == null
+    })
   }
 
   componentWillLoad() {
@@ -175,7 +169,7 @@ export class XApp {
 
     debugIf(this.debug, `x-app: found ${this.childViews.length} child views`)
     this.childViews.forEach((v) => {
-      v.url = stripBasename(v.url, this.router.root, this.hash)
+      v.url = this.router.adjustRootViewUrls(v.url, this.hash)
       v.transition = v.transition || this.transition
     })
 

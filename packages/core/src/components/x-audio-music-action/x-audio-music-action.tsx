@@ -1,5 +1,7 @@
-import { Component, Element, h, Host, Method, Prop } from '@stencil/core';
-import { actionBus, AudioType, AUDIO_TOPIC, EventAction, IActionElement, warn } from '../..';
+import { Component, Element, h, Host, Method, Prop } from '@stencil/core'
+import { actionBus, EventAction, IActionElement } from '../../services/actions'
+import { AudioType, AUDIO_TOPIC } from '../../services/audio'
+import { warn } from '../../services/common'
 
 /**
  * This element just holds data to express the actionEvent to fire. This element
@@ -46,18 +48,16 @@ export class XAudioMusicAction implements IActionElement {
   }
 
   /**
-   * Send this action to the the Action Bus.
+   * Send this action to the the action messaging system.
    */
   @Method()
-  async sendAction(data?:Record<string,any>) {
+  async sendAction(data?: Record<string, any>) {
     const action = await this.getAction()
     if (action) {
-      if (data)
-        Object.assign(action.data, data)
-      actionBus.emit(action.topic, action);
+      if (data) Object.assign(action.data, data)
+      actionBus.emit(action.topic, action)
     }
   }
-
 
   private get parent(): HTMLXActionActivatorElement {
     return this.el.closest('x-action-activator')!

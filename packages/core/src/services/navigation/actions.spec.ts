@@ -1,8 +1,10 @@
-import { RafCallback } from '@stencil/core';
-import { newSpecPage } from '@stencil/core/testing';
-import { EventEmitter } from '../actions/event-emitter';
-import { RouterService } from '../routing/router';
-import { NAVIGATION_COMMANDS, NAVIGATION_TOPIC } from './interfaces';
+jest.mock('../../workers/expr-eval.worker')
+
+import { RafCallback } from '@stencil/core'
+import { newSpecPage } from '@stencil/core/testing'
+import { EventEmitter } from '../actions/event-emitter'
+import { RouterService } from '../routing/router'
+import { NAVIGATION_COMMANDS, NAVIGATION_TOPIC } from './interfaces'
 
 describe('route-actions:', () => {
   let actionBus: EventEmitter

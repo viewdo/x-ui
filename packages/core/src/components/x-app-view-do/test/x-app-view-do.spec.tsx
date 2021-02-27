@@ -1,13 +1,13 @@
-jest.mock('../../../services/logging')
+jest.mock('../../../services/common/logging')
+jest.mock('../../../workers/expr-eval.worker')
 
-import { newSpecPage } from '@stencil/core/testing';
-import { actionBus, eventBus } from '../../../services';
-import { XAppView } from '../../x-app-view/x-app-view';
-import { XApp } from '../../x-app/x-app';
-import { XAppViewDo } from '../x-app-view-do';
+import { newSpecPage } from '@stencil/core/testing'
+import { actionBus, eventBus } from '../../../services/actions'
+import { XAppView } from '../../x-app-view/x-app-view'
+import { XApp } from '../../x-app/x-app'
+import { XAppViewDo } from '../x-app-view-do'
 
 describe('x-app-view-do', () => {
-
   afterEach(() => {
     actionBus.removeAllListeners()
     eventBus.removeAllListeners()
@@ -18,8 +18,7 @@ describe('x-app-view-do', () => {
     const page = await newSpecPage({
       components: [XApp, XAppView, XAppViewDo],
       url: 'http://test/',
-      html:
-      `<x-app>
+      html: `<x-app>
         <x-app-view url='/foo'>
           <x-app-view-do url="/go">
           </x-app-view-do>
@@ -65,9 +64,8 @@ describe('x-app-view-do', () => {
           </div>
         </x-app-view>
       </x-app>`,
-      autoApplyChanges: true
+      autoApplyChanges: true,
     })
-
 
     expect(page.root).toEqualHtml(`
     <x-app>
@@ -106,8 +104,7 @@ describe('x-app-view-do', () => {
     const page = await newSpecPage({
       components: [XApp, XAppView, XAppViewDo],
       url: 'http://test/',
-      html:
-      `<x-app start-url='/start'>
+      html: `<x-app start-url='/start'>
         <x-app-view url='/start'>
           <x-app-view-do url="step-1">
             <a id='s1' x-next>NEXT</a>
@@ -149,8 +146,7 @@ describe('x-app-view-do', () => {
     const page = await newSpecPage({
       components: [XApp, XAppView, XAppViewDo],
       url: 'http://test/',
-      html:
-      `<x-app start-url='/start'>
+      html: `<x-app start-url='/start'>
         <x-app-view url='/start'>
           <x-app-view-do url="step-1">
             <a id='s1' x-next>NEXT</a>
@@ -192,8 +188,7 @@ describe('x-app-view-do', () => {
     const page = await newSpecPage({
       components: [XApp, XAppView, XAppViewDo],
       url: 'http://test/',
-      html:
-      `<x-app-view>
+      html: `<x-app-view>
         <x-app-view-do url="/go">
         </x-app-view-do>
       </x-app-view>
@@ -217,16 +212,15 @@ describe('x-app-view-do', () => {
     </x-app-view>
       `)
 
-      const subject = page.body.querySelector('x-app-vew')
-      subject?.remove()
+    const subject = page.body.querySelector('x-app-vew')
+    subject?.remove()
   })
 
   it('hide if no parent', async () => {
     const page = await newSpecPage({
       components: [XApp, XAppView, XAppViewDo],
       url: 'http://test/',
-      html:
-      `
+      html: `
       <x-app-view-do url="/go">
       </x-app-view-do>
       `,
@@ -245,22 +239,22 @@ describe('x-app-view-do', () => {
 
     const subject = page.body.querySelector('x-app-view-do')
     subject?.remove()
-
   })
 
   it('renders remote content', async () => {
-
     const page = await newSpecPage({
       components: [XApp, XAppView, XAppViewDo],
-      url: 'http://test/test'    ,
+      url: 'http://test/test',
     })
 
-    page.win.fetch = jest.fn().mockImplementation(() => Promise.resolve({
-      status: 200,
-      text: () => Promise.resolve(`<h1>HI WORLD!</h1>`)
-    }))
+    page.win.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve({
+        status: 200,
+        text: () => Promise.resolve(`<h1>HI WORLD!</h1>`),
+      }),
+    )
 
-    page.setContent( `
+    page.setContent(`
     <x-app>
       <x-app-view url="/">
         <x-app-view-do content-src="fake.html" url="/test">
@@ -295,6 +289,5 @@ describe('x-app-view-do', () => {
 
     const subject = page.body.querySelector('x-app')
     subject?.remove()
-
   })
 })

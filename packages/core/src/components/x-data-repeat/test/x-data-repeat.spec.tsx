@@ -1,11 +1,14 @@
-import { newSpecPage } from '@stencil/core/testing';
-import { actionBus, DATA_EVENTS, eventBus } from '../../..';
-import { ROUTE_EVENTS } from '../../../services/routing/interfaces';
-import { XDataRepeat } from '../x-data-repeat';
-import remoteData from './data.json';
+jest.mock('../../../workers/jsonata.worker')
+jest.mock('../../../workers/expr-eval.worker')
+
+import { newSpecPage } from '@stencil/core/testing'
+import { actionBus, eventBus } from '../../../services/actions'
+import { DATA_EVENTS } from '../../../services/data'
+import { ROUTE_EVENTS } from '../../../services/routing/interfaces'
+import { XDataRepeat } from '../x-data-repeat'
+import remoteData from './data.json'
 
 describe('x-data-repeat', () => {
-
   afterEach(() => {
     actionBus.removeAllListeners()
     eventBus.removeAllListeners()
@@ -15,7 +18,7 @@ describe('x-data-repeat', () => {
   it('renders', async () => {
     const page = await newSpecPage({
       components: [XDataRepeat],
-      html: `<x-data-repeat></x-data-repeat>`
+      html: `<x-data-repeat></x-data-repeat>`,
     })
     expect(page.root).toEqualHtml(`
       <x-data-repeat>
@@ -34,7 +37,7 @@ describe('x-data-repeat', () => {
       components: [XDataRepeat],
       html: `<x-data-repeat items="[1,2,3]">
               <template><b>{{data:item}}</b></template>
-             </x-data-repeat>`
+             </x-data-repeat>`,
     })
     await page.waitForChanges()
 
@@ -58,8 +61,7 @@ describe('x-data-repeat', () => {
   it('render scripted array', async () => {
     const page = await newSpecPage({
       components: [XDataRepeat],
-      html:
-      `<x-data-repeat>
+      html: `<x-data-repeat>
         <script type="text/json">
         ["dogs", "cats", "bears", "birds"]
         </script>
@@ -91,15 +93,16 @@ describe('x-data-repeat', () => {
   })
 
   it('render remote json', async () => {
-
     const page = await newSpecPage({
       components: [XDataRepeat],
     })
 
-    page.win.fetch = jest.fn().mockImplementation(() => Promise.resolve({
-      status: 200,
-      json: () => Promise.resolve([1,2,3])
-    }))
+    page.win.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve({
+        status: 200,
+        json: () => Promise.resolve([1, 2, 3]),
+      }),
+    )
 
     await page.setContent(`<x-data-repeat items-src="items.json">
         <template><b>{{data:item}}</b></template>
@@ -126,19 +129,24 @@ describe('x-data-repeat', () => {
   })
 
   it('renders and responds to changing data', async () => {
-
     const page = await newSpecPage({
       components: [XDataRepeat],
     })
 
-    page.win.fetch = jest.fn().mockImplementationOnce(() => Promise.resolve({
-      status: 200,
-      json: () => Promise.resolve([1,2,3])
-    }))
-    .mockImplementationOnce(() => Promise.resolve({
-      status: 200,
-      json: () => Promise.resolve([1,2,3,4,5])
-    }))
+    page.win.fetch = jest
+      .fn()
+      .mockImplementationOnce(() =>
+        Promise.resolve({
+          status: 200,
+          json: () => Promise.resolve([1, 2, 3]),
+        }),
+      )
+      .mockImplementationOnce(() =>
+        Promise.resolve({
+          status: 200,
+          json: () => Promise.resolve([1, 2, 3, 4, 5]),
+        }),
+      )
 
     await page.setContent(`<x-data-repeat items-src="items.json">
         <template><b>{{data:item}}</b></template>
@@ -185,19 +193,24 @@ describe('x-data-repeat', () => {
   })
 
   it('handles erroring remote data', async () => {
-
     const page = await newSpecPage({
       components: [XDataRepeat],
     })
 
-    page.win.fetch = jest.fn().mockImplementationOnce(() => Promise.resolve({
-      status: 404,
-      json: () => Promise.resolve(null)
-    }))
-    .mockImplementationOnce(() => Promise.resolve({
-      status: 200,
-      json: () => Promise.reject('error')
-    }))
+    page.win.fetch = jest
+      .fn()
+      .mockImplementationOnce(() =>
+        Promise.resolve({
+          status: 404,
+          json: () => Promise.resolve(null),
+        }),
+      )
+      .mockImplementationOnce(() =>
+        Promise.resolve({
+          status: 200,
+          json: () => Promise.reject('error'),
+        }),
+      )
 
     await page.setContent(`<x-data-repeat items-src="items.json">
         <template><b>{{data:item}}</b></template>
@@ -232,15 +245,16 @@ describe('x-data-repeat', () => {
   })
 
   it('filter remote json', async () => {
-
     const page = await newSpecPage({
       components: [XDataRepeat],
     })
 
-    page.win.fetch = jest.fn().mockImplementation(() => Promise.resolve({
-      status: 200,
-      json: () => Promise.resolve(remoteData)
-    }))
+    page.win.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve({
+        status: 200,
+        json: () => Promise.resolve(remoteData),
+      }),
+    )
 
     await page.setContent(`<x-data-repeat items-src="data.json" filter="[Account.Order.Product.SKU]">
         <template><b>{{data:item}}</b></template>

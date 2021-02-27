@@ -16,13 +16,13 @@ This player can be configured to display in full or minimal mode. When displayed
 
 While it can be placed anywhere, only ONE player is allowed within an HTML document. Loading a second element will have no effect.
 
-Once in-place, the **`<x-audio-player>`** listens on the **audio** topic for commands.
+Once in-place, the [\<x-audio-player\>](/components/x-audio-player) listens on the **audio** topic for commands.
 
 > Note: This component subscribes to route-change notifications - as some audio clips are meant to end when the route changes.
 
 ## Audio Actions
 
-To operate the player, it is easiest to just use the **`<x-audio-load-*>`** components to pre-load the audio. Then declare the actions using the [**`<x-action-activator>`**](/components/x-action-activator) component.
+To operate the player, it is easiest to just use the `<x-audio-load-*>` components to pre-load the audio. Then declare the actions using the [\<x-action-activator\>](/components/x-action-activator) component.
 
 ```html
 <x-app-view-do>

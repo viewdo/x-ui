@@ -1,6 +1,6 @@
 # X-APP
 
-The root component is the base container for the view-engine and its child components. This element should contain root-level HTML that is global to every view along with [**`<x-app-view>`**](/components/x-app-view) components placed within any global-html.
+The root component is the base container for the view-engine and its child components. This element should contain root-level HTML that is global to every view along with [\<x-app-view\>](/components/x-app-view) components placed within any global-html.
 
 ## Usage
 
@@ -20,11 +20,11 @@ This component is the root container for all routing. It provides an entry-point
 **Responsibilities:**
 
 * Content navigation settings
-* Event Action Listener Registrations
-* Event Action event delegation to and from the bus
+* Action Listener Registrations
+* Action event delegation to and from the bus
 * Page title
 
-For more information on routing, check out the [routing](/routing) documentation. Also, check out the [**`<x-app-view>`**](/components/x-app-view) and [**`<x-app-view-do>`**](/components/x-app-view-do) components.
+For more information on routing, check out the [routing](/routing) documentation. Also, check out the [\<x-app-view\>](/components/x-app-view) and [\<x-app-view-do\>](/components/x-app-view-do) components.
 
 ### Child Attribute Detection & Resolution
 

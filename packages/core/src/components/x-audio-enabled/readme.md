@@ -1,12 +1,12 @@
 # X-AUDIO-ENABLED
 
-The `<x-audio-enabled>` component exposes a checkbox to enable or disable global audio, for background sounds and video components.
+The [\<x-audio-enabled\>](/components/x-audio-enabled) component exposes a checkbox to enable or disable global audio, for background sounds and video components.
 
 ## Usage
 
 Display a checkbox for users to set a preference for sound. Disabled mutes all videos and disables all presentational audio.
 
-Using the `<x-audio-enabled>` component description.
+Using the [\<x-audio-enabled\>](/components/x-audio-enabled) component description.
 
 ```html
 <x-audio-enabled></x-audio-enabled>

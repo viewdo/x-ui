@@ -1,8 +1,10 @@
-import { Component, Element, h, Host, Method, Prop, State } from '@stencil/core';
-import { ActionActivationStrategy, actionBus, debugIf, EventAction, IActionElement, warn } from '../..';
+import { Component, Element, h, Host, Method, Prop, State } from '@stencil/core'
+import { ActionActivationStrategy, actionBus, EventAction, IActionElement } from '../../services/actions'
+import { debugIf, warn } from '../../services/common'
 
 /**
  * @system actions
+ * @deps actions
  */
 @Component({
   tag: 'x-action-activator',
@@ -18,7 +20,6 @@ export class XActionActivator {
    * Values: 'OnElementEvent'|'OnEnter'|'AtTime'|'OnExit'
    */
   @Prop() activate: ActionActivationStrategy = ActionActivationStrategy.OnElementEvent
-
 
   /**
    * The element to watch for events when using the OnElementEvent
@@ -46,17 +47,15 @@ export class XActionActivator {
    */
   @Prop() debug = false
 
-
   /**
    *
    */
   @Method()
   async activateActions(): Promise<void> {
+    const values: Record<string, any> = {}
 
-    const values: Record<string,any> = {}
-
-    this.childInputs.forEach((el: any, index:number) => {
-      values[el.id||el.name||index] = el.value || el.checked
+    this.childInputs.forEach((el: any, index: number) => {
+      values[el.id || el.name || index] = el.value || el.checked
     })
 
     // Activate children
@@ -121,7 +120,9 @@ export class XActionActivator {
     if (this.activate === ActionActivationStrategy.OnElementEvent) {
       const element = this.targetElement
         ? this.el.ownerDocument.querySelector(this.targetElement)
-        : this.el.querySelector(':enabled:not(x-action):not(x-audio-music-action):not(x-audio-sound-action):not(script):not(x-action-activator)')
+        : this.el.querySelector(
+            ':enabled:not(x-action):not(x-audio-music-action):not(x-audio-sound-action):not(script):not(x-action-activator)',
+          )
 
       if (!element) {
         warn(`x-action-activator: ${this.parent?.url || ''} no elements found for '${this.targetElement || 'na'}'`)

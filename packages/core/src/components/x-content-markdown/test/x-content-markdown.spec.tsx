@@ -1,12 +1,14 @@
-jest.mock('../../../services/logging')
+jest.mock('../../../services/common/logging')
+jest.mock('../../../workers/remarkable.worker')
+jest.mock('../../../workers/expr-eval.worker')
 
-import { newSpecPage } from '@stencil/core/testing';
-import { actionBus, DATA_EVENTS, eventBus, InMemoryProvider } from '../../..';
-import { addDataProvider } from '../../../services/data/providers/factory';
-import { XContentMarkdown } from '../x-content-markdown';
+import { newSpecPage } from '@stencil/core/testing'
+import { actionBus, eventBus } from '../../../services/actions'
+import { DATA_EVENTS, InMemoryProvider } from '../../../services/data'
+import { addDataProvider } from '../../../services/data/providers/factory'
+import { XContentMarkdown } from '../x-content-markdown'
 
 describe('x-content-markdown', () => {
-
   let session: InMemoryProvider
 
   beforeEach(() => {
@@ -19,7 +21,6 @@ describe('x-content-markdown', () => {
     eventBus.removeAllListeners()
     jest.resetAllMocks()
   })
-
 
   it('renders', async () => {
     const page = await newSpecPage({
@@ -71,10 +72,10 @@ describe('x-content-markdown', () => {
   it('renders empty markup from inline md', async () => {
     const page = await newSpecPage({
       components: [XContentMarkdown],
-      html:  `<x-content-markdown>
+      html: `<x-content-markdown>
       <script>
       </script>
-     </x-content-markdown>`
+     </x-content-markdown>`,
     })
 
     await page.waitForChanges()
@@ -91,15 +92,16 @@ describe('x-content-markdown', () => {
   })
 
   it('renders markup from remote', async () => {
-
     const page = await newSpecPage({
       components: [XContentMarkdown],
     })
 
-    page.win.fetch = jest.fn().mockImplementation(() => Promise.resolve({
-      status: 200,
-      text: () => Promise.resolve(`# HI WORLD! `)
-    }))
+    page.win.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve({
+        status: 200,
+        text: () => Promise.resolve(`# HI WORLD! `),
+      }),
+    )
 
     page.setContent(`<x-content-markdown src="fake.md"></x-content-markdown>`)
 
@@ -117,19 +119,19 @@ describe('x-content-markdown', () => {
 
     const subject = page.body.querySelector('x-content-markdown')
     subject?.remove()
-
   })
 
   it('handles erroring markup from remote', async () => {
-
     const page = await newSpecPage({
       components: [XContentMarkdown],
     })
 
-    page.win.fetch = jest.fn().mockImplementation(() => Promise.resolve({
-      status: 200,
-      text: () => Promise.reject('Error!')
-    }))
+    page.win.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve({
+        status: 200,
+        text: () => Promise.reject('Error!'),
+      }),
+    )
 
     page.setContent(`<x-content-markdown src="fake.md"></x-content-markdown>`)
 
@@ -142,19 +144,19 @@ describe('x-content-markdown', () => {
 
     const subject = page.body.querySelector('x-content-markdown')
     subject?.remove()
-
   })
 
   it('handles http error in markup from remote', async () => {
-
     const page = await newSpecPage({
       components: [XContentMarkdown],
     })
 
-    page.win.fetch = jest.fn().mockImplementation(() => Promise.resolve({
-      status: 400,
-      text: () => Promise.resolve('Error!')
-    }))
+    page.win.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve({
+        status: 400,
+        text: () => Promise.resolve('Error!'),
+      }),
+    )
 
     page.setContent(`<x-content-markdown src="fake.md"></x-content-markdown>`)
 
@@ -167,23 +169,23 @@ describe('x-content-markdown', () => {
 
     const subject = page.body.querySelector('x-content-markdown')
     subject?.remove()
-
   })
 
   it('renders markup from remote, delayed', async () => {
-
     const page = await newSpecPage({
       components: [XContentMarkdown],
     })
 
-    page.win.fetch = jest.fn().mockImplementation(() => Promise.resolve({
-      status: 200,
-      text: () => Promise.resolve(`# HI WORLD! `)
-    }))
+    page.win.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve({
+        status: 200,
+        text: () => Promise.resolve(`# HI WORLD! `),
+      }),
+    )
 
     // @ts-ignore
     page.win.Prism = {
-      highlightAllUnder: jest.fn().mockImplementation()
+      highlightAllUnder: jest.fn().mockImplementation(),
     }
 
     page.setContent(`<x-content-markdown no-render src="fake.md"></x-content-markdown>`)
@@ -211,19 +213,19 @@ describe('x-content-markdown', () => {
     `)
 
     md?.remove()
-
   })
 
   it('renders markup conditionally', async () => {
-
     const page = await newSpecPage({
       components: [XContentMarkdown],
     })
 
-    page.win.fetch = jest.fn().mockImplementation(() => Promise.resolve({
-      status: 200,
-      text: () => Promise.resolve(`# HI WORLD! `)
-    }))
+    page.win.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve({
+        status: 200,
+        text: () => Promise.resolve(`# HI WORLD! `),
+      }),
+    )
 
     await page.setContent(`<x-content-markdown render-if="false" src="fake.md"></x-content-markdown>`)
 
@@ -250,19 +252,19 @@ describe('x-content-markdown', () => {
     `)
 
     md?.remove()
-
   })
 
   it('renders markup conditionally, from data expression', async () => {
-
     const page = await newSpecPage({
       components: [XContentMarkdown],
     })
 
-    page.win.fetch = jest.fn().mockImplementation(() => Promise.resolve({
-      status: 200,
-      text: () => Promise.resolve(`# HI WORLD! `)
-    }))
+    page.win.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve({
+        status: 200,
+        text: () => Promise.resolve(`# HI WORLD! `),
+      }),
+    )
 
     await page.setContent(`<x-content-markdown render-if="{{session:render}}" src="fake.md"></x-content-markdown>`)
 
@@ -273,7 +275,7 @@ describe('x-content-markdown', () => {
 
     await session.set('render', 'true')
     eventBus.emit(DATA_EVENTS.DataChanged, {
-      provider: 'session'
+      provider: 'session',
     })
 
     await page.waitForChanges()
@@ -290,7 +292,5 @@ describe('x-content-markdown', () => {
 
     const subject = page.body.querySelector('x-content-markdown')
     subject?.remove()
-
   })
-
 })

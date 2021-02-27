@@ -1,6 +1,6 @@
 # Video Actions
 
-The Video Action Listener is configured to handle commands raised through [Actions Bus](/actions/event-bus).
+The Video Action Listener is configured to handle commands raised through the [actions system](/actions).
 
 Topic: `video`
 

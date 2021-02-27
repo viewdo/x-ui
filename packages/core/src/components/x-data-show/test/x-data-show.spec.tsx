@@ -1,10 +1,12 @@
-jest.mock('../../../services/logging')
+jest.mock('../../../services/common/logging')
+jest.mock('../../../workers/expr-eval.worker')
 
-import { newSpecPage } from '@stencil/core/testing';
-import { eventBus, InMemoryProvider } from '../../..';
-import { DATA_EVENTS } from '../../../services/data/interfaces';
-import { addDataProvider } from '../../../services/data/providers/factory';
-import { XDataShow } from '../x-data-show';
+import { newSpecPage } from '@stencil/core/testing'
+import { eventBus } from '../../../services/actions'
+import { InMemoryProvider } from '../../../services/data'
+import { DATA_EVENTS } from '../../../services/data/interfaces'
+import { addDataProvider } from '../../../services/data/providers/factory'
+import { XDataShow } from '../x-data-show'
 
 describe('x-data-show', () => {
   let session: InMemoryProvider

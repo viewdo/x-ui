@@ -1,14 +1,9 @@
-import { Component, Element, h, Host, Prop, State } from '@stencil/core';
-import {
-    DATA_EVENTS,
-    eventBus,
-    resolveChildElementXAttributes,
-    resolveExpression,
-    RouterService,
-    ROUTE_EVENTS,
-    warn
-} from '../..';
-import { createKey } from '../../services/routing/utils/location-utils';
+import { Component, Element, h, Host, Prop, State } from '@stencil/core'
+import { eventBus } from '../../services/actions'
+import { slugify, warn } from '../../services/common'
+import { DATA_EVENTS, resolveExpression } from '../../services/data'
+import { resolveChildElementXAttributes } from '../../services/elements'
+import { RouterService, ROUTE_EVENTS } from '../../services/routing'
 
 /**
  *  @system content
@@ -42,8 +37,6 @@ export class XContentInclude {
   }
 
   async componentWillLoad() {
-    this.contentKey = `dynamic-content-${createKey(10)}`
-
     this.dataSubscription = eventBus.on(DATA_EVENTS.DataChanged, async () => {
       await this.resolveContent()
     })
@@ -52,6 +45,7 @@ export class XContentInclude {
       await this.resolveContent()
     })
 
+    this.contentKey = `dynamic-content-${slugify(this.src)}`
     await this.resolveContent()
   }
 
@@ -81,10 +75,10 @@ export class XContentInclude {
 
   async componentWillRender() {
     if (this.content) {
-      this.resetContent();
-      let innerContent = `${this.content || ''}`;
-      const content = this.el.ownerDocument.createElement('div');
-      content.slot = 'content';
+      this.resetContent()
+      let innerContent = `${this.content || ''}`
+      const content = this.el.ownerDocument.createElement('div')
+      content.slot = 'content'
       content.id = this.contentKey
       content.innerHTML = innerContent
       await resolveChildElementXAttributes(content)
@@ -95,9 +89,7 @@ export class XContentInclude {
     }
   }
 
-  async componentDidRender() {
-
-  }
+  async componentDidRender() {}
 
   disconnectedCallback() {
     this.dataSubscription()
@@ -105,6 +97,10 @@ export class XContentInclude {
   }
 
   render() {
-    return <Host><slot name="content" /></Host>
+    return (
+      <Host>
+        <slot name="content" />
+      </Host>
+    )
   }
 }

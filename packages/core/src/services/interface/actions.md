@@ -1,7 +1,7 @@
 # Interface Actions
 
 The default Interface Action Listener is configured to handle commands meant to alter HTML elements
-raised through the [Actions](/actions/event-bus).
+raised through the [Actions](/actions).
 
 Topic: `interface`
 

@@ -1,9 +1,10 @@
-jest.mock('../../../services/logging')
+jest.mock('../../../services/common/logging')
+jest.mock('../../../workers/expr-eval.worker')
 
-import { newSpecPage } from '@stencil/core/testing';
-import { XAppView } from '../../x-app-view/x-app-view';
-import { XApp } from '../../x-app/x-app';
-import { XLink } from '../x-app-link';
+import { newSpecPage } from '@stencil/core/testing'
+import { XAppView } from '../../x-app-view/x-app-view'
+import { XApp } from '../../x-app/x-app'
+import { XLink } from '../x-app-link'
 
 describe('x-app-link', () => {
   it('renders', async () => {

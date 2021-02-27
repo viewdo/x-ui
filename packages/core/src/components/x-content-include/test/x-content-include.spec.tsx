@@ -1,5 +1,4 @@
-jest.mock('../../../services/logging')
-
+jest.mock('../../../services/common/logging')
 
 describe('x-content-include', () => {
   it('renders', async () => {
