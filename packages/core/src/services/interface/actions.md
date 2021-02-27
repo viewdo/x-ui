@@ -40,7 +40,7 @@ Writes data to the console using console.log()
 
 Arguments:
 
-*{{:required}} **data** (required)\
+* **data** (required)\
   Any data that is sent to console.log
 
 ```html

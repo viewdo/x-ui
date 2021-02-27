@@ -1,5 +1,5 @@
 import { ActionActivationStrategy, eventBus } from '../actions';
-import { hasExpression, resolveExpression } from '../data';
+import { hasToken, resolveExpression } from '../data';
 import { resolveChildElementXAttributes } from '../elements';
 import { MatchResults, RouteViewOptions, ROUTE_EVENTS } from './interfaces';
 import { RouterService } from './router';
@@ -105,7 +105,7 @@ export class Route {
     if (this.routeElement.ownerDocument) {
       if (this.pageTitle) {
         let { pageTitle } = this
-        if (hasExpression(this.pageTitle)) {
+        if (hasToken(this.pageTitle)) {
           pageTitle = await resolveExpression(this.pageTitle)
         }
 

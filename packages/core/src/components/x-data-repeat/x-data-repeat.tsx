@@ -2,7 +2,7 @@ import { Component, Element, forceUpdate, h, Host, Prop, State } from '@stencil/
 import { eventBus } from '../../services/actions'
 import { debugIf, warnIf } from '../../services/common'
 import { arrify } from '../../services/common/arrify'
-import { DATA_EVENTS, hasExpression, resolveExpression } from '../../services/data'
+import { DATA_EVENTS, hasToken, resolveExpression } from '../../services/data'
 import { RouterService, ROUTE_EVENTS } from '../../services/routing'
 import { filterData } from '../../workers/jsonata.worker'
 /**
@@ -143,7 +143,7 @@ export class XDataRepeat {
     }
     if (this.filter) {
       let filterString = this.filter.slice()
-      if (hasExpression(filterString)) {
+      if (hasToken(filterString)) {
         filterString = await resolveExpression(filterString)
       }
 
@@ -173,7 +173,7 @@ export class XDataRepeat {
     let items = []
     try {
       let itemsString = this.items
-      if (itemsString && hasExpression(itemsString)) {
+      if (itemsString && hasToken(itemsString)) {
         itemsString = await resolveExpression(itemsString)
         debugIf(this.debug, `x-data-repeat: items resolved to ${itemsString}`)
       }

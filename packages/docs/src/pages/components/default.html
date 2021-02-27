@@ -1,19 +1,20 @@
 <x-content-reference
   script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
-  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css"
->
+  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
 </x-content-reference>
 <x-content-reference
-  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js"
->
+  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
 </x-content-reference>
 
 <div class="container container-fluid mx-auto">
-  <ul hidden class="component-list list-group btn-group-xl float-end ms-3 mt-2" x-show-when="{{query:group}}">
+  <ul hidden
+    class="component-list list-group btn-group-xl float-end ms-3 mt-2"
+    x-show-when="!{{query:group}}">
     <li class="list-group-item fw-bold text-capitalize d-none d-sm-block">
       <x-data-display text="{{query:group}}"></x-data-display> Components
     </li>
-    <x-data-repeat items-src="/json/components.json" filter="components[docsTags[text='{{query:group}}']]">
+    <x-data-repeat items-src="/json/components.json"
+      filter="components[docsTags[text='{{query:group}}']]">
       <template>
         <li class="list-group-item">
           <a href="/components/{{data:tag}}?group={{query:group}}"> &lt;{{data:tag}}&gt; </a>
@@ -21,6 +22,7 @@
       </template>
     </x-data-repeat>
   </ul>
-  <x-content-markdown render-if="{{route:component}}" src="/pages/components/{{route:component}}/readme.md">
+  <x-content-markdown render-if="{{route:component}}"
+    src="/pages/components/{{route:component}}/readme.md">
   </x-content-markdown>
 </div>

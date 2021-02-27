@@ -2,15 +2,21 @@ import { evalExpression } from '../../workers/expr-eval.worker'
 import { warn } from '../common/logging'
 import { requireValue } from '../common/requireValue'
 import { toBoolean } from '../common/strings'
+import { hasVisited } from '../navigation'
 import { ExpressionContext } from './interfaces'
 import { addDataProvider, getDataProvider, removeDataProvider } from './providers/factory'
 import { DataItemProvider } from './providers/item'
 
-const expressionRegEx = /\{\{([\w-]*):([\w_]*)(?:\.([\w_.-]*))?(?:\?([\w_.-]*))?\}\}/g
+const expressionRegEx = /\{\{([\w-]*):([\w_]*)(?:\.([\w_.-]*))?(?:\?([\w_.-]*))?\}\}/gi
+const funcRegEx = /[\{]{0,2}didVisit\(['"](.*)["']\)[\}]{0,2}/gi
+const operatorRegex = /.*[\>\<\+\-\=\|in]{1,}.*/gi
 
-export function hasExpression(valueExpression: string) {
-  requireValue(valueExpression, 'valueExpression')
+export function hasToken(valueExpression: string) {
   return valueExpression.match(expressionRegEx)
+}
+
+export function hasExpression(value: string) {
+  return value.match(operatorRegex) || value.match(funcRegEx)
 }
 
 /**
@@ -25,21 +31,30 @@ export function hasExpression(valueExpression: string) {
 export async function resolveExpression(valueExpression: string, data?: any): Promise<string> {
   requireValue(valueExpression, 'valueExpression')
 
+  let expression = valueExpression.slice()
   if (valueExpression === null || valueExpression === '') {
     return valueExpression
   }
 
+
   // If this expression doesn't match, leave it alone
-  if (!valueExpression.match(expressionRegEx)) {
+  if (!valueExpression.match(expressionRegEx) && !valueExpression.match(funcRegEx)) {
     return valueExpression
   }
 
   // Make a copy to avoid side effects
-  let result = valueExpression.slice()
+  let result:any = expression.slice()
 
   if (data) {
     addDataProvider('data', new DataItemProvider(data))
   }
+
+  if (valueExpression.match(funcRegEx)) {
+    const matches = funcRegEx.exec(valueExpression)
+    const value = matches ? hasVisited(matches[1]) : false
+    result = valueExpression.replace(funcRegEx, value.toString())
+  }
+
 
   // Replace each match
   let match: string | RegExpExecArray | null
@@ -49,7 +64,7 @@ export async function resolveExpression(valueExpression: string, data?: any): Pr
     const providerKey = match[1]
     const dataKey = match[2]
     const propKey = match[3] || ''
-    const defaultValue = match[4] || ''
+    const defaultValue = match[4] || null
 
     const provider = await getDataProvider(providerKey)
 
@@ -65,7 +80,7 @@ export async function resolveExpression(valueExpression: string, data?: any): Pr
       value = typeof node === 'object' ? JSON.stringify(node) : `${node}`
     }
 
-    result = result.replace(expression, value)
+    result = result.replace(expression, value ?? '')
   }
 
   if (data) {
@@ -83,15 +98,20 @@ export async function resolveExpression(valueExpression: string, data?: any): Pr
  * @param {string} expression A js-based expression for value comparisons or calculations
  * @param {object} context An object holding any variables for the expression.
  */
-export async function evaluate(
+async function evaluate(
   expression: string,
   context: ExpressionContext = {},
 ): Promise<number | boolean | string> {
   requireValue(expression, 'expression')
+  if (!hasExpression(expression))
+    return expression
+
+  const escaped = expression.replace(/['"]?(?![in|empty|null])([a-z][\w-/?.]{1,})['"]?/ig, `'$1'`)
   try {
     context.null = null
     context.empty = ''
-    return await evalExpression(expression.toLowerCase(), context)
+
+    return await evalExpression(escaped, context)
   } catch (error) {
     warn(`An exception was raised evaluating expression '${expression}': ${error}`)
     return expression
@@ -109,6 +129,7 @@ export async function evaluate(
  */
 export async function evaluateExpression(expression: string, context: ExpressionContext = {}): Promise<any> {
   requireValue(expression, 'expression')
+
   const detokenizedExpression = await resolveExpression(expression)
   return evaluate(detokenizedExpression, context)
 }
@@ -124,29 +145,25 @@ export async function evaluateExpression(expression: string, context: Expression
  */
 export async function evaluatePredicate(expression: string, context: ExpressionContext = {}): Promise<boolean> {
   requireValue(expression, 'expression')
-  let negation = false
+
+
   let workingExpression = expression.slice()
-  if (workingExpression.startsWith('!')) {
-    negation = true
+  if (hasToken(expression))
+    workingExpression = await resolveExpression(workingExpression)
+
+  if (!workingExpression) return false
+
+  const negation = workingExpression.startsWith('!')
+
+  if (negation) {
     workingExpression = workingExpression.slice(1, workingExpression.length)
   }
 
-  const detokenizedExpression = await resolveExpression(workingExpression)
-  try {
-    context.null = null
-    context.empty = ''
-    const result = await evalExpression(detokenizedExpression, context)
-    if (typeof result === 'boolean') {
-      return result
-    }
-
-    if (typeof result === 'number') {
-      return result > 0
-    }
-
-    return toBoolean(result)
-  } catch {
-    const result = toBoolean(detokenizedExpression)
-    return negation ? !result : result
+  let result:any =  toBoolean(workingExpression)
+  if (hasExpression(workingExpression)) {
+    try {
+      result = await evaluate(workingExpression, context)
+    } catch { }
   }
+  return negation ? !result : result
 }

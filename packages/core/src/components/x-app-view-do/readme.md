@@ -70,7 +70,7 @@ This route will be activated once for each new session visit to the page.
 This route will be activated if a value for 'consent' was not found in local-storage[^1].
 
 ```html
-<x-app-view-do url="/accept-terms" page-title="Consent" when="!{{storage:consent}}"> ... </x-app-view-do>
+<x-app-view-do url="/accept-terms" page-title="Consent" when="{{storage:consent}} == null"> ... </x-app-view-do>
 ```
 
 > **Important**: If a value for `{{storage:consent}}` is not set in this route's somehow, the user cannot get to the parent page.

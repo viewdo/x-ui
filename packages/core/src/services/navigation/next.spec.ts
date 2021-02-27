@@ -11,6 +11,8 @@ import { clearVisits, markVisit } from './visits'
 describe('next-resolver: find next', () => {
   let toDos: IViewDo[]
   let session: InMemoryProvider
+
+
   beforeEach(() => {
     session = new InMemoryProvider()
     addDataProvider('session', session)

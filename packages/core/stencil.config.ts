@@ -54,7 +54,7 @@ const config: Config = {
       type: 'www',
       dir: '../../docs',
       buildDir: 'dist',
-      empty: true,
+      empty: false,
       serviceWorker: null,
       indexHtml: 'index.html',
       copy: [

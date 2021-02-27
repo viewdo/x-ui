@@ -1,8 +1,8 @@
 jest.mock('../common/logging')
 jest.mock('../../workers/expr-eval.worker')
 
-import { clearVisits, markVisit } from '../navigation/visits'
-import { evaluate, evaluateExpression, evaluatePredicate, resolveExpression } from './expressions'
+import { clearVisits, hasVisited, markVisit } from '../navigation/visits'
+import { evaluateExpression, evaluatePredicate, resolveExpression } from './expressions'
 import { addDataProvider } from './providers/factory'
 import { InMemoryProvider } from './providers/memory'
 
@@ -56,32 +56,32 @@ describe('resolveExpression', () => {
 
 describe('evaluate', () => {
   it('evaluates simple math', async () => {
-    const value = await evaluate('1 + 1')
+    const value = await evaluateExpression('1 + 1')
     expect(value).toBe(2)
   })
 
   it('evaluates simple predicate', async () => {
-    const value = await evaluate('2 == 2')
+    const value = await evaluatePredicate('2 == 2')
     expect(value).toBe(true)
   })
 
   it('evaluates string comparison expression', async () => {
-    const value = await evaluate('"word" == "word"')
+    const value = await evaluatePredicate('"word" == "word"')
     expect(value).toBe(true)
   })
 
   it('evaluates string comparison expression (false)', async () => {
-    const value = await evaluate('"word" != "word"')
+    const value = await evaluatePredicate('"word" != "word"')
     expect(value).toBe(false)
   })
 
   it('evaluates value in array expression', async () => {
-    const value = await evaluate('1 in [1,2,3]')
+    const value = await evaluatePredicate('1 in [1,2,3]')
     expect(value).toBe(true)
   })
 
   it('evaluates value in array expression (false)', async () => {
-    const value = await evaluate('4 in [1,2,3]')
+    const value = await evaluatePredicate('4 in [1,2,3]')
     expect(value).toBe(false)
   })
 })
@@ -124,7 +124,7 @@ describe('evaluateExpression', () => {
 
   it('evaluates default values', async () => {
     const value = await evaluateExpression('"{{bad:value?default}}"')
-    expect(value).toBe('default')
+    expect(value).toBe('"default"')
   })
 
   it('evaluates default values unquoted', async () => {
@@ -218,19 +218,20 @@ describe('evaluatePredicate [session]', () => {
 
   it('evaluates empty strings', async () => {
     await session.set('a', '')
-    const value = await evaluatePredicate('{{session:a}} == empty')
+    const value = await evaluatePredicate(`'{{session:a}}' == empty`)
     expect(value).toBe(true)
   })
 
   it('evaluates did visit', async () => {
     markVisit('/foo')
-    const value = await evaluatePredicate('didVisit("/foo")')
-    expect(value).toBe(true)
+    const realResult = hasVisited('/foo')
+    const value = await evaluatePredicate('{{didVisit("/foo")}}')
+    expect(value).toBe(realResult)
   })
 
   it('evaluates did not visit', async () => {
     clearVisits()
-    const value = await evaluatePredicate('didVisit("/foo")')
+    const value = await evaluatePredicate('{{didVisit("/foo")}}')
     expect(value).toBe(false)
   })
 
@@ -240,17 +241,17 @@ describe('evaluatePredicate [session]', () => {
   })
 
   it('evaluates not null session values', async () => {
-    const value = await evaluatePredicate('"{{session:bad}}" != empty')
+    const value = await evaluatePredicate(`'{{session:bad}}' != ''`)
     expect(value).toBe(false)
   })
 
   it('evaluates null session values as empty', async () => {
-    const value = await evaluatePredicate('{{session:bad}} == empty')
+    const value = await evaluatePredicate('{{session:bad}} == null')
     expect(value).toBe(true)
   })
 
   it('evaluates with ! for true on empty', async () => {
-    const value = await evaluatePredicate('!{{session:bad}}')
+    const value = await evaluatePredicate('{{session:bad}} != null')
     expect(value).toBe(true)
   })
 
@@ -268,7 +269,7 @@ describe('evaluatePredicate [session]', () => {
 
   it('evaluates with ! for false on not empty string', async () => {
     await session.set('name', '')
-    const value = await evaluatePredicate('!{{session:name}}')
+    const value = await evaluatePredicate('{{session:name}} != null')
     expect(value).toBe(true)
   })
 })

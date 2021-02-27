@@ -21,7 +21,7 @@ Sets the main page theme to dark or light.
 
 Arguments:
 
-*{{:required}} **theme** (required)\
+* **theme** (required)\
   Set's the theme to 'dark' or 'light'.
 
 ```html
@@ -40,7 +40,7 @@ Writes data to the console using console.log()
 
 Arguments:
 
-*{{:required}} **data** (required)\
+* **data** (required)\
   Any data that is sent to console.log
 
 ```html
