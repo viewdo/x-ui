@@ -115,8 +115,7 @@ export class XApp {
     composed: true,
     cancelable: true,
     bubbles: false,
-  })
-  actions!: EventEmitter
+  }) actions!: EventEmitter
 
   /**
    * Listen for events that occurred within the **`<x-app>`**
@@ -127,8 +126,7 @@ export class XApp {
     composed: true,
     cancelable: false,
     bubbles: true,
-  })
-  events!: EventEmitter
+  }) events!: EventEmitter
 
   private get childViews(): HTMLXAppViewElement[] {
     return Array.from(this.el.querySelectorAll('x-app-view') || []).filter((e) => {

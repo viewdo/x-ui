@@ -45,11 +45,11 @@ Provider Key: '**cookie**'
 
 `{cookie:(key)}`
 
-The cookie provider is registered using a special component **`<x-data-provider-cookie>`**.
+The cookie provider is registered using a special component **[\<x-data-provider-cookie\>](/components/x-data-provider-cookie)**.
 
 ## Custom Data Providers
 
-You can extend this system by adding your own provider, using a Data Provider Event Action.
+You can extend this system by adding your own provider, using a Data Provider Action.
 
 To register a provider, provide a unique name and an instance that implements IDataProvider and that data will become available within the expression system.
 

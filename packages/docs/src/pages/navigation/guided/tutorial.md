@@ -157,7 +157,7 @@ Now let’s move out of theory any into our new HTML Elements.
 
 ## Views and Dos
 
-In our examples above, we discussed routes and sub-routes. The routes are expressed in our Experience UI using the **`<x-app-view>`** tag and their sub-routes would be **`<x-app-view-do>`** tags.
+In our examples above, we discussed routes and sub-routes. The routes are expressed in our Experience UI using the [\<x-app-view\>](/components/x-app-view) tag and their sub-routes would be [\<x-app-view-do\>](/components/x-app-view-do) tags.
 
 The default visit-requirement is ‘once’, so it can be omitted. Also, if the 'when’ property exists, the visit requirement is always derived from that expression, leaving few occasions where we have to express the visit-strategy.
 

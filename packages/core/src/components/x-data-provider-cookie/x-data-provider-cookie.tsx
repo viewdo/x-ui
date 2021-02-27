@@ -7,7 +7,7 @@ import {
   DATA_COMMANDS,
   DATA_TOPIC,
   evaluatePredicate,
-  IDataProvider,
+  IDataProvider
 } from '../../services/data'
 
 /**
@@ -43,8 +43,7 @@ export class XDataProviderCookie {
     bubbles: true,
     composed: true,
     cancelable: true,
-  })
-  didConsent!: EventEmitter<CookieConsent>
+  }) didConsent!: EventEmitter<CookieConsent>
 
   private get consentKey() {
     return 'consent'

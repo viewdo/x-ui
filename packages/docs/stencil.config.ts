@@ -1,5 +1,5 @@
-import { Config } from '@stencil/core';
-import { sass } from '@stencil/sass';
+import { Config } from '@stencil/core'
+import { sass } from '@stencil/sass'
 
 // Const scssVariables = 'src/scss/variables.scss';
 const config: Config = {
@@ -13,7 +13,7 @@ const config: Config = {
     port: 3002,
     root: '../../docs',
   },
-  outputTargets: []
+  outputTargets: [],
 }
 
 const wwwOutput: any = {
@@ -29,7 +29,7 @@ const wwwOutput: any = {
       dest: '.',
       keepDirStructure: true,
     },
-  ]
+  ],
 }
 
 // if (!config.devMode) {
@@ -40,5 +40,4 @@ const wwwOutput: any = {
 
 config.outputTargets?.push(wwwOutput)
 
-export { config };
-
+export { config }

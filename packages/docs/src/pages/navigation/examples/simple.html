@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
@@ -11,7 +10,8 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
-      crossorigin="anonymous" />
+      crossorigin="anonymous"
+    />
 
     <title>App</title>
     <style>
@@ -42,13 +42,10 @@
   </head>
 
   <body>
-    <x-app app-title="App" start-url="/home"
-      root="/pages/navigation/examples/simple.html#/">
+    <x-app app-title="App" start-url="/home" root="/pages/navigation/examples/simple.html#/">
       <nav class="nav d-flex flex-row">
-        <x-app-link class="nav-link" href="/home" exact active-class="active">
-          Home </x-app-link>
-        <x-app-link class="nav-link" href="/about" active-class="active"> About
-        </x-app-link>
+        <x-app-link class="nav-link" href="/home" exact active-class="active"> Home </x-app-link>
+        <x-app-link class="nav-link" href="/about" active-class="active"> About </x-app-link>
       </nav>
       <div class="container">
         <x-app-view url="/home" page-title="Home">
@@ -70,5 +67,4 @@
       </div>
     </x-app>
   </body>
-
 </html>

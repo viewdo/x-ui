@@ -33,7 +33,8 @@ const config: Config = {
     {
       type: 'docs-vscode',
       file: 'dist/custom-elements/custom-elements.json',
-      sourceCodeBaseUrl: 'https://github.com/viewdo/x-ui',
+
+      sourceCodeBaseUrl: '/home/jason/dvcs/github.com/viewdo/x-ui/packages/core',
     },
     {
       type: 'docs-custom',
@@ -53,7 +54,7 @@ const config: Config = {
       type: 'www',
       dir: '../../docs',
       buildDir: 'dist',
-      empty: false,
+      empty: true,
       serviceWorker: null,
       indexHtml: 'index.html',
       copy: [

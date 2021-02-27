@@ -24,8 +24,7 @@ export class XAppAnalytics {
     composed: false,
     cancelable: false,
     bubbles: false,
-  })
-  event!: EventEmitter<any>
+  }) event!: EventEmitter<any>
 
   /**
    * Page views.
@@ -35,8 +34,7 @@ export class XAppAnalytics {
     composed: false,
     cancelable: false,
     bubbles: false,
-  })
-  pageView!: EventEmitter<any>
+  }) pageView!: EventEmitter<any>
 
   /**
    * View percentage views.
@@ -46,8 +44,7 @@ export class XAppAnalytics {
     composed: false,
     cancelable: false,
     bubbles: false,
-  })
-  viewPercentage!: EventEmitter<any>
+  }) viewPercentage!: EventEmitter<any>
 
   componentWillLoad() {
     this.listener = new AnalyticsActionListener(actionBus, eventBus)

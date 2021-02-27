@@ -1,9 +1,0 @@
-coverage
-dist
-node_modules
-package-lock.json
-www
-dist
-test
-__mock__
-*.md

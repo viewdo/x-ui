@@ -14,7 +14,7 @@ describe('analytics-listener', () => {
   beforeEach(() => {
     actionBus = new EventEmitter()
     eventBus = new EventEmitter()
-  })
+   })
 
   it('listener registered', async () => {
     let result: any = null
@@ -48,7 +48,7 @@ describe('analytics-listener', () => {
 
     expect(result).toBe(data)
     subject.destroy()
-  })
+   })
 
   it('handlePageView: registers listeners event: page-view', async () => {
     subject = new AnalyticsActionListener(actionBus, eventBus)

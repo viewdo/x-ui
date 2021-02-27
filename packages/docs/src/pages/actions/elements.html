@@ -1,27 +1,28 @@
 <x-content-reference
   script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
-  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css"
->
+  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
 </x-content-reference>
 <x-content-reference
-  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js"
->
+  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
 </x-content-reference>
+
 <div class="container container-fluid mx-auto">
   <h1>Element Activated Actions</h1>
-  <p>Element activation works by attaching an event-listener to specified element.</p>
-
+  <p>Element activation works by attaching an event-listener to specified
+    element.</p>
   <h2>Wrapped Elements</h2>
-  <p>You can wrap inputs and buttons in the action-elements to activate and add user-data to actions.</p>
-
+  <p>You can wrap inputs and buttons in the action-elements to activate and add
+    user-data to actions.</p>
   <h3>Wrapped Click Target</h3>
-  <p>
-    The following button has been wrapped with the x-action-activator element. This automatically registers actions to
-    the click-event. <em>Note, since it's the only element, no target-element or event needs to be declared.</em>
+  <p> The following button has been wrapped with the x-action-activator element.
+    This automatically registers actions to the click-event. <em>Note, since
+      it's the only element, no target-element or event needs to be
+      declared.</em>
   </p>
-
   <x-action-activator>
-    <x-action topic="interface" command="log" data-message="You clicked the wrapped button."> </x-action>
+    <x-action topic="interface"
+      command="log"
+      data-message="You clicked the wrapped button."> </x-action>
     <button class="btn btn-info text-white">Wrapped Button</button>
   </x-action-activator>
   <x-content-markdown>
@@ -34,21 +35,26 @@
       ```
     </script>
   </x-content-markdown>
-
   <h3>Wrapped Input</h3>
+  <p>Action argument data can come from inputs, by wrapping the inputs inside
+    the activator tag.</p>
+  <x-action-activator activate="OnElementEvent"
+    target-element="#send">
+    <x-action topic="interface"
+      command="log"> </x-action>
 
-  <p>Action argument data can come from inputs, by wrapping the inputs inside the activator tag.</p>
-
-  <x-action-activator activate="OnElementEvent" target-element="#send">
-    <x-action topic="interface" command="log"> </x-action>
     <div class="input-group mt-1">
-      <input id="message" value="I am message you can change!" class="form-control" />
+      <input id="message"
+        value="I am message you can change!"
+        class="form-control" />
+
       <div class="input-group-append">
-        <button id="send" class="btn btn-outline-secondary" type="button">Send</button>
+        <button id="send"
+          class="btn btn-outline-secondary"
+          type="button">Send</button>
       </div>
     </div>
   </x-action-activator>
-
   <x-content-markdown>
     <script type="text/markdown">
       ```html
@@ -64,29 +70,39 @@
       ```
     </script>
   </x-content-markdown>
-
   <h3>Wrapped Form</h3>
+  <p>An action's data can be entirely derived from a form collection of inputs.
+  </p>
+  <x-action-activator activate="OnElementEvent"
+    target-element="#send3">
+    <x-action topic="interface"
+      command="log"> </x-action>
 
-  <p>An action's data can be entirely derived from a form collection of inputs.</p>
-
-  <x-action-activator activate="OnElementEvent" target-element="#send3">
-    <x-action topic="interface" command="log"> </x-action>
     <div class="form-group mt-1">
       <label for="email">Email</label>
-      <input type="email" class="form-control" id="email" value="name@example.com" />
+      <input type="email"
+        class="form-control"
+        id="email"
+        value="name@example.com" />
       <label for="url">Url</label>
-      <input type="url" class="form-control" id="url" value="https://view.do" />
+      <input type="url"
+        class="form-control"
+        id="url"
+        value="https://view.do" />
       <label for="select">Select</label>
-      <select class="form-select" id="select" aria-label="Floating label select example">
+      <select class="form-select"
+        id="select"
+        aria-label="Floating label select example">
         <option selected>Open this select menu</option>
         <option value="1">One</option>
         <option value="2">Two</option>
         <option value="3">Three</option>
       </select>
-      <button type="button" id="send3" class="btn btn-primary mt-2">Send</button>
+      <button type="button"
+        id="send3"
+        class="btn btn-primary mt-2">Send</button>
     </div>
   </x-action-activator>
-
   <x-content-markdown>
     <script type="text/markdown">
       ```html
@@ -110,22 +126,21 @@
       ```
     </script>
   </x-content-markdown>
-
   <h2>Unwrapped Elements</h2>
-  <p>
-    In some cases, the element might not be wrappable. The following examples show how to target elements for activating
-    actions without wrapping.
-  </p>
-
+  <p> In some cases, the element might not be wrappable. The following examples
+    show how to target elements for activating actions without wrapping. </p>
   <h3>Unwrapped Activator</h3>
-
-  <p>This example shows an action that is activated by a button somewhere else on the page.</p>
-
-  <x-action-activator activate="OnElementEvent" target-element="#button4" target-event="click">
-    <x-action topic="interface" command="log" data-message="You clicked an unwrapped button."> </x-action>
+  <p>This example shows an action that is activated by a button somewhere else
+    on the page.</p>
+  <x-action-activator activate="OnElementEvent"
+    target-element="#button4"
+    target-event="click">
+    <x-action topic="interface"
+      command="log"
+      data-message="You clicked an unwrapped button."> </x-action>
   </x-action-activator>
-  <button class="btn btn-info text-white" id="button4">Not Wrapped</button>
-
+  <button class="btn btn-info text-white"
+    id="button4">Not Wrapped</button>
   <x-content-markdown>
     <script type="text/markdown">
       ```html
@@ -136,19 +151,25 @@
       ```
     </script>
   </x-content-markdown>
-
   <h3>Unwrapped Activator, Wrapped Data</h3>
-
-  <p>This example shows an action that is activated by a button somewhere else on the page.</p>
-
-  <x-action-activator activate="OnElementEvent" target-element="#button5" target-event="click">
-    <x-action topic="interface" command="log" data-message="You clicked an unwrapped button."> </x-action>
-    <x-action topic="interface" command="dir" data-inline="An inline value">
-      <input type="hidden" name="input" value="A hidden input value" />
+  <p>This example shows an action that is activated by a button somewhere else
+    on the page.</p>
+  <x-action-activator activate="OnElementEvent"
+    target-element="#button5"
+    target-event="click">
+    <x-action topic="interface"
+      command="log"
+      data-message="You clicked an unwrapped button."> </x-action>
+    <x-action topic="interface"
+      command="dir"
+      data-inline="An inline value">
+      <input type="hidden"
+        name="input"
+        value="A hidden input value" />
     </x-action>
   </x-action-activator>
-  <button class="btn btn-info text-white" id="button5">Not Wrapped</button>
-
+  <button class="btn btn-info text-white"
+    id="button5">Not Wrapped</button>
   <x-content-markdown>
     <script type="text/markdown">
       ```html
@@ -162,8 +183,9 @@
       ```
     </script>
   </x-content-markdown>
-
   <footer>
-    <button x-next="/actions" slot="start" class="btn btn-light">&lt; Back</button>
+    <button x-next="/actions"
+      slot="start"
+      class="btn btn-light">&lt; Back</button>
   </footer>
 </div>

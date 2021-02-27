@@ -1,6 +1,6 @@
 # Analytics Actions
 
-The Analytics Action Listener is configured to handle commands raised through [Actions Bus](/actions/event-bus)
+The Analytics Action Listener is configured to handle commands raised through the [actions system](/actions)
 to send to all analytics components which can execute functions for any analytics system configured.
 
 Topic: `analytics`

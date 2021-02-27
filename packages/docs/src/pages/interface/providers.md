@@ -10,7 +10,7 @@ The built-in providers provides basic functionality by handling the following co
 
 ## Custom Interface Provider
 
-You can extend this system by adding your own provider, using a Register Interface Provider Event Action.
+You can extend this system by adding your own provider, using a Register Interface Provider Action.
 
 The system listens for custom events in the action topic: **interface**
 

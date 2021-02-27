@@ -9,19 +9,27 @@
 </x-content-reference>
 <div class="container container-fluid mx-auto">
   <h1>Route-based Content</h1>
-  <p class="lead">This page uses route and URL data within the content!</p>
+  <p class="lead">This page uses route and URL
+    data within the content!</p>
 
   <x-data-display>
     <template>
       <h2>Learn About '{{route:item}}'</h2>
-      <p>{{storage:name}}, you picked one of my favorite things!</p>
-      <img style="width: 75%" src="https://source.unsplash.com/random/500x200?{{route:item}}" />
+      <p>{{storage:name}}, you picked one of my
+        favorite things!</p>
+      <img
+        style="width: 75%"
+        src="https://source.unsplash.com/random/500x200?{{route:item}}"
+      />
     </template>
   </x-data-display>
 
   <h2>Under the Hood</h2>
   <p>
-    Check out how <b class="brand">&lt;x-ui/&gt;</b> makes it easy to use route and query-string data directly in your
+    Check out how <b
+      class="brand">&lt;x-ui/&gt;</b> makes it
+    easy to use route and query-string data
+    directly in your
     content.
   </p>
 
@@ -50,6 +58,7 @@
 
   <x-content-markdown>
     <script type="text/markdown">
+
       ```html
       <x-app-view url="/data" page-title="Data Routes">
         <x-app-view url="/:item" page-title="Info on {{route:item}}"> ... this content ... </x-app-view>
@@ -59,6 +68,10 @@
   </x-content-markdown>
 
   <footer>
-    <a slot="start" href="/routing/dynamic" class="btn btn-light"> &lt; Back </a>
+    <a
+      slot="start"
+      href="/routing/dynamic"
+      class="btn btn-light"
+    > &lt; Back </a>
   </footer>
 </div>

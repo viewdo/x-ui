@@ -1,9 +1,15 @@
 module.exports = {
-  extends: ['plugin:@stencil/recommended'],
   parserOptions: {
-    project: './tsconfig.json',
+    project: "./tsconfig.json"
   },
-  plugins: ['prettier'],
+  extends: [
+    "plugin:@stencil/recommended"
+  ],
+  settings: {
+    react: {
+      "version": "16.7"
+    }
+  },
   rules: {
     '@stencil/strict-boolean-conditions': 0,
     '@stencil/strict-mutable': 0,

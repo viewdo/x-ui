@@ -17,5 +17,5 @@
     "stripInternal": true,
     "strict": true
   },
-  "exclude": ["**/__mocks__/**"]
+  "exclude": ["**/__mocks__", "node_modules", "**/.worker.ts"]
 }

@@ -16,7 +16,7 @@
     "url": "https://github.com/viewdo/x-ui/issues",
     "email": "tech@view.do"
   },
-  "main": "dist/index.cjs.js",
+  "main": "dist/x-ui.cjs.js",
   "module": "dist/custom-elements/index.js",
   "es2015": "dist/esm/index.js",
   "es2017": "dist/esm/index.js",
@@ -43,22 +43,19 @@
     "test:watch": "stencil test --spec --watch"
   },
   "dependencies": {
+    "howler": "^2.2.1",
     "expr-eval": "^2.0.2",
-    "howler": "^2.2.1"
+    "jsonata": "^1.8.4",
+    "remarkable": "^2.0.1"
   },
   "devDependencies": {
     "@stencil/core": "2.4.0",
     "@stencil/sass": "1.4.1",
     "@stencil/store": "1.4.1",
     "@types/howler": "2.2.1",
-    "jsonata": "^1.8.4",
-    "remarkable": "^2.0.1",
     "workbox-build": "6.1.1"
   },
   "jest": {
-    "preset": "@stencil/core/testing",
-    "globals": {
-      "NODE_ENV": "test"
-    }
+    "preset": "@stencil/core/testing"
   }
 }

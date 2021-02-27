@@ -1,8 +1,13 @@
-import { newSpecPage } from '@stencil/core/testing';
-import { EventEmitter } from '../actions/event-emitter';
-import { InterfaceActionListener } from './actions';
-import { INTERFACE_COMMANDS, INTERFACE_TOPIC } from './interfaces';
-import { clearInterfaceProvider, getInterfaceProvider } from './providers/factory';
+jest.mock('../common/logging')
+global.console.log = jest.fn()
+global.console.dir = jest.fn()
+global.console.table = jest.fn()
+
+import { newSpecPage } from '@stencil/core/testing'
+import { EventEmitter } from '../actions/event-emitter'
+import { InterfaceActionListener } from './actions'
+import { INTERFACE_COMMANDS, INTERFACE_TOPIC } from './interfaces'
+import { clearInterfaceProvider, getInterfaceProvider } from './providers/factory'
 
 let called = false
 class MockProvider {

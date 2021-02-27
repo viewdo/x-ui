@@ -1,6 +1,6 @@
 # Interface Actions
 
-The default Interface Action Listener is configured to handle commands raised to the [Event-Action Bus](/actions/event-bus).
+The default Interface Action Listener is configured to handle commands raised to the [Event-action messaging system](/actions).
 
 ---
 
