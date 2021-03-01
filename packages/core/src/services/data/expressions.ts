@@ -9,7 +9,7 @@ import { DataItemProvider } from './providers/item'
 
 const expressionRegEx = /\{\{([\w-]*):([\w_]*)(?:\.([\w_.-]*))?(?:\?([\w_.-]*))?\}\}/gi
 const funcRegEx = /[\{]{0,2}didVisit\(['"](.*)["']\)[\}]{0,2}/gi
-const operatorRegex = /.*[\>\<\+\-\=\|in]{1,}.*/gi
+const operatorRegex = /(in|for|[\>\<\+\-\=]{1})/gi
 
 export function hasToken(valueExpression: string) {
   return valueExpression.match(expressionRegEx)
@@ -80,7 +80,7 @@ export async function resolveExpression(valueExpression: string, data?: any): Pr
       value = typeof node === 'object' ? JSON.stringify(node) : `${node}`
     }
 
-    result = result.replace(expression, value ?? '')
+    result = result.replace(expression, value ?? 'null')
   }
 
   if (data) {
@@ -146,8 +146,14 @@ export async function evaluateExpression(expression: string, context: Expression
 export async function evaluatePredicate(expression: string, context: ExpressionContext = {}): Promise<boolean> {
   requireValue(expression, 'expression')
 
+ let workingExpression = expression.slice()
 
-  let workingExpression = expression.slice()
+ if (workingExpression.match(funcRegEx)) {
+    const matches = funcRegEx.exec(workingExpression)
+    const value = matches ? hasVisited(matches[1]) : false
+    workingExpression = workingExpression.replace(funcRegEx, value.toString())
+  }
+
   if (hasToken(expression))
     workingExpression = await resolveExpression(workingExpression)
 

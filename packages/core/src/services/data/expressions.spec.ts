@@ -19,8 +19,9 @@ describe('resolveExpression', () => {
   })
 
   it('returns null for non-existent value', async () => {
-    const value = (await resolveExpression('{{session:name}}')) || ''
-    expect(value).toBe('')
+    const value = await resolveExpression('{{session:name}}')
+
+    expect(value).toBe('null')
   })
 
   it('returns the literal string if no expression is detected', async () => {
@@ -218,20 +219,20 @@ describe('evaluatePredicate [session]', () => {
 
   it('evaluates empty strings', async () => {
     await session.set('a', '')
-    const value = await evaluatePredicate(`'{{session:a}}' == empty`)
+    const value = await evaluatePredicate(`{{session:a}} == null`)
     expect(value).toBe(true)
   })
 
   it('evaluates did visit', async () => {
     markVisit('/foo')
     const realResult = hasVisited('/foo')
-    const value = await evaluatePredicate('{{didVisit("/foo")}}')
+    const value = await evaluatePredicate('didVisit("/foo")')
     expect(value).toBe(realResult)
   })
 
   it('evaluates did not visit', async () => {
     clearVisits()
-    const value = await evaluatePredicate('{{didVisit("/foo")}}')
+    const value = await evaluatePredicate(`{{didVisit('/foo')}}`)
     expect(value).toBe(false)
   })
 
@@ -242,7 +243,7 @@ describe('evaluatePredicate [session]', () => {
 
   it('evaluates not null session values', async () => {
     const value = await evaluatePredicate(`'{{session:bad}}' != ''`)
-    expect(value).toBe(false)
+    expect(value).toBe(true)
   })
 
   it('evaluates null session values as empty', async () => {
@@ -252,7 +253,7 @@ describe('evaluatePredicate [session]', () => {
 
   it('evaluates with ! for true on empty', async () => {
     const value = await evaluatePredicate('{{session:bad}} != null')
-    expect(value).toBe(true)
+    expect(value).toBe(false)
   })
 
   it('evaluates with ! for false on not empty', async () => {
@@ -270,6 +271,6 @@ describe('evaluatePredicate [session]', () => {
   it('evaluates with ! for false on not empty string', async () => {
     await session.set('name', '')
     const value = await evaluatePredicate('{{session:name}} != null')
-    expect(value).toBe(true)
+    expect(value).toBe(false)
   })
 })
