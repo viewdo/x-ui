@@ -10,6 +10,7 @@ import { DataItemProvider } from './providers/item'
 const expressionRegEx = /\{\{([\w-]*):([\w_]*)(?:\.([\w_.-]*))?(?:\?([\w_.-]*))?\}\}/gi
 const funcRegEx = /[\{]{0,2}didVisit\(['"](.*)["']\)[\}]{0,2}/gi
 const operatorRegex = /(in|for|[\>\<\+\-\=]{1})/gi
+const escapeStringsRegex = /['"]?([a-zA-Z\/]{1}[\w-/_?.]+)['"]?/gi
 
 export function hasToken(valueExpression: string) {
   return valueExpression.match(expressionRegEx)
@@ -20,46 +21,44 @@ export function hasExpression(value: string) {
 }
 
 /**
- * This function replaces all {{provider:key}} values with the actual values
+ * This function replaces all tokens: (ie `{{provider:key}}`) values with the actual values
  * from the expressed provider & key. This is used by {evaluateExpression}
  * before it is sent to {evaluate} for calculation.
  *
- * @export resolveExpression
- * @param {string} valueExpression
+ * @export resolveTokens
+ * @param {string} textWithTokens
  * @return {*}  {(Promise<string|null>)}
  */
-export async function resolveExpression(valueExpression: string, data?: any): Promise<string> {
-  requireValue(valueExpression, 'valueExpression')
+export async function resolveTokens(textWithTokens: string, forExpression:boolean = false, data?: any): Promise<string> {
+  requireValue(textWithTokens, 'valueExpression')
 
-  let expression = valueExpression.slice()
-  if (valueExpression === null || valueExpression === '') {
-    return valueExpression
+  let result = textWithTokens.slice()
+  if (textWithTokens === null || textWithTokens === '') {
+    return result
   }
 
 
   // If this expression doesn't match, leave it alone
-  if (!valueExpression.match(expressionRegEx) && !valueExpression.match(funcRegEx)) {
-    return valueExpression
+  if (!textWithTokens.match(expressionRegEx) && !textWithTokens.match(funcRegEx)) {
+    return result
   }
 
-  // Make a copy to avoid side effects
-  let result:any = expression.slice()
 
   if (data) {
     addDataProvider('data', new DataItemProvider(data))
   }
 
-  if (valueExpression.match(funcRegEx)) {
-    const matches = funcRegEx.exec(valueExpression)
+  if (textWithTokens.match(funcRegEx)) {
+    const matches = funcRegEx.exec(textWithTokens)
     const value = matches ? hasVisited(matches[1]) : false
-    result = valueExpression.replace(funcRegEx, value.toString())
+    result = textWithTokens.replace(funcRegEx, value.toString())
   }
 
 
   // Replace each match
   let match: string | RegExpExecArray | null
 
-  while ((match = expressionRegEx.exec(valueExpression))) {
+  while ((match = expressionRegEx.exec(textWithTokens))) {
     const expression = match[0]
     const providerKey = match[1]
     const dataKey = match[2]
@@ -80,7 +79,15 @@ export async function resolveExpression(valueExpression: string, data?: any): Pr
       value = typeof node === 'object' ? JSON.stringify(node) : `${node}`
     }
 
-    result = result.replace(expression, value ?? 'null')
+    let replacement = value || ''
+    if (forExpression) {
+      if (value === null || value == undefined || value == '')
+        replacement = 'null'
+      else
+        replacement = value.replace(escapeStringsRegex, `'$1'`)
+    }
+
+    result = result.replace(expression, replacement)
   }
 
   if (data) {
@@ -106,12 +113,10 @@ async function evaluate(
   if (!hasExpression(expression))
     return expression
 
-  const escaped = expression.replace(/['"]?(?![in|empty|null])([a-z][\w-/?.]{1,})['"]?/ig, `'$1'`)
   try {
     context.null = null
-    context.empty = ''
 
-    return await evalExpression(escaped, context)
+    return await evalExpression(expression, context)
   } catch (error) {
     warn(`An exception was raised evaluating expression '${expression}': ${error}`)
     return expression
@@ -130,7 +135,7 @@ async function evaluate(
 export async function evaluateExpression(expression: string, context: ExpressionContext = {}): Promise<any> {
   requireValue(expression, 'expression')
 
-  const detokenizedExpression = await resolveExpression(expression)
+  const detokenizedExpression = await resolveTokens(expression, true)
   return evaluate(detokenizedExpression, context)
 }
 
@@ -154,8 +159,8 @@ export async function evaluatePredicate(expression: string, context: ExpressionC
     workingExpression = workingExpression.replace(funcRegEx, value.toString())
   }
 
-  if (hasToken(expression))
-    workingExpression = await resolveExpression(workingExpression)
+  if (hasToken(workingExpression))
+    workingExpression = await resolveTokens(workingExpression, true)
 
   if (!workingExpression) return false
 

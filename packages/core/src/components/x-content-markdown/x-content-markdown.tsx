@@ -1,7 +1,7 @@
 import { Component, Element, forceUpdate, h, Host, Prop, State } from '@stencil/core'
 import { eventBus } from '../../services/actions'
 import { warn } from '../../services/common/logging'
-import { DATA_EVENTS, evaluatePredicate, resolveExpression } from '../../services/data'
+import { DATA_EVENTS, evaluatePredicate, resolveTokens } from '../../services/data'
 import { resolveChildElementXAttributes } from '../../services/elements'
 import { RouterService, ROUTE_EVENTS } from '../../services/routing'
 import { renderMarkdown } from '../../workers/remarkable.worker'
@@ -100,7 +100,7 @@ export class XContentMarkdown {
 
   private async getContentFromSrc() {
     try {
-      const src = await resolveExpression(this.src!)
+      const src = await resolveTokens(this.src!)
       const response = await window.fetch(src)
       if (response.status === 200) {
         const data = await response.text()

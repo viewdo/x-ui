@@ -224,23 +224,11 @@
           page-title="Use w/CDN"
           visit="optional"
           content-src="/pages/start/cdn.html">
-          <x-action-activator activate="OnEnter">
-            <x-action topic="data"
-              command="set-data"
-              data-provider="storage"
-              data-installed="cdn"> </x-action>
-          </x-action-activator>
         </x-app-view-do>
         <x-app-view-do url="npm"
           page-title="Install w/NPM"
           visit="optional"
           content-src="/pages/start/npm.html">
-          <x-action-activator activate="OnEnter">
-            <x-action topic="data"
-              command="set-data"
-              data-provider="storage"
-              data-installed="npm"> </x-action>
-          </x-action-activator>
         </x-app-view-do>
       </x-app-view>
       <x-app-view url="/routing"

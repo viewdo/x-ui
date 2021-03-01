@@ -1,7 +1,7 @@
 import { Component, Element, h, Host, Prop, State } from '@stencil/core'
 import { eventBus } from '../../services/actions'
 import { slugify, warn } from '../../services/common'
-import { DATA_EVENTS, resolveExpression } from '../../services/data'
+import { DATA_EVENTS, resolveTokens } from '../../services/data'
 import { resolveChildElementXAttributes } from '../../services/elements'
 import { RouterService, ROUTE_EVENTS } from '../../services/routing'
 
@@ -60,7 +60,7 @@ export class XContentInclude {
     }
 
     try {
-      const src = await resolveExpression(this.src)
+      const src = await resolveTokens(this.src)
       const response = await fetch(src)
       if (response.status === 200) {
         const data = await response.text()

@@ -1,7 +1,7 @@
 import { Component, Element, forceUpdate, h, Host, Prop, State } from '@stencil/core'
 import { eventBus } from '../../services/actions'
 import { warn } from '../../services/common/logging'
-import { DATA_EVENTS, resolveExpression } from '../../services/data'
+import { DATA_EVENTS, resolveTokens } from '../../services/data'
 import { removeAllChildNodes, resolveChildElementXAttributes } from '../../services/elements'
 import { RouterService, ROUTE_EVENTS } from '../../services/routing'
 
@@ -85,11 +85,11 @@ export class XDataDisplay {
     }
 
     if (this.text) {
-      this.value = await resolveExpression(this.text, this.innerData)
+      this.value = await resolveTokens(this.text, false, this.innerData)
     }
 
     if (this.innerTemplate) {
-      this.resolvedTemplate = await resolveExpression(this.innerTemplate, this.innerData)
+      this.resolvedTemplate = await resolveTokens(this.innerTemplate, false, this.innerData)
     }
   }
 

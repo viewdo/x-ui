@@ -2,7 +2,7 @@ import { Component, Element, forceUpdate, h, Host, Prop, State } from '@stencil/
 import { eventBus } from '../../services/actions'
 import { debugIf, warnIf } from '../../services/common'
 import { arrify } from '../../services/common/arrify'
-import { DATA_EVENTS, hasToken, resolveExpression } from '../../services/data'
+import { DATA_EVENTS, hasToken, resolveTokens } from '../../services/data'
 import { RouterService, ROUTE_EVENTS } from '../../services/routing'
 import { filterData } from '../../workers/jsonata.worker'
 /**
@@ -111,7 +111,7 @@ export class XDataRepeat {
       return await items.reduce(
         (previousPromise: Promise<any>, item: any) =>
           previousPromise.then(async () =>
-            resolveExpression(this.innerTemplate.slice(), item).then((html) => {
+            resolveTokens(this.innerTemplate.slice(), false, item).then((html) => {
               resolvedTemplate += html
               return resolvedTemplate
             }),
@@ -144,7 +144,7 @@ export class XDataRepeat {
     if (this.filter) {
       let filterString = this.filter.slice()
       if (hasToken(filterString)) {
-        filterString = await resolveExpression(filterString)
+        filterString = await resolveTokens(filterString)
       }
 
       debugIf(this.debug, `x-data-repeat: filtering: ${filterString}`)
@@ -174,7 +174,7 @@ export class XDataRepeat {
     try {
       let itemsString = this.items
       if (itemsString && hasToken(itemsString)) {
-        itemsString = await resolveExpression(itemsString)
+        itemsString = await resolveTokens(itemsString)
         debugIf(this.debug, `x-data-repeat: items resolved to ${itemsString}`)
       }
 

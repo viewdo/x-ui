@@ -2,11 +2,11 @@ jest.mock('../common/logging')
 jest.mock('../../workers/expr-eval.worker')
 
 import { clearVisits, hasVisited, markVisit } from '../navigation/visits'
-import { evaluateExpression, evaluatePredicate, resolveExpression } from './expressions'
+import { evaluateExpression, evaluatePredicate, resolveTokens } from './expressions'
 import { addDataProvider } from './providers/factory'
 import { InMemoryProvider } from './providers/memory'
 
-describe('resolveExpression', () => {
+describe('resolveTokens', () => {
   let session: InMemoryProvider
   let storage: InMemoryProvider
 
@@ -19,46 +19,121 @@ describe('resolveExpression', () => {
   })
 
   it('returns null for non-existent value', async () => {
-    const value = await resolveExpression('{{session:name}}')
+    const value = await resolveTokens('{{session:name}}')
+    expect(value).toBe('')
+  })
 
+  it('returns null for non-existent values used in expressions', async () => {
+    const value = await resolveTokens('{{session:name}}', true)
     expect(value).toBe('null')
   })
 
+
+  it('returns empty for empty value', async () => {
+    await session.set('name', '')
+    const value = await resolveTokens('{{session:name}}')
+    expect(value).toBe(``)
+  })
+
+  it('returns null for empty values in expressions', async () => {
+    await session.set('name', '')
+    const value = await resolveTokens('{{session:name}}', true)
+    expect(value).toBe(`null`)
+  })
+
   it('returns the literal string if no expression is detected', async () => {
-    const value = await resolveExpression('my_value')
+    const value = await resolveTokens('my_value')
     expect(value).toBe('my_value')
   })
 
   it('returns the right value for a good expression', async () => {
     await session.set('name', 'biden')
-    const value = await resolveExpression('{{session:name}}')
+    const value = await resolveTokens('{{session:name}}')
     expect(value).toBe('biden')
   })
 
   it('returns the right value for a JSON expression', async () => {
     await session.set('user', '{"name":"Joe"}')
-    const value = await resolveExpression('{{session:user.name}}')
+    const value = await resolveTokens('{{session:user.name}}')
     expect(value).toBe('Joe')
   })
 
   it('returns the right value for a deep JSON expression', async () => {
     await session.set('user', '{"name": { "first":"Joe"}}')
-    const value = await resolveExpression('{{session:user.name.first}}')
+    const value = await resolveTokens('{{session:user.name.first}}')
     expect(value).toBe('Joe')
   })
 
   it('replaces multiple expressions in the same string', async () => {
     await session.set('rate', '1')
     await session.set('vintage', '1985')
-    const value = await resolveExpression('${{session:rate}} in {{session:vintage}}')
+    const value = await resolveTokens('${{session:rate}} in {{session:vintage}}')
     expect(value).toBe('$1 in 1985')
   })
+
 })
 
-describe('evaluate', () => {
+describe('evaluateExpression', () => {
+  let session: InMemoryProvider
+  let storage: InMemoryProvider
+
+  beforeEach(() => {
+    session = new InMemoryProvider()
+    storage = new InMemoryProvider()
+
+    addDataProvider('session', session)
+    addDataProvider('storage', storage)
+  })
+
   it('evaluates simple math', async () => {
     const value = await evaluateExpression('1 + 1')
     expect(value).toBe(2)
+  })
+
+  it('evaluates simple math no-spaces', async () => {
+    const value = await evaluateExpression('1+1')
+    expect(value).toBe(2)
+  })
+
+  it('evaluates simple predicate', async () => {
+    const value = await evaluateExpression('2==2')
+    expect(value).toBe(true)
+  })
+
+  it('evaluates simple expression with data-provider values', async () => {
+    await session.set('rate', '1')
+    await session.set('vintage', '1985')
+    const value = await evaluateExpression('{{session:rate}} + {{session:vintage}}')
+    expect(value).toBe(1986)
+  })
+
+  it('evaluates array in expression', async () => {
+    await session.set('items', `['foo','boo']`)
+    await session.set('item', 'foo')
+    const exp ='{{session:item}} in {{session:items}}'
+    const detokenized = await resolveTokens(exp, true)
+    expect(detokenized).toBe(`'foo' in ['foo','boo']`)
+    const value = await evaluateExpression(exp)
+    expect(value).toBe(true)
+  })
+
+  it('evaluates default values', async () => {
+    const value = await evaluateExpression('{{bad:value?1}} > 0')
+    expect(value).toBe(true)
+  })
+
+  it('evaluates default values unquoted', async () => {
+    const value = await evaluateExpression('{{bad:value?default}}')
+    expect(value).toBe(`'default'`)
+  })
+})
+
+describe('evaluatePredicate [session]', () => {
+  let session: InMemoryProvider
+
+  beforeEach(() => {
+    session = new InMemoryProvider()
+    addDataProvider('session', session)
   })
 
   it('evaluates simple predicate', async () => {
@@ -85,64 +160,6 @@ describe('evaluate', () => {
     const value = await evaluatePredicate('4 in [1,2,3]')
     expect(value).toBe(false)
   })
-})
-
-describe('evaluateExpression', () => {
-  let session: InMemoryProvider
-  let storage: InMemoryProvider
-
-  beforeEach(() => {
-    session = new InMemoryProvider()
-    storage = new InMemoryProvider()
-
-    addDataProvider('session', session)
-    addDataProvider('storage', storage)
-  })
-
-  it('evaluates simple math', async () => {
-    const value = await evaluateExpression('1+1')
-    expect(value).toBe(2)
-  })
-
-  it('evaluates simple predicate', async () => {
-    const value = await evaluateExpression('2==2')
-    expect(value).toBe(true)
-  })
-
-  it('evaluates simple expression with data-provider values', async () => {
-    await session.set('rate', '1')
-    await session.set('vintage', '1985')
-    const value = await evaluateExpression('{{session:rate}} + {{session:vintage}}')
-    expect(value).toBe(1986)
-  })
-
-  it('evaluates array in expression', async () => {
-    await session.set('items', '["foo","boo"]')
-    await session.set('item', 'foo')
-    const value = await evaluateExpression('"{{session:item}}" in {{session:items}}')
-    expect(value).toBe(true)
-  })
-
-  it('evaluates default values', async () => {
-    const value = await evaluateExpression('"{{bad:value?default}}"')
-    expect(value).toBe('"default"')
-  })
-
-  it('evaluates default values unquoted', async () => {
-    const value = await evaluateExpression('{{bad:value?default}}')
-    expect(value).toBe('default')
-  })
-})
-
-describe('evaluatePredicate [session]', () => {
-  let session: InMemoryProvider
-
-  beforeEach(() => {
-    session = new InMemoryProvider()
-    addDataProvider('session', session)
-  })
-
-  afterEach(() => {})
 
   it('evaluates simple predicate with data-provider values', async () => {
     await session.set('a', '1')
@@ -174,31 +191,31 @@ describe('evaluatePredicate [session]', () => {
 
   it('evaluates string predicate with data-provider values equal', async () => {
     await session.set('a', 'foo')
-    const value = await evaluatePredicate('"{{session:a}}" == "foo"')
+    const value = await evaluatePredicate('{{session:a}} == "foo"')
     expect(value).toBe(true)
   })
 
   it('string predicate with data-provider values not equal', async () => {
     await session.set('a', 'foo')
-    const value = await evaluatePredicate('"{{session:a}}" != "foo"')
+    const value = await evaluatePredicate('{{session:a}} != "foo"')
     expect(value).toBe(false)
   })
 
   it('string predicate with data-provider values without quotes', async () => {
     await session.set('a', 'foo')
-    const value = await evaluatePredicate('"{{session:a}}" != "foo"')
+    const value = await evaluatePredicate('{{session:a}} != "foo"')
     expect(value).toBe(false)
   })
 
   it('evaluates string includes', async () => {
     await session.set('a', 'foo')
-    const value = await evaluatePredicate('"f" in "{{session:a}}"')
+    const value = await evaluatePredicate('"f" in {{session:a}}')
     expect(value).toBe(true)
   })
 
   it('evaluates string includes false', async () => {
     await session.set('a', 'foo')
-    const value = await evaluatePredicate('"d" in "{{session:a}}"')
+    const value = await evaluatePredicate('"d" in {{session:a}}')
     expect(value).toBe(false)
   })
 
@@ -256,6 +273,19 @@ describe('evaluatePredicate [session]', () => {
     expect(value).toBe(false)
   })
 
+  it('evaluates session strings not null', async () => {
+    await session.set('installed', 'npm')
+    const value = await evaluatePredicate('{{session:installed}} != null')
+    expect(value).toBe(true)
+  })
+
+  it('evaluates session strings is null: false', async () => {
+    await session.set('installed', 'npm')
+    const value = await evaluatePredicate('{{session:installed}} == null')
+    expect(value).toBe(false)
+  })
+
+
   it('evaluates with ! for false on not empty', async () => {
     await session.set('name', 'jason')
     const value = await evaluatePredicate('!{{session:name}}')
@@ -263,14 +293,8 @@ describe('evaluatePredicate [session]', () => {
   })
 
   it('evaluates with ! for true when value', async () => {
-    await session.set('name', 'jason')
-    const value = await evaluatePredicate('{{session:name}}')
+    const value = await evaluatePredicate('!{{session:name}}')
     expect(value).toBe(true)
   })
 
-  it('evaluates with ! for false on not empty string', async () => {
-    await session.set('name', '')
-    const value = await evaluatePredicate('{{session:name}} != null')
-    expect(value).toBe(false)
-  })
 })

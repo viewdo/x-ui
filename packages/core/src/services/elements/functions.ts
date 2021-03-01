@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 
 import { debugIf } from '../common/logging'
-import { evaluatePredicate, hasToken, resolveExpression } from '../data'
+import { evaluatePredicate, hasToken, resolveTokens } from '../data'
 import { TimedNode } from './interfaces'
 
 export async function resolveChildElementXAttributes(element: HTMLElement) {
@@ -60,7 +60,7 @@ export function resolveChildXValueFromAttributes(element: Element) {
 export async function resolveXValueFromAttribute(element: Element) {
   const expression = element.getAttribute('x-value-from')
   if (expression && hasToken(expression)) {
-    const value = await resolveExpression(expression)
+    const value = await resolveTokens(expression)
     if (value) {
       element.setAttribute('value', value)
     }
