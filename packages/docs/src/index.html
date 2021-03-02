@@ -199,7 +199,7 @@
         content-src="/pages/home/default.html">
         <x-app-view-do url="name"
           page-title="Introductions"
-          when="{{storage:name}} == null"
+          when="!{{storage:name}}"
           content-src="/pages/home/intro.html">
         </x-app-view-do>
         <x-app-view-do url="welcome"
@@ -216,7 +216,7 @@
         page-title="Get Started"
         content-src="/pages/start/default.html">
         <x-app-view-do url="select"
-          when="{{storage:installed}} == null"
+          when="!{{storage:installed}}"
           page-title="Select Installation"
           content-src="/pages/start/select.html">
         </x-app-view-do>

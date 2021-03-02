@@ -4,7 +4,6 @@ import { ActionActivationStrategy, actionBus, EventAction, IActionElement } from
 
 /**
  * @system actions
- * @deps actions
  */
 @Component({
   tag: 'x-action-activator',

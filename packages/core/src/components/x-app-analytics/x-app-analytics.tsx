@@ -6,8 +6,6 @@ import { AnalyticsActionListener } from './analytics'
 /**
  *
  * @system analytics
- * @deps actions
- * @deps analytics
  */
 @Component({
   tag: 'x-app-analytics',

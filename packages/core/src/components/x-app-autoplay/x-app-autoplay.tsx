@@ -3,7 +3,6 @@ import { onVideoChange, videoState } from '../../services/video'
 
 /**
  * @system video
- * @deps video
  */
 @Component({
   tag: 'x-app-autoplay',

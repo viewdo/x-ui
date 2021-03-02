@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1" />
     <!-- Bootstrap CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
-      crossorigin="anonymous"
-    />
-
+      crossorigin="anonymous" />
     <title>App</title>
     <style>
       [x-cloak] {
@@ -33,7 +32,8 @@
       }
     </style>
     <!-- Experience UI -->
-    <script type="module" src="/dist/x-ui.esm.js"></script>
+    <script type="module"
+      src="/dist/x-ui.esm.js"></script>
     <!--
           HIYA! Right-click to save this file locally.  Uncomment the script
           reference below, and remove the one above.
@@ -42,29 +42,46 @@
   </head>
 
   <body>
-    <x-app app-title="App" start-url="/home" root="/pages/navigation/examples/simple.html#/">
+
+    <x-app app-title="App"
+      start-url="/home"
+      root="/pages/navigation/examples/simple.html#/">
       <nav class="nav d-flex flex-row">
-        <x-app-link class="nav-link" href="/home" exact active-class="active"> Home </x-app-link>
-        <x-app-link class="nav-link" href="/about" active-class="active"> About </x-app-link>
+        <x-app-link class="nav-link"
+          href="/home"
+          exact
+          active-class="active"> Home </x-app-link>
+        <x-app-link class="nav-link"
+          href="/about"
+          active-class="active"> About </x-app-link>
       </nav>
+
       <div class="container">
-        <x-app-view url="/home" page-title="Home">
+        <x-app-view url="/home"
+          page-title="Home">
           <h1>Home</h1>
           <hr />
+
           <div slot="content">
             <h2>Hello World!</h2>
             <p>Now you have a basic content router.</p>
           </div>
         </x-app-view>
-        <x-app-view url="/about" page-title="About" x-cloak>
+        <x-app-view url="/about"
+          page-title="About"
+          x-cloak>
           <h1>About</h1>
           <hr />
+
           <div slot="content">
             <h2>About World!</h2>
             <p>AND an about page.</p>
           </div>
         </x-app-view>
       </div>
+      <x-data-provider-session></x-data-provider-session>
+      <x-data-provider-storage></x-data-provider-storage>
     </x-app>
   </body>
+
 </html>

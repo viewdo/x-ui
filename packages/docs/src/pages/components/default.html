@@ -9,7 +9,7 @@
 <div class="container container-fluid mx-auto">
   <ul hidden
     class="component-list list-group btn-group-xl float-end ms-3 mt-2"
-    x-show-when="!{{query:group}}">
+    x-show-when="{{query:group}}">
     <li class="list-group-item fw-bold text-capitalize d-none d-sm-block">
       <x-data-display text="{{query:group}}"></x-data-display> Components
     </li>

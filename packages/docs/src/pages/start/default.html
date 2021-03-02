@@ -9,7 +9,7 @@
 <div class="container container-fluid mx-auto">
   <h1>Get Ready to Go</h1>
 
-  <div x-hide-when="'{{storage:installed}}' != 'npm'">
+  <div x-hide-when="{{storage:installed}} != 'npm'">
     <h2>Local Reference</h2>
     <x-action-activator>
       <x-action topic="data"
@@ -34,7 +34,7 @@
     </x-content-markdown>
   </div>
 
-  <div x-hide-when="'{{storage:installed}}' != 'cdn'">
+  <div x-hide-when="{{storage:installed}} != 'cdn'">
     <h2>Remote Reference</h2>
     <x-action-activator>
       <x-action topic="data"

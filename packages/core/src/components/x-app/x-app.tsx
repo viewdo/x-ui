@@ -8,11 +8,6 @@ import { LocationSegments, RouterService } from '../../services/routing'
 
 /**
  * @system routing
- * @deps actions
- * @deps data
- * @deps elements
- * @deps interface
- * @deps routing
  *
  */
 @Component({

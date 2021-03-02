@@ -1,28 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <base href="stepper.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1" />
     <!-- Experience UI -->
-    <script type="module" src="/dist/x-ui.esm.js"></script>
+    <script type="module"
+      src="/dist/x-ui.esm.js"></script>
     <!--
           HIYA! Right-click to save this file locally.  Uncomment the script
           reference below, and remove the one above.
         -->
     <!--script type="module" src="https://unpkg.com/@viewdo/x-ui/dist/x-ui/x-ui.esm.js"></script-->
-
     <!-- Bootstrap  -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" />
-
+    <link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" />
     <title>Loading...</title>
     <style>
       [x-cloak],
       [hidden] {
         display: none;
       }
+
       body {
         padding: 2rem;
       }
@@ -71,7 +73,6 @@
         /*   height: 120px; */
         height: 100%;
         left: calc(0.5em - 1px);
-
         position: absolute;
         top: 20px;
       }
@@ -116,110 +117,143 @@
   </head>
 
   <body>
-    <x-app app-title="My HTML App" start-url="/home" root="/pages/navigation/examples/stepper.html#" class="container">
-      <h1 class="mt-3">No-Code Stepper</h1>
 
-      <x-app-view url="/home" page-title="Home">
+    <x-app app-title="My HTML App"
+      start-url="/home"
+      root="/pages/navigation/examples/stepper.html#"
+      class="container">
+      <h1 class="mt-3">No-Code Stepper</h1>
+      <x-app-view url="/home"
+        page-title="Home">
         <h2>Home</h2>
+
         <div slot="content">
           <p>Click the link below to begin.</p>
-
-          <a class="btn btn-primary" href="/survey" x-hide-when="{{storage:food}}">Take Survey</a>
-          <a class="btn btn-light" href="/survey/step-1" hidden x-show-when="{{storage:food}}">Retake Survey</a>
+          <a class="btn btn-primary"
+            href="/survey"
+            x-hide-when="{{storage:food}}">Take Survey</a>
+          <a class="btn btn-light"
+            href="/survey/step-1"
+            hidden
+            x-show-when="{{storage:food}}">Retake Survey</a>
         </div>
       </x-app-view>
-
-      <x-app-view url="/survey" page-title="Survey" x-cloak>
-        <x-content-reference style-src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css">
+      <x-app-view url="/survey"
+        page-title="Survey"
+        x-cloak>
+        <x-content-reference
+          style-src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css">
         </x-content-reference>
         <h2>Survey</h2>
-        <div class="step" x-class="completed" x-class-when="{{storage:nickname}}">
+
+        <div class="step"
+          x-class="completed"
+          x-class-when="{{storage:nickname}}">
+
           <div class="stepper">
+
             <div class="circle"></div>
+
             <div class="line"></div>
           </div>
+
           <div class="form">
-            <h3>
-              Step 1
-              <span x-hide-when="!{{storage:nickname}}">
+            <h3> Step 1 <span x-hide-when="!{{storage:nickname}}">
                 <a href="/survey/step-1">✔️</a>
               </span>
             </h3>
-            <x-app-view-do when="!{{storage:nickname}}" url="step-1" page-title="Step 1">
-              <div slot="content" class="form-group">
-                <label class="form-label" for="name">Nick Name</label>
-                <input
-                  type="text"
+            <x-app-view-do when="!{{storage:nickname}}"
+              url="step-1"
+              page-title="Step 1">
+
+              <div slot="content"
+                class="form-group">
+                <label class="form-label"
+                  for="name">Nick Name</label>
+                <input type="text"
                   required
                   class="form-control mb-3"
                   id="name"
                   onblur="localStorage.setItem('nickname', this.value)"
                   onchange="localStorage.setItem('nickname', this.value)"
                   x-value-from="{{storage:nickname}}"
-                  tabindex="0"
-                />
-
-                <a class="btn btn-primary" x-next="/survey/step-2"> Next </a>
+                  tabindex="0" />
+                <a class="btn btn-primary"
+                  x-next="/survey/step-2"> Next </a>
               </div>
             </x-app-view-do>
           </div>
         </div>
-        <div class="step" x-class="completed" x-class-when="{{storage:show}}">
+
+        <div class="step"
+          x-class="completed"
+          x-class-when="{{storage:show}}">
+
           <div class="stepper">
+
             <div class="circle"></div>
+
             <div class="line"></div>
           </div>
+
           <div>
-            <h3>
-              Step 2
-              <span x-hide-when="!{{storage:show}}">
+            <h3> Step 2 <span x-hide-when="!{{storage:show}}">
                 <a href="/survey/step-2">✔️</a>
               </span>
             </h3>
-            <x-app-view-do when="!{{storage:show}}" url="step-2" page-title="Step 2">
+            <x-app-view-do when="!{{storage:show}}"
+              url="step-2"
+              page-title="Step 2">
+
               <div slot="content">
-                <label class="form-label" for="show">TV Show</label>
-                <input
-                  type="text"
+                <label class="form-label"
+                  for="show">TV Show</label>
+                <input type="text"
                   required
                   id="show"
                   class="form-control mb-3"
                   onblur="localStorage.setItem('show', this.value)"
                   onchange="localStorage.setItem('show', this.value)"
                   x-value-from="{{storage:show}}"
-                  tabindex="0"
-                />
-                <a class="btn btn-primary" x-next="/survey/step-3">Next</a>
+                  tabindex="0" />
+                <a class="btn btn-primary"
+                  x-next="/survey/step-3">Next</a>
               </div>
             </x-app-view-do>
           </div>
         </div>
-        <div class="step" x-class="completed" x-class-when="{{storage:food}}">
+
+        <div class="step"
+          x-class="completed"
+          x-class-when="{{storage:food}}">
+
           <div class="stepper">
+
             <div class="circle"></div>
           </div>
+
           <div>
-            <h3>
-              Step 3
-              <span x-hide-when="!{{storage:food}}">
+            <h3> Step 3 <span x-hide-when="!{{storage:food}}">
                 <a href="/survey/step-3">✔️</a>
               </span>
             </h3>
-            <x-app-view-do when="!{{storage:food}}" url="step-3" page-title="Step 3">
+            <x-app-view-do when="!{{storage:food}}"
+              url="step-3"
+              page-title="Step 3">
+
               <div slot="content">
-                <label class="form-label" for="show">Food or Snack</label>
-                <input
-                  type="text"
+                <label class="form-label"
+                  for="show">Food or Snack</label>
+                <input type="text"
                   required
                   id="food"
                   class="form-control mb-3"
                   onblur="localStorage.setItem('food', this.value)"
                   onchange="localStorage.setItem('food', this.value)"
                   x-value-from="{{storage:food}}"
-                  tabindex="0"
-                />
-
-                <a class="btn btn-primary" x-next>Next</a>
+                  tabindex="0" />
+                <a class="btn btn-primary"
+                  x-next>Next</a>
               </div>
             </x-app-view-do>
           </div>
@@ -227,9 +261,13 @@
 
         <div slot="content">
           <p>Thank you for completing our survey.</p>
-          <a class="btn btn-light" href="/home">Return Home </a>
+          <a class="btn btn-light"
+            href="/home">Return Home </a>
         </div>
       </x-app-view>
+      <x-data-provider-session></x-data-provider-session>
+      <x-data-provider-storage></x-data-provider-storage>
     </x-app>
   </body>
+
 </html>

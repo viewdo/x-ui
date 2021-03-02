@@ -4,18 +4,21 @@ Data Providers _provide_ the underlying data-store for expressions to resolve us
 
 > The Data Provider system is a way to normalize data access for use within Data Expressions.
 
-
 ## Built-in Data Providers
 
-There are data-providers already created for sessionStorage, localStorage and cookies. The first two automatically are registered. The cookie provider is optional.'
+There are data-providers already created for sessionStorage, localStorage and cookies.
 
-* Browser Session: **session**
-* Browser Storage: **storage**
-* Cookies: **cookie**
+To use them, add their tag:
+
+* Browser Session: **session** `<x-data-provider-session>`
+* Browser Storage: **storage** `<x-data-provider-storage>`
+* Cookies: **cookie** `<x-data-provider-cookie>`
+
+Other data-providers that require no configuration are:
+
 * Route: **route**
 * Query: **query**
 * Inline Data: **data**
-
 
 **Example:**
 

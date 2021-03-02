@@ -1,27 +1,24 @@
 <div class="container container-fluid mx-auto">
   <h1>Introductions</h1>
-  <p>
-    The <a href="https://view.do/" target="_blank">view.DO</a> Experience UI components were built to make it easier to
-    create personalized, conversational web experiences.
-  </p>
-  <p>
-    To demonstrate some of the functional capabilities, here we are going to collect data, store it in your browser and
-    use it later.
-  </p>
+  <p> The <a href="https://view.do/"
+      target="_blank">view.DO</a> Experience UI components were built to make it
+    easier to create personalized, conversational web experiences. </p>
+  <p> To demonstrate some of the functional capabilities, here we are going to
+    collect data, store it in your browser and use it later. </p>
   <p>Tell us what to call you and it will show up in fun ways later.</p>
+
   <div class="form-floating mb-3">
-    <input
-      type="text"
+    <input type="text"
       required
       class="form-control"
       onblur="localStorage.setItem('name', this.value)"
       onchange="localStorage.setItem('name', this.value)"
-      x-value-from="{{storage:name}}"
-    />
+      x-value-from="{{storage:name}}" />
     <label for="floatingInput">Nickname</label>
   </div>
-
   <footer>
-    <button slot="end" x-next class="btn btn-primary btn-lg">Continue &gt;</button>
+    <button slot="end"
+      x-next
+      class="btn btn-primary btn-lg">Continue &gt;</button>
   </footer>
 </div>

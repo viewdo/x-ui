@@ -10,7 +10,7 @@ const config: Config = {
   devServer: {
     openBrowser: false,
     reloadStrategy: 'pageReload',
-    port: 3002,
+    port: 8110,
     root: '../../docs',
   },
   outputTargets: [],

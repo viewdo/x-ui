@@ -5,8 +5,6 @@ import { MatchResults, RouterService, ROUTE_EVENTS } from '../../services/routin
 
 /**
  * @system navigation
- * @deps routing
- * @deps actions
  */
 @Component({
   tag: 'x-app-link',
