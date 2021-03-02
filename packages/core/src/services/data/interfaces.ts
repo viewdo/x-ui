@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-import { EventEmitter } from '../actions/event-emitter'
+import { EventEmitter } from '../events'
 
 export interface IDataProvider {
   changed: EventEmitter

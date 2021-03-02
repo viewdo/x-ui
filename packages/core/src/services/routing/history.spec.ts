@@ -1,8 +1,10 @@
+jest.mock('../data/evaluate.worker')
+
 import { newSpecPage } from '@stencil/core/testing'
 import { HistoryService } from './history'
 import { LocationSegments } from './interfaces'
 
-describe('history-service', () => {
+describe('history', () => {
   const startPage = async (url: string = '') => {
     const page = await newSpecPage({
       components: [],

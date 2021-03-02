@@ -1,6 +1,6 @@
 import { Component, Element, h, Host, Method, Prop, State } from '@stencil/core'
-import { ActionActivationStrategy, actionBus, EventAction, IActionElement } from '../../services/actions'
 import { debugIf, warn } from '../../services/common'
+import { ActionActivationStrategy, actionBus, EventAction, IActionElement } from '../../services/events'
 
 /**
  * @system actions

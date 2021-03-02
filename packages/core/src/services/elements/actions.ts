@@ -1,7 +1,6 @@
 import { MockWindow } from '@stencil/core/mock-doc'
-import { EventAction, IEventActionListener, IEventEmitter } from '../actions'
-import { debugIf } from '../common/logging'
-import { interfaceState } from '../interface/state'
+import { commonState, debugIf } from '../common'
+import { EventAction, IEventActionListener, IEventEmitter } from '../events'
 import { ELEMENTS_COMMANDS, ELEMENTS_TOPIC } from './interfaces'
 
 export class ElementsActionListener implements IEventActionListener {
@@ -13,7 +12,7 @@ export class ElementsActionListener implements IEventActionListener {
     this.body = win.document.body as HTMLBodyElement
     this.eventBus = eventBus
     this.actionsSubscription = actionBus.on(ELEMENTS_TOPIC, async (ev: EventAction<any>) => {
-      debugIf(interfaceState.debug, `elements-listener: action received ${ev.topic}:${ev.command}`)
+      debugIf(commonState.debug, `elements-listener: action received ${ev.topic}:${ev.command}`)
       await this.commandReceived(ev.command, ev.data)
     })
   }

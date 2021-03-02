@@ -43,7 +43,7 @@ export class XContentReference {
    * To fetch the contents change to false or remove
    * attribute.
    */
-  @Prop({ mutable: true }) noRender = false
+  @Prop({ mutable: true }) deferLoad = false
 
   private async getStylePromise(element: HTMLHeadElement) {
     if (this.styleSrc && !hasReference(this.styleSrc)) {
@@ -97,7 +97,7 @@ export class XContentReference {
   }
 
   async componentWillRender() {
-    if (this.noRender) {
+    if (this.deferLoad) {
       return
     }
 

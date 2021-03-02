@@ -1,6 +1,9 @@
 import { Config } from '@stencil/core'
 import { sass } from '@stencil/sass'
+import path from 'path'
 import { version } from './package.json'
+//  import tsconfig from './tsconfig.json'
+
 
 const config: Config = {
   namespace: 'x-ui',
@@ -10,6 +13,9 @@ const config: Config = {
   enableCache: true,
   excludeUnusedDependencies: true,
   hashFileNames: true,
+  rollupPlugins: {
+    before: []
+  },
   devServer: {
     openBrowser: false,
     reloadStrategy: 'pageReload',
@@ -24,6 +30,7 @@ const config: Config = {
     },
     {
       type: 'dist-custom-elements-bundle',
+
     },
     {
       type: 'docs-readme',
@@ -33,8 +40,7 @@ const config: Config = {
     {
       type: 'docs-vscode',
       file: 'dist/custom-elements/custom-elements.json',
-
-      sourceCodeBaseUrl: '/home/jason/dvcs/github.com/viewdo/x-ui/packages/core',
+      sourceCodeBaseUrl: path.join(process.cwd(),'packages/core'),
     },
     {
       type: 'docs-custom',
@@ -71,6 +77,12 @@ const config: Config = {
       ],
     },
   ],
+  testing: {
+    moduleNameMapper: {
+      "^services/(.*)$": "<rootDir>/src/services/$1"
+    }
+
+  }
 }
 
 export { config }

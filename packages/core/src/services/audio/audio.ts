@@ -1,6 +1,6 @@
 import { Howl } from 'howler'
-import { EventEmitter } from '../actions/event-emitter'
-import { warn } from '../common/logging'
+import { warn } from '../common'
+import { EventEmitter } from '../events'
 import { AudioInfo } from './audio-info'
 import { AUDIO_EVENTS } from './interfaces'
 import { trackPlayed } from './tracked'

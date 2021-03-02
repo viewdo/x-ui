@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-import { LocationSegments } from '../common/interfaces';
+import { LocationSegments } from '../common';
 import { Path } from './utils';
 
 export { LocationSegments };

@@ -3,11 +3,13 @@
 import { createStore } from '@stencil/store'
 
 class StateModel {
+  storageProvider!: string
   storedVisits!: string[]
   sessionVisits!: string[]
 }
 
 const store = createStore<StateModel>({
+  storageProvider: 'storage',
   storedVisits: [],
   sessionVisits: [],
 })

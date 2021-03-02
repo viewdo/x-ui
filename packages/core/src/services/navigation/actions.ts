@@ -1,8 +1,6 @@
-import { EventAction, IEventEmitter } from '../actions'
-import { debugIf } from '../common/logging'
-import { interfaceState } from '../interface'
-import { LocationSegments, ROUTE_EVENTS } from '../routing'
-import { RouterService } from '../routing/router'
+import { commonState, debugIf } from '../common'
+import { EventAction, IEventEmitter } from '../events'
+import { LocationSegments, RouterService, ROUTE_EVENTS } from '../routing'
 import { NavigateNext, NavigateTo, NAVIGATION_COMMANDS, NAVIGATION_TOPIC } from './interfaces'
 
 export class NavigationActionListener {
@@ -19,7 +17,7 @@ export class NavigationActionListener {
   }
 
   handleEventAction(eventAction: EventAction<NavigateTo | NavigateNext>) {
-    debugIf(interfaceState.debug, `route-listener: action received ${JSON.stringify(eventAction)}`)
+    debugIf(commonState.debug, `route-listener: action received ${JSON.stringify(eventAction)}`)
 
     switch (eventAction.command) {
       case NAVIGATION_COMMANDS.GoNext: {

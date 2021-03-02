@@ -1,6 +1,6 @@
 import { Component, Element, forceUpdate, h, Host, Prop, State } from '@stencil/core'
-import { eventBus } from '../../services/actions'
 import { debugIf } from '../../services/common'
+import { eventBus } from '../../services/events'
 import { MatchResults, RouterService, ROUTE_EVENTS } from '../../services/routing'
 
 /**

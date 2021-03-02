@@ -1,11 +1,11 @@
 import { RafCallback } from '@stencil/core/internal'
-import { IEventEmitter } from '../actions'
-import { addDataProvider } from '../data/providers/factory'
-import { captureElementsEventOnce } from '../elements/functions'
+import { addDataProvider } from '../data/factory'
+import { captureElementsEventOnce } from '../elements'
+import { IEventEmitter } from '../events'
 import { NavigationActionListener } from '../navigation/actions'
-import { RoutingDataProvider } from './data-provider'
 import { HistoryService } from './history'
 import { LocationSegments, MatchOptions, MatchResults, RouteViewOptions } from './interfaces'
+import { RoutingDataProvider } from './provider'
 import { Route } from './route'
 import { isAbsolute, locationsAreEqual, resolvePathname } from './utils/location'
 import { addLeadingSlash, ensureBasename, stripBasename } from './utils/path'
@@ -20,7 +20,7 @@ export class RouterService {
   constructor(
     private win: Window,
     private readonly writeTask: (t: RafCallback) => void,
-    events: IEventEmitter,
+    private eventBus: IEventEmitter,
     actions: IEventEmitter,
     public root: string = '',
     public appTitle: string = '',
@@ -29,7 +29,7 @@ export class RouterService {
     private useHash = false,
   ) {
     this.history = new HistoryService(win, root, useHash)
-    this.listener = new NavigationActionListener(this, events, actions)
+    this.listener = new NavigationActionListener(this, eventBus, actions)
 
     this.removeHandler = this.history.listen((location: LocationSegments) => {
       if (this.location) {
@@ -163,6 +163,6 @@ export class RouterService {
     scrollTopOffset: number,
     matchSetter: (m: MatchResults | null) => void,
   ) {
-    return new Route(this, routeElement, path, exact, pageTitle, transition, scrollTopOffset, matchSetter)
+    return new Route(this.eventBus, this, routeElement, path, exact, pageTitle, transition, scrollTopOffset, matchSetter)
   }
 }

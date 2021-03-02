@@ -10,19 +10,19 @@ The presence of a boolean attribute indicate the value of its property is `true
 
 ```html
 <x-content-include></x-content-include>
-<!-- "no-render" is false -->
+<!-- "defer-load" is false -->
 <!-- -->
-<x-content-include no-render></x-content-include>
-<!-- "no-render" is true -->
+<x-content-include defer-load></x-content-include>
+<!-- "defer-load" is true -->
 <!-- -->
-<x-content-include no-render="true"></x-content-include>
-<!-- "no-render" is true -->
+<x-content-include defer-load="true"></x-content-include>
+<!-- "defer-load" is true -->
 <!-- -->
-<x-content-include no-render="foo"></x-content-include>
-<!-- "no-render" is true -->
+<x-content-include defer-load="foo"></x-content-include>
+<!-- "defer-load" is true -->
 <!-- -->
-<x-content-include no-render="false"></x-content-include>
-<!-- !! "no-render" is true -->
+<x-content-include defer-load="false"></x-content-include>
+<!-- !! "defer-load" is true -->
 
 ```
 

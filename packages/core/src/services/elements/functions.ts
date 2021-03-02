@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-import { debugIf } from '../common/logging'
+import { debugIf } from '../common'
 import { evaluatePredicate, hasToken, resolveTokens } from '../data'
 import { TimedNode } from './interfaces'
 

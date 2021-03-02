@@ -4,10 +4,10 @@ global.console.dir = jest.fn()
 global.console.table = jest.fn()
 
 import { newSpecPage } from '@stencil/core/testing'
-import { EventEmitter } from '../actions/event-emitter'
+import { EventEmitter } from '../events/emitter'
 import { InterfaceActionListener } from './actions'
+import { clearInterfaceProvider, getInterfaceProvider } from './factory'
 import { INTERFACE_COMMANDS, INTERFACE_TOPIC } from './interfaces'
-import { clearInterfaceProvider, getInterfaceProvider } from './providers/factory'
 
 let called = false
 class MockProvider {

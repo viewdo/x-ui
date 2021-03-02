@@ -2,8 +2,8 @@ jest.mock('../common/logging')
 
 import { MockWindow } from '@stencil/core/mock-doc'
 import { newSpecPage } from '@stencil/core/testing'
-import { EventEmitter } from '../actions/event-emitter'
-import { sleep } from '../common/promises'
+import { sleep } from '../common'
+import { EventEmitter } from '../events'
 import { ElementsActionListener } from './actions'
 import { ELEMENTS_COMMANDS, ELEMENTS_TOPIC } from './interfaces'
 import { clearReferences, hasReference, markReference } from './references'

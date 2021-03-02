@@ -1,9 +1,9 @@
 import { Component, Element, h, Host, Prop, State } from '@stencil/core'
-import { ActionActivationStrategy, eventBus } from '../../services/actions'
 import { debugIf, slugify } from '../../services/common'
 import { warn } from '../../services/common/logging'
 import { DATA_EVENTS } from '../../services/data'
 import { resolveChildElementXAttributes } from '../../services/elements'
+import { ActionActivationStrategy, eventBus } from '../../services/events'
 import { markVisit, resolveNext } from '../../services/navigation'
 import { MatchResults, Route, RouterService } from '../../services/routing'
 

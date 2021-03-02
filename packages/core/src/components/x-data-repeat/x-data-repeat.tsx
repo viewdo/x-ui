@@ -1,10 +1,9 @@
 import { Component, Element, forceUpdate, h, Host, Prop, State } from '@stencil/core'
-import { eventBus } from '../../services/actions'
-import { debugIf, warnIf } from '../../services/common'
-import { arrify } from '../../services/common/arrify'
+import { arrify, debugIf, warnIf } from '../../services/common'
 import { DATA_EVENTS, hasToken, resolveTokens } from '../../services/data'
+import { eventBus } from '../../services/events'
 import { RouterService, ROUTE_EVENTS } from '../../services/routing'
-import { filterData } from '../../workers/jsonata.worker'
+import { filterData } from './filter/jsonata.worker'
 /**
  *  @system data
  */
@@ -43,7 +42,7 @@ export class XDataRepeat {
    * To fetch the contents change to false or remove
    * attribute.
    */
-  @Prop({ mutable: true }) noRender = false
+  @Prop({ mutable: true }) deferLoad = false
 
   /**
    * Turn on debug statements for load, update and render events.
@@ -100,7 +99,7 @@ export class XDataRepeat {
 
   private async resolveHtml(items: any[]) {
     debugIf(this.debug, 'x-data-repeat: resolving html')
-    if (this.noRender) {
+    if (this.deferLoad) {
       return null
     }
 

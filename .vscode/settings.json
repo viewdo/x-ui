@@ -71,5 +71,6 @@
     "./packages/core/dist/custom-elements/custom-elements.json"
   ],
   "ponicode.testSettings.testLocation.locationType": "Custom",
-  "ponicode.testSettings.testLocation.path": "{rootDir}/{filePath}/{fileName}.spec.{ext}"
+  "ponicode.testSettings.testLocation.path": "{rootDir}/{filePath}/{fileName}.spec.{ext}",
+  "exportall.config.folderListener": []
 }

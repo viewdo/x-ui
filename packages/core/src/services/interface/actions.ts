@@ -1,11 +1,9 @@
 import { MockWindow } from '@stencil/core/mock-doc'
-import { EventAction, IEventActionListener, IEventEmitter } from '../actions'
-import { debugIf } from '../common/logging'
-import { kebabToCamelCase } from '../common/strings'
+import { commonState, debugIf, kebabToCamelCase } from '../common'
+import { EventAction, IEventActionListener, IEventEmitter } from '../events/interfaces'
+import { getInterfaceProvider, setInterfaceProvider } from './factory'
 import { INTERFACE_COMMANDS, INTERFACE_TOPIC } from './interfaces'
 import { DefaultInterfaceProvider } from './providers/default'
-import { getInterfaceProvider, setInterfaceProvider } from './providers/factory'
-import { interfaceState } from './state'
 
 export class InterfaceActionListener implements IEventActionListener {
   actionsSubscription!: () => void
@@ -21,7 +19,7 @@ export class InterfaceActionListener implements IEventActionListener {
   }
 
   handleAction(actionEvent: EventAction<any>) {
-    debugIf(interfaceState.debug, `document-listener: action received ${JSON.stringify(actionEvent)}`)
+    debugIf(commonState.debug, `document-listener: action received ${JSON.stringify(actionEvent)}`)
 
     if (actionEvent.command === INTERFACE_COMMANDS.RegisterProvider) {
       const { name = 'unknown', provider } = actionEvent.data

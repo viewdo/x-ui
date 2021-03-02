@@ -1,10 +1,9 @@
-import { EventEmitter, IEventEmitter } from '../actions';
-import { Listener } from '../actions/interfaces';
-import { warnIf } from '../common/logging';
-import { LocationSegments } from './interfaces';
-import { ScrollHistory } from './scroll-history';
-import { createKey, createLocation, locationsAreEqual } from './utils/location';
-import { createPath, ensureBasename, hasBasename, stripBasename } from './utils/path';
+import { warnIf } from '../common'
+import { EventEmitter, IEventEmitter, Listener } from '../events'
+import { LocationSegments } from './interfaces'
+import { ScrollHistory } from './scroll'
+import { createKey, createLocation, locationsAreEqual } from './utils/location'
+import { createPath, ensureBasename, hasBasename, stripBasename } from './utils/path'
 
 const KeyLength = 6
 
@@ -57,6 +56,7 @@ export class HistoryService {
     }
     this.setState('POP', location)
   }
+
   push(path: string, state: any = {}) {
     const action = 'PUSH'
     const location = createLocation(path, state, createKey(KeyLength), this.location)

@@ -1,9 +1,9 @@
-import { EventEmitter } from '../actions/event-emitter'
-import { debugIf } from '../common/logging'
+import { debugIf } from '../common'
+import { EventEmitter } from '../events'
 import {
-  captureElementChildTimedNodes,
-  resolveElementChildTimedNodesByTime,
-  restoreElementChildTimedNodes,
+    captureElementChildTimedNodes,
+    resolveElementChildTimedNodesByTime,
+    restoreElementChildTimedNodes
 } from './functions'
 import { TimedNode, TIMER_EVENTS } from './interfaces'
 

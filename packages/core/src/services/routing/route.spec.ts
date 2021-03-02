@@ -1,8 +1,8 @@
-jest.mock('../../workers/expr-eval.worker')
+jest.mock('../data/evaluate.worker')
 
 import { RafCallback, SpecPage } from '@stencil/core/internal'
 import { newSpecPage } from '@stencil/core/testing'
-import { EventEmitter } from '../actions/event-emitter'
+import { EventEmitter } from '../events/emitter'
 import { MatchResults } from './interfaces'
 import { Route } from './route'
 import { RouterService } from './router'
@@ -60,7 +60,7 @@ describe('route', () => {
   it('normalizeChildUrl', async () => {
     page = await startPage('/')
     router = new RouterService(page.win, writeTask, eventBus, actionBus)
-    let subject = new Route(router, page.body, '/route')
+    let subject = new Route(eventBus, router, page.body, '/route')
 
     let normalized = subject.normalizeChildUrl('child')
     expect(normalized).toBe('/route/child')
@@ -99,7 +99,7 @@ describe('route', () => {
     page = await startPage('/route')
     router = new RouterService(page.win, writeTask, eventBus, actionBus, '', 'App')
     const routeElement = page.body.querySelector('div')!
-    let subject = new Route(router, routeElement, '/route')
+    let subject = new Route(eventBus, router, routeElement, '/route')
 
     subject.adjustTitle()
 
@@ -110,9 +110,9 @@ describe('route', () => {
 
   it('loadComplete - match', async () => {
     page = await startPage('/route')
-    router = new RouterService(page.win, writeTask, eventBus, actionBus, '', 'App')
+    router = new RouterService( page.win, writeTask, eventBus, actionBus, '', 'App')
     const routeElement = page.body.querySelector('div')!
-    let subject = new Route(router, routeElement, '/route')
+    let subject = new Route(eventBus, router, routeElement, '/route')
 
     subject.match = {
       path: '/route',
@@ -131,7 +131,7 @@ describe('route', () => {
     page.doc.title = 'Neat!'
     router = new RouterService(page.win, writeTask, eventBus, actionBus)
     const routeElement = page.body.querySelector('div')!
-    let subject = new Route(router, routeElement, '/route', true, 'Page', null, 10)
+    let subject = new Route(eventBus, router, routeElement, '/route', true, 'Page', null, 10)
 
     subject.match = {
       path: '/route',
@@ -149,7 +149,7 @@ describe('route', () => {
     page = await startPage('/')
     router = new RouterService(page.win, writeTask, eventBus, actionBus)
     const routeElement = page.body.querySelector('div')!
-    let subject = new Route(router, routeElement, '/route')
+    let subject = new Route(eventBus, router, routeElement, '/route')
 
     subject.captureInnerLinks()
 

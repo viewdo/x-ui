@@ -94,13 +94,13 @@ This component supports HTML string interpolation within a child template tag. E
 
 ## Properties
 
-| Property   | Attribute   | Description                                                                                                   | Type                  | Default     |
-| ---------- | ----------- | ------------------------------------------------------------------------------------------------------------- | --------------------- | ----------- |
-| `debug`    | `debug`     | Turn on debug statements for load, update and render events.                                                  | `boolean`             | `false`     |
-| `filter`   | `filter`    | The JSONata query to filter the json items see <https://try.jsonata.org> for more info.                       | `string \| undefined` | `undefined` |
-| `items`    | `items`     | The array-string or data expression to obtain a collection for rendering the template. {{session:cart.items}} | `string \| undefined` | `undefined` |
-| `itemsSrc` | `items-src` | The URL to remote JSON collection to use for the items.                                                       | `string \| undefined` | `undefined` |
-| `noRender` | `no-render` | If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.  | `boolean`             | `false`     |
+| Property    | Attribute    | Description                                                                                                   | Type                  | Default     |
+| ----------- | ------------ | ------------------------------------------------------------------------------------------------------------- | --------------------- | ----------- |
+| `debug`     | `debug`      | Turn on debug statements for load, update and render events.                                                  | `boolean`             | `false`     |
+| `deferLoad` | `defer-load` | If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.  | `boolean`             | `false`     |
+| `filter`    | `filter`     | The JSONata query to filter the json items see <https://try.jsonata.org> for more info.                       | `string \| undefined` | `undefined` |
+| `items`     | `items`      | The array-string or data expression to obtain a collection for rendering the template. {{session:cart.items}} | `string \| undefined` | `undefined` |
+| `itemsSrc`  | `items-src`  | The URL to remote JSON collection to use for the items.                                                       | `string \| undefined` | `undefined` |
 
 
 ----------------------------------------------

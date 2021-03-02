@@ -1,14 +1,11 @@
-import { warnIf } from '../common/logging';
-import { storageAvailable } from '../data/browser/browser-utils';
-import { VisitStrategy } from './interfaces';
-
-const supportsSession = storageAvailable(window, 'sessionStorage')
-warnIf(!supportsSession, 'session-storage is not supported')
-
-const supportsStorage = storageAvailable(window, 'localStorage')
-warnIf(!supportsStorage, 'local-storage is not supported')
+import { getDataProvider } from '../data/factory'
+import { InMemoryProvider } from '../data/providers/memory'
+import { VisitStrategy } from './interfaces'
+import { navigationState } from './state'
 
 const visitKey = 'visits'
+const sessionFallback = new InMemoryProvider()
+const storageFallback = new InMemoryProvider()
 
 function parseVisits(visits: string | null): string[] {
   return JSON.parse(visits || '[]')
@@ -18,61 +15,66 @@ function stringifyVisits(visits: string[]) {
   return JSON.stringify(visits || '[]')
 }
 
-export function getSessionVisits() {
-  if (!supportsSession) {
-    return []
+export async function getSessionVisits() {
+  var provider = (await getDataProvider('session')) || sessionFallback
+  if (provider) {
+   const visits = await provider.get(visitKey)
+   return visits ? parseVisits(visits): []
   }
 
-  const visits = sessionStorage?.getItem(visitKey)
-  return parseVisits(visits)
+  return []
 }
 
-export function setSessionVisits(visits: string[]) {
-  if (supportsSession) {
-    sessionStorage.setItem(visitKey, stringifyVisits(visits))
-  }
-}
-
-export function getStoredVisits() {
-  if (!supportsStorage) {
-    return []
-  }
-
-  const storage = localStorage.getItem(visitKey)
-  return parseVisits(storage)
-}
-
-export function setStoredVisits(visits: string[]) {
-  if (supportsStorage) {
-    localStorage.setItem(visitKey, stringifyVisits(visits))
+export async function setSessionVisits(visits: string[]) {
+  var provider = (await getDataProvider('session')) || sessionFallback
+  if (provider) {
+    await provider.set(visitKey, stringifyVisits(visits))
   }
 }
 
-export function hasVisited(url: string) {
-  return getSessionVisits().includes(url) || getStoredVisits().includes(url)
+export async function getStoredVisits() {
+  var provider = (await getDataProvider(navigationState.storageProvider)) || storageFallback
+  if (provider) {
+   const visits = await provider.get(visitKey)
+   return visits ? parseVisits(visits): []
+  }
+
+  return []
 }
 
-export function recordVisit(visit: VisitStrategy, url: string) {
+export async function setStoredVisits(visits: string[]) {
+  var provider = (await getDataProvider(navigationState.storageProvider)) || storageFallback
+  if (provider) {
+    await provider.set(visitKey, stringifyVisits(visits))
+  }
+}
+
+export async function hasVisited(url: string) {
+  const visits = [...await getSessionVisits(),... await getStoredVisits()]
+  return visits.includes(url)
+}
+
+export async function recordVisit(visit: VisitStrategy, url: string) {
   if (visit == VisitStrategy.once) {
-    storeVisit(url)
+    await storeVisit(url)
   } else {
-    markVisit(url)
+    await markVisit(url)
   }
 }
 
-export function markVisit(url: string) {
-  const sessionVisits = getSessionVisits()
+export async function markVisit(url: string) {
+  const sessionVisits = await getSessionVisits()
   if (sessionVisits.includes(url)) return
-  setSessionVisits([...new Set([...sessionVisits, url])])
+  await setSessionVisits([...new Set([...sessionVisits, url])])
 }
 
-export function storeVisit(url: string) {
-  const storedVisits = getStoredVisits()
+export async function storeVisit(url: string) {
+  const storedVisits = await getStoredVisits()
   if (storedVisits.includes(url)) return
-  setStoredVisits([...new Set([...storedVisits, url])])
+  await setStoredVisits([...new Set([...storedVisits, url])])
 }
 
-export function clearVisits() {
-  setSessionVisits([])
-  setStoredVisits([])
+export async function clearVisits() {
+  await setSessionVisits([])
+  await setStoredVisits([])
 }

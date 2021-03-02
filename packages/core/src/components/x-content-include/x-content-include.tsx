@@ -1,8 +1,8 @@
 import { Component, Element, h, Host, Prop, State } from '@stencil/core'
-import { eventBus } from '../../services/actions'
 import { slugify, warn } from '../../services/common'
 import { DATA_EVENTS, resolveTokens } from '../../services/data'
 import { resolveChildElementXAttributes } from '../../services/elements'
+import { eventBus } from '../../services/events'
 import { RouterService, ROUTE_EVENTS } from '../../services/routing'
 
 /**
@@ -30,7 +30,7 @@ export class XContentInclude {
    * To fetch the contents change to false or remove
    * attribute.
    */
-  @Prop({ mutable: true }) noRender = false
+  @Prop({ mutable: true }) deferLoad = false
 
   private get router(): RouterService | undefined {
     return this.el.closest('x-app')?.router
@@ -55,7 +55,7 @@ export class XContentInclude {
   }
 
   private async resolveContent() {
-    if (this.noRender) {
+    if (this.deferLoad) {
       return
     }
 

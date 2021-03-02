@@ -1,6 +1,6 @@
 import { Component, Element, h, Host, Prop } from '@stencil/core'
-import { actionBus } from '../../services/actions'
 import { AudioType, AUDIO_TOPIC, DiscardStrategy, LoadStrategy } from '../../services/audio'
+import { actionBus } from '../../services/events'
 
 /**
  *

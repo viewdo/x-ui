@@ -1,4 +1,4 @@
-jest.mock('../../workers/expr-eval.worker')
+jest.mock('../data/evaluate.worker')
 
 import { newSpecPage } from '@stencil/core/testing'
 import { ElementTimer } from './timer'

@@ -1,7 +1,7 @@
 import { Component, Element, h, Host, Method, Prop } from '@stencil/core'
-import { actionBus, EventAction, IActionElement } from '../../services/actions'
 import { AudioType, AUDIO_COMMANDS, AUDIO_TOPIC } from '../../services/audio/interfaces'
 import { warn } from '../../services/common/logging'
+import { actionBus, EventAction, IActionElement } from '../../services/events'
 
 /**
  * This element just holds data to express the actionEvent to fire. This element

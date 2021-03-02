@@ -1,5 +1,4 @@
 import { Component, Element, h, Host, Prop, State } from '@stencil/core'
-import { ActionActivationStrategy, actionBus, eventBus } from '../../services/actions'
 import { debugIf, slugify } from '../../services/common'
 import { warn } from '../../services/common/logging'
 import { DATA_EVENTS } from '../../services/data'
@@ -10,8 +9,9 @@ import {
   ElementTimer,
   getChildInputValidity,
   resolveChildElementXAttributes,
-  TIMER_EVENTS,
+  TIMER_EVENTS
 } from '../../services/elements'
+import { ActionActivationStrategy, actionBus, eventBus } from '../../services/events'
 import { recordVisit, VisitStrategy } from '../../services/navigation'
 import { MatchResults, Route } from '../../services/routing'
 import { VideoActionListener, videoState } from '../../services/video'

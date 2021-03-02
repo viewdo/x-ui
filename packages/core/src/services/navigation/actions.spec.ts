@@ -1,9 +1,9 @@
-jest.mock('../../workers/expr-eval.worker')
+jest.mock('../data/evaluate.worker')
 
 import { RafCallback } from '@stencil/core'
 import { newSpecPage } from '@stencil/core/testing'
-import { EventEmitter } from '../actions/event-emitter'
-import { RouterService } from '../routing/router'
+import { EventEmitter } from '../events'
+import { RouterService } from '../routing'
 import { NAVIGATION_COMMANDS, NAVIGATION_TOPIC } from './interfaces'
 
 describe('route-actions:', () => {

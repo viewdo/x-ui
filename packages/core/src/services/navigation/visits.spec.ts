@@ -1,3 +1,7 @@
+jest.mock('../common/logging')
+jest.mock('../data/evaluate.worker')
+
+import { commonState } from '../common'
 import { VisitStrategy } from './interfaces'
 import {
   clearVisits,
@@ -6,49 +10,53 @@ import {
   hasVisited,
   markVisit,
   recordVisit,
-  storeVisit,
+  storeVisit
 } from './visits'
 
 describe('visits', () => {
-  it('markVisit', async () => {
-    markVisit('/fake-url')
+  commonState.providerTimeout = 0
 
-    expect(hasVisited('/fake-url')).toBe(true)
-    clearVisits()
+  
+
+  it('markVisit', async () => {
+    await markVisit('/fake-url')
+
+    expect(await hasVisited('/fake-url')).toBe(true)
+    await clearVisits()
   })
 
   it('storeVisit', async () => {
-    storeVisit('/fake-url')
+    await storeVisit('/fake-url')
 
-    expect(hasVisited('/fake-url')).toBe(true)
-    clearVisits()
+    expect(await hasVisited('/fake-url')).toBe(true)
+    await clearVisits()
   })
 
   it('recordVisit: always', async () => {
-    recordVisit(VisitStrategy.always, '/fake-url')
+    await recordVisit(VisitStrategy.always, '/fake-url')
 
-    expect(hasVisited('/fake-url')).toBe(true)
+    expect(await hasVisited('/fake-url')).toBe(true)
 
-    let visits = getStoredVisits()
+    let visits = await getStoredVisits()
     expect(visits).not.toContain('/fake-url')
-    visits = getSessionVisits()
+    visits = await getSessionVisits()
 
     expect(visits).toContain('/fake-url')
 
-    clearVisits()
+    await clearVisits()
   })
 
   it('recordVisit: once', async () => {
-    recordVisit(VisitStrategy.once, '/fake-url')
+    await recordVisit(VisitStrategy.once, '/fake-url')
 
-    expect(hasVisited('/fake-url')).toBe(true)
+    expect(await hasVisited('/fake-url')).toBe(true)
 
-    let visits = getStoredVisits()
+    let visits = await getStoredVisits()
     expect(visits).toContain('/fake-url')
-    visits = getSessionVisits()
+    visits = await getSessionVisits()
 
     expect(visits).not.toContain('/fake-url')
 
-    clearVisits()
+    await clearVisits()
   })
 })

@@ -1,9 +1,9 @@
 jest.mock('../common/logging')
 
-import { EventEmitter } from '../actions/event-emitter'
+import { EventEmitter } from '../events'
 import { DataListener } from './actions'
+import { clearDataProviders, getDataProvider, getDataProviders } from './factory'
 import { DATA_COMMANDS, DATA_TOPIC, IDataProvider } from './interfaces'
-import { clearDataProviders, getDataProvider, getDataProviders } from './providers/factory'
 import { InMemoryProvider } from './providers/memory'
 
 class MockDataProvider extends InMemoryProvider {
@@ -63,18 +63,11 @@ describe('data-provider-listener', () => {
     expect(storage).toBeNull()
   })
 
-  it('eventListener: registers listeners events', async () => {
-    subject = new DataListener()
-    subject.initialize(mockWindow, actionBus, eventBus)
-    const listeners = getDataProviders()
-    expect(Object.keys(listeners).length).toBe(2)
-  })
-
   it('eventListener: handles listeners events', async () => {
     subject = new DataListener()
     subject.initialize(mockWindow, actionBus, eventBus)
     const listeners = getDataProviders()
-    expect(Object.keys(listeners).length).toBe(2)
+    expect(Object.keys(listeners).length).toBe(0)
 
     const event = {
       command: DATA_COMMANDS.RegisterDataProvider,

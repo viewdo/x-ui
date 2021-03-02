@@ -1,8 +1,8 @@
 import { Component, Element, forceUpdate, h, Host, Prop, State } from '@stencil/core'
-import { eventBus } from '../../services/actions'
 import { warn } from '../../services/common/logging'
 import { DATA_EVENTS, resolveTokens } from '../../services/data'
 import { removeAllChildNodes, resolveChildElementXAttributes } from '../../services/elements'
+import { eventBus } from '../../services/events'
 import { RouterService, ROUTE_EVENTS } from '../../services/routing'
 
 /**
@@ -35,7 +35,7 @@ export class XDataDisplay {
    * attribute.
    */
 
-  @Prop({ mutable: true }) noRender = false
+  @Prop({ mutable: true }) deferLoad = false
 
   private get router(): RouterService | undefined {
     return this.el.closest('x-app')?.router
@@ -80,7 +80,7 @@ export class XDataDisplay {
   }
 
   private async resolveTemplate() {
-    if (this.noRender) {
+    if (this.deferLoad) {
       return
     }
 

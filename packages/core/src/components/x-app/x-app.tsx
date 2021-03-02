@@ -1,9 +1,9 @@
 import { Component, Element, Event, EventEmitter, h, Host, Listen, Prop, State, writeTask } from '@stencil/core'
-import { actionBus, EventAction, eventBus, IEventActionListener } from '../../services/actions'
-import { debugIf, log } from '../../services/common/logging'
+import { commonState, debugIf, log } from '../../services/common'
 import { clearDataProviders, DataListener } from '../../services/data'
 import { ElementsActionListener, elementsState, resolveChildElementXAttributes } from '../../services/elements'
-import { InterfaceActionListener, interfaceState } from '../../services/interface'
+import { actionBus, EventAction, eventBus, IEventActionListener } from '../../services/events'
+import { InterfaceActionListener } from '../../services/interface'
 import { LocationSegments, RouterService } from '../../services/routing'
 
 /**
@@ -141,8 +141,8 @@ export class XApp {
       log('x-app: initializing')
     }
 
-    interfaceState.debug = this.debug
-    interfaceState.providerTimeout = this.providerTimeout
+    commonState.debug = this.debug
+    commonState.providerTimeout = this.providerTimeout
     elementsState.animationInterval = this.animationInterval
 
     this.actionsSubscription = actionBus.on('*', (_topic, args) => {
@@ -177,7 +177,7 @@ export class XApp {
   }
 
   private addListener(name: string, listener: IEventActionListener) {
-    debugIf(interfaceState.debug, `x-app: ${name}-listener registered`)
+    debugIf(commonState.debug, `x-app: ${name}-listener registered`)
     listener.initialize(window, actionBus, eventBus)
     this.listeners.push(listener)
   }

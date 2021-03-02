@@ -1,6 +1,6 @@
 import { Component, Element, h, Host, Method, Prop } from '@stencil/core'
-import { actionBus, ActionTopicType, EventAction, IActionElement } from '../../services/actions'
 import { warn } from '../../services/common/logging'
+import { actionBus, ActionTopicType, EventAction, IActionElement } from '../../services/events'
 
 /**
  * This element just holds data to express the actionEvent to fire. This element

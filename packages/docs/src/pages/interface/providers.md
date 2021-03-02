@@ -50,7 +50,7 @@ type InterfaceProvider = {
 ### Interface State
 
 ```typescript
-class InterfaceState {
+class commonState {
   theme: 'light' | 'dark' | string
   muted: boolean
   autoplay: boolean

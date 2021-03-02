@@ -1,77 +1,10 @@
 jest.mock('../common/logging')
-jest.mock('../../workers/expr-eval.worker')
+jest.mock('./evaluate.worker')
 
 import { clearVisits, hasVisited, markVisit } from '../navigation/visits'
-import { evaluateExpression, evaluatePredicate, resolveTokens } from './expressions'
-import { addDataProvider } from './providers/factory'
+import { evaluateExpression, evaluatePredicate } from './expressions'
+import { addDataProvider } from './factory'
 import { InMemoryProvider } from './providers/memory'
-
-describe('resolveTokens', () => {
-  let session: InMemoryProvider
-  let storage: InMemoryProvider
-
-  beforeEach(() => {
-    session = new InMemoryProvider()
-    storage = new InMemoryProvider()
-
-    addDataProvider('session', session)
-    addDataProvider('storage', storage)
-  })
-
-  it('returns null for non-existent value', async () => {
-    const value = await resolveTokens('{{session:name}}')
-    expect(value).toBe('')
-  })
-
-  it('returns null for non-existent values used in expressions', async () => {
-    const value = await resolveTokens('{{session:name}}', true)
-    expect(value).toBe('null')
-  })
-
-
-  it('returns empty for empty value', async () => {
-    await session.set('name', '')
-    const value = await resolveTokens('{{session:name}}')
-    expect(value).toBe(``)
-  })
-
-  it('returns null for empty values in expressions', async () => {
-    await session.set('name', '')
-    const value = await resolveTokens('{{session:name}}', true)
-    expect(value).toBe(`null`)
-  })
-
-  it('returns the literal string if no expression is detected', async () => {
-    const value = await resolveTokens('my_value')
-    expect(value).toBe('my_value')
-  })
-
-  it('returns the right value for a good expression', async () => {
-    await session.set('name', 'biden')
-    const value = await resolveTokens('{{session:name}}')
-    expect(value).toBe('biden')
-  })
-
-  it('returns the right value for a JSON expression', async () => {
-    await session.set('user', '{"name":"Joe"}')
-    const value = await resolveTokens('{{session:user.name}}')
-    expect(value).toBe('Joe')
-  })
-
-  it('returns the right value for a deep JSON expression', async () => {
-    await session.set('user', '{"name": { "first":"Joe"}}')
-    const value = await resolveTokens('{{session:user.name.first}}')
-    expect(value).toBe('Joe')
-  })
-
-  it('replaces multiple expressions in the same string', async () => {
-    await session.set('rate', '1')
-    await session.set('vintage', '1985')
-    const value = await resolveTokens('${{session:rate}} in {{session:vintage}}')
-    expect(value).toBe('$1 in 1985')
-  })
-
-})
 
 describe('evaluateExpression', () => {
   let session: InMemoryProvider
@@ -111,8 +44,6 @@ describe('evaluateExpression', () => {
     await session.set('items', `['foo','boo']`)
     await session.set('item', 'foo')
     const exp ='{{session:item}} in {{session:items}}'
-    const detokenized = await resolveTokens(exp, true)
-    expect(detokenized).toBe(`'foo' in ['foo','boo']`)
     const value = await evaluateExpression(exp)
     expect(value).toBe(true)
   })
@@ -128,7 +59,7 @@ describe('evaluateExpression', () => {
   })
 })
 
-describe('evaluatePredicate [session]', () => {
+describe('evaluatePredicate', () => {
   let session: InMemoryProvider
 
   beforeEach(() => {
@@ -241,14 +172,14 @@ describe('evaluatePredicate [session]', () => {
   })
 
   it('evaluates did visit', async () => {
-    markVisit('/foo')
-    const realResult = hasVisited('/foo')
-    const value = await evaluatePredicate('didVisit("/foo")')
+    await markVisit('/foo')
+    const realResult = await hasVisited('/foo')
+    const value = await evaluatePredicate(`didVisit('/foo')`)
     expect(value).toBe(realResult)
   })
 
   it('evaluates did not visit', async () => {
-    clearVisits()
+    await clearVisits()
     const value = await evaluatePredicate(`{{didVisit('/foo')}}`)
     expect(value).toBe(false)
   })

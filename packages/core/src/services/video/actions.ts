@@ -1,5 +1,5 @@
-import { EventAction, IEventEmitter } from '../actions'
-import { debugIf } from '../common/logging'
+import { debugIf } from '../common'
+import { EventAction, IEventEmitter } from '../events'
 import { VIDEO_COMMANDS, VIDEO_EVENTS, VIDEO_TOPIC } from './interfaces'
 import { onVideoChange, videoState } from './state'
 

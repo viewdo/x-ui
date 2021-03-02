@@ -1,9 +1,9 @@
 import { Component, Element, h, Host, Prop, State } from '@stencil/core'
-import { actionBus, eventBus } from '../../services/actions'
 import { audioState } from '../../services/audio'
 import { AudioActionListener } from '../../services/audio/actions'
 import { AUDIO_TOPIC } from '../../services/audio/interfaces'
 import { debugIf, warn } from '../../services/common'
+import { actionBus, eventBus } from '../../services/events'
 
 /**
  * Use this element only once per page to enable audio features.

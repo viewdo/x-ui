@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { ActionActivationStrategy, ActionTopicType, EventAction } from "./services/actions";
+import { ActionActivationStrategy, ActionTopicType, EventAction } from "./services/events";
 import { RouterService } from "./services/routing";
 import { VisitStrategy } from "./services/navigation";
 import { DiscardStrategy, LoadStrategy } from "./services/audio";
@@ -341,7 +341,7 @@ export namespace Components {
         /**
           * If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.
          */
-        "noRender": boolean;
+        "deferLoad": boolean;
         /**
           * Remote Template URL
          */
@@ -355,7 +355,7 @@ export namespace Components {
         /**
           * If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.
          */
-        "noRender": boolean;
+        "deferLoad": boolean;
         /**
           * If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.
          */
@@ -366,6 +366,10 @@ export namespace Components {
         "src"?: string;
     }
     interface XContentReference {
+        /**
+          * If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.
+         */
+        "deferLoad": boolean;
         /**
           * When inline the link/script tags are rendered in-place rather than added to the head.
          */
@@ -379,10 +383,6 @@ export namespace Components {
          */
         "noModule": boolean;
         /**
-          * If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.
-         */
-        "noRender": boolean;
-        /**
           * The script file to reference.
          */
         "scriptSrc"?: string;
@@ -395,7 +395,7 @@ export namespace Components {
         /**
           * If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.
          */
-        "noRender": boolean;
+        "deferLoad": boolean;
         /**
           * The data expression to obtain a value for rendering as inner-text for this element. {{session:user.name}}
           * @default null
@@ -412,11 +412,35 @@ export namespace Components {
          */
         "skipConsent": boolean;
     }
+    interface XDataProviderSession {
+        /**
+          * The key prefix to use in storage
+         */
+        "keyPrefix"?: string;
+        /**
+          * Provider name to use in x-ui expressions.
+         */
+        "name": string;
+    }
+    interface XDataProviderStorage {
+        /**
+          * The key prefix to use in storage
+         */
+        "keyPrefix"?: string;
+        /**
+          * Provider name to use in x-ui expressions.
+         */
+        "name": string;
+    }
     interface XDataRepeat {
         /**
           * Turn on debug statements for load, update and render events.
          */
         "debug": boolean;
+        /**
+          * If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.
+         */
+        "deferLoad": boolean;
         /**
           * The JSONata query to filter the json items see <https://try.jsonata.org> for more info.
          */
@@ -430,10 +454,6 @@ export namespace Components {
           * @example /data.json
          */
         "itemsSrc"?: string;
-        /**
-          * If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.
-         */
-        "noRender": boolean;
     }
     interface XDataShow {
         /**
@@ -569,6 +589,18 @@ declare global {
         prototype: HTMLXDataProviderCookieElement;
         new (): HTMLXDataProviderCookieElement;
     };
+    interface HTMLXDataProviderSessionElement extends Components.XDataProviderSession, HTMLStencilElement {
+    }
+    var HTMLXDataProviderSessionElement: {
+        prototype: HTMLXDataProviderSessionElement;
+        new (): HTMLXDataProviderSessionElement;
+    };
+    interface HTMLXDataProviderStorageElement extends Components.XDataProviderStorage, HTMLStencilElement {
+    }
+    var HTMLXDataProviderStorageElement: {
+        prototype: HTMLXDataProviderStorageElement;
+        new (): HTMLXDataProviderStorageElement;
+    };
     interface HTMLXDataRepeatElement extends Components.XDataRepeat, HTMLStencilElement {
     }
     var HTMLXDataRepeatElement: {
@@ -603,6 +635,8 @@ declare global {
         "x-content-reference": HTMLXContentReferenceElement;
         "x-data-display": HTMLXDataDisplayElement;
         "x-data-provider-cookie": HTMLXDataProviderCookieElement;
+        "x-data-provider-session": HTMLXDataProviderSessionElement;
+        "x-data-provider-storage": HTMLXDataProviderStorageElement;
         "x-data-repeat": HTMLXDataRepeatElement;
         "x-data-show": HTMLXDataShowElement;
     }
@@ -932,7 +966,7 @@ declare namespace LocalJSX {
         /**
           * If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.
          */
-        "noRender"?: boolean;
+        "deferLoad"?: boolean;
         /**
           * Remote Template URL
          */
@@ -946,7 +980,7 @@ declare namespace LocalJSX {
         /**
           * If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.
          */
-        "noRender"?: boolean;
+        "deferLoad"?: boolean;
         /**
           * If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.
          */
@@ -957,6 +991,10 @@ declare namespace LocalJSX {
         "src"?: string;
     }
     interface XContentReference {
+        /**
+          * If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.
+         */
+        "deferLoad"?: boolean;
         /**
           * When inline the link/script tags are rendered in-place rather than added to the head.
          */
@@ -970,10 +1008,6 @@ declare namespace LocalJSX {
          */
         "noModule"?: boolean;
         /**
-          * If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.
-         */
-        "noRender"?: boolean;
-        /**
           * The script file to reference.
          */
         "scriptSrc"?: string;
@@ -986,7 +1020,7 @@ declare namespace LocalJSX {
         /**
           * If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.
          */
-        "noRender"?: boolean;
+        "deferLoad"?: boolean;
         /**
           * The data expression to obtain a value for rendering as inner-text for this element. {{session:user.name}}
           * @default null
@@ -1007,11 +1041,35 @@ declare namespace LocalJSX {
          */
         "skipConsent"?: boolean;
     }
+    interface XDataProviderSession {
+        /**
+          * The key prefix to use in storage
+         */
+        "keyPrefix"?: string;
+        /**
+          * Provider name to use in x-ui expressions.
+         */
+        "name"?: string;
+    }
+    interface XDataProviderStorage {
+        /**
+          * The key prefix to use in storage
+         */
+        "keyPrefix"?: string;
+        /**
+          * Provider name to use in x-ui expressions.
+         */
+        "name"?: string;
+    }
     interface XDataRepeat {
         /**
           * Turn on debug statements for load, update and render events.
          */
         "debug"?: boolean;
+        /**
+          * If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.
+         */
+        "deferLoad"?: boolean;
         /**
           * The JSONata query to filter the json items see <https://try.jsonata.org> for more info.
          */
@@ -1025,10 +1083,6 @@ declare namespace LocalJSX {
           * @example /data.json
          */
         "itemsSrc"?: string;
-        /**
-          * If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.
-         */
-        "noRender"?: boolean;
     }
     interface XDataShow {
         /**
@@ -1058,6 +1112,8 @@ declare namespace LocalJSX {
         "x-content-reference": XContentReference;
         "x-data-display": XDataDisplay;
         "x-data-provider-cookie": XDataProviderCookie;
+        "x-data-provider-session": XDataProviderSession;
+        "x-data-provider-storage": XDataProviderStorage;
         "x-data-repeat": XDataRepeat;
         "x-data-show": XDataShow;
     }
@@ -1087,6 +1143,8 @@ declare module "@stencil/core" {
             "x-content-reference": LocalJSX.XContentReference & JSXBase.HTMLAttributes<HTMLXContentReferenceElement>;
             "x-data-display": LocalJSX.XDataDisplay & JSXBase.HTMLAttributes<HTMLXDataDisplayElement>;
             "x-data-provider-cookie": LocalJSX.XDataProviderCookie & JSXBase.HTMLAttributes<HTMLXDataProviderCookieElement>;
+            "x-data-provider-session": LocalJSX.XDataProviderSession & JSXBase.HTMLAttributes<HTMLXDataProviderSessionElement>;
+            "x-data-provider-storage": LocalJSX.XDataProviderStorage & JSXBase.HTMLAttributes<HTMLXDataProviderStorageElement>;
             "x-data-repeat": LocalJSX.XDataRepeat & JSXBase.HTMLAttributes<HTMLXDataRepeatElement>;
             "x-data-show": LocalJSX.XDataShow & JSXBase.HTMLAttributes<HTMLXDataShowElement>;
         }

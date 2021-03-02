@@ -1,10 +1,10 @@
-import { ActionActivationStrategy, eventBus } from '../actions';
-import { hasToken, resolveTokens } from '../data';
-import { resolveChildElementXAttributes } from '../elements';
-import { MatchResults, RouteViewOptions, ROUTE_EVENTS } from './interfaces';
-import { RouterService } from './router';
-import { isAbsolute } from './utils/location';
-import { matchesAreEqual } from './utils/path-match';
+import { hasToken, resolveTokens } from '../data/tokens'
+import { resolveChildElementXAttributes } from '../elements/functions'
+import { ActionActivationStrategy, IEventEmitter } from '../events'
+import { MatchResults, RouteViewOptions, ROUTE_EVENTS } from './interfaces'
+import { RouterService } from './router'
+import { isAbsolute } from './utils/location'
+import { matchesAreEqual } from './utils/path-match'
 
 export class Route {
   private readonly subscription: () => void
@@ -13,6 +13,7 @@ export class Route {
   public previousMatch: MatchResults | null = null
 
   constructor(
+    eventBus: IEventEmitter,
     public router: RouterService,
     public routeElement: HTMLElement,
     public path: string,
@@ -70,8 +71,8 @@ export class Route {
       if (!matchesAreEqual(this.match, this.previousMatch)) {
         this.captureInnerLinks()
         await resolveChildElementXAttributes(this.routeElement)
-        this.routeElement.querySelectorAll('[no-render]').forEach((el: any) => {
-          el.removeAttribute('no-render')
+        this.routeElement.querySelectorAll('[defer-load]').forEach((el: any) => {
+          el.removeAttribute('defer-load')
         })
         this.router.viewsUpdated(routeViewOptions)
       }

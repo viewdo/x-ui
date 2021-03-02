@@ -1,4 +1,4 @@
-import { EventEmitter } from '../../actions/event-emitter'
+import { EventEmitter } from '../../events'
 import { DATA_EVENTS, IDataProvider } from '../interfaces'
 
 export class InMemoryProvider implements IDataProvider {

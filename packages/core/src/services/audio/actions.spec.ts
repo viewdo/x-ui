@@ -1,9 +1,9 @@
-jest.mock('../../workers/expr-eval.worker')
+jest.mock('../data/evaluate.worker')
 
 import { newSpecPage, SpecPage } from '@stencil/core/testing'
-import { EventEmitter } from '../actions/event-emitter'
 import { sleep } from '../common'
-import { ROUTE_EVENTS } from '../routing/interfaces'
+import { EventEmitter } from '../events'
+import { ROUTE_EVENTS } from '../routing'
 import { AudioActionListener } from './actions'
 import { AudioTrack } from './audio'
 import { AudioInfo } from './audio-info'

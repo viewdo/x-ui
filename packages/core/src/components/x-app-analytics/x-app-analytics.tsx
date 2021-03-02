@@ -1,7 +1,7 @@
 import { Component, Event, EventEmitter } from '@stencil/core'
-import { actionBus, eventBus } from '../../services/actions'
-import { AnalyticsActionListener } from '../../services/analytics'
 import { LocationSegments } from '../../services/common'
+import { actionBus, eventBus } from '../../services/events'
+import { AnalyticsActionListener } from './analytics'
 
 /**
  *

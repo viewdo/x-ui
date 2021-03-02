@@ -1,9 +1,8 @@
 jest.mock('../common/logging')
-jest.mock('../../workers/expr-eval.worker')
+jest.mock('../data/evaluate.worker')
 
-import { actionBus, eventBus } from '../actions'
-import { addDataProvider } from '../data/providers/factory'
-import { InMemoryProvider } from '../data/providers/memory'
+import { addDataProvider, InMemoryProvider } from '../data'
+import { actionBus, eventBus } from '../events'
 import { IViewDo, VisitStrategy } from './interfaces'
 import { resolveNext } from './next'
 import { clearVisits, markVisit } from './visits'
@@ -12,14 +11,13 @@ describe('next-resolver: find next', () => {
   let toDos: IViewDo[]
   let session: InMemoryProvider
 
-
-  beforeEach(() => {
+  beforeEach(async () => {
     session = new InMemoryProvider()
     addDataProvider('session', session)
     toDos = []
     actionBus.removeAllListeners()
     eventBus.removeAllListeners()
-    clearVisits()
+    await clearVisits()
   })
 
   const setupBasicPath = () => {
@@ -111,7 +109,7 @@ describe('next-resolver: find next', () => {
     await session.set('email', 'j@biden.com')
     await session.set('color', 'red')
 
-    markVisit('/once')
+    await markVisit('/once')
 
     const result = await resolveNext(toDos)
     expect(result?.url).toBe('/terms')
@@ -123,8 +121,8 @@ describe('next-resolver: find next', () => {
     await session.set('email', 'j@biden.com')
     await session.set('color', 'red')
 
-    markVisit('/once')
-    markVisit('/terms')
+    await markVisit('/once')
+    await markVisit('/terms')
 
     const result = await resolveNext(toDos)
     expect(result?.url).toBe('/always')
@@ -135,9 +133,9 @@ describe('next-resolver: find next', () => {
     await session.set('email', 'j@biden.com')
     await session.set('color', 'red')
 
-    markVisit('/name')
-    markVisit('/once')
-    markVisit('/terms')
+    await markVisit('/name')
+    await markVisit('/once')
+    await markVisit('/terms')
 
     const result = await resolveNext(toDos)
     expect(result?.url).toBe('/name')

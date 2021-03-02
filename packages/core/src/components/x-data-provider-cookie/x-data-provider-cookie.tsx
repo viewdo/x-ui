@@ -1,14 +1,14 @@
 import { Component, Element, Event, EventEmitter, h, Host, Prop, State } from '@stencil/core'
-import { EventAction } from '../../services/actions'
 import {
   CookieConsent,
-  CookieProvider,
   DataProviderRegistration,
   DATA_COMMANDS,
   DATA_TOPIC,
   evaluatePredicate,
   IDataProvider
 } from '../../services/data'
+import { EventAction } from '../../services/events'
+import { CookieProvider } from './cookie'
 
 /**
  *  @system data

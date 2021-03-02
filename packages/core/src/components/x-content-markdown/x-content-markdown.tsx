@@ -1,10 +1,10 @@
 import { Component, Element, forceUpdate, h, Host, Prop, State } from '@stencil/core'
-import { eventBus } from '../../services/actions'
 import { warn } from '../../services/common/logging'
 import { DATA_EVENTS, evaluatePredicate, resolveTokens } from '../../services/data'
 import { resolveChildElementXAttributes } from '../../services/elements'
+import { eventBus } from '../../services/events'
 import { RouterService, ROUTE_EVENTS } from '../../services/routing'
-import { renderMarkdown } from '../../workers/remarkable.worker'
+import { renderMarkdown } from './markdown/remarkable.worker'
 
 /**
  *  @system content
@@ -34,7 +34,7 @@ export class XContentMarkdown {
    * To fetch the contents change to false or remove
    * attribute.
    */
-  @Prop({ mutable: true }) noRender = false
+  @Prop({ mutable: true }) deferLoad = false
 
   /**
    * If set, disables auto-rendering of this instance.
@@ -66,7 +66,7 @@ export class XContentMarkdown {
   }
 
   private async resolveContent() {
-    if (this.noRender) {
+    if (this.deferLoad) {
       return null
     }
 

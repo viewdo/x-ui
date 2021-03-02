@@ -1,10 +1,10 @@
-import { evaluatePredicate } from '../data/expressions';
-import { IViewDo, VisitStrategy } from './interfaces';
-import { hasVisited } from './visits';
+import { evaluatePredicate } from '../data'
+import { IViewDo, VisitStrategy } from './interfaces'
+import { hasVisited } from './visits'
 
 async function applyPredicate(viewDo: IViewDo): Promise<IViewDo> {
   let { when, url, visit = VisitStrategy.once } = viewDo
-  let visited = hasVisited(url)
+  let visited = await hasVisited(url)
   if (when) {
     const shouldGo = await evaluatePredicate(when)
     if (shouldGo) {
