@@ -343,27 +343,43 @@ export namespace Components {
          */
         "deferLoad": boolean;
         /**
+          * Cross Origin Mode
+         */
+        "mode": RequestMode;
+        /**
+          * Before rendering HTML, replace any data-tokens with their resolved values. This also commands this component to re-render it's HTML for data-changes. This can affect performance.
+         */
+        "resolveTokens": boolean;
+        /**
           * Remote Template URL
          */
         "src": string;
+        /**
+          * A data-token predicate to advise this component when to render (useful if used in a dynamic route or if tokens are used in the 'src' attribute)
+         */
+        "when"?: string;
     }
     interface XContentMarkdown {
-        /**
-          * Base Url for embedded links
-         */
-        "baseUrl"?: string;
         /**
           * If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.
          */
         "deferLoad": boolean;
         /**
-          * If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.
+          * Cross Origin Mode
          */
-        "renderIf"?: string;
+        "mode": RequestMode;
+        /**
+          * Before rendering HTML, replace any data-tokens with their resolved values. This also commands this component to re-render it's HTML for data-changes. This can affect performance.
+         */
+        "resolveTokens": boolean;
         /**
           * Remote Template URL
          */
         "src"?: string;
+        /**
+          * A data-token predicate to advise this component when to render (useful if used in a dynamic route or if tokens are used in the 'src' attribute)
+         */
+        "when"?: string;
     }
     interface XContentReference {
         /**
@@ -968,27 +984,43 @@ declare namespace LocalJSX {
          */
         "deferLoad"?: boolean;
         /**
+          * Cross Origin Mode
+         */
+        "mode"?: RequestMode;
+        /**
+          * Before rendering HTML, replace any data-tokens with their resolved values. This also commands this component to re-render it's HTML for data-changes. This can affect performance.
+         */
+        "resolveTokens"?: boolean;
+        /**
           * Remote Template URL
          */
         "src": string;
+        /**
+          * A data-token predicate to advise this component when to render (useful if used in a dynamic route or if tokens are used in the 'src' attribute)
+         */
+        "when"?: string;
     }
     interface XContentMarkdown {
-        /**
-          * Base Url for embedded links
-         */
-        "baseUrl"?: string;
         /**
           * If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.
          */
         "deferLoad"?: boolean;
         /**
-          * If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.
+          * Cross Origin Mode
          */
-        "renderIf"?: string;
+        "mode"?: RequestMode;
+        /**
+          * Before rendering HTML, replace any data-tokens with their resolved values. This also commands this component to re-render it's HTML for data-changes. This can affect performance.
+         */
+        "resolveTokens"?: boolean;
         /**
           * Remote Template URL
          */
         "src"?: string;
+        /**
+          * A data-token predicate to advise this component when to render (useful if used in a dynamic route or if tokens are used in the 'src' attribute)
+         */
+        "when"?: string;
     }
     interface XContentReference {
         /**

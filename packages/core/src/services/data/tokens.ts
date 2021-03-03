@@ -1,14 +1,13 @@
 import { requireValue } from '../common'
-import { hasVisited } from '../navigation'
 import { addDataProvider, getDataProvider, removeDataProvider } from './factory'
 import { DataItemProvider } from './providers/item'
 
 const tokenRegEx = /\{\{([\w-]*):([\w_]*)(?:\.([\w_.-]*))?(?:\?([\w_.-]*))?\}\}/gi
-const funcRegEx = /[\{]{0,2}didVisit\(['"](.*)["']\)[\}]{0,2}/gi
+
 const escapeStringsRegex = /['"]?([a-zA-Z\/]{1}[\w-/_?.]+)['"]?/gi
 
-export function hasToken(valueExpression: string) {
-  return valueExpression.match(tokenRegEx) || valueExpression.match(funcRegEx)
+export function hasToken(value: string) {
+  return value.match(tokenRegEx)
 }
 
 /**
@@ -35,12 +34,6 @@ export async function resolveTokens(textWithTokens: string, forExpression:boolea
 
   if (data) {
     addDataProvider('data', new DataItemProvider(data))
-  }
-
-  if (textWithTokens.match(funcRegEx)) {
-    const matches = funcRegEx.exec(textWithTokens)
-    const value = matches ? (await hasVisited(matches[1])) : false
-    result = textWithTokens.replace(funcRegEx, value.toString())
   }
 
   // Replace each match

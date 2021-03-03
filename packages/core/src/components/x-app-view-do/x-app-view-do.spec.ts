@@ -3,15 +3,18 @@ jest.mock('../../services/data/evaluate.worker')
 
 import { newSpecPage } from '@stencil/core/testing'
 import { actionBus, eventBus } from '../../services/events'
+import { clearVisits } from '../../services/navigation'
 import { XAppView } from '../x-app-view/x-app-view'
 import { XApp } from '../x-app/x-app'
 import { XAppViewDo } from './x-app-view-do'
 
 describe('x-app-view-do', () => {
-  afterEach(() => {
+
+  beforeEach(async () => {
     actionBus.removeAllListeners()
     eventBus.removeAllListeners()
     jest.resetAllMocks()
+    await clearVisits()
   })
 
   it('renders inactive', async () => {

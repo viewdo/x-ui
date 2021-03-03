@@ -194,6 +194,22 @@
           <p>Enable JavaScript to see more</p>
         </div>
       </div>
+      <x-data-provider-cookie x-cloak
+        class="container container-fluid border shadow-sm p-2 mt-2">
+
+        <div>
+          <p>This site uses just added cookies as a data-provider for
+            demonstration purposes.</p>
+          <p>Here's where the lawyers add all their jargon knowing you will
+            likely not read it.</p>
+        </div>
+        <button type="button"
+          class="btn btn-primary"
+          slot="accept">Accept</button>
+        <button type="button"
+          class="btn "
+          slot="reject">Decline</button>
+      </x-data-provider-cookie>
       <x-app-view url="/home"
         page-title="Home"
         content-src="/pages/home/default.html">

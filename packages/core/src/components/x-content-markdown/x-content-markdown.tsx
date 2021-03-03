@@ -1,6 +1,7 @@
 import { Component, Element, forceUpdate, h, Host, Prop, State } from '@stencil/core'
 import { warn } from '../../services/common/logging'
-import { DATA_EVENTS, evaluatePredicate, resolveTokens } from '../../services/data'
+import { getRemoteContent } from '../../services/content/remote'
+import { DATA_EVENTS, evaluatePredicate } from '../../services/data'
 import { resolveChildElementXAttributes } from '../../services/elements'
 import { eventBus } from '../../services/events'
 import { RouterService, ROUTE_EVENTS } from '../../services/routing'
@@ -14,20 +15,31 @@ import { renderMarkdown } from './markdown/remarkable.worker'
   shadow: false,
 })
 export class XContentMarkdown {
-  private dataChangedSubscription!: () => void
-  private routeChangedSubscription!: () => void
+  private readonly contentClass = 'rendered-content'
+  private dataSubscription!: () => void
+  private routeSubscription!: () => void
+
   @Element() el!: HTMLXContentMarkdownElement
-  @State() content?: string | null = null
+  @State() contentElement?: HTMLElement| null = null
 
   /**
    * Remote Template URL
    */
   @Prop() src?: string
 
+
   /**
-   * Base Url for embedded links
+   * Cross Origin Mode
    */
-  @Prop() baseUrl?: string
+  @Prop() mode: RequestMode = "cors"
+
+  /**
+   * Before rendering HTML, replace any data-tokens with their
+   * resolved values. This also commands this component to
+   * re-render it's HTML for data-changes. This can affect
+   * performance.
+   */
+  @Prop() resolveTokens: boolean = false
 
   /**
    * If set, disables auto-rendering of this instance.
@@ -37,11 +49,11 @@ export class XContentMarkdown {
   @Prop({ mutable: true }) deferLoad = false
 
   /**
-   * If set, disables auto-rendering of this instance.
-   * To fetch the contents change to false or remove
-   * attribute.
+   * A data-token predicate to advise this component when
+   * to render (useful if used in a dynamic route or if
+   * tokens are used in the 'src' attribute)
    */
-  @Prop({ mutable: true }) renderIf?: string
+  @Prop({ mutable: true }) when?: string
 
   private get router(): RouterService | null {
     return this.el.closest('x-app')?.router || null
@@ -52,73 +64,55 @@ export class XContentMarkdown {
   }
 
   async componentWillLoad() {
-    this.dataChangedSubscription = eventBus.on(DATA_EVENTS.DataChanged, () => {
-      forceUpdate(this.el)
-    })
-
-    this.routeChangedSubscription = eventBus.on(ROUTE_EVENTS.RouteChanged, () => {
-      forceUpdate(this.el)
-    })
+    if (this.resolveTokens || this.when != undefined) {
+      this.dataSubscription = eventBus.on(DATA_EVENTS.DataChanged, () => {
+        forceUpdate(this.el)
+      })
+      this.routeSubscription = eventBus.on(ROUTE_EVENTS.RouteChanged, () => {
+        forceUpdate(this.el)
+      })
+    }
   }
 
   async componentWillRender() {
-    this.content = await this.resolveContent()
+    let shouldRender = !this.deferLoad
+    if (this.when)
+      shouldRender = await evaluatePredicate(this.when)
+
+    if (shouldRender)
+      this.contentElement = await this.resolveContentElement()
+    else
+      this.contentElement = null
   }
 
-  private async resolveContent() {
-    if (this.deferLoad) {
-      return null
-    }
-
-    //const renderValue = await evaluateExpression(this.renderIf || 'true')
-    let shouldRender = true
-    if (this.renderIf) {
-      shouldRender = await evaluatePredicate(this.renderIf)
-    }
-    if (!shouldRender) {
-      return null
-    }
-
-    let content = ''
-    if (this.src) {
-      content = await this.getContentFromSrc()
-    } else if (this.childScript) {
-      content = await this.getContentFromScript()
-    }
+  private async resolveContentElement() {
+    const content = this.src ?
+      await this.getContentFromSrc() :
+      await this.getContentFromScript()
+    if (content == null) return null
 
     const div = document.createElement('div')
-    div.innerHTML = content
-
+    div.innerHTML = await renderMarkdown(content) || ''
+    div.className = this.contentClass
     await resolveChildElementXAttributes(div)
-    if (this.router) {
-      this.router!.captureInnerLinks(div)
-    }
-
+    this.router?.captureInnerLinks(div)
     this.highlight(div)
-    return div.innerHTML
+    return div
   }
 
   private async getContentFromSrc() {
     try {
-      const src = await resolveTokens(this.src!)
-      const response = await window.fetch(src)
-      if (response.status === 200) {
-        const data = await response.text()
-        return (await renderMarkdown(data)) || ''
-      }
-
-      warn(`x-content-markdown: unable to retrieve from ${this.src}`)
+      return await getRemoteContent(window, this.src!, this.mode, this.resolveTokens)
     } catch {
       warn(`x-content-markdown: unable to retrieve from ${this.src}`)
+      return null
     }
-    return ''
   }
 
   private async getContentFromScript() {
     const element = this.childScript
-    if (!element?.textContent) return ''
-    const md = this.dedent(element.textContent)
-    return (await renderMarkdown(md)) || ''
+    if (!element?.textContent) return null
+    return this.dedent(element.textContent)
   }
 
   private dedent(innerText: string) {
@@ -127,26 +121,26 @@ export class XContentMarkdown {
     return match ? string?.replace(new RegExp(`^${match[0]}`, 'gm'), '') : string
   }
 
-  private highlight(container: { querySelectorAll: (arg0: string) => any }) {
+  private highlight(container: HTMLElement) {
     const win = window as any
     const prism = win.Prism
     if (prism?.highlightAllUnder) {
-      const unhinted = container.querySelectorAll('pre>code:not([class*="language-"])')
-      unhinted.forEach((n: any) => {
-        // Dead simple language detection :)
-        const lang = n.textContent.match(/^\s*</) ? 'markup' : n.textContent.match(/^\s*(\$|#)/) ? 'bash' : 'js'
-        n.classList.add(`language-${lang}`)
-      })
       prism.highlightAllUnder(container)
     }
   }
 
   disconnectedCallback() {
-    this.dataChangedSubscription()
-    this.routeChangedSubscription()
+    this.dataSubscription?.call(this)
+    this.routeSubscription?.call(this)
   }
 
   render() {
-    return <Host hidden={!this.content}>{this.content ? <div innerHTML={this.content}></div> : null}</Host>
+    this.el.querySelector(`.${this.contentClass}`)?.remove()
+    if (this.contentElement)
+      this.el.append(this.contentElement)
+    return (
+      <Host hidden={this.contentElement == null}>
+      </Host>
+      )
   }
 }

@@ -1,10 +1,10 @@
 jest.mock('../../services/common/logging')
-jest.mock('./markdown/remarkable.worker')
 jest.mock('../../services/data/evaluate.worker')
+jest.mock('./markdown/remarkable.worker')
 
 import { newSpecPage } from '@stencil/core/testing'
 import { DATA_EVENTS, InMemoryProvider } from '../../services/data'
-import { addDataProvider } from '../../services/data/factory'
+import { addDataProvider, clearDataProviders } from '../../services/data/factory'
 import { actionBus, eventBus } from '../../services/events'
 import { XContentMarkdown } from './x-content-markdown'
 
@@ -20,6 +20,7 @@ describe('x-content-markdown', () => {
     actionBus.removeAllListeners()
     eventBus.removeAllListeners()
     jest.resetAllMocks()
+    clearDataProviders()
   })
 
   it('renders', async () => {
@@ -57,7 +58,7 @@ describe('x-content-markdown', () => {
         <script>
           # Hello
         </script>
-        <div>
+        <div class="rendered-content">
           <h1>
           Hello
           </h1>
@@ -81,9 +82,10 @@ describe('x-content-markdown', () => {
     await page.waitForChanges()
 
     expect(page.root).toEqualHtml(`
-      <x-content-markdown hidden="">
+      <x-content-markdown>
         <script>
         </script>
+        <div class="rendered-content"></div>
       </x-content-markdown>
     `)
 
@@ -98,7 +100,7 @@ describe('x-content-markdown', () => {
 
     page.win.fetch = jest.fn().mockImplementation(() =>
       Promise.resolve({
-        status: 200,
+        ok: true,
         text: () => Promise.resolve(`# HI WORLD! `),
       }),
     )
@@ -109,7 +111,7 @@ describe('x-content-markdown', () => {
 
     expect(page.root).toEqualHtml(`
       <x-content-markdown src="fake.md">
-        <div >
+        <div class="rendered-content">
           <h1>
           HI WORLD!
           </h1>
@@ -128,7 +130,7 @@ describe('x-content-markdown', () => {
 
     page.win.fetch = jest.fn().mockImplementation(() =>
       Promise.resolve({
-        status: 200,
+        ok: true,
         text: () => Promise.reject('Error!'),
       }),
     )
@@ -178,7 +180,7 @@ describe('x-content-markdown', () => {
 
     page.win.fetch = jest.fn().mockImplementation(() =>
       Promise.resolve({
-        status: 200,
+        ok: true,
         text: () => Promise.resolve(`# HI WORLD! `),
       }),
     )
@@ -204,7 +206,7 @@ describe('x-content-markdown', () => {
 
     expect(page.root).toEqualHtml(`
       <x-content-markdown src="fake.md">
-        <div >
+        <div class="rendered-content">
           <h1>
           HI WORLD!
           </h1>
@@ -222,28 +224,28 @@ describe('x-content-markdown', () => {
 
     page.win.fetch = jest.fn().mockImplementation(() =>
       Promise.resolve({
-        status: 200,
+        ok: true,
         text: () => Promise.resolve(`# HI WORLD! `),
       }),
     )
 
-    await page.setContent(`<x-content-markdown render-if="false" src="fake.md"></x-content-markdown>`)
+    await page.setContent(`<x-content-markdown when="false" src="fake.md"></x-content-markdown>`)
 
     await page.waitForChanges()
 
     expect(page.root).toEqualHtml(`
-      <x-content-markdown render-if="false" hidden="" src="fake.md">
+      <x-content-markdown when="false" hidden="" src="fake.md">
       </x-content-markdown>
     `)
 
     const md = page.body.querySelector('x-content-markdown')
-    md?.setAttribute('render-if', 'true')
+    md?.setAttribute('when', 'true')
 
     await page.waitForChanges()
 
     expect(page.root).toEqualHtml(`
-      <x-content-markdown render-if="true" src="fake.md">
-        <div>
+      <x-content-markdown when="true" src="fake.md">
+        <div class="rendered-content">
           <h1>
           HI WORLD!
           </h1>
@@ -261,15 +263,15 @@ describe('x-content-markdown', () => {
 
     page.win.fetch = jest.fn().mockImplementation(() =>
       Promise.resolve({
-        status: 200,
+        ok: true,
         text: () => Promise.resolve(`# HI WORLD! `),
       }),
     )
 
-    await page.setContent(`<x-content-markdown render-if="{{session:render}}" src="fake.md"></x-content-markdown>`)
+    await page.setContent(`<x-content-markdown when="{{session:render}}" src="fake.md"></x-content-markdown>`)
 
     expect(page.root).toEqualHtml(`
-      <x-content-markdown render-if="{{session:render}}" hidden="" src="fake.md">
+      <x-content-markdown when="{{session:render}}" hidden="" src="fake.md">
       </x-content-markdown>
     `)
 
@@ -281,8 +283,8 @@ describe('x-content-markdown', () => {
     await page.waitForChanges()
 
     expect(page.root).toEqualHtml(`
-      <x-content-markdown render-if="{{session:render}}" src="fake.md">
-        <div>
+      <x-content-markdown when="{{session:render}}" src="fake.md">
+        <div class="rendered-content">
           <h1>
           HI WORLD!
           </h1>

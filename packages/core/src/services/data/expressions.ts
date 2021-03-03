@@ -1,12 +1,15 @@
 import { requireValue, toBoolean, warn } from '../common'
+import { hasVisited } from '../navigation/visits'
 import { evalExpression } from './evaluate.worker'
 import { ExpressionContext } from './interfaces'
 import { hasToken, resolveTokens } from './tokens'
 
 const operatorRegex = /(in|for|[\>\<\+\-\=]{1})/gi
 
+const funcRegEx = /[\{]{0,2}didVisit\(['"](.*)["']\)[\}]{0,2}/gi
+
 export function hasExpression(value: string) {
-  return value.match(operatorRegex)
+  return value.match(operatorRegex) || value.match(funcRegEx)
 }
 
 /**
@@ -74,6 +77,12 @@ export async function evaluatePredicate(expression: string, context: ExpressionC
 
   if (negation) {
     workingExpression = workingExpression.slice(1, workingExpression.length)
+  }
+
+  if (expression.match(funcRegEx)) {
+    const matches = funcRegEx.exec(workingExpression)
+    const value = matches ? (await hasVisited(matches[1])) : false
+    workingExpression = workingExpression.replace(funcRegEx, value.toString())
   }
 
   let result:any =  toBoolean(workingExpression)

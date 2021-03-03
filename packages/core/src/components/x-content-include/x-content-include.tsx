@@ -1,6 +1,7 @@
-import { Component, Element, h, Host, Prop, State } from '@stencil/core'
-import { slugify, warn } from '../../services/common'
-import { DATA_EVENTS, resolveTokens } from '../../services/data'
+import { Component, Element, forceUpdate, h, Host, Prop, State } from '@stencil/core'
+import { warn } from '../../services/common'
+import { getRemoteContent } from '../../services/content/remote'
+import { DATA_EVENTS, evaluatePredicate } from '../../services/data'
 import { resolveChildElementXAttributes } from '../../services/elements'
 import { eventBus } from '../../services/events'
 import { RouterService, ROUTE_EVENTS } from '../../services/routing'
@@ -13,17 +14,31 @@ import { RouterService, ROUTE_EVENTS } from '../../services/routing'
   shadow: false,
 })
 export class XContentInclude {
-  private contentKey!: string
+  private readonly contentClass = 'remote-content'
   private dataSubscription!: () => void
   private routeSubscription!: () => void
 
   @Element() el!: HTMLXContentIncludeElement
-  @State() content?: string
+
+  @State() contentElement: HTMLElement | null = null
 
   /**
    * Remote Template URL
    */
   @Prop() src!: string
+
+  /**
+   * Cross Origin Mode
+   */
+  @Prop() mode: RequestMode = "cors"
+
+  /**
+   * Before rendering HTML, replace any data-tokens with their
+   * resolved values. This also commands this component to
+   * re-render it's HTML for data-changes. This can affect
+   * performance.
+   */
+  @Prop() resolveTokens: boolean = true
 
   /**
    * If set, disables auto-rendering of this instance.
@@ -32,75 +47,74 @@ export class XContentInclude {
    */
   @Prop({ mutable: true }) deferLoad = false
 
+  /**
+   * A data-token predicate to advise this component when
+   * to render (useful if used in a dynamic route or if
+   * tokens are used in the 'src' attribute)
+   */
+  @Prop({ mutable: true }) when?: string
+
   private get router(): RouterService | undefined {
     return this.el.closest('x-app')?.router
   }
 
   async componentWillLoad() {
-    this.dataSubscription = eventBus.on(DATA_EVENTS.DataChanged, async () => {
-      await this.resolveContent()
-    })
-
-    this.routeSubscription = eventBus.on(ROUTE_EVENTS.RouteChanged, async () => {
-      await this.resolveContent()
-    })
-
-    this.contentKey = `dynamic-content-${slugify(this.src)}`
-    await this.resolveContent()
-  }
-
-  private resetContent() {
-    const remoteContent = this.el.querySelector(`#${this.contentKey}`)
-    remoteContent?.remove()
-  }
-
-  private async resolveContent() {
-    if (this.deferLoad) {
-      return
-    }
-
-    try {
-      const src = await resolveTokens(this.src)
-      const response = await fetch(src)
-      if (response.status === 200) {
-        const data = await response.text()
-        this.content = data
-      } else {
-        warn(`x-content-include: Unable to retrieve from ${this.src}`)
-      }
-    } catch {
-      warn(`x-content-include: Unable to retrieve from ${this.src}`)
+     if (this.resolveTokens || this.when != undefined) {
+      this.dataSubscription = eventBus.on(DATA_EVENTS.DataChanged, () => {
+        forceUpdate(this.el)
+      })
+      this.routeSubscription = eventBus.on(ROUTE_EVENTS.RouteChanged, () => {
+        forceUpdate(this.el)
+      })
     }
   }
 
   async componentWillRender() {
-    if (this.content) {
-      this.resetContent()
-      let innerContent = `${this.content || ''}`
-      const content = this.el.ownerDocument.createElement('div')
-      content.slot = 'content'
-      content.id = this.contentKey
-      content.innerHTML = innerContent
-      await resolveChildElementXAttributes(content)
-      if (this.router) {
-        this.router!.captureInnerLinks(content)
-      }
-      this.el.append(content)
+
+    let shouldRender = !this.deferLoad
+    if (this.when)
+      shouldRender = await evaluatePredicate(this.when)
+
+    if (shouldRender)
+      this.contentElement = this.src ? (await this.resolveContentElement()) : null
+    else
+      this.contentElement = null
+  }
+
+  private async resolveContentElement() {
+    let content = await this.getContentFromSrc()
+    if (content == null) return null
+
+    const div = document.createElement('div')
+    div.innerHTML = content
+    div.className = this.contentClass
+    await resolveChildElementXAttributes(div)
+    this.router?.captureInnerLinks(div)
+    return div
+  }
+
+  private async getContentFromSrc() {
+    try {
+      const content = await getRemoteContent(window, this.src, this.mode, this.resolveTokens)
+      return content
+    } catch {
+      warn(`x-content-include: unable to retrieve from ${this.src}`)
+      return null
     }
   }
 
-  async componentDidRender() {}
-
   disconnectedCallback() {
-    this.dataSubscription()
-    this.routeSubscription()
+    this.dataSubscription?.call(this)
+    this.routeSubscription?.call(this)
   }
 
   render() {
+    this.el.querySelector(`.${this.contentClass}`)?.remove()
+    if (this.contentElement)
+      this.el.append(this.contentElement)
     return (
-      <Host>
-        <slot name="content" />
+      <Host hidden={this.contentElement == null}>
       </Host>
-    )
+      )
   }
 }
