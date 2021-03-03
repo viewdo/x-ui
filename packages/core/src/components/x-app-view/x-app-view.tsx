@@ -1,6 +1,7 @@
-import { Component, Element, h, Host, Prop, State } from '@stencil/core'
+import { Component, Element, forceUpdate, h, Host, Prop, State } from '@stencil/core'
 import { debugIf, slugify } from '../../services/common'
 import { warn } from '../../services/common/logging'
+import { getRemoteContent } from '../../services/content/remote'
 import { DATA_EVENTS } from '../../services/data'
 import { resolveChildElementXAttributes } from '../../services/elements'
 import { ActionActivationStrategy, eventBus } from '../../services/events'
@@ -22,6 +23,7 @@ export class XAppView {
   @Element() el!: HTMLXAppViewElement
   @State() match: MatchResults | null = null
   @State() exactMatch = false
+  @State() contentElement: HTMLElement|null = null
   private contentKey?: string | null
 
   /**
@@ -65,6 +67,22 @@ export class XAppView {
    * Remote URL for this Route's content.
    */
   @Prop() contentSrc?: string
+
+   /**
+   * Cross Origin Mode if the content is pulled from
+   * a remote location
+   */
+  @Prop() mode: RequestMode = "cors"
+
+  /**
+   * Before rendering remote HTML, replace any data-tokens with their
+   * resolved values. This also commands this component to
+   * re-render it's HTML for data-changes. This can affect
+   * performance.
+   *
+   * IMPORTANT: ONLY WORKS ON REMOTE HTML
+   */
+  @Prop() resolveTokens: boolean = false
 
   /**
    * Turn on debug statements for load, update and render events.
@@ -137,9 +155,9 @@ export class XAppView {
       v.transition = v.transition || this.transition
     })
 
-    this.dataChangedSubscription = eventBus.on(DATA_EVENTS.DataChanged, async () => {
+    this.dataChangedSubscription = eventBus.on(DATA_EVENTS.DataChanged, () => {
       debugIf(this.debug, `x-app-view: ${this.url} data changed `)
-      if (this.match?.isExact) await resolveChildElementXAttributes(this.el)
+      if (this.match?.isExact) forceUpdate(this.el)
     })
 
     this.contentKey = `remote-content-${slugify(this.contentSrc || 'none')}`
@@ -160,42 +178,36 @@ export class XAppView {
         return
       } else {
         markVisit(this.match.url)
-        await this.fetchHtml()
+        this.contentElement = await this.resolveContentElement()
       }
     } else {
       this.resetContent()
     }
   }
 
-  private async fetchHtml() {
-    if (!this.contentSrc || this.el.querySelector(`#${this.contentKey}`)) {
-      return
+  private async resolveContentElement() {
+    debugIf(this.debug, `x-app-view: ${this.url} fetching content from ${this.contentSrc}`)
+    if (!this.contentSrc) {
+      return null
     }
-
     try {
-      debugIf(this.debug, `x-app-view: ${this.url} fetching content from ${this.contentSrc}`)
-
-      const response = await window.fetch(this.contentSrc)
-      if (response.status === 200) {
-        const innerContent = await response.text()
-        const content = this.el.ownerDocument.createElement('div')
-        content.slot = 'content'
-        content.id = this.contentKey!
-        content.innerHTML = innerContent
-        this.route.captureInnerLinks(content)
-        await resolveChildElementXAttributes(content)
-        this.el.append(content)
-      } else {
-        warn(`x-app-view: ${this.url} Unable to retrieve from ${this.contentSrc}`)
-      }
+      const content = await getRemoteContent(window, this.contentSrc!, this.mode, this.resolveTokens)
+      if (content == null) return null
+      const div = document.createElement('div')
+      div.slot = 'content'
+      div.innerHTML = content
+      div.id = this.contentKey!
+      await resolveChildElementXAttributes(div)
+      this.route.captureInnerLinks(div)
+      return div
     } catch {
       warn(`x-app-view: ${this.url} Unable to retrieve from ${this.contentSrc}`)
+      return null
     }
   }
 
   async componentDidRender() {
     debugIf(this.debug, `x-app-view: ${this.url} did render`)
-
     if (this.match?.isExact) {
       await this.route?.activateActions(this.actionActivators, ActionActivationStrategy.OnEnter)
     } else {
@@ -203,14 +215,11 @@ export class XAppView {
         await this.route?.activateActions(this.actionActivators, ActionActivationStrategy.OnExit)
       }
     }
-
     await this.route?.loadCompleted()
   }
 
   private resetContent() {
-    const remoteContent = this.el.querySelector(`#${this.contentKey}`)
-    remoteContent?.remove()
-    this.contentKey = null
+    this.contentElement = null
   }
 
   disconnectedCallback() {
@@ -220,6 +229,9 @@ export class XAppView {
 
   render() {
     debugIf(this.debug, `x-app-view: ${this.url} render`)
+    this.el.querySelector(`#${this.contentKey}`)?.remove()
+    if (this.contentElement)
+      this.el.append(this.contentElement)
     return (
       <Host>
         <slot />

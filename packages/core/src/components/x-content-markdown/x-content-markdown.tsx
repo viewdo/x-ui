@@ -20,7 +20,7 @@ export class XContentMarkdown {
   private routeSubscription!: () => void
 
   @Element() el!: HTMLXContentMarkdownElement
-  @State() contentElement?: HTMLElement| null = null
+  @State() contentElement: HTMLElement| null = null
 
   /**
    * Remote Template URL

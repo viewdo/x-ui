@@ -146,9 +146,17 @@ export namespace Components {
          */
         "exact": boolean;
         /**
+          * Cross Origin Mode if the content is pulled from a remote location
+         */
+        "mode": RequestMode;
+        /**
           * The title for this view. This is prefixed before the app title configured in x-app
          */
         "pageTitle": string;
+        /**
+          * Before rendering remote HTML, replace any data-tokens with their resolved values. This also commands this component to re-render it's HTML for data-changes. This can affect performance.  IMPORTANT: ONLY WORKS ON REMOTE HTML
+         */
+        "resolveTokens": boolean;
         /**
           * The router-service instance  (internal)
          */
@@ -176,13 +184,13 @@ export namespace Components {
          */
         "debug": boolean;
         /**
-          * How should this page be presented (coming soon)
-         */
-        "display": 'page' | 'modal' | 'full';
-        /**
           * The url for this route should only be matched when it is exact.
          */
         "exact": boolean;
+        /**
+          * Cross Origin Mode if the content is pulled from a remote location
+         */
+        "mode": RequestMode;
         /**
           * When this value exists, the page will automatically progress when the duration in seconds has passed.
          */
@@ -191,6 +199,10 @@ export namespace Components {
           * The title for this view. This is prefixed before the app title configured in x-app
          */
         "pageTitle": string;
+        /**
+          * Before rendering remote HTML, replace any data-tokens with their resolved values. This also commands this component to re-render it's HTML for data-changes. This can affect performance.  IMPORTANT: ONLY WORKS ON REMOTE HTML
+         */
+        "resolveTokens": boolean;
         /**
           * Header height or offset for scroll-top on this view.
          */
@@ -803,9 +815,17 @@ declare namespace LocalJSX {
          */
         "exact"?: boolean;
         /**
+          * Cross Origin Mode if the content is pulled from a remote location
+         */
+        "mode"?: RequestMode;
+        /**
           * The title for this view. This is prefixed before the app title configured in x-app
          */
         "pageTitle"?: string;
+        /**
+          * Before rendering remote HTML, replace any data-tokens with their resolved values. This also commands this component to re-render it's HTML for data-changes. This can affect performance.  IMPORTANT: ONLY WORKS ON REMOTE HTML
+         */
+        "resolveTokens"?: boolean;
         /**
           * The router-service instance  (internal)
          */
@@ -833,13 +853,13 @@ declare namespace LocalJSX {
          */
         "debug"?: boolean;
         /**
-          * How should this page be presented (coming soon)
-         */
-        "display"?: 'page' | 'modal' | 'full';
-        /**
           * The url for this route should only be matched when it is exact.
          */
         "exact"?: boolean;
+        /**
+          * Cross Origin Mode if the content is pulled from a remote location
+         */
+        "mode"?: RequestMode;
         /**
           * When this value exists, the page will automatically progress when the duration in seconds has passed.
          */
@@ -848,6 +868,10 @@ declare namespace LocalJSX {
           * The title for this view. This is prefixed before the app title configured in x-app
          */
         "pageTitle"?: string;
+        /**
+          * Before rendering remote HTML, replace any data-tokens with their resolved values. This also commands this component to re-render it's HTML for data-changes. This can affect performance.  IMPORTANT: ONLY WORKS ON REMOTE HTML
+         */
+        "resolveTokens"?: boolean;
         /**
           * Header height or offset for scroll-top on this view.
          */

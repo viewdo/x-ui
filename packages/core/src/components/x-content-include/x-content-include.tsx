@@ -82,21 +82,16 @@ export class XContentInclude {
   }
 
   private async resolveContentElement() {
-    let content = await this.getContentFromSrc()
-    if (content == null) return null
-
-    const div = document.createElement('div')
-    div.innerHTML = content
-    div.className = this.contentClass
-    await resolveChildElementXAttributes(div)
-    this.router?.captureInnerLinks(div)
-    return div
-  }
-
-  private async getContentFromSrc() {
     try {
       const content = await getRemoteContent(window, this.src, this.mode, this.resolveTokens)
-      return content
+      if (content == null) return null
+
+      const div = document.createElement('div')
+      div.innerHTML = content
+      div.className = this.contentClass
+      await resolveChildElementXAttributes(div)
+      this.router?.captureInnerLinks(div)
+      return div
     } catch {
       warn(`x-content-include: unable to retrieve from ${this.src}`)
       return null

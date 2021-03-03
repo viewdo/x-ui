@@ -1,6 +1,7 @@
-import { Component, Element, h, Host, Prop, State } from '@stencil/core'
+import { Component, Element, forceUpdate, h, Host, Prop, State } from '@stencil/core'
 import { debugIf, slugify } from '../../services/common'
 import { warn } from '../../services/common/logging'
+import { getRemoteContent } from '../../services/content/remote'
 import { DATA_EVENTS } from '../../services/data'
 import {
   captureXBackClickEvent,
@@ -33,6 +34,7 @@ export class XAppViewDo {
 
   @Element() el!: HTMLXAppViewDoElement
   @State() match: MatchResults | null = null
+  @State() contentElement: HTMLElement|null = null
   private contentKey?: string | null
 
   /**
@@ -96,10 +98,20 @@ export class XAppViewDo {
   @Prop() contentSrc?: string
 
   /**
-   *  How should this page be presented
-   *  (coming soon)
+   * Cross Origin Mode if the content is pulled from
+   * a remote location
    */
-  @Prop() display: 'page' | 'modal' | 'full' = 'page'
+  @Prop() mode: RequestMode = "cors"
+
+  /**
+   * Before rendering remote HTML, replace any data-tokens with their
+   * resolved values. This also commands this component to
+   * re-render it's HTML for data-changes. This can affect
+   * performance.
+   *
+   * IMPORTANT: ONLY WORKS ON REMOTE HTML
+   */
+  @Prop() resolveTokens: boolean = false
 
   /**
    * To debug timed elements, set this value to true.
@@ -170,9 +182,9 @@ export class XAppViewDo {
       },
     )
 
-    this.dataChangedSubscription = eventBus.on(DATA_EVENTS.DataChanged, async () => {
+    this.dataChangedSubscription = eventBus.on(DATA_EVENTS.DataChanged, () => {
       debugIf(this.debug, 'x-app-view-do: data changed ')
-      if (this.match?.isExact) await resolveChildElementXAttributes(this.el)
+      if (this.match?.isExact) forceUpdate(this.el)
     })
 
     this.contentKey = `remote-content-${slugify(this.contentSrc || 'none')}`
@@ -183,36 +195,36 @@ export class XAppViewDo {
 
     if (this.match?.isExact) {
       debugIf(this.debug, `x-app-view-do: ${this.url} on-enter`)
-      await this.fetchHtml()
-      await this.captureChildElements()
+      this.contentElement = await this.resolveContentElement()
+      await this.captureChildElements(this.el)
+      if (this.contentElement)
+        await this.captureChildElements(this.contentElement)
       await this.setupTimer()
-      this.el.removeAttribute('hidden')
+      //this.el.removeAttribute('hidden')
     } else {
-      this.el.setAttribute('hidden', '')
+      //this.el.setAttribute('hidden', '')
       this.cleanup()
     }
   }
 
-  private async fetchHtml() {
-    if (!this.contentSrc || this.el.querySelector(`#${this.contentKey}`)) {
-      return
+  private async resolveContentElement() {
+    if (!this.contentSrc) {
+      return null
     }
 
     try {
-      const response = await window.fetch(this.contentSrc)
-      if (response.status === 200) {
-        const innerContent = await response.text()
-        const content = this.el.ownerDocument.createElement('div')
-        content.slot = 'content'
-        content.id = this.contentKey!
-        content.innerHTML = innerContent
-        await resolveChildElementXAttributes(content)
-        this.el.append(content)
-      } else {
-        warn(`x-app-view-do: ${this.url} Unable to retrieve from ${this.contentSrc}`)
-      }
+      const content = await getRemoteContent(window, this.contentSrc!, this.mode, this.resolveTokens)
+      if (content == null) return null
+      const div = document.createElement('div')
+      div.slot = 'content'
+      div.innerHTML = content
+      div.id = this.contentKey!
+      await resolveChildElementXAttributes(div)
+      this.route.captureInnerLinks(div)
+      return div
     } catch {
       warn(`x-app-view-do: ${this.url} Unable to retrieve from ${this.contentSrc}`)
+      return null
     }
   }
 
@@ -258,18 +270,18 @@ export class XAppViewDo {
     })
   }
 
-  private async captureChildElements() {
+  private async captureChildElements(el:HTMLElement) {
     debugIf(this.debug, `x-app-view-do: ${this.url} resolve children called`)
 
-    captureXBackClickEvent(this.el, (tag) => {
+    captureXBackClickEvent(el, (tag) => {
       this.back(tag, 'clicked')
     })
 
-    captureXNextClickEvent(this.el, (tag, route) => {
+    captureXNextClickEvent(el, (tag, route) => {
       this.next(tag, 'clicked', route)
     })
 
-    captureXLinkClickEvent(this.el, (tag, route) => {
+    captureXLinkClickEvent(el, (tag, route) => {
       this.next(tag, 'clicked', route)
     })
   }
@@ -304,8 +316,11 @@ export class XAppViewDo {
 
   render() {
     debugIf(this.debug, `x-app-view-do: ${this.url} render`)
+    this.el.querySelector(`#${this.contentKey}`)?.remove()
+    if (this.contentElement && this.match?.isExact)
+      this.el.append(this.contentElement)
     return (
-      <Host>
+      <Host hidden={!this.match?.isExact}>
         <slot />
         <slot name="content" />
       </Host>
