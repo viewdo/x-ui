@@ -204,8 +204,8 @@ export class XApp {
 
   disconnectedCallback() {
     clearDataProviders()
-    this.actionsSubscription()
-    this.eventSubscription()
+    this.actionsSubscription?.call(this)
+    this.eventSubscription?.call(this)
     this.router.destroy()
     this.listeners.forEach((l) => l.destroy())
     eventBus.removeAllListeners()

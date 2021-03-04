@@ -6,7 +6,7 @@ import { interfaceState, onInterfaceChange } from '../../services/interface'
   shadow: false,
 })
 export class XAppThemeDark {
-  private subscriptionDispose!: () => void
+  private interfaceSubscriptionon!: () => void
 
   @State() dark: boolean = false
 
@@ -22,7 +22,7 @@ export class XAppThemeDark {
 
   componentWillLoad() {
     this.dark = interfaceState.theme == 'dark'
-    this.subscriptionDispose = onInterfaceChange('theme', (theme) => {
+    this.interfaceSubscriptionon = onInterfaceChange('theme', (theme) => {
       this.toggleDarkTheme(theme === 'dark')
     })
   }
@@ -33,7 +33,7 @@ export class XAppThemeDark {
   }
 
   disconnectedCallback() {
-    this.subscriptionDispose()
+    this.interfaceSubscriptionon()
   }
 
   render() {

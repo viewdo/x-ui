@@ -12,8 +12,8 @@ import { filterData } from './filter/jsonata.worker'
   shadow: true,
 })
 export class XDataRepeat {
-  private subscriptionData!: () => void
-  private subscriptionRoutes!: () => void
+  private dataSubscription!: () => void
+  private routeSubscription!: () => void
   @Element() el!: HTMLXDataRepeatElement
   @State() innerTemplate!: string
   @State() resolvedTemplate!: string
@@ -63,11 +63,11 @@ export class XDataRepeat {
 
   async componentWillLoad() {
     debugIf(this.debug, 'x-data-repeat: loading')
-    this.subscriptionData = eventBus.on(DATA_EVENTS.DataChanged, () => {
+    this.dataSubscription= eventBus.on(DATA_EVENTS.DataChanged, () => {
       forceUpdate(this.el)
     })
 
-    this.subscriptionRoutes = eventBus.on(ROUTE_EVENTS.RouteChanged, () => {
+    this.routeSubscription = eventBus.on(ROUTE_EVENTS.RouteChanged, () => {
       forceUpdate(this.el)
     })
 
@@ -187,8 +187,8 @@ export class XDataRepeat {
   componentDidRender() {}
 
   disconnectedCallback() {
-    this.subscriptionData()
-    this.subscriptionRoutes()
+    this.dataSubscription?.call(this)
+    this.routeSubscription?.call(this)
   }
 
   render() {

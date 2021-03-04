@@ -12,7 +12,7 @@ import { MatchResults, RouterService, ROUTE_EVENTS } from '../../services/routin
   shadow: false,
 })
 export class XLink {
-  private subscriptionDispose!: () => void
+  private routeSubscription!: () => void
   @Element() el!: HTMLXAppLinkElement
   @State() match?: MatchResults | null
 
@@ -55,7 +55,7 @@ export class XLink {
   componentWillLoad() {
     if (this.router) this.href = this.router!.resolvePathname(this.href, this.parentUrl || '/')
 
-    this.subscriptionDispose = eventBus.on(ROUTE_EVENTS.RouteChanged, () => {
+    this.routeSubscription = eventBus.on(ROUTE_EVENTS.RouteChanged, () => {
       const match = this.router!.matchPath({
         path: this.href,
         exact: this.exact,
@@ -86,7 +86,7 @@ export class XLink {
   }
 
   disconnectedCallback() {
-    this.subscriptionDispose?.call(this)
+    this.routeSubscription?.call(this)
   }
 
   // Get the URL for this route link without the root from the router

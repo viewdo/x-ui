@@ -14,8 +14,8 @@ import { RouterService, ROUTE_EVENTS } from '../../services/routing'
   shadow: true,
 })
 export class XDataDisplay {
-  private subscriptionData!: () => void
-  private subscriptionRoutes!: () => void
+  private dataSubscription!: () => void
+  private routeSubscription!: () => void
   @Element() el!: HTMLXDataDisplayElement
   @State() innerTemplate!: string
   @State() resolvedTemplate?: string
@@ -50,11 +50,11 @@ export class XDataDisplay {
   }
 
   async componentWillLoad() {
-    this.subscriptionData = eventBus.on(DATA_EVENTS.DataChanged, () => {
+    this.dataSubscription= eventBus.on(DATA_EVENTS.DataChanged, () => {
       forceUpdate(this.el)
     })
 
-    this.subscriptionRoutes = eventBus.on(ROUTE_EVENTS.RouteChanged, () => {
+    this.routeSubscription = eventBus.on(ROUTE_EVENTS.RouteChanged, () => {
       forceUpdate(this.el)
     })
 
@@ -108,8 +108,8 @@ export class XDataDisplay {
   }
 
   disconnectedCallback() {
-    this.subscriptionData()
-    this.subscriptionRoutes()
+    this.dataSubscription?.call(this)
+    this.routeSubscription?.call(this)
   }
 
   render() {

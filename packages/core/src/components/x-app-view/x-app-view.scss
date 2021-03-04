@@ -12,8 +12,12 @@
 
 :host(.active-route-exact) {
   display: block;
-
+  transition: opacity .5s;
   ::slotted([slot='content']) {
     display: block;
   }
+}
+
+.removed {
+  opacity: 0;
 }

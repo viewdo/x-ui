@@ -37,7 +37,7 @@ export class XAudioEnabled {
   }
 
   disconnectedCallback() {
-    this.muteSubscription()
+    this.muteSubscription?.call(this)
   }
 
   render() {

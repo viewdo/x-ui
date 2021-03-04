@@ -27,7 +27,7 @@ import { VideoActionListener, videoState } from '../../services/video'
   shadow: true,
 })
 export class XAppViewDo {
-  private dataChangedSubscription!: () => void
+  private dataSubscription!: () => void
   private route!: Route
   private videoListener?: VideoActionListener
   private elementTimer?: ElementTimer
@@ -182,7 +182,7 @@ export class XAppViewDo {
       },
     )
 
-    this.dataChangedSubscription = eventBus.on(DATA_EVENTS.DataChanged, () => {
+    this.dataSubscription = eventBus.on(DATA_EVENTS.DataChanged, () => {
       debugIf(this.debug, 'x-app-view-do: data changed ')
       if (this.match?.isExact) forceUpdate(this.el)
     })
@@ -339,7 +339,7 @@ export class XAppViewDo {
 
   disconnectedCallback() {
     this.cleanup()
-    this.dataChangedSubscription()
+    this.dataSubscription?.call(this)
     this.route.destroy()
   }
 }

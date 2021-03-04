@@ -10,7 +10,7 @@ import { onVideoChange, videoState } from '../../services/video'
 })
 export class XAppAutoplay {
   private checkbox?: HTMLInputElement
-  private subscriptionDispose!: () => void
+  private videoSubscription!: () => void
   @State() autoPlay = true
 
   /**
@@ -26,7 +26,7 @@ export class XAppAutoplay {
   componentWillLoad() {
     this.autoPlay = videoState.autoplay
 
-    this.subscriptionDispose = onVideoChange('autoplay', (a) => {
+    this.videoSubscription = onVideoChange('autoplay', (a) => {
       this.autoPlay = a
     })
   }
@@ -36,7 +36,7 @@ export class XAppAutoplay {
   }
 
   disconnectedCallback() {
-    this.subscriptionDispose()
+    this.videoSubscription?.call(this)
   }
 
   render() {
