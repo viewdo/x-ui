@@ -11,18 +11,17 @@ describe('x-data-provider-session', () => {
     const page = await newSpecPage({
       components: [XDataProviderSession],
       html: `<x-data-provider-session></x-data-provider-session>`,
-    });
+    })
     expect(page.root).toEqualHtml(`
       <x-data-provider-session  hidden="">
       </x-data-provider-session>
-    `);
-  });
+    `)
+  })
 
   it('sessionProvider: is functional', async () => {
     const page = await newSpecPage({
       components: [XApp, XDataProviderSession],
-      html:
-      `<x-app>
+      html: `<x-app>
         <x-data-provider-session></x-data-provider-session>
       </x-app>`,
       supportsShadowDom: true,
@@ -45,5 +44,4 @@ describe('x-data-provider-session', () => {
 
     subject.remove()
   })
-
-});
+})

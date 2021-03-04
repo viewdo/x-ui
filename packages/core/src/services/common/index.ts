@@ -6,4 +6,3 @@ export * from './promises'
 export * from './requireValue'
 export * from './state'
 export * from './strings'
-

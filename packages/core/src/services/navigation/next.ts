@@ -18,12 +18,12 @@ async function applyPredicate(viewDo: IViewDo): Promise<IViewDo> {
 }
 
 async function findFirstUnvisited(doList: IViewDo[]): Promise<IViewDo | null> {
-  const found = doList.filter((d) => d.visit !== VisitStrategy.optional).find((i) => i.visited == false)
+  const found = doList.filter(d => d.visit !== VisitStrategy.optional).find(i => i.visited == false)
   return found || null
 }
 
 export async function resolveNext(childViewDos: Array<IViewDo>): Promise<IViewDo | null> {
-  const converted = await Promise.all(childViewDos.map((e) => applyPredicate(e)))
+  const converted = await Promise.all(childViewDos.map(e => applyPredicate(e)))
 
   const result = findFirstUnvisited(converted)
 

@@ -50,7 +50,7 @@ export class XDataDisplay {
   }
 
   async componentWillLoad() {
-    this.dataSubscription= eventBus.on(DATA_EVENTS.DataChanged, () => {
+    this.dataSubscription = eventBus.on(DATA_EVENTS.DataChanged, () => {
       forceUpdate(this.el)
     })
 

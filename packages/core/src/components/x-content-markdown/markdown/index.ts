@@ -1,1 +1,1 @@
-export * from './remarkable.worker';
+export * from './remarkable.worker'

@@ -9,7 +9,7 @@ import { NAVIGATION_COMMANDS, NAVIGATION_TOPIC } from './interfaces'
 describe('route-actions:', () => {
   let actionBus: EventEmitter
   let eventBus: EventEmitter
-  const writeTask: (func: RafCallback) => void = (_func) => {}
+  const writeTask: (func: RafCallback) => void = _func => {}
 
   const startPage = async (url: string = '') => {
     return await newSpecPage({

@@ -7,7 +7,7 @@ export class NavigationActionListener {
   private readonly removeSubscription!: () => void
 
   constructor(private router: RouterService, private events: IEventEmitter, private actions: IEventEmitter) {
-    this.removeSubscription = this.actions.on(NAVIGATION_TOPIC, (e) => {
+    this.removeSubscription = this.actions.on(NAVIGATION_TOPIC, e => {
       this.handleEventAction(e)
     })
   }

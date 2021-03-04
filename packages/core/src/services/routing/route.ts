@@ -89,7 +89,7 @@ export class Route {
     const match = this.match != null
     const exact = this.match?.isExact || false
     if (this.transition) {
-      this.transition.split(' ').forEach((t) => {
+      this.transition.split(' ').forEach(t => {
         this.toggleClass(t, match)
       })
     }
@@ -110,9 +110,7 @@ export class Route {
           pageTitle = await resolveTokens(this.pageTitle)
         }
 
-        this.routeElement.ownerDocument.title = `${pageTitle} | ${
-          this.router.appTitle || this.routeElement.ownerDocument.title
-        }`
+        this.routeElement.ownerDocument.title = `${pageTitle} | ${this.router.appTitle || this.routeElement.ownerDocument.title}`
       } else if (this.router.appTitle) {
         this.routeElement.ownerDocument.title = `${this.router.appTitle}`
       }
@@ -127,13 +125,13 @@ export class Route {
   public async activateActions(
     actionActivators: HTMLXActionActivatorElement[],
     forEvent: ActionActivationStrategy,
-    filter: (activator: HTMLXActionActivatorElement) => boolean = (_a) => true,
+    filter: (activator: HTMLXActionActivatorElement) => boolean = _a => true,
   ) {
     await Promise.all(
       actionActivators
-        .filter((activator) => activator.activate === forEvent)
+        .filter(activator => activator.activate === forEvent)
         .filter(filter)
-        .map(async (activator) => {
+        .map(async activator => {
           await activator.activateActions()
         }),
     )

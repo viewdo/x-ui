@@ -9,7 +9,6 @@ import { XApp } from '../x-app/x-app'
 import { XAppViewDo } from './x-app-view-do'
 
 describe('x-app-view-do', () => {
-
   beforeEach(async () => {
     actionBus.removeAllListeners()
     eventBus.removeAllListeners()

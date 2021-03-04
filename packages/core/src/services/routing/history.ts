@@ -23,7 +23,7 @@ export class HistoryService {
 
     this.push(this.location.pathname)
 
-    this.win.addEventListener('popstate', (e) => {
+    this.win.addEventListener('popstate', e => {
       this.handlePop(this.getDOMLocation(e.state))
     })
   }

@@ -19,7 +19,7 @@ export function hasToken(value: string) {
  * @param {string} textWithTokens
  * @return {*}  {(Promise<string|null>)}
  */
-export async function resolveTokens(textWithTokens: string, forExpression:boolean = false, data?: any): Promise<string> {
+export async function resolveTokens(textWithTokens: string, forExpression: boolean = false, data?: any): Promise<string> {
   requireValue(textWithTokens, 'valueExpression')
 
   let result = textWithTokens.slice()
@@ -54,7 +54,7 @@ export async function resolveTokens(textWithTokens: string, forExpression:boolea
       const object = typeof value === 'string' ? JSON.parse(value || '{}') : value
       const propSegments = propKey.split('.')
       let node = object
-      propSegments.forEach((property) => {
+      propSegments.forEach(property => {
         node = node[property]
       })
       value = typeof node === 'object' ? JSON.stringify(node) : `${node}`
@@ -62,10 +62,8 @@ export async function resolveTokens(textWithTokens: string, forExpression:boolea
 
     let replacement = value || ''
     if (forExpression) {
-      if (value === null || value == undefined || value == '')
-        replacement = 'null'
-      else
-        replacement = value.replace(escapeStringsRegex, `'$1'`)
+      if (value === null || value == undefined || value == '') replacement = 'null'
+      else replacement = value.replace(escapeStringsRegex, `'$1'`)
     }
 
     result = result.replace(expression, replacement)

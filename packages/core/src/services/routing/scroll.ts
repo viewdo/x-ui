@@ -7,16 +7,13 @@ export class ScrollHistory {
   constructor(private win: Window) {
     this.scrollPositions = new Map<string, [number, number]>()
 
-    getDataProvider('session')
-    .then(provider => {
+    getDataProvider('session').then(provider => {
       this.provider = provider
       if (provider) {
         const scrollData = win.sessionStorage.getItem(AppScrollKey)
-        if (scrollData)
-          this.scrollPositions = new Map(JSON.parse(scrollData))
+        if (scrollData) this.scrollPositions = new Map(JSON.parse(scrollData))
       }
     })
-
 
     if (win && 'scrollRestoration' in win.history) {
       window.history.scrollRestoration = 'manual'

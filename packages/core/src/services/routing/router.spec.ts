@@ -8,7 +8,7 @@ import { RouterService } from './router'
 describe('router', () => {
   let actionBus: EventEmitter
   let eventBus: EventEmitter
-  const writeTask: (func: RafCallback) => void = (_func) => {}
+  const writeTask: (func: RafCallback) => void = _func => {}
 
   const startPage = async (url: string = '') => {
     return await newSpecPage({

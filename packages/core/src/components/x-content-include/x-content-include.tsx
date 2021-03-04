@@ -30,7 +30,7 @@ export class XContentInclude {
   /**
    * Cross Origin Mode
    */
-  @Prop() mode: RequestMode = "cors"
+  @Prop() mode: RequestMode = 'cors'
 
   /**
    * Before rendering HTML, replace any data-tokens with their
@@ -59,7 +59,7 @@ export class XContentInclude {
   }
 
   async componentWillLoad() {
-     if (this.resolveTokens || this.when != undefined) {
+    if (this.resolveTokens || this.when != undefined) {
       this.dataSubscription = eventBus.on(DATA_EVENTS.DataChanged, () => {
         forceUpdate(this.el)
       })
@@ -70,15 +70,11 @@ export class XContentInclude {
   }
 
   async componentWillRender() {
-
     let shouldRender = !this.deferLoad
-    if (this.when)
-      shouldRender = await evaluatePredicate(this.when)
+    if (this.when) shouldRender = await evaluatePredicate(this.when)
 
-    if (shouldRender)
-      this.contentElement = this.src ? (await this.resolveContentElement()) : null
-    else
-      this.contentElement = null
+    if (shouldRender) this.contentElement = this.src ? await this.resolveContentElement() : null
+    else this.contentElement = null
   }
 
   private async resolveContentElement() {
@@ -105,9 +101,6 @@ export class XContentInclude {
 
   render() {
     replaceHtmlInElement(this.el, `.${this.contentClass}`, this.contentElement)
-    return (
-      <Host hidden={this.contentElement == null}>
-      </Host>
-      )
+    return <Host hidden={this.contentElement == null}></Host>
   }
 }

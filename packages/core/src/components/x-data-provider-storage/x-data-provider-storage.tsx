@@ -16,15 +16,14 @@ export class XDataProviderStorage {
   @Element() el!: HTMLXDataProviderStorageElement
 
   /**
-  * The key prefix to use in storage
-  */
+   * The key prefix to use in storage
+   */
   @Prop() keyPrefix?: string
 
   /**
    * Provider name to use in x-ui expressions.
    */
   @Prop() name: string = 'storage'
-
 
   private registerProvider() {
     const customEvent = new CustomEvent<EventAction<DataProviderRegistration>>('x:actions', {
@@ -46,12 +45,6 @@ export class XDataProviderStorage {
   }
 
   render() {
-    return (
-      <Host hidden>
-      </Host>
-    )
+    return <Host hidden></Host>
   }
-
-  
-
 }

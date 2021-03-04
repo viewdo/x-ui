@@ -1,4 +1,5 @@
 import { Config } from '@stencil/core'
+import { OutputTargetWww } from '@stencil/core/internal'
 import { sass } from '@stencil/sass'
 
 // Const scssVariables = 'src/scss/variables.scss';
@@ -6,7 +7,7 @@ const config: Config = {
   namespace: 'lib',
   plugins: [sass()],
   preamble: 'view.DO 2021',
-  hashFileNames: false,
+  hashFileNames: true,
   devServer: {
     openBrowser: false,
     reloadStrategy: 'pageReload',
@@ -16,7 +17,7 @@ const config: Config = {
   outputTargets: [],
 }
 
-const wwwOutput: any = {
+const wwwOutput: OutputTargetWww = {
   type: 'www',
   dir: '../../docs',
   buildDir: 'js',
@@ -32,11 +33,12 @@ const wwwOutput: any = {
   ],
 }
 
-// if (!config.devMode) {
-//   wwwOutput.serviceWorker = {
-//     globPatterns: ['**/*.{js,css,json,html,md,mdx,wav,ico,mp3}'],
-//   }
-// }
+if (!config.devMode) {
+  wwwOutput.serviceWorker = {
+    globPatterns: ['**/*.{js,css,json,html,md.png,svg}'],
+    swSrc: 'src/sw.ts',
+  }
+}
 
 config.outputTargets?.push(wwwOutput)
 

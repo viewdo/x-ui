@@ -1,15 +1,7 @@
 import { commonState, debounce, debugIf } from '../common'
 import { EventAction, IEventActionListener, IEventEmitter } from '../events'
 import { addDataProvider, getDataProvider } from './factory'
-import {
-    DataProviderRegistration,
-    DATA_COMMANDS,
-    DATA_EVENTS,
-    DATA_TOPIC,
-    IDataProvider,
-    SetData
-} from './interfaces'
-
+import { DataProviderRegistration, DATA_COMMANDS, DATA_EVENTS, DATA_TOPIC, IDataProvider, SetData } from './interfaces'
 
 export class DataListener implements IEventActionListener {
   private eventBus!: IEventEmitter
@@ -17,7 +9,7 @@ export class DataListener implements IEventActionListener {
   emitChange!: Function
   public initialize(_window: Window, actionBus: IEventEmitter, eventBus: IEventEmitter) {
     this.eventBus = eventBus
-    const handle = actionBus.on(DATA_TOPIC, (e) => {
+    const handle = actionBus.on(DATA_TOPIC, e => {
       this.handleAction(e)
     })
     this.disposeHandles.push(handle)
@@ -69,15 +61,17 @@ export class DataListener implements IEventActionListener {
       if (provider) {
         const instance = await getDataProvider(provider)
         if (instance) {
-          await Promise.all(Object.keys(data)
-            .filter((k) => k != 'provider')
-            .map((key) => instance.set(key, data[key])))
+          await Promise.all(
+            Object.keys(data)
+              .filter(k => k != 'provider')
+              .map(key => instance.set(key, data[key])),
+          )
         }
       }
     }
   }
 
   destroy() {
-    this.disposeHandles.forEach((h) => h?.call(this))
+    this.disposeHandles.forEach(h => h?.call(this))
   }
 }

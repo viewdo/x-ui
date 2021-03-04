@@ -1,1 +1,1 @@
-export * from './jsonata.worker';
+export * from './jsonata.worker'

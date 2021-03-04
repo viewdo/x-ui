@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-import { createStore } from '@stencil/store';
+import { createStore } from '@stencil/store'
 
 class StateModel {
   debug!: boolean
@@ -16,11 +16,4 @@ const store = createStore<StateModel>({
 
 const { state, onChange, reset, dispose } = store
 
-export {
-  store as interfaceStore,
-  state as interfaceState,
-  onChange as onInterfaceChange,
-  reset as interfaceStateReset,
-  dispose as interfaceStateDispose,
-};
-
+export { store as interfaceStore, state as interfaceState, onChange as onInterfaceChange, reset as interfaceStateReset, dispose as interfaceStateDispose }

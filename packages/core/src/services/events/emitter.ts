@@ -47,7 +47,7 @@ export class EventEmitter implements IEventEmitter {
 
   public emit(event: string, ...args: any[]): void {
     if (typeof this.events[event] === 'object') {
-      ;[...this.events[event]].forEach((listener) => {
+      ;[...this.events[event]].forEach(listener => {
         listener.apply(this, args)
       })
     }

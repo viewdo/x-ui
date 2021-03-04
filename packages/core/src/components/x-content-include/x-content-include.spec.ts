@@ -9,7 +9,6 @@ import { actionBus, eventBus } from '../../services/events'
 import { XContentInclude } from './x-content-include'
 
 describe('x-content-include', () => {
-
   let session: InMemoryProvider
 
   beforeEach(() => {
@@ -282,5 +281,4 @@ describe('x-content-include', () => {
     const subject = page.body.querySelector('x-content-include')
     subject?.remove()
   })
-
 })

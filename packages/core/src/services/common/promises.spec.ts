@@ -1,4 +1,3 @@
-
 import { findAsyncSequential, sleep } from './promises'
 // @ponicode
 describe('promise_utils.sleep', () => {
@@ -28,7 +27,7 @@ describe('promise_utils.sleep', () => {
 
 describe('findAsyncSequential', () => {
   const asyncFunc = (e: number) => {
-    return new Promise<number>((resolve) => {
+    return new Promise<number>(resolve => {
       setTimeout(() => resolve(e), e * 100)
     })
   }
@@ -36,7 +35,7 @@ describe('findAsyncSequential', () => {
     const arr = [1, 2, 3]
     const final: number[] = []
 
-    const result = await findAsyncSequential(arr, async (p) => {
+    const result = await findAsyncSequential(arr, async p => {
       const value: number = await asyncFunc(p)
       final.push(value)
       return value == 3

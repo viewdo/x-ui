@@ -11,7 +11,7 @@ export enum ELEMENTS_COMMANDS {
 
 export enum TIMER_EVENTS {
   OnInterval = 'on-interval',
-  OnEnd = 'on-end'
+  OnEnd = 'on-end',
 }
 
 export type TimedNode = {

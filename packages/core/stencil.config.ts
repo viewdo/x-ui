@@ -4,7 +4,6 @@ import path from 'path'
 import { version } from './package.json'
 //  import tsconfig from './tsconfig.json'
 
-
 const config: Config = {
   namespace: 'x-ui',
   plugins: [sass()],
@@ -14,7 +13,7 @@ const config: Config = {
   excludeUnusedDependencies: true,
   hashFileNames: true,
   rollupPlugins: {
-    before: []
+    before: [],
   },
   devServer: {
     openBrowser: false,
@@ -30,7 +29,6 @@ const config: Config = {
     },
     {
       type: 'dist-custom-elements-bundle',
-
     },
     {
       type: 'docs-readme',
@@ -40,7 +38,7 @@ const config: Config = {
     {
       type: 'docs-vscode',
       file: 'dist/custom-elements/custom-elements.json',
-      sourceCodeBaseUrl: path.join(process.cwd(),'packages/core'),
+      sourceCodeBaseUrl: path.join(process.cwd(), 'packages/core'),
     },
     {
       type: 'docs-custom',
@@ -79,10 +77,9 @@ const config: Config = {
   ],
   testing: {
     moduleNameMapper: {
-      "^services/(.*)$": "<rootDir>/src/services/$1"
-    }
-
-  }
+      '^services/(.*)$': '<rootDir>/src/services/$1',
+    },
+  },
 }
 
 export { config }

@@ -41,7 +41,7 @@ export function removeDataProvider(name: string) {
 }
 
 export function clearDataProviders() {
-  Object.keys(providers).forEach((key) => {
+  Object.keys(providers).forEach(key => {
     delete providers[key]
   })
 }

@@ -19,12 +19,7 @@ export class AudioActionListener {
   public readonly queued: Record<string, AudioTrack[]>
   public readonly loaded: Record<string, AudioTrack[]>
 
-  constructor(
-    win: Window | MockWindow,
-    private readonly eventBus: EventEmitter,
-    private readonly actionBus: EventEmitter,
-    private readonly debug: boolean = false,
-  ) {
+  constructor(win: Window | MockWindow, private readonly eventBus: EventEmitter, private readonly actionBus: EventEmitter, private readonly debug: boolean = false) {
     audioState.enabled = win.localStorage?.getItem(this.enabledKey) == 'true' || false
 
     this.actionSubscription = this.actionBus.on(AUDIO_TOPIC, (ev: EventAction<any>) => {
@@ -32,7 +27,7 @@ export class AudioActionListener {
       this.commandReceived(ev.command, ev.data)
     })
 
-    this.disposeMuteSubscription = onAudioStateChange('enabled', (m) => {
+    this.disposeMuteSubscription = onAudioStateChange('enabled', m => {
       win.localStorage?.setItem(this.enabledKey, m.toString())
       eventBus.emit(AUDIO_TOPIC, AUDIO_EVENTS.SoundChanged, m)
     })
@@ -276,18 +271,18 @@ export class AudioActionListener {
 
   private discardTracksFromQueue(type: AudioType, ...reasons: DiscardStrategy[]) {
     const eligibleAudio = (audio: AudioTrack) => !reasons.includes(audio.discard)
-    this.queued[type] = this.queued[type]?.filter((i) => eligibleAudio(i))
+    this.queued[type] = this.queued[type]?.filter(i => eligibleAudio(i))
   }
 
   private discardTracksFromLoaded(type: AudioType, ...reasons: DiscardStrategy[]) {
     const eligibleAudio = (audio: AudioTrack) => !reasons.includes(audio.discard)
-    this.loaded[type] = this.loaded[type]?.filter((i) => eligibleAudio(i))
+    this.loaded[type] = this.loaded[type]?.filter(i => eligibleAudio(i))
   }
 
   // AudioTrack workflow
 
   private startLoadedTrack(startRequest: AudioRequest) {
-    const audio = this.loaded[startRequest.type]?.find((a) => a.trackId === startRequest.trackId)
+    const audio = this.loaded[startRequest.type]?.find(a => a.trackId === startRequest.trackId)
     if (audio) {
       this.replaceActiveTrack(audio)
       this.eventBus.emit(AUDIO_TOPIC, AUDIO_EVENTS.Started, audio.trackId)

@@ -12,7 +12,7 @@ describe('route', () => {
   let eventBus: EventEmitter
   let router: RouterService
   let page: SpecPage
-  const writeTask: (func: RafCallback) => void = (_func) => {}
+  const writeTask: (func: RafCallback) => void = _func => {}
 
   const startPage = async (url: string = '') => {
     return await newSpecPage({
@@ -33,7 +33,7 @@ describe('route', () => {
 
     router = new RouterService(page.win, writeTask, eventBus, actionBus, '', 'App', '', 0)
 
-    let subject = router.createRoute(page.body, '/route', true, 'Page', null, 0, (m) => (match = m))
+    let subject = router.createRoute(page.body, '/route', true, 'Page', null, 0, m => (match = m))
 
     expect(subject).not.toBeNull()
     expect(subject.match).toBeNull()
@@ -110,7 +110,7 @@ describe('route', () => {
 
   it('loadComplete - match', async () => {
     page = await startPage('/route')
-    router = new RouterService( page.win, writeTask, eventBus, actionBus, '', 'App')
+    router = new RouterService(page.win, writeTask, eventBus, actionBus, '', 'App')
     const routeElement = page.body.querySelector('div')!
     let subject = new Route(eventBus, router, routeElement, '/route')
 

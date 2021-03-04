@@ -19,7 +19,7 @@ describe('x-data-provider-cookie', () => {
       components: [XDataProviderCookie],
       html: `<x-data-provider-cookie hide-when="true">
           </x-data-provider-cookie>`,
-        supportsShadowDom:true
+      supportsShadowDom: true,
     })
     expect(page.root).toEqualHtml(`
     <x-data-provider-cookie hidden="" hide-when="true">
@@ -50,12 +50,12 @@ describe('x-data-provider-cookie', () => {
             <button slot="reject">Reject</button>
           </x-data-provider-cookie>
         </x-app>`,
-        supportsShadowDom:true
+      supportsShadowDom: true,
     })
 
     const subject = page.body.querySelector('x-data-provider-cookie')!
 
-    const acceptButton =page.body.querySelector('button[slot=accept]')! as HTMLAnchorElement
+    const acceptButton = page.body.querySelector('button[slot=accept]')! as HTMLAnchorElement
     expect(acceptButton).not.toBeNull()
     acceptButton.click()
 
@@ -103,7 +103,7 @@ describe('x-data-provider-cookie', () => {
             <button slot="reject">Reject</button>
           </x-data-provider-cookie>
         </x-app>`,
-        supportsShadowDom:true
+      supportsShadowDom: true,
     })
 
     const subject = page.body.querySelector('x-data-provider-cookie')!

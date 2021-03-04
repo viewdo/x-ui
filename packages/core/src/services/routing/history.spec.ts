@@ -41,7 +41,7 @@ describe('history', () => {
     expect(subject.location.pathname).toBe('/home')
 
     let currentLocation: LocationSegments
-    subject.listen((location) => {
+    subject.listen(location => {
       currentLocation = location
     })
     expect(currentLocation!).toBe(subject.location)

@@ -1,12 +1,5 @@
 import { Component, Element, Event, EventEmitter, forceUpdate, h, Host, Prop, State } from '@stencil/core'
-import {
-  CookieConsent,
-  DataProviderRegistration,
-  DATA_COMMANDS,
-  DATA_TOPIC,
-  evaluatePredicate,
-  IDataProvider
-} from '../../services/data'
+import { CookieConsent, DataProviderRegistration, DATA_COMMANDS, DATA_TOPIC, evaluatePredicate, IDataProvider } from '../../services/data'
 import { EventAction } from '../../services/events'
 import { CookieProvider } from './cookie'
 
@@ -16,13 +9,13 @@ import { CookieProvider } from './cookie'
 @Component({
   tag: 'x-data-provider-cookie',
   shadow: true,
-  styles: `:host {display:block;}`
+  styles: `:host {display:block;}`,
 })
 export class XDataProviderCookie {
   private customProvider!: IDataProvider
   @Element() el!: HTMLXDataProviderCookieElement
 
-  @State() hide?:boolean
+  @State() hide?: boolean
 
   /**
    * An expression that tells this component how to determine if
@@ -45,7 +38,8 @@ export class XDataProviderCookie {
     bubbles: true,
     composed: true,
     cancelable: true,
-  }) didConsent!: EventEmitter<CookieConsent>
+  })
+  didConsent!: EventEmitter<CookieConsent>
 
   private get consentKey() {
     return 'consent'
@@ -66,7 +60,7 @@ export class XDataProviderCookie {
   }
 
   async componentWillLoad() {
-    this.hide = false;
+    this.hide = false
     if (this.hideWhen) {
       this.hide = await evaluatePredicate(this.hideWhen)
       return
@@ -76,20 +70,18 @@ export class XDataProviderCookie {
     const consented = await this.customProvider.get(this.consentKey)
     if (consented != null) {
       this.hide = true
-      if (consented == 'true')
-       this.registerProvider()
+      if (consented == 'true') this.registerProvider()
     } else if (this.skipConsent) {
       this.hide = true
     }
   }
 
-
-  private onAccept = async (ev:MouseEvent) => {
+  private onAccept = async (ev: MouseEvent) => {
     ev.preventDefault()
     await this.handleConsentResponse(true)
   }
 
-  private onReject = async (ev:MouseEvent) => {
+  private onReject = async (ev: MouseEvent) => {
     ev.preventDefault()
     await this.handleConsentResponse(false)
   }
@@ -106,19 +98,16 @@ export class XDataProviderCookie {
   }
 
   render() {
-    return (<Host hidden={this.hide}>
-        <slot/>
+    return (
+      <Host hidden={this.hide}>
+        <slot />
         <a onClick={async ev => await this.onAccept(ev)}>
-          <slot name="accept">
-            Accept
-          </slot>
+          <slot name="accept">Accept</slot>
         </a>
         <a onClick={async ev => await this.onReject(ev)}>
-          <slot name="reject">
-            Reject
-          </slot>
+          <slot name="reject">Reject</slot>
         </a>
-      </Host>)
-
+      </Host>
+    )
   }
 }

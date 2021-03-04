@@ -13,11 +13,11 @@ describe('analytics-listener', () => {
   beforeEach(() => {
     actionBus = new EventEmitter()
     eventBus = new EventEmitter()
-   })
+  })
 
   it('listener registered', async () => {
     let result: any = null
-    eventBus.on(ANALYTICS_EVENTS.ListenerRegistered, (listener) => {
+    eventBus.on(ANALYTICS_EVENTS.ListenerRegistered, listener => {
       result = listener
     })
 
@@ -31,7 +31,7 @@ describe('analytics-listener', () => {
     subject = new AnalyticsActionListener(actionBus, eventBus)
 
     let result: any = null
-    subject.handleViewTime = (e) => {
+    subject.handleViewTime = e => {
       result = e
     }
 
@@ -47,13 +47,13 @@ describe('analytics-listener', () => {
 
     expect(result).toBe(data)
     subject.destroy()
-   })
+  })
 
   it('handlePageView: registers listeners event: page-view', async () => {
     subject = new AnalyticsActionListener(actionBus, eventBus)
 
     let result: any = null
-    subject.handlePageView = (e) => {
+    subject.handlePageView = e => {
       result = e
     }
 
@@ -74,7 +74,7 @@ describe('analytics-listener', () => {
     subject = new AnalyticsActionListener(actionBus, eventBus)
 
     let result: any = null
-    subject.handlePageView = (e) => {
+    subject.handlePageView = e => {
       result = e
     }
 
@@ -93,7 +93,7 @@ describe('analytics-listener', () => {
     subject = new AnalyticsActionListener(actionBus, eventBus)
 
     let result: any = null
-    subject.handleEvent = (e) => {
+    subject.handleEvent = e => {
       result = e
     }
 

@@ -1,4 +1,4 @@
-import { elementsState } from './state';
+import { elementsState } from './state'
 
 export function hasReference(url: string) {
   return elementsState.references.includes(url)

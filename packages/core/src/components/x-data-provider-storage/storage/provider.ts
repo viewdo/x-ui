@@ -4,9 +4,13 @@ import { EventEmitter } from '../../../services/events/emitter'
 export class StorageProvider implements IDataProvider {
   constructor(private readonly localStorage = window.localStorage) {
     this.changed = new EventEmitter()
-    window?.addEventListener('storage', () => {
-      this.changed.emit(DATA_EVENTS.DataChanged)
-    }, { passive: true })
+    window?.addEventListener(
+      'storage',
+      () => {
+        this.changed.emit(DATA_EVENTS.DataChanged)
+      },
+      { passive: true },
+    )
   }
 
   async get(key: string): Promise<string | null> {

@@ -15,12 +15,7 @@
  *
  * @returns {Function}  A new, throttled, function.
  */
-export function throttle(
-  delay: number,
-  callback: (...args: any[]) => any,
-  noTrailing: boolean = true,
-  debounceMode: boolean = false,
-): Function {
+export function throttle(delay: number, callback: (...args: any[]) => any, noTrailing: boolean = true, debounceMode: boolean = false): Function {
   /*
    * After wrapper has stopped being called, this timeout ensures that
    * `callback` is executed at the proper times in `throttle` and `end`

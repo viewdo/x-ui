@@ -105,14 +105,7 @@ export class XLink {
 
     return (
       <Host>
-        <a
-          href={this.href}
-          title={this.el.title}
-          {...anchorAttributes}
-          x-attached-click
-          class={classes}
-          onClick={(e: MouseEvent) => this.handleClick(e)}
-        >
+        <a href={this.href} title={this.el.title} {...anchorAttributes} x-attached-click class={classes} onClick={(e: MouseEvent) => this.handleClick(e)}>
           <slot />
         </a>
       </Host>

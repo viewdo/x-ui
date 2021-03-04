@@ -12,7 +12,7 @@ export class InterfaceActionListener implements IEventActionListener {
 
   initialize(win: Window | MockWindow, actionBus: IEventEmitter, eventBus: IEventEmitter): void {
     this.eventBus = eventBus
-    this.actionsSubscription = actionBus.on(INTERFACE_TOPIC, (e) => {
+    this.actionsSubscription = actionBus.on(INTERFACE_TOPIC, e => {
       this.handleAction(e)
     })
     this.defaultProvider = new DefaultInterfaceProvider(win, eventBus)

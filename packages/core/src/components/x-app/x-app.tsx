@@ -110,7 +110,8 @@ export class XApp {
     composed: true,
     cancelable: true,
     bubbles: false,
-  }) actions!: EventEmitter
+  })
+  actions!: EventEmitter
 
   /**
    * Listen for events that occurred within the **`<x-app>`**
@@ -121,10 +122,11 @@ export class XApp {
     composed: true,
     cancelable: false,
     bubbles: true,
-  }) events!: EventEmitter
+  })
+  events!: EventEmitter
 
   private get childViews(): HTMLXAppViewElement[] {
-    return Array.from(this.el.querySelectorAll('x-app-view') || []).filter((e) => {
+    return Array.from(this.el.querySelectorAll('x-app-view') || []).filter(e => {
       return e.parentElement?.closest('x-app-view') == null
     })
   }
@@ -144,24 +146,15 @@ export class XApp {
       this.actions.emit(args)
     })
 
-    this.eventSubscription = eventBus.on('*', (args) => {
+    this.eventSubscription = eventBus.on('*', args => {
       this.events.emit(args)
     })
 
-    this.router = new RouterService(
-      window,
-      writeTask,
-      eventBus,
-      actionBus,
-      this.root,
-      this.appTitle,
-      this.transition,
-      this.scrollTopOffset,
-    )
+    this.router = new RouterService(window, writeTask, eventBus, actionBus, this.root, this.appTitle, this.transition, this.scrollTopOffset)
     this.router.captureInnerLinks(this.el)
 
     debugIf(this.debug, `x-app: found ${this.childViews.length} child views`)
-    this.childViews.forEach((v) => {
+    this.childViews.forEach(v => {
       v.url = this.router.adjustRootViewUrls(v.url, this.hash)
       v.transition = v.transition || this.transition
     })
@@ -193,11 +186,11 @@ export class XApp {
   private async performLoadElementManipulation(element: HTMLElement) {
     await resolveChildElementXAttributes(element)
 
-    element.querySelectorAll('[x-hide]').forEach((el) => {
+    element.querySelectorAll('[x-hide]').forEach(el => {
       el.setAttribute('hidden', '')
       el.removeAttribute('x-hide')
     })
-    element.querySelectorAll('[x-cloak]').forEach((el) => {
+    element.querySelectorAll('[x-cloak]').forEach(el => {
       el.removeAttribute('x-cloak')
     })
   }
@@ -207,7 +200,7 @@ export class XApp {
     this.actionsSubscription?.call(this)
     this.eventSubscription?.call(this)
     this.router.destroy()
-    this.listeners.forEach((l) => l.destroy())
+    this.listeners.forEach(l => l.destroy())
     eventBus.removeAllListeners()
     actionBus.removeAllListeners()
   }

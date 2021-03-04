@@ -27,7 +27,7 @@ export class XAudioEnabled {
   componentWillLoad() {
     this.enabled = audioState.enabled
 
-    this.muteSubscription = onAudioStateChange('enabled', (m) => {
+    this.muteSubscription = onAudioStateChange('enabled', m => {
       this.enabled = m
     })
   }
@@ -47,7 +47,7 @@ export class XAudioEnabled {
           type="checkbox"
           class={this.classes}
           id={this.inputId}
-          ref={(e) => {
+          ref={e => {
             this.checkbox = e
           }}
           onChange={() => this.toggle()}

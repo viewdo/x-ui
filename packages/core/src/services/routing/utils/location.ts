@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 
-import { LocationSegments } from '../interfaces';
-import { parsePath, parseQueryString } from './path';
+import { LocationSegments } from '../interfaces'
+import { parsePath, parseQueryString } from './path'
 
 export const isAbsolute = (pathname: string) => pathname?.startsWith('/') || false
 
@@ -115,25 +115,16 @@ export const valueEqual = (a: any, b: any): boolean => {
       return false
     }
 
-    return aKeys.every((key) => valueEqual(a[key], b[key]))
+    return aKeys.every(key => valueEqual(a[key], b[key]))
   }
 
   return false
 }
 
 export const locationsAreEqual = (a: LocationSegments, b: LocationSegments) =>
-  a.pathname === b.pathname &&
-  a.search === b.search &&
-  a.hash === b.hash &&
-  a.key === b.key &&
-  valueEqual(a.state, b.state)
+  a.pathname === b.pathname && a.search === b.search && a.hash === b.hash && a.key === b.key && valueEqual(a.state, b.state)
 
-export const createLocation = (
-  path: string | LocationSegments,
-  state: any,
-  key: string,
-  currentLocation?: LocationSegments,
-) => {
+export const createLocation = (path: string | LocationSegments, state: any, key: string, currentLocation?: LocationSegments) => {
   let location: LocationSegments
 
   if (typeof path === 'string') {
@@ -164,12 +155,7 @@ export const createLocation = (
   try {
     location.pathname = decodeURI(location.pathname)
   } catch (error_) {
-    const error =
-      error_ instanceof URIError
-        ? new URIError(
-            `Pathname "${location.pathname}" could not be decoded. This is likely caused by an invalid percent-encoding.`,
-          )
-        : error_
+    const error = error_ instanceof URIError ? new URIError(`Pathname "${location.pathname}" could not be decoded. This is likely caused by an invalid percent-encoding.`) : error_
     throw error
   }
 

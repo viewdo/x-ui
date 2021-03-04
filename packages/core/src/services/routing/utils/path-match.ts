@@ -1,8 +1,8 @@
 /* istanbul ignore file */
 
-import { LocationSegments, MatchOptions, MatchResults } from '../interfaces';
-import { valueEqual } from './location';
-import { Key, Path, pathToRegexp } from './path-regex';
+import { LocationSegments, MatchOptions, MatchResults } from '../interfaces'
+import { valueEqual } from './location'
+import { Key, Path, pathToRegexp } from './path-regex'
 
 interface CompileOptions {
   end: boolean

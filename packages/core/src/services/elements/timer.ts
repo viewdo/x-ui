@@ -1,10 +1,6 @@
 import { debugIf } from '../common'
 import { EventEmitter } from '../events'
-import {
-    captureElementChildTimedNodes,
-    resolveElementChildTimedNodesByTime,
-    restoreElementChildTimedNodes
-} from './functions'
+import { captureElementChildTimedNodes, resolveElementChildTimedNodesByTime, restoreElementChildTimedNodes } from './functions'
 import { TimedNode, TIMER_EVENTS } from './interfaces'
 
 export class ElementTimer extends EventEmitter {
@@ -19,13 +15,10 @@ export class ElementTimer extends EventEmitter {
 
     // Capture timed nodes
     this.timedNodes = captureElementChildTimedNodes(this.rootElement, this.duration)
-    debugIf(
-      this.debug && this.timedNodes.length > 0,
-      `element-timer:  found time-child nodes: ${JSON.stringify(this.timedNodes)}`,
-    )
+    debugIf(this.debug && this.timedNodes.length > 0, `element-timer:  found time-child nodes: ${JSON.stringify(this.timedNodes)}`)
 
     // self-register to manage them
-    this.on(TIMER_EVENTS.OnInterval, (time) => {
+    this.on(TIMER_EVENTS.OnInterval, time => {
       resolveElementChildTimedNodesByTime(this.rootElement, this.timedNodes, time, duration, debug)
       this.lastTime = time
     })

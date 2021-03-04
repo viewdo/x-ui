@@ -1,4 +1,4 @@
-import { IEvents, Listener } from '../common/interfaces';
+import { IEvents, Listener } from '../common/interfaces'
 /* istanbul ignore file */
 
 export interface IEventEmitter {
@@ -30,7 +30,6 @@ export interface EventAction<T> {
 export const ACTIONS_DOM_EVENT = 'x:actions'
 export const EVENTS_DOM_EVENT = 'x:events'
 
-
 export interface IActionElement {
   getAction(): Promise<EventAction<any> | null>
 }
@@ -45,5 +44,4 @@ export enum ActionTopicType {
   video = 'video',
 }
 
-
-export { Listener, IEvents };
+export { Listener, IEvents }

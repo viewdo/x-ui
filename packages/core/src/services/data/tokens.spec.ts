@@ -27,7 +27,6 @@ describe('resolveTokens', () => {
     expect(value).toBe('null')
   })
 
-
   it('returns empty for empty value', async () => {
     await session.set('name', '')
     const value = await resolveTokens('{{session:name}}')
@@ -69,5 +68,4 @@ describe('resolveTokens', () => {
     const value = await resolveTokens('${{session:rate}} in {{session:vintage}}')
     expect(value).toBe('$1 in 1985')
   })
-
 })

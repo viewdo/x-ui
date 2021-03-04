@@ -82,7 +82,7 @@ describe('x-action', () => {
 
   it('x-action: sendAction', async () => {
     let msg: EventAction<any> | null = null
-    actionBus.on('navigation', (a) => {
+    actionBus.on('navigation', a => {
       msg = a
     })
     const page = await newSpecPage({

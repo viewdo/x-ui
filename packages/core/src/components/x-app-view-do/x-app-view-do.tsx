@@ -11,7 +11,7 @@ import {
   getChildInputValidity,
   replaceHtmlInElement,
   resolveChildElementXAttributes,
-  TIMER_EVENTS
+  TIMER_EVENTS,
 } from '../../services/elements'
 import { ActionActivationStrategy, actionBus, eventBus } from '../../services/events'
 import { recordVisit, VisitStrategy } from '../../services/navigation'
@@ -35,7 +35,7 @@ export class XAppViewDo {
 
   @Element() el!: HTMLXAppViewDoElement
   @State() match: MatchResults | null = null
-  @State() contentElement: HTMLElement|null = null
+  @State() contentElement: HTMLElement | null = null
   private contentKey?: string | null
 
   /**
@@ -102,7 +102,7 @@ export class XAppViewDo {
    * Cross Origin Mode if the content is pulled from
    * a remote location
    */
-  @Prop() mode: RequestMode = "cors"
+  @Prop() mode: RequestMode = 'cors'
 
   /**
    * Before rendering remote HTML, replace any data-tokens with their
@@ -198,8 +198,7 @@ export class XAppViewDo {
       debugIf(this.debug, `x-app-view-do: ${this.url} on-enter`)
       this.contentElement = await this.resolveContentElement()
       await this.captureChildElements(this.el)
-      if (this.contentElement)
-        await this.captureChildElements(this.contentElement)
+      if (this.contentElement) await this.captureChildElements(this.contentElement)
       await this.setupTimer()
       //this.el.removeAttribute('hidden')
     } else {
@@ -254,7 +253,7 @@ export class XAppViewDo {
 
     const activated: any = []
     this.elementTimer.on(TIMER_EVENTS.OnInterval, async (time: number) => {
-      await this.route.activateActions(this.actionActivators, ActionActivationStrategy.AtTime, (activator) => {
+      await this.route.activateActions(this.actionActivators, ActionActivationStrategy.AtTime, activator => {
         if (activated.includes(activator)) return false
         if (activator.time && time >= activator.time) {
           activated.push(activator)
@@ -271,10 +270,10 @@ export class XAppViewDo {
     })
   }
 
-  private async captureChildElements(el:HTMLElement) {
+  private async captureChildElements(el: HTMLElement) {
     debugIf(this.debug, `x-app-view-do: ${this.url} resolve children called`)
 
-    captureXBackClickEvent(el, (tag) => {
+    captureXBackClickEvent(el, tag => {
       this.back(tag, 'clicked')
     })
 

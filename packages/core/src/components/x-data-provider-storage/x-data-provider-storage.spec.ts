@@ -11,16 +11,16 @@ describe('x-data-provider-storage', () => {
     const page = await newSpecPage({
       components: [XDataProviderStorage],
       html: `<x-data-provider-storage></x-data-provider-storage>`,
-    });
+    })
     expect(page.root).toEqualHtml(`
       <x-data-provider-storage hidden="">
       </x-data-provider-storage>
-    `);
-  });
+    `)
+  })
 
   it('localStorage: is functional', async () => {
     const page = await newSpecPage({
-      components: [XApp,XDataProviderStorage],
+      components: [XApp, XDataProviderStorage],
       html: '<x-app><x-data-provider-storage></x-data-provider-storage></x-app>',
       supportsShadowDom: true,
     })
@@ -41,4 +41,4 @@ describe('x-data-provider-storage', () => {
 
     subject.remove()
   })
-});
+})

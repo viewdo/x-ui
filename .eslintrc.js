@@ -10,9 +10,11 @@ module.exports = {
       "version": "16.7"
     }
   },
+  plugins: ["prettier"],
   rules: {
     '@stencil/strict-boolean-conditions': 0,
     '@stencil/strict-mutable': 0,
+    '@stencil/decorators-style': 0,
     '@typescript-eslint/naming-convention': 0,
     '@typescript-eslint/lines-between-class-members': 0,
     'react/react-in-jsx-scope': 0,
@@ -34,6 +36,7 @@ module.exports = {
     'no-plusplus': 0,
     'class-methods-use-this': 0,
     'no-undef': 0,
+    'prettier/prettier': "error"
   },
   overrides: [
     {

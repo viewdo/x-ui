@@ -1,22 +1,17 @@
 <x-content-reference
   script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
-  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css"
->
+  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
 </x-content-reference>
 <x-content-reference
-  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js"
->
+  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
 </x-content-reference>
 
 <div class="container container-fluid mx-auto">
   <h1>Installation</h1>
-
   <h2>Cloud Reference</h2>
-  <p class="lead">
-    No need to install anything. You selected to use these elements by adding a single script reference in the head of
-    your HTML file.
+  <p class="lead"> No need to install anything. You selected to use these
+    elements by adding a single script reference in the head of your HTML file.
   </p>
-
   <h3>Add Script References</h3>
   <p>Add the following script tags to the head:</p>
   <x-content-markdown>
@@ -31,10 +26,20 @@
       ```
     </script>
   </x-content-markdown>
-  <p class="note">Only one of these scripts are imported. Which depends on the browser's support for ESM modules.</p>
-
+  <p class="note">Only one of these scripts are imported. Which depends on the
+    browser's support for ESM modules.</p>
   <footer>
-    <button slot="start" x-back class="btn btn-light btn-lg">&lt; Back</button>
-    <button slot="end" x-next class="btn btn-primary btn-lg">Next &gt;</button>
+    <button slot="start"
+      x-back
+      class="btn btn-light btn-lg">&lt; Back</button>
+    <button slot="end"
+      x-next
+      class="btn btn-primary btn-lg">Next &gt;</button>
   </footer>
+  <x-action-activator activate="OnEnter">
+    <x-action topic="data"
+      command="set-data"
+      data-provider="storage"
+      data-installed="cdn"> </x-action>
+  </x-action-activator>
 </div>

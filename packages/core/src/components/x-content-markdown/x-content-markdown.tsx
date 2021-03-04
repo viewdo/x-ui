@@ -20,18 +20,17 @@ export class XContentMarkdown {
   private routeSubscription!: () => void
 
   @Element() el!: HTMLXContentMarkdownElement
-  @State() contentElement: HTMLElement| null = null
+  @State() contentElement: HTMLElement | null = null
 
   /**
    * Remote Template URL
    */
   @Prop() src?: string
 
-
   /**
    * Cross Origin Mode
    */
-  @Prop() mode: RequestMode = "cors"
+  @Prop() mode: RequestMode = 'cors'
 
   /**
    * Before rendering HTML, replace any data-tokens with their
@@ -76,23 +75,18 @@ export class XContentMarkdown {
 
   async componentWillRender() {
     let shouldRender = !this.deferLoad
-    if (this.when)
-      shouldRender = await evaluatePredicate(this.when)
+    if (this.when) shouldRender = await evaluatePredicate(this.when)
 
-    if (shouldRender)
-      this.contentElement = await this.resolveContentElement()
-    else
-      this.contentElement = null
+    if (shouldRender) this.contentElement = await this.resolveContentElement()
+    else this.contentElement = null
   }
 
   private async resolveContentElement() {
-    const content = this.src ?
-      await this.getContentFromSrc() :
-      await this.getContentFromScript()
+    const content = this.src ? await this.getContentFromSrc() : await this.getContentFromScript()
     if (content == null) return null
 
     const div = document.createElement('div')
-    div.innerHTML = await renderMarkdown(content) || ''
+    div.innerHTML = (await renderMarkdown(content)) || ''
     div.className = this.contentClass
     await resolveChildElementXAttributes(div)
     this.router?.captureInnerLinks(div)
@@ -136,9 +130,6 @@ export class XContentMarkdown {
 
   render() {
     replaceHtmlInElement(this.el, `.${this.contentClass}`, this.contentElement)
-    return (
-      <Host hidden={this.contentElement == null}>
-      </Host>
-      )
+    return <Host hidden={this.contentElement == null}></Host>
   }
 }

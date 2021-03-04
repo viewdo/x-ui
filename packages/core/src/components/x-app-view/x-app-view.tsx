@@ -23,7 +23,7 @@ export class XAppView {
   @Element() el!: HTMLXAppViewElement
   @State() match: MatchResults | null = null
   @State() exactMatch = false
-  @State() contentElement: HTMLElement|null = null
+  @State() contentElement: HTMLElement | null = null
   private contentKey?: string | null
 
   /**
@@ -68,11 +68,11 @@ export class XAppView {
    */
   @Prop() contentSrc?: string
 
-   /**
+  /**
    * Cross Origin Mode if the content is pulled from
    * a remote location
    */
-  @Prop() mode: RequestMode = "cors"
+  @Prop() mode: RequestMode = 'cors'
 
   /**
    * Before rendering remote HTML, replace any data-tokens with their
@@ -98,22 +98,19 @@ export class XAppView {
   }
 
   private get actionActivators(): HTMLXActionActivatorElement[] {
-    return Array.from(this.el.querySelectorAll('x-action-activator')).filter((e) => this.isChild(e))
+    return Array.from(this.el.querySelectorAll('x-action-activator')).filter(e => this.isChild(e))
   }
 
   private isChild(element: HTMLElement) {
-    return (
-      element.parentElement?.closest('x-app-view') === this.el ||
-      (false && element.parentElement?.closest('x-view-do') == null)
-    )
+    return element.parentElement?.closest('x-app-view') === this.el || (false && element.parentElement?.closest('x-view-do') == null)
   }
 
   private get childViewDos(): HTMLXAppViewDoElement[] {
-    return Array.from(this.el.querySelectorAll('x-app-view-do') || []).filter((e) => this.isChild(e))
+    return Array.from(this.el.querySelectorAll('x-app-view-do') || []).filter(e => this.isChild(e))
   }
 
   private get childViews(): HTMLXAppViewElement[] {
-    return Array.from(this.el.querySelectorAll('x-app-view') || []).filter((e) => this.isChild(e))
+    return Array.from(this.el.querySelectorAll('x-app-view') || []).filter(e => this.isChild(e))
   }
 
   componentWillLoad() {
@@ -144,13 +141,13 @@ export class XAppView {
     debugIf(this.debug, `x-app-view: ${this.url} match: ${this.route.match ? 'true' : 'false'}`)
 
     debugIf(this.debug, `x-app-view: ${this.url} found ${this.childViews.length} child views`)
-    this.childViews.forEach((v) => {
+    this.childViews.forEach(v => {
       v.url = this.route.normalizeChildUrl(v.url)
       v.transition = v.transition || this.transition
     })
 
     debugIf(this.debug, `x-app-view: ${this.url} found ${this.childViewDos.length} child view-dos`)
-    this.childViewDos.forEach((v) => {
+    this.childViewDos.forEach(v => {
       v.url = this.route.normalizeChildUrl(v.url)
       v.transition = v.transition || this.transition
     })
@@ -168,7 +165,7 @@ export class XAppView {
 
     if (this.match?.isExact) {
       debugIf(this.debug, `x-app-view: ${this.url} route is matched `)
-      const viewDos = this.childViewDos.map((el) => {
+      const viewDos = this.childViewDos.map(el => {
         const { url, when, visit } = el
         return { url, when, visit }
       })
@@ -231,7 +228,7 @@ export class XAppView {
     debugIf(this.debug, `x-app-view: ${this.url} render`)
     replaceHtmlInElement(this.el, `#${this.contentKey}`, this.contentElement)
     return (
-      <Host >
+      <Host>
         <slot />
         <slot name="content" />
       </Host>

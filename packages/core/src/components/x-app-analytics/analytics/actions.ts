@@ -8,7 +8,7 @@ export class AnalyticsActionListener {
 
   constructor(private actions: IEventEmitter, private events: IEventEmitter) {
     this.removeSubscription.push(
-      this.actions.on(ANALYTICS_TOPIC, (e) => {
+      this.actions.on(ANALYTICS_TOPIC, e => {
         this.handleEventAction(e)
       }),
     )
@@ -21,9 +21,9 @@ export class AnalyticsActionListener {
     this.events.emit(ANALYTICS_EVENTS.ListenerRegistered, this)
   }
 
-  handleEvent: (data: any) => void = (_d) => {}
-  handleViewTime: (data: any) => void = (_d) => {}
-  handlePageView: (data: any) => void = (_d) => {}
+  handleEvent: (data: any) => void = _d => {}
+  handleViewTime: (data: any) => void = _d => {}
+  handlePageView: (data: any) => void = _d => {}
 
   private handleEventAction(eventAction: EventAction<any>) {
     debugIf(commonState.debug, `analytics-listener: action received ${JSON.stringify(eventAction)}`)
@@ -45,6 +45,6 @@ export class AnalyticsActionListener {
   }
 
   destroy() {
-    this.removeSubscription?.forEach((d) => d())
+    this.removeSubscription?.forEach(d => d())
   }
 }

@@ -43,7 +43,7 @@ describe('evaluateExpression', () => {
   it('evaluates array in expression', async () => {
     await session.set('items', `['foo','boo']`)
     await session.set('item', 'foo')
-    const exp ='{{session:item}} in {{session:items}}'
+    const exp = '{{session:item}} in {{session:items}}'
     const value = await evaluateExpression(exp)
     expect(value).toBe(true)
   })
@@ -216,7 +216,6 @@ describe('evaluatePredicate', () => {
     expect(value).toBe(false)
   })
 
-
   it('evaluates with ! for false on not empty', async () => {
     await session.set('name', 'jason')
     const value = await evaluatePredicate('!{{session:name}}')
@@ -227,5 +226,4 @@ describe('evaluatePredicate', () => {
     const value = await evaluatePredicate('!{{session:name}}')
     expect(value).toBe(true)
   })
-
 })

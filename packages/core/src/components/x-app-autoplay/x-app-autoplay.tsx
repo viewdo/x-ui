@@ -26,7 +26,7 @@ export class XAppAutoplay {
   componentWillLoad() {
     this.autoPlay = videoState.autoplay
 
-    this.videoSubscription = onVideoChange('autoplay', (a) => {
+    this.videoSubscription = onVideoChange('autoplay', a => {
       this.autoPlay = a
     })
   }
@@ -46,7 +46,7 @@ export class XAppAutoplay {
           type="checkbox"
           class={this.classes}
           id={this.inputId}
-          ref={(e) => {
+          ref={e => {
             this.checkbox = e
           }}
           onChange={() => this.toggleAutoPlay()}

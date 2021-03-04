@@ -58,18 +58,13 @@ export class XActionActivator {
     })
 
     // Activate children
-    this.actions.forEach((action) => {
+    this.actions.forEach(action => {
       const data = action.data
 
       Object.assign(data, values)
 
       const dataString = JSON.stringify(data)
-      debugIf(
-        this.debug,
-        `x-action-activator:  ${this.parent?.url || ''} Activating [${this.activate}~{topic: ${
-          action?.topic
-        }, command:${action?.command}, data: ${dataString}}]`,
-      )
+      debugIf(this.debug, `x-action-activator:  ${this.parent?.url || ''} Activating [${this.activate}~{topic: ${action?.topic}, command:${action?.command}, data: ${dataString}}]`)
 
       actionBus.emit(action.topic, action)
     })
@@ -102,16 +97,14 @@ export class XActionActivator {
       return
     }
 
-    this.childActions.forEach(async (a) => {
+    this.childActions.forEach(async a => {
       const action = await a.getAction()
       if (!action) return
 
       const dataString = JSON.stringify(action.data)
       debugIf(
         this.debug,
-        `x-action-activator: ${this.parent?.url || ''} registered [${this.activate}~{topic: ${action?.topic}, command:${
-          action?.command
-        }, data: ${dataString}}}] `,
+        `x-action-activator: ${this.parent?.url || ''} registered [${this.activate}~{topic: ${action?.topic}, command:${action?.command}, data: ${dataString}}}] `,
       )
       this.actions.push(action)
     })
@@ -119,21 +112,14 @@ export class XActionActivator {
     if (this.activate === ActionActivationStrategy.OnElementEvent) {
       const element = this.targetElement
         ? this.el.ownerDocument.querySelector(this.targetElement)
-        : this.el.querySelector(
-            ':enabled:not(x-action):not(x-audio-music-action):not(x-audio-sound-action):not(script):not(x-action-activator)',
-          )
+        : this.el.querySelector(':enabled:not(x-action):not(x-audio-music-action):not(x-audio-sound-action):not(script):not(x-action-activator)')
 
       if (!element) {
         warn(`x-action-activator: ${this.parent?.url || ''} no elements found for '${this.targetElement || 'na'}'`)
       } else {
         debugIf(this.debug, `x-action-activator: element found ${element.nodeName}`)
         element.addEventListener(this.targetEvent, async () => {
-          debugIf(
-            this.debug,
-            `x-action-activator: ${this.parent?.url || ''} received ${element?.nodeName || ''} ${
-              this.targetEvent
-            } event`,
-          )
+          debugIf(this.debug, `x-action-activator: ${this.parent?.url || ''} received ${element?.nodeName || ''} ${this.targetEvent} event`)
           await this.activateActions()
         })
       }

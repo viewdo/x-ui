@@ -20,13 +20,9 @@ export function hasExpression(value: string) {
  * @param {string} expression A js-based expression for value comparisons or calculations
  * @param {object} context An object holding any variables for the expression.
  */
-async function evaluate(
-  expression: string,
-  context: ExpressionContext = {},
-): Promise<number | boolean | string> {
+async function evaluate(expression: string, context: ExpressionContext = {}): Promise<number | boolean | string> {
   requireValue(expression, 'expression')
-  if (!hasExpression(expression))
-    return expression
+  if (!hasExpression(expression)) return expression
 
   try {
     context.null = null
@@ -68,8 +64,7 @@ export async function evaluatePredicate(expression: string, context: ExpressionC
 
   let workingExpression = expression.slice()
 
-  if (hasToken(workingExpression))
-    workingExpression = await resolveTokens(workingExpression, true)
+  if (hasToken(workingExpression)) workingExpression = await resolveTokens(workingExpression, true)
 
   if (!workingExpression) return false
 
@@ -81,15 +76,15 @@ export async function evaluatePredicate(expression: string, context: ExpressionC
 
   if (expression.match(funcRegEx)) {
     const matches = funcRegEx.exec(workingExpression)
-    const value = matches ? (await hasVisited(matches[1])) : false
+    const value = matches ? await hasVisited(matches[1]) : false
     workingExpression = workingExpression.replace(funcRegEx, value.toString())
   }
 
-  let result:any =  toBoolean(workingExpression)
+  let result: any = toBoolean(workingExpression)
   if (hasExpression(workingExpression)) {
     try {
       result = await evaluate(workingExpression, context)
-    } catch { }
+    } catch {}
   }
   return negation ? !result : result
 }

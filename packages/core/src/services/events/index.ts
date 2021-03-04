@@ -6,5 +6,3 @@ export { actionBus, eventBus }
 
 const actionBus = new EventEmitter()
 const eventBus = new EventEmitter()
-
-

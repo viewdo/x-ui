@@ -39,7 +39,7 @@ describe('x-action-activator', () => {
     expect(activator).toBeDefined()
 
     let command = null
-    actionBus.on('test', (e) => {
+    actionBus.on('test', e => {
       command = e.command
     })
 
@@ -65,7 +65,7 @@ describe('x-action-activator', () => {
     const button = page.body.querySelector('button')
 
     let command = null
-    actionBus.on('test', (e) => {
+    actionBus.on('test', e => {
       command = e.command
     })
 
@@ -99,7 +99,7 @@ describe('x-action-activator', () => {
     const button = page.body.querySelector('button')
 
     let eventAction: EventAction<any> | null = null
-    actionBus.on('test', (e) => {
+    actionBus.on('test', e => {
       eventAction = e
     })
 
@@ -132,7 +132,7 @@ describe('x-action-activator', () => {
     const link = page.body.querySelector('input')
 
     let command = null
-    actionBus.on('test', (e) => {
+    actionBus.on('test', e => {
       command = e.command
     })
 
@@ -159,7 +159,7 @@ describe('x-action-activator', () => {
     const link = page.body.querySelector('a')
 
     let command = null
-    actionBus.on('test', (e) => {
+    actionBus.on('test', e => {
       command = e
     })
 

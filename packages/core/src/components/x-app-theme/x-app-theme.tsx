@@ -7,10 +7,10 @@ import { interfaceState, onInterfaceChange } from '../../services/interface'
 })
 export class XAppTheme {
   @Element() el!: HTMLXAppThemeElement
-  private interfaceSubscriptionon!: () => void
+  private interfaceSubscription!: () => void
 
   componentWillLoad() {
-    this.interfaceSubscriptionon = onInterfaceChange('theme', (theme) => {
+    this.interfaceSubscription = onInterfaceChange('theme', theme => {
       this.toggleDarkTheme(theme === 'dark')
     })
 
@@ -19,10 +19,10 @@ export class XAppTheme {
     } else {
       const prefersDark = window?.matchMedia('(prefers-color-scheme: dark)')
       if (prefersDark?.addEventListener) {
-        prefersDark.addEventListener('change', (ev) => {
-          this.toggleDarkTheme(ev.matches)
+        prefersDark.addEventListener('change', ev => {
+          interfaceState.theme = ev.matches ? 'dark' : 'light'
         })
-        this.toggleDarkTheme(prefersDark.matches)
+        interfaceState.theme = 'dark'
       }
     }
   }
@@ -32,6 +32,6 @@ export class XAppTheme {
   }
 
   disconnectedCallback() {
-    this.interfaceSubscriptionon()
+    this.interfaceSubscription?.call(this)
   }
 }

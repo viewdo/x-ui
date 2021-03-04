@@ -119,21 +119,16 @@ export class RouterService {
   }
 
   captureInnerLinks(root: HTMLElement, fromPath?: string) {
-    captureElementsEventOnce<HTMLAnchorElement, MouseEvent>(
-      root,
-      `a[href]`,
-      'click',
-      (el: HTMLAnchorElement, ev: MouseEvent) => {
-        if (this.isModifiedEvent(ev) || !this?.history) return true
+    captureElementsEventOnce<HTMLAnchorElement, MouseEvent>(root, `a[href]`, 'click', (el: HTMLAnchorElement, ev: MouseEvent) => {
+      if (this.isModifiedEvent(ev) || !this?.history) return true
 
-        if (!el.href.includes(location.origin) || el.target) return true
+      if (!el.href.includes(location.origin) || el.target) return true
 
-        ev.preventDefault()
+      ev.preventDefault()
 
-        const path = el.href.replace(location.origin, '')
-        return this.handleRouteLinkClick(path, fromPath || this.location.pathname)
-      },
-    )
+      const path = el.href.replace(location.origin, '')
+      return this.handleRouteLinkClick(path, fromPath || this.location.pathname)
+    })
   }
 
   handleRouteLinkClick(toPath: string, fromPath?: string) {

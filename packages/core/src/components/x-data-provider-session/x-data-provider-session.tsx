@@ -45,10 +45,6 @@ export class XDataProviderSession {
   }
 
   render() {
-    return (
-      <Host hidden>
-      </Host>
-    )
+    return <Host hidden></Host>
   }
-
 }

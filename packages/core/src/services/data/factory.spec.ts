@@ -36,9 +36,4 @@ describe('provider-factory', () => {
     const provider = await getDataProvider('custom')
     expect(provider).toBe(null)
   })
-
-
-
-  
-
 })

@@ -14,6 +14,7 @@ export class XDataShow {
   @Element() el!: HTMLXDataShowElement
   private dataSubscription!: () => void
   private routeSubscription!: () => void
+
   @State() show = true
 
   /**
@@ -24,7 +25,7 @@ export class XDataShow {
   @Prop() when!: string
 
   componentWillLoad() {
-    this.dataSubscription= eventBus.on(DATA_EVENTS.DataChanged, () => {
+    this.dataSubscription = eventBus.on(DATA_EVENTS.DataChanged, () => {
       forceUpdate(this.el)
     })
 

@@ -63,7 +63,7 @@ export class XDataRepeat {
 
   async componentWillLoad() {
     debugIf(this.debug, 'x-data-repeat: loading')
-    this.dataSubscription= eventBus.on(DATA_EVENTS.DataChanged, () => {
+    this.dataSubscription = eventBus.on(DATA_EVENTS.DataChanged, () => {
       forceUpdate(this.el)
     })
 
@@ -110,7 +110,7 @@ export class XDataRepeat {
       return await items.reduce(
         (previousPromise: Promise<any>, item: any) =>
           previousPromise.then(async () =>
-            resolveTokens(this.innerTemplate.slice(), false, item).then((html) => {
+            resolveTokens(this.innerTemplate.slice(), false, item).then(html => {
               resolvedTemplate += html
               return resolvedTemplate
             }),
@@ -135,10 +135,7 @@ export class XDataRepeat {
     } else if (this.items) {
       items = await this.resolveItemsExpression()
     } else {
-      warnIf(
-        this.debug,
-        'x-data-repeat: you must include at least one of the following: items, json-src or a <script> element with a JSON array.',
-      )
+      warnIf(this.debug, 'x-data-repeat: you must include at least one of the following: items, json-src or a <script> element with a JSON array.')
     }
     if (this.filter) {
       let filterString = this.filter.slice()

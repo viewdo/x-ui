@@ -2,8 +2,6 @@
 
 import { CookieAttributes } from './interfaces'
 
-
-
 function stringifyAttribute(key: string, value: string | boolean | undefined): string {
   if (!value) {
     return ''
