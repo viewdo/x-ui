@@ -9,6 +9,7 @@ import {
   captureXNextClickEvent,
   ElementTimer,
   getChildInputValidity,
+  replaceHtmlInElement,
   resolveChildElementXAttributes,
   TIMER_EVENTS
 } from '../../services/elements'
@@ -316,9 +317,7 @@ export class XAppViewDo {
 
   render() {
     debugIf(this.debug, `x-app-view-do: ${this.url} render`)
-    this.el.querySelector(`#${this.contentKey}`)?.remove()
-    if (this.contentElement && this.match?.isExact)
-      this.el.append(this.contentElement)
+    replaceHtmlInElement(this.el, `#${this.contentKey}`, this.contentElement)
     return (
       <Host hidden={!this.match?.isExact}>
         <slot />

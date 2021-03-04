@@ -1,9 +1,9 @@
-import { Component, Element, forceUpdate, h, Host, Prop, State } from '@stencil/core'
+import { Component, Element, forceUpdate, h, Host, Prop, State, VNode } from '@stencil/core'
 import { debugIf, slugify } from '../../services/common'
 import { warn } from '../../services/common/logging'
 import { getRemoteContent } from '../../services/content/remote'
 import { DATA_EVENTS } from '../../services/data'
-import { resolveChildElementXAttributes } from '../../services/elements'
+import { replaceHtmlInElement, resolveChildElementXAttributes } from '../../services/elements'
 import { ActionActivationStrategy, eventBus } from '../../services/events'
 import { markVisit, resolveNext } from '../../services/navigation'
 import { MatchResults, Route, RouterService } from '../../services/routing'
@@ -18,7 +18,7 @@ import { MatchResults, Route, RouterService } from '../../services/routing'
   shadow: true,
 })
 export class XAppView {
-  private dataChangedSubscription!: () => void
+  private dataSubscription!: () => void
   private route!: Route
   @Element() el!: HTMLXAppViewElement
   @State() match: MatchResults | null = null
@@ -155,7 +155,7 @@ export class XAppView {
       v.transition = v.transition || this.transition
     })
 
-    this.dataChangedSubscription = eventBus.on(DATA_EVENTS.DataChanged, () => {
+    this.dataSubscription = eventBus.on(DATA_EVENTS.DataChanged, () => {
       debugIf(this.debug, `x-app-view: ${this.url} data changed `)
       if (this.match?.isExact) forceUpdate(this.el)
     })
@@ -223,17 +223,15 @@ export class XAppView {
   }
 
   disconnectedCallback() {
-    this.dataChangedSubscription()
+    this.dataSubscription?.call(this)
     this.route.destroy()
   }
 
-  render() {
+  render(): VNode {
     debugIf(this.debug, `x-app-view: ${this.url} render`)
-    this.el.querySelector(`#${this.contentKey}`)?.remove()
-    if (this.contentElement)
-      this.el.append(this.contentElement)
+    replaceHtmlInElement(this.el, `#${this.contentKey}`, this.contentElement)
     return (
-      <Host>
+      <Host >
         <slot />
         <slot name="content" />
       </Host>

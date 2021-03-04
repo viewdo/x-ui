@@ -4,20 +4,17 @@ import { debugIf } from '../common'
 import { evaluatePredicate, hasToken, resolveTokens } from '../data'
 import { TimedNode } from './interfaces'
 
-export function replaceHtmlInElement(el:HTMLElement, existingSelector:string, contentElement:HTMLElement|null ) {
+export async function replaceHtmlInElement(el:HTMLElement, existingSelector:string, contentElement:HTMLElement|null ) {
   const existing = el.querySelector(existingSelector)
-  if (existing && existing.innerHTML != contentElement?.innerHTML) {
-    existing.classList.add('removing')
-    existing.addEventListener("transitionend", () => {
-      existing.remove();
-      if (contentElement)
-        el.append(contentElement)
-    })
-  } else if (contentElement) {
+  const changed = existing?.innerHTML != contentElement?.innerHTML
+  if (!changed) return
+
+  if (existing)
+    existing.remove();
+
+  if (contentElement)
     el.append(contentElement)
-  } else if (existing && contentElement == null) {
-    existing.remove()
-  }
+
 }
 
 export async function resolveChildElementXAttributes(element: HTMLElement) {

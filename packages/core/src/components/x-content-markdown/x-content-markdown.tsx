@@ -2,7 +2,7 @@ import { Component, Element, forceUpdate, h, Host, Prop, State } from '@stencil/
 import { warn } from '../../services/common/logging'
 import { getRemoteContent } from '../../services/content/remote'
 import { DATA_EVENTS, evaluatePredicate } from '../../services/data'
-import { resolveChildElementXAttributes } from '../../services/elements'
+import { replaceHtmlInElement, resolveChildElementXAttributes } from '../../services/elements'
 import { eventBus } from '../../services/events'
 import { RouterService, ROUTE_EVENTS } from '../../services/routing'
 import { renderMarkdown } from './markdown/remarkable.worker'
@@ -135,9 +135,7 @@ export class XContentMarkdown {
   }
 
   render() {
-    this.el.querySelector(`.${this.contentClass}`)?.remove()
-    if (this.contentElement)
-      this.el.append(this.contentElement)
+    replaceHtmlInElement(this.el, `.${this.contentClass}`, this.contentElement)
     return (
       <Host hidden={this.contentElement == null}>
       </Host>
