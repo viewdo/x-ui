@@ -31,9 +31,6 @@ describe('x-data-display', () => {
 
     expect(page.root).toEqualHtml(`
       <x-data-display text="foo">
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
         <span class="dynamic">
           foo
         </span>
@@ -46,7 +43,7 @@ describe('x-data-display', () => {
   it('renders child template', async () => {
     const page = await newSpecPage({
       components: [XDataDisplay],
-      html: `<x-data-display text="test">
+      html: `<x-data-display>
               <template>
                 <p>Hello Jason!</p>
               </template>
@@ -54,14 +51,10 @@ describe('x-data-display', () => {
     })
 
     expect(page.root).toEqualHtml(`
-      <x-data-display text="test">
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-        <span class="dynamic">
-          test
+      <x-data-display>
+        <div class="dynamic">
           <p>Hello Jason!</p>
-        </span>
+        </div>
       </x-data-display>
     `)
 
@@ -84,12 +77,9 @@ describe('x-data-display', () => {
 
     expect(page.root).toEqualHtml(`
       <x-data-display>
-       <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-        <span class="dynamic">
-        <p>Hello Forrest!</p>
-        </span>
+        <div class="dynamic">
+          <p>Hello Forrest!</p>
+        </div>
       </x-data-display>
     `)
 
@@ -110,12 +100,9 @@ describe('x-data-display', () => {
 
     expect(page.root).toEqualHtml(`
       <x-data-display>
-       <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-        <span class="dynamic">
+        <div class="dynamic">
         <p>Hello Tom!</p>
-        </span>
+        </div>
       </x-data-display>
     `)
 
@@ -136,12 +123,9 @@ describe('x-data-display', () => {
 
     expect(page.root).toEqualHtml(`
       <x-data-display>
-       <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-        <span class="dynamic">
-        <p>Hello Tom!</p>
-        </span>
+        <div class="dynamic">
+          <p>Hello Tom!</p>
+        </div>
       </x-data-display>
     `)
 
@@ -152,12 +136,9 @@ describe('x-data-display', () => {
 
     expect(page.root).toEqualHtml(`
       <x-data-display>
-       <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-        <span class="dynamic">
-        <p>Hello Tomy!</p>
-        </span>
+        <div class="dynamic">
+          <p>Hello Tomy!</p>
+        </div>
       </x-data-display>
     `)
 

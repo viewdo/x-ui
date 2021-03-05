@@ -1,31 +1,48 @@
-import { Component, Element, forceUpdate, h, Host, Prop, State } from '@stencil/core'
+import {
+  Component,
+  Element,
+  forceUpdate,
+  h,
+  Host,
+  Prop,
+  State,
+} from '@stencil/core'
 import { warn } from '../../services/common/logging'
 import { DATA_EVENTS, resolveTokens } from '../../services/data'
-import { removeAllChildNodes, resolveChildElementXAttributes } from '../../services/elements'
+import {
+  removeAllChildNodes,
+  replaceHtmlInElement,
+  resolveChildElementXAttributes,
+} from '../../services/elements'
 import { eventBus } from '../../services/events'
 import { RouterService, ROUTE_EVENTS } from '../../services/routing'
 
 /**
- *  @system data
+ * Render data directly into HTML using declarative expressions.
+ * This element renders the expression with all data-tokens
+ * replaced with the values provided by the provider.
+ *
+ * @system data
+ * @system content
  */
 @Component({
   tag: 'x-data-display',
   styleUrl: 'x-data-display.scss',
-  shadow: true,
+  shadow: false,
 })
 export class XDataDisplay {
   private dataSubscription!: () => void
   private routeSubscription!: () => void
+  private contentClass = 'dynamic'
   @Element() el!: HTMLXDataDisplayElement
   @State() innerTemplate!: string
-  @State() resolvedTemplate?: string
   @State() innerData: any
-  @State() value?: string
+  @State() contentElement: HTMLElement | null = null
 
   /**
-   The data expression to obtain a value for rendering as inner-text for this element.
-   {{session:user.name}}
-   @default null
+   * The data expression to obtain a value for rendering as inner-text for this element.
+   * {{session:user.name}}
+   * @default null
    */
   @Prop() text?: string
 
@@ -34,7 +51,6 @@ export class XDataDisplay {
    * To fetch the contents change to false or remove
    * attribute.
    */
-
   @Prop({ mutable: true }) deferLoad = false
 
   private get router(): RouterService | undefined {
@@ -50,13 +66,19 @@ export class XDataDisplay {
   }
 
   async componentWillLoad() {
-    this.dataSubscription = eventBus.on(DATA_EVENTS.DataChanged, () => {
-      forceUpdate(this.el)
-    })
+    this.dataSubscription = eventBus.on(
+      DATA_EVENTS.DataChanged,
+      () => {
+        forceUpdate(this.el)
+      },
+    )
 
-    this.routeSubscription = eventBus.on(ROUTE_EVENTS.RouteChanged, () => {
-      forceUpdate(this.el)
-    })
+    this.routeSubscription = eventBus.on(
+      ROUTE_EVENTS.RouteChanged,
+      () => {
+        forceUpdate(this.el)
+      },
+    )
 
     if (this.childTemplate !== null) {
       this.innerTemplate = this.childTemplate.innerHTML
@@ -64,47 +86,52 @@ export class XDataDisplay {
 
     if (this.childScript !== null) {
       try {
-        this.innerData = JSON.parse(this.childScript.textContent || '')
+        this.innerData = JSON.parse(
+          this.childScript.textContent || '',
+        )
       } catch (error) {
         warn(`x-data-display: unable to deserialize JSON: ${error}`)
       }
     }
-
     removeAllChildNodes(this.el)
   }
 
   async componentWillRender() {
-    this.resetContent()
-    await this.resolveTemplate()
-    this.setContent()
+    let shouldRender = !this.deferLoad
+
+    if (shouldRender)
+      this.contentElement = await this.resolveContentElement()
+    else this.contentElement = null
   }
 
-  private async resolveTemplate() {
-    if (this.deferLoad) {
-      return
-    }
-
+  private async getContent() {
+    let content: string | null = null
     if (this.text) {
-      this.value = await resolveTokens(this.text, false, this.innerData)
+      content = await resolveTokens(this.text, false, this.innerData)
     }
 
     if (this.innerTemplate) {
-      this.resolvedTemplate = await resolveTokens(this.innerTemplate, false, this.innerData)
+      content = await resolveTokens(
+        this.innerTemplate,
+        false,
+        this.innerData,
+      )
     }
+    return content
   }
 
-  private resetContent() {
-    const remoteContent = this.el.querySelector(`.dynamic`)
-    remoteContent?.remove()
-  }
+  private async resolveContentElement() {
+    const content = await this.getContent()
+    if (content == null) return null
 
-  private async setContent() {
-    const span = document.createElement('span')
-    span.innerHTML = `${this.value || ''}${this.resolvedTemplate || ''}`
-    span.className = 'dynamic'
-    await resolveChildElementXAttributes(span)
-    this.router?.captureInnerLinks(span)
-    this.el.append(span)
+    const container = document.createElement(
+      this.innerTemplate ? 'div' : 'span',
+    )
+    container.innerHTML = content
+    container.className = this.contentClass
+    await resolveChildElementXAttributes(container)
+    this.router?.captureInnerLinks(container)
+    return container
   }
 
   disconnectedCallback() {
@@ -113,6 +140,11 @@ export class XDataDisplay {
   }
 
   render() {
+    replaceHtmlInElement(
+      this.el,
+      `.${this.contentClass}`,
+      this.contentElement,
+    )
     return (
       <Host>
         <slot />
