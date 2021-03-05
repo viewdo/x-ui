@@ -70,11 +70,11 @@ export class Route {
         scrollTopOffset: this.scrollTopOffset,
       }
     }
-    await this.adjustTitle()
 
     // If this is an independent route and it matches then routes have updated.
     // If the only change to location is a hash change then do not scroll.
     if (this.match?.isExact) {
+      await this.adjustTitle()
       if (!matchesAreEqual(this.match, this.previousMatch)) {
         this.captureInnerLinks()
         await resolveChildElementXAttributes(this.routeElement)
@@ -138,6 +138,13 @@ export class Route {
       ? this.router.resolvePathname(path, this.path)
       : path
     this.router.goToRoute(route)
+  }
+
+  public replaceWithRoute(path: string) {
+    const route = !isAbsolute(path)
+      ? this.router.resolvePathname(path, this.path)
+      : path
+    this.router.replaceWithRoute(route)
   }
 
   public async activateActions(

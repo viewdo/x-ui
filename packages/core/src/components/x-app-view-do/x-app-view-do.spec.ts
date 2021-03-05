@@ -171,6 +171,7 @@ describe('x-app-view-do', () => {
     const next1 = page.body.querySelector('a#s1') as HTMLAnchorElement
     next1.click()
 
+    jest.advanceTimersToNextTimer()
     await page.waitForChanges()
 
     expect(router!.location.pathname).toBe('/start/step-2')
@@ -178,9 +179,8 @@ describe('x-app-view-do', () => {
     const back = page.body.querySelector('a#b2') as HTMLAnchorElement
     back.click()
 
+    jest.advanceTimersToNextTimer()
     await page.waitForChanges()
-
-    // expect(router!.location.pathname).toBe('/start/step-1')
 
     const subject = page.body.querySelector('x-app')
     subject?.remove()

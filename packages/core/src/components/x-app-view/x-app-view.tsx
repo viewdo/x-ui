@@ -226,7 +226,7 @@ export class XAppView {
       })
       const nextDo = await resolveNext(viewDos)
       if (nextDo) {
-        this.route.goToRoute(nextDo.url)
+        this.route.replaceWithRoute(nextDo.url)
         return
       } else {
         markVisit(this.match.url)

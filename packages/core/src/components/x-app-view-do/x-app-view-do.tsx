@@ -226,8 +226,6 @@ export class XAppViewDo {
       debugIf(this.debug, `x-app-view-do: ${this.url} on-enter`)
       this.contentElement = await this.resolveContentElement()
       await this.captureChildElements(this.el)
-      if (this.contentElement)
-        await this.captureChildElements(this.contentElement)
       await this.setupTimer()
       //this.el.removeAttribute('hidden')
     } else {
@@ -254,6 +252,7 @@ export class XAppViewDo {
       div.innerHTML = content
       div.id = this.contentKey!
       await resolveChildElementXAttributes(div)
+      await this.captureChildElements(div)
       this.route.captureInnerLinks(div)
       return div
     } catch {

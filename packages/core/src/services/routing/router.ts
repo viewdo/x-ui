@@ -102,7 +102,7 @@ export class RouterService {
       startUrl.length > 1 &&
       this.location?.pathname === '/'
     ) {
-      this.goToRoute(startUrl)
+      this.replaceWithRoute(startUrl)
     }
   }
 
@@ -144,6 +144,13 @@ export class RouterService {
 
   goToRoute(path: string) {
     this.history.push(stripBasename(path, this.root, this.useHash))
+  }
+
+  replaceWithRoute(path: string) {
+    this.history.replace(
+      stripBasename(path, this.root, this.useHash),
+      this.location.state,
+    )
   }
 
   matchPath(options: MatchOptions = {}): MatchResults | null {
