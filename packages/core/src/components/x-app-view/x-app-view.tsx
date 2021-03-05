@@ -1,14 +1,42 @@
-import { Component, Element, forceUpdate, h, Host, Prop, State, VNode } from '@stencil/core'
+import {
+  Component,
+  Element,
+  forceUpdate,
+  h,
+  Host,
+  Prop,
+  State,
+  VNode,
+} from '@stencil/core'
 import { debugIf, slugify } from '../../services/common'
 import { warn } from '../../services/common/logging'
 import { getRemoteContent } from '../../services/content/remote'
 import { DATA_EVENTS } from '../../services/data'
-import { replaceHtmlInElement, resolveChildElementXAttributes } from '../../services/elements'
-import { ActionActivationStrategy, eventBus } from '../../services/events'
+import {
+  replaceHtmlInElement,
+  resolveChildElementXAttributes,
+} from '../../services/elements'
+import {
+  ActionActivationStrategy,
+  eventBus,
+} from '../../services/events'
 import { markVisit, resolveNext } from '../../services/navigation'
-import { MatchResults, Route, RouterService } from '../../services/routing'
+import {
+  MatchResults,
+  Route,
+  RouterService,
+} from '../../services/routing'
 
 /**
+ * The View component holds a segment of content visible only when
+ * a URL path matches. It defines a route and its content.
+ * This provides the declarative mechanism
+ * for in-page content/component routing by URL.
+ *
+ * It is a chid component of the \<x-app\>  element.
+ *
+ *
+ *  @system core
  *  @system routing
  *  @system presentation
  */
@@ -98,26 +126,37 @@ export class XAppView {
   }
 
   private get actionActivators(): HTMLXActionActivatorElement[] {
-    return Array.from(this.el.querySelectorAll('x-action-activator')).filter(e => this.isChild(e))
+    return Array.from(
+      this.el.querySelectorAll('x-action-activator'),
+    ).filter(e => this.isChild(e))
   }
 
   private isChild(element: HTMLElement) {
-    return element.parentElement?.closest('x-app-view') === this.el || (false && element.parentElement?.closest('x-view-do') == null)
+    return (
+      element.parentElement?.closest('x-app-view') === this.el ||
+      (false && element.parentElement?.closest('x-view-do') == null)
+    )
   }
 
   private get childViewDos(): HTMLXAppViewDoElement[] {
-    return Array.from(this.el.querySelectorAll('x-app-view-do') || []).filter(e => this.isChild(e))
+    return Array.from(
+      this.el.querySelectorAll('x-app-view-do') || [],
+    ).filter(e => this.isChild(e))
   }
 
   private get childViews(): HTMLXAppViewElement[] {
-    return Array.from(this.el.querySelectorAll('x-app-view') || []).filter(e => this.isChild(e))
+    return Array.from(
+      this.el.querySelectorAll('x-app-view') || [],
+    ).filter(e => this.isChild(e))
   }
 
   componentWillLoad() {
     debugIf(this.debug, `x-app-view: ${this.url} loading`)
 
     if (!this.routeContainer || !this.routeContainer.router) {
-      warn(`x-app-view: ${this.url} cannot load outside of an x-app element`)
+      warn(
+        `x-app-view: ${this.url} cannot load outside of an x-app element`,
+      )
       return
     }
 
@@ -138,26 +177,42 @@ export class XAppView {
       },
     )
 
-    debugIf(this.debug, `x-app-view: ${this.url} match: ${this.route.match ? 'true' : 'false'}`)
+    debugIf(
+      this.debug,
+      `x-app-view: ${this.url} match: ${
+        this.route.match ? 'true' : 'false'
+      }`,
+    )
 
-    debugIf(this.debug, `x-app-view: ${this.url} found ${this.childViews.length} child views`)
+    debugIf(
+      this.debug,
+      `x-app-view: ${this.url} found ${this.childViews.length} child views`,
+    )
     this.childViews.forEach(v => {
       v.url = this.route.normalizeChildUrl(v.url)
       v.transition = v.transition || this.transition
     })
 
-    debugIf(this.debug, `x-app-view: ${this.url} found ${this.childViewDos.length} child view-dos`)
+    debugIf(
+      this.debug,
+      `x-app-view: ${this.url} found ${this.childViewDos.length} child view-dos`,
+    )
     this.childViewDos.forEach(v => {
       v.url = this.route.normalizeChildUrl(v.url)
       v.transition = v.transition || this.transition
     })
 
-    this.dataSubscription = eventBus.on(DATA_EVENTS.DataChanged, () => {
-      debugIf(this.debug, `x-app-view: ${this.url} data changed `)
-      if (this.match?.isExact) forceUpdate(this.el)
-    })
+    this.dataSubscription = eventBus.on(
+      DATA_EVENTS.DataChanged,
+      () => {
+        debugIf(this.debug, `x-app-view: ${this.url} data changed `)
+        if (this.match?.isExact) forceUpdate(this.el)
+      },
+    )
 
-    this.contentKey = `remote-content-${slugify(this.contentSrc || 'none')}`
+    this.contentKey = `remote-content-${slugify(
+      this.contentSrc || 'none',
+    )}`
   }
 
   async componentWillRender() {
@@ -183,12 +238,20 @@ export class XAppView {
   }
 
   private async resolveContentElement() {
-    debugIf(this.debug, `x-app-view: ${this.url} fetching content from ${this.contentSrc}`)
+    debugIf(
+      this.debug,
+      `x-app-view: ${this.url} fetching content from ${this.contentSrc}`,
+    )
     if (!this.contentSrc) {
       return null
     }
     try {
-      const content = await getRemoteContent(window, this.contentSrc!, this.mode, this.resolveTokens)
+      const content = await getRemoteContent(
+        window,
+        this.contentSrc!,
+        this.mode,
+        this.resolveTokens,
+      )
       if (content == null) return null
       const div = document.createElement('div')
       div.slot = 'content'
@@ -198,7 +261,9 @@ export class XAppView {
       this.route.captureInnerLinks(div)
       return div
     } catch {
-      warn(`x-app-view: ${this.url} Unable to retrieve from ${this.contentSrc}`)
+      warn(
+        `x-app-view: ${this.url} Unable to retrieve from ${this.contentSrc}`,
+      )
       return null
     }
   }
@@ -206,10 +271,16 @@ export class XAppView {
   async componentDidRender() {
     debugIf(this.debug, `x-app-view: ${this.url} did render`)
     if (this.match?.isExact) {
-      await this.route?.activateActions(this.actionActivators, ActionActivationStrategy.OnEnter)
+      await this.route?.activateActions(
+        this.actionActivators,
+        ActionActivationStrategy.OnEnter,
+      )
     } else {
       if (this.route?.didExit()) {
-        await this.route?.activateActions(this.actionActivators, ActionActivationStrategy.OnExit)
+        await this.route?.activateActions(
+          this.actionActivators,
+          ActionActivationStrategy.OnExit,
+        )
       }
     }
     await this.route?.loadCompleted()
@@ -226,7 +297,11 @@ export class XAppView {
 
   render(): VNode {
     debugIf(this.debug, `x-app-view: ${this.url} render`)
-    replaceHtmlInElement(this.el, `#${this.contentKey}`, this.contentElement)
+    replaceHtmlInElement(
+      this.el,
+      `#${this.contentKey}`,
+      this.contentElement,
+    )
     return (
       <Host>
         <slot />

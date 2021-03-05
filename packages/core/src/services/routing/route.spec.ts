@@ -31,9 +31,26 @@ describe('route', () => {
     page = await startPage('/')
     let match: MatchResults | null = null
 
-    router = new RouterService(page.win, writeTask, eventBus, actionBus, '', 'App', '', 0)
+    router = new RouterService(
+      page.win,
+      writeTask,
+      eventBus,
+      actionBus,
+      '',
+      'App',
+      '',
+      0,
+    )
 
-    let subject = router.createRoute(page.body, '/route', true, 'Page', null, 0, m => (match = m))
+    let subject = router.createRoute(
+      page.body,
+      '/route',
+      true,
+      'Page',
+      null,
+      0,
+      m => (match = m),
+    )
 
     expect(subject).not.toBeNull()
     expect(subject.match).toBeNull()
@@ -59,7 +76,12 @@ describe('route', () => {
 
   it('normalizeChildUrl', async () => {
     page = await startPage('/')
-    router = new RouterService(page.win, writeTask, eventBus, actionBus)
+    router = new RouterService(
+      page.win,
+      writeTask,
+      eventBus,
+      actionBus,
+    )
     let subject = new Route(eventBus, router, page.body, '/route')
 
     let normalized = subject.normalizeChildUrl('child')
@@ -71,9 +93,24 @@ describe('route', () => {
 
   it('adjustPageTitle', async () => {
     page = await startPage('/')
-    router = new RouterService(page.win, writeTask, eventBus, actionBus, '', 'App')
+    router = new RouterService(
+      page.win,
+      writeTask,
+      eventBus,
+      actionBus,
+      '',
+      'App',
+    )
     const routeElement = page.body.querySelector('div')!
-    let subject = router.createRoute(routeElement, '/route', true, 'Page', null, 0, () => {})
+    let subject = router.createRoute(
+      routeElement,
+      '/route',
+      true,
+      'Page',
+      null,
+      0,
+      () => {},
+    )
 
     subject.adjustTitle()
 
@@ -84,9 +121,24 @@ describe('route', () => {
 
   it('adjustPageTitle - dynamic', async () => {
     page = await startPage('/route/Widget')
-    router = new RouterService(page.win, writeTask, eventBus, actionBus, '', 'App')
+    router = new RouterService(
+      page.win,
+      writeTask,
+      eventBus,
+      actionBus,
+      '',
+      'App',
+    )
     const routeElement = page.body.querySelector('div')!
-    let subject = router.createRoute(routeElement, '/route/:product', true, '{{route:product}}', null, 0, () => {})
+    let subject = router.createRoute(
+      routeElement,
+      '/route/:product',
+      true,
+      '{{route:product}}',
+      null,
+      0,
+      () => {},
+    )
 
     subject.adjustTitle()
 
@@ -97,7 +149,14 @@ describe('route', () => {
 
   it('adjustPageTitle - no page', async () => {
     page = await startPage('/route')
-    router = new RouterService(page.win, writeTask, eventBus, actionBus, '', 'App')
+    router = new RouterService(
+      page.win,
+      writeTask,
+      eventBus,
+      actionBus,
+      '',
+      'App',
+    )
     const routeElement = page.body.querySelector('div')!
     let subject = new Route(eventBus, router, routeElement, '/route')
 
@@ -110,7 +169,14 @@ describe('route', () => {
 
   it('loadComplete - match', async () => {
     page = await startPage('/route')
-    router = new RouterService(page.win, writeTask, eventBus, actionBus, '', 'App')
+    router = new RouterService(
+      page.win,
+      writeTask,
+      eventBus,
+      actionBus,
+      '',
+      'App',
+    )
     const routeElement = page.body.querySelector('div')!
     let subject = new Route(eventBus, router, routeElement, '/route')
 
@@ -129,9 +195,23 @@ describe('route', () => {
   it('loadComplete - scroll-top', async () => {
     page = await startPage('/route')
     page.doc.title = 'Neat!'
-    router = new RouterService(page.win, writeTask, eventBus, actionBus)
+    router = new RouterService(
+      page.win,
+      writeTask,
+      eventBus,
+      actionBus,
+    )
     const routeElement = page.body.querySelector('div')!
-    let subject = new Route(eventBus, router, routeElement, '/route', true, 'Page', null, 10)
+    let subject = new Route(
+      eventBus,
+      router,
+      routeElement,
+      '/route',
+      true,
+      'Page',
+      null,
+      10,
+    )
 
     subject.match = {
       path: '/route',
@@ -147,7 +227,12 @@ describe('route', () => {
 
   it('captureInnerLinks', async () => {
     page = await startPage('/')
-    router = new RouterService(page.win, writeTask, eventBus, actionBus)
+    router = new RouterService(
+      page.win,
+      writeTask,
+      eventBus,
+      actionBus,
+    )
     const routeElement = page.body.querySelector('div')!
     let subject = new Route(eventBus, router, routeElement, '/route')
 

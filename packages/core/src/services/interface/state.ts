@@ -16,4 +16,10 @@ const store = createStore<StateModel>({
 
 const { state, onChange, reset, dispose } = store
 
-export { store as interfaceStore, state as interfaceState, onChange as onInterfaceChange, reset as interfaceStateReset, dispose as interfaceStateDispose }
+export {
+  store as interfaceStore,
+  state as interfaceState,
+  onChange as onInterfaceChange,
+  reset as interfaceStateReset,
+  dispose as interfaceStateDispose,
+}

@@ -1,13 +1,28 @@
-import { Component, Element, forceUpdate, h, Host, Prop, State } from '@stencil/core'
+import {
+  Component,
+  Element,
+  forceUpdate,
+  h,
+  Host,
+  Prop,
+  State,
+} from '@stencil/core'
 import { warn } from '../../services/common'
 import { getRemoteContent } from '../../services/content/remote'
 import { DATA_EVENTS, evaluatePredicate } from '../../services/data'
-import { replaceHtmlInElement, resolveChildElementXAttributes } from '../../services/elements'
+import {
+  replaceHtmlInElement,
+  resolveChildElementXAttributes,
+} from '../../services/elements'
 import { eventBus } from '../../services/events'
 import { RouterService, ROUTE_EVENTS } from '../../services/routing'
 
 /**
- *  @system content
+ * This component fetches remote HTML and renders it safely and directly
+ * into the page when when and where you tell it too, as soon as it renders.
+ *
+ * @system core
+ * @system content
  */
 @Component({
   tag: 'x-content-include',
@@ -60,12 +75,18 @@ export class XContentInclude {
 
   async componentWillLoad() {
     if (this.resolveTokens || this.when != undefined) {
-      this.dataSubscription = eventBus.on(DATA_EVENTS.DataChanged, () => {
-        forceUpdate(this.el)
-      })
-      this.routeSubscription = eventBus.on(ROUTE_EVENTS.RouteChanged, () => {
-        forceUpdate(this.el)
-      })
+      this.dataSubscription = eventBus.on(
+        DATA_EVENTS.DataChanged,
+        () => {
+          forceUpdate(this.el)
+        },
+      )
+      this.routeSubscription = eventBus.on(
+        ROUTE_EVENTS.RouteChanged,
+        () => {
+          forceUpdate(this.el)
+        },
+      )
     }
   }
 
@@ -73,13 +94,21 @@ export class XContentInclude {
     let shouldRender = !this.deferLoad
     if (this.when) shouldRender = await evaluatePredicate(this.when)
 
-    if (shouldRender) this.contentElement = this.src ? await this.resolveContentElement() : null
+    if (shouldRender)
+      this.contentElement = this.src
+        ? await this.resolveContentElement()
+        : null
     else this.contentElement = null
   }
 
   private async resolveContentElement() {
     try {
-      const content = await getRemoteContent(window, this.src, this.mode, this.resolveTokens)
+      const content = await getRemoteContent(
+        window,
+        this.src,
+        this.mode,
+        this.resolveTokens,
+      )
       if (content == null) return null
 
       const div = document.createElement('div')
@@ -100,7 +129,11 @@ export class XContentInclude {
   }
 
   render() {
-    replaceHtmlInElement(this.el, `.${this.contentClass}`, this.contentElement)
+    replaceHtmlInElement(
+      this.el,
+      `.${this.contentClass}`,
+      this.contentElement,
+    )
     return <Host hidden={this.contentElement == null}></Host>
   }
 }

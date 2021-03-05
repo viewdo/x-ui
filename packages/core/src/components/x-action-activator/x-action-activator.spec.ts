@@ -1,7 +1,11 @@
 jest.mock('../../services/common/logging')
 
 import { newSpecPage } from '@stencil/core/testing'
-import { actionBus, EventAction, eventBus } from '../../services/events'
+import {
+  actionBus,
+  EventAction,
+  eventBus,
+} from '../../services/events'
 import { XAction } from '../x-action/x-action'
 import { XActionActivator } from './x-action-activator'
 

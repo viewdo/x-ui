@@ -17,10 +17,18 @@ export function ensureBasename(path: string, prefix: string) {
  * @param path
  * @param prefix
  */
-export const hasBasename = (path: string, prefix: string) => path.startsWith(prefix) || new RegExp(`^${prefix}(\\/|\\?|#|$)`, 'i').test(path)
+export const hasBasename = (path: string, prefix: string) =>
+  path.startsWith(prefix) ||
+  new RegExp(`^${prefix}(\\/|\\?|#|$)`, 'i').test(path)
 
-export const stripBasename = (path: string, prefix: string, hash: boolean) => {
-  let stripped = hasBasename(path, prefix) ? path.slice(prefix.length) : path
+export const stripBasename = (
+  path: string,
+  prefix: string,
+  hash: boolean,
+) => {
+  let stripped = hasBasename(path, prefix)
+    ? path.slice(prefix.length)
+    : path
   if (isFilename(path) || hash) {
     return '#' + addLeadingSlash(stripped)
   }
@@ -29,11 +37,14 @@ export const stripBasename = (path: string, prefix: string, hash: boolean) => {
 
 export const isFilename = (path: string) => path.includes('.')
 
-export const stripTrailingSlash = (path: string) => (path?.endsWith('/') ? path.slice(0, -1) : path)
+export const stripTrailingSlash = (path: string) =>
+  path?.endsWith('/') ? path.slice(0, -1) : path
 
-export const addLeadingSlash = (path: string) => (path?.startsWith('/') ? path : `/${path}`)
+export const addLeadingSlash = (path: string) =>
+  path?.startsWith('/') ? path : `/${path}`
 
-export const stripLeadingSlash = (path: string) => (path?.startsWith('/') ? path.slice(1) : path)
+export const stripLeadingSlash = (path: string) =>
+  path?.startsWith('/') ? path.slice(1) : path
 
 export function parsePath(path = '/'): LocationSegments {
   let pathname = path
@@ -82,10 +93,14 @@ export function parseQueryString(query: string) {
     return {}
   }
 
-  return (/^[?#]/.test(query) ? query.slice(1) : query).split('&').reduce<Record<string, any>>((parameters, parameter) => {
-    const [key, value] = parameter.split('=')
+  return (/^[?#]/.test(query) ? query.slice(1) : query)
+    .split('&')
+    .reduce<Record<string, any>>((parameters, parameter) => {
+      const [key, value] = parameter.split('=')
 
-    parameters[key] = value ? decodeURIComponent(value.replace(/\+/g, ' ')) : ''
-    return parameters
-  }, {})
+      parameters[key] = value
+        ? decodeURIComponent(value.replace(/\+/g, ' '))
+        : ''
+      return parameters
+    }, {})
 }

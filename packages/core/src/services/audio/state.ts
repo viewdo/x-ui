@@ -14,4 +14,8 @@ const store = createStore<StateModel>({
 
 const { state, onChange } = store
 
-export { store as audioStore, state as audioState, onChange as onAudioStateChange }
+export {
+  store as audioStore,
+  state as audioState,
+  onChange as onAudioStateChange,
+}

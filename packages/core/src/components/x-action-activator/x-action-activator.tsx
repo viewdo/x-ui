@@ -1,8 +1,24 @@
-import { Component, Element, h, Host, Method, Prop, State } from '@stencil/core'
+import {
+  Component,
+  Element,
+  h,
+  Host,
+  Method,
+  Prop,
+  State,
+} from '@stencil/core'
 import { debugIf, warn } from '../../services/common'
-import { ActionActivationStrategy, actionBus, EventAction, IActionElement } from '../../services/events'
+import {
+  ActionActivationStrategy,
+  actionBus,
+  EventAction,
+  IActionElement,
+} from '../../services/events'
 
 /**
+ * This element defines how and when a group of child Actions are
+ * activated.
+ *
  * @system actions
  */
 @Component({
@@ -18,7 +34,8 @@ export class XActionActivator {
    * The activation strategy to use for the contained actions.
    * Values: 'OnElementEvent'|'OnEnter'|'AtTime'|'OnExit'
    */
-  @Prop() activate: ActionActivationStrategy = ActionActivationStrategy.OnElementEvent
+  @Prop() activate: ActionActivationStrategy =
+    ActionActivationStrategy.OnElementEvent
 
   /**
    * The element to watch for events when using the OnElementEvent
@@ -64,7 +81,14 @@ export class XActionActivator {
       Object.assign(data, values)
 
       const dataString = JSON.stringify(data)
-      debugIf(this.debug, `x-action-activator:  ${this.parent?.url || ''} Activating [${this.activate}~{topic: ${action?.topic}, command:${action?.command}, data: ${dataString}}]`)
+      debugIf(
+        this.debug,
+        `x-action-activator:  ${this.parent?.url || ''} Activating [${
+          this.activate
+        }~{topic: ${action?.topic}, command:${
+          action?.command
+        }, data: ${dataString}}]`,
+      )
 
       actionBus.emit(action.topic, action)
     })
@@ -76,24 +100,45 @@ export class XActionActivator {
     return this.el.querySelectorAll('input,select,textarea')
   }
 
-  private get parent(): HTMLXAppViewDoElement | HTMLXAppViewElement | null {
-    return this.el.closest('x-app-view-do') || this.el.closest('x-app-view')
+  private get parent():
+    | HTMLXAppViewDoElement
+    | HTMLXAppViewElement
+    | null {
+    return (
+      this.el.closest('x-app-view-do') ||
+      this.el.closest('x-app-view')
+    )
   }
 
   private get childActions(): IActionElement[] {
     const actions = Array.from(this.el.querySelectorAll('x-action'))
 
-    const audioMusicActions = Array.from(this.el.querySelectorAll('x-audio-music-action'))
+    const audioMusicActions = Array.from(
+      this.el.querySelectorAll('x-audio-music-action'),
+    )
 
-    const audioSoundActions = Array.from(this.el.querySelectorAll('x-audio-sound-action'))
+    const audioSoundActions = Array.from(
+      this.el.querySelectorAll('x-audio-sound-action'),
+    )
 
-    return [...actions, ...audioMusicActions, ...audioSoundActions] as IActionElement[]
+    return [
+      ...actions,
+      ...audioMusicActions,
+      ...audioSoundActions,
+    ] as IActionElement[]
   }
 
   componentDidLoad() {
-    debugIf(this.debug, `x-action-activator: ${this.parent?.url || ''} loading`)
+    debugIf(
+      this.debug,
+      `x-action-activator: ${this.parent?.url || ''} loading`,
+    )
     if (this.childActions.length === 0) {
-      warn(`x-action-activator: ${this.parent?.url || ''} no children actions detected`)
+      warn(
+        `x-action-activator: ${
+          this.parent?.url || ''
+        } no children actions detected`,
+      )
       return
     }
 
@@ -104,7 +149,11 @@ export class XActionActivator {
       const dataString = JSON.stringify(action.data)
       debugIf(
         this.debug,
-        `x-action-activator: ${this.parent?.url || ''} registered [${this.activate}~{topic: ${action?.topic}, command:${action?.command}, data: ${dataString}}}] `,
+        `x-action-activator: ${this.parent?.url || ''} registered [${
+          this.activate
+        }~{topic: ${action?.topic}, command:${
+          action?.command
+        }, data: ${dataString}}}] `,
       )
       this.actions.push(action)
     })
@@ -112,14 +161,28 @@ export class XActionActivator {
     if (this.activate === ActionActivationStrategy.OnElementEvent) {
       const element = this.targetElement
         ? this.el.ownerDocument.querySelector(this.targetElement)
-        : this.el.querySelector(':enabled:not(x-action):not(x-audio-music-action):not(x-audio-sound-action):not(script):not(x-action-activator)')
+        : this.el.querySelector(
+            ':enabled:not(x-action):not(x-audio-music-action):not(x-audio-sound-action):not(script):not(x-action-activator)',
+          )
 
       if (!element) {
-        warn(`x-action-activator: ${this.parent?.url || ''} no elements found for '${this.targetElement || 'na'}'`)
+        warn(
+          `x-action-activator: ${
+            this.parent?.url || ''
+          } no elements found for '${this.targetElement || 'na'}'`,
+        )
       } else {
-        debugIf(this.debug, `x-action-activator: element found ${element.nodeName}`)
+        debugIf(
+          this.debug,
+          `x-action-activator: element found ${element.nodeName}`,
+        )
         element.addEventListener(this.targetEvent, async () => {
-          debugIf(this.debug, `x-action-activator: ${this.parent?.url || ''} received ${element?.nodeName || ''} ${this.targetEvent} event`)
+          debugIf(
+            this.debug,
+            `x-action-activator: ${this.parent?.url || ''} received ${
+              element?.nodeName || ''
+            } ${this.targetEvent} event`,
+          )
           await this.activateActions()
         })
       }

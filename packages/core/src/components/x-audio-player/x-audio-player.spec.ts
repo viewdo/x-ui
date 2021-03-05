@@ -2,7 +2,13 @@ jest.mock('../../services/common/logging')
 jest.mock('../../services/audio/actions')
 
 import { newSpecPage } from '@stencil/core/testing'
-import { audioState, audioStore, AudioTrack, AudioType, DiscardStrategy } from '../../services/audio'
+import {
+  audioState,
+  audioStore,
+  AudioTrack,
+  AudioType,
+  DiscardStrategy,
+} from '../../services/audio'
 import { actionBus, eventBus } from '../../services/events'
 import { interfaceStore } from '../../services/interface'
 import { XAudioPlayer } from './x-audio-player'
@@ -49,7 +55,12 @@ describe('x-audio-player', () => {
   })
 
   //@ts-ignore
-  AudioTrack.createSound = (info: AudioInfo, onload: any, onend: any, onerror: any) => {
+  AudioTrack.createSound = (
+    info: AudioInfo,
+    onload: any,
+    onend: any,
+    onerror: any,
+  ) => {
     const instance = Object.assign(info, audio, {
       onload,
       onend,

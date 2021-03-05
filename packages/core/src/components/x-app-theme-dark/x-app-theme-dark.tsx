@@ -1,6 +1,15 @@
 import { Component, h, Host, Prop, State } from '@stencil/core'
-import { interfaceState, onInterfaceChange } from '../../services/interface'
+import {
+  interfaceState,
+  onInterfaceChange,
+} from '../../services/interface'
 
+/**
+ * The `<x-app-theme-dark>` component displays a checkbox to control the
+ * dark-theme setting applied to the interface.
+ *
+ * Default: user-preference
+ */
 @Component({
   tag: 'x-app-theme-dark',
   shadow: false,
@@ -39,7 +48,13 @@ export class XAppThemeDark {
   render() {
     return (
       <Host>
-        <input type="checkbox" class={this.classes} id={this.inputId} onChange={() => this.toggleDarkTheme(!this.dark)} checked={this.dark} />
+        <input
+          type="checkbox"
+          class={this.classes}
+          id={this.inputId}
+          onChange={() => this.toggleDarkTheme(!this.dark)}
+          checked={this.dark}
+        />
       </Host>
     )
   }

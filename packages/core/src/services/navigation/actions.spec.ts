@@ -25,7 +25,12 @@ describe('route-actions:', () => {
   })
   it('navigate-to, navigate-next ', async () => {
     const page = await startPage('/')
-    const subject = new RouterService(page.win, writeTask, eventBus, actionBus)
+    const subject = new RouterService(
+      page.win,
+      writeTask,
+      eventBus,
+      actionBus,
+    )
 
     actionBus.emit(NAVIGATION_TOPIC, {
       topic: NAVIGATION_TOPIC,
@@ -58,7 +63,16 @@ describe('route-actions:', () => {
 
   it('navigate-back ', async () => {
     const page = await startPage('/')
-    const subject = new RouterService(page.win, writeTask, eventBus, actionBus, '', '', '', 0)
+    const subject = new RouterService(
+      page.win,
+      writeTask,
+      eventBus,
+      actionBus,
+      '',
+      '',
+      '',
+      0,
+    )
 
     actionBus.emit(NAVIGATION_TOPIC, {
       topic: NAVIGATION_TOPIC,

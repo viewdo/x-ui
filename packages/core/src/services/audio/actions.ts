@@ -6,7 +6,14 @@ import { ROUTE_EVENTS } from '../routing'
 import { AudioTrack } from './audio'
 import { AudioInfo } from './audio-info'
 import { AudioRequest } from './audio-request'
-import { AudioType, AUDIO_COMMANDS, AUDIO_EVENTS, AUDIO_TOPIC, DiscardStrategy, LoadStrategy } from './interfaces'
+import {
+  AudioType,
+  AUDIO_COMMANDS,
+  AUDIO_EVENTS,
+  AUDIO_TOPIC,
+  DiscardStrategy,
+  LoadStrategy,
+} from './interfaces'
 import { audioState, onAudioStateChange } from './state'
 import { hasPlayed } from './tracked'
 
@@ -19,23 +26,41 @@ export class AudioActionListener {
   public readonly queued: Record<string, AudioTrack[]>
   public readonly loaded: Record<string, AudioTrack[]>
 
-  constructor(win: Window | MockWindow, private readonly eventBus: EventEmitter, private readonly actionBus: EventEmitter, private readonly debug: boolean = false) {
-    audioState.enabled = win.localStorage?.getItem(this.enabledKey) == 'true' || false
+  constructor(
+    win: Window | MockWindow,
+    private readonly eventBus: EventEmitter,
+    private readonly actionBus: EventEmitter,
+    private readonly debug: boolean = false,
+  ) {
+    audioState.enabled =
+      win.localStorage?.getItem(this.enabledKey) == 'true' || false
 
-    this.actionSubscription = this.actionBus.on(AUDIO_TOPIC, (ev: EventAction<any>) => {
-      debugIf(this.debug, `audio-listener: event received ${ev.topic}:${ev.command}`)
-      this.commandReceived(ev.command, ev.data)
-    })
+    this.actionSubscription = this.actionBus.on(
+      AUDIO_TOPIC,
+      (ev: EventAction<any>) => {
+        debugIf(
+          this.debug,
+          `audio-listener: event received ${ev.topic}:${ev.command}`,
+        )
+        this.commandReceived(ev.command, ev.data)
+      },
+    )
 
-    this.disposeMuteSubscription = onAudioStateChange('enabled', m => {
-      win.localStorage?.setItem(this.enabledKey, m.toString())
-      eventBus.emit(AUDIO_TOPIC, AUDIO_EVENTS.SoundChanged, m)
-    })
+    this.disposeMuteSubscription = onAudioStateChange(
+      'enabled',
+      m => {
+        win.localStorage?.setItem(this.enabledKey, m.toString())
+        eventBus.emit(AUDIO_TOPIC, AUDIO_EVENTS.SoundChanged, m)
+      },
+    )
 
-    this.eventSubscription = this.eventBus.on(ROUTE_EVENTS.RouteChanged, () => {
-      debugIf(this.debug, 'audio-listener: route changed received')
-      this.routeChanged()
-    })
+    this.eventSubscription = this.eventBus.on(
+      ROUTE_EVENTS.RouteChanged,
+      () => {
+        debugIf(this.debug, 'audio-listener: route changed received')
+        this.routeChanged()
+      },
+    )
 
     this.onDeck = {
       [AudioType.Music]: null,
@@ -65,7 +90,10 @@ export class AudioActionListener {
 
   public isPlaying(): boolean {
     if (!this.onDeck) return false
-    return Boolean(this.onDeck[AudioType.Music]?.playing) || Boolean(this.onDeck[AudioType.Sound]?.playing)
+    return (
+      Boolean(this.onDeck[AudioType.Music]?.playing) ||
+      Boolean(this.onDeck[AudioType.Sound]?.playing)
+    )
   }
 
   public hasAudio(): boolean {
@@ -115,7 +143,10 @@ export class AudioActionListener {
 
   // Private members
 
-  private commandReceived(command: string, data: AudioInfo | AudioRequest | boolean) {
+  private commandReceived(
+    command: string,
+    data: AudioInfo | AudioRequest | boolean,
+  ) {
     switch (command) {
       case AUDIO_COMMANDS.Enable: {
         this.enable()
@@ -128,19 +159,25 @@ export class AudioActionListener {
       }
 
       case AUDIO_COMMANDS.Load: {
-        const audio = this.createQueuedAudioFromTrack(data as AudioInfo)
+        const audio = this.createQueuedAudioFromTrack(
+          data as AudioInfo,
+        )
         this.loadTrack(audio)
         break
       }
 
       case AUDIO_COMMANDS.Play: {
-        const audio = this.createQueuedAudioFromTrack(data as AudioInfo)
+        const audio = this.createQueuedAudioFromTrack(
+          data as AudioInfo,
+        )
         this.replaceActiveTrack(audio)
         break
       }
 
       case AUDIO_COMMANDS.Queue: {
-        const audio = this.createQueuedAudioFromTrack(data as AudioInfo)
+        const audio = this.createQueuedAudioFromTrack(
+          data as AudioInfo,
+        )
         this.addTrackToQueue(audio)
         break
       }
@@ -194,7 +231,10 @@ export class AudioActionListener {
       const [event, trackId] = args
 
       if (event) {
-        debugIf(this.debug, `event-listener: audio event ${event} ${trackId}`)
+        debugIf(
+          this.debug,
+          `event-listener: audio event ${event} ${trackId}`,
+        )
         this.eventBus.emit(AUDIO_TOPIC, ...args)
       }
     })
@@ -230,12 +270,24 @@ export class AudioActionListener {
 
     // Discard any route-based audio
     this.discardActive(AudioType.Sound, DiscardStrategy.Route)
-    this.discardTracksFromQueue(AudioType.Sound, DiscardStrategy.Route)
-    this.discardTracksFromLoaded(AudioType.Sound, DiscardStrategy.Route)
+    this.discardTracksFromQueue(
+      AudioType.Sound,
+      DiscardStrategy.Route,
+    )
+    this.discardTracksFromLoaded(
+      AudioType.Sound,
+      DiscardStrategy.Route,
+    )
 
     this.discardActive(AudioType.Music, DiscardStrategy.Route)
-    this.discardTracksFromQueue(AudioType.Music, DiscardStrategy.Route)
-    this.discardTracksFromLoaded(AudioType.Music, DiscardStrategy.Route)
+    this.discardTracksFromQueue(
+      AudioType.Music,
+      DiscardStrategy.Route,
+    )
+    this.discardTracksFromLoaded(
+      AudioType.Music,
+      DiscardStrategy.Route,
+    )
   }
 
   // Queue Management
@@ -244,7 +296,11 @@ export class AudioActionListener {
     const { type } = audio
     if (!this.loaded[type]?.includes(audio)) {
       this.loaded[type].push(audio)
-      this.eventBus.emit(AUDIO_TOPIC, AUDIO_EVENTS.Loaded, audio.trackId)
+      this.eventBus.emit(
+        AUDIO_TOPIC,
+        AUDIO_EVENTS.Loaded,
+        audio.trackId,
+      )
     }
   }
 
@@ -252,7 +308,11 @@ export class AudioActionListener {
     const { type } = audio
     if (!this.queued[type]?.includes(audio)) {
       this.queued[type].push(audio)
-      this.eventBus.emit(AUDIO_TOPIC, AUDIO_EVENTS.Queued, audio.trackId)
+      this.eventBus.emit(
+        AUDIO_TOPIC,
+        AUDIO_EVENTS.Queued,
+        audio.trackId,
+      )
     }
 
     if (!this.onDeck[audio.type]) {
@@ -263,29 +323,51 @@ export class AudioActionListener {
   private getNextAudioFromQueue(type: AudioType) {
     const audio = this.queued[type]?.pop()
     if (audio) {
-      this.eventBus.emit(AUDIO_TOPIC, AUDIO_EVENTS.Dequeued, audio.trackId)
+      this.eventBus.emit(
+        AUDIO_TOPIC,
+        AUDIO_EVENTS.Dequeued,
+        audio.trackId,
+      )
     }
 
     return audio
   }
 
-  private discardTracksFromQueue(type: AudioType, ...reasons: DiscardStrategy[]) {
-    const eligibleAudio = (audio: AudioTrack) => !reasons.includes(audio.discard)
-    this.queued[type] = this.queued[type]?.filter(i => eligibleAudio(i))
+  private discardTracksFromQueue(
+    type: AudioType,
+    ...reasons: DiscardStrategy[]
+  ) {
+    const eligibleAudio = (audio: AudioTrack) =>
+      !reasons.includes(audio.discard)
+    this.queued[type] = this.queued[type]?.filter(i =>
+      eligibleAudio(i),
+    )
   }
 
-  private discardTracksFromLoaded(type: AudioType, ...reasons: DiscardStrategy[]) {
-    const eligibleAudio = (audio: AudioTrack) => !reasons.includes(audio.discard)
-    this.loaded[type] = this.loaded[type]?.filter(i => eligibleAudio(i))
+  private discardTracksFromLoaded(
+    type: AudioType,
+    ...reasons: DiscardStrategy[]
+  ) {
+    const eligibleAudio = (audio: AudioTrack) =>
+      !reasons.includes(audio.discard)
+    this.loaded[type] = this.loaded[type]?.filter(i =>
+      eligibleAudio(i),
+    )
   }
 
   // AudioTrack workflow
 
   private startLoadedTrack(startRequest: AudioRequest) {
-    const audio = this.loaded[startRequest.type]?.find(a => a.trackId === startRequest.trackId)
+    const audio = this.loaded[startRequest.type]?.find(
+      a => a.trackId === startRequest.trackId,
+    )
     if (audio) {
       this.replaceActiveTrack(audio)
-      this.eventBus.emit(AUDIO_TOPIC, AUDIO_EVENTS.Started, audio.trackId)
+      this.eventBus.emit(
+        AUDIO_TOPIC,
+        AUDIO_EVENTS.Started,
+        audio.trackId,
+      )
     }
   }
 

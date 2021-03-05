@@ -5,7 +5,9 @@ export function hasPlayed(trackId: string) {
 }
 
 export function trackPlayed(trackId: string) {
-  audioState.playedAudio = [...new Set([...audioState.playedAudio, trackId])]
+  audioState.playedAudio = [
+    ...new Set([...audioState.playedAudio, trackId]),
+  ]
 }
 
 export function clearTracked() {

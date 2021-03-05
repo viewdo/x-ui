@@ -2,13 +2,22 @@
 const prefix = '%cview.DO UI%c '
 
 const colors = {
-  log: ['color: white;background:#7566A0;font-weight: bold; font-size:10px; padding:2px 6px; border-radius: 5px', 'color: black:background:none;font-weight:normal'],
-  debug: ['color: white;background:#44883E;font-weight: bold; font-size:10px; padding:2px 6px; border-radius: 5px', 'color: black:background:none;font-weight:normal'],
+  log: [
+    'color: white;background:#7566A0;font-weight: bold; font-size:10px; padding:2px 6px; border-radius: 5px',
+    'color: black:background:none;font-weight:normal',
+  ],
+  debug: [
+    'color: white;background:#44883E;font-weight: bold; font-size:10px; padding:2px 6px; border-radius: 5px',
+    'color: black:background:none;font-weight:normal',
+  ],
   warn: [
     'color: white;background:#ffc409;font-weight: bold; font-size:10px; padding:2px 6px; border-radius: 5px',
     'color: black:background:none;font-weight:normal;color:#FDD757;',
   ],
-  error: ['color: white;background:#eb445a;font-weight: bold; font-size:10px; padding:2px 6px; border-radius: 5px', 'color: black:background:none;font-weight:normal;color:red;'],
+  error: [
+    'color: white;background:#eb445a;font-weight: bold; font-size:10px; padding:2px 6px; border-radius: 5px',
+    'color: black:background:none;font-weight:normal;color:red;',
+  ],
 }
 
 export function log(message: string) {

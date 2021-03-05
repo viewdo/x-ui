@@ -1,21 +1,41 @@
 import { debugIf } from '../common'
 import { EventAction, IEventEmitter } from '../events'
-import { VIDEO_COMMANDS, VIDEO_EVENTS, VIDEO_TOPIC } from './interfaces'
+import {
+  VIDEO_COMMANDS,
+  VIDEO_EVENTS,
+  VIDEO_TOPIC,
+} from './interfaces'
 import { onVideoChange, videoState } from './state'
 
 export class VideoActionListener {
   disposeHandle: () => void
   private disposeAutoPlaySubscription!: () => void
-  constructor(win: Window, private childVideo: HTMLVideoElement, private eventBus: IEventEmitter, private actionBus: IEventEmitter, private debug: boolean) {
-    videoState.autoplay = win.localStorage?.getItem('autoplay') === 'true'
-    this.disposeHandle = this.actionBus.on(VIDEO_TOPIC, async (ev: EventAction<any>) => {
-      debugIf(this.debug, `x-video-listener: event received ${ev.topic}:${ev.command}`)
-      await this.commandReceived(ev.command, ev.data)
-    })
-    this.disposeAutoPlaySubscription = onVideoChange('autoplay', a => {
-      win.localStorage?.setItem('autoplay', a?.toString())
-      eventBus?.emit(VIDEO_EVENTS.AutoPlayChanged, a)
-    })
+  constructor(
+    win: Window,
+    private childVideo: HTMLVideoElement,
+    private eventBus: IEventEmitter,
+    private actionBus: IEventEmitter,
+    private debug: boolean,
+  ) {
+    videoState.autoplay =
+      win.localStorage?.getItem('autoplay') === 'true'
+    this.disposeHandle = this.actionBus.on(
+      VIDEO_TOPIC,
+      async (ev: EventAction<any>) => {
+        debugIf(
+          this.debug,
+          `x-video-listener: event received ${ev.topic}:${ev.command}`,
+        )
+        await this.commandReceived(ev.command, ev.data)
+      },
+    )
+    this.disposeAutoPlaySubscription = onVideoChange(
+      'autoplay',
+      a => {
+        win.localStorage?.setItem('autoplay', a?.toString())
+        eventBus?.emit(VIDEO_EVENTS.AutoPlayChanged, a)
+      },
+    )
   }
 
   private async commandReceived(command: string, data: any) {

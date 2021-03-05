@@ -1,4 +1,5 @@
-export type CookieAttributes = BaseCookieAttributes & SameSiteCookieAttributes
+export type CookieAttributes = BaseCookieAttributes &
+  SameSiteCookieAttributes
 
 export interface BaseCookieAttributes {
   /**
@@ -24,7 +25,9 @@ export interface BaseCookieAttributes {
   secure?: boolean
 }
 
-export type SameSiteCookieAttributes = LaxStrictSameSiteCookieAttributes | NoneSameSiteCookieAttributes
+export type SameSiteCookieAttributes =
+  | LaxStrictSameSiteCookieAttributes
+  | NoneSameSiteCookieAttributes
 
 export interface LaxStrictSameSiteCookieAttributes {
   /**

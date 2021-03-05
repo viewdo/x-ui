@@ -2,7 +2,10 @@ jest.mock('../../services/common/logging')
 jest.mock('../../services/data/evaluate.worker')
 
 import { newSpecPage } from '@stencil/core/testing'
-import { clearDataProviders, getDataProvider } from '../../services/data/factory'
+import {
+  clearDataProviders,
+  getDataProvider,
+} from '../../services/data/factory'
 import { actionBus, eventBus } from '../../services/events'
 import { XApp } from '../x-app/x-app'
 import { XDataProviderCookie } from './x-data-provider-cookie'
@@ -55,7 +58,9 @@ describe('x-data-provider-cookie', () => {
 
     const subject = page.body.querySelector('x-data-provider-cookie')!
 
-    const acceptButton = page.body.querySelector('button[slot=accept]')! as HTMLAnchorElement
+    const acceptButton = page.body.querySelector(
+      'button[slot=accept]',
+    )! as HTMLAnchorElement
     expect(acceptButton).not.toBeNull()
     acceptButton.click()
 
@@ -108,7 +113,9 @@ describe('x-data-provider-cookie', () => {
 
     const subject = page.body.querySelector('x-data-provider-cookie')!
 
-    const rejectButton = page.body.querySelector('button[slot=reject]')! as HTMLButtonElement
+    const rejectButton = page.body.querySelector(
+      'button[slot=reject]',
+    )! as HTMLButtonElement
 
     rejectButton.click()
 

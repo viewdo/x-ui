@@ -1,13 +1,13 @@
-:host {
+x-app-link {
   display: contents;
   position: relative;
 }
 
-:host[href] {
+x-app-link[href] {
   cursor: pointer;
-}
 
-a,
-a:focus {
-  outline: none;
+  a,
+  a:focus {
+    outline: none;
+  }
 }

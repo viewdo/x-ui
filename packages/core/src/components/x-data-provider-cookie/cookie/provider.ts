@@ -1,4 +1,7 @@
-import { DATA_EVENTS, IDataProvider } from '../../../services/data/interfaces'
+import {
+  DATA_EVENTS,
+  IDataProvider,
+} from '../../../services/data/interfaces'
 import { EventEmitter } from '../../../services/events/emitter'
 import { getCookie, setCookie } from './utils'
 

@@ -1,10 +1,31 @@
-import { Component, Element, Event, EventEmitter, forceUpdate, h, Host, Prop, State } from '@stencil/core'
-import { CookieConsent, DataProviderRegistration, DATA_COMMANDS, DATA_TOPIC, evaluatePredicate, IDataProvider } from '../../services/data'
+import {
+  Component,
+  Element,
+  Event,
+  EventEmitter,
+  forceUpdate,
+  h,
+  Host,
+  Prop,
+  State,
+} from '@stencil/core'
+import {
+  CookieConsent,
+  DataProviderRegistration,
+  DATA_COMMANDS,
+  DATA_TOPIC,
+  evaluatePredicate,
+  IDataProvider,
+} from '../../services/data'
 import { EventAction } from '../../services/events'
 import { CookieProvider } from './cookie'
 
 /**
- *  @system data
+ * This component enables the *Cookie Data Provider*,
+ * after requesting consent from the user. The consent
+ * message and the accept/reject button are customizable.
+ *
+ * @system data
  */
 @Component({
   tag: 'x-data-provider-cookie',
@@ -46,7 +67,9 @@ export class XDataProviderCookie {
   }
 
   private registerProvider() {
-    const customEvent = new CustomEvent<EventAction<DataProviderRegistration>>('x:actions', {
+    const customEvent = new CustomEvent<
+      EventAction<DataProviderRegistration>
+    >('x:actions', {
       detail: {
         topic: DATA_TOPIC,
         command: DATA_COMMANDS.RegisterDataProvider,
@@ -89,7 +112,10 @@ export class XDataProviderCookie {
   private async handleConsentResponse(consented: boolean) {
     if (consented) {
       this.registerProvider()
-      await this.customProvider.set(this.consentKey, consented.toString())
+      await this.customProvider.set(
+        this.consentKey,
+        consented.toString(),
+      )
     }
 
     this.didConsent.emit({ consented })

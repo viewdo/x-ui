@@ -1,6 +1,10 @@
 import { MockWindow } from '@stencil/core/mock-doc'
 import { commonState, debugIf } from '../common'
-import { EventAction, IEventActionListener, IEventEmitter } from '../events'
+import {
+  EventAction,
+  IEventActionListener,
+  IEventEmitter,
+} from '../events'
 import { ELEMENTS_COMMANDS, ELEMENTS_TOPIC } from './interfaces'
 
 export class ElementsActionListener implements IEventActionListener {
@@ -8,13 +12,23 @@ export class ElementsActionListener implements IEventActionListener {
   eventBus!: IEventEmitter
   private body!: HTMLBodyElement
 
-  initialize(win: Window | MockWindow, actionBus: IEventEmitter, eventBus: IEventEmitter): void {
+  initialize(
+    win: Window | MockWindow,
+    actionBus: IEventEmitter,
+    eventBus: IEventEmitter,
+  ): void {
     this.body = win.document.body as HTMLBodyElement
     this.eventBus = eventBus
-    this.actionsSubscription = actionBus.on(ELEMENTS_TOPIC, async (ev: EventAction<any>) => {
-      debugIf(commonState.debug, `elements-listener: action received ${ev.topic}:${ev.command}`)
-      await this.commandReceived(ev.command, ev.data)
-    })
+    this.actionsSubscription = actionBus.on(
+      ELEMENTS_TOPIC,
+      async (ev: EventAction<any>) => {
+        debugIf(
+          commonState.debug,
+          `elements-listener: action received ${ev.topic}:${ev.command}`,
+        )
+        await this.commandReceived(ev.command, ev.data)
+      },
+    )
   }
 
   private async commandReceived(command: string, data: any) {
@@ -83,7 +97,8 @@ export class ElementsActionListener implements IEventActionListener {
     const { selector, attribute, value } = args
     if (!attribute) return
     const element = this.body.querySelector(selector) as HTMLElement
-    if (element && attribute) element.setAttribute(attribute, value || '')
+    if (element && attribute)
+      element.setAttribute(attribute, value || '')
   }
 
   elementRemoveAttribute(args: any) {

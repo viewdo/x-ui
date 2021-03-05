@@ -1,7 +1,11 @@
 import { hasToken, resolveTokens } from '../data/tokens'
 import { resolveChildElementXAttributes } from '../elements/functions'
 import { ActionActivationStrategy, IEventEmitter } from '../events'
-import { MatchResults, RouteViewOptions, ROUTE_EVENTS } from './interfaces'
+import {
+  MatchResults,
+  RouteViewOptions,
+  ROUTE_EVENTS,
+} from './interfaces'
 import { RouterService } from './router'
 import { isAbsolute } from './utils/location'
 import { matchesAreEqual } from './utils/path-match'
@@ -46,7 +50,10 @@ export class Route {
   }
 
   public didExit() {
-    return !!this.match?.isExact && !matchesAreEqual(this.match, this.previousMatch)
+    return (
+      !!this.match?.isExact &&
+      !matchesAreEqual(this.match, this.previousMatch)
+    )
   }
 
   public async loadCompleted() {
@@ -71,9 +78,11 @@ export class Route {
       if (!matchesAreEqual(this.match, this.previousMatch)) {
         this.captureInnerLinks()
         await resolveChildElementXAttributes(this.routeElement)
-        this.routeElement.querySelectorAll('[defer-load]').forEach((el: any) => {
-          el.removeAttribute('defer-load')
-        })
+        this.routeElement
+          .querySelectorAll('[defer-load]')
+          .forEach((el: any) => {
+            el.removeAttribute('defer-load')
+          })
         this.router.viewsUpdated(routeViewOptions)
       }
     }
@@ -81,7 +90,8 @@ export class Route {
 
   toggleClass(className: string, force: boolean) {
     const exists = this.routeElement.classList.contains(className)
-    if (exists && force == false) this.routeElement.classList.remove(className)
+    if (exists && force == false)
+      this.routeElement.classList.remove(className)
     if (!exists && force) this.routeElement.classList.add(className)
   }
 
@@ -99,7 +109,10 @@ export class Route {
   }
 
   public captureInnerLinks(root?: HTMLElement) {
-    this.router.captureInnerLinks(root || this.routeElement, this.path)
+    this.router.captureInnerLinks(
+      root || this.routeElement,
+      this.path,
+    )
   }
 
   public async adjustTitle() {
@@ -110,7 +123,10 @@ export class Route {
           pageTitle = await resolveTokens(this.pageTitle)
         }
 
-        this.routeElement.ownerDocument.title = `${pageTitle} | ${this.router.appTitle || this.routeElement.ownerDocument.title}`
+        this.routeElement.ownerDocument.title = `${pageTitle} | ${
+          this.router.appTitle ||
+          this.routeElement.ownerDocument.title
+        }`
       } else if (this.router.appTitle) {
         this.routeElement.ownerDocument.title = `${this.router.appTitle}`
       }
@@ -118,14 +134,18 @@ export class Route {
   }
 
   public goToRoute(path: string) {
-    const route = !isAbsolute(path) ? this.router.resolvePathname(path, this.path) : path
+    const route = !isAbsolute(path)
+      ? this.router.resolvePathname(path, this.path)
+      : path
     this.router.goToRoute(route)
   }
 
   public async activateActions(
     actionActivators: HTMLXActionActivatorElement[],
     forEvent: ActionActivationStrategy,
-    filter: (activator: HTMLXActionActivatorElement) => boolean = _a => true,
+    filter: (
+      activator: HTMLXActionActivatorElement,
+    ) => boolean = _a => true,
   ) {
     await Promise.all(
       actionActivators

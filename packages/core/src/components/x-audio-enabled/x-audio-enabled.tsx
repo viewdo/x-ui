@@ -2,8 +2,10 @@ import { Component, h, Host, Prop, State } from '@stencil/core'
 import { audioState, onAudioStateChange } from '../../services/audio'
 
 /**
- * Expose a checkbox to enable or disable global audio for background sounds and video.
+ * This component exposes a checkbox to enable or disable global audio for background sounds and video.
+ *
  * @system audio
+ * @system presentation
  */
 @Component({
   tag: 'x-audio-enabled',

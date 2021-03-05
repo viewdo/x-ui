@@ -29,7 +29,9 @@ describe('x-data-provider-session', () => {
 
     await page.waitForChanges()
 
-    const subject = page.body.querySelector('x-data-provider-session')!
+    const subject = page.body.querySelector(
+      'x-data-provider-session',
+    )!
 
     const provider = await getDataProvider('session')
     expect(provider).not.toBeNull()

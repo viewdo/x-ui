@@ -5,7 +5,9 @@ export function hasReference(url: string) {
 }
 
 export function markReference(url: string) {
-  elementsState.references = [...new Set([...elementsState.references, url])]
+  elementsState.references = [
+    ...new Set([...elementsState.references, url]),
+  ]
 }
 
 export function clearReferences() {

@@ -4,7 +4,10 @@ jest.mock('./markdown/remarkable.worker')
 
 import { newSpecPage } from '@stencil/core/testing'
 import { DATA_EVENTS, InMemoryProvider } from '../../services/data'
-import { addDataProvider, clearDataProviders } from '../../services/data/factory'
+import {
+  addDataProvider,
+  clearDataProviders,
+} from '../../services/data/factory'
 import { actionBus, eventBus } from '../../services/events'
 import { XContentMarkdown } from './x-content-markdown'
 
@@ -105,7 +108,9 @@ describe('x-content-markdown', () => {
       }),
     )
 
-    page.setContent(`<x-content-markdown src="fake.md"></x-content-markdown>`)
+    page.setContent(
+      `<x-content-markdown src="fake.md"></x-content-markdown>`,
+    )
 
     await page.waitForChanges()
 
@@ -135,7 +140,9 @@ describe('x-content-markdown', () => {
       }),
     )
 
-    page.setContent(`<x-content-markdown src="fake.md"></x-content-markdown>`)
+    page.setContent(
+      `<x-content-markdown src="fake.md"></x-content-markdown>`,
+    )
 
     await page.waitForChanges()
 
@@ -160,7 +167,9 @@ describe('x-content-markdown', () => {
       }),
     )
 
-    page.setContent(`<x-content-markdown src="fake.md"></x-content-markdown>`)
+    page.setContent(
+      `<x-content-markdown src="fake.md"></x-content-markdown>`,
+    )
 
     await page.waitForChanges()
 
@@ -190,7 +199,9 @@ describe('x-content-markdown', () => {
       highlightAllUnder: jest.fn().mockImplementation(),
     }
 
-    page.setContent(`<x-content-markdown defer-load src="fake.md"></x-content-markdown>`)
+    page.setContent(
+      `<x-content-markdown defer-load src="fake.md"></x-content-markdown>`,
+    )
 
     await page.waitForChanges()
 
@@ -229,7 +240,9 @@ describe('x-content-markdown', () => {
       }),
     )
 
-    await page.setContent(`<x-content-markdown when="false" src="fake.md"></x-content-markdown>`)
+    await page.setContent(
+      `<x-content-markdown when="false" src="fake.md"></x-content-markdown>`,
+    )
 
     await page.waitForChanges()
 
@@ -268,7 +281,9 @@ describe('x-content-markdown', () => {
       }),
     )
 
-    await page.setContent(`<x-content-markdown when="{{session:render}}" src="fake.md"></x-content-markdown>`)
+    await page.setContent(
+      `<x-content-markdown when="{{session:render}}" src="fake.md"></x-content-markdown>`,
+    )
 
     expect(page.root).toEqualHtml(`
       <x-content-markdown when="{{session:render}}" hidden="" src="fake.md">
@@ -287,6 +302,111 @@ describe('x-content-markdown', () => {
         <div class="rendered-content">
           <h1>
           HI WORLD!
+          </h1>
+        </div>
+      </x-content-markdown>
+    `)
+
+    const subject = page.body.querySelector('x-content-markdown')
+    subject?.remove()
+  })
+
+  it('renders tokens from data expression', async () => {
+    const page = await newSpecPage({
+      components: [XContentMarkdown],
+    })
+
+    await session.set('name', 'Jane')
+
+    await page.setContent(
+      `<x-content-markdown resolve-tokens>
+        <script>
+          # Hello {{session:name}}
+        </script>
+       </x-content-markdown>`,
+    )
+
+    await page.waitForChanges()
+
+    expect(page.root).toEqualHtml(`
+     <x-content-markdown resolve-tokens>
+        <script>
+          # Hello {{session:name}}
+        </script>
+        <div class="rendered-content">
+          <h1>
+          Hello Jane
+          </h1>
+        </div>
+      </x-content-markdown>
+    `)
+
+    await session.set('name', 'John')
+    eventBus.emit(DATA_EVENTS.DataChanged, {
+      provider: 'session',
+    })
+
+    await page.waitForChanges()
+
+    expect(page.root).toEqualHtml(`
+     <x-content-markdown resolve-tokens>
+        <script>
+          # Hello {{session:name}}
+        </script>
+        <div class="rendered-content">
+          <h1>
+          Hello John
+          </h1>
+        </div>
+      </x-content-markdown>
+    `)
+
+    const subject = page.body.querySelector('x-content-markdown')
+    subject?.remove()
+  })
+
+  it('renders tokens from data expressions in remote markdown', async () => {
+    const page = await newSpecPage({
+      components: [XContentMarkdown],
+    })
+
+    page.win.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve({
+        ok: true,
+        text: () => Promise.resolve(`# HI {{session:name}}! `),
+      }),
+    )
+
+    await session.set('name', 'Jane')
+
+    await page.setContent(
+      `<x-content-markdown resolve-tokens src="fake.md"></x-content-markdown>`,
+    )
+
+    await page.waitForChanges()
+
+    expect(page.root).toEqualHtml(`
+     <x-content-markdown resolve-tokens src="fake.md">
+        <div class="rendered-content">
+          <h1>
+          HI Jane!
+          </h1>
+        </div>
+      </x-content-markdown>
+    `)
+
+    await session.set('name', 'John')
+    eventBus.emit(DATA_EVENTS.DataChanged, {
+      provider: 'session',
+    })
+
+    await page.waitForChanges()
+
+    expect(page.root).toEqualHtml(`
+     <x-content-markdown resolve-tokens src="fake.md">
+        <div class="rendered-content">
+          <h1>
+          HI John!
           </h1>
         </div>
       </x-content-markdown>

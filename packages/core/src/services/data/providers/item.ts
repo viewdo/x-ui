@@ -2,7 +2,13 @@ import { EventEmitter } from '../../events'
 import { DATA_EVENTS, IDataProvider } from '../interfaces'
 
 export class DataItemProvider implements IDataProvider {
-  constructor(private data: any, private readonly setter?: (key: string, value: any) => Promise<void>) {
+  constructor(
+    private data: any,
+    private readonly setter?: (
+      key: string,
+      value: any,
+    ) => Promise<void>,
+  ) {
     this.changed = new EventEmitter()
   }
 

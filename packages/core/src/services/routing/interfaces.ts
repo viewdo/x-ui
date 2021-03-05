@@ -9,7 +9,10 @@ export enum ROUTE_EVENTS {
   RouteChanged = 'route-changed',
 }
 
-export type Prompt = (location: LocationSegments, action: string) => string
+export type Prompt = (
+  location: LocationSegments,
+  action: string,
+) => string
 
 export interface RouteViewOptions {
   scrollTopOffset?: number
@@ -22,7 +25,12 @@ export interface RouteSubscription {
   groupIndex?: number
 }
 
-export type LocationSegmentPart = 'pathname' | 'search' | 'hash' | 'state' | 'key'
+export type LocationSegmentPart =
+  | 'pathname'
+  | 'search'
+  | 'hash'
+  | 'state'
+  | 'key'
 
 export interface RouterHistory {
   length: number

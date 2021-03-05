@@ -1,21 +1,34 @@
 import { commonState, debugIf } from '../../../services/common'
 import { EventAction, IEventEmitter } from '../../../services/events'
-import { LocationSegments, ROUTE_EVENTS } from '../../../services/routing'
-import { ANALYTICS_COMMANDS, ANALYTICS_EVENTS, ANALYTICS_TOPIC } from './interfaces'
+import {
+  LocationSegments,
+  ROUTE_EVENTS,
+} from '../../../services/routing'
+import {
+  ANALYTICS_COMMANDS,
+  ANALYTICS_EVENTS,
+  ANALYTICS_TOPIC,
+} from './interfaces'
 
 export class AnalyticsActionListener {
   private readonly removeSubscription: Array<() => void> = []
 
-  constructor(private actions: IEventEmitter, private events: IEventEmitter) {
+  constructor(
+    private actions: IEventEmitter,
+    private events: IEventEmitter,
+  ) {
     this.removeSubscription.push(
       this.actions.on(ANALYTICS_TOPIC, e => {
         this.handleEventAction(e)
       }),
     )
     this.removeSubscription.push(
-      this.events.on(ROUTE_EVENTS.RouteChanged, (location: LocationSegments) => {
-        this.handlePageView(location)
-      }),
+      this.events.on(
+        ROUTE_EVENTS.RouteChanged,
+        (location: LocationSegments) => {
+          this.handlePageView(location)
+        },
+      ),
     )
 
     this.events.emit(ANALYTICS_EVENTS.ListenerRegistered, this)
@@ -26,7 +39,12 @@ export class AnalyticsActionListener {
   handlePageView: (data: any) => void = _d => {}
 
   private handleEventAction(eventAction: EventAction<any>) {
-    debugIf(commonState.debug, `analytics-listener: action received ${JSON.stringify(eventAction)}`)
+    debugIf(
+      commonState.debug,
+      `analytics-listener: action received ${JSON.stringify(
+        eventAction,
+      )}`,
+    )
 
     switch (eventAction.command) {
       case ANALYTICS_COMMANDS.SendEvent: {

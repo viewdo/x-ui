@@ -4,8 +4,10 @@ import { actionBus, eventBus } from '../../services/events'
 import { AnalyticsActionListener } from './analytics'
 
 /**
+ * This component serves as a proxy to delegate event-based
+ * functions to be consumed by various analytics snippets.
  *
- * @system analytics
+ * @system interface
  */
 @Component({
   tag: 'x-app-analytics',
@@ -50,7 +52,8 @@ export class XAppAnalytics {
   componentWillLoad() {
     this.listener = new AnalyticsActionListener(actionBus, eventBus)
     this.listener.handleEvent = e => this.event.emit(e)
-    this.listener.handlePageView = (e: LocationSegments) => this.pageView.emit(`${e.pathname}?${e.search}`)
+    this.listener.handlePageView = (e: LocationSegments) =>
+      this.pageView.emit(`${e.pathname}?${e.search}`)
     this.listener.handleViewTime = e => this.viewPercentage.emit(e)
   }
 

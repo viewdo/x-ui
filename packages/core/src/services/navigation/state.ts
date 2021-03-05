@@ -16,4 +16,10 @@ const store = createStore<StateModel>({
 
 const { state, onChange, reset, dispose } = store
 
-export { store as navigationStore, state as navigationState, onChange as onNavigationChange, reset as navigationStateReset, dispose as navigationStateDispose }
+export {
+  store as navigationStore,
+  state as navigationState,
+  onChange as onNavigationChange,
+  reset as navigationStateReset,
+  dispose as navigationStateDispose,
+}

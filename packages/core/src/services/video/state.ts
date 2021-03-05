@@ -12,4 +12,10 @@ const store = createStore<StateModel>({
 
 const { state, onChange, reset, dispose } = store
 
-export { store as videoStore, state as videoState, onChange as onVideoChange, reset as videoStateReset, dispose as videoStateDispose }
+export {
+  store as videoStore,
+  state as videoState,
+  onChange as onVideoChange,
+  reset as videoStateReset,
+  dispose as videoStateDispose,
+}

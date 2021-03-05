@@ -1,6 +1,14 @@
-# x-data-provider-storage
+# X-DATA-PROVIDER-STORAGE
 
+This component enables the **Storage Data Provider**.
 
+## Cookie Data Provider
+
+This store is short-lived within the browsing storage of an exact browser. This provider enables you to use storage data in your HTML.
+
+Provider Key: '**storage**'
+
+`{{storage:(key)}`
 
 <!-- Auto Generated Below -->
 

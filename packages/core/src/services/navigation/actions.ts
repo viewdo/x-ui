@@ -1,12 +1,25 @@
 import { commonState, debugIf } from '../common'
 import { EventAction, IEventEmitter } from '../events'
-import { LocationSegments, RouterService, ROUTE_EVENTS } from '../routing'
-import { NavigateNext, NavigateTo, NAVIGATION_COMMANDS, NAVIGATION_TOPIC } from './interfaces'
+import {
+  LocationSegments,
+  RouterService,
+  ROUTE_EVENTS,
+} from '../routing'
+import {
+  NavigateNext,
+  NavigateTo,
+  NAVIGATION_COMMANDS,
+  NAVIGATION_TOPIC,
+} from './interfaces'
 
 export class NavigationActionListener {
   private readonly removeSubscription!: () => void
 
-  constructor(private router: RouterService, private events: IEventEmitter, private actions: IEventEmitter) {
+  constructor(
+    private router: RouterService,
+    private events: IEventEmitter,
+    private actions: IEventEmitter,
+  ) {
     this.removeSubscription = this.actions.on(NAVIGATION_TOPIC, e => {
       this.handleEventAction(e)
     })
@@ -16,8 +29,15 @@ export class NavigationActionListener {
     this.events.emit(ROUTE_EVENTS.RouteChanged, location)
   }
 
-  handleEventAction(eventAction: EventAction<NavigateTo | NavigateNext>) {
-    debugIf(commonState.debug, `route-listener: action received ${JSON.stringify(eventAction)}`)
+  handleEventAction(
+    eventAction: EventAction<NavigateTo | NavigateNext>,
+  ) {
+    debugIf(
+      commonState.debug,
+      `route-listener: action received ${JSON.stringify(
+        eventAction,
+      )}`,
+    )
 
     switch (eventAction.command) {
       case NAVIGATION_COMMANDS.GoNext: {

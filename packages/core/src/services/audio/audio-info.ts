@@ -1,4 +1,8 @@
-import { AudioType, DiscardStrategy, LoadStrategy } from './interfaces'
+import {
+  AudioType,
+  DiscardStrategy,
+  LoadStrategy,
+} from './interfaces'
 
 export class AudioInfo {
   trackId!: string

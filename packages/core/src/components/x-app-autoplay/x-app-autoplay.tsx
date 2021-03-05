@@ -2,7 +2,12 @@ import { Component, h, Host, Prop, State } from '@stencil/core'
 import { onVideoChange, videoState } from '../../services/video'
 
 /**
- * @system video
+ * This component displays a checkbox to control the autoplay setting,
+ * used for video playback - as well as automatic navigation to the
+ * next page, when a video ends. Default: enabled
+ *
+ * @system presentation
+ * @system media
  */
 @Component({
   tag: 'x-app-autoplay',

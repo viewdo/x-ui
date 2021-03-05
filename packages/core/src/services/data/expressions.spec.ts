@@ -1,7 +1,11 @@
 jest.mock('../common/logging')
 jest.mock('./evaluate.worker')
 
-import { clearVisits, hasVisited, markVisit } from '../navigation/visits'
+import {
+  clearVisits,
+  hasVisited,
+  markVisit,
+} from '../navigation/visits'
 import { evaluateExpression, evaluatePredicate } from './expressions'
 import { addDataProvider } from './factory'
 import { InMemoryProvider } from './providers/memory'
@@ -36,7 +40,9 @@ describe('evaluateExpression', () => {
   it('evaluates simple expression with data-provider values', async () => {
     await session.set('rate', '1')
     await session.set('vintage', '1985')
-    const value = await evaluateExpression('{{session:rate}} + {{session:vintage}}')
+    const value = await evaluateExpression(
+      '{{session:rate}} + {{session:vintage}}',
+    )
     expect(value).toBe(1986)
   })
 
@@ -95,28 +101,36 @@ describe('evaluatePredicate', () => {
   it('evaluates simple predicate with data-provider values', async () => {
     await session.set('a', '1')
     await session.set('b', '1985')
-    const value = await evaluatePredicate('{{session:a}} < {{session:b}}')
+    const value = await evaluatePredicate(
+      '{{session:a}} < {{session:b}}',
+    )
     expect(value).toBe(true)
   })
 
   it('evaluates simple predicate with data-provider values reversed', async () => {
     await session.set('a', '1985')
     await session.set('b', '1')
-    const value = await evaluatePredicate('{{session:a}} > {{session:b}}')
+    const value = await evaluatePredicate(
+      '{{session:a}} > {{session:b}}',
+    )
     expect(value).toBe(true)
   })
 
   it('evaluates simple predicate with data-provider values equal', async () => {
     await session.set('a', '5')
     await session.set('b', '5')
-    const value = await evaluatePredicate('{{session:a}} == {{session:b}}')
+    const value = await evaluatePredicate(
+      '{{session:a}} == {{session:b}}',
+    )
     expect(value).toBe(true)
   })
 
   it('evaluates simple predicate with data-provider values not equal', async () => {
     await session.set('a', '5')
     await session.set('b', '5')
-    const value = await evaluatePredicate('{{session:a}} != {{session:b}}')
+    const value = await evaluatePredicate(
+      '{{session:a}} != {{session:b}}',
+    )
     expect(value).toBe(false)
   })
 
@@ -206,13 +220,17 @@ describe('evaluatePredicate', () => {
 
   it('evaluates session strings not null', async () => {
     await session.set('installed', 'npm')
-    const value = await evaluatePredicate('{{session:installed}} != null')
+    const value = await evaluatePredicate(
+      '{{session:installed}} != null',
+    )
     expect(value).toBe(true)
   })
 
   it('evaluates session strings is null: false', async () => {
     await session.set('installed', 'npm')
-    const value = await evaluatePredicate('{{session:installed}} == null')
+    const value = await evaluatePredicate(
+      '{{session:installed}} == null',
+    )
     expect(value).toBe(false)
   })
 

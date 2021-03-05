@@ -6,7 +6,10 @@ global.console.table = jest.fn()
 import { newSpecPage } from '@stencil/core/testing'
 import { EventEmitter } from '../events/emitter'
 import { InterfaceActionListener } from './actions'
-import { clearInterfaceProvider, getInterfaceProvider } from './factory'
+import {
+  clearInterfaceProvider,
+  getInterfaceProvider,
+} from './factory'
 import { INTERFACE_COMMANDS, INTERFACE_TOPIC } from './interfaces'
 
 let called = false

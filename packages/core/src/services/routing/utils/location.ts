@@ -3,13 +3,19 @@
 import { LocationSegments } from '../interfaces'
 import { parsePath, parseQueryString } from './path'
 
-export const isAbsolute = (pathname: string) => pathname?.startsWith('/') || false
+export const isAbsolute = (pathname: string) =>
+  pathname?.startsWith('/') || false
 
-export const createKey = (keyLength: number) => Math.random().toString(36).slice(2, keyLength)
+export const createKey = (keyLength: number) =>
+  Math.random().toString(36).slice(2, keyLength)
 
 // About 1.5x faster than the two-arg version of Array#splice()
 const spliceOne = (list: string[], index: number) => {
-  for (let i = index, k = i + 1, n = list.length; k < n; i += 1, k += 1) {
+  for (
+    let i = index, k = i + 1, n = list.length;
+    k < n;
+    i += 1, k += 1
+  ) {
     list[i] = list[k]
   }
 
@@ -67,7 +73,11 @@ export function resolvePathname(to: string, from = '') {
     }
   }
 
-  if (mustEndAbs && fromParts[0] !== '' && (!fromParts[0] || !isAbsolute(fromParts[0]))) {
+  if (
+    mustEndAbs &&
+    fromParts[0] !== '' &&
+    (!fromParts[0] || !isAbsolute(fromParts[0]))
+  ) {
     fromParts.unshift('')
   }
 
@@ -90,7 +100,11 @@ export const valueEqual = (a: any, b: any): boolean => {
   }
 
   if (Array.isArray(a)) {
-    return Array.isArray(b) && a.length === b.length && a.every((item, index) => valueEqual(item, b[index]))
+    return (
+      Array.isArray(b) &&
+      a.length === b.length &&
+      a.every((item, index) => valueEqual(item, b[index]))
+    )
   }
 
   const aType = typeof a
@@ -121,10 +135,22 @@ export const valueEqual = (a: any, b: any): boolean => {
   return false
 }
 
-export const locationsAreEqual = (a: LocationSegments, b: LocationSegments) =>
-  a.pathname === b.pathname && a.search === b.search && a.hash === b.hash && a.key === b.key && valueEqual(a.state, b.state)
+export const locationsAreEqual = (
+  a: LocationSegments,
+  b: LocationSegments,
+) =>
+  a.pathname === b.pathname &&
+  a.search === b.search &&
+  a.hash === b.hash &&
+  a.key === b.key &&
+  valueEqual(a.state, b.state)
 
-export const createLocation = (path: string | LocationSegments, state: any, key: string, currentLocation?: LocationSegments) => {
+export const createLocation = (
+  path: string | LocationSegments,
+  state: any,
+  key: string,
+  currentLocation?: LocationSegments,
+) => {
   let location: LocationSegments
 
   if (typeof path === 'string') {
@@ -155,7 +181,12 @@ export const createLocation = (path: string | LocationSegments, state: any, key:
   try {
     location.pathname = decodeURI(location.pathname)
   } catch (error_) {
-    const error = error_ instanceof URIError ? new URIError(`Pathname "${location.pathname}" could not be decoded. This is likely caused by an invalid percent-encoding.`) : error_
+    const error =
+      error_ instanceof URIError
+        ? new URIError(
+            `Pathname "${location.pathname}" could not be decoded. This is likely caused by an invalid percent-encoding.`,
+          )
+        : error_
     throw error
   }
 
@@ -167,7 +198,10 @@ export const createLocation = (path: string | LocationSegments, state: any, key:
     if (!location.pathname) {
       location.pathname = currentLocation.pathname
     } else if (!location.pathname?.startsWith('/')) {
-      location.pathname = resolvePathname(location.pathname, currentLocation.pathname)
+      location.pathname = resolvePathname(
+        location.pathname,
+        currentLocation.pathname,
+      )
     }
   } else if (!location.pathname) {
     location.pathname = '/'

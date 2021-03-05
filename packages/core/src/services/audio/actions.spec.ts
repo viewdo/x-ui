@@ -7,7 +7,14 @@ import { ROUTE_EVENTS } from '../routing'
 import { AudioActionListener } from './actions'
 import { AudioTrack } from './audio'
 import { AudioInfo } from './audio-info'
-import { AudioType, AUDIO_COMMANDS, AUDIO_EVENTS, AUDIO_TOPIC, DiscardStrategy, LoadStrategy } from './interfaces'
+import {
+  AudioType,
+  AUDIO_COMMANDS,
+  AUDIO_EVENTS,
+  AUDIO_TOPIC,
+  DiscardStrategy,
+  LoadStrategy,
+} from './interfaces'
 import { clearTracked } from './tracked'
 
 describe('audio-listener:', () => {
@@ -31,7 +38,12 @@ describe('audio-listener:', () => {
       events.push(...args)
     })
 
-    AudioTrack.createSound = (info: AudioInfo, onload, onend, onerror) => {
+    AudioTrack.createSound = (
+      info: AudioInfo,
+      onload,
+      onend,
+      onerror,
+    ) => {
       let _state = ''
       const instance = Object.assign(info, audio, {
         onload,
@@ -42,7 +54,8 @@ describe('audio-listener:', () => {
         fade: () => this,
         start: () => (_state = 'playing'),
         stop: () => (_state = 'stopped'),
-        mute: (mute: boolean) => (_state = mute ? 'muted' : 'playing'),
+        mute: (mute: boolean) =>
+          (_state = mute ? 'muted' : 'playing'),
         state: () => _state,
         seek: (time: number) => (_state = `${_state}:${time}`),
         volume: (_value: number) => this,
@@ -352,11 +365,15 @@ describe('audio-listener:', () => {
     listener = new AudioActionListener(page.win, eventBus, actionBus)
     listener.enable()
 
-    expect(page.win.localStorage.getItem(listener.enabledKey)).toBe('true')
+    expect(page.win.localStorage.getItem(listener.enabledKey)).toBe(
+      'true',
+    )
 
     listener.disable()
 
-    expect(page.win.localStorage.getItem(listener.enabledKey)).toBe('false')
+    expect(page.win.localStorage.getItem(listener.enabledKey)).toBe(
+      'false',
+    )
 
     listener.destroy()
   })
@@ -374,14 +391,18 @@ describe('audio-listener:', () => {
       command: AUDIO_COMMANDS.Enable,
     })
 
-    expect(page.win.localStorage.getItem(listener.enabledKey)).toBe('true')
+    expect(page.win.localStorage.getItem(listener.enabledKey)).toBe(
+      'true',
+    )
 
     actionBus.emit(AUDIO_TOPIC, {
       topic: AUDIO_TOPIC,
       command: AUDIO_COMMANDS.Disable,
     })
 
-    expect(page.win.localStorage.getItem(listener.enabledKey)).toBe('false')
+    expect(page.win.localStorage.getItem(listener.enabledKey)).toBe(
+      'false',
+    )
 
     listener.destroy()
   })

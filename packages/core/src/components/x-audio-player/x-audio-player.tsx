@@ -1,4 +1,11 @@
-import { Component, Element, h, Host, Prop, State } from '@stencil/core'
+import {
+  Component,
+  Element,
+  h,
+  Host,
+  Prop,
+  State,
+} from '@stencil/core'
 import { audioState } from '../../services/audio'
 import { AudioActionListener } from '../../services/audio/actions'
 import { AUDIO_TOPIC } from '../../services/audio/interfaces'
@@ -8,6 +15,7 @@ import { actionBus, eventBus } from '../../services/events'
 /**
  * Use this element only once per page to enable audio features.
  * @system audio
+ * @system presentation
  */
 @Component({
   tag: 'x-audio-player',
@@ -44,7 +52,12 @@ export class XAudioPlayer {
     }
     debugIf(this.debug, 'x-audio-player: loading')
 
-    this.listener = new AudioActionListener(window, eventBus, actionBus, this.debug)
+    this.listener = new AudioActionListener(
+      window,
+      eventBus,
+      actionBus,
+      this.debug,
+    )
 
     this.listenerSubscription = eventBus.on(AUDIO_TOPIC, () => {
       this.hasAudio = this.listener.hasAudio()

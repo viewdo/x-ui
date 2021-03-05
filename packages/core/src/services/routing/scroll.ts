@@ -11,7 +11,8 @@ export class ScrollHistory {
       this.provider = provider
       if (provider) {
         const scrollData = win.sessionStorage.getItem(AppScrollKey)
-        if (scrollData) this.scrollPositions = new Map(JSON.parse(scrollData))
+        if (scrollData)
+          this.scrollPositions = new Map(JSON.parse(scrollData))
       }
     })
 

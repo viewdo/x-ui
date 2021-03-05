@@ -3,7 +3,15 @@ jest.mock('../data/evaluate.worker')
 
 import { commonState } from '../common'
 import { VisitStrategy } from './interfaces'
-import { clearVisits, getSessionVisits, getStoredVisits, hasVisited, markVisit, recordVisit, storeVisit } from './visits'
+import {
+  clearVisits,
+  getSessionVisits,
+  getStoredVisits,
+  hasVisited,
+  markVisit,
+  recordVisit,
+  storeVisit,
+} from './visits'
 
 describe('visits', () => {
   commonState.providerTimeout = 0

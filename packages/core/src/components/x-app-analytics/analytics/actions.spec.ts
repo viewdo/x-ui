@@ -4,7 +4,11 @@ jest.mock('../../../services/common/logging')
 import { EventEmitter } from '../../../services/events'
 import { ROUTE_EVENTS } from '../../../services/routing'
 import { AnalyticsActionListener } from './actions'
-import { ANALYTICS_COMMANDS, ANALYTICS_EVENTS, ANALYTICS_TOPIC } from './interfaces'
+import {
+  ANALYTICS_COMMANDS,
+  ANALYTICS_EVENTS,
+  ANALYTICS_TOPIC,
+} from './interfaces'
 
 describe('analytics-listener', () => {
   let subject: AnalyticsActionListener | null = null

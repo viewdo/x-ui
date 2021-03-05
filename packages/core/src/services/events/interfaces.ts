@@ -10,7 +10,11 @@ export interface IEventEmitter {
 }
 
 export interface IEventActionListener {
-  initialize(win: Window, actions: IEventEmitter, events: IEventEmitter): void
+  initialize(
+    win: Window,
+    actions: IEventEmitter,
+    events: IEventEmitter,
+  ): void
   destroy(): void
 }
 

@@ -1,5 +1,10 @@
 import { Component, Element, h, Host, Prop } from '@stencil/core'
-import { DataProviderRegistration, DATA_COMMANDS, DATA_TOPIC, IDataProvider } from '../../services/data'
+import {
+  DataProviderRegistration,
+  DATA_COMMANDS,
+  DATA_TOPIC,
+  IDataProvider,
+} from '../../services/data'
 import { EventAction } from '../../services/events'
 import { StorageProvider } from './storage/provider'
 
@@ -9,7 +14,10 @@ import { StorageProvider } from './storage/provider'
 })
 
 /**
- *  @system data
+ * This component enables the **Storage Data Provider**, that
+ * leverages the browser 'long-term' data storage.
+ *
+ * @system data
  */
 export class XDataProviderStorage {
   private provider!: IDataProvider
@@ -26,7 +34,9 @@ export class XDataProviderStorage {
   @Prop() name: string = 'storage'
 
   private registerProvider() {
-    const customEvent = new CustomEvent<EventAction<DataProviderRegistration>>('x:actions', {
+    const customEvent = new CustomEvent<
+      EventAction<DataProviderRegistration>
+    >('x:actions', {
       detail: {
         topic: DATA_TOPIC,
         command: DATA_COMMANDS.RegisterDataProvider,

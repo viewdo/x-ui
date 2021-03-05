@@ -5,22 +5,34 @@ type DataProviders = Record<string, IDataProvider>
 
 const providers: DataProviders = {}
 
-export function addDataProvider(name: string, provider: IDataProvider) {
+export function addDataProvider(
+  name: string,
+  provider: IDataProvider,
+) {
   requireValue(name, 'provider name')
   if (typeof provider.get !== 'function') {
-    throw new TypeError(`The provider ${name} is missing the get(key) function.`)
+    throw new TypeError(
+      `The provider ${name} is missing the get(key) function.`,
+    )
   }
 
   if (typeof provider.set !== 'function') {
-    throw new TypeError(`The provider ${name} is missing the set(key) function.`)
+    throw new TypeError(
+      `The provider ${name} is missing the set(key) function.`,
+    )
   }
 
   providers[name.toLowerCase()] = provider
 
-  debugIf(commonState.debug && name !== 'data', `data-provider: ${name} registered`)
+  debugIf(
+    commonState.debug && name !== 'data',
+    `data-provider: ${name} registered`,
+  )
 }
 
-export async function getDataProvider(name: string): Promise<IDataProvider | null> {
+export async function getDataProvider(
+  name: string,
+): Promise<IDataProvider | null> {
   const key = name.toLowerCase()
   requireValue(name, 'provider name')
   if (Object.keys(providers).includes(key)) return providers[key]

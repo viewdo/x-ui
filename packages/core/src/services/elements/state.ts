@@ -14,4 +14,10 @@ const store = createStore<StateModel>({
 
 const { state, onChange, reset, dispose } = store
 
-export { store as elementsStore, state as elementsState, onChange as onElementsChange, reset as elementsStateReset, dispose as elementsStateDispose }
+export {
+  store as elementsStore,
+  state as elementsState,
+  onChange as onElementsChange,
+  reset as elementsStateReset,
+  dispose as elementsStateDispose,
+}

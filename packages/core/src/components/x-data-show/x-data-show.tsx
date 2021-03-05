@@ -1,10 +1,24 @@
-import { Component, Element, forceUpdate, h, Host, Prop, State } from '@stencil/core'
+import {
+  Component,
+  Element,
+  forceUpdate,
+  h,
+  Host,
+  Prop,
+  State,
+} from '@stencil/core'
 import { DATA_EVENTS, evaluatePredicate } from '../../services/data'
 import { eventBus } from '../../services/events'
 import { ROUTE_EVENTS } from '../../services/routing'
 
 /**
+ *  This tag conditionally renders child elements based on the
+ * configured predicate applied to the when value predicate.
+ * To learn more about predicates, check out the
+ * expressions documentation.
+ *
  *  @system data
+ *  @system content
  */
 @Component({
   tag: 'x-data-show',
@@ -25,13 +39,19 @@ export class XDataShow {
   @Prop() when!: string
 
   componentWillLoad() {
-    this.dataSubscription = eventBus.on(DATA_EVENTS.DataChanged, () => {
-      forceUpdate(this.el)
-    })
+    this.dataSubscription = eventBus.on(
+      DATA_EVENTS.DataChanged,
+      () => {
+        forceUpdate(this.el)
+      },
+    )
 
-    this.routeSubscription = eventBus.on(ROUTE_EVENTS.RouteChanged, () => {
-      forceUpdate(this.el)
-    })
+    this.routeSubscription = eventBus.on(
+      ROUTE_EVENTS.RouteChanged,
+      () => {
+        forceUpdate(this.el)
+      },
+    )
   }
 
   async componentWillRender() {

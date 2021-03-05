@@ -1,7 +1,10 @@
 jest.mock('../../services/data/evaluate.worker')
 
 import { newSpecPage } from '@stencil/core/testing'
-import { elementsStateReset, hasReference } from '../../services/elements'
+import {
+  elementsStateReset,
+  hasReference,
+} from '../../services/elements'
 import { XContentReference } from './x-content-reference'
 
 jest.setTimeout(1000)

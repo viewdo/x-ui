@@ -2,8 +2,17 @@ import { warnIf } from '../common'
 import { EventEmitter, IEventEmitter, Listener } from '../events'
 import { LocationSegments } from './interfaces'
 import { ScrollHistory } from './scroll'
-import { createKey, createLocation, locationsAreEqual } from './utils/location'
-import { createPath, ensureBasename, hasBasename, stripBasename } from './utils/path'
+import {
+  createKey,
+  createLocation,
+  locationsAreEqual,
+} from './utils/location'
+import {
+  createPath,
+  ensureBasename,
+  hasBasename,
+  stripBasename,
+} from './utils/path'
 
 const KeyLength = 6
 
@@ -14,7 +23,11 @@ export class HistoryService {
   scrollHistory: ScrollHistory
   previousLocation!: LocationSegments
 
-  constructor(public win: Window, private basename: string, private useHash: boolean = false) {
+  constructor(
+    public win: Window,
+    private basename: string,
+    private useHash: boolean = false,
+  ) {
     this.events = new EventEmitter()
     this.location = this.getDOMLocation(this.getHistoryState())
     this.previousLocation = this.location
@@ -59,7 +72,12 @@ export class HistoryService {
 
   push(path: string, state: any = {}) {
     const action = 'PUSH'
-    const location = createLocation(path, state, createKey(KeyLength), this.location)
+    const location = createLocation(
+      path,
+      state,
+      createKey(KeyLength),
+      this.location,
+    )
 
     const href = this.createHref(location)
     const { key } = location
@@ -69,7 +87,10 @@ export class HistoryService {
     this.win.history.pushState({ key, state }, '', href)
 
     const previousIndex = this.allKeys.indexOf(this.location.key)
-    const nextKeys = this.allKeys.slice(0, previousIndex === -1 ? 0 : previousIndex + 1)
+    const nextKeys = this.allKeys.slice(
+      0,
+      previousIndex === -1 ? 0 : previousIndex + 1,
+    )
 
     nextKeys.push(location.key)
     this.allKeys = nextKeys
@@ -79,7 +100,12 @@ export class HistoryService {
 
   replace(path: string, state: any = {}) {
     const action = 'REPLACE'
-    const location = createLocation(path, state, createKey(KeyLength), this.location)
+    const location = createLocation(
+      path,
+      state,
+      createKey(KeyLength),
+      this.location,
+    )
 
     const href = this.createHref(location)
     const { key } = location
@@ -106,7 +132,9 @@ export class HistoryService {
     this.location = location
 
     // Set scroll position based on its previous storage value
-    this.location.scrollPosition = this.scrollHistory.get(this.location.key)
+    this.location.scrollPosition = this.scrollHistory.get(
+      this.location.key,
+    )
 
     this.events.emit(action, this.location)
   }

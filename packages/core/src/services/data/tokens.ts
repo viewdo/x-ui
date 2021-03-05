@@ -1,5 +1,9 @@
 import { requireValue } from '../common'
-import { addDataProvider, getDataProvider, removeDataProvider } from './factory'
+import {
+  addDataProvider,
+  getDataProvider,
+  removeDataProvider,
+} from './factory'
 import { DataItemProvider } from './providers/item'
 
 const tokenRegEx = /\{\{([\w-]*):([\w_]*)(?:\.([\w_.-]*))?(?:\?([\w_.-]*))?\}\}/gi
@@ -19,7 +23,11 @@ export function hasToken(value: string) {
  * @param {string} textWithTokens
  * @return {*}  {(Promise<string|null>)}
  */
-export async function resolveTokens(textWithTokens: string, forExpression: boolean = false, data?: any): Promise<string> {
+export async function resolveTokens(
+  textWithTokens: string,
+  forExpression: boolean = false,
+  data?: any,
+): Promise<string> {
   requireValue(textWithTokens, 'valueExpression')
 
   let result = textWithTokens.slice()
@@ -51,18 +59,21 @@ export async function resolveTokens(textWithTokens: string, forExpression: boole
     let value = (await provider?.get(dataKey)) || defaultValue
 
     if (propKey) {
-      const object = typeof value === 'string' ? JSON.parse(value || '{}') : value
+      const object =
+        typeof value === 'string' ? JSON.parse(value || '{}') : value
       const propSegments = propKey.split('.')
       let node = object
       propSegments.forEach(property => {
         node = node[property]
       })
-      value = typeof node === 'object' ? JSON.stringify(node) : `${node}`
+      value =
+        typeof node === 'object' ? JSON.stringify(node) : `${node}`
     }
 
     let replacement = value || ''
     if (forExpression) {
-      if (value === null || value == undefined || value == '') replacement = 'null'
+      if (value === null || value == undefined || value == '')
+        replacement = 'null'
       else replacement = value.replace(escapeStringsRegex, `'$1'`)
     }
 

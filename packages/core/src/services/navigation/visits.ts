@@ -33,7 +33,9 @@ export async function setSessionVisits(visits: string[]) {
 }
 
 export async function getStoredVisits() {
-  var provider = (await getDataProvider(navigationState.storageProvider)) || storageFallback
+  var provider =
+    (await getDataProvider(navigationState.storageProvider)) ||
+    storageFallback
   if (provider) {
     const visits = await provider.get(visitKey)
     return visits ? parseVisits(visits) : []
@@ -43,14 +45,19 @@ export async function getStoredVisits() {
 }
 
 export async function setStoredVisits(visits: string[]) {
-  var provider = (await getDataProvider(navigationState.storageProvider)) || storageFallback
+  var provider =
+    (await getDataProvider(navigationState.storageProvider)) ||
+    storageFallback
   if (provider) {
     await provider.set(visitKey, stringifyVisits(visits))
   }
 }
 
 export async function hasVisited(url: string) {
-  const visits = [...(await getSessionVisits()), ...(await getStoredVisits())]
+  const visits = [
+    ...(await getSessionVisits()),
+    ...(await getStoredVisits()),
+  ]
   return visits.includes(url)
 }
 

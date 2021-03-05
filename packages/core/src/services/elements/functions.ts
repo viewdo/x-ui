@@ -4,7 +4,11 @@ import { debugIf } from '../common'
 import { evaluatePredicate, hasToken, resolveTokens } from '../data'
 import { TimedNode } from './interfaces'
 
-export async function replaceHtmlInElement(el: HTMLElement, existingSelector: string, contentElement: HTMLElement | null) {
+export function replaceHtmlInElement(
+  el: HTMLElement,
+  existingSelector: string,
+  contentElement: HTMLElement | null,
+) {
   const existing = el.querySelector(existingSelector)
   const changed = existing?.innerHTML != contentElement?.innerHTML
   if (!changed) return
@@ -14,7 +18,9 @@ export async function replaceHtmlInElement(el: HTMLElement, existingSelector: st
   if (contentElement) el.append(contentElement)
 }
 
-export async function resolveChildElementXAttributes(element: HTMLElement) {
+export async function resolveChildElementXAttributes(
+  element: HTMLElement,
+) {
   resolveChildXHideWhenAttributes(element)
   resolveChildXShowWhenAttributes(element)
   resolveChildXClassWhenAttributes(element)
@@ -77,7 +83,10 @@ export async function resolveXValueFromAttribute(element: Element) {
   }
 }
 
-export function captureElementsEventOnce<TElement extends HTMLElement, TEvent extends Event>(
+export function captureElementsEventOnce<
+  TElement extends HTMLElement,
+  TEvent extends Event
+>(
   rootElement: HTMLElement,
   query: string,
   event: string,
@@ -114,75 +123,140 @@ export function removeAllChildNodes(rootElement: HTMLElement) {
   }
 }
 
-export function captureXBackClickEvent(rootElement: HTMLElement, eventHandler: (tag: string) => void) {
-  captureElementsEventOnce<HTMLElement, MouseEvent>(rootElement, '[x-back]', 'click', (el: HTMLElement, e: MouseEvent) => {
-    e.preventDefault()
-    eventHandler(el.localName)
-  })
-
-  captureElementsEventOnce<HTMLElement, KeyboardEvent>(rootElement, '[x-back]', 'keydown', (el: HTMLElement, e: KeyboardEvent) => {
-    if (e.isComposing) return
-    if (e.key == 'Space' || e.key == 'Enter') {
+export function captureXBackClickEvent(
+  rootElement: HTMLElement,
+  eventHandler: (tag: string) => void,
+) {
+  captureElementsEventOnce<HTMLElement, MouseEvent>(
+    rootElement,
+    '[x-back]',
+    'click',
+    (el: HTMLElement, e: MouseEvent) => {
       e.preventDefault()
       eventHandler(el.localName)
-    }
-  })
+    },
+  )
+
+  captureElementsEventOnce<HTMLElement, KeyboardEvent>(
+    rootElement,
+    '[x-back]',
+    'keydown',
+    (el: HTMLElement, e: KeyboardEvent) => {
+      if (e.isComposing) return
+      if (e.key == 'Space' || e.key == 'Enter') {
+        e.preventDefault()
+        eventHandler(el.localName)
+      }
+    },
+  )
 }
 
-export function captureXNextClickEvent(rootElement: HTMLElement, eventHandler: (tag: string, route?: string | null) => void) {
-  captureElementsEventOnce<HTMLElement, MouseEvent>(rootElement, '[x-next]', 'click', (el: HTMLElement, e: MouseEvent) => {
-    const route = el.getAttribute('x-next')
-    e.preventDefault()
-    eventHandler(el.localName, route)
-  })
-  captureElementsEventOnce<HTMLElement, KeyboardEvent>(rootElement, '[x-next]', 'keydown', (el: HTMLElement, e: KeyboardEvent) => {
-    if (e.isComposing) return
-    if (e.key == 'Space' || e.key == 'Enter') {
+export function captureXNextClickEvent(
+  rootElement: HTMLElement,
+  eventHandler: (tag: string, route?: string | null) => void,
+) {
+  captureElementsEventOnce<HTMLElement, MouseEvent>(
+    rootElement,
+    '[x-next]',
+    'click',
+    (el: HTMLElement, e: MouseEvent) => {
       const route = el.getAttribute('x-next')
       e.preventDefault()
       eventHandler(el.localName, route)
-    }
-  })
+    },
+  )
+  captureElementsEventOnce<HTMLElement, KeyboardEvent>(
+    rootElement,
+    '[x-next]',
+    'keydown',
+    (el: HTMLElement, e: KeyboardEvent) => {
+      if (e.isComposing) return
+      if (e.key == 'Space' || e.key == 'Enter') {
+        const route = el.getAttribute('x-next')
+        e.preventDefault()
+        eventHandler(el.localName, route)
+      }
+    },
+  )
 }
 
-export function captureXLinkClickEvent(rootElement: HTMLElement, eventHandler: (tag: string, route?: string | null) => void) {
-  captureElementsEventOnce<HTMLElement, MouseEvent>(rootElement, '[x-link]', 'click', (el: HTMLElement, e: MouseEvent) => {
-    const route = el.getAttribute('x-link')
-    e.preventDefault()
-    eventHandler(el.localName, route)
-  })
+export function captureXLinkClickEvent(
+  rootElement: HTMLElement,
+  eventHandler: (tag: string, route?: string | null) => void,
+) {
+  captureElementsEventOnce<HTMLElement, MouseEvent>(
+    rootElement,
+    '[x-link]',
+    'click',
+    (el: HTMLElement, e: MouseEvent) => {
+      const route = el.getAttribute('x-link')
+      e.preventDefault()
+      eventHandler(el.localName, route)
+    },
+  )
 }
 
-export function captureElementChildTimedNodes(rootElement: HTMLElement, defaultDuration: number) {
+export function captureElementChildTimedNodes(
+  rootElement: HTMLElement,
+  defaultDuration: number,
+) {
   const timedNodes: TimedNode[] = []
-  rootElement.querySelectorAll('[x-in-time], [x-out-time]').forEach(element => {
-    const startAttribute = element.getAttribute('x-in-time')
-    const start = startAttribute ? Number.parseFloat(startAttribute) : 0
-    const endAttribute = element.getAttribute('x-out-time')
-    const end = endAttribute ? Number.parseFloat(endAttribute) : defaultDuration
-    timedNodes.push({
-      start,
-      end,
-      classIn: element.getAttribute('x-in-class'),
-      classOut: element.getAttribute('x-out-class'),
-      element,
+  rootElement
+    .querySelectorAll('[x-in-time], [x-out-time]')
+    .forEach(element => {
+      const startAttribute = element.getAttribute('x-in-time')
+      const start = startAttribute
+        ? Number.parseFloat(startAttribute)
+        : 0
+      const endAttribute = element.getAttribute('x-out-time')
+      const end = endAttribute
+        ? Number.parseFloat(endAttribute)
+        : defaultDuration
+      timedNodes.push({
+        start,
+        end,
+        classIn: element.getAttribute('x-in-class'),
+        classOut: element.getAttribute('x-out-class'),
+        element,
+      })
     })
-  })
   return timedNodes
 }
 
-export function resolveElementChildTimedNodesByTime(rootElement: HTMLElement, timedNodes: TimedNode[], time: number, duration: number, debug: boolean) {
+export function resolveElementChildTimedNodesByTime(
+  rootElement: HTMLElement,
+  timedNodes: TimedNode[],
+  time: number,
+  duration: number,
+  debug: boolean,
+) {
   timedNodes.forEach(node => {
-    if (node.start > -1 && time >= node.start && (node.end > -1 ? time < node.end : true)) {
-      debugIf(debug, `x-app-view-do: node ${node.element.id} is after start: ${node.start} before end: ${node.end}`)
+    if (
+      node.start > -1 &&
+      time >= node.start &&
+      (node.end > -1 ? time < node.end : true)
+    ) {
+      debugIf(
+        debug,
+        `x-app-view-do: node ${node.element.id} is after start: ${node.start} before end: ${node.end}`,
+      )
       // Time is after start and before end, if it exists
-      if (node.classIn && !node.element.classList.contains(node.classIn)) {
-        debugIf(debug, `x-app-view-do: node ${node.element.id} is after start: ${node.start} before end: ${node.end} [adding classIn: ${node.classIn}]`)
+      if (
+        node.classIn &&
+        !node.element.classList.contains(node.classIn)
+      ) {
+        debugIf(
+          debug,
+          `x-app-view-do: node ${node.element.id} is after start: ${node.start} before end: ${node.end} [adding classIn: ${node.classIn}]`,
+        )
         node.element.classList.add(node.classIn)
       }
 
       if (node.element.hasAttribute('hidden')) {
-        debugIf(debug, `x-app-view-do: node ${node.element.id} is after start: ${node.start} before end: ${node.end} [removing hidden attribute]`)
+        debugIf(
+          debug,
+          `x-app-view-do: node ${node.element.id} is after start: ${node.start} before end: ${node.end} [removing hidden attribute]`,
+        )
         // Otherwise, if there's a hidden attribute, remove it
         node.element.removeAttribute('hidden')
       }
@@ -190,9 +264,18 @@ export function resolveElementChildTimedNodesByTime(rootElement: HTMLElement, ti
 
     if (node.end > -1 && time > node.end) {
       // Time is after end, if it exists
-      debugIf(debug, `x-app-view-do: node ${node.element.id} is after end: ${node.end}`)
-      if (node.classIn && node.element.classList.contains(node.classIn)) {
-        debugIf(debug, `x-app-view-do: node ${node.element.id} is after end: ${node.end}  [removing classIn: ${node.classIn}]`)
+      debugIf(
+        debug,
+        `x-app-view-do: node ${node.element.id} is after end: ${node.end}`,
+      )
+      if (
+        node.classIn &&
+        node.element.classList.contains(node.classIn)
+      ) {
+        debugIf(
+          debug,
+          `x-app-view-do: node ${node.element.id} is after end: ${node.end}  [removing classIn: ${node.classIn}]`,
+        )
         // Remove the in class, if it exists
         node.element.classList.remove(node.classIn)
       }
@@ -200,19 +283,27 @@ export function resolveElementChildTimedNodesByTime(rootElement: HTMLElement, ti
       if (node.classOut) {
         // If a class-out was specified and isn't on the element, add it
         if (!node.element.classList.contains(node.classOut)) {
-          debugIf(debug, `x-app-view-do: node ${node.element.id} is after end: ${node.end} [adding classOut: ${node.classOut}]`)
+          debugIf(
+            debug,
+            `x-app-view-do: node ${node.element.id} is after end: ${node.end} [adding classOut: ${node.classOut}]`,
+          )
           node.element.classList.add(node.classOut)
         }
       } else if (!node.element.hasAttribute('hidden')) {
         // Otherwise, if there's no hidden attribute, add it
-        debugIf(debug, `x-app-view-do: node ${node.element.id} is after end: ${node.end} [adding hidden attribute]`)
+        debugIf(
+          debug,
+          `x-app-view-do: node ${node.element.id} is after end: ${node.end} [adding hidden attribute]`,
+        )
         node.element.setAttribute('hidden', '')
       }
     }
   })
 
   // Resolve x-time-to
-  const timeValueElements = rootElement.querySelectorAll('[x-time-to]')
+  const timeValueElements = rootElement.querySelectorAll(
+    '[x-time-to]',
+  )
   timeValueElements.forEach(el => {
     const seconds = Math.floor(time)
     const attributeName = el.getAttribute('x-time-to')
@@ -225,7 +316,9 @@ export function resolveElementChildTimedNodesByTime(rootElement: HTMLElement, ti
   })
 
   // Resolve x-percentage-to
-  const timePercentageValueElements = rootElement.querySelectorAll('[x-percentage-to]')
+  const timePercentageValueElements = rootElement.querySelectorAll(
+    '[x-percentage-to]',
+  )
   timePercentageValueElements.forEach(element => {
     const attributeName = element.getAttribute('x-percentage-to')
     const percentage = time / duration
@@ -233,18 +326,29 @@ export function resolveElementChildTimedNodesByTime(rootElement: HTMLElement, ti
       element.setAttribute(attributeName, percentage.toString())
     } else {
       element.childNodes.forEach(cn => cn.remove())
-      element.append(document.createTextNode(`${Math.round(percentage * 100)}%`))
+      element.append(
+        document.createTextNode(`${Math.round(percentage * 100)}%`),
+      )
     }
   })
 }
 
-export function restoreElementChildTimedNodes(rootElement: HTMLElement, timedNodes: TimedNode[]) {
+export function restoreElementChildTimedNodes(
+  rootElement: HTMLElement,
+  timedNodes: TimedNode[],
+) {
   timedNodes.forEach(node => {
-    if (node.classIn && node.element.classList.contains(node.classIn)) {
+    if (
+      node.classIn &&
+      node.element.classList.contains(node.classIn)
+    ) {
       node.element.classList.remove(node.classIn)
     }
 
-    if (node.classOut && node.element.classList.contains(node.classOut)) {
+    if (
+      node.classOut &&
+      node.element.classList.contains(node.classOut)
+    ) {
       node.element.classList.remove(node.classOut)
     }
 
@@ -254,7 +358,9 @@ export function restoreElementChildTimedNodes(rootElement: HTMLElement, timedNod
   })
 
   // Resolve x-time-to
-  const timeValueElements = rootElement.querySelectorAll('[x-time-to]')
+  const timeValueElements = rootElement.querySelectorAll(
+    '[x-time-to]',
+  )
   timeValueElements.forEach(el => {
     const attributeName = el.getAttribute('x-time-to')
     if (attributeName) {
@@ -266,7 +372,9 @@ export function restoreElementChildTimedNodes(rootElement: HTMLElement, timedNod
   })
 
   // Resolve x-percentage-to
-  const timePercentageValueElements = rootElement.querySelectorAll('[x-percentage-to]')
+  const timePercentageValueElements = rootElement.querySelectorAll(
+    '[x-percentage-to]',
+  )
   timePercentageValueElements.forEach(el => {
     const attributeName = el.getAttribute('x-percentage-to')
     if (attributeName) {

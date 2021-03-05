@@ -19,7 +19,10 @@ export function sleep(ms: number): Promise<void> {
  * @param {(t: T) => Promise<boolean>} predicate
  * @return {(Promise<T|undefined>)}
  */
-export async function findAsyncSequential<T>(array: T[], predicate: (t: T) => Promise<boolean>): Promise<T | null> {
+export async function findAsyncSequential<T>(
+  array: T[],
+  predicate: (t: T) => Promise<boolean>,
+): Promise<T | null> {
   for (const t of array) {
     if (await predicate(t)) {
       return t

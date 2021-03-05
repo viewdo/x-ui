@@ -21,7 +21,11 @@ export type TimedNode = {
   classOut: string | null
   element: {
     id: any
-    classList: { contains: (arg0: string) => any; add: (arg0: string) => void; remove: (arg0: string) => void }
+    classList: {
+      contains: (arg0: string) => any
+      add: (arg0: string) => void
+      remove: (arg0: string) => void
+    }
     hasAttribute: (arg0: string) => any
     removeAttribute: (arg0: string) => void
     setAttribute: (arg0: string, arg1: string) => void

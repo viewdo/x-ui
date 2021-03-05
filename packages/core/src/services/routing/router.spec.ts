@@ -85,7 +85,12 @@ describe('router', () => {
 
   it('initialized: blank path/', async () => {
     const page = await startPage()
-    const subject = new RouterService(page.win, writeTask, eventBus, actionBus)
+    const subject = new RouterService(
+      page.win,
+      writeTask,
+      eventBus,
+      actionBus,
+    )
 
     expect(subject.location.pathname).toBe('/')
 
@@ -98,7 +103,12 @@ describe('router', () => {
 
   it('initialized: path = /home', async () => {
     const page = await startPage('/home')
-    const subject = new RouterService(page.win, writeTask, eventBus, actionBus)
+    const subject = new RouterService(
+      page.win,
+      writeTask,
+      eventBus,
+      actionBus,
+    )
 
     expect(subject.location.pathname).toBe('/home')
 
@@ -111,7 +121,12 @@ describe('router', () => {
 
   it('match-path: browser | path = /item/:item ', async () => {
     const page = await startPage('/item/food')
-    const subject = new RouterService(page.win, writeTask, eventBus, actionBus)
+    const subject = new RouterService(
+      page.win,
+      writeTask,
+      eventBus,
+      actionBus,
+    )
 
     expect(subject.location.pathname).toBe('/item/food')
 
@@ -128,7 +143,12 @@ describe('router', () => {
 
   it('router-service: scrollTop ', async () => {
     const page = await startPage('/')
-    const subject = new RouterService(page.win, writeTask, eventBus, actionBus)
+    const subject = new RouterService(
+      page.win,
+      writeTask,
+      eventBus,
+      actionBus,
+    )
 
     let didScroll = false
 
@@ -149,7 +169,12 @@ describe('router', () => {
 
   it('router-service: captureInnerLinks ', async () => {
     const page = await startPage('/')
-    const subject = new RouterService(page.win, writeTask, eventBus, actionBus)
+    const subject = new RouterService(
+      page.win,
+      writeTask,
+      eventBus,
+      actionBus,
+    )
 
     subject.captureInnerLinks(page.body)
     await page.waitForChanges()

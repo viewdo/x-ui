@@ -4,11 +4,24 @@ import { captureElementsEventOnce } from '../elements'
 import { IEventEmitter } from '../events'
 import { NavigationActionListener } from '../navigation/actions'
 import { HistoryService } from './history'
-import { LocationSegments, MatchOptions, MatchResults, RouteViewOptions } from './interfaces'
+import {
+  LocationSegments,
+  MatchOptions,
+  MatchResults,
+  RouteViewOptions,
+} from './interfaces'
 import { RoutingDataProvider } from './provider'
 import { Route } from './route'
-import { isAbsolute, locationsAreEqual, resolvePathname } from './utils/location'
-import { addLeadingSlash, ensureBasename, stripBasename } from './utils/path'
+import {
+  isAbsolute,
+  locationsAreEqual,
+  resolvePathname,
+} from './utils/location'
+import {
+  addLeadingSlash,
+  ensureBasename,
+  stripBasename,
+} from './utils/path'
 import { matchPath } from './utils/path-match'
 
 export class RouterService {
@@ -29,25 +42,41 @@ export class RouterService {
     private useHash = false,
   ) {
     this.history = new HistoryService(win, root, useHash)
-    this.listener = new NavigationActionListener(this, eventBus, actions)
+    this.listener = new NavigationActionListener(
+      this,
+      eventBus,
+      actions,
+    )
 
-    this.removeHandler = this.history.listen((location: LocationSegments) => {
-      if (this.location) {
-        if (!locationsAreEqual(this.location, location)) {
+    this.removeHandler = this.history.listen(
+      (location: LocationSegments) => {
+        if (this.location) {
+          if (!locationsAreEqual(this.location, location)) {
+            this.location = location
+            this.listener.notifyRouteChanged(location)
+          }
+        } else {
           this.location = location
           this.listener.notifyRouteChanged(location)
         }
-      } else {
-        this.location = location
-        this.listener.notifyRouteChanged(location)
-      }
-    })
+      },
+    )
 
     this.location = this.history.location
     this.listener.notifyRouteChanged(this.location)
 
-    addDataProvider('route', new RoutingDataProvider((key: string) => this.location?.params[key]))
-    addDataProvider('query', new RoutingDataProvider((key: string) => this.location?.query[key]))
+    addDataProvider(
+      'route',
+      new RoutingDataProvider(
+        (key: string) => this.location?.params[key],
+      ),
+    )
+    addDataProvider(
+      'query',
+      new RoutingDataProvider(
+        (key: string) => this.location?.query[key],
+      ),
+    )
   }
 
   adjustRootViewUrls(url: string, hash: boolean): string {
@@ -56,7 +85,9 @@ export class RouterService {
 
   viewsUpdated(options: RouteViewOptions = {}) {
     if (options.scrollToId) {
-      const elm = this.win.document.querySelector('#' + options.scrollToId)
+      const elm = this.win.document.querySelector(
+        '#' + options.scrollToId,
+      )
       if (elm) {
         elm.scrollIntoView()
         return
@@ -66,7 +97,11 @@ export class RouterService {
   }
 
   finalize(startUrl: string) {
-    if (startUrl && startUrl.length > 1 && this.location?.pathname === '/') {
+    if (
+      startUrl &&
+      startUrl.length > 1 &&
+      this.location?.pathname === '/'
+    ) {
       this.goToRoute(startUrl)
     }
   }
@@ -76,7 +111,10 @@ export class RouterService {
   }
 
   goToParentRoute() {
-    const parentSegments = this.history.location.pathParts?.slice(0, -1)
+    const parentSegments = this.history.location.pathParts?.slice(
+      0,
+      -1,
+    )
     if (parentSegments) {
       this.goToRoute(addLeadingSlash(parentSegments.join('/')))
     } else {
@@ -86,8 +124,14 @@ export class RouterService {
 
   scrollTo(scrollToLocation: number) {
     if (Array.isArray(this.history.location.scrollPosition)) {
-      if (this.history.location && Array.isArray(this.history.location.scrollPosition)) {
-        this.win.scrollTo(this.history.location.scrollPosition[0], this.history.location.scrollPosition[1])
+      if (
+        this.history.location &&
+        Array.isArray(this.history.location.scrollPosition)
+      ) {
+        this.win.scrollTo(
+          this.history.location.scrollPosition[0],
+          this.history.location.scrollPosition[1],
+        )
       }
       return
     }
@@ -119,21 +163,36 @@ export class RouterService {
   }
 
   captureInnerLinks(root: HTMLElement, fromPath?: string) {
-    captureElementsEventOnce<HTMLAnchorElement, MouseEvent>(root, `a[href]`, 'click', (el: HTMLAnchorElement, ev: MouseEvent) => {
-      if (this.isModifiedEvent(ev) || !this?.history) return true
+    captureElementsEventOnce<HTMLAnchorElement, MouseEvent>(
+      root,
+      `a[href]`,
+      'click',
+      (el: HTMLAnchorElement, ev: MouseEvent) => {
+        if (this.isModifiedEvent(ev) || !this?.history) return true
 
-      if (!el.href.includes(location.origin) || el.target) return true
+        if (!el.href.includes(location.origin) || el.target)
+          return true
 
-      ev.preventDefault()
+        ev.preventDefault()
 
-      const path = el.href.replace(location.origin, '')
-      return this.handleRouteLinkClick(path, fromPath || this.location.pathname)
-    })
+        const path = el.href.replace(location.origin, '')
+        return this.handleRouteLinkClick(
+          path,
+          fromPath || this.location.pathname,
+        )
+      },
+    )
   }
 
   handleRouteLinkClick(toPath: string, fromPath?: string) {
-    const route = isAbsolute(toPath) ? toPath : this.normalizeChildUrl(toPath, fromPath || '/')
-    if (fromPath && route.startsWith(fromPath) && route.includes('#')) {
+    const route = isAbsolute(toPath)
+      ? toPath
+      : this.normalizeChildUrl(toPath, fromPath || '/')
+    if (
+      fromPath &&
+      route.startsWith(fromPath) &&
+      route.includes('#')
+    ) {
       const elId = toPath.substr(toPath.indexOf('#'))
       this.win.document?.querySelector(elId)?.scrollIntoView({
         behavior: 'smooth',
@@ -158,6 +217,16 @@ export class RouterService {
     scrollTopOffset: number,
     matchSetter: (m: MatchResults | null) => void,
   ) {
-    return new Route(this.eventBus, this, routeElement, path, exact, pageTitle, transition, scrollTopOffset, matchSetter)
+    return new Route(
+      this.eventBus,
+      this,
+      routeElement,
+      path,
+      exact,
+      pageTitle,
+      transition,
+      scrollTopOffset,
+      matchSetter,
+    )
   }
 }

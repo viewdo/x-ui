@@ -1,5 +1,8 @@
 import { newSpecPage } from '@stencil/core/testing'
-import { interfaceState, interfaceStateDispose } from '../../services/interface'
+import {
+  interfaceState,
+  interfaceStateDispose,
+} from '../../services/interface'
 import { XAppTheme } from './x-app-theme'
 
 describe('x-app-theme', () => {

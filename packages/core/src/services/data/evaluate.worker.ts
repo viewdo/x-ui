@@ -1,4 +1,6 @@
-;(self as any).importScripts('https://cdn.jsdelivr.net/npm/expr-eval@2.0.2/dist/bundle.min.js')
+;(self as any).importScripts(
+  'https://cdn.jsdelivr.net/npm/expr-eval@2.0.2/dist/bundle.min.js',
+)
 
 import type { ExpressionContext } from './interfaces'
 
@@ -12,6 +14,9 @@ const expressionEvaluator = new (self as any).exprEval.Parser()
  * @param {string} expression A js-based expression for value comparisons or calculations
  * @param {object} context An object holding any variables for the expression.
  */
-export async function evalExpression(expression: string, context: ExpressionContext = {}): Promise<number | boolean | string> {
+export async function evalExpression(
+  expression: string,
+  context: ExpressionContext = {},
+): Promise<number | boolean | string> {
   return expressionEvaluator.evaluate(expression, context)
 }

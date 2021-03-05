@@ -28,13 +28,18 @@ describe('x-app-analytics', () => {
       </x-app>`,
     })
 
-    const analytics = page.body.querySelector('x-app-analytics') as HTMLXAppAnalyticsElement
+    const analytics = page.body.querySelector(
+      'x-app-analytics',
+    ) as HTMLXAppAnalyticsElement
 
     const pageView = []
     //@ts-ignore
-    analytics!.addEventListener('page-view', (e: CustomEvent<string>) => {
-      pageView.push(e.detail)
-    })
+    analytics!.addEventListener(
+      'page-view',
+      (e: CustomEvent<string>) => {
+        pageView.push(e.detail)
+      },
+    )
 
     const router = page.body.querySelector('x-app')?.router
 

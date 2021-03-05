@@ -2,7 +2,10 @@ jest.mock('../../services/common/logging')
 jest.mock('../../services/data/evaluate.worker')
 
 import { newSpecPage } from '@stencil/core/testing'
-import { addDataProvider, InMemoryProvider } from '../../services/data'
+import {
+  addDataProvider,
+  InMemoryProvider,
+} from '../../services/data'
 import { DATA_EVENTS } from '../../services/data/interfaces'
 import { eventBus } from '../../services/events'
 import { XDataShow } from './x-data-show'

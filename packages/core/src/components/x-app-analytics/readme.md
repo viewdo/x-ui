@@ -41,8 +41,6 @@ Using the [\<x-app-analytics\>](/components/x-app-analytics) is simple, but does
     </script>
   </x-app-analytics>
 </body>
-
-## Event Detail
 ```
 
 <!-- Auto Generated Below -->

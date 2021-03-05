@@ -14,4 +14,10 @@ const store = createStore<StateModel>({
 
 const { state, onChange, reset, dispose } = store
 
-export { store as commonStore, state as commonState, onChange as onCommonChange, reset as commonStateReset, dispose as commonStateDispose }
+export {
+  store as commonStore,
+  state as commonState,
+  onChange as onCommonChange,
+  reset as commonStateReset,
+  dispose as commonStateDispose,
+}

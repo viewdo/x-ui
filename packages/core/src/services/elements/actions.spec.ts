@@ -6,7 +6,11 @@ import { sleep } from '../common'
 import { EventEmitter } from '../events'
 import { ElementsActionListener } from './actions'
 import { ELEMENTS_COMMANDS, ELEMENTS_TOPIC } from './interfaces'
-import { clearReferences, hasReference, markReference } from './references'
+import {
+  clearReferences,
+  hasReference,
+  markReference,
+} from './references'
 
 describe('elements-actions:', () => {
   let actionBus: EventEmitter
@@ -140,10 +144,16 @@ describe('elements-actions:', () => {
   })
 
   it('interface listener: ElementAddClasses / ElementRemoveClasses', async () => {
-    const fakeWindow = new MockWindow('<html><body><h1>Hello</h1></body></html>')
+    const fakeWindow = new MockWindow(
+      '<html><body><h1>Hello</h1></body></html>',
+    )
 
     const interfaceListener = new ElementsActionListener()
-    interfaceListener.initialize(fakeWindow.window, actionBus, eventBus)
+    interfaceListener.initialize(
+      fakeWindow.window,
+      actionBus,
+      eventBus,
+    )
 
     actionBus.emit(ELEMENTS_TOPIC, {
       topic: ELEMENTS_TOPIC,
@@ -156,7 +166,9 @@ describe('elements-actions:', () => {
 
     await sleep(300)
 
-    expect(fakeWindow.document.body.innerHTML).toBe('<h1 class="test">Hello</h1>')
+    expect(fakeWindow.document.body.innerHTML).toBe(
+      '<h1 class="test">Hello</h1>',
+    )
 
     actionBus.emit(ELEMENTS_TOPIC, {
       topic: ELEMENTS_TOPIC,
@@ -173,10 +185,16 @@ describe('elements-actions:', () => {
   })
 
   it('interface listener: elementToggleClass', async () => {
-    const fakeWindow = new MockWindow('<html><body><h1>Hello</h1></body></html>')
+    const fakeWindow = new MockWindow(
+      '<html><body><h1>Hello</h1></body></html>',
+    )
 
     const interfaceListener = new ElementsActionListener()
-    interfaceListener.initialize(fakeWindow.window, actionBus, eventBus)
+    interfaceListener.initialize(
+      fakeWindow.window,
+      actionBus,
+      eventBus,
+    )
 
     actionBus.emit(ELEMENTS_TOPIC, {
       topic: ELEMENTS_TOPIC,
@@ -189,7 +207,9 @@ describe('elements-actions:', () => {
 
     await sleep(300)
 
-    expect(fakeWindow.document.body.innerHTML).toBe('<h1 class="test">Hello</h1>')
+    expect(fakeWindow.document.body.innerHTML).toBe(
+      '<h1 class="test">Hello</h1>',
+    )
 
     actionBus.emit(ELEMENTS_TOPIC, {
       topic: ELEMENTS_TOPIC,
@@ -206,10 +226,16 @@ describe('elements-actions:', () => {
   })
 
   it('interface listener: ElementSetAttribute / ElementRemoveAttribute', async () => {
-    const fakeWindow = new MockWindow('<html><body><h1>Hello</h1></body></html>')
+    const fakeWindow = new MockWindow(
+      '<html><body><h1>Hello</h1></body></html>',
+    )
 
     const interfaceListener = new ElementsActionListener()
-    interfaceListener.initialize(fakeWindow.window, actionBus, eventBus)
+    interfaceListener.initialize(
+      fakeWindow.window,
+      actionBus,
+      eventBus,
+    )
 
     actionBus.emit(ELEMENTS_TOPIC, {
       topic: ELEMENTS_TOPIC,
@@ -220,7 +246,9 @@ describe('elements-actions:', () => {
       },
     })
 
-    expect(fakeWindow.document.body.innerHTML).toBe('<h1 hidden="">Hello</h1>')
+    expect(fakeWindow.document.body.innerHTML).toBe(
+      '<h1 hidden="">Hello</h1>',
+    )
 
     actionBus.emit(ELEMENTS_TOPIC, {
       topic: ELEMENTS_TOPIC,
@@ -232,7 +260,9 @@ describe('elements-actions:', () => {
       },
     })
 
-    expect(fakeWindow.document.body.innerHTML).toBe('<h1 hidden="true">Hello</h1>')
+    expect(fakeWindow.document.body.innerHTML).toBe(
+      '<h1 hidden="true">Hello</h1>',
+    )
 
     actionBus.emit(ELEMENTS_TOPIC, {
       topic: ELEMENTS_TOPIC,
@@ -257,7 +287,11 @@ describe('elements-actions:', () => {
     )
 
     const interfaceListener = new ElementsActionListener()
-    interfaceListener.initialize(fakeWindow.window, actionBus, eventBus)
+    interfaceListener.initialize(
+      fakeWindow.window,
+      actionBus,
+      eventBus,
+    )
 
     actionBus.emit(ELEMENTS_TOPIC, {
       topic: ELEMENTS_TOPIC,

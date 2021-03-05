@@ -7,7 +7,10 @@ import { interfaceState, onInterfaceChange } from '../state'
 export class DefaultInterfaceProvider {
   private disposeThemeSubscription!: () => void
 
-  constructor(win: MockWindow | Window = window, eventBus?: IEventEmitter) {
+  constructor(
+    win: MockWindow | Window = window,
+    eventBus?: IEventEmitter,
+  ) {
     interfaceState.theme = win?.localStorage.getItem('theme') || null
 
     this.disposeThemeSubscription = onInterfaceChange('theme', t => {

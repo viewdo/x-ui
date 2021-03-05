@@ -4,12 +4,12 @@ module.exports = {
   jsxBracketSameLine: false,
   jsxSingleQuote: false,
   quoteProps: "consistent",
-  printWidth: 180,
+  printWidth: 70,
   semi: false,
   endOfLine: "lf",
   singleQuote: true,
   tabWidth: 2,
   trailingComma: "all",
   useTabs: false,
-  embeddedLanguageFormatting: "off"
+  embeddedLanguageFormatting: true
 }

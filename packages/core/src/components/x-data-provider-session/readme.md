@@ -1,6 +1,14 @@
-# x-data-provider-session
+# X-DATA-PROVIDER-SESSION
 
+This component enables the **Session Data Provider**.
 
+## Cookie Data Provider
+
+This store is short-lived within the browsing session of an exact browser. This provider enables you to use session data in your HTML.
+
+Provider Key: '**session**'
+
+`{{session:(key)}`
 
 <!-- Auto Generated Below -->
 

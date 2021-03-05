@@ -7,7 +7,10 @@ If inline is present, the source would be nested inside this element, otherwise 
 ## Usage
 
 ```html
-<x-content-reference script-src="<url>" style-src="<url>" inline />
+<x-content-reference
+  script-src="<url>"
+  style-src="<url>">
+</x-content-reference>
 ```
 
 ## Examples

@@ -21,12 +21,15 @@ describe('x-data-provider-storage', () => {
   it('localStorage: is functional', async () => {
     const page = await newSpecPage({
       components: [XApp, XDataProviderStorage],
-      html: '<x-app><x-data-provider-storage></x-data-provider-storage></x-app>',
+      html:
+        '<x-app><x-data-provider-storage></x-data-provider-storage></x-app>',
       supportsShadowDom: true,
     })
     await page.waitForChanges()
 
-    const subject = page.body.querySelector('x-data-provider-storage')!
+    const subject = page.body.querySelector(
+      'x-data-provider-storage',
+    )!
 
     const provider = await getDataProvider('storage')
     expect(provider).toBeDefined()

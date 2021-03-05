@@ -1,13 +1,26 @@
-import { Component, Element, h, Host, Method, Prop } from '@stencil/core'
+import {
+  Component,
+  Element,
+  h,
+  Host,
+  Method,
+  Prop,
+} from '@stencil/core'
 import { AudioType, AUDIO_TOPIC } from '../../services/audio'
 import { warn } from '../../services/common'
-import { actionBus, EventAction, IActionElement } from '../../services/events'
+import {
+  actionBus,
+  EventAction,
+  IActionElement,
+} from '../../services/events'
 
 /**
- * This element just holds data to express the actionEvent to fire. This element
- * should always be the child of a x-action-activator.
+ * This element represents an action to be fired. This
+ * specialized action encapsulates required parameters
+ * needed for audio-based actions, for music.
  *
  * @system audio
+ * @system presentation
  */
 @Component({
   tag: 'x-audio-music-action',
@@ -19,7 +32,13 @@ export class XAudioMusicAction implements IActionElement {
   /**
    * The command to execute.
    */
-  @Prop() command!: 'start' | 'pause' | 'resume' | 'mute' | 'volume' | 'seek'
+  @Prop() command!:
+    | 'start'
+    | 'pause'
+    | 'resume'
+    | 'mute'
+    | 'volume'
+    | 'seek'
 
   /**
    * The track to target.
@@ -65,7 +84,9 @@ export class XAudioMusicAction implements IActionElement {
 
   componentWillLoad() {
     if (this.parent === undefined) {
-      warn('The x-audio-music-action component must be wrapped with an x-action-activator component to work.')
+      warn(
+        'The x-audio-music-action component must be wrapped with an x-action-activator component to work.',
+      )
     }
   }
 

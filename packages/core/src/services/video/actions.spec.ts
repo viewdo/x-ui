@@ -21,7 +21,13 @@ describe('video-actions:', () => {
     actionBus = new EventEmitter()
     eventBus = new EventEmitter()
 
-    subject = new VideoActionListener(page.win, video as HTMLVideoElement, eventBus, actionBus, false)
+    subject = new VideoActionListener(
+      page.win,
+      video as HTMLVideoElement,
+      eventBus,
+      actionBus,
+      false,
+    )
 
     eventBus.on('*', (...args: any[]) => {
       events.push(...args)
@@ -89,7 +95,13 @@ describe('video-actions:', () => {
   })
 
   it('actions: autoplay from listener', async () => {
-    subject = new VideoActionListener(page.win, video as HTMLVideoElement, eventBus, actionBus, false)
+    subject = new VideoActionListener(
+      page.win,
+      video as HTMLVideoElement,
+      eventBus,
+      actionBus,
+      false,
+    )
 
     subject.setAutoPlay(true)
 
@@ -103,7 +115,13 @@ describe('video-actions:', () => {
   })
 
   it('actions: autoplay from bus ', async () => {
-    subject = new VideoActionListener(page.win, video as HTMLVideoElement, eventBus, actionBus, false)
+    subject = new VideoActionListener(
+      page.win,
+      video as HTMLVideoElement,
+      eventBus,
+      actionBus,
+      false,
+    )
 
     actionBus.emit(VIDEO_TOPIC, {
       topic: VIDEO_TOPIC,

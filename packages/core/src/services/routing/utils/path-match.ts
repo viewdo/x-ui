@@ -1,6 +1,10 @@
 /* istanbul ignore file */
 
-import { LocationSegments, MatchOptions, MatchResults } from '../interfaces'
+import {
+  LocationSegments,
+  MatchOptions,
+  MatchResults,
+} from '../interfaces'
 import { valueEqual } from './location'
 import { Key, Path, pathToRegexp } from './path-regex'
 
@@ -14,9 +18,13 @@ const patternCache: Record<string, any> = {}
 const cacheLimit = 10000
 
 // Memoized function for creating the path match regex
-const compilePath = (pattern: Path, options: CompileOptions): { re: RegExp; keys: Key[] } => {
+const compilePath = (
+  pattern: Path,
+  options: CompileOptions,
+): { re: RegExp; keys: Key[] } => {
   const cacheKey = `${options.end}${options.strict}`
-  const cache = patternCache[cacheKey] || (patternCache[cacheKey] = {})
+  const cache =
+    patternCache[cacheKey] || (patternCache[cacheKey] = {})
   const cachePattern = JSON.stringify(pattern)
 
   if (cache[cachePattern]) {
@@ -38,7 +46,10 @@ const compilePath = (pattern: Path, options: CompileOptions): { re: RegExp; keys
 /**
  * Public API for matching a URL pathname to a path pattern.
  */
-export function matchPath(location: LocationSegments, options: MatchOptions = {}): MatchResults | null {
+export function matchPath(
+  location: LocationSegments,
+  options: MatchOptions = {},
+): MatchResults | null {
   if (typeof options === 'string') {
     options = { path: options }
   }
@@ -64,10 +75,13 @@ export function matchPath(location: LocationSegments, options: MatchOptions = {}
     path, // The path pattern used to match
     url: path === '/' && url === '' ? '/' : url, // The matched portion of the URL
     isExact, // Whether or not we matched exactly
-    params: keys.reduce<Record<string, string>>((memo, key: Key, index) => {
-      memo[key.name] = values[index]
-      return memo
-    }, {}),
+    params: keys.reduce<Record<string, string>>(
+      (memo, key: Key, index) => {
+        memo[key.name] = values[index]
+        return memo
+      },
+      {},
+    ),
   }
 
   if (result.isExact) {
@@ -77,7 +91,10 @@ export function matchPath(location: LocationSegments, options: MatchOptions = {}
   return result
 }
 
-export const matchesAreEqual = (a: MatchResults | null, b: MatchResults | null) => {
+export const matchesAreEqual = (
+  a: MatchResults | null,
+  b: MatchResults | null,
+) => {
   if (a === null && b === null) {
     return true
   }
@@ -86,5 +103,11 @@ export const matchesAreEqual = (a: MatchResults | null, b: MatchResults | null) 
     return false
   }
 
-  return a && b && a.path === b.path && a.url === b.url && valueEqual(a.params, b.params)
+  return (
+    a &&
+    b &&
+    a.path === b.path &&
+    a.url === b.url &&
+    valueEqual(a.params, b.params)
+  )
 }

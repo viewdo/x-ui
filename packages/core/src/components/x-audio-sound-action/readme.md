@@ -1,5 +1,11 @@
 # X-AUDIO-SOUND-ACTION
 
+This element represents an action to be fired. This specialized action encapsulates required parameters needed for audio-based actions, for sound.
+
+## Usage
+
+See the [audio](/audio) systems documentation.
+
 <!-- Auto Generated Below -->
 
 

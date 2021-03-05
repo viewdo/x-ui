@@ -2,7 +2,10 @@
 
 import { CookieAttributes } from './interfaces'
 
-function stringifyAttribute(key: string, value: string | boolean | undefined): string {
+function stringifyAttribute(
+  key: string,
+  value: string | boolean | undefined,
+): string {
   if (!value) {
     return ''
   }
@@ -18,12 +21,17 @@ function stringifyAttribute(key: string, value: string | boolean | undefined): s
 function stringifyAttributes(attributes: CookieAttributes): string {
   if (typeof attributes.expires === 'number') {
     const expires = new Date()
-    expires.setMilliseconds(expires.getMilliseconds() + attributes.expires * 864e5)
+    expires.setMilliseconds(
+      expires.getMilliseconds() + attributes.expires * 864e5,
+    )
     attributes.expires = expires
   }
 
   return (
-    stringifyAttribute('Expires', attributes.expires ? attributes.expires.toUTCString() : '') +
+    stringifyAttribute(
+      'Expires',
+      attributes.expires ? attributes.expires.toUTCString() : '',
+    ) +
     stringifyAttribute('Domain', attributes.domain) +
     stringifyAttribute('Path', attributes.path) +
     stringifyAttribute('Secure', attributes.secure) +
@@ -39,8 +47,14 @@ function writeValue(value: string): string {
   return value.replace(/;/g, '%3B')
 }
 
-function encode(key: string, value: string, attributes: CookieAttributes): string {
-  return `${writeValue(key).replace(/=/g, '%3D')}=${writeValue(value)}${stringifyAttributes(attributes)}`
+function encode(
+  key: string,
+  value: string,
+  attributes: CookieAttributes,
+): string {
+  return `${writeValue(key).replace(/=/g, '%3D')}=${writeValue(
+    value,
+  )}${stringifyAttributes(attributes)}`
 }
 
 function parse(cookieString: string): Record<string, string> {
@@ -57,14 +71,24 @@ function parse(cookieString: string): Record<string, string> {
   return result
 }
 
-export function getAll(document: HTMLDocument): Record<string, string> {
+export function getAll(
+  document: HTMLDocument,
+): Record<string, string> {
   return parse(document.cookie)
 }
 
-export function getCookie(document: HTMLDocument, key: string): string | undefined {
+export function getCookie(
+  document: HTMLDocument,
+  key: string,
+): string | undefined {
   return getAll(document)[key]
 }
 
-export function setCookie(document: HTMLDocument, key: string, value: string, attributes?: CookieAttributes): void {
+export function setCookie(
+  document: HTMLDocument,
+  key: string,
+  value: string,
+  attributes?: CookieAttributes,
+): void {
   document.cookie = encode(key, value, { path: '/', ...attributes })
 }

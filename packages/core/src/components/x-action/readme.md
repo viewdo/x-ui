@@ -1,18 +1,25 @@
 # X-ACTION
 
-This element holds the data that **is** the Action submitted through [Actions](/actions).
+This element holds the data that **is** the Action submitted through [Actions](/actions). The parent tag defines how and when the child actions are submitted through [Actions](/actions).
+
+> This element does not activate these actions automatically. They need to be activated through script, or by wrapping them in an [\<x-action-activator\>](/components/x-action-activator) tag.
 
 ## Usage
 
-This element does not activate these actions automatically. They need to be activated through script, or by wrapping them in an [\<x-action-activator\>](/components/x-action-activator) tag. The parent tag defines how and when the child actions are submitted through [Actions](/actions).
+```html
+<x-action topic="<topic>"
+  command="<command>"
+  data-(key)="value">
+</x-action>
+```
 
 ### Attribute Data
 
 For most action-argument data, it is easies to specify them as key-value pairs using the `data-*` attributes within the `x-action` tag. The name of the argument should be prefixed with `data-`. A
 
 ```html
-<x-action topic="<topic>" 
-  command="<command>" 
+<x-action topic="<topic>"
+  command="<command>"
   data-(key)="value">
 </x-action>
 ```
@@ -24,10 +31,10 @@ For most action-argument data, it is easies to specify them as key-value pairs u
 For most data, it is easy to specify key-value pairs using the `data-*` attributes within the `x-action` tag.
 
 ```html
-<x-action topic="<topic>" 
+<x-action topic="<topic>"
   command="<command>">
-  <input type="hidden" 
-    name="arg1" 
+  <input type="hidden"
+    name="arg1"
     value="Hello World">
 </x-action>
 ```
@@ -44,23 +51,6 @@ For more complex data shapes, you can define the data parameters as JSON in a ch
     }
   </script>
 </x-action>
-```
-
-## Dependencies
-
-### Depends on
-
-* [\<x-action-activator\>](/components/x-action-activator)
-
-### Graph
-
-```mermaid
-graph TD;
-  x-app-view-do --> x-action-activator
-  x-action-activator --> x-action
-
-  style x-action fill:#f9f,stroke:#333,stroke-width:1px
-
 ```
 
 <!-- Auto Generated Below -->

@@ -1,4 +1,12 @@
-import { Component, Element, forceUpdate, h, Host, Prop, State } from '@stencil/core'
+import {
+  Component,
+  Element,
+  forceUpdate,
+  h,
+  Host,
+  Prop,
+  State,
+} from '@stencil/core'
 import { debugIf, slugify } from '../../services/common'
 import { warn } from '../../services/common/logging'
 import { getRemoteContent } from '../../services/content/remote'
@@ -13,12 +21,23 @@ import {
   resolveChildElementXAttributes,
   TIMER_EVENTS,
 } from '../../services/elements'
-import { ActionActivationStrategy, actionBus, eventBus } from '../../services/events'
+import {
+  ActionActivationStrategy,
+  actionBus,
+  eventBus,
+} from '../../services/events'
 import { recordVisit, VisitStrategy } from '../../services/navigation'
 import { MatchResults, Route } from '../../services/routing'
 import { VideoActionListener, videoState } from '../../services/video'
 
 /**
+ * The \<x-app-view-do\> element represents a specialized child-route for a parent \<x-app-view\> component.
+ * It represents a sub-route that has special presentation and workflow behaviors.
+ *
+ * They are used to create presentation, wizards, input workflows, or step by step instructions or
+ * wherever you want guided or automatic navigation. These are the only routes that support
+ * audio, video and timed actions.
+ *
  *  @system routing
  *  @system presentation
  */
@@ -162,12 +181,16 @@ export class XAppViewDo {
     debugIf(this.debug, `x-app-view-do: ${this.url} loading`)
 
     if (!this.routeContainer) {
-      warn(`x-app-view-do: ${this.url} cannot load outside of an x-app element`)
+      warn(
+        `x-app-view-do: ${this.url} cannot load outside of an x-app element`,
+      )
       return
     }
 
     if (!this.parentView) {
-      warn(`x-app-view-do: ${this.url} cannot load outside of an x-app element`)
+      warn(
+        `x-app-view-do: ${this.url} cannot load outside of an x-app element`,
+      )
       return
     }
 
@@ -183,12 +206,17 @@ export class XAppViewDo {
       },
     )
 
-    this.dataSubscription = eventBus.on(DATA_EVENTS.DataChanged, () => {
-      debugIf(this.debug, 'x-app-view-do: data changed ')
-      if (this.match?.isExact) forceUpdate(this.el)
-    })
+    this.dataSubscription = eventBus.on(
+      DATA_EVENTS.DataChanged,
+      () => {
+        debugIf(this.debug, 'x-app-view-do: data changed ')
+        if (this.match?.isExact) forceUpdate(this.el)
+      },
+    )
 
-    this.contentKey = `remote-content-${slugify(this.contentSrc || 'none')}`
+    this.contentKey = `remote-content-${slugify(
+      this.contentSrc || 'none',
+    )}`
   }
 
   async componentWillRender() {
@@ -198,7 +226,8 @@ export class XAppViewDo {
       debugIf(this.debug, `x-app-view-do: ${this.url} on-enter`)
       this.contentElement = await this.resolveContentElement()
       await this.captureChildElements(this.el)
-      if (this.contentElement) await this.captureChildElements(this.contentElement)
+      if (this.contentElement)
+        await this.captureChildElements(this.contentElement)
       await this.setupTimer()
       //this.el.removeAttribute('hidden')
     } else {
@@ -213,7 +242,12 @@ export class XAppViewDo {
     }
 
     try {
-      const content = await getRemoteContent(window, this.contentSrc!, this.mode, this.resolveTokens)
+      const content = await getRemoteContent(
+        window,
+        this.contentSrc!,
+        this.mode,
+        this.resolveTokens,
+      )
       if (content == null) return null
       const div = document.createElement('div')
       div.slot = 'content'
@@ -223,7 +257,9 @@ export class XAppViewDo {
       this.route.captureInnerLinks(div)
       return div
     } catch {
-      warn(`x-app-view-do: ${this.url} Unable to retrieve from ${this.contentSrc}`)
+      warn(
+        `x-app-view-do: ${this.url} Unable to retrieve from ${this.contentSrc}`,
+      )
       return null
     }
   }
@@ -231,13 +267,26 @@ export class XAppViewDo {
   private async setupTimer() {
     const video = this.childVideo
 
-    this.elementTimer = new ElementTimer(this.el, this.duration, this.debug)
+    this.elementTimer = new ElementTimer(
+      this.el,
+      this.duration,
+      this.debug,
+    )
 
     if (video) {
-      this.videoListener = new VideoActionListener(window, video, eventBus, actionBus, this.debug)
+      this.videoListener = new VideoActionListener(
+        window,
+        video,
+        eventBus,
+        actionBus,
+        this.debug,
+      )
 
       video.addEventListener(this.videoTimeEvent, () => {
-        this.elementTimer!.emit(TIMER_EVENTS.OnInterval, video.currentTime)
+        this.elementTimer!.emit(
+          TIMER_EVENTS.OnInterval,
+          video.currentTime,
+        )
       })
 
       video.addEventListener(this.videoEndEvent, () => {
@@ -252,16 +301,23 @@ export class XAppViewDo {
     }
 
     const activated: any = []
-    this.elementTimer.on(TIMER_EVENTS.OnInterval, async (time: number) => {
-      await this.route.activateActions(this.actionActivators, ActionActivationStrategy.AtTime, activator => {
-        if (activated.includes(activator)) return false
-        if (activator.time && time >= activator.time) {
-          activated.push(activator)
-          return true
-        }
-        return false
-      })
-    })
+    this.elementTimer.on(
+      TIMER_EVENTS.OnInterval,
+      async (time: number) => {
+        await this.route.activateActions(
+          this.actionActivators,
+          ActionActivationStrategy.AtTime,
+          activator => {
+            if (activated.includes(activator)) return false
+            if (activator.time && time >= activator.time) {
+              activated.push(activator)
+              return true
+            }
+            return false
+          },
+        )
+      },
+    )
 
     this.elementTimer.on(TIMER_EVENTS.OnEnd, async () => {
       if (videoState.autoplay) {
@@ -271,7 +327,10 @@ export class XAppViewDo {
   }
 
   private async captureChildElements(el: HTMLElement) {
-    debugIf(this.debug, `x-app-view-do: ${this.url} resolve children called`)
+    debugIf(
+      this.debug,
+      `x-app-view-do: ${this.url} resolve children called`,
+    )
 
     captureXBackClickEvent(el, tag => {
       this.back(tag, 'clicked')
@@ -295,13 +354,23 @@ export class XAppViewDo {
   }
 
   private back(element: string, eventName: string) {
-    debugIf(this.debug, `x-app-view-do: back fired from ${element}:${eventName}`)
+    debugIf(
+      this.debug,
+      `x-app-view-do: back fired from ${element}:${eventName}`,
+    )
     this.cleanup()
     this.route?.router.history.goBack()
   }
 
-  private async next(element: string, eventName: string, route?: string | null) {
-    debugIf(this.debug, `x-app-view-do: next fired from ${element}:${eventName}`)
+  private async next(
+    element: string,
+    eventName: string,
+    route?: string | null,
+  ) {
+    debugIf(
+      this.debug,
+      `x-app-view-do: next fired from ${element}:${eventName}`,
+    )
     const valid = getChildInputValidity(this.el)
     if (valid) {
       recordVisit(this.visit, this.url)
@@ -316,7 +385,11 @@ export class XAppViewDo {
 
   render() {
     debugIf(this.debug, `x-app-view-do: ${this.url} render`)
-    replaceHtmlInElement(this.el, `#${this.contentKey}`, this.contentElement)
+    replaceHtmlInElement(
+      this.el,
+      `#${this.contentKey}`,
+      this.contentElement,
+    )
     return (
       <Host hidden={!this.match?.isExact}>
         <slot />
@@ -328,9 +401,15 @@ export class XAppViewDo {
   async componentDidRender() {
     debugIf(this.debug, `x-app-view-do: ${this.url} did render`)
     if (this.match?.isExact) {
-      await this.route?.activateActions(this.actionActivators, ActionActivationStrategy.OnEnter)
+      await this.route?.activateActions(
+        this.actionActivators,
+        ActionActivationStrategy.OnEnter,
+      )
     } else if (this.route?.didExit()) {
-      await this.route?.activateActions(this.actionActivators, ActionActivationStrategy.OnExit)
+      await this.route?.activateActions(
+        this.actionActivators,
+        ActionActivationStrategy.OnExit,
+      )
     }
     await this.route?.loadCompleted()
   }

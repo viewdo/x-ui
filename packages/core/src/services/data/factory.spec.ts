@@ -2,7 +2,12 @@ jest.mock('../common/logging')
 jest.mock('../data/evaluate.worker')
 
 import { actionBus, eventBus } from '../events'
-import { addDataProvider, clearDataProviders, getDataProvider, removeDataProvider } from './factory'
+import {
+  addDataProvider,
+  clearDataProviders,
+  getDataProvider,
+  removeDataProvider,
+} from './factory'
 import { InMemoryProvider } from './providers/memory'
 
 describe('provider-factory', () => {

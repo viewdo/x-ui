@@ -1,6 +1,18 @@
-import { Component, Element, h, Host, Method, Prop } from '@stencil/core'
+import {
+  Component,
+  Element,
+  h,
+  Host,
+  Method,
+  Prop,
+} from '@stencil/core'
 import { warn } from '../../services/common/logging'
-import { actionBus, ActionTopicType, EventAction, IActionElement } from '../../services/events'
+import {
+  actionBus,
+  ActionTopicType,
+  EventAction,
+  IActionElement,
+} from '../../services/events'
 
 /**
  * This element just holds data to express the actionEvent to fire. This element
@@ -44,7 +56,10 @@ export class XAction implements IActionElement {
     let data: Record<string, any> = { ...this.el.dataset }
 
     if (this.childScript) {
-      Object.assign(data, JSON.parse(this.childScript!.textContent || '{}'))
+      Object.assign(
+        data,
+        JSON.parse(this.childScript!.textContent || '{}'),
+      )
     }
 
     this.childInputs.forEach((el: any, index: number) => {
@@ -84,7 +99,9 @@ export class XAction implements IActionElement {
 
   componentWillLoad() {
     if (this.parent === null) {
-      warn('The x-action component must be wrapped with an x-action-activator component to work.')
+      warn(
+        'The x-action component must be wrapped with an x-action-activator component to work.',
+      )
     }
   }
 

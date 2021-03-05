@@ -33,7 +33,10 @@ export interface PathFunctionOptions {
 
 export type Token = string | Key
 export type Path = string | RegExp | Array<string | RegExp>
-export type PathFunction = (data?: Record<string, any>, options?: PathFunctionOptions) => string
+export type PathFunction = (
+  data?: Record<string, any>,
+  options?: PathFunctionOptions,
+) => string
 
 /**
  * Default configs.
@@ -62,7 +65,10 @@ const PATH_REGEXP = new RegExp(
 /**
  * Parse a string for the raw tokens.
  */
-export const parse = (string: string, options?: ParseOptions): Token[] => {
+export const parse = (
+  string: string,
+  options?: ParseOptions,
+): Token[] => {
   const tokens = []
   let key = 0
   let index = 0
@@ -109,7 +115,8 @@ export const parse = (string: string, options?: ParseOptions): Token[] => {
       pathEscaped = false
     }
 
-    const partial = previous !== '' && next !== undefined && next !== previous
+    const partial =
+      previous !== '' && next !== undefined && next !== previous
     const repeat = modifier === '+' || modifier === '*'
     const optional = modifier === '?' || modifier === '*'
     const delimiter = previous || defaultDelimiter
@@ -122,7 +129,9 @@ export const parse = (string: string, options?: ParseOptions): Token[] => {
       optional,
       repeat,
       partial,
-      pattern: pattern ? escapeGroup(pattern) : `[^${escapeString(delimiter)}]+?`,
+      pattern: pattern
+        ? escapeGroup(pattern)
+        : `[^${escapeString(delimiter)}]+?`,
     })
   }
 
@@ -137,7 +146,8 @@ export const parse = (string: string, options?: ParseOptions): Token[] => {
 /**
  * Compile a string to a template function for the path.
  */
-export const compile = (string: string, options?: ParseOptions) => tokensToFunction(parse(string, options))
+export const compile = (string: string, options?: ParseOptions) =>
+  tokensToFunction(parse(string, options))
 
 /**
  * Expose a method for transforming tokens into the path function.
@@ -153,7 +163,10 @@ export const tokensToFunction = (tokens: Token[]): PathFunction => {
     }
   }
 
-  return (data?: Record<string, any>, options?: PathFunctionOptions): string => {
+  return (
+    data?: Record<string, any>,
+    options?: PathFunctionOptions,
+  ): string => {
     let path = ''
     const encode = options?.encode || encodeURIComponent
 
@@ -168,7 +181,9 @@ export const tokensToFunction = (tokens: Token[]): PathFunction => {
 
       if (Array.isArray(value)) {
         if (!token.repeat) {
-          throw new TypeError(`Expected "${token.name}" to not repeat, but got array`)
+          throw new TypeError(
+            `Expected "${token.name}" to not repeat, but got array`,
+          )
         }
 
         if (value.length === 0) {
@@ -176,27 +191,39 @@ export const tokensToFunction = (tokens: Token[]): PathFunction => {
             continue
           }
 
-          throw new TypeError(`Expected "${token.name}" to not be empty`)
+          throw new TypeError(
+            `Expected "${token.name}" to not be empty`,
+          )
         }
 
         for (const [j, element] of value.entries()) {
           segment = encode(element)
 
           if (!matches[i].test(segment)) {
-            throw new TypeError(`Expected all "${token.name}" to match "${token.pattern}"`)
+            throw new TypeError(
+              `Expected all "${token.name}" to match "${token.pattern}"`,
+            )
           }
 
-          path += `${j === 0 ? token.prefix : token.delimiter}${segment}`
+          path += `${
+            j === 0 ? token.prefix : token.delimiter
+          }${segment}`
         }
 
         continue
       }
 
-      if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
+      if (
+        typeof value === 'string' ||
+        typeof value === 'number' ||
+        typeof value === 'boolean'
+      ) {
         segment = encode(String(value))
 
         if (!matches[i].test(segment)) {
-          throw new TypeError(`Expected "${token.name}" to match "${token.pattern}", but got "${segment}"`)
+          throw new TypeError(
+            `Expected "${token.name}" to match "${token.pattern}", but got "${segment}"`,
+          )
         }
 
         path += `${token.prefix}${segment}`
@@ -212,7 +239,11 @@ export const tokensToFunction = (tokens: Token[]): PathFunction => {
         continue
       }
 
-      throw new TypeError(`Expected "${token.name}" to be ${token.repeat ? 'an array' : 'a string'}`)
+      throw new TypeError(
+        `Expected "${token.name}" to be ${
+          token.repeat ? 'an array' : 'a string'
+        }`,
+      )
     }
 
     return path
@@ -222,17 +253,20 @@ export const tokensToFunction = (tokens: Token[]): PathFunction => {
 /**
  * Escape a regular expression string.
  */
-export const escapeString = (string: string) => string.replace(/([.+*?=^!:${}()[\]|/\\])/g, '\\$1')
+export const escapeString = (string: string) =>
+  string.replace(/([.+*?=^!:${}()[\]|/\\])/g, '\\$1')
 
 /**
  * Escape the capturing group by escaping special characters and meaning.
  */
-const escapeGroup = (group: string) => group.replace(/([=!:$/()])/g, '\\$1')
+const escapeGroup = (group: string) =>
+  group.replace(/([=!:$/()])/g, '\\$1')
 
 /**
  * Get the flags for a regexp from the options.
  */
-const flags = (options: RegExpOptions): string => (options?.sensitive ? '' : 'i')
+const flags = (options: RegExpOptions): string =>
+  options?.sensitive ? '' : 'i'
 
 /**
  * Pull out keys from a regexp.
@@ -265,7 +299,11 @@ const regexpToRegexp = (path: RegExp, keys: Key[]): RegExp => {
 /**
  * Transform an array into a regexp.
  */
-const arrayToRegexp = (path: Array<string | RegExp>, keys: Key[], options: RegExpOptions): RegExp => {
+const arrayToRegexp = (
+  path: Array<string | RegExp>,
+  keys: Key[],
+  options: RegExpOptions,
+): RegExp => {
   const parts = []
 
   for (const element of path) {
@@ -278,19 +316,34 @@ const arrayToRegexp = (path: Array<string | RegExp>, keys: Key[], options: RegEx
 /**
  * Create a path regexp from string input.
  */
-const stringToRegexp = (path: string, keys: Key[], options: RegExpOptions): RegExp => tokensToRegExp(parse(path, options), keys, options)
+const stringToRegexp = (
+  path: string,
+  keys: Key[],
+  options: RegExpOptions,
+): RegExp => tokensToRegExp(parse(path, options), keys, options)
 
 /**
  * Expose a function for taking tokens and returning a RegExp.
  */
-export const tokensToRegExp = (tokens: Token[], keys?: Key[], options?: RegExpOptions): RegExp => {
+export const tokensToRegExp = (
+  tokens: Token[],
+  keys?: Key[],
+  options?: RegExpOptions,
+): RegExp => {
   options = options || {}
 
   const { strict } = options
   const end = options.end !== false
-  const delimiter = escapeString(options.delimiter || DEFAULT_DELIMITER)
+  const delimiter = escapeString(
+    options.delimiter || DEFAULT_DELIMITER,
+  )
   const delimiters = options.delimiters || DEFAULT_DELIMITERS
-  const endsWith = (options.endsWith?.length ? [...options.endsWith] : options.endsWith ? [options.endsWith] : [])
+  const endsWith = (options.endsWith?.length
+    ? [...options.endsWith]
+    : options.endsWith
+    ? [options.endsWith]
+    : []
+  )
     .map(i => escapeString(i as string))
     .concat('$')
     .join('|')
@@ -303,17 +356,23 @@ export const tokensToRegExp = (tokens: Token[], keys?: Key[], options?: RegExpOp
 
     if (typeof token === 'string') {
       route += escapeString(token)
-      isEndDelimited = i === tokens.length - 1 && delimiters.includes(token[token.length - 1])
+      isEndDelimited =
+        i === tokens.length - 1 &&
+        delimiters.includes(token[token.length - 1])
     } else {
       const prefix = escapeString(token.prefix || '')
-      const capture = token.repeat ? `(?:${token.pattern})(?:${prefix}(?:${token.pattern}))*` : token.pattern
+      const capture = token.repeat
+        ? `(?:${token.pattern})(?:${prefix}(?:${token.pattern}))*`
+        : token.pattern
 
       if (keys) {
         keys.push(token)
       }
 
       if (token.optional) {
-        route += token.partial ? `${prefix}(${capture})?` : `(?:${prefix}(${capture}))?`
+        route += token.partial
+          ? `${prefix}(${capture})?`
+          : `(?:${prefix}(${capture}))?`
       } else {
         route += `${prefix}(${capture})`
       }
@@ -346,7 +405,11 @@ export const tokensToRegExp = (tokens: Token[], keys?: Key[], options?: RegExpOp
  * placeholder key descriptions. For example, using `/user/:id`, `keys` will
  * contain `[{ name: 'id', delimiter: '/', optional: false, repeat: false }]`.
  */
-export const pathToRegexp = (path: Path, keys: Key[], options: RegExpOptions): RegExp => {
+export const pathToRegexp = (
+  path: Path,
+  keys: Key[],
+  options: RegExpOptions,
+): RegExp => {
   if (path instanceof RegExp) {
     return regexpToRegexp(path, keys)
   }

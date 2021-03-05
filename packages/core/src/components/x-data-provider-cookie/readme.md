@@ -1,14 +1,14 @@
 # X-DATA-PROVIDER-COOKIE
 
-## Cookie Data Provider Registration Component
+This component enables the **Cookie Data Provider**, after requesting consent from the user. The consent message and the accept/reject button are customizable.
 
-This component enabled the **Cookie Data Provider**.
+## Cookie Data Provider
 
 This store is long-lived from the same browser, but for very small data items. This provider enables you to use cookie data in your HTML.
 
 Provider Key: '**cookie**'
 
-`{cookie:(key)}`
+`{{cookie:(key)}`
 
 When included on the page, this component automatically shows a banner to collect consent from the user. You MUST supply clickable elements and decorate them with **x-accept** and **x-reject** attributes, respecting the user's decision.
 

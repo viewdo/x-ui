@@ -9,7 +9,12 @@ export class AudioTrack extends AudioInfo {
   private readonly sound?: Howl
   events: EventEmitter = new EventEmitter()
 
-  static createSound = (audio: AudioInfo, onload?: () => void, onend?: () => void, onerror?: (id: number, error: any) => void) => {
+  static createSound = (
+    audio: AudioInfo,
+    onload?: () => void,
+    onend?: () => void,
+    onerror?: (id: number, error: any) => void,
+  ) => {
     const { loop, src, type } = audio
     if (src && type) {
       return new Howl({
@@ -23,7 +28,11 @@ export class AudioTrack extends AudioInfo {
     }
   }
 
-  constructor(audio: AudioInfo, private readonly baseVolume: number = 1, private readonly fadeSpeed: number = 2) {
+  constructor(
+    audio: AudioInfo,
+    private readonly baseVolume: number = 1,
+    private readonly fadeSpeed: number = 2,
+  ) {
     super()
     Object.assign(this, audio)
 
@@ -43,7 +52,9 @@ export class AudioTrack extends AudioInfo {
         else events.emit(AUDIO_EVENTS.Ended, trackId)
       },
       (_id, error) => {
-        warn(`x-audio: An error occurred for audio track ${trackId}: ${error}`)
+        warn(
+          `x-audio: An error occurred for audio track ${trackId}: ${error}`,
+        )
         events.emit(AUDIO_EVENTS.Errored, trackId)
       },
     )

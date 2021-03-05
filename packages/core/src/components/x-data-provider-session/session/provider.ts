@@ -3,7 +3,9 @@ import { EventEmitter } from '../../../services/events/emitter'
 
 export class SessionProvider implements IDataProvider {
   changed: EventEmitter
-  constructor(private readonly sessionStorage = window.sessionStorage) {
+  constructor(
+    private readonly sessionStorage = window.sessionStorage,
+  ) {
     this.changed = new EventEmitter()
   }
 

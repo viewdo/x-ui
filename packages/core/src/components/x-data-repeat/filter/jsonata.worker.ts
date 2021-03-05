@@ -1,4 +1,6 @@
-;(self as any).importScripts('https://cdn.jsdelivr.net/npm/jsonata@1.8.4/jsonata.min.js')
+;(self as any).importScripts(
+  'https://cdn.jsdelivr.net/npm/jsonata@1.8.4/jsonata.min.js',
+)
 
 import { arrify } from '../../../services/common/arrify'
 /**

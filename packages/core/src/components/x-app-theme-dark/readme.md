@@ -1,4 +1,12 @@
-# x-app-theme
+# X-APP-THEME-DARK
+
+The `<x-app-theme-dark>` component displays a checkbox to control the dark-theme setting applied to the interface.
+
+Default: user-preference
+
+## Usage
+
+Add the `<x-app-theme-dark>` component to any page to allow the user to adjust the setting. You can style it using standard CSS and if necessary, add CSS styles directly to the input element using the **classes** attribute.
 
 <!-- Auto Generated Below -->
 

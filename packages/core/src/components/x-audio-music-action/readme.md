@@ -1,6 +1,10 @@
 # X-AUDIO-MUSIC-ACTION
 
+This element represents an action to be fired. This specialized action encapsulates required parameters- needed for audio-based actions, for music.
+
 ## Usage
+
+See the [audio](/audio) systems documentation.
 
 <!-- Auto Generated Below -->
 

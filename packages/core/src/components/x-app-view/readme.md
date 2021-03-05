@@ -15,12 +15,12 @@ The View component is a child component for the `<x -app>` component for adding 
 
 The View Component and its attributes provide the page context & functionality:
 
-* Page title updates
-* Scroll top on navigation
-* Smooth transitions between routes
-* Parameterized data for data-driven routing
-* Page visit tracking
-* Attribute-based conditional show/hide of child elements
+- Page title updates
+- Scroll top on navigation
+- Smooth transitions between routes
+- Parameterized data for data-driven routing
+- Page visit tracking
+- Attribute-based conditional show/hide of child elements
 
 ### Child Views & Routing
 
@@ -91,7 +91,7 @@ Input-type elements (input, textarea and select) can specify a data expression f
 | `contentSrc`          | `content-src`       | Remote URL for this Route's content.                                                                                                                                                                                            | `string \| undefined`                                | `undefined` |
 | `debug`               | `debug`             | Turn on debug statements for load, update and render events.                                                                                                                                                                    | `boolean`                                            | `false`     |
 | `exact`               | `exact`             | The url for this route should only be matched when it is exact.                                                                                                                                                                 | `boolean`                                            | `false`     |
-| `mode`                | `mode`              | Cross Origin Mode if the content is pulled from a remote location                                                                                                                                                               | `"cors" \| "navigate" \| "no-cors" \| "same-origin"` | `"cors"`    |
+| `mode`                | `mode`              | Cross Origin Mode if the content is pulled from a remote location                                                                                                                                                               | `"cors" \| "navigate" \| "no-cors" \| "same-origin"` | `'cors'`    |
 | `pageTitle`           | `page-title`        | The title for this view. This is prefixed before the app title configured in x-app                                                                                                                                              | `string`                                             | `''`        |
 | `resolveTokens`       | `resolve-tokens`    | Before rendering remote HTML, replace any data-tokens with their resolved values. This also commands this component to re-render it's HTML for data-changes. This can affect performance.  IMPORTANT: ONLY WORKS ON REMOTE HTML | `boolean`                                            | `false`     |
 | `router` _(required)_ | --                  | The router-service instance  (internal)                                                                                                                                                                                         | `RouterService`                                      | `undefined` |

@@ -1,5 +1,10 @@
 import { Component, Element, h, Host, Prop } from '@stencil/core'
-import { DataProviderRegistration, DATA_COMMANDS, DATA_TOPIC, IDataProvider } from '../../services/data/interfaces'
+import {
+  DataProviderRegistration,
+  DATA_COMMANDS,
+  DATA_TOPIC,
+  IDataProvider,
+} from '../../services/data/interfaces'
 import { EventAction } from '../../services/events'
 import { SessionProvider } from './session/provider'
 
@@ -9,6 +14,9 @@ import { SessionProvider } from './session/provider'
 })
 
 /**
+ *  This component enables the **Session Data Provider**.
+ *  It leverages the short-lived browser storage.
+ *
  *  @system data
  */
 export class XDataProviderSession {
@@ -26,7 +34,9 @@ export class XDataProviderSession {
   @Prop() name: string = 'session'
 
   private registerProvider() {
-    const customEvent = new CustomEvent<EventAction<DataProviderRegistration>>('x:actions', {
+    const customEvent = new CustomEvent<
+      EventAction<DataProviderRegistration>
+    >('x:actions', {
       detail: {
         topic: DATA_TOPIC,
         command: DATA_COMMANDS.RegisterDataProvider,

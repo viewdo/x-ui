@@ -2,7 +2,10 @@ jest.mock('../../services/data/evaluate.worker')
 jest.mock('../../services/common/logging')
 
 import { newSpecPage } from '@stencil/core/testing'
-import { addDataProvider, clearDataProviders } from '../../services/data/factory'
+import {
+  addDataProvider,
+  clearDataProviders,
+} from '../../services/data/factory'
 import { DATA_EVENTS } from '../../services/data/interfaces'
 import { InMemoryProvider } from '../../services/data/providers/memory'
 import { actionBus, eventBus } from '../../services/events'
@@ -46,7 +49,9 @@ describe('x-content-include', () => {
       }),
     )
 
-    page.setContent(`<x-content-include src="fake.html"></x-content-include>`)
+    page.setContent(
+      `<x-content-include src="fake.html"></x-content-include>`,
+    )
 
     await page.waitForChanges()
 
@@ -76,7 +81,9 @@ describe('x-content-include', () => {
       }),
     )
 
-    page.setContent(`<x-content-include src="fake.html"></x-content-include>`)
+    page.setContent(
+      `<x-content-include src="fake.html"></x-content-include>`,
+    )
 
     await page.waitForChanges()
 
@@ -101,7 +108,9 @@ describe('x-content-include', () => {
       }),
     )
 
-    page.setContent(`<x-content-include src="fake.html"></x-content-include>`)
+    page.setContent(
+      `<x-content-include src="fake.html"></x-content-include>`,
+    )
 
     await page.waitForChanges()
 
@@ -131,7 +140,9 @@ describe('x-content-include', () => {
       highlightAllUnder: jest.fn().mockImplementation(),
     }
 
-    page.setContent(`<x-content-include defer-load src="fake.html"></x-content-include>`)
+    page.setContent(
+      `<x-content-include defer-load src="fake.html"></x-content-include>`,
+    )
 
     await page.waitForChanges()
 
@@ -170,7 +181,9 @@ describe('x-content-include', () => {
       }),
     )
 
-    await page.setContent(`<x-content-include when="false" src="fake.html"></x-content-include>`)
+    await page.setContent(
+      `<x-content-include when="false" src="fake.html"></x-content-include>`,
+    )
 
     await page.waitForChanges()
 
@@ -209,7 +222,9 @@ describe('x-content-include', () => {
       }),
     )
 
-    await page.setContent(`<x-content-include when="{{session:render}}" src="fake.html"></x-content-include>`)
+    await page.setContent(
+      `<x-content-include when="{{session:render}}" src="fake.html"></x-content-include>`,
+    )
 
     expect(page.root).toEqualHtml(`
       <x-content-include when="{{session:render}}" hidden="" src="fake.html">
@@ -245,11 +260,14 @@ describe('x-content-include', () => {
     page.win.fetch = jest.fn().mockImplementation(() =>
       Promise.resolve({
         ok: true,
-        text: () => Promise.resolve(`<h1>HI {{session:name?FRIEND}}!</h1> `),
+        text: () =>
+          Promise.resolve(`<h1>HI {{session:name?FRIEND}}!</h1> `),
       }),
     )
 
-    await page.setContent(`<x-content-include src="fake.html"></x-content-include>`)
+    await page.setContent(
+      `<x-content-include src="fake.html"></x-content-include>`,
+    )
 
     expect(page.root).toEqualHtml(`
       <x-content-include src="fake.html">

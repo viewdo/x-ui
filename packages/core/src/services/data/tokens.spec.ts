@@ -65,7 +65,9 @@ describe('resolveTokens', () => {
   it('replaces multiple expressions in the same string', async () => {
     await session.set('rate', '1')
     await session.set('vintage', '1985')
-    const value = await resolveTokens('${{session:rate}} in {{session:vintage}}')
+    const value = await resolveTokens(
+      '${{session:rate}} in {{session:vintage}}',
+    )
     expect(value).toBe('$1 in 1985')
   })
 })

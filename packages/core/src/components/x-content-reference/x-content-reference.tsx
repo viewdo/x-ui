@@ -2,7 +2,10 @@ import { Component, Element, Prop } from '@stencil/core'
 import { hasReference, markReference } from '../../services/elements'
 
 /**
- *  @system content
+ * This component makes a single reference to script and css sources. It can
+ * be used by HTML fragment to ensure a reference is made, without worry
+ * that it will create duplicate references.
+ * @system content
  */
 @Component({
   tag: 'x-content-reference',

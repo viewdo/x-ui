@@ -1,10 +1,22 @@
 import { Component, Element, h, Host, Prop } from '@stencil/core'
-import { AudioType, AUDIO_TOPIC, DiscardStrategy, LoadStrategy } from '../../services/audio'
+import {
+  AudioType,
+  AUDIO_TOPIC,
+  DiscardStrategy,
+  LoadStrategy,
+} from '../../services/audio'
 import { actionBus } from '../../services/events'
 
 /**
+ * This component declares audio used within this \<x-app-view-do\> route.
+ * The \<x-audio-sound-load\> instructs the player to load audio files
+ * while defining play behaviors.
+ *
+ * The audio player will pre-load or play when the route is active.
+ * The player manages them according to their settings.
  *
  * @system audio
+ * @system presentation
  */
 @Component({
   tag: 'x-audio-music-load',

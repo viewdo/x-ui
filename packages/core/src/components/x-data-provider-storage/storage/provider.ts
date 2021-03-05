@@ -1,4 +1,7 @@
-import { DATA_EVENTS, IDataProvider } from '../../../services/data/interfaces'
+import {
+  DATA_EVENTS,
+  IDataProvider,
+} from '../../../services/data/interfaces'
 import { EventEmitter } from '../../../services/events/emitter'
 
 export class StorageProvider implements IDataProvider {

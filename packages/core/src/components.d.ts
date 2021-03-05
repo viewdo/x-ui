@@ -106,9 +106,12 @@ export namespace Components {
           * The class to add when this HREF is active in the browser
          */
         "activeClass": string;
+        /**
+          * Provide log messages for path matching.
+         */
         "debug": boolean;
         /**
-          * Only active on the exact href match no not on child routes
+          * Only active on the exact href match, and not on child routes
          */
         "exact": boolean;
         /**
@@ -116,11 +119,19 @@ export namespace Components {
          */
         "href": string;
         /**
-          * Only active on the exact href match using every aspect of the URL.
+          * Only active on the exact href match using every aspect of the URL including parameters.
          */
         "strict": boolean;
     }
     interface XAppTheme {
+        /**
+          * Change the class name that is added to the body tag when the theme is determined to be dark.
+         */
+        "darkClass": string;
+        /**
+          * Skip adding the class to the body tag, just update the interface state.
+         */
+        "skipClass": boolean;
     }
     interface XAppThemeDark {
         /**
@@ -250,7 +261,12 @@ export namespace Components {
         /**
           * The command to execute.
          */
-        "command": 'start' | 'pause' | 'resume' | 'mute' | 'volume' | 'seek';
+        "command": | 'start'
+    | 'pause'
+    | 'resume'
+    | 'mute'
+    | 'volume'
+    | 'seek';
         /**
           * Get the underlying actionEvent instance. Used by the x-action-activator element.
          */
@@ -775,9 +791,12 @@ declare namespace LocalJSX {
           * The class to add when this HREF is active in the browser
          */
         "activeClass"?: string;
+        /**
+          * Provide log messages for path matching.
+         */
         "debug"?: boolean;
         /**
-          * Only active on the exact href match no not on child routes
+          * Only active on the exact href match, and not on child routes
          */
         "exact"?: boolean;
         /**
@@ -785,11 +804,19 @@ declare namespace LocalJSX {
          */
         "href": string;
         /**
-          * Only active on the exact href match using every aspect of the URL.
+          * Only active on the exact href match using every aspect of the URL including parameters.
          */
         "strict"?: boolean;
     }
     interface XAppTheme {
+        /**
+          * Change the class name that is added to the body tag when the theme is determined to be dark.
+         */
+        "darkClass"?: string;
+        /**
+          * Skip adding the class to the body tag, just update the interface state.
+         */
+        "skipClass"?: boolean;
     }
     interface XAppThemeDark {
         /**
@@ -919,7 +946,12 @@ declare namespace LocalJSX {
         /**
           * The command to execute.
          */
-        "command": 'start' | 'pause' | 'resume' | 'mute' | 'volume' | 'seek';
+        "command": | 'start'
+    | 'pause'
+    | 'resume'
+    | 'mute'
+    | 'volume'
+    | 'seek';
         /**
           * The track to target.
          */

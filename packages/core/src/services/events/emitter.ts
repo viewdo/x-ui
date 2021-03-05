@@ -7,7 +7,11 @@ export class EventEmitter implements IEventEmitter {
   private recalcWildcardEvents() {
     const newWildCardEvents = []
     for (const i in this.events) {
-      if (i.endsWith('*') && this.events[i] && this.events[i].length > 0) {
+      if (
+        i.endsWith('*') &&
+        this.events[i] &&
+        this.events[i].length > 0
+      ) {
         newWildCardEvents.push(i)
       }
     }
@@ -41,7 +45,9 @@ export class EventEmitter implements IEventEmitter {
   }
 
   public removeAllListeners(): void {
-    Object.keys(this.events).forEach((event: string) => this.events[event].splice(0, this.events[event].length))
+    Object.keys(this.events).forEach((event: string) =>
+      this.events[event].splice(0, this.events[event].length),
+    )
     this.recalcWildcardEvents()
   }
 
@@ -58,8 +64,15 @@ export class EventEmitter implements IEventEmitter {
     }
 
     for (const rawWcEvent of this.wildcardEvents) {
-      const wcEvent = rawWcEvent.slice(0, rawWcEvent.endsWith('.*') ? -2 : -1)
-      if (!event.endsWith('*') && event !== wcEvent && event.startsWith(wcEvent)) {
+      const wcEvent = rawWcEvent.slice(
+        0,
+        rawWcEvent.endsWith('.*') ? -2 : -1,
+      )
+      if (
+        !event.endsWith('*') &&
+        event !== wcEvent &&
+        event.startsWith(wcEvent)
+      ) {
         this.emit(rawWcEvent, event, ...args)
       }
     }

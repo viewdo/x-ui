@@ -1,14 +1,43 @@
-import { Component, Element, Event, EventEmitter, h, Host, Listen, Prop, State, writeTask } from '@stencil/core'
+import {
+  Component,
+  Element,
+  Event,
+  EventEmitter,
+  h,
+  Host,
+  Listen,
+  Prop,
+  State,
+  writeTask,
+} from '@stencil/core'
 import { commonState, debugIf, log } from '../../services/common'
-import { clearDataProviders, DataListener } from '../../services/data'
-import { ElementsActionListener, elementsState, resolveChildElementXAttributes } from '../../services/elements'
-import { actionBus, EventAction, eventBus, IEventActionListener } from '../../services/events'
+import { DataListener } from '../../services/data/actions'
+import { clearDataProviders } from '../../services/data/factory'
+import {
+  ElementsActionListener,
+  elementsState,
+  resolveChildElementXAttributes,
+} from '../../services/elements'
+import {
+  actionBus,
+  EventAction,
+  eventBus,
+  IEventActionListener,
+} from '../../services/events'
 import { InterfaceActionListener } from '../../services/interface'
-import { LocationSegments, RouterService } from '../../services/routing'
+import {
+  LocationSegments,
+  RouterService,
+} from '../../services/routing'
 
 /**
- * @system routing
+ * The root component is the base container for the view-engine and its
+ * child components. This element should contain root-level HTML that
+ * is global to every view along with \<x-app-view\>
+ * components placed within any global-html.
  *
+ * @system routing
+ * @system interface
  */
 @Component({
   tag: 'x-app',
@@ -126,7 +155,9 @@ export class XApp {
   events!: EventEmitter
 
   private get childViews(): HTMLXAppViewElement[] {
-    return Array.from(this.el.querySelectorAll('x-app-view') || []).filter(e => {
+    return Array.from(
+      this.el.querySelectorAll('x-app-view') || [],
+    ).filter(e => {
       return e.parentElement?.closest('x-app-view') == null
     })
   }
@@ -150,10 +181,22 @@ export class XApp {
       this.events.emit(args)
     })
 
-    this.router = new RouterService(window, writeTask, eventBus, actionBus, this.root, this.appTitle, this.transition, this.scrollTopOffset)
+    this.router = new RouterService(
+      window,
+      writeTask,
+      eventBus,
+      actionBus,
+      this.root,
+      this.appTitle,
+      this.transition,
+      this.scrollTopOffset,
+    )
     this.router.captureInnerLinks(this.el)
 
-    debugIf(this.debug, `x-app: found ${this.childViews.length} child views`)
+    debugIf(
+      this.debug,
+      `x-app: found ${this.childViews.length} child views`,
+    )
     this.childViews.forEach(v => {
       v.url = this.router.adjustRootViewUrls(v.url, this.hash)
       v.transition = v.transition || this.transition
