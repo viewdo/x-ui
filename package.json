@@ -68,7 +68,7 @@
     "prettier": "2.2.1",
     "rimraf": "3.0.2",
     "rollup-plugin-analyzer": "4.0.0",
-    "typescript": "4.2.2",
+    "typescript": "4.2.3",
     "yargs": "16.2.0"
   },
   "jest": {
