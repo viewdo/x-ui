@@ -17,7 +17,7 @@ export class ScrollHistory {
     })
 
     if (win && 'scrollRestoration' in win.history) {
-      window.history.scrollRestoration = 'manual'
+      win.history.scrollRestoration = 'manual'
     }
   }
 

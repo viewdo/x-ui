@@ -144,11 +144,11 @@ export class HistoryService {
   }
 
   goBack() {
-    this.go(-1)
+    this.win.history.back()
   }
 
   goForward() {
-    this.go(1)
+    this.win.history.forward()
   }
 
   public listen(listener: Listener) {

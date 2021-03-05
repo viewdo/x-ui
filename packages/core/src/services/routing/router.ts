@@ -147,10 +147,9 @@ export class RouterService {
   }
 
   replaceWithRoute(path: string) {
-    this.history.replace(
-      stripBasename(path, this.root, this.useHash),
-      this.location.state,
-    )
+    const newPath = stripBasename(path, this.root, this.useHash)
+    this.location.pathname = newPath
+    this.history.replace(newPath)
   }
 
   matchPath(options: MatchOptions = {}): MatchResults | null {

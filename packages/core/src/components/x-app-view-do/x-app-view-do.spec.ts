@@ -1,7 +1,14 @@
 jest.mock('../../services/common/logging')
+jest.mock('../../services/elements/timer')
 jest.mock('../../services/data/evaluate.worker')
 
 import { newSpecPage } from '@stencil/core/testing'
+import {
+  addDataProvider,
+  DATA_EVENTS,
+  IDataProvider,
+  InMemoryProvider,
+} from '../../services/data'
 import { actionBus, eventBus } from '../../services/events'
 import { clearVisits } from '../../services/navigation'
 import { XAppView } from '../x-app-view/x-app-view'
@@ -9,11 +16,17 @@ import { XApp } from '../x-app/x-app'
 import { XAppViewDo } from './x-app-view-do'
 
 describe('x-app-view-do', () => {
+  let storage: IDataProvider
   beforeEach(async () => {
     actionBus.removeAllListeners()
     eventBus.removeAllListeners()
-    jest.resetAllMocks()
+    storage = new InMemoryProvider()
+    addDataProvider('storage', storage)
+  })
+
+  afterEach(async () => {
     await clearVisits()
+    storage.changed.removeAllListeners()
   })
 
   it('renders inactive', async () => {
@@ -154,7 +167,7 @@ describe('x-app-view-do', () => {
             <a id='s1' x-next>NEXT</a>
           </x-app-view-do>
           <x-app-view-do url="step-2">
-            <a id='b2' x-back>BACK</a>
+            <a id='b2' href="step-1">BACK</a>
             <a id='s2' x-next>NEXT</a>
           </x-app-view-do>
           done!
@@ -171,7 +184,6 @@ describe('x-app-view-do', () => {
     const next1 = page.body.querySelector('a#s1') as HTMLAnchorElement
     next1.click()
 
-    jest.advanceTimersToNextTimer()
     await page.waitForChanges()
 
     expect(router!.location.pathname).toBe('/start/step-2')
@@ -179,8 +191,9 @@ describe('x-app-view-do', () => {
     const back = page.body.querySelector('a#b2') as HTMLAnchorElement
     back.click()
 
-    jest.advanceTimersToNextTimer()
     await page.waitForChanges()
+
+    // expect(router!.location.pathname).toBe('/start/step-1')
 
     const subject = page.body.querySelector('x-app')
     subject?.remove()
@@ -288,6 +301,152 @@ describe('x-app-view-do', () => {
         </x-app-view>
       </x-app>
       `)
+
+    const subject = page.body.querySelector('x-app')
+    subject?.remove()
+  })
+
+  it('renders empty remote content', async () => {
+    const page = await newSpecPage({
+      components: [XApp, XAppView, XAppViewDo],
+      url: 'http://test/test',
+    })
+
+    page.win.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve({
+        status: 200,
+        text: () => Promise.resolve(null),
+      }),
+    )
+
+    page.setContent(`
+    <x-app>
+      <x-app-view url="/">
+        <x-app-view-do content-src="fake.html" url="/test">
+        </x-app-view-do>
+      </x-app-view>
+    </x-app>
+    `)
+
+    await page.waitForChanges()
+
+    expect(page.root).toEqualHtml(`
+      <x-app>
+        <x-app-view class="active-route" url="/">
+          <mock:shadow-root>
+            <slot></slot>
+            <slot name="content"></slot>
+          </mock:shadow-root>
+          <x-app-view-do class="active-route active-route-exact" content-src="fake.html" url="/test">
+            <mock:shadow-root>
+              <slot></slot>
+              <slot name="content"></slot>
+            </mock:shadow-root>
+          </x-app-view-do>
+        </x-app-view>
+      </x-app>
+      `)
+
+    const subject = page.body.querySelector('x-app')
+    subject?.remove()
+  })
+
+  it('renders remote content with tokens replace', async () => {
+    const page = await newSpecPage({
+      components: [XApp, XAppView, XAppViewDo],
+      url: 'http://test/test',
+    })
+
+    page.win.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve({
+        status: 200,
+        text: () => Promise.resolve(`<h1>HI {{storage:name}}!</h1>`),
+      }),
+    )
+
+    await storage.set('name', 'Jolene')
+
+    page.setContent(`
+    <x-app>
+      <x-app-view url="/">
+        <x-app-view-do content-src="fake.html" url="/test" resolve-tokens>
+        </x-app-view-do>
+      </x-app-view>
+    </x-app>
+    `)
+
+    await page.waitForChanges()
+
+    expect(page.root).toEqualHtml(`
+      <x-app>
+        <x-app-view class="active-route" url="/">
+          <mock:shadow-root>
+            <slot></slot>
+            <slot name="content"></slot>
+          </mock:shadow-root>
+          <x-app-view-do class="active-route active-route-exact" content-src="fake.html" url="/test" resolve-tokens>
+            <mock:shadow-root>
+              <slot></slot>
+              <slot name="content"></slot>
+            </mock:shadow-root>
+            <div id="remote-content-fakehtml">
+              <h1>
+                HI Jolene!
+              </h1>
+            </div>
+          </x-app-view-do>
+        </x-app-view>
+      </x-app>
+      `)
+
+    await storage.set('name', 'Dolly')
+    eventBus.emit(DATA_EVENTS.DataChanged, {})
+    await page.waitForChanges()
+
+    expect(page.root).toEqualHtml(`
+      <x-app>
+        <x-app-view class="active-route" url="/">
+          <mock:shadow-root>
+            <slot></slot>
+            <slot name="content"></slot>
+          </mock:shadow-root>
+          <x-app-view-do class="active-route active-route-exact" content-src="fake.html" url="/test" resolve-tokens>
+            <mock:shadow-root>
+              <slot></slot>
+              <slot name="content"></slot>
+            </mock:shadow-root>
+            <div id="remote-content-fakehtml">
+              <h1>
+                HI Dolly!
+              </h1>
+            </div>
+          </x-app-view-do>
+        </x-app-view>
+      </x-app>
+      `)
+
+    const subject = page.body.querySelector('x-app')
+    subject?.remove()
+  })
+
+  it('uses internal video tag for time', async () => {
+    const page = await newSpecPage({
+      components: [XApp, XAppView, XAppViewDo],
+      url: 'http://test/test',
+    })
+
+    page.setContent(`
+    <x-app>
+      <x-app-view url="/">
+        <x-app-view-do url="/test"
+          video-target="div#video">
+          <div id="video"></div>
+        </x-app-view-do>
+      </x-app-view>
+    </x-app>
+    `)
+
+    await page.waitForChanges()
 
     const subject = page.body.querySelector('x-app')
     subject?.remove()

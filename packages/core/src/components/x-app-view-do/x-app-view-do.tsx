@@ -227,9 +227,7 @@ export class XAppViewDo {
       this.contentElement = await this.resolveContentElement()
       await this.captureChildElements(this.el)
       await this.setupTimer()
-      //this.el.removeAttribute('hidden')
     } else {
-      //this.el.setAttribute('hidden', '')
       this.cleanup()
     }
   }
@@ -416,6 +414,7 @@ export class XAppViewDo {
   disconnectedCallback() {
     this.cleanup()
     this.dataSubscription?.call(this)
+    this.elementTimer?.destroy?.call(this)
     this.route.destroy()
   }
 }
