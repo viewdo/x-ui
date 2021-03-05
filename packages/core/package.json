@@ -50,9 +50,9 @@
     "@stencil/sass": "1.4.1",
     "@stencil/store": "1.4.1",
     "@types/howler": "2.2.1",
-    "expr-eval": "^2.0.2",
-    "jsonata": "^1.8.4",
-    "remarkable": "^2.0.1"
+    "expr-eval": "2.0.2",
+    "jsonata": "1.8.4",
+    "remarkable": "2.0.1"
   },
   "jest": {
     "preset": "@stencil/core/testing"
