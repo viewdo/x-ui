@@ -106,6 +106,10 @@ export class XContentMarkdown {
     else this.contentElement = null
   }
 
+  private fixMarkdown(content: string) {
+    return content.split('\\|').join('or')
+  }
+
   private async resolveContentElement() {
     const content = this.src
       ? await this.getContentFromSrc()
@@ -113,7 +117,8 @@ export class XContentMarkdown {
     if (content == null) return null
 
     const div = document.createElement('div')
-    div.innerHTML = (await renderMarkdown(content)) || ''
+    div.innerHTML =
+      (await renderMarkdown(this.fixMarkdown(content))) || ''
     div.className = this.contentClass
     await resolveChildElementXAttributes(div)
     this.router?.captureInnerLinks(div)
