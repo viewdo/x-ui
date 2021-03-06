@@ -12,7 +12,10 @@ Using the [\<x-app-analytics\>](/components/x-app-analytics) is simple, but does
 ```html
 <head>
   <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZZZ"></script>
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-ZZZ"
+  ></script>
   <script>
     window.dataLayer = window.dataLayer || []
     function gtag() {
@@ -26,15 +29,15 @@ Using the [\<x-app-analytics\>](/components/x-app-analytics) is simple, but does
   ...
   <x-app-analytics id="analytics">
     <script>
-      analytics.addEventListener('x:analytics:event', (e) => {
+      analytics.addEventListener('events', e => {
         console.log(`event: ${JSON.stringify(e.detail)}`)
         gtag(e.detail.key, e.detail.value)
       })
-      analytics.addEventListener('x:analytics:page-view', (e) => {
+      analytics.addEventListener('page-view', e => {
         console.log(`event: ${JSON.stringify(e.detail)}`)
         gtag('page_view', e.detail.pathname)
       })
-      analytics.addEventListener('x:analytics:view-percentage', (e) => {
+      analytics.addEventListener('x:analytics:view-time', e => {
         console.log(`event: ${JSON.stringify(e.detail)}`)
         gtag(e.detail.key, e.detail.value)
       })
@@ -48,11 +51,11 @@ Using the [\<x-app-analytics\>](/components/x-app-analytics) is simple, but does
 
 ## Events
 
-| Event                         | Description              | Type               |
-| ----------------------------- | ------------------------ | ------------------ |
-| `page-view`                   | Page views.              | `CustomEvent<any>` |
-| `x:analytics:event`           | Raised analytics events. | `CustomEvent<any>` |
-| `x:analytics:view-percentage` | View percentage views.   | `CustomEvent<any>` |
+| Event       | Description              | Type               |
+| ----------- | ------------------------ | ------------------ |
+| `event`     | Raised analytics events. | `CustomEvent<any>` |
+| `page-view` | Page views.              | `CustomEvent<any>` |
+| `view-time` | View percentage views.   | `CustomEvent<any>` |
 
 
 ----------------------------------------------

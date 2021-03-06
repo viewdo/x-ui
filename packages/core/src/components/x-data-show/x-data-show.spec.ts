@@ -2,12 +2,11 @@ jest.mock('../../services/common/logging')
 jest.mock('../../services/data/evaluate.worker')
 
 import { newSpecPage } from '@stencil/core/testing'
-import {
-  addDataProvider,
-  InMemoryProvider,
-} from '../../services/data'
+import { addDataProvider } from '../../services/data/factory'
 import { DATA_EVENTS } from '../../services/data/interfaces'
+import { InMemoryProvider } from '../../services/data/providers/memory'
 import { eventBus } from '../../services/events'
+import { ROUTE_EVENTS } from '../../services/routing/interfaces'
 import { XDataShow } from './x-data-show'
 
 describe('x-data-show', () => {
@@ -49,6 +48,8 @@ describe('x-data-show', () => {
       html: `<x-data-show when="true"><p>Show Me</p></x-data-show>`,
       supportsShadowDom: false,
     })
+
+    eventBus.emit(ROUTE_EVENTS.RouteChanged, {})
     expect(page.root).toEqualHtml(`
       <x-data-show when="true">
         <p>

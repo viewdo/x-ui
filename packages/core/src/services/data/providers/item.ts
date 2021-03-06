@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { EventEmitter } from '../../events'
 import { DATA_EVENTS, IDataProvider } from '../interfaces'
 

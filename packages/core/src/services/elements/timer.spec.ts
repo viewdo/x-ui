@@ -1,59 +1,46 @@
 jest.mock('../data/evaluate.worker')
 
-import { newSpecPage } from '@stencil/core/testing'
+import { MockRequestAnimationFrameProvider } from '../../components/x-app-view-do/view-do/mocks/frame-provider'
+import { TIMER_EVENTS } from './interfaces'
 import { ElementTimer } from './timer'
 
 describe('element-timer:', () => {
   let subject: ElementTimer
+  const animationFrameProvider = new MockRequestAnimationFrameProvider()
 
-  it('emits time', async () => {
-    const page = await newSpecPage({
-      components: [],
-      html: `
-      <div id="timer">
-        <input type="text" x-percentage-to="value" />
-      </div>
-      `,
-    })
-
-    const element = page.body.querySelector('div')!
-    subject = new ElementTimer(element, 100, false)
-
-    subject.emitTime(10)
-    await page.waitForChanges()
-
-    let input = page.body.querySelector('input')
-    expect(input!.value).toBe('0.1')
-
-    subject.emitTime(20)
-    await page.waitForChanges()
-
-    input = page.body.querySelector('input')
-    expect(input!.value).toBe('0.2')
+  beforeEach(() => {
+    animationFrameProvider.reset()
   })
 
-  it('emits time then cleans up', async () => {
-    const page = await newSpecPage({
-      components: [],
-      html: `
-      <div id="timer">
-        <input type="text" x-percentage-to="value" />
-      </div>
-      `,
+  it('emits time, calculates elapsed, and ends on time.', async () => {
+    const intervals = []
+    let ended = false
+    subject = new ElementTimer(animationFrameProvider, 60, 0)
+    subject.on(TIMER_EVENTS.OnInterval, time => {
+      intervals.push(time)
     })
-    subject = new ElementTimer(page.body, 3, false)
-    jest.useFakeTimers()
+    subject.on(TIMER_EVENTS.OnEnd, () => {
+      ended = true
+    })
     subject.beginInternalTimer()
 
-    jest.runTimersToTime(3000)
+    animationFrameProvider.triggerNextAnimationFrame(1000)
+    expect(subject.elapsed).toBeDefined()
+    expect(subject.elapsed!.seconds).toBe(1)
 
-    let input = page.body.querySelector('input')
-    let value = Number(input!.value)
-    expect(value).toBe(1)
+    animationFrameProvider.triggerNextAnimationFrame(2000)
+    expect(subject.elapsed).toBeDefined()
+    expect(subject.elapsed!.seconds).toBe(2)
+    expect(intervals.length).toBe(2)
 
-    jest.runTimersToTime(3100)
+    animationFrameProvider.triggerNextAnimationFrame(60000)
+    expect(subject.elapsed!.minutes).toBe(1)
+    expect(subject.elapsed!.elapsed).toBe(60)
 
-    expect(input!.value).toBe('0')
-    subject.destroy()
+    animationFrameProvider.triggerNextAnimationFrame(65000)
+    expect(subject.elapsed!.minutes).toBe(1)
+    expect(subject.elapsed!.elapsed).toBe(60)
+
+    expect(ended).toBeTruthy()
   })
 })

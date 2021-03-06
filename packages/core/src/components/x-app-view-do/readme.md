@@ -38,8 +38,8 @@ When the parent [\<x-app-view\>](/components/x-app-view)'s route is activated, b
 1. Lists all direct-child [\<x-app-view-do\>](/components/x-app-view-do) items, one at a time in sequence.
 2. Finds the first unvisited route respecting the **'visit'** requirement or [**'when'** predicate](/expression), if present.
 
-   * **If found**: It pushes the page state to its url, thus activated the child route.
-   * **Otherwise**: The [\<x-app-view\>](/components/x-app-view) is satisfied and can now render its own contents.
+   - **If found**: It pushes the page state to its url, thus activated the child route.
+   - **Otherwise**: The [\<x-app-view\>](/components/x-app-view) is satisfied and can now render its own contents.
 
 ## Samples
 
@@ -50,7 +50,9 @@ The following are some examples to demonstrate how you can combine the settings 
 This route will be activated once for each new visit to the page. (Visit 'once' is the default behavior, so it can be omitted.)
 
 ```html
-<x-app-view-do url="/accept-terms" page-title="Consent" visit="once"> ... </x-app-view-do>
+<x-app-view-do url="/accept-terms" page-title="Consent" visit="once">
+  ...
+</x-app-view-do>
 ```
 
 > By default, the visit-strategy is 'once'. In this case, the visit is stored in local-storage. Any subsequent visits to this page with the same browser won't see it again.
@@ -60,7 +62,13 @@ This route will be activated once for each new visit to the page. (Visit 'once' 
 This route will be activated once for each new session visit to the page.
 
 ```html
-<x-app-view-do url="/accept-terms" page-title="Consent" visit="always"> ... </x-app-view-do>
+<x-app-view-do
+  url="/accept-terms"
+  page-title="Consent"
+  visit="always"
+>
+  ...
+</x-app-view-do>
 ```
 
 > For **'always'**, the visit is stored in local-session which is destroyed when the browser tab is closed, but retained while on the site.
@@ -70,7 +78,13 @@ This route will be activated once for each new session visit to the page.
 This route will be activated if a value for 'consent' was not found in local-storage[^1].
 
 ```html
-<x-app-view-do url="/accept-terms" page-title="Consent" when="{{storage:consent}} == null"> ... </x-app-view-do>
+<x-app-view-do
+  url="/accept-terms"
+  page-title="Consent"
+  when="{{storage:consent}} == null"
+>
+  ...
+</x-app-view-do>
 ```
 
 > **Important**: If a value for `{{storage:consent}}` is not set in this route's somehow, the user cannot get to the parent page.
@@ -84,36 +98,42 @@ This data can be set manually or using our specialized declarative components to
 This route will be activated only through navigation. This is helpful for opt-in presentations, modals or other action-based content.
 
 ```html
-<x-app-view-do url="/learn-more" page-title="Watch a video" visit="optional"> ... </x-app-view-do>
+<x-app-view-do
+  url="/learn-more"
+  page-title="Watch a video"
+  visit="optional"
+>
+  ...
+</x-app-view-do>
 ```
 
 > **Important**: When linking from a [\<x-app-view-do\>](/components/x-app-view-do) to another any other route, you using a [\<x-app-link\>](/components/x-app-link), validation and visit tracking is not performed. To mark the current route 'visited', add a **'x-next'** attribute to any clickable element.
 
 #### Presentation Features
 
-* Supports [video](/video) support:
-  * Video Timer becomes basis for Timed Actions
-  * Auto-Play w/Global Setting
-  * Auto-Next available on Video End
-  * Video Supports Global Audio Preferences
-* Supports [audio](/audio) support:
-  * Time & Event-based Sounds * Voice Over
-  * Background Music
-  * Voice-overs
-* Supports [actions](/actions):
-  * At route entrance
-  * At a given time
-  * At a given user interaction
-  * Before route exit
-* Built-in timer & and optional duration:
-  * Synced to video (respecting scrub, pause, etc)
-  * Based on time elapsed since entrance
-  * Hide and show elements at certain times
-  * Time-based animation class toggling
-  * Time-based navigation or when the video ends.
-* Automatic visibility resolution for child elements using special attributes.
-* Automatic next and back handlers for child elements using special attributes.
-* Automatic time/percentage value insertion for child elements using special attributes.
+- Supports [video](/video) support:
+  - Video Timer becomes basis for Timed Actions
+  - Auto-Play w/Global Setting
+  - Auto-Next available on Video End
+  - Video Supports Global Audio Preferences
+- Supports [audio](/audio) support:
+  - Time & Event-based Sounds \* Voice Over
+  - Background Music
+  - Voice-overs
+- Supports [actions](/actions):
+  - At route entrance
+  - At a given time
+  - At a given user interaction
+  - Before route exit
+- Built-in timer & and optional duration:
+  - Synced to video (respecting scrub, pause, etc)
+  - Based on time elapsed since entrance
+  - Hide and show elements at certain times
+  - Time-based animation class toggling
+  - Time-based navigation or when the video ends.
+- Automatic visibility resolution for child elements using special attributes.
+- Automatic next and back handlers for child elements using special attributes.
+- Automatic time/percentage value insertion for child elements using special attributes.
 
 ### Routing & Guided Navigation
 
@@ -219,6 +239,8 @@ This attribute instructs [\<x-app-view-do\>](/components/x-app-view-do) to injec
 
 ```html
 <any value="" x-time-to="value" />
+
+<input x-time-to="value" />
 ```
 
 #### Time Percentage To: [x-percentage-to]

@@ -12,23 +12,18 @@ import { warn } from '../../services/common/logging'
 import { getRemoteContent } from '../../services/content/remote'
 import { DATA_EVENTS } from '../../services/data'
 import {
-  captureXBackClickEvent,
-  captureXLinkClickEvent,
-  captureXNextClickEvent,
   ElementTimer,
-  getChildInputValidity,
   replaceHtmlInElement,
   resolveChildElementXAttributes,
-  TIMER_EVENTS,
 } from '../../services/elements'
 import {
   ActionActivationStrategy,
   actionBus,
   eventBus,
 } from '../../services/events'
-import { recordVisit, VisitStrategy } from '../../services/navigation'
+import { VisitStrategy } from '../../services/navigation'
 import { MatchResults, Route } from '../../services/routing'
-import { VideoActionListener, videoState } from '../../services/video'
+import { ViewDoService } from './view-do'
 
 /**
  * The \<x-app-view-do\> element represents a specialized child-route for a parent \<x-app-view\> component.
@@ -49,8 +44,10 @@ import { VideoActionListener, videoState } from '../../services/video'
 export class XAppViewDo {
   private dataSubscription!: () => void
   private route!: Route
-  private videoListener?: VideoActionListener
-  private elementTimer?: ElementTimer
+  private service?: ViewDoService
+
+  // private videoListener?: VideoActionListener
+  // private elementTimer?: ElementTimer
 
   @Element() el!: HTMLXAppViewDoElement
   @State() match: MatchResults | null = null
@@ -157,20 +154,12 @@ export class XAppViewDo {
    */
   @Prop() videoEndEvent: string = 'ended'
 
-  private get duration() {
-    return this.childVideo?.duration || this.nextAfter
-  }
-
   private get parentView() {
     return this.el.closest('x-app-view')
   }
 
   private get routeContainer() {
     return this.el.closest('x-app')
-  }
-
-  private get childVideo(): HTMLVideoElement | null {
-    return this.el.querySelector(this.videoTarget)
   }
 
   private get actionActivators(): HTMLXActionActivatorElement[] {
@@ -224,11 +213,33 @@ export class XAppViewDo {
 
     if (this.match?.isExact) {
       debugIf(this.debug, `x-app-view-do: ${this.url} on-enter`)
+
+      this.service = new ViewDoService(
+        this.el,
+        new ElementTimer(
+          window,
+          this.nextAfter,
+          performance.now(),
+          this.debug,
+        ),
+        this.route,
+        this.url,
+        this.visit,
+        actionBus,
+        eventBus,
+        this.videoTarget,
+        this.videoTimeEvent,
+        this.videoEndEvent,
+        this.nextAfter,
+        this.debug,
+      )
       this.contentElement = await this.resolveContentElement()
-      await this.captureChildElements(this.el)
-      await this.setupTimer()
+      if (this.contentElement)
+        await this.service.captureChildElements(this.contentElement)
+
+      await this.service.beginTimer()
     } else {
-      this.cleanup()
+      this.service?.cleanup()
     }
   }
 
@@ -245,12 +256,12 @@ export class XAppViewDo {
         this.resolveTokens,
       )
       if (content == null) return null
+
       const div = document.createElement('div')
       div.slot = 'content'
       div.innerHTML = content
       div.id = this.contentKey!
       await resolveChildElementXAttributes(div)
-      await this.captureChildElements(div)
       this.route.captureInnerLinks(div)
       return div
     } catch {
@@ -258,125 +269,6 @@ export class XAppViewDo {
         `x-app-view-do: ${this.url} Unable to retrieve from ${this.contentSrc}`,
       )
       return null
-    }
-  }
-
-  private async setupTimer() {
-    const video = this.childVideo
-
-    this.elementTimer = new ElementTimer(
-      this.el,
-      this.duration,
-      this.debug,
-    )
-
-    if (video) {
-      this.videoListener = new VideoActionListener(
-        window,
-        video,
-        eventBus,
-        actionBus,
-        this.debug,
-      )
-
-      video.addEventListener(this.videoTimeEvent, () => {
-        this.elementTimer!.emit(
-          TIMER_EVENTS.OnInterval,
-          video.currentTime,
-        )
-      })
-
-      video.addEventListener(this.videoEndEvent, () => {
-        this.elementTimer!.emit(TIMER_EVENTS.OnEnd)
-      })
-
-      if (videoState.autoplay) {
-        await video?.play()
-      }
-    } else {
-      this.elementTimer.beginInternalTimer()
-    }
-
-    const activated: any = []
-    this.elementTimer.on(
-      TIMER_EVENTS.OnInterval,
-      async (time: number) => {
-        await this.route.activateActions(
-          this.actionActivators,
-          ActionActivationStrategy.AtTime,
-          activator => {
-            if (activated.includes(activator)) return false
-            if (activator.time && time >= activator.time) {
-              activated.push(activator)
-              return true
-            }
-            return false
-          },
-        )
-      },
-    )
-
-    this.elementTimer.on(TIMER_EVENTS.OnEnd, async () => {
-      if (videoState.autoplay) {
-        await this.next('timer', TIMER_EVENTS.OnEnd)
-      }
-    })
-  }
-
-  private async captureChildElements(el: HTMLElement) {
-    debugIf(
-      this.debug,
-      `x-app-view-do: ${this.url} resolve children called`,
-    )
-
-    captureXBackClickEvent(el, tag => {
-      this.back(tag, 'clicked')
-    })
-
-    captureXNextClickEvent(el, (tag, route) => {
-      this.next(tag, 'clicked', route)
-    })
-
-    captureXLinkClickEvent(el, (tag, route) => {
-      this.next(tag, 'clicked', route)
-    })
-  }
-
-  private cleanup() {
-    const remoteContent = this.el.querySelector(`#${this.contentKey}`)
-    remoteContent?.remove()
-    this.childVideo?.pause()
-    this.videoListener?.destroy()
-    this.elementTimer?.destroy()
-  }
-
-  private back(element: string, eventName: string) {
-    debugIf(
-      this.debug,
-      `x-app-view-do: back fired from ${element}:${eventName}`,
-    )
-    this.cleanup()
-    this.route?.router.history.goBack()
-  }
-
-  private async next(
-    element: string,
-    eventName: string,
-    route?: string | null,
-  ) {
-    debugIf(
-      this.debug,
-      `x-app-view-do: next fired from ${element}:${eventName}`,
-    )
-    const valid = getChildInputValidity(this.el)
-    if (valid) {
-      recordVisit(this.visit, this.url)
-      this.cleanup()
-      if (route) {
-        this.route.goToRoute(route)
-      } else {
-        this.route.router.goToParentRoute()
-      }
     }
   }
 
@@ -412,9 +304,8 @@ export class XAppViewDo {
   }
 
   disconnectedCallback() {
-    this.cleanup()
     this.dataSubscription?.call(this)
-    this.elementTimer?.destroy?.call(this)
+    this.service?.cleanup?.call(this)
     this.route.destroy()
   }
 }

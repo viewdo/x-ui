@@ -50,7 +50,7 @@ export class XDataProviderStorage {
   }
 
   async componentWillLoad() {
-    this.provider = new StorageProvider()
+    this.provider = new StorageProvider(window)
     this.registerProvider()
   }
 

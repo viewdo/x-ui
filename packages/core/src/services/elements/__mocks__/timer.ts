@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import { EventEmitter } from '../../events'
 import { TimedNode } from '../interfaces'
 

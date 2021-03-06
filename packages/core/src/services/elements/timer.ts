@@ -1,84 +1,80 @@
 import { debugIf } from '../common'
 import { EventEmitter } from '../events'
-import {
-  captureElementChildTimedNodes,
-  resolveElementChildTimedNodesByTime,
-  restoreElementChildTimedNodes,
-} from './functions'
-import { TimedNode, TIMER_EVENTS } from './interfaces'
+import { TIMER_EVENTS } from './interfaces'
 
 export class ElementTimer extends EventEmitter {
-  private timedNodes: TimedNode[] = []
-  private timer?: NodeJS.Timeout
-  public lastTime = 0
-
+  private timer: number = 0
+  public elapsed?: {
+    hours: number
+    minutes: number
+    seconds: number
+    elapsed: number
+  }
   constructor(
-    private rootElement: HTMLElement,
-    private duration: number,
-    private debug: boolean,
+    private provider: AnimationFrameProvider,
+    public limit: number = 0,
+    public start = performance.now(),
+    private debug: boolean = false,
   ) {
     super()
-    this.lastTime = 0
+
     debugIf(
       this.debug,
-      `element-timer: starting timer w/ ${duration} duration`,
+      `element-timer: starting timer w/ ${limit} duration`,
     )
-
-    // Capture timed nodes
-    this.timedNodes = captureElementChildTimedNodes(
-      this.rootElement,
-      this.duration,
-    )
-    debugIf(
-      this.debug && this.timedNodes.length > 0,
-      `element-timer:  found time-child nodes: ${JSON.stringify(
-        this.timedNodes,
-      )}`,
-    )
-
-    // self-register to manage them
-    this.on(TIMER_EVENTS.OnInterval, time => {
-      resolveElementChildTimedNodesByTime(
-        this.rootElement,
-        this.timedNodes,
-        time,
-        duration,
-        debug,
-      )
-      this.lastTime = time
-    })
-
-    this.on(TIMER_EVENTS.OnEnd, () => {
-      restoreElementChildTimedNodes(this.rootElement, this.timedNodes)
-    })
   }
 
   beginInternalTimer() {
-    let time = 0
-    const { duration, debug } = this
-
-    this.timer = setInterval(() => {
-      time = time + 0.5
-      this.emitTime(time)
-      if (duration > 0 && time > duration) {
-        debugIf(
-          debug,
-          `element-timer: presentation ended at ${time} [not redirecting]`,
-        )
-        clearInterval(this.timer!)
-        this.emit(TIMER_EVENTS.OnEnd)
-      }
-    }, 500)
+    this.timer = this.provider.requestAnimationFrame(current => {
+      this.interval(current)
+    })
   }
 
-  public emitTime(time: number) {
-    debugIf(this.debug, `element-timer: ${this.lastTime} - ${time}`)
-    this.emit(TIMER_EVENTS.OnInterval, time)
+  private interval(time: number) {
+    const difference = elapsedTime(this.start, time)
+    if (this.limit && difference.elapsed > this.limit) {
+      debugIf(
+        this.debug,
+        `element-timer: presentation ended at ${time} [not redirecting]`,
+      )
+      this.provider.cancelAnimationFrame(this.timer)
+      this.emit(TIMER_EVENTS.OnEnd)
+    } else {
+      this.elapsed = difference
+      this.emitTime()
+      this.timer = this.provider.requestAnimationFrame(current => {
+        this.interval(current)
+      })
+    }
+  }
+
+  public emitTime() {
+    debugIf(this.debug, `element-timer: ${this.elapsed?.elapsed}`)
+    this.emit(TIMER_EVENTS.OnInterval, this.elapsed?.elapsed)
   }
 
   destroy() {
-    restoreElementChildTimedNodes(this.rootElement, this.timedNodes)
     this.removeAllListeners()
-    clearInterval(this.timer!)
+    try {
+      this.provider.cancelAnimationFrame(this.timer)
+    } catch {}
+  }
+}
+
+export function elapsedTime(start: number, time: number) {
+  const elapsed = (time - start) / 1000
+  if (elapsed >= 0) {
+    return {
+      hours: Math.floor((elapsed / 3600) % 24),
+      minutes: Math.floor((elapsed / 60) % 60),
+      seconds: Math.floor(elapsed % 60),
+      elapsed,
+    }
+  }
+  return {
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+    elapsed,
   }
 }

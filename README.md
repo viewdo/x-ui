@@ -1,6 +1,6 @@
 # view.DO Experience UI
 
-![Pre-Release](https://via.placeholder.com/728x90/333333/FFFFFF?text=PREVIEW+RELEASE:ALPHA+0.1)
+![Pre-Release](https://via.placeholder.com/728x50/2d8dc9/FFFFFF?text=PREVIEW+RELEASE:ALPHA+0.2)
 
 ![MIT](https://badgen.net/github/license/viewdo/x-ui?icon=github)
 ![size](https://badgen.net/badgesize/normal/file-url/unpkg.com/@viewdo/x-ui/dist/x-ui/x-ui.esm.js?icon=sourcegraph&color=blue)
@@ -13,7 +13,6 @@
 [![Gitter](https://badgen.net/badge/chat/on%20gitter?icon=gitter)](https://gitter.im/viewdo/x-ui)
 [![jsdelivr](https://badgen.net/badge/jsdelivr/CDN?icon=jsdelivr&color=blue)](https://cdn.jsdelivr.net/npm/@viewdo/x-ui/+esm)
 [![unpkgd](https://badgen.net/badge/unpkg/CDN)](https://unpkg.com/browse/@viewdo/x-ui)
-
 
 ## Experience UI is a suite of custom HTML elements that turns a static HTML file into single-page web-experiences
 
@@ -30,8 +29,10 @@ Throw this reference tag into your HTML page's head so the browser can figure ou
 ```html
 <head>
   ...
-  <script type="module" src="https://unpkg.com/@viewdo/x-ui/dist/x-ui/x-ui.esm.js">
-  </script>
+  <script
+    type="module"
+    src="https://unpkg.com/@viewdo/x-ui/dist/x-ui/x-ui.esm.js"
+  ></script>
   ....
 </head>
 ```
@@ -69,7 +70,7 @@ The best way to see what these components can do for your HTML is taking a look 
 
 Thank you to the Ionic team and their fabulous [**Stencil.js** SDK](https://stenciljs.com) for the best way to build lightening fast, native web-components. Also, shout-out to the creators and contributors to all open-source efforts, but especially to the libraries we love and used:
 
-* **howler.js**: [howler-js](https://github.com/goldfire/howler.js) best audio library for managing audio files
-* **SilentMatt**: [expression evaluator](https://github.com/silentmatt/expr-eval) for a declarative expression parser
-* **JSONata**: [JSONata](https://jsonata.org/) another declarative approach for solving problems, this uses expressions to query JSON.
-* **remarkable**: [remarkable](https://jonschlinkert.github.io/remarkable/demo/) Ridiculously fast markdown to HTML processing.
+- **howler.js**: [howler-js](https://github.com/goldfire/howler.js) best audio library for managing audio files
+- **SilentMatt**: [expression evaluator](https://github.com/silentmatt/expr-eval) for a declarative expression parser
+- **JSONata**: [JSONata](https://jsonata.org/) another declarative approach for solving problems, this uses expressions to query JSON.
+- **remarkable**: [remarkable](https://jonschlinkert.github.io/remarkable/demo/) Ridiculously fast markdown to HTML processing.

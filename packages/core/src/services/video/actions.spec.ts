@@ -3,6 +3,7 @@ import { sleep } from '../common/promises'
 import { EventEmitter } from '../events/emitter'
 import { VideoActionListener } from './actions'
 import { VIDEO_COMMANDS, VIDEO_TOPIC } from './interfaces'
+import { videoState } from './state'
 
 describe('video-actions:', () => {
   let subject: VideoActionListener
@@ -22,7 +23,6 @@ describe('video-actions:', () => {
     eventBus = new EventEmitter()
 
     subject = new VideoActionListener(
-      page.win,
       video as HTMLVideoElement,
       eventBus,
       actionBus,
@@ -96,7 +96,6 @@ describe('video-actions:', () => {
 
   it('actions: autoplay from listener', async () => {
     subject = new VideoActionListener(
-      page.win,
       video as HTMLVideoElement,
       eventBus,
       actionBus,
@@ -105,18 +104,17 @@ describe('video-actions:', () => {
 
     subject.setAutoPlay(true)
 
-    expect(page.win.localStorage.getItem('autoplay')).toBe('true')
+    expect(videoState.autoplay).toBe(true)
 
     subject.setAutoPlay(false)
 
-    expect(page.win.localStorage.getItem('autoplay')).toBe('false')
+    expect(videoState.autoplay).toBe(false)
 
     subject.destroy()
   })
 
   it('actions: autoplay from bus ', async () => {
     subject = new VideoActionListener(
-      page.win,
       video as HTMLVideoElement,
       eventBus,
       actionBus,
@@ -129,15 +127,13 @@ describe('video-actions:', () => {
       data: true,
     })
 
-    expect(page.win.localStorage.getItem('autoplay')).toBe('true')
-
     actionBus.emit(VIDEO_TOPIC, {
       topic: VIDEO_TOPIC,
       command: VIDEO_COMMANDS.SetAutoPlay,
       data: false,
     })
 
-    expect(page.win.localStorage.getItem('autoplay')).toBe('false')
+    expect(videoState.autoplay).toBe(false)
 
     subject.destroy()
   })

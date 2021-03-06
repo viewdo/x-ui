@@ -12,6 +12,7 @@ export function ensureBasename(path: string, prefix: string) {
   result = stripTrailingSlash(result.replace(/[/]{2,}/gi, '/'))
   return addLeadingSlash(result)
 }
+
 /**
  * Paths has basename
  * @param path

@@ -33,33 +33,33 @@ export class ElementsActionListener implements IEventActionListener {
 
   private async commandReceived(command: string, data: any) {
     switch (command) {
-      case ELEMENTS_COMMANDS.ElementToggleClass: {
-        this.elementToggleClass(data)
+      case ELEMENTS_COMMANDS.ToggleClass: {
+        this.ToggleClass(data)
         break
       }
 
-      case ELEMENTS_COMMANDS.ElementAddClasses: {
-        this.elementAddClasses(data)
+      case ELEMENTS_COMMANDS.AddClasses: {
+        this.AddClasses(data)
         break
       }
 
-      case ELEMENTS_COMMANDS.ElementRemoveClasses: {
-        this.elementRemoveClasses(data)
+      case ELEMENTS_COMMANDS.RemoveClasses: {
+        this.RemoveClasses(data)
         break
       }
 
-      case ELEMENTS_COMMANDS.ElementSetAttribute: {
-        this.elementSetAttribute(data)
+      case ELEMENTS_COMMANDS.SetAttribute: {
+        this.SetAttribute(data)
         break
       }
 
-      case ELEMENTS_COMMANDS.ElementRemoveAttribute: {
-        this.elementRemoveAttribute(data)
+      case ELEMENTS_COMMANDS.RemoveAttribute: {
+        this.RemoveAttribute(data)
         break
       }
 
-      case ELEMENTS_COMMANDS.ElementCallMethod: {
-        this.elementCallMethod(data)
+      case ELEMENTS_COMMANDS.CallMethod: {
+        this.CallMethod(data)
         break
       }
 
@@ -67,14 +67,14 @@ export class ElementsActionListener implements IEventActionListener {
     }
   }
 
-  elementToggleClass(args: any) {
+  ToggleClass(args: any) {
     const { selector, className } = args
     if (!className) return
     const element = this.body.querySelector(selector) as HTMLElement
     if (element && className) element.classList.toggle(className)
   }
 
-  elementAddClasses(args: any) {
+  AddClasses(args: any) {
     const { selector, classes } = args
     if (!classes) return
     const element = this.body.querySelector(selector) as HTMLElement
@@ -84,7 +84,7 @@ export class ElementsActionListener implements IEventActionListener {
       })
   }
 
-  elementRemoveClasses(args: any) {
+  RemoveClasses(args: any) {
     const { selector, classes } = args
     const element = this.body.querySelector(selector) as HTMLElement
     if (element && classes)
@@ -93,7 +93,7 @@ export class ElementsActionListener implements IEventActionListener {
       })
   }
 
-  elementSetAttribute(args: any) {
+  SetAttribute(args: any) {
     const { selector, attribute, value } = args
     if (!attribute) return
     const element = this.body.querySelector(selector) as HTMLElement
@@ -101,14 +101,14 @@ export class ElementsActionListener implements IEventActionListener {
       element.setAttribute(attribute, value || '')
   }
 
-  elementRemoveAttribute(args: any) {
+  RemoveAttribute(args: any) {
     const { selector, attribute } = args
     if (!attribute) return
     const element = this.body.querySelector(selector) as HTMLElement
     if (element && attribute) element?.removeAttribute(attribute)
   }
 
-  elementCallMethod(args: any) {
+  CallMethod(args: any) {
     const { selector, method, data } = args
     if (!method) return
     const element = this.body.querySelector(selector)

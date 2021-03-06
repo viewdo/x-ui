@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import { EventEmitter } from '../../events'
 import { AudioRequest } from '../audio-request'
 import { AudioType } from '../interfaces'

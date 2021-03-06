@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import jsonata from 'jsonata'
 import { arrify } from '../../../../services/common/arrify'
 

@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 
 import { LocationSegments } from '../common'
+import { ActionActivationStrategy } from '../events'
 import { Path } from './utils'
 
 export { LocationSegments }
@@ -58,4 +59,15 @@ export interface MatchResults {
   url: string
   isExact: boolean
   params: Record<string, string>
+}
+
+export interface IRoute {
+  activateActions(
+    actionActivators: HTMLXActionActivatorElement[],
+    AtTime: ActionActivationStrategy,
+    filter: (activator: any) => boolean,
+  ): Promise<void>
+  goBack(): void
+  goToRoute(path: string): void
+  goToParentRoute(): void
 }

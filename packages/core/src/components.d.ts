@@ -11,7 +11,7 @@ import { VisitStrategy } from "./services/navigation";
 import { RouterService as RouterService1 } from "./services/routing/router";
 import { DiscardStrategy, LoadStrategy } from "./services/audio";
 import { AUDIO_COMMANDS } from "./services/audio/interfaces";
-import { CookieConsent } from "./services/data";
+import { CookieConsent, DataProviderRegistration } from "./services/data";
 export namespace Components {
     interface XAction {
         /**
@@ -95,7 +95,17 @@ export namespace Components {
     interface XAppAnalytics {
     }
     interface XAppAutoplay {
+        /**
+          * Any classes to add to the input-element directly.
+         */
         "classes"?: string;
+        /**
+          * The data provider to store the audio-enabled state in.
+         */
+        "dataProvider": string;
+        /**
+          * The id field to add to the input-element directly.
+         */
         "inputId"?: string;
     }
     interface XAppLink {
@@ -153,6 +163,10 @@ export namespace Components {
           * The url for this route should only be matched when it is exact.
          */
         "exact": boolean;
+        /**
+          * Return all child elements used for processing. This function is primarily meant for testing.
+         */
+        "getChildren": () => Promise<{ activators: HTMLXActionActivatorElement[]; views: HTMLXAppViewElement[]; dos: HTMLXAppViewDoElement[]; }>;
         /**
           * Cross Origin Mode if the content is pulled from a remote location
          */
@@ -267,6 +281,10 @@ export namespace Components {
           * Any classes to add to the input-element directly.
          */
         "classes"?: string;
+        /**
+          * The data provider to store the audio-enabled state in.
+         */
+        "dataProvider": string;
         /**
           * The id field to add to the input-element directly.
          */
@@ -463,9 +481,9 @@ export namespace Components {
     }
     interface XDataProviderCookie {
         /**
-          * An expression that tells this component how to determine if the user has previously consented. {{{storage:consented}}}
+          * Immediately register the provider.
          */
-        "hideWhen"?: string;
+        "registerProvider": () => Promise<boolean>;
         /**
           * When skipConsent is true, the accept-cookies banner will not be displayed before accessing cookie-data.
          */
@@ -788,20 +806,30 @@ declare namespace LocalJSX {
     }
     interface XAppAnalytics {
         /**
+          * Raised analytics events.
+         */
+        "onEvent"?: (event: CustomEvent<any>) => void;
+        /**
           * Page views.
          */
         "onPage-view"?: (event: CustomEvent<any>) => void;
         /**
-          * Raised analytics events.
-         */
-        "onX:analytics:event"?: (event: CustomEvent<any>) => void;
-        /**
           * View percentage views.
          */
-        "onX:analytics:view-percentage"?: (event: CustomEvent<any>) => void;
+        "onView-time"?: (event: CustomEvent<any>) => void;
     }
     interface XAppAutoplay {
+        /**
+          * Any classes to add to the input-element directly.
+         */
         "classes"?: string;
+        /**
+          * The data provider to store the audio-enabled state in.
+         */
+        "dataProvider"?: string;
+        /**
+          * The id field to add to the input-element directly.
+         */
         "inputId"?: string;
     }
     interface XAppLink {
@@ -973,6 +1001,10 @@ declare namespace LocalJSX {
           * Any classes to add to the input-element directly.
          */
         "classes"?: string;
+        /**
+          * The data provider to store the audio-enabled state in.
+         */
+        "dataProvider"?: string;
         /**
           * The id field to add to the input-element directly.
          */
@@ -1152,10 +1184,6 @@ declare namespace LocalJSX {
         "text"?: string;
     }
     interface XDataProviderCookie {
-        /**
-          * An expression that tells this component how to determine if the user has previously consented. {{{storage:consented}}}
-         */
-        "hideWhen"?: string;
         /**
           * This event is raised when the consents to cookies.
          */

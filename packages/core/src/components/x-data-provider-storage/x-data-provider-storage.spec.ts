@@ -3,6 +3,7 @@ jest.mock('../../services/common/logging')
 
 import { newSpecPage } from '@stencil/core/testing'
 import { getDataProvider } from '../../services/data/factory'
+import { DATA_EVENTS } from '../../services/data/interfaces'
 import { XApp } from '../x-app/x-app'
 import { XDataProviderStorage } from './x-data-provider-storage'
 
@@ -41,6 +42,18 @@ describe('x-data-provider-storage', () => {
 
     const verified = await provider!.get('test')
     expect(verified).toBe(result)
+
+    let changed = false
+    provider?.changed.on(DATA_EVENTS.DataChanged, () => {
+      changed = true
+    })
+
+    page.win.dispatchEvent(new CustomEvent('storage'))
+    page.win.localStorage.setItem('fake', 'value')
+
+    await page.waitForChanges()
+
+    expect(changed).toBeTruthy()
 
     subject.remove()
   })

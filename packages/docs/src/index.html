@@ -124,7 +124,6 @@
       <nav class="navbar-nav bg-dark sticky-top">
 
         <div class="container container-fluid d-flex flex-row">
-          <a href="/fug">Bad</a>
           <x-app-link class="nav-link flex-fill tip ps-2"
             title="Get Started"
             href="/start">
@@ -652,13 +651,13 @@
     </x-app>
     <x-app-analytics id="analytics">
       <script>
-        analytics.addEventListener( 'x:analytics:event', ( e ) => {
+        analytics.addEventListener( 'event', ( e ) => {
           gtag( e.detail.key, e.detail.value )
         } )
-        analytics.addEventListener( 'x:analytics:page-view', ( e ) => {
+        analytics.addEventListener( 'page-view', ( e ) => {
           gtag( 'page_view', e.detail.pathname )
         } )
-        analytics.addEventListener( 'x:analytics:view-percentage', ( e ) => {
+        analytics.addEventListener( 'x:analytics:view-time', ( e ) => {
           gtag( e.detail.key, e.detail.value )
         } )
       </script>

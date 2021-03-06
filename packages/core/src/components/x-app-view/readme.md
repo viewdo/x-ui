@@ -100,6 +100,20 @@ Input-type elements (input, textarea and select) can specify a data expression f
 | `url` _(required)_    | `url`               | The url for this route, including the parent's routes.                                                                                                                                                                          | `string`                                             | `undefined` |
 
 
+## Methods
+
+### `getChildren() => Promise<{ activators: HTMLXActionActivatorElement[]; views: HTMLXAppViewElement[]; dos: HTMLXAppViewDoElement[]; }>`
+
+Return all child elements used for processing. This function is
+primarily meant for testing.
+
+#### Returns
+
+Type: `Promise<{ activators: HTMLXActionActivatorElement[]; views: HTMLXAppViewElement[]; dos: HTMLXAppViewDoElement[]; }>`
+
+
+
+
 ----------------------------------------------
 
 view.DO : Experience Platform

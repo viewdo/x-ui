@@ -72,7 +72,7 @@ describe('x-app-view-do', () => {
       html: `
       <x-app>
         <x-app-view url='/'>
-          <x-app-view-do url="/go">
+          <x-app-view-do url="go">
             <a x-next>Next</a>
           </x-app-view-do>
           <div slot="content">
@@ -105,13 +105,12 @@ describe('x-app-view-do', () => {
     </x-app>
     `)
 
-    const xui = page.body.querySelector('x-app')
-    expect(xui?.router.location.pathname).toBe('/go')
+    const router = page.body.querySelector('x-app')!.router
+    expect(router.location.pathname).toBe('/go')
 
-    const next = page.body.querySelector('a')
-    next!.click()
+    router.goToParentRoute()
 
-    expect(xui?.router.location.pathname).toBe('/')
+    expect(router.location.pathname).toBe('/')
 
     page.body.querySelector('x-app-view-do')!.remove()
     page.body.querySelector('x-app-view')!.remove()
@@ -136,21 +135,19 @@ describe('x-app-view-do', () => {
       </x-app>`,
     })
 
-    const router = page.body.querySelector('x-app')?.router
+    const router = page.body.querySelector('x-app')!.router
 
     await page.waitForChanges()
 
     expect(router!.location.pathname).toBe('/start/step-1')
 
-    const next1 = page.body.querySelector('a#s1') as HTMLAnchorElement
-    next1.click()
+    router.goToParentRoute()
 
     await page.waitForChanges()
 
     expect(router!.location.pathname).toBe('/start/step-2')
 
-    const next2 = page.body.querySelector('a#s2') as HTMLAnchorElement
-    next2.click()
+    router.goToParentRoute()
 
     await page.waitForChanges()
 
@@ -181,25 +178,23 @@ describe('x-app-view-do', () => {
       </x-app>`,
     })
 
-    const router = page.body.querySelector('x-app')?.router
+    const router = page.body.querySelector('x-app')!.router
 
     await page.waitForChanges()
 
     expect(router!.location.pathname).toBe('/start/step-1')
 
-    const next1 = page.body.querySelector('a#s1') as HTMLAnchorElement
-    next1.click()
+    router.goToParentRoute()
 
     await page.waitForChanges()
 
     expect(router!.location.pathname).toBe('/start/step-2')
 
-    const back = page.body.querySelector('a#b2') as HTMLAnchorElement
-    back.click()
+    router.goToRoute('step-1')
 
     await page.waitForChanges()
 
-    // expect(router!.location.pathname).toBe('/start/step-1')
+    expect(router!.location.pathname).toBe('/start/step-1')
 
     page.body
       .querySelectorAll('x-app-view-do')
@@ -454,8 +449,8 @@ describe('x-app-view-do', () => {
     <x-app>
       <x-app-view url="/">
         <x-app-view-do url="/test"
-          video-target="div#video">
-          <div id="video"></div>
+          video-target="#video">
+          <video id="video"></video>
         </x-app-view-do>
       </x-app-view>
     </x-app>

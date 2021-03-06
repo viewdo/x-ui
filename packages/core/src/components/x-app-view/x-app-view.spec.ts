@@ -2,7 +2,10 @@ jest.mock('../../services/common/logging')
 jest.mock('../../services/data/evaluate.worker')
 
 import { newSpecPage } from '@stencil/core/testing'
+import { DATA_EVENTS } from '../../services/data'
 import { actionBus, eventBus } from '../../services/events'
+import { XActionActivator } from '../x-action-activator/x-action-activator'
+import { XAction } from '../x-action/x-action'
 import { XApp } from '../x-app/x-app'
 import { XAppView } from './x-app-view'
 
@@ -154,5 +157,65 @@ describe('x-app-view', () => {
 
     const subject = page.body.querySelector('x-app')
     subject?.remove()
+  })
+
+  it('activates own actions, only', async () => {
+    const page = await newSpecPage({
+      components: [XApp, XAppView, XActionActivator, XAction],
+      url: 'http://test/',
+      html: `
+    <x-app>
+      <x-app-view url="/">
+        <x-app-view url="lev-1">
+          <x-app-view url="lev-2">
+            <x-action-activator activate="OnEnter">
+              <x-action topic="test" command="doit" data-data="level-3">
+              </x-action>
+            </x-action-activator>
+          </x-app-view>
+          <x-action-activator activate="OnEnter">
+            <x-action topic="test" command="doit" data-data="level-2">
+          </x-action>
+        </x-action-activator>
+        </x-app-view>
+        <x-action-activator activate="OnEnter">
+          <x-action topic="test" command="doit" data-data="level-1">
+          </x-action>
+        </x-action-activator>
+      </x-app-view>
+    </x-app>
+    `,
+      autoApplyChanges: true,
+    })
+
+    const views = page.body.querySelectorAll('x-app-view')
+
+    const root = views[0]
+    let children = await root.getChildren()
+
+    expect(children.activators.length).toBe(1)
+    expect(children.views.length).toBe(1)
+    expect(children.dos.length).toBe(0)
+
+    eventBus.emit(DATA_EVENTS.DataChanged, {
+      provider: 'fake',
+    })
+
+    const lev1 = views[1]
+    children = await lev1.getChildren()
+
+    expect(children.activators.length).toBe(1)
+    expect(children.views.length).toBe(1)
+    expect(children.dos.length).toBe(0)
+
+    const lev2 = views[2]
+    children = await lev2.getChildren()
+
+    expect(children.activators.length).toBe(1)
+    expect(children.views.length).toBe(0)
+    expect(children.dos.length).toBe(0)
+
+    views.forEach(e => e.remove())
+    page.body.querySelector('x-app')!.remove()
   })
 })

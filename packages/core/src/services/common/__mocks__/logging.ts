@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 export function log(_message: string) {
   //
 }

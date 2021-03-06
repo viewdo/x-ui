@@ -17,10 +17,11 @@ Using the [\<x-audio-enabled\>](/components/x-audio-enabled) component descripti
 
 ## Properties
 
-| Property  | Attribute  | Description                                        | Type                  | Default     |
-| --------- | ---------- | -------------------------------------------------- | --------------------- | ----------- |
-| `classes` | `classes`  | Any classes to add to the input-element directly.  | `string \| undefined` | `undefined` |
-| `inputId` | `input-id` | The id field to add to the input-element directly. | `string \| undefined` | `undefined` |
+| Property       | Attribute       | Description                                            | Type                  | Default     |
+| -------------- | --------------- | ------------------------------------------------------ | --------------------- | ----------- |
+| `classes`      | `classes`       | Any classes to add to the input-element directly.      | `string \| undefined` | `undefined` |
+| `dataProvider` | `data-provider` | The data provider to store the audio-enabled state in. | `string`              | `'storage'` |
+| `inputId`      | `input-id`      | The id field to add to the input-element directly.     | `string \| undefined` | `undefined` |
 
 
 ----------------------------------------------

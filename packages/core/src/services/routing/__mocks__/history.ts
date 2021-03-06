@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 export class MockHistory implements History {
   constructor(private window: Window) {}
   items: any[] = []

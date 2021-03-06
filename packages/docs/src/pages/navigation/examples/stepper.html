@@ -120,7 +120,7 @@
 
     <x-app app-title="My HTML App"
       start-url="/home"
-      root="/pages/navigation/examples/stepper.html#"
+      root="/pages/navigation/examples/stepper.html#/"
       class="container">
       <h1 class="mt-3">No-Code Stepper</h1>
       <x-app-view url="/home"
@@ -169,17 +169,21 @@
               <div slot="content"
                 class="form-group">
                 <label class="form-label"
-                  for="name">Nick Name</label>
-                <input type="text"
-                  required
-                  class="form-control mb-3"
-                  id="name"
-                  onblur="localStorage.setItem('nickname', this.value)"
-                  onchange="localStorage.setItem('nickname', this.value)"
-                  x-value-from="{{storage:nickname}}"
-                  tabindex="0" />
-                <a class="btn btn-primary"
-                  x-next="/survey/step-2"> Next </a>
+                  for="nickname">Nick Name</label>
+                <x-action-activator target-element="a">
+                  <x-action topic="data"
+                    command="set-data"
+                    data-provider="storage">
+                  </x-action>
+                  <input type="text"
+                    required
+                    class="form-control mb-3"
+                    id="nickname"
+                    x-value-from="{{storage:nickname}}"
+                    tabindex="0" />
+                  <a class="btn btn-primary"
+                    x-next="/survey/step-2"> Next </a>
+                </x-action-activator>
               </div>
             </x-app-view-do>
           </div>
@@ -208,16 +212,20 @@
               <div slot="content">
                 <label class="form-label"
                   for="show">TV Show</label>
-                <input type="text"
-                  required
-                  id="show"
-                  class="form-control mb-3"
-                  onblur="localStorage.setItem('show', this.value)"
-                  onchange="localStorage.setItem('show', this.value)"
-                  x-value-from="{{storage:show}}"
-                  tabindex="0" />
-                <a class="btn btn-primary"
-                  x-next="/survey/step-3">Next</a>
+                <x-action-activator target-element="a">
+                  <x-action topic="data"
+                    command="set-data"
+                    data-provider="storage">
+                  </x-action>
+                  <input type="text"
+                    required
+                    id="show"
+                    class="form-control mb-3"
+                    x-value-from="{{storage:show}}"
+                    tabindex="0" />
+                  <a class="btn btn-primary"
+                    x-next="/survey/step-3">Next</a>
+                </x-action-activator>
               </div>
             </x-app-view-do>
           </div>
@@ -244,16 +252,19 @@
               <div slot="content">
                 <label class="form-label"
                   for="show">Food or Snack</label>
-                <input type="text"
-                  required
-                  id="food"
-                  class="form-control mb-3"
-                  onblur="localStorage.setItem('food', this.value)"
-                  onchange="localStorage.setItem('food', this.value)"
-                  x-value-from="{{storage:food}}"
-                  tabindex="0" />
-                <a class="btn btn-primary"
-                  x-next>Next</a>
+                <x-action-activator target-element="a">
+                  <x-action topic="data"
+                    command="set-data"
+                    data-provider="storage">
+                    <input type="text"
+                      required
+                      id="food"
+                      class="form-control mb-3"
+                      x-value-from="{{storage:food}}"
+                      tabindex="0" />
+                    <a class="btn btn-primary"
+                      x-next>Next</a>
+                </x-action-activator>
               </div>
             </x-app-view-do>
           </div>
