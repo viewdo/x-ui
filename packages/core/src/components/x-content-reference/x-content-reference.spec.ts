@@ -17,10 +17,10 @@ describe('x-content-reference', () => {
   it('renders', async () => {
     const page = await newSpecPage({
       components: [XContentReference],
-      html: `<x-content-reference inline></x-content-reference>`,
+      html: `<x-content-reference inline defer-load></x-content-reference>`,
     })
     expect(page.root).toEqualHtml(`
-      <x-content-reference inline>
+      <x-content-reference inline defer-load>
       </x-content-reference>
     `)
   })

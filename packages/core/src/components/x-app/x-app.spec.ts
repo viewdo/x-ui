@@ -31,12 +31,12 @@ describe('x-app', () => {
   it('adds hidden to x-hide children', async () => {
     const page = await newSpecPage({
       components: [XApp],
-      html: `<x-app app-title="Hello"><div x-hide></div></x-app>`,
+      html: `<x-app app-title="Hello" debug><div x-hide></div></x-app>`,
     })
 
     await page.waitForChanges()
     expect(page.root).toEqualHtml(`
-    <x-app app-title="Hello">
+    <x-app app-title="Hello" debug>
       <div hidden></div>
     </x-app>
   `)

@@ -203,7 +203,7 @@ export function captureElementChildTimedNodes(
   const timedNodes: TimedNode[] = []
   rootElement
     .querySelectorAll('[x-in-time], [x-out-time]')
-    .forEach(element => {
+    ?.forEach(element => {
       const startAttribute = element.getAttribute('x-in-time')
       const start = startAttribute
         ? Number.parseFloat(startAttribute)
@@ -230,7 +230,7 @@ export function resolveElementChildTimedNodesByTime(
   duration: number,
   debug: boolean,
 ) {
-  timedNodes.forEach(node => {
+  timedNodes?.forEach(node => {
     if (
       node.start > -1 &&
       time >= node.start &&
@@ -304,8 +304,8 @@ export function resolveElementChildTimedNodesByTime(
   const timeValueElements = rootElement.querySelectorAll(
     '[x-time-to]',
   )
-  timeValueElements.forEach(el => {
-    const seconds = Math.floor(time)
+  timeValueElements?.forEach(el => {
+    const seconds = time
     const attributeName = el.getAttribute('x-time-to')
     if (attributeName) {
       el.setAttribute(attributeName, seconds.toString())
@@ -319,11 +319,11 @@ export function resolveElementChildTimedNodesByTime(
   const timePercentageValueElements = rootElement.querySelectorAll(
     '[x-percentage-to]',
   )
-  timePercentageValueElements.forEach(element => {
+  timePercentageValueElements?.forEach(element => {
     const attributeName = element.getAttribute('x-percentage-to')
     const percentage = time / duration
     if (attributeName) {
-      element.setAttribute(attributeName, percentage.toString())
+      element.setAttribute(attributeName, percentage.toFixed(2))
     } else {
       element.childNodes.forEach(cn => cn.remove())
       element.append(
@@ -337,7 +337,7 @@ export function restoreElementChildTimedNodes(
   rootElement: HTMLElement,
   timedNodes: TimedNode[],
 ) {
-  timedNodes.forEach(node => {
+  timedNodes?.forEach(node => {
     if (
       node.classIn &&
       node.element.classList.contains(node.classIn)
@@ -361,7 +361,7 @@ export function restoreElementChildTimedNodes(
   const timeValueElements = rootElement.querySelectorAll(
     '[x-time-to]',
   )
-  timeValueElements.forEach(el => {
+  timeValueElements?.forEach(el => {
     const attributeName = el.getAttribute('x-time-to')
     if (attributeName) {
       el.setAttribute(attributeName, '0')
@@ -375,7 +375,7 @@ export function restoreElementChildTimedNodes(
   const timePercentageValueElements = rootElement.querySelectorAll(
     '[x-percentage-to]',
   )
-  timePercentageValueElements.forEach(el => {
+  timePercentageValueElements?.forEach(el => {
     const attributeName = el.getAttribute('x-percentage-to')
     if (attributeName) {
       el.setAttribute(attributeName, '0')

@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 ;(self as any).importScripts(
   'https://cdn.jsdelivr.net/npm/remarkable@2.0.1/dist/remarkable.min.js',
 )

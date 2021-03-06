@@ -32,7 +32,7 @@ describe('audio-listener:', () => {
     events = []
     actionBus = new EventEmitter()
     eventBus = new EventEmitter()
-    listener = new AudioActionListener(page.win, eventBus, actionBus)
+    listener = new AudioActionListener(eventBus, actionBus)
 
     eventBus.on('*', (...args: any[]) => {
       events.push(...args)
@@ -352,57 +352,6 @@ describe('audio-listener:', () => {
 
     playing = listener.onDeck[AudioType.Sound]
     expect(playing).not.toBeNull()
-
-    listener.destroy()
-  })
-
-  it('set-mute: updates storage via listener', async () => {
-    page = await newSpecPage({
-      components: [],
-      html: `<div></div>`,
-    })
-
-    listener = new AudioActionListener(page.win, eventBus, actionBus)
-    listener.enable()
-
-    expect(page.win.localStorage.getItem(listener.enabledKey)).toBe(
-      'true',
-    )
-
-    listener.disable()
-
-    expect(page.win.localStorage.getItem(listener.enabledKey)).toBe(
-      'false',
-    )
-
-    listener.destroy()
-  })
-
-  it('set-mute: updates storage from action', async () => {
-    page = await newSpecPage({
-      components: [],
-      html: `<div></div>`,
-    })
-
-    listener = new AudioActionListener(page.win, eventBus, actionBus)
-
-    actionBus.emit(AUDIO_TOPIC, {
-      topic: AUDIO_TOPIC,
-      command: AUDIO_COMMANDS.Enable,
-    })
-
-    expect(page.win.localStorage.getItem(listener.enabledKey)).toBe(
-      'true',
-    )
-
-    actionBus.emit(AUDIO_TOPIC, {
-      topic: AUDIO_TOPIC,
-      command: AUDIO_COMMANDS.Disable,
-    })
-
-    expect(page.win.localStorage.getItem(listener.enabledKey)).toBe(
-      'false',
-    )
 
     listener.destroy()
   })

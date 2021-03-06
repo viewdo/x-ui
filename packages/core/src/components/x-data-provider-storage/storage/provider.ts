@@ -5,7 +5,9 @@ import {
 import { EventEmitter } from '../../../services/events/emitter'
 
 export class StorageProvider implements IDataProvider {
-  constructor(private readonly localStorage = window.localStorage) {
+  private readonly localStorage!: Storage
+  constructor(win: Window) {
+    this.localStorage = win.localStorage
     this.changed = new EventEmitter()
     window?.addEventListener(
       'storage',

@@ -17,25 +17,35 @@ Topic: `analytics`
 
 Sends the payload to the onEvent handler in x-analytics component.
 
-* **(key:value)[]**\
+- **(key:value)[]**\
   All key-values pairs are sent to the handler.
 
 ```html
 <x-action-activator activate="...">
-  <x-action topic="analytics" command="send-event" data-(key)="(value)"> </x-action>
+  <x-action
+    topic="analytics"
+    command="send-event"
+    data-(key)="(value)"
+  >
+  </x-action>
 </x-action-activator>
 ```
 
-### `send-view-percentage`
+### `send-view-time`
 
 Sends the payload to the onEvent handler in x-analytics component.
 
-* **(key-values)[]**\
+- **(key-values)[]**\
   All key-values pairs are sent to the handler.
 
 ```html
 <x-action-activator activate="...">
-  <x-action topic="analytics" command="send-view-percentage" data-value="(value)"> </x-action>
+  <x-action
+    topic="analytics"
+    command="send-view-time"
+    data-value="(value)"
+  >
+  </x-action>
 </x-action-activator>
 ```
 
@@ -43,11 +53,16 @@ Sends the payload to the onEvent handler in x-analytics component.
 
 Sends the payload to the onEvent handler in x-analytics component.
 
-* **(key:value)[]**\
+- **(key:value)[]**\
   All key-values pairs are sent to the handler.
 
 ```html
 <x-action-activator activate="...">
-  <x-action topic="analytics" command="send-page-view" data-value="(page)"> </x-action>
+  <x-action
+    topic="analytics"
+    command="send-page-view"
+    data-value="(page)"
+  >
+  </x-action>
 </x-action-activator>
 ```

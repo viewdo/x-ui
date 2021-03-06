@@ -110,11 +110,12 @@ export class RouterService {
       startUrl.length > 1 &&
       this.location?.pathname === '/'
     ) {
-      this.replaceWithRoute(startUrl)
+      this.replaceWithRoute(stripBasename(startUrl, this.root))
     }
   }
 
   goBack() {
+    this.location.pathname = this.history.previousLocation.pathname
     this.history.goBack()
   }
 
@@ -151,11 +152,13 @@ export class RouterService {
   }
 
   goToRoute(path: string) {
-    this.history.push(stripBasename(path, this.root))
+    const pathName = resolvePathname(path, this.location.pathname)
+    this.location.pathname = pathName
+    this.history.push(pathName)
   }
 
   replaceWithRoute(path: string) {
-    const newPath = stripBasename(path, this.root)
+    const newPath = resolvePathname(path, this.location.pathname)
     this.location.pathname = newPath
     this.history.replace(newPath)
   }

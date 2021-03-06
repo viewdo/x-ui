@@ -1,74 +1,39 @@
 jest.mock('../../services/common/logging')
-jest.mock('../../services/audio/actions')
+jest.mock('../../services/data/evaluate.worker')
+jest.mock('../../services/audio/audio')
 
 import { newSpecPage } from '@stencil/core/testing'
 import {
+  AudioInfo,
   audioState,
   audioStore,
-  AudioTrack,
   AudioType,
   DiscardStrategy,
+  LoadStrategy,
 } from '../../services/audio'
 import { actionBus, eventBus } from '../../services/events'
 import { interfaceStore } from '../../services/interface'
 import { XAudioPlayer } from './x-audio-player'
 
-type Audio = {
-  play: () => number
-  pause: () => any
-  fade: () => any
-  stop: () => any
-  mute: () => any
-  state: () => string
-  seek: (_time: number) => any
-  volume: (_value: number) => any
-}
-
 describe('x-audio-player', () => {
-  let data
-
-  let audio: Audio
-  beforeAll(() => {
+  let data: AudioInfo | any
+  beforeEach(() => {
     data = {
       src: '/fake/path.mp3',
       trackId: 'queued-music-1',
       type: AudioType.Music,
       discard: DiscardStrategy.Route,
       loop: true,
+      mode: LoadStrategy.Load,
     }
+  })
+
+  afterEach(async () => {
     actionBus.removeAllListeners()
     eventBus.removeAllListeners()
-
-    audio = {
-      play: () => 0,
-      pause: () => this,
-      fade: () => this,
-      stop: () => this,
-      mute: () => this,
-      state: () => 'loaded',
-      seek: (_time: number) => this,
-      volume: (_value: number) => this,
-    }
-
     interfaceStore.dispose()
     audioStore.dispose()
   })
-
-  //@ts-ignore
-  AudioTrack.createSound = (
-    info: AudioInfo,
-    onload: any,
-    onend: any,
-    onerror: any,
-  ) => {
-    const instance = Object.assign(info, audio, {
-      onload,
-      onend,
-      onerror,
-    })
-    onload()
-    return instance as Audio
-  }
 
   it('renders', async () => {
     const page = await newSpecPage({
@@ -89,19 +54,26 @@ describe('x-audio-player', () => {
       components: [XAudioPlayer],
       html: `<x-audio-player></x-audio-player>`,
     })
+
     expect(page.root).toEqualHtml(`
     <x-audio-player>
       <mock:shadow-root></mock:shadow-root>
     </x-audio-player>
     `)
 
+    audioState.hasAudio = false
+    audioState.enabled = false
     await page.waitForChanges()
 
-    audioState.hasAudio = true
+    // actionBus.emit(AUDIO_TOPIC, {
+    //   topic: AUDIO_TOPIC,
+    //   command: AUDIO_COMMANDS.Load,
+    //   data,
+    // })
 
     await page.waitForChanges()
 
-    audioState.enabled = true
+    // expect(audioState.hasAudio).toBe(true)
   })
 
   it('reacts to listener changes', async () => {

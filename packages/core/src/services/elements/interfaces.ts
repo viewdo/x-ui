@@ -1,12 +1,12 @@
 export const ELEMENTS_TOPIC = 'elements'
 
 export enum ELEMENTS_COMMANDS {
-  ElementToggleClass = 'element-toggle-class',
-  ElementAddClasses = 'element-add-classes',
-  ElementRemoveClasses = 'element-remove-classes',
-  ElementSetAttribute = 'element-set-attribute',
-  ElementRemoveAttribute = 'element-remove-attribute',
-  ElementCallMethod = 'element-call-method',
+  ToggleClass = 'toggle-class',
+  AddClasses = 'add-classes',
+  RemoveClasses = 'remove-classes',
+  SetAttribute = 'set-attribute',
+  RemoveAttribute = 'remove-attribute',
+  CallMethod = 'call-method',
 }
 
 export enum TIMER_EVENTS {

@@ -1,7 +1,6 @@
-import { MockWindow } from '@stencil/core/mock-doc'
 import { Howler } from 'howler'
 import { debugIf } from '../common'
-import { EventAction, EventEmitter } from '../events'
+import { EventAction, IEventEmitter } from '../events'
 import { ROUTE_EVENTS } from '../routing'
 import { AudioTrack } from './audio'
 import { AudioInfo } from './audio-info'
@@ -14,27 +13,30 @@ import {
   DiscardStrategy,
   LoadStrategy,
 } from './interfaces'
-import { audioState, onAudioStateChange } from './state'
+import { audioState } from './state'
 import { hasPlayed } from './tracked'
 
 export class AudioActionListener {
-  public enabledKey = 'audio'
   private readonly actionSubscription: () => void
   private readonly eventSubscription: () => void
-  private readonly disposeMuteSubscription!: () => void
-  public readonly onDeck: Record<string, AudioTrack | null>
-  public readonly queued: Record<string, AudioTrack[]>
-  public readonly loaded: Record<string, AudioTrack[]>
+  public onDeck: Record<string, AudioTrack | null> = {
+    [AudioType.Music]: null,
+    [AudioType.Sound]: null,
+  }
+  public queued: Record<string, AudioTrack[]> = {
+    [AudioType.Music]: [],
+    [AudioType.Sound]: [],
+  }
+  public loaded: Record<string, AudioTrack[]> = {
+    [AudioType.Music]: [],
+    [AudioType.Sound]: [],
+  }
 
   constructor(
-    win: Window | MockWindow,
-    private readonly eventBus: EventEmitter,
-    private readonly actionBus: EventEmitter,
+    private readonly eventBus: IEventEmitter,
+    private readonly actionBus: IEventEmitter,
     private readonly debug: boolean = false,
   ) {
-    audioState.enabled =
-      win.localStorage?.getItem(this.enabledKey) == 'true' || false
-
     this.actionSubscription = this.actionBus.on(
       AUDIO_TOPIC,
       (ev: EventAction<any>) => {
@@ -46,14 +48,6 @@ export class AudioActionListener {
       },
     )
 
-    this.disposeMuteSubscription = onAudioStateChange(
-      'enabled',
-      m => {
-        win.localStorage?.setItem(this.enabledKey, m.toString())
-        eventBus.emit(AUDIO_TOPIC, AUDIO_EVENTS.SoundChanged, m)
-      },
-    )
-
     this.eventSubscription = this.eventBus.on(
       ROUTE_EVENTS.RouteChanged,
       () => {
@@ -61,21 +55,6 @@ export class AudioActionListener {
         this.routeChanged()
       },
     )
-
-    this.onDeck = {
-      [AudioType.Music]: null,
-      [AudioType.Sound]: null,
-    }
-
-    this.queued = {
-      [AudioType.Music]: [],
-      [AudioType.Sound]: [],
-    }
-
-    this.loaded = {
-      [AudioType.Music]: [],
-      [AudioType.Sound]: [],
-    }
   }
 
   // Public Members
@@ -408,6 +387,5 @@ export class AudioActionListener {
     this.pause()
     this.eventSubscription()
     this.actionSubscription()
-    this.disposeMuteSubscription()
   }
 }

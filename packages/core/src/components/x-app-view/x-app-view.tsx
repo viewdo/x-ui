@@ -4,6 +4,7 @@ import {
   forceUpdate,
   h,
   Host,
+  Method,
   Prop,
   State,
 } from '@stencil/core'
@@ -115,6 +116,26 @@ export class XAppView {
    * Turn on debug statements for load, update and render events.
    */
   @Prop() debug = false
+
+  /**
+   * Return all child elements used for processing. This function is
+   * primarily meant for testing.
+   *
+   */
+  @Method({
+    name: 'getChildren',
+  })
+  public async getChildren(): Promise<{
+    activators: HTMLXActionActivatorElement[]
+    views: HTMLXAppViewElement[]
+    dos: HTMLXAppViewDoElement[]
+  }> {
+    return {
+      activators: this.actionActivators,
+      views: this.childViews,
+      dos: this.childViewDos,
+    }
+  }
 
   private get parent() {
     return this.el.parentElement?.closest('x-app-view')
@@ -292,7 +313,7 @@ export class XAppView {
 
   disconnectedCallback() {
     this.dataSubscription?.call(this)
-    this.route.destroy()
+    this.route?.destroy()
   }
 
   render() {

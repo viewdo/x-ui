@@ -2,6 +2,7 @@ import { hasToken, resolveTokens } from '../data/tokens'
 import { resolveChildElementXAttributes } from '../elements/functions'
 import { ActionActivationStrategy, IEventEmitter } from '../events'
 import {
+  IRoute,
   MatchResults,
   RouteViewOptions,
   ROUTE_EVENTS,
@@ -10,7 +11,7 @@ import { RouterService } from './router'
 import { isAbsolute } from './utils/location'
 import { matchesAreEqual } from './utils/path-match'
 
-export class Route {
+export class Route implements IRoute {
   private readonly subscription: () => void
   public match: MatchResults | null = null
   public scrollOnNextRender = false
@@ -124,6 +125,14 @@ export class Route {
       }
     }
     this.router.adjustTitle(pageTitle)
+  }
+
+  public goBack() {
+    this.router.history.goBack()
+  }
+
+  public goToParentRoute() {
+    this.router.goToParentRoute()
   }
 
   public goToRoute(path: string) {

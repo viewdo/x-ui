@@ -23,7 +23,7 @@ import {
  */
 @Component({
   tag: 'x-action-activator',
-  shadow: true,
+  shadow: false,
 })
 export class XActionActivator {
   @State() actions: Array<EventAction<unknown>> = []

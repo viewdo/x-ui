@@ -46,7 +46,7 @@ describe('elements-actions:', () => {
 
     actionBus.emit(ELEMENTS_TOPIC, {
       topic: ELEMENTS_TOPIC,
-      command: ELEMENTS_COMMANDS.ElementToggleClass,
+      command: ELEMENTS_COMMANDS.ToggleClass,
       data: {
         selector: 'div',
         className: 'test',
@@ -61,7 +61,7 @@ describe('elements-actions:', () => {
     subject.destroy()
   })
 
-  it('elementAddClasses, elementRemoveClasses', async () => {
+  it('AddClasses, RemoveClasses', async () => {
     const page = await newSpecPage({
       components: [],
       html: `<div></div>`,
@@ -71,7 +71,7 @@ describe('elements-actions:', () => {
 
     actionBus.emit(ELEMENTS_TOPIC, {
       topic: ELEMENTS_TOPIC,
-      command: ELEMENTS_COMMANDS.ElementAddClasses,
+      command: ELEMENTS_COMMANDS.AddClasses,
       data: {
         selector: 'div',
         classes: 'test',
@@ -88,7 +88,7 @@ describe('elements-actions:', () => {
 
     actionBus.emit(ELEMENTS_TOPIC, {
       topic: ELEMENTS_TOPIC,
-      command: ELEMENTS_COMMANDS.ElementRemoveClasses,
+      command: ELEMENTS_COMMANDS.RemoveClasses,
       data: {
         selector: 'div',
         classes: 'test',
@@ -102,7 +102,7 @@ describe('elements-actions:', () => {
     subject.destroy()
   })
 
-  it('elementSetAttribute, elementRemoveAttribute', async () => {
+  it('setAttribute, removeAttribute', async () => {
     const page = await newSpecPage({
       components: [],
       html: `<div></div>`,
@@ -112,7 +112,7 @@ describe('elements-actions:', () => {
 
     actionBus.emit(ELEMENTS_TOPIC, {
       topic: ELEMENTS_TOPIC,
-      command: ELEMENTS_COMMANDS.ElementSetAttribute,
+      command: ELEMENTS_COMMANDS.SetAttribute,
       data: {
         selector: 'div',
         attribute: 'test',
@@ -129,7 +129,7 @@ describe('elements-actions:', () => {
 
     actionBus.emit(ELEMENTS_TOPIC, {
       topic: ELEMENTS_TOPIC,
-      command: ELEMENTS_COMMANDS.ElementRemoveAttribute,
+      command: ELEMENTS_COMMANDS.RemoveAttribute,
       data: {
         selector: 'div',
         attribute: 'test',
@@ -143,7 +143,7 @@ describe('elements-actions:', () => {
     subject.destroy()
   })
 
-  it('interface listener: ElementAddClasses / ElementRemoveClasses', async () => {
+  it('interface listener: AddClasses / RemoveClasses', async () => {
     const fakeWindow = new MockWindow(
       '<html><body><h1>Hello</h1></body></html>',
     )
@@ -157,7 +157,7 @@ describe('elements-actions:', () => {
 
     actionBus.emit(ELEMENTS_TOPIC, {
       topic: ELEMENTS_TOPIC,
-      command: ELEMENTS_COMMANDS.ElementAddClasses,
+      command: ELEMENTS_COMMANDS.AddClasses,
       data: {
         selector: 'h1',
         classes: 'test',
@@ -172,7 +172,7 @@ describe('elements-actions:', () => {
 
     actionBus.emit(ELEMENTS_TOPIC, {
       topic: ELEMENTS_TOPIC,
-      command: ELEMENTS_COMMANDS.ElementRemoveClasses,
+      command: ELEMENTS_COMMANDS.RemoveClasses,
       data: {
         selector: 'h1',
         classes: 'test',
@@ -198,7 +198,7 @@ describe('elements-actions:', () => {
 
     actionBus.emit(ELEMENTS_TOPIC, {
       topic: ELEMENTS_TOPIC,
-      command: ELEMENTS_COMMANDS.ElementToggleClass,
+      command: ELEMENTS_COMMANDS.ToggleClass,
       data: {
         selector: 'h1',
         className: 'test',
@@ -213,7 +213,7 @@ describe('elements-actions:', () => {
 
     actionBus.emit(ELEMENTS_TOPIC, {
       topic: ELEMENTS_TOPIC,
-      command: ELEMENTS_COMMANDS.ElementToggleClass,
+      command: ELEMENTS_COMMANDS.ToggleClass,
       data: {
         selector: 'h1',
         className: 'test',
@@ -225,7 +225,7 @@ describe('elements-actions:', () => {
     expect(fakeWindow.document.body.innerHTML).toBe('<h1>Hello</h1>')
   })
 
-  it('interface listener: ElementSetAttribute / ElementRemoveAttribute', async () => {
+  it('interface listener: SetAttribute / RemoveAttribute', async () => {
     const fakeWindow = new MockWindow(
       '<html><body><h1>Hello</h1></body></html>',
     )
@@ -239,7 +239,7 @@ describe('elements-actions:', () => {
 
     actionBus.emit(ELEMENTS_TOPIC, {
       topic: ELEMENTS_TOPIC,
-      command: ELEMENTS_COMMANDS.ElementSetAttribute,
+      command: ELEMENTS_COMMANDS.SetAttribute,
       data: {
         selector: 'h1',
         attribute: 'hidden',
@@ -252,7 +252,7 @@ describe('elements-actions:', () => {
 
     actionBus.emit(ELEMENTS_TOPIC, {
       topic: ELEMENTS_TOPIC,
-      command: ELEMENTS_COMMANDS.ElementSetAttribute,
+      command: ELEMENTS_COMMANDS.SetAttribute,
       data: {
         selector: 'h1',
         attribute: 'hidden',
@@ -266,7 +266,7 @@ describe('elements-actions:', () => {
 
     actionBus.emit(ELEMENTS_TOPIC, {
       topic: ELEMENTS_TOPIC,
-      command: ELEMENTS_COMMANDS.ElementRemoveAttribute,
+      command: ELEMENTS_COMMANDS.RemoveAttribute,
       data: {
         selector: 'h1',
         attribute: 'hidden',
@@ -295,7 +295,7 @@ describe('elements-actions:', () => {
 
     actionBus.emit(ELEMENTS_TOPIC, {
       topic: ELEMENTS_TOPIC,
-      command: ELEMENTS_COMMANDS.ElementCallMethod,
+      command: ELEMENTS_COMMANDS.CallMethod,
       data: {
         selector: 'button',
         method: 'click',

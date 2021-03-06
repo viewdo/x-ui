@@ -51,7 +51,7 @@ export class XContentReference {
   private async getStylePromise(element: HTMLHeadElement) {
     if (this.styleSrc && !hasReference(this.styleSrc)) {
       const url = this.styleSrc
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
         const registered = () => {
           markReference(url)
           resolve({})
@@ -60,11 +60,7 @@ export class XContentReference {
         link.href = url
         link.rel = 'stylesheet'
         link.addEventListener('load', () => registered())
-        try {
-          element.append(link)
-        } catch (error) {
-          reject(error)
-        }
+        element.append(link)
         setTimeout(() => registered(), 500)
       })
     }
@@ -74,7 +70,7 @@ export class XContentReference {
     // Make the style reference
     if (this.scriptSrc && !hasReference(this.scriptSrc)) {
       const url = this.scriptSrc
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
         const registered = () => {
           markReference(url)
           resolve({})
@@ -89,11 +85,7 @@ export class XContentReference {
 
         script.addEventListener('load', () => registered())
 
-        try {
-          element.append(script)
-        } catch (error) {
-          reject(error)
-        }
+        element.append(script)
         setTimeout(() => registered(), 500)
       })
     }

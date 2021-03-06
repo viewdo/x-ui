@@ -25,10 +25,7 @@ import { actionBus, eventBus } from '../../services/events'
 export class XAudioPlayer {
   private listener!: AudioActionListener
   private listenerSubscription!: () => void
-  private muteSubscription!: () => void
-
   @Element() el!: HTMLXAudioPlayerElement
-
   @State() hasAudio = false
   @State() isPlaying = false
 
@@ -53,7 +50,6 @@ export class XAudioPlayer {
     debugIf(this.debug, 'x-audio-player: loading')
 
     this.listener = new AudioActionListener(
-      window,
       eventBus,
       actionBus,
       this.debug,
@@ -71,7 +67,6 @@ export class XAudioPlayer {
   disconnectedCallback() {
     audioState.hasAudio = false
     this.listenerSubscription?.call(this)
-    this.muteSubscription?.call(this)
     this.listener?.destroy()
   }
 

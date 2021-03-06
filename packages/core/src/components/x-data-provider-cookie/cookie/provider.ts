@@ -6,7 +6,8 @@ import { EventEmitter } from '../../../services/events/emitter'
 import { getCookie, setCookie } from './utils'
 
 export class CookieProvider implements IDataProvider {
-  constructor(private readonly document = window.document) {
+  changed: EventEmitter
+  constructor(private readonly document: Document) {
     this.changed = new EventEmitter()
   }
 
@@ -16,8 +17,8 @@ export class CookieProvider implements IDataProvider {
 
   async set(key: string, value: any) {
     setCookie(this.document, key, value, { sameSite: 'strict' })
-    this.changed.emit(DATA_EVENTS.DataChanged)
+    this.changed.emit(DATA_EVENTS.DataChanged, {
+      provider: 'cookie',
+    })
   }
-
-  changed: EventEmitter
 }

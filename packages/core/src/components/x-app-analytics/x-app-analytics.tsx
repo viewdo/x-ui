@@ -20,7 +20,7 @@ export class XAppAnalytics {
    * Raised analytics events.
    */
   @Event({
-    eventName: 'x:analytics:event',
+    eventName: 'event',
     composed: false,
     cancelable: false,
     bubbles: false,
@@ -42,19 +42,19 @@ export class XAppAnalytics {
    * View percentage views.
    */
   @Event({
-    eventName: 'x:analytics:view-percentage',
+    eventName: 'view-time',
     composed: false,
     cancelable: false,
     bubbles: false,
   })
-  viewPercentage!: EventEmitter<any>
+  viewTime!: EventEmitter<any>
 
   componentWillLoad() {
     this.listener = new AnalyticsActionListener(actionBus, eventBus)
     this.listener.handleEvent = e => this.event.emit(e)
     this.listener.handlePageView = (e: LocationSegments) =>
       this.pageView.emit(`${e.pathname}?${e.search}`)
-    this.listener.handleViewTime = e => this.viewPercentage.emit(e)
+    this.listener.handleViewTime = e => this.viewTime.emit(e)
   }
 
   disconnectedCallback() {

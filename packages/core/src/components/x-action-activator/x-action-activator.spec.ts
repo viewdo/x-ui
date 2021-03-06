@@ -20,13 +20,13 @@ describe('x-action-activator', () => {
   it('renders', async () => {
     const page = await newSpecPage({
       components: [XActionActivator],
-      html: `<x-action-activator></x-action-activator>`,
+      html: `<x-action-activator>
+              <p>hello</p>
+              </x-action-activator>`,
     })
     expect(page.root).toEqualHtml(
       `<x-action-activator>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
+      <p>hello</p>
       </x-action-activator>`,
     )
   })
@@ -80,6 +80,8 @@ describe('x-action-activator', () => {
     expect(command).toBe('pass')
 
     button?.click()
+
+    activator?.remove()
   })
 
   it('captures child input values', async () => {
@@ -145,6 +147,8 @@ describe('x-action-activator', () => {
     await page.waitForChanges()
 
     expect(command).toBe('pass')
+
+    activator?.remove()
   })
 
   it('does not capture if no element exists', async () => {
@@ -172,5 +176,7 @@ describe('x-action-activator', () => {
     await page.waitForChanges()
 
     expect(command).toBeNull()
+
+    activator?.remove()
   })
 })

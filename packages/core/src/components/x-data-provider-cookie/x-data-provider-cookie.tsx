@@ -3,9 +3,9 @@ import {
   Element,
   Event,
   EventEmitter,
-  forceUpdate,
   h,
   Host,
+  Method,
   Prop,
   State,
 } from '@stencil/core'
@@ -14,7 +14,6 @@ import {
   DataProviderRegistration,
   DATA_COMMANDS,
   DATA_TOPIC,
-  evaluatePredicate,
   IDataProvider,
 } from '../../services/data'
 import { EventAction } from '../../services/events'
@@ -30,26 +29,20 @@ import { CookieProvider } from './cookie'
 @Component({
   tag: 'x-data-provider-cookie',
   shadow: true,
-  styles: `:host {display:block;}`,
+  styles: `:host {display:block; display:contents;}`,
 })
 export class XDataProviderCookie {
   private customProvider!: IDataProvider
+  private consentKey = 'consent'
   @Element() el!: HTMLXDataProviderCookieElement
 
-  @State() hide?: boolean
-
-  /**
-   * An expression that tells this component how to determine if
-   * the user has previously consented.
-   * {{{storage:consented}}}
-   */
-  @Prop() hideWhen?: string
+  @State() hide: boolean = false
 
   /**
    * When skipConsent is true, the accept-cookies banner will not
    * be displayed before accessing cookie-data.
    */
-  @Prop() skipConsent = false
+  @Prop() skipConsent: boolean = false
 
   /**
    * This event is raised when the consents to cookies.
@@ -62,11 +55,13 @@ export class XDataProviderCookie {
   })
   didConsent!: EventEmitter<CookieConsent>
 
-  private get consentKey() {
-    return 'consent'
-  }
-
-  private registerProvider() {
+  /**
+   * Immediately register the provider.
+   */
+  @Method({
+    name: 'registerProvider',
+  })
+  public async registerProvider() {
     const customEvent = new CustomEvent<
       EventAction<DataProviderRegistration>
     >('x:actions', {
@@ -79,58 +74,58 @@ export class XDataProviderCookie {
         },
       },
     })
-    this.el.ownerDocument.body.dispatchEvent(customEvent)
+    await this.customProvider.set(this.consentKey, true.toString())
+    this.didConsent.emit({ consented: true })
+    this.hide = true
+    return this.el.ownerDocument.body.dispatchEvent(customEvent)
   }
 
   async componentWillLoad() {
-    this.hide = false
-    if (this.hideWhen) {
-      this.hide = await evaluatePredicate(this.hideWhen)
+    this.customProvider = new CookieProvider(this.el.ownerDocument)
+
+    if (this.skipConsent) {
+      this.registerProvider()
+      this.hide = true
       return
     }
 
-    this.customProvider = new CookieProvider()
     const consented = await this.customProvider.get(this.consentKey)
     if (consented != null) {
       this.hide = true
       if (consented == 'true') this.registerProvider()
-    } else if (this.skipConsent) {
+    }
+  }
+
+  private async handleConsentResponse(
+    ev: MouseEvent,
+    consented: boolean,
+  ) {
+    ev.preventDefault()
+    if (consented) {
+      await this.registerProvider()
+    } else {
       this.hide = true
     }
-  }
-
-  private onAccept = async (ev: MouseEvent) => {
-    ev.preventDefault()
-    await this.handleConsentResponse(true)
-  }
-
-  private onReject = async (ev: MouseEvent) => {
-    ev.preventDefault()
-    await this.handleConsentResponse(false)
-  }
-
-  private async handleConsentResponse(consented: boolean) {
-    if (consented) {
-      this.registerProvider()
-      await this.customProvider.set(
-        this.consentKey,
-        consented.toString(),
-      )
-    }
-
-    this.didConsent.emit({ consented })
-    this.hide = true
-    forceUpdate(this)
   }
 
   render() {
     return (
       <Host hidden={this.hide}>
         <slot />
-        <a onClick={async ev => await this.onAccept(ev)}>
+        <a
+          id="accept"
+          onClick={async ev =>
+            await this.handleConsentResponse(ev, true)
+          }
+        >
           <slot name="accept">Accept</slot>
         </a>
-        <a onClick={async ev => await this.onReject(ev)}>
+        <a
+          id="reject"
+          onClick={async ev =>
+            await this.handleConsentResponse(ev, false)
+          }
+        >
           <slot name="reject">Reject</slot>
         </a>
       </Host>

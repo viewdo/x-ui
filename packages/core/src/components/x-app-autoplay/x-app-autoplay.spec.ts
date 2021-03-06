@@ -1,8 +1,23 @@
 import { newSpecPage } from '@stencil/core/testing'
+import {
+  addDataProvider,
+  clearDataProviders,
+} from '../../services/data/factory'
+import { IDataProvider } from '../../services/data/interfaces'
+import { InMemoryProvider } from '../../services/data/providers'
 import { videoState } from '../../services/video'
 import { XAppAutoplay } from './x-app-autoplay'
-
 describe('x-app-autoplay', () => {
+  let storage: IDataProvider
+  beforeEach(async () => {
+    storage = new InMemoryProvider()
+    addDataProvider('storage', storage)
+  })
+
+  afterEach(async () => {
+    clearDataProviders()
+  })
+
   it('renders', async () => {
     const page = await newSpecPage({
       components: [XAppAutoplay],
@@ -33,6 +48,16 @@ describe('x-app-autoplay', () => {
         <input type="checkbox" >
       </x-app-autoplay>
     `)
+
+    let value = await storage.get('autoplay')
+
+    expect(value).toBe('false')
+
+    videoState.autoplay = true
+
+    value = await storage.get('autoplay')
+
+    expect(value).toBe('true')
 
     page.body.querySelector('x-app-autoplay')?.remove()
   })

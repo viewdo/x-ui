@@ -1,5 +1,12 @@
 import { Component, h, Host, Prop, State } from '@stencil/core'
-import { onVideoChange, videoState } from '../../services/video'
+import { getDataProvider } from '../../services/data/factory'
+import { IDataProvider } from '../../services/data/interfaces'
+import { eventBus } from '../../services/events'
+import {
+  onVideoChange,
+  videoState,
+  VIDEO_EVENTS,
+} from '../../services/video'
 
 /**
  * This component displays a checkbox to control the autoplay setting,
@@ -14,25 +21,40 @@ import { onVideoChange, videoState } from '../../services/video'
   shadow: false,
 })
 export class XAppAutoplay {
+  private enabledKey = 'autoplay'
   private checkbox?: HTMLInputElement
   private videoSubscription!: () => void
+  private storage: IDataProvider | null = null
   @State() autoPlay = true
 
   /**
-   *
+   * Any classes to add to the input-element directly.
    */
   @Prop() classes?: string
 
   /**
-   *
+   * The id field to add to the input-element directly.
    */
   @Prop() inputId?: string
 
-  componentWillLoad() {
+  /**
+   * The data provider to store the audio-enabled state in.
+   */
+  @Prop() dataProvider: string = 'storage'
+
+  async componentWillLoad() {
     this.autoPlay = videoState.autoplay
 
-    this.videoSubscription = onVideoChange('autoplay', a => {
+    this.storage = await getDataProvider(this.dataProvider)
+    if (this.storage) {
+      const autoplay = await this.storage.get(this.enabledKey)
+      videoState.autoplay = autoplay !== 'false'
+    }
+
+    this.videoSubscription = onVideoChange('autoplay', async a => {
       this.autoPlay = a
+      await this.storage?.set(this.enabledKey, a.toString())
+      eventBus?.emit(VIDEO_EVENTS.AutoPlayChanged, a)
     })
   }
 

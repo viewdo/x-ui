@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 ;(self as any).importScripts(
   'https://cdn.jsdelivr.net/npm/expr-eval@2.0.2/dist/bundle.min.js',
 )
