@@ -1,7 +1,6 @@
 import {
   Component,
   Element,
-  forceUpdate,
   h,
   Host,
   Prop,
@@ -10,6 +9,14 @@ import {
 import { eventBus } from '../../services/events'
 import { ROUTE_EVENTS } from '../../services/routing'
 import { RouterService } from '../../services/routing/router'
+
+/**
+ * This component should be placed at the end of the content,
+ * inside the x-app component. It shows up when no views
+ * above it resolve.
+ *
+ * @system routing
+ */
 @Component({
   tag: 'x-app-view-not-found',
   shadow: true,
@@ -17,6 +24,7 @@ import { RouterService } from '../../services/routing/router'
 })
 export class XAppViewNotFound {
   private routeSubscription!: () => void
+  private finalizeSubscription!: () => void
   @Element() el!: HTMLXAppViewNotFoundElement
   @State() show = false
 
@@ -56,16 +64,18 @@ export class XAppViewNotFound {
 
     this.router = this.routeContainer.router
 
-    this.routeSubscription = eventBus.on(
-      ROUTE_EVENTS.RouteChanged,
+    this.finalizeSubscription = eventBus.on(
+      ROUTE_EVENTS.Finalized,
       () => {
-        forceUpdate(this.el)
+        this.show = this.router.exactRoutes.length == 0
+        this.routeSubscription = eventBus.on(
+          ROUTE_EVENTS.RouteChanged,
+          () => {
+            this.show = this.router.exactRoutes.length == 0
+          },
+        )
       },
     )
-  }
-
-  componentWillRender() {
-    this.show = this.router.exactRoutes.length == 0
   }
 
   async componentDidRender() {
@@ -78,6 +88,7 @@ export class XAppViewNotFound {
   }
 
   disconnectedCallback() {
+    this.finalizeSubscription?.call(this)
     this.routeSubscription?.call(this)
   }
 

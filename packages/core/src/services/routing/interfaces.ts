@@ -8,6 +8,7 @@ export { LocationSegments }
 
 export enum ROUTE_EVENTS {
   RouteChanged = 'route-changed',
+  Finalized = 'finalized',
 }
 
 export type Prompt = (

@@ -18,6 +18,7 @@ const config: Config = {
   devServer: {
     openBrowser: false,
     reloadStrategy: 'pageReload',
+    gzip: true,
     port: 3333,
     root: '../../docs',
   },

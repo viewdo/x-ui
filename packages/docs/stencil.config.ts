@@ -12,6 +12,8 @@ const config: Config = {
     openBrowser: false,
     reloadStrategy: 'pageReload',
     port: 3002,
+    gzip: true,
+    experimentalDevModules: true,
     root: '../../docs',
   },
   outputTargets: [],
