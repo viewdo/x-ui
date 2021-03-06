@@ -60,8 +60,9 @@ describe('x-app-view-do', () => {
     </x-app>
     `)
 
-    const subject = page.body.querySelector('x-app')
-    subject?.remove()
+    page.body.querySelector('x-app-view-do')!.remove()
+    page.body.querySelector('x-app-view')!.remove()
+    page.body.querySelector('x-app')!.remove()
   })
 
   it('renders active', async () => {
@@ -112,7 +113,9 @@ describe('x-app-view-do', () => {
 
     expect(xui?.router.location.pathname).toBe('/')
 
-    xui?.remove()
+    page.body.querySelector('x-app-view-do')!.remove()
+    page.body.querySelector('x-app-view')!.remove()
+    page.body.querySelector('x-app')!.remove()
   })
 
   it('navigate two steps and back to home', async () => {
@@ -153,8 +156,11 @@ describe('x-app-view-do', () => {
 
     expect(router!.location.pathname).toBe('/start')
 
-    const subject = page.body.querySelector('x-app')
-    subject?.remove()
+    page.body
+      .querySelectorAll('x-app-view-do')
+      .forEach(e => e!.remove())
+    page.body.querySelector('x-app-view')!.remove()
+    page.body.querySelector('x-app')!.remove()
   })
 
   it('navigate forward, then back', async () => {
@@ -195,8 +201,11 @@ describe('x-app-view-do', () => {
 
     // expect(router!.location.pathname).toBe('/start/step-1')
 
-    const subject = page.body.querySelector('x-app')
-    subject?.remove()
+    page.body
+      .querySelectorAll('x-app-view-do')
+      .forEach(e => e!.remove())
+    page.body.querySelector('x-app-view')!.remove()
+    page.body.querySelector('x-app')!.remove()
   })
 
   it('hide if no router', async () => {
@@ -227,8 +236,7 @@ describe('x-app-view-do', () => {
     </x-app-view>
       `)
 
-    const subject = page.body.querySelector('x-app-vew')
-    subject?.remove()
+    page.body.querySelector('x-app-view')!.remove()
   })
 
   it('hide if no parent', async () => {
@@ -252,8 +260,7 @@ describe('x-app-view-do', () => {
       </x-app-view-do>
       `)
 
-    const subject = page.body.querySelector('x-app-view-do')
-    subject?.remove()
+    page.body.querySelector('x-app-view-do')!.remove()
   })
 
   it('renders remote content', async () => {
@@ -302,8 +309,11 @@ describe('x-app-view-do', () => {
       </x-app>
       `)
 
-    const subject = page.body.querySelector('x-app')
-    subject?.remove()
+    page.body
+      .querySelectorAll('x-app-view-do')
+      .forEach(e => e!.remove())
+    page.body.querySelector('x-app-view')!.remove()
+    page.body.querySelector('x-app')!.remove()
   })
 
   it('renders empty remote content', async () => {
@@ -346,9 +356,11 @@ describe('x-app-view-do', () => {
         </x-app-view>
       </x-app>
       `)
-
-    const subject = page.body.querySelector('x-app')
-    subject?.remove()
+    page.body
+      .querySelectorAll('x-app-view-do')
+      .forEach(e => e!.remove())
+    page.body.querySelector('x-app-view')!.remove()
+    page.body.querySelector('x-app')!.remove()
   })
 
   it('renders remote content with tokens replace', async () => {
@@ -425,8 +437,11 @@ describe('x-app-view-do', () => {
       </x-app>
       `)
 
-    const subject = page.body.querySelector('x-app')
-    subject?.remove()
+    page.body
+      .querySelectorAll('x-app-view-do')
+      .forEach(e => e!.remove())
+    page.body.querySelector('x-app-view')!.remove()
+    page.body.querySelector('x-app')!.remove()
   })
 
   it('uses internal video tag for time', async () => {
@@ -448,7 +463,10 @@ describe('x-app-view-do', () => {
 
     await page.waitForChanges()
 
-    const subject = page.body.querySelector('x-app')
-    subject?.remove()
+    page.body
+      .querySelectorAll('x-app-view-do')
+      .forEach(e => e!.remove())
+    page.body.querySelector('x-app-view')!.remove()
+    page.body.querySelector('x-app')!.remove()
   })
 })

@@ -17,21 +17,14 @@ export function ensureBasename(path: string, prefix: string) {
  * @param path
  * @param prefix
  */
-export const hasBasename = (path: string, prefix: string) =>
+export const hasBasename = (path: string, prefix: string = '/') =>
   path.startsWith(prefix) ||
   new RegExp(`^${prefix}(\\/|\\?|#|$)`, 'i').test(path)
 
-export const stripBasename = (
-  path: string,
-  prefix: string,
-  hash: boolean,
-) => {
+export const stripBasename = (path: string, prefix: string) => {
   let stripped = hasBasename(path, prefix)
     ? path.slice(prefix.length)
     : path
-  if (isFilename(path) || hash) {
-    return '#' + addLeadingSlash(stripped)
-  }
   return addLeadingSlash(stripped)
 }
 

@@ -20,6 +20,8 @@ import {
 import {
   addLeadingSlash,
   ensureBasename,
+  hasBasename,
+  isFilename,
   stripBasename,
 } from './utils/path'
 import { matchPath } from './utils/path-match'
@@ -29,7 +31,7 @@ export class RouterService {
   private readonly removeHandler!: () => void
   private listener!: NavigationActionListener
   public history: HistoryService
-
+  public routes: { [index: string]: Route } = {}
   constructor(
     private win: Window,
     private readonly writeTask: (t: RafCallback) => void,
@@ -39,9 +41,8 @@ export class RouterService {
     public appTitle: string = '',
     public transition: string = '',
     public scrollTopOffset = 0,
-    private useHash = false,
   ) {
-    this.history = new HistoryService(win, root, useHash)
+    this.history = new HistoryService(win, root)
     this.listener = new NavigationActionListener(
       this,
       eventBus,
@@ -79,8 +80,15 @@ export class RouterService {
     )
   }
 
-  adjustRootViewUrls(url: string, hash: boolean): string {
-    return stripBasename(url, this.root, hash)
+  adjustRootViewUrls(url: string): string {
+    let stripped =
+      this.root && hasBasename(url, this.root)
+        ? url.slice(this.root.length)
+        : url
+    if (isFilename(this.root)) {
+      return '#' + addLeadingSlash(stripped)
+    }
+    return addLeadingSlash(stripped)
   }
 
   viewsUpdated(options: RouteViewOptions = {}) {
@@ -143,11 +151,11 @@ export class RouterService {
   }
 
   goToRoute(path: string) {
-    this.history.push(stripBasename(path, this.root, this.useHash))
+    this.history.push(stripBasename(path, this.root))
   }
 
   replaceWithRoute(path: string) {
-    const newPath = stripBasename(path, this.root, this.useHash)
+    const newPath = stripBasename(path, this.root)
     this.location.pathname = newPath
     this.history.replace(newPath)
   }
@@ -166,6 +174,19 @@ export class RouterService {
 
   isModifiedEvent(ev: MouseEvent) {
     return ev.metaKey || ev.altKey || ev.ctrlKey || ev.shiftKey
+  }
+
+  public async adjustTitle(title: string) {
+    let pageTitle = title
+    if (this.win.document) {
+      if (pageTitle) {
+        this.win.document.title = `${pageTitle} | ${
+          this.appTitle || this.win.document.title
+        }`
+      } else if (this.appTitle) {
+        this.win.document.title = `${this.appTitle}`
+      }
+    }
   }
 
   captureInnerLinks(root: HTMLElement, fromPath?: string) {
@@ -187,6 +208,12 @@ export class RouterService {
           fromPath || this.location.pathname,
         )
       },
+    )
+  }
+
+  get exactRoutes() {
+    return Object.keys(this.routes).filter(
+      r => this.routes[r].match?.isExact,
     )
   }
 
@@ -223,7 +250,7 @@ export class RouterService {
     scrollTopOffset: number,
     matchSetter: (m: MatchResults | null) => void,
   ) {
-    return new Route(
+    const route = new Route(
       this.eventBus,
       this,
       routeElement,
@@ -233,6 +260,11 @@ export class RouterService {
       transition,
       scrollTopOffset,
       matchSetter,
+      (self: Route) => {
+        delete this.routes[self.path]
+      },
     )
+    this.routes[route.path] = route
+    return route
   }
 }

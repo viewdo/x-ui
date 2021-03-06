@@ -29,6 +29,7 @@ import {
   LocationSegments,
   RouterService,
 } from '../../services/routing'
+import { XAppViewNotFound } from '../x-app-view-not-found/x-app-view-not-found'
 
 /**
  * The root component is the base container for the view-engine and its
@@ -89,14 +90,6 @@ export class XApp {
    * routing, data and action systems.
    */
   @Prop() debug = false
-
-  /**
-   * Use hash routes to on the client-side. Default
-   * is to use folder-paths. This requires a smart
-   * server-side proxy that rewrites all requests to
-   * the HTML file.
-   */
-  @Prop() hash = false
 
   /**
    * Header height or offset for scroll-top on this
@@ -198,9 +191,16 @@ export class XApp {
       `x-app: found ${this.childViews.length} child views`,
     )
     this.childViews.forEach(v => {
-      v.url = this.router.adjustRootViewUrls(v.url, this.hash)
+      v.url = this.router.adjustRootViewUrls(v.url)
       v.transition = v.transition || this.transition
     })
+
+    const notFound = this.el.querySelector(
+      'x-app-view-not-found',
+    ) as XAppViewNotFound | null
+    if (notFound) {
+      notFound.transition = notFound.transition || this.transition
+    }
 
     this.addListener('data', new DataListener())
     this.addListener('interface', new InterfaceActionListener())

@@ -124,6 +124,7 @@
       <nav class="navbar-nav bg-dark sticky-top">
 
         <div class="container container-fluid d-flex flex-row">
+          <a href="/fug">Bad</a>
           <x-app-link class="nav-link flex-fill tip ps-2"
             title="Get Started"
             href="/start">
@@ -640,10 +641,12 @@
         </div>
       </x-app-view>
       <!-- Not Found Route -->
-      <x-app-view url="*"
-        exact
-        page-title="Page not Found"
-        content-src="/pages/404.html"> </x-app-view>
+      <x-app-view-not-found page-title="Page not Found">
+
+        <div class="container container-fluid mx-auto">
+          <h1>Not Found</h1>
+        </div>
+      </x-app-view-not-found>
       <x-data-provider-session></x-data-provider-session>
       <x-data-provider-storage></x-data-provider-storage>
     </x-app>

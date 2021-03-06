@@ -17,14 +17,14 @@ body {
   --primary-bg: #483f61;
   --content-max-width: 950px;
 
-  font-family: 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  font-family: 'Segoe UI', Helvetica, Arial, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   background-color: var(--background-color);
   color: var(--text-color);
   text-shadow: 0 0 0.5px var(--dark);
   max-width: 100vw;
   overflow-x: hidden;
 }
-
 
 body.dark {
   --primary: #ae9ae4;
@@ -42,15 +42,13 @@ body.dark {
   --bs-success: var(--success);
   --bs-info: var(--info);
   text-shadow: none;
-
 }
-
 
 body::-webkit-scrollbar {
-    width: 1em;
+  width: 1em;
 }
 body::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
 body::-webkit-scrollbar-thumb {
   background-color: var(--nav-bg);
@@ -276,7 +274,8 @@ x-app-link.text-white a:any-link {
   color: white;
 }
 
-x-app > x-app-view {
+x-app > x-app-view,
+x-app > x-app-view-not-found {
   max-width: var(--content-max-width);
   padding: var(--bs-gutter-x, 0.75rem);
   margin-right: auto !important;
@@ -317,7 +316,11 @@ x-app-view.active-route + x-app-view {
 }
 
 footer {
-  background-image: linear-gradient(to bottom, transparent, var(--background-color));
+  background-image: linear-gradient(
+    to bottom,
+    transparent,
+    var(--background-color)
+  );
   background-size: fill;
   position: sticky;
   z-index: 1;

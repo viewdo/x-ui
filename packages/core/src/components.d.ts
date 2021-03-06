@@ -8,6 +8,7 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { ActionActivationStrategy, ActionTopicType, EventAction } from "./services/events";
 import { RouterService } from "./services/routing";
 import { VisitStrategy } from "./services/navigation";
+import { RouterService as RouterService1 } from "./services/routing/router";
 import { DiscardStrategy, LoadStrategy } from "./services/audio";
 import { AUDIO_COMMANDS } from "./services/audio/interfaces";
 import { CookieConsent } from "./services/data";
@@ -66,10 +67,6 @@ export namespace Components {
           * Turn on debugging to get helpful messages from the routing, data and action systems.
          */
         "debug": boolean;
-        /**
-          * Use hash routes to on the client-side. Default is to use folder-paths. This requires a smart server-side proxy that rewrites all requests to the HTML file.
-         */
-        "hash": boolean;
         /**
           * The wait-time, in milliseconds to wait for un-registered data providers found in an expression. This is to accommodate a possible lag between evaluation before the first view-do 'when' predicate an the registration process.
          */
@@ -246,6 +243,24 @@ export namespace Components {
           * If present, the expression must evaluate to true for this route to be sequenced by the parent view. The existence of this value overrides the visit strategy
          */
         "when"?: string;
+    }
+    interface XAppViewNotFound {
+        /**
+          * The title for this view. This is prefixed before the app title configured in x-app
+         */
+        "pageTitle": string;
+        /**
+          * The router-service instance  (internal)
+         */
+        "router": RouterService;
+        /**
+          * Header height or offset for scroll-top on this view.
+         */
+        "scrollTopOffset": number;
+        /**
+          * Navigation transition between routes. This is a CSS animation class.
+         */
+        "transition"?: string;
     }
     interface XAudioEnabled {
         /**
@@ -567,6 +582,12 @@ declare global {
         prototype: HTMLXAppViewDoElement;
         new (): HTMLXAppViewDoElement;
     };
+    interface HTMLXAppViewNotFoundElement extends Components.XAppViewNotFound, HTMLStencilElement {
+    }
+    var HTMLXAppViewNotFoundElement: {
+        prototype: HTMLXAppViewNotFoundElement;
+        new (): HTMLXAppViewNotFoundElement;
+    };
     interface HTMLXAudioEnabledElement extends Components.XAudioEnabled, HTMLStencilElement {
     }
     var HTMLXAudioEnabledElement: {
@@ -668,6 +689,7 @@ declare global {
         "x-app-theme-dark": HTMLXAppThemeDarkElement;
         "x-app-view": HTMLXAppViewElement;
         "x-app-view-do": HTMLXAppViewDoElement;
+        "x-app-view-not-found": HTMLXAppViewNotFoundElement;
         "x-audio-enabled": HTMLXAudioEnabledElement;
         "x-audio-music-action": HTMLXAudioMusicActionElement;
         "x-audio-music-load": HTMLXAudioMusicLoadElement;
@@ -731,10 +753,6 @@ declare namespace LocalJSX {
           * Turn on debugging to get helpful messages from the routing, data and action systems.
          */
         "debug"?: boolean;
-        /**
-          * Use hash routes to on the client-side. Default is to use folder-paths. This requires a smart server-side proxy that rewrites all requests to the HTML file.
-         */
-        "hash"?: boolean;
         /**
           * These events are **`<x-app>`** command-requests for action handlers to perform tasks. Any handles should cancel the event.
          */
@@ -931,6 +949,24 @@ declare namespace LocalJSX {
           * If present, the expression must evaluate to true for this route to be sequenced by the parent view. The existence of this value overrides the visit strategy
          */
         "when"?: string;
+    }
+    interface XAppViewNotFound {
+        /**
+          * The title for this view. This is prefixed before the app title configured in x-app
+         */
+        "pageTitle"?: string;
+        /**
+          * The router-service instance  (internal)
+         */
+        "router": RouterService;
+        /**
+          * Header height or offset for scroll-top on this view.
+         */
+        "scrollTopOffset"?: number;
+        /**
+          * Navigation transition between routes. This is a CSS animation class.
+         */
+        "transition"?: string;
     }
     interface XAudioEnabled {
         /**
@@ -1189,6 +1225,7 @@ declare namespace LocalJSX {
         "x-app-theme-dark": XAppThemeDark;
         "x-app-view": XAppView;
         "x-app-view-do": XAppViewDo;
+        "x-app-view-not-found": XAppViewNotFound;
         "x-audio-enabled": XAudioEnabled;
         "x-audio-music-action": XAudioMusicAction;
         "x-audio-music-load": XAudioMusicLoad;
@@ -1220,6 +1257,7 @@ declare module "@stencil/core" {
             "x-app-theme-dark": LocalJSX.XAppThemeDark & JSXBase.HTMLAttributes<HTMLXAppThemeDarkElement>;
             "x-app-view": LocalJSX.XAppView & JSXBase.HTMLAttributes<HTMLXAppViewElement>;
             "x-app-view-do": LocalJSX.XAppViewDo & JSXBase.HTMLAttributes<HTMLXAppViewDoElement>;
+            "x-app-view-not-found": LocalJSX.XAppViewNotFound & JSXBase.HTMLAttributes<HTMLXAppViewNotFoundElement>;
             "x-audio-enabled": LocalJSX.XAudioEnabled & JSXBase.HTMLAttributes<HTMLXAudioEnabledElement>;
             "x-audio-music-action": LocalJSX.XAudioMusicAction & JSXBase.HTMLAttributes<HTMLXAudioMusicActionElement>;
             "x-audio-music-load": LocalJSX.XAudioMusicLoad & JSXBase.HTMLAttributes<HTMLXAudioMusicLoadElement>;

@@ -26,6 +26,7 @@ export class Route {
     public transition: string | null = null,
     public scrollTopOffset: number = 0,
     matchSetter: (m: MatchResults | null) => void = () => {},
+    private routeDestroy?: (self: Route) => void,
   ) {
     this.subscription = eventBus.on(ROUTE_EVENTS.RouteChanged, () => {
       this.previousMatch = this.match
@@ -116,21 +117,13 @@ export class Route {
   }
 
   public async adjustTitle() {
-    if (this.routeElement.ownerDocument) {
-      if (this.pageTitle) {
-        let { pageTitle } = this
-        if (hasToken(this.pageTitle)) {
-          pageTitle = await resolveTokens(this.pageTitle)
-        }
-
-        this.routeElement.ownerDocument.title = `${pageTitle} | ${
-          this.router.appTitle ||
-          this.routeElement.ownerDocument.title
-        }`
-      } else if (this.router.appTitle) {
-        this.routeElement.ownerDocument.title = `${this.router.appTitle}`
+    let { pageTitle } = this
+    if (this.pageTitle) {
+      if (hasToken(this.pageTitle)) {
+        pageTitle = await resolveTokens(this.pageTitle)
       }
     }
+    this.router.adjustTitle(pageTitle)
   }
 
   public goToRoute(path: string) {
@@ -166,5 +159,6 @@ export class Route {
 
   public destroy() {
     this.subscription()
+    this.routeDestroy?.call(this, this)
   }
 }

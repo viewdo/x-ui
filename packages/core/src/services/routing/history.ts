@@ -23,11 +23,7 @@ export class HistoryService {
   scrollHistory: ScrollHistory
   previousLocation!: LocationSegments
 
-  constructor(
-    public win: Window,
-    private basename: string,
-    private useHash: boolean = false,
-  ) {
+  constructor(public win: Window, private basename: string) {
     this.events = new EventEmitter()
     this.location = this.getDOMLocation(this.getHistoryState())
     this.previousLocation = this.location
@@ -57,7 +53,7 @@ export class HistoryService {
     )
 
     if (this.basename) {
-      path = stripBasename(path, this.basename, this.useHash)
+      path = stripBasename(path, this.basename)
     }
 
     return createLocation(path, state, key || createKey(6))

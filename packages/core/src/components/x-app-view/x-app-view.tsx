@@ -6,7 +6,6 @@ import {
   Host,
   Prop,
   State,
-  VNode,
 } from '@stencil/core'
 import { debugIf, slugify } from '../../services/common'
 import { warn } from '../../services/common/logging'
@@ -131,13 +130,6 @@ export class XAppView {
     ).filter(e => this.isChild(e))
   }
 
-  private isChild(element: HTMLElement) {
-    return (
-      element.parentElement?.closest('x-app-view') === this.el ||
-      (false && element.parentElement?.closest('x-view-do') == null)
-    )
-  }
-
   private get childViewDos(): HTMLXAppViewDoElement[] {
     return Array.from(
       this.el.querySelectorAll('x-app-view-do') || [],
@@ -148,6 +140,14 @@ export class XAppView {
     return Array.from(
       this.el.querySelectorAll('x-app-view') || [],
     ).filter(e => this.isChild(e))
+  }
+
+  private isChild(element: HTMLElement) {
+    return (
+      element.closest('x-app-view') == this.el ||
+      element.parentElement == this.el ||
+      element.parentElement?.closest('x-app-view') === this.el
+    )
   }
 
   componentWillLoad() {
@@ -295,13 +295,14 @@ export class XAppView {
     this.route.destroy()
   }
 
-  render(): VNode {
+  render() {
     debugIf(this.debug, `x-app-view: ${this.url} render`)
     replaceHtmlInElement(
       this.el,
       `#${this.contentKey}`,
       this.contentElement,
     )
+
     return (
       <Host>
         <slot />
