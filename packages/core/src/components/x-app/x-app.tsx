@@ -15,7 +15,6 @@ import { DataListener } from '../../services/data/actions'
 import { clearDataProviders } from '../../services/data/factory'
 import {
   ElementsActionListener,
-  elementsState,
   resolveChildElementXAttributes,
 } from '../../services/elements'
 import {
@@ -42,7 +41,7 @@ import { XAppViewNotFound } from '../x-app-view-not-found/x-app-view-not-found'
  */
 @Component({
   tag: 'x-app',
-  styleUrl: 'x-app.scss',
+  styleUrl: 'x-app.css',
   shadow: false,
 })
 export class XApp {
@@ -106,13 +105,6 @@ export class XApp {
    */
   @Prop() providerTimeout: number = 500
 
-  /**
-   * The interval, in milliseconds to use with the
-   * element-timer (used in place for a video)
-   * when timing animations in  x-app-view-do elements.
-   */
-  @Prop() animationInterval: number = 500
-
   @Listen('x:actions', {
     passive: true,
     target: 'body',
@@ -164,7 +156,6 @@ export class XApp {
 
     commonState.debug = this.debug
     commonState.providerTimeout = this.providerTimeout
-    elementsState.animationInterval = this.animationInterval
 
     this.actionsSubscription = actionBus.on('*', (_topic, args) => {
       this.actions.emit(args)

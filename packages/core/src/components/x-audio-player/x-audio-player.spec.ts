@@ -44,7 +44,6 @@ describe('x-audio-player', () => {
     await page.waitForChanges()
     expect(page.root).toEqualHtml(`
     <x-audio-player>
-      <mock:shadow-root></mock:shadow-root>
     </x-audio-player>
     `)
   })
@@ -57,7 +56,6 @@ describe('x-audio-player', () => {
 
     expect(page.root).toEqualHtml(`
     <x-audio-player>
-      <mock:shadow-root></mock:shadow-root>
     </x-audio-player>
     `)
 

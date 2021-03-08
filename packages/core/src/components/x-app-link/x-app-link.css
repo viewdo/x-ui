@@ -5,9 +5,9 @@ x-app-link {
 
 x-app-link[href] {
   cursor: pointer;
+}
 
-  a,
-  a:focus {
-    outline: none;
-  }
+x-app-link a,
+x-app-link a:focus {
+  outline: none;
 }

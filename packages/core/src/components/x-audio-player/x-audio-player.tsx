@@ -11,16 +11,20 @@ import { AudioActionListener } from '../../services/audio/actions'
 import { AUDIO_TOPIC } from '../../services/audio/interfaces'
 import { debugIf, warn } from '../../services/common'
 import { actionBus, eventBus } from '../../services/events'
+import { XContentReference } from '../x-content-reference/x-content-reference'
 
 /**
  * Use this element only once per page to enable audio features.
+ * It will add a CDN reference to Howler.js:
+ * <https://cdn.jsdelivr.net/npm/howler@2.2.1/dist/howler.core.min.js>
+ *
  * @system audio
  * @system presentation
  */
 @Component({
   tag: 'x-audio-player',
-  styleUrl: 'x-audio-player.scss',
-  shadow: true,
+  styleUrl: 'x-audio-player.css',
+  shadow: false,
 })
 export class XAudioPlayer {
   private listener!: AudioActionListener
@@ -77,23 +81,29 @@ export class XAudioPlayer {
       return <Host></Host>
     }
 
-    return (
-      <Host>
+    // eslint-disable-next-line @stencil/render-returns-host
+    return [
+      <XContentReference
+        scriptSrc={
+          'https://cdn.jsdelivr.net/npm/howler@2.2.1/dist/howler.core.min.js'
+        }
+      ></XContentReference>,
+      <Host hidden={this.display}>
         <i
           hidden={!this.isPlaying}
           onClick={() => {
             this.listener.pause()
           }}
-          class="ri-pause-fill fs-2"
+          class="ri-pause-line fs-2"
         ></i>
         <i
           hidden={this.isPlaying}
           onClick={() => {
             this.listener.resume()
           }}
-          class="ri-speaker-2-line fs-2"
+          class="ri-play-line fs-2"
         ></i>
-      </Host>
-    )
+      </Host>,
+    ]
   }
 }

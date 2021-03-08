@@ -42,7 +42,7 @@ import {
  */
 @Component({
   tag: 'x-app-view',
-  styleUrl: 'x-app-view.scss',
+  styleUrl: 'x-app-view.css',
   shadow: true,
 })
 export class XAppView {

@@ -27,7 +27,7 @@ import { RouterService, ROUTE_EVENTS } from '../../services/routing'
  */
 @Component({
   tag: 'x-data-display',
-  styleUrl: 'x-data-display.scss',
+  styleUrl: 'x-data-display.css',
   shadow: false,
 })
 export class XDataDisplay {

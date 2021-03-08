@@ -26,7 +26,7 @@ import {
  */
 @Component({
   tag: 'x-app-link',
-  styleUrl: `x-app-link.scss`,
+  styleUrl: `x-app-link.css`,
   shadow: false,
 })
 export class XLink {
