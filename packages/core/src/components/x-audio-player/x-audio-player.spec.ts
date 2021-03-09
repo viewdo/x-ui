@@ -5,8 +5,8 @@ jest.mock('./audio/track')
 import { newSpecPage } from '@stencil/core/testing'
 import { audioState, audioStore } from '../../services/audio'
 import { actionBus, eventBus } from '../../services/events'
-import { interfaceStore } from '../../services/interface'
 import { XContentReference } from '../x-content-reference/x-content-reference'
+import { interfaceStore } from '../x-ui/ui'
 import { XAudioPlayer } from './x-audio-player'
 
 describe('x-audio-player', () => {

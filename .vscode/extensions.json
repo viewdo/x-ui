@@ -6,6 +6,7 @@
     "orta.vscode-jest",
     "ldez.ignore-files",
     "dbaeumer.vscode-eslint",
-    "rvest.vs-code-prettier-eslint"
+    "rvest.vs-code-prettier-eslint",
+    "natemoo-re.vscode-stencil-tools"
   ]
 }

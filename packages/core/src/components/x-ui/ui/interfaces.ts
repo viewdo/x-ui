@@ -1,14 +1,14 @@
 /* istanbul ignore file */
 
-export const INTERFACE_TOPIC = 'interface'
+export const UI_TOPIC = 'ui'
 
-export enum INTERFACE_COMMANDS {
+export enum UI_COMMANDS {
   RegisterProvider = 'register-provider',
   Log = 'log',
   SetTheme = 'set-theme',
 }
 
-export enum INTERFACE_EVENTS {
+export enum UI_EVENTS {
   ThemeChanged = 'theme',
 }
 

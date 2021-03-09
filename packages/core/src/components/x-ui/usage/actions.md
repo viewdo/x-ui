@@ -1,15 +1,14 @@
-# Interface Actions
+# UI Actions
 
-The default Interface Action Listener is configured to handle commands meant to alter HTML elements
+The default UI Action Listener is configured to handle commands meant to alter HTML elements
 raised through the [Actions](/actions).
 
-Topic: `interface`
+Topic: `ui`
 
 ```html
 <x-action-activator activate="...">
-  <x-action topic="interface" 
-    command="<command>" 
-    data-(key)="(value)"> </x-action>
+  <x-action topic="ui" command="<command>" data-(key)="(value)">
+  </x-action>
 </x-action-activator>
 ```
 
@@ -21,14 +20,13 @@ Sets the main page theme to dark or light.
 
 Arguments:
 
-* **theme** (required)\
+- **theme** (required)\
   Set's the theme to 'dark' or 'light'.
 
 ```html
 <x-action-activator activate="...">
-  <x-action topic="interface" 
-    command="set-theme" 
-    data-theme="dark"> </x-action>
+  <x-action topic="ui" command="set-theme" data-theme="dark">
+  </x-action>
 </x-action-activator>
 ```
 
@@ -40,13 +38,12 @@ Writes data to the console using console.log()
 
 Arguments:
 
-* **data** (required)\
+- **data** (required)\
   Any data that is sent to console.log
 
 ```html
 <x-action-activator activate="...">
-  <x-action topic="interface" 
-    command="set-theme" 
-    data-theme="dark"> </x-action>
+  <x-action topic="ui" command="set-theme" data-theme="dark">
+  </x-action>
 </x-action-activator>
 ```

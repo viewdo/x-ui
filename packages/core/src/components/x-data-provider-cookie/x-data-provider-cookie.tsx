@@ -9,6 +9,7 @@ import {
   Prop,
   State,
 } from '@stencil/core'
+import { removeDataProvider } from '../../services/data/factory'
 import {
   DataProviderRegistration,
   DATA_COMMANDS,
@@ -83,6 +84,7 @@ export class XDataProviderCookie {
         },
       },
     })
+    this.el.ownerDocument.body.dispatchEvent(customEvent)
     this.actionSubscription = actionBus.on(
       this.name,
       async (action: EventAction<SetData>) => {
@@ -99,7 +101,6 @@ export class XDataProviderCookie {
     await this.provider.set(this.consentKey, true.toString())
     this.didConsent.emit({ consented: true })
     this.hide = true
-    return this.el.ownerDocument.body.dispatchEvent(customEvent)
   }
 
   async componentWillLoad() {
@@ -132,6 +133,11 @@ export class XDataProviderCookie {
     } else {
       this.hide = true
     }
+  }
+
+  disconnectedCallback() {
+    removeDataProvider(this.name)
+    this.actionSubscription?.call(this)
   }
 
   render() {

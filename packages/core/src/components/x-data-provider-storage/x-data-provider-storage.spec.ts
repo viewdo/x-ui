@@ -4,17 +4,23 @@ jest.mock('../../services/common/logging')
 import { newSpecPage } from '@stencil/core/testing'
 import { getDataProvider } from '../../services/data/factory'
 import { DATA_EVENTS } from '../../services/data/interfaces'
+import { eventBus } from '../../services/events'
 import { XApp } from '../x-app/x-app'
+import { StorageService } from './storage/service'
 import { XDataProviderStorage } from './x-data-provider-storage'
 
 describe('x-data-provider-storage', () => {
+  afterEach(() => {
+    eventBus.removeAllListeners()
+  })
+
   it('renders', async () => {
     const page = await newSpecPage({
       components: [XDataProviderStorage],
       html: `<x-data-provider-storage></x-data-provider-storage>`,
     })
     expect(page.root).toEqualHtml(`
-      <x-data-provider-storage hidden="">
+      <x-data-provider-storage>
       </x-data-provider-storage>
     `)
   })
@@ -32,7 +38,9 @@ describe('x-data-provider-storage', () => {
       'x-data-provider-storage',
     )!
 
-    const provider = await getDataProvider('storage')
+    const provider = (await getDataProvider(
+      'storage',
+    )) as StorageService
     expect(provider).toBeDefined()
 
     await provider!.set('test', 'value')
@@ -44,7 +52,7 @@ describe('x-data-provider-storage', () => {
     expect(verified).toBe(result)
 
     let changed = false
-    provider?.changed.on(DATA_EVENTS.DataChanged, () => {
+    eventBus.on(DATA_EVENTS.DataChanged, () => {
       changed = true
     })
 

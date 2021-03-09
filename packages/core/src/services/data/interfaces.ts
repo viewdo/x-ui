@@ -6,9 +6,11 @@ export interface IDataMutator {
 
 export interface IDataProvider {
   get(key: string): Promise<string | null>
-  // set(key: string, value: string): Promise<void>
-  // keys(): Promise<string[]>
 }
+
+export interface IServiceProvider
+  extends IDataProvider,
+    IDataMutator {}
 
 export type ExpressionContext = Record<string, any>
 

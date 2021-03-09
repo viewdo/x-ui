@@ -171,6 +171,78 @@ Hard discards or play-src should ease out the audio with a .5 second fade-out be
 <!-- Auto Generated Below -->
 
 
+## Usage
+
+### Actions
+
+# Audio Action Listener
+
+The Audio Action Listener listens for action commands to control audio during presentations.
+
+TOPIC: `audio`
+
+```html
+<x-action-activator activate="...">
+  <x-action topic="" command="<command>" data-(key)="(value)">
+  </x-action>
+</x-action-activator>
+```
+
+## Commands
+
+### `enable`
+
+This command enables audio for all music, sound and video.
+
+```html
+<x-action-activator activate="...">
+  <x-action topic="audio" command="enable"></x-action>
+</x-action-activator>
+```
+
+### `disable`
+
+This command disables audio for all music, sound and video.
+
+```html
+<x-action-activator activate="...">
+  <x-action topic="audio" command="set-data" data-(key)="(value)">
+  </x-action>
+</x-action-activator>
+```
+
+---
+
+Audio components have special action tags, to help shape the resulting action message.
+
+---
+
+### `load`
+
+This command enables audio for all music, sound and video.
+
+Arguments:
+
+- **key** [required]\
+  The input key to the experience input to update.
+
+- **value** [required]\
+  The value to set.
+
+```html
+<x-action-activator activate="...">
+  <x-action topic="audio" command="set-data" data-(key)="(value)">
+  </x-action>
+</x-action-activator>
+```
+
+
+### Provider
+
+
+
+
+
 ## Properties
 
 | Property         | Attribute           | Description                                                                                                                                    | Type      | Default                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |

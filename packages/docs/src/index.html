@@ -56,7 +56,7 @@
     <link rel="preload"
       as="script"
       crossorigin
-      href="/js/dist/x-app-theme.entry.js">
+      href="/js/dist/x-ui-theme.entry.js">
     <link rel="preload"
       as="script"
       crossorigin
@@ -316,7 +316,7 @@
       <x-app-view url="/home"
         resolve-tokens
         content-src="/pages/home/default.html">
-        <x-app-theme></x-app-theme>
+        <x-ui-theme></x-ui-theme>
         <x-app-view-do url="/home/name"
           page-title="Introductions"
           when="!{{storage:name}}"
@@ -356,6 +356,21 @@
         page-title="Routing"
         content-src="/pages/routing/default.html"
         transition="animate__animated animate__fadeIn">
+        <ul x-cloak
+          class="component-list list-group btn-group-xl float-end ms-3 mt-4 d-none d-sm-block">
+          <li class="list-group-item fw-bold text-capitalize">Routing Components
+          </li>
+          <x-data-repeat items-src="/assets/components.json"
+            filter="components[docsTags[text='routing']]">
+            <template>
+              <li class="list-group-item">
+                <a
+                  href="/components/{{data:tag}}?group=routing">
+                  &lt;{{data:tag}}&gt; </a>
+              </li>
+            </template>
+          </x-data-repeat>
+        </ul>
         <x-app-view url="lazy"
           page-title="Lazy Loaded Routes"
           content-src="/pages/routing/lazy.html"> </x-app-view>
@@ -384,6 +399,18 @@
       <x-app-view url="/navigation"
         page-title="Navigation System"
         content-src="/pages/navigation/default.html">
+        <ul x-cloak
+          class="component-list list-group btn-group-xl float-end ms-2 mt-4 d-none d-sm-block">
+          <li class="list-group-item fw-bold">Navigation Components</li>
+          <x-data-repeat items-src="/assets/components.json"
+            filter="components[docsTags[text='navigation']]">
+            <template>
+              <li class="list-group-item">
+                <a href="/components/{{data:tag}}?group=navigation"> &lt;{{data:tag}}&gt; </a>
+              </li>
+            </template>
+          </x-data-repeat>
+        </ul>
         <x-app-view url="guided"
           page-title="Guided"
           content-src="/pages/navigation/guided/default.html"
@@ -398,6 +425,20 @@
       <x-app-view url="/content"
         page-title="Content"
         content-src="/pages/content/default.html">
+        <ul x-cloak
+          class="component-list list-group btn-group-xl float-end ms-2 mt-4 d-none d-sm-block">
+          <li class="list-group-item fw-bold"> Content Components</li>
+          <x-data-repeat items-src="/assets/components.json"
+            filter="components[docsTags[text='content']]">
+            <template>
+              <li class="list-group-item">
+                <a
+                  href="/components/{{data:tag}}?group=content">
+                  &lt;{{data:tag}}&gt; </a>
+              </li>
+            </template>
+          </x-data-repeat>
+        </ul>
         <x-app-view url="include"
           page-title="Remote HTML"
           content-src="/pages/content/include.html"> </x-app-view>
@@ -412,6 +453,20 @@
       <x-app-view url="/data"
         page-title="Data Binding"
         content-src="/pages/data/default.html">
+        <ul x-cloak
+          class="component-list list-group btn-group-xl float-end ms-2 mt-4 d-none d-sm-block">
+          <li class="list-group-item fw-bold">Data Components</li>
+          <x-data-repeat items-src="/assets/components.json"
+            filter="components[docsTags[text='data']]">
+            <template>
+              <li class="list-group-item">
+                <a
+                  href="/components/{{data:tag}}?group=data">
+                  &lt;{{data:tag}}&gt; </a>
+              </li>
+            </template>
+          </x-data-repeat>
+        </ul>
         <x-app-view url="expressions"
           page-title="Data Expressions"
           content-src="/pages/data/expressions.html">
@@ -442,6 +497,20 @@
       <x-app-view url="/actions"
         page-title="Action"
         content-src="/pages/actions/default.html">
+        <ul x-cloak
+          class="component-list list-group btn-group-xl float-end ms-2 mt-4 d-none d-sm-block">
+          <li class="list-group-item fw-bold"> Action Components</li>
+          <x-data-repeat items-src="/assets/components.json"
+            filter="components[docsTags[text='actions']]">
+            <template>
+            <li class="list-group-item">
+              <a
+                href="/components/{{data:tag}}">
+                &lt;{{data:tag}}&gt; </a>
+            </li>
+          </template>
+          </x-data-repeat>
+        </ul>
         <x-app-view-do url="activation/events"
           visit="optional"
           content-src="/pages/actions/events.html">

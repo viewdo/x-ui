@@ -31,7 +31,7 @@ describe('audio-provider', () => {
   })
 
   it('get:hasAudio', async () => {
-    listener.onDeck['sound'] = {
+    listener.onDeck['music'] = {
       trackId: 'track-1',
       playing: () => true,
     }
@@ -46,7 +46,7 @@ describe('audio-provider', () => {
   })
 
   it('get:currentMusic', async () => {
-    listener.onDeck['sound'] = {
+    listener.onDeck['music'] = {
       trackId: 'track-1',
       isPlaying: true,
     }

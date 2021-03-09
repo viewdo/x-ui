@@ -5,10 +5,7 @@ jest.mock('../../services/data/evaluate.worker')
 import { newSpecPage } from '@stencil/core/testing'
 import { contentStateDispose } from '../../services/content'
 import { addDataProvider } from '../../services/data/factory'
-import {
-  DATA_EVENTS,
-  IDataProvider,
-} from '../../services/data/interfaces'
+import { DATA_EVENTS } from '../../services/data/interfaces'
 import { InMemoryProvider } from '../../services/data/providers/memory'
 import { actionBus, eventBus } from '../../services/events'
 import { clearVisits } from '../../services/navigation'
@@ -17,7 +14,7 @@ import { XApp } from '../x-app/x-app'
 import { XAppViewDo } from './x-app-view-do'
 
 describe('x-app-view-do', () => {
-  let storage: IDataProvider
+  let storage: InMemoryProvider
   beforeEach(async () => {
     actionBus.removeAllListeners()
     eventBus.removeAllListeners()

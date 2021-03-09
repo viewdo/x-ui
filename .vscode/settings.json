@@ -28,6 +28,7 @@
     "markdownlint",
     "maxlevel",
     "msapplication",
+    "nomodule",
     "noslash",
     "notitle",
     "nowait",
@@ -40,6 +41,7 @@
     "ponicode",
     "preconnect",
     "predeploy",
+    "purgecss",
     "recalc",
     "referrerpolicy",
     "rehype",
@@ -47,6 +49,7 @@
     "searchjs",
     "storyinput",
     "stylelint",
+    "tailwindcss",
     "timedout",
     "unhinted",
     "unlisten",
@@ -72,5 +75,70 @@
   ],
   "ponicode.testSettings.testLocation.locationType": "Custom",
   "ponicode.testSettings.testLocation.path": "{rootDir}/{filePath}/{fileName}.spec.{ext}",
-  "exportall.config.folderListener": []
+  "exportall.config.folderListener": [
+  ],
+  "editor.formatOnSaveMode": "file",
+  "dotupGenerateTestFile.testFileLocation": "source file directory",
+  "dotupGenerateTestFile.testFileSuffix": "spec",
+  "dotupGenerateTestFile.template.file": [
+    "${Imports}",
+    "",
+    "${FileTests}"
+  ],
+  "dotupGenerateTestFile.template.class": [
+    "describe('${ClassName}', () => {",
+    "",
+    "${ClassTests}",
+    "});",
+    ""
+  ],
+  "dotupGenerateTestFile.template.asyncMethod": [
+    "it('${ClassName}-${MethodName}', async () => {",
+    "// Arguments",
+    "${Declarations}",
+    "",
+    "// Method call",
+    "${MemberTests}",
+    "});",
+    ""
+  ],
+  "dotupGenerateTestFile.template.function": [
+    "it('${ClassName}-${MethodName}', () => {",
+    "// Arguments",
+    "${Declarations}",
+    "",
+    "// Method call",
+    "${MemberTests}",
+    "",
+    "// Expect result",
+    "expect(${MethodCallResult}).to.be.not.undefined;",
+    "});",
+    ""
+  ],
+  "dotupGenerateTestFile.template.property": [
+    "it('${ClassName}-${PropertyName}', () => {",
+    "// Arguments",
+    "${Declarations}",
+    "",
+    "// Property call",
+    "${MemberTests}",
+    "",
+    "// Expect result",
+    "expect(${PropertyGetResult}).equals(${PropertySetVariable});",
+    "});",
+    ""
+  ],
+  "dotupGenerateTestFile.template.asyncFunction": [
+    "it('${ClassName}-${MethodName}', async () => {",
+    "// Arguments",
+    "${Declarations}",
+    "",
+    "// Method call",
+    "${MemberTests}",
+    "",
+    "// Expect result",
+    "expect(${MethodCallResult}).to.be.not.undefined;",
+    "});",
+    ""
+  ]
 }

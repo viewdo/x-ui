@@ -15,7 +15,8 @@
     "preserveConstEnums": true,
     "resolveJsonModule": true,
     "stripInternal": true,
-    "strict": true
+    "strict": true,
+    "typeRoots": ["node_modules/@types"]
   },
   "exclude": ["**/__mocks__", "node_modules", "**/.worker.ts"]
 }

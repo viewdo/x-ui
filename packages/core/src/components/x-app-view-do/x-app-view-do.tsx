@@ -38,7 +38,7 @@ import { ViewDoService } from './view-do'
  */
 @Component({
   tag: 'x-app-view-do',
-  styleUrl: 'x-app-view-do.scss',
+  styleUrl: 'x-app-view-do.css',
   shadow: true,
 })
 export class XAppViewDo {

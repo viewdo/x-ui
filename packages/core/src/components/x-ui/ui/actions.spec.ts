@@ -1,16 +1,13 @@
-jest.mock('../common/logging')
+jest.mock('../../../services/common/logging')
 global.console.log = jest.fn()
 global.console.dir = jest.fn()
 global.console.table = jest.fn()
 
 import { newSpecPage } from '@stencil/core/testing'
-import { EventEmitter } from '../events/emitter'
-import { InterfaceActionListener } from './actions'
-import {
-  clearInterfaceProvider,
-  getInterfaceProvider,
-} from './factory'
-import { INTERFACE_COMMANDS, INTERFACE_TOPIC } from './interfaces'
+import { EventEmitter } from '../../../services/events/emitter'
+import { UIActionListener } from './actions'
+import { clearUIProvider, getUIProvider } from './factory'
+import { UI_COMMANDS, UI_TOPIC } from './interfaces'
 
 let called = false
 class MockProvider {
@@ -33,25 +30,25 @@ describe('interface-actions:', () => {
       components: [],
       html: `<div></div>`,
     })
-    const subject = new InterfaceActionListener()
+    const subject = new UIActionListener()
     subject.initialize(page.win, actionBus, eventBus)
 
     const provider = new MockProvider()
 
-    actionBus.emit(INTERFACE_TOPIC, {
-      topic: INTERFACE_TOPIC,
-      command: INTERFACE_COMMANDS.RegisterProvider,
+    actionBus.emit(UI_TOPIC, {
+      topic: UI_TOPIC,
+      command: UI_COMMANDS.RegisterProvider,
       data: {
         name: 'special',
         provider,
       },
     })
 
-    let result = getInterfaceProvider()
+    let result = getUIProvider()
     expect(result).toBe(provider)
 
-    actionBus.emit(INTERFACE_TOPIC, {
-      topic: INTERFACE_TOPIC,
+    actionBus.emit(UI_TOPIC, {
+      topic: UI_TOPIC,
       command: 'do-the-thing',
       data: {
         name: 'special',
@@ -62,9 +59,9 @@ describe('interface-actions:', () => {
 
     expect(called).toBe(true)
 
-    clearInterfaceProvider()
+    clearUIProvider()
 
-    result = getInterfaceProvider()
+    result = getUIProvider()
 
     expect(result).toBeNull()
 
@@ -76,7 +73,7 @@ describe('interface-actions:', () => {
       components: [],
       html: `<div></div>`,
     })
-    const subject = new InterfaceActionListener()
+    const subject = new UIActionListener()
     subject.initialize(page.win, actionBus, eventBus)
 
     subject.defaultProvider.setTheme('dark')
@@ -91,12 +88,12 @@ describe('interface-actions:', () => {
       components: [],
       html: `<div></div>`,
     })
-    const subject = new InterfaceActionListener()
+    const subject = new UIActionListener()
     subject.initialize(page.win, actionBus, eventBus)
 
-    actionBus.emit(INTERFACE_TOPIC, {
-      topic: INTERFACE_TOPIC,
-      command: INTERFACE_COMMANDS.SetTheme,
+    actionBus.emit(UI_TOPIC, {
+      topic: UI_TOPIC,
+      command: UI_COMMANDS.SetTheme,
       data: 'dark',
     })
 
@@ -110,27 +107,27 @@ describe('interface-actions:', () => {
       components: [],
       html: `<div></div>`,
     })
-    const subject = new InterfaceActionListener()
+    const subject = new UIActionListener()
     subject.initialize(page.win, actionBus, eventBus)
 
-    actionBus.emit(INTERFACE_TOPIC, {
-      topic: INTERFACE_TOPIC,
-      command: INTERFACE_COMMANDS.Log,
+    actionBus.emit(UI_TOPIC, {
+      topic: UI_TOPIC,
+      command: UI_COMMANDS.Log,
       data: {
         message: 'do not log in tests!',
       },
     })
 
-    actionBus.emit(INTERFACE_TOPIC, {
-      topic: INTERFACE_TOPIC,
+    actionBus.emit(UI_TOPIC, {
+      topic: UI_TOPIC,
       command: 'warn',
       data: {
         message: 'do not log in tests!',
       },
     })
 
-    actionBus.emit(INTERFACE_TOPIC, {
-      topic: INTERFACE_TOPIC,
+    actionBus.emit(UI_TOPIC, {
+      topic: UI_TOPIC,
       command: 'dir',
       data: {
         message: 'do not log in tests!',

@@ -3,17 +3,23 @@ jest.mock('../../services/common/logging')
 
 import { newSpecPage } from '@stencil/core/testing'
 import { getDataProvider } from '../../services/data/factory'
+import { eventBus } from '../../services/events'
 import { XApp } from '../x-app/x-app'
+import { SessionService } from './session/service'
 import { XDataProviderSession } from './x-data-provider-session'
 
 describe('x-data-provider-session', () => {
+  afterEach(() => {
+    eventBus.removeAllListeners()
+  })
+
   it('renders', async () => {
     const page = await newSpecPage({
       components: [XDataProviderSession],
       html: `<x-data-provider-session></x-data-provider-session>`,
     })
     expect(page.root).toEqualHtml(`
-      <x-data-provider-session  hidden="">
+      <x-data-provider-session>
       </x-data-provider-session>
     `)
   })
@@ -33,7 +39,9 @@ describe('x-data-provider-session', () => {
       'x-data-provider-session',
     )!
 
-    const provider = await getDataProvider('session')
+    const provider = (await getDataProvider(
+      'session',
+    )) as SessionService
     expect(provider).not.toBeNull()
 
     await provider!.set('test', 'value')

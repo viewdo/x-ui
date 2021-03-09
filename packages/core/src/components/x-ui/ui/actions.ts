@@ -1,15 +1,19 @@
 import { MockWindow } from '@stencil/core/mock-doc'
-import { commonState, debugIf, kebabToCamelCase } from '../common'
+import {
+  commonState,
+  debugIf,
+  kebabToCamelCase,
+} from '../../../services/common'
 import {
   EventAction,
   IEventActionListener,
   IEventEmitter,
-} from '../events/interfaces'
-import { getInterfaceProvider, setInterfaceProvider } from './factory'
-import { INTERFACE_COMMANDS, INTERFACE_TOPIC } from './interfaces'
-import { DefaultInterfaceProvider } from './providers/default'
+} from '../../../services/events'
+import { getUIProvider, setUIProvider } from './factory'
+import { UI_COMMANDS, UI_TOPIC } from './interfaces'
+import { DefaultUIProvider } from './providers/default'
 
-export class InterfaceActionListener implements IEventActionListener {
+export class UIActionListener implements IEventActionListener {
   actionsSubscription!: () => void
   defaultProvider!: any
   eventBus!: IEventEmitter
@@ -20,10 +24,10 @@ export class InterfaceActionListener implements IEventActionListener {
     eventBus: IEventEmitter,
   ): void {
     this.eventBus = eventBus
-    this.actionsSubscription = actionBus.on(INTERFACE_TOPIC, e => {
+    this.actionsSubscription = actionBus.on(UI_TOPIC, e => {
       this.handleAction(e)
     })
-    this.defaultProvider = new DefaultInterfaceProvider(win, eventBus)
+    this.defaultProvider = new DefaultUIProvider(win, eventBus)
   }
 
   handleAction(actionEvent: EventAction<any>) {
@@ -34,13 +38,13 @@ export class InterfaceActionListener implements IEventActionListener {
       )}`,
     )
 
-    if (actionEvent.command === INTERFACE_COMMANDS.RegisterProvider) {
+    if (actionEvent.command === UI_COMMANDS.RegisterProvider) {
       const { name = 'unknown', provider } = actionEvent.data
       if (provider) {
-        setInterfaceProvider(name, provider)
+        setUIProvider(name, provider)
       }
     } else {
-      const currentProvider = getInterfaceProvider() as any
+      const currentProvider = getUIProvider() as any
       const commandFuncKey = kebabToCamelCase(actionEvent.command)
 
       // Use the registered provider unless it doesn't implement this command

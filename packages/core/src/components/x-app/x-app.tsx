@@ -24,12 +24,12 @@ import {
   eventBus,
   IEventActionListener,
 } from '../../services/events'
-import { InterfaceActionListener } from '../../services/interface'
 import {
   LocationSegments,
   RouterService,
 } from '../../services/routing'
 import { XAppViewNotFound } from '../x-app-view-not-found/x-app-view-not-found'
+import { InterfaceActionListener } from '../x-ui/ui'
 
 /**
  * The root component is the base container for the view-engine and its

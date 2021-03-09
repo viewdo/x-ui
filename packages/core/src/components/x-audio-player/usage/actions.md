@@ -6,9 +6,7 @@ TOPIC: `audio`
 
 ```html
 <x-action-activator activate="...">
-  <x-action topic="audio" 
-    command="<command>" 
-    data-(key)="(value)"> 
+  <x-action topic="" command="<command>" data-(key)="(value)">
   </x-action>
 </x-action-activator>
 ```
@@ -21,8 +19,7 @@ This command enables audio for all music, sound and video.
 
 ```html
 <x-action-activator activate="...">
-  <x-action topic="dxp" 
-    command="enable"></x-action>
+  <x-action topic="audio" command="enable"></x-action>
 </x-action-activator>
 ```
 
@@ -32,13 +29,13 @@ This command disables audio for all music, sound and video.
 
 ```html
 <x-action-activator activate="...">
-  <x-action topic="dxp" 
-    command="set-data" 
-    data-(key)="(value)"> </x-action>
+  <x-action topic="audio" command="set-data" data-(key)="(value)">
+  </x-action>
 </x-action-activator>
 ```
 
 ---
+
 Audio components have special action tags, to help shape the resulting action message.
 
 ---
@@ -49,16 +46,15 @@ This command enables audio for all music, sound and video.
 
 Arguments:
 
-* **key** [required]\
+- **key** [required]\
   The input key to the experience input to update.
 
-* **value** [required]\
+- **value** [required]\
   The value to set.
 
 ```html
 <x-action-activator activate="...">
-  <x-action topic="dxp" 
-    command="set-data" 
-    data-(key)="(value)"> </x-action>
+  <x-action topic="audio" command="set-data" data-(key)="(value)">
+  </x-action>
 </x-action-activator>
 ```

@@ -24,7 +24,7 @@
     "start": "run-p watch:core start:docs",
     "build:core": "yarn workspace @viewdo/x-ui run build",
     "start:core": "yarn workspace @viewdo/x-ui run start",
-    "watch:core": "yarn workspace @viewdo/x-ui run build:watch",
+    "watch:core": "yarn workspace @viewdo/x-ui run watch",
     "test": "yarn workspace @viewdo/x-ui run test --cwd packages/core",
     "build:docs": "yarn workspace docs run build",
     "start:docs": "yarn workspace docs run start",

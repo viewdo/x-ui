@@ -127,26 +127,6 @@ export namespace Components {
          */
         "strict": boolean;
     }
-    interface XAppTheme {
-        /**
-          * Change the class name that is added to the body tag when the theme is determined to be dark.
-         */
-        "darkClass": string;
-        /**
-          * Skip adding the class to the body tag, just update the interface state.
-         */
-        "skipClass": boolean;
-    }
-    interface XAppThemeDark {
-        /**
-          * The class to add to the inner input.
-         */
-        "classes"?: string;
-        /**
-          * The inner input ID
-         */
-        "inputId"?: string;
-    }
     interface XAppView {
         /**
           * Remote URL for this Route's content.
@@ -520,7 +500,7 @@ export namespace Components {
         /**
           * Immediately register the provider.
          */
-        "registerProvider": () => Promise<boolean>;
+        "registerProvider": () => Promise<void>;
         /**
           * When skipConsent is true, the accept-cookies banner will not be displayed before accessing cookie-data.
          */
@@ -579,6 +559,26 @@ export namespace Components {
          */
         "when": string;
     }
+    interface XUiTheme {
+        /**
+          * Change the class name that is added to the body tag when the theme is determined to be dark.
+         */
+        "darkClass": string;
+        /**
+          * Skip adding the class to the body tag, just update the interface state.
+         */
+        "skipClass": boolean;
+    }
+    interface XUiThemeSwitch {
+        /**
+          * The class to add to the inner input.
+         */
+        "classes"?: string;
+        /**
+          * The inner input ID
+         */
+        "inputId"?: string;
+    }
 }
 declare global {
     interface HTMLXActionElement extends Components.XAction, HTMLStencilElement {
@@ -616,18 +616,6 @@ declare global {
     var HTMLXAppLinkElement: {
         prototype: HTMLXAppLinkElement;
         new (): HTMLXAppLinkElement;
-    };
-    interface HTMLXAppThemeElement extends Components.XAppTheme, HTMLStencilElement {
-    }
-    var HTMLXAppThemeElement: {
-        prototype: HTMLXAppThemeElement;
-        new (): HTMLXAppThemeElement;
-    };
-    interface HTMLXAppThemeDarkElement extends Components.XAppThemeDark, HTMLStencilElement {
-    }
-    var HTMLXAppThemeDarkElement: {
-        prototype: HTMLXAppThemeDarkElement;
-        new (): HTMLXAppThemeDarkElement;
     };
     interface HTMLXAppViewElement extends Components.XAppView, HTMLStencilElement {
     }
@@ -737,6 +725,18 @@ declare global {
         prototype: HTMLXDataShowElement;
         new (): HTMLXDataShowElement;
     };
+    interface HTMLXUiThemeElement extends Components.XUiTheme, HTMLStencilElement {
+    }
+    var HTMLXUiThemeElement: {
+        prototype: HTMLXUiThemeElement;
+        new (): HTMLXUiThemeElement;
+    };
+    interface HTMLXUiThemeSwitchElement extends Components.XUiThemeSwitch, HTMLStencilElement {
+    }
+    var HTMLXUiThemeSwitchElement: {
+        prototype: HTMLXUiThemeSwitchElement;
+        new (): HTMLXUiThemeSwitchElement;
+    };
     interface HTMLElementTagNameMap {
         "x-action": HTMLXActionElement;
         "x-action-activator": HTMLXActionActivatorElement;
@@ -744,8 +744,6 @@ declare global {
         "x-app-analytics": HTMLXAppAnalyticsElement;
         "x-app-autoplay": HTMLXAppAutoplayElement;
         "x-app-link": HTMLXAppLinkElement;
-        "x-app-theme": HTMLXAppThemeElement;
-        "x-app-theme-dark": HTMLXAppThemeDarkElement;
         "x-app-view": HTMLXAppViewElement;
         "x-app-view-do": HTMLXAppViewDoElement;
         "x-app-view-not-found": HTMLXAppViewNotFoundElement;
@@ -764,6 +762,8 @@ declare global {
         "x-data-provider-storage": HTMLXDataProviderStorageElement;
         "x-data-repeat": HTMLXDataRepeatElement;
         "x-data-show": HTMLXDataShowElement;
+        "x-ui-theme": HTMLXUiThemeElement;
+        "x-ui-theme-switch": HTMLXUiThemeSwitchElement;
     }
 }
 declare namespace LocalJSX {
@@ -890,26 +890,6 @@ declare namespace LocalJSX {
           * Only active on the exact href match using every aspect of the URL including parameters.
          */
         "strict"?: boolean;
-    }
-    interface XAppTheme {
-        /**
-          * Change the class name that is added to the body tag when the theme is determined to be dark.
-         */
-        "darkClass"?: string;
-        /**
-          * Skip adding the class to the body tag, just update the interface state.
-         */
-        "skipClass"?: boolean;
-    }
-    interface XAppThemeDark {
-        /**
-          * The class to add to the inner input.
-         */
-        "classes"?: string;
-        /**
-          * The inner input ID
-         */
-        "inputId"?: string;
     }
     interface XAppView {
         /**
@@ -1323,6 +1303,26 @@ declare namespace LocalJSX {
          */
         "when": string;
     }
+    interface XUiTheme {
+        /**
+          * Change the class name that is added to the body tag when the theme is determined to be dark.
+         */
+        "darkClass"?: string;
+        /**
+          * Skip adding the class to the body tag, just update the interface state.
+         */
+        "skipClass"?: boolean;
+    }
+    interface XUiThemeSwitch {
+        /**
+          * The class to add to the inner input.
+         */
+        "classes"?: string;
+        /**
+          * The inner input ID
+         */
+        "inputId"?: string;
+    }
     interface IntrinsicElements {
         "x-action": XAction;
         "x-action-activator": XActionActivator;
@@ -1330,8 +1330,6 @@ declare namespace LocalJSX {
         "x-app-analytics": XAppAnalytics;
         "x-app-autoplay": XAppAutoplay;
         "x-app-link": XAppLink;
-        "x-app-theme": XAppTheme;
-        "x-app-theme-dark": XAppThemeDark;
         "x-app-view": XAppView;
         "x-app-view-do": XAppViewDo;
         "x-app-view-not-found": XAppViewNotFound;
@@ -1350,6 +1348,8 @@ declare namespace LocalJSX {
         "x-data-provider-storage": XDataProviderStorage;
         "x-data-repeat": XDataRepeat;
         "x-data-show": XDataShow;
+        "x-ui-theme": XUiTheme;
+        "x-ui-theme-switch": XUiThemeSwitch;
     }
 }
 export { LocalJSX as JSX };
@@ -1362,8 +1362,6 @@ declare module "@stencil/core" {
             "x-app-analytics": LocalJSX.XAppAnalytics & JSXBase.HTMLAttributes<HTMLXAppAnalyticsElement>;
             "x-app-autoplay": LocalJSX.XAppAutoplay & JSXBase.HTMLAttributes<HTMLXAppAutoplayElement>;
             "x-app-link": LocalJSX.XAppLink & JSXBase.HTMLAttributes<HTMLXAppLinkElement>;
-            "x-app-theme": LocalJSX.XAppTheme & JSXBase.HTMLAttributes<HTMLXAppThemeElement>;
-            "x-app-theme-dark": LocalJSX.XAppThemeDark & JSXBase.HTMLAttributes<HTMLXAppThemeDarkElement>;
             "x-app-view": LocalJSX.XAppView & JSXBase.HTMLAttributes<HTMLXAppViewElement>;
             "x-app-view-do": LocalJSX.XAppViewDo & JSXBase.HTMLAttributes<HTMLXAppViewDoElement>;
             "x-app-view-not-found": LocalJSX.XAppViewNotFound & JSXBase.HTMLAttributes<HTMLXAppViewNotFoundElement>;
@@ -1382,6 +1380,8 @@ declare module "@stencil/core" {
             "x-data-provider-storage": LocalJSX.XDataProviderStorage & JSXBase.HTMLAttributes<HTMLXDataProviderStorageElement>;
             "x-data-repeat": LocalJSX.XDataRepeat & JSXBase.HTMLAttributes<HTMLXDataRepeatElement>;
             "x-data-show": LocalJSX.XDataShow & JSXBase.HTMLAttributes<HTMLXDataShowElement>;
+            "x-ui-theme": LocalJSX.XUiTheme & JSXBase.HTMLAttributes<HTMLXUiThemeElement>;
+            "x-ui-theme-switch": LocalJSX.XUiThemeSwitch & JSXBase.HTMLAttributes<HTMLXUiThemeSwitchElement>;
         }
     }
 }
