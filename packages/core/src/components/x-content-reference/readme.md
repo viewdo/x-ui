@@ -102,14 +102,22 @@ If inline is present, the source would be nested inside this element, otherwise 
 
 ## Properties
 
-| Property              | Attribute    | Description                                                                                                  | Type                  | Default     |
-| --------------------- | ------------ | ------------------------------------------------------------------------------------------------------------ | --------------------- | ----------- |
-| `deferLoad`           | `defer-load` | If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute. | `boolean`             | `false`     |
-| `inline`              | `inline`     | When inline the link/script tags are rendered in-place rather than added to the head.                        | `boolean`             | `false`     |
-| `module` _(required)_ | `module`     | Import the script file as a module.                                                                          | `boolean`             | `undefined` |
-| `noModule`            | `no-module`  | Declare the script only for use when modules aren't supported                                                | `boolean`             | `false`     |
-| `scriptSrc`           | `script-src` | The script file to reference.                                                                                | `string \| undefined` | `undefined` |
-| `styleSrc`            | `style-src`  | The css file to reference                                                                                    | `string \| undefined` | `undefined` |
+| Property    | Attribute    | Description                                                                                                  | Type                  | Default     |
+| ----------- | ------------ | ------------------------------------------------------------------------------------------------------------ | --------------------- | ----------- |
+| `deferLoad` | `defer-load` | If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute. | `boolean`             | `false`     |
+| `inline`    | `inline`     | When inline the link/script tags are rendered in-place rather than added to the head.                        | `boolean`             | `false`     |
+| `module`    | `module`     | Import the script file as a module.                                                                          | `boolean`             | `false`     |
+| `noModule`  | `no-module`  | Declare the script only for use when modules aren't supported                                                | `boolean`             | `false`     |
+| `scriptSrc` | `script-src` | The script file to reference.                                                                                | `string \| undefined` | `undefined` |
+| `styleSrc`  | `style-src`  | The css file to reference                                                                                    | `string \| undefined` | `undefined` |
+| `timeout`   | `timeout`    | Timeout for waiting for the script of style tags to confirm they were loaded.                                | `number`              | `1000`      |
+
+
+## Events
+
+| Event        | Description                                                                                                                                                                                                                           | Type                                              |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| `x:complete` | This event is fired when the script and style elements are loaded or timed out. The value for each style and script will be true or false, for loaded or timedout, respectively.  Event Details: {  type: string,  loaded:: boolean } | `CustomEvent<{ type: string; loaded: boolean; }>` |
 
 
 ----------------------------------------------
