@@ -3,14 +3,16 @@ jest.mock('../../services/common/logging')
 
 import { newSpecPage } from '@stencil/core/testing'
 import { getDataProvider } from '../../services/data/factory'
+import { dataStateDispose } from '../../services/data/state'
 import { eventBus } from '../../services/events'
-import { XApp } from '../x-app/x-app'
+import { XData } from '../x-data/x-data'
 import { SessionService } from './session/service'
 import { XDataProviderSession } from './x-data-provider-session'
 
 describe('x-data-provider-session', () => {
   afterEach(() => {
     eventBus.removeAllListeners()
+    dataStateDispose()
   })
 
   it('renders', async () => {
@@ -26,10 +28,10 @@ describe('x-data-provider-session', () => {
 
   it('sessionProvider: is functional', async () => {
     const page = await newSpecPage({
-      components: [XApp, XDataProviderSession],
-      html: `<x-app>
+      components: [XData, XDataProviderSession],
+      html: `<x-data>
         <x-data-provider-session></x-data-provider-session>
-      </x-app>`,
+      </x-data>`,
       supportsShadowDom: true,
     })
 

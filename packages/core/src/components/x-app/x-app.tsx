@@ -11,9 +11,6 @@ import {
   writeTask,
 } from '@stencil/core'
 import { commonState, debugIf, log } from '../../services/common'
-import { DataListener } from '../../services/data/actions'
-import { clearDataProviders } from '../../services/data/factory'
-import { dataState } from '../../services/data/state'
 import {
   ElementsActionListener,
   resolveChildElementXAttributes,
@@ -96,15 +93,6 @@ export class XApp {
    */
   @Prop() scrollTopOffset?: number
 
-  /**
-   * The wait-time, in milliseconds to wait for
-   * un-registered data providers found in an expression.
-   * This is to accommodate a possible lag between
-   * evaluation before the first view-do 'when' predicate
-   * an the registration process.
-   */
-  @Prop() providerTimeout: number = 500
-
   @Listen('x:actions', {
     passive: true,
     target: 'body',
@@ -155,7 +143,6 @@ export class XApp {
     }
 
     commonState.debug = this.debug
-    dataState.providerTimeout = this.providerTimeout
 
     this.actionsSubscription = actionBus.on('*', (_topic, args) => {
       this.actions.emit(args)
@@ -193,7 +180,6 @@ export class XApp {
       notFound.transition = notFound.transition || this.transition
     }
 
-    this.addListener('data', new DataListener())
     this.addListener('elements', new ElementsActionListener())
   }
 
@@ -229,7 +215,6 @@ export class XApp {
   }
 
   disconnectedCallback() {
-    clearDataProviders()
     this.actionsSubscription?.call(this)
     this.eventSubscription?.call(this)
     this.router.destroy()

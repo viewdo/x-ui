@@ -4,11 +4,13 @@ import { createStore } from '@stencil/store'
 import { IDataProvider } from './interfaces'
 
 class StateModel {
+  enabled!: boolean
   providers!: Record<string, IDataProvider>
   providerTimeout!: number
 }
 
 const store = createStore<StateModel>({
+  enabled: false,
   providers: {},
   providerTimeout: 500,
 })

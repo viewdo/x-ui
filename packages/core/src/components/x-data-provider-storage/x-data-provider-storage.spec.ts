@@ -4,14 +4,16 @@ jest.mock('../../services/common/logging')
 import { newSpecPage } from '@stencil/core/testing'
 import { getDataProvider } from '../../services/data/factory'
 import { DATA_EVENTS } from '../../services/data/interfaces'
+import { dataStateDispose } from '../../services/data/state'
 import { eventBus } from '../../services/events'
-import { XApp } from '../x-app/x-app'
+import { XData } from '../x-data/x-data'
 import { StorageService } from './storage/service'
 import { XDataProviderStorage } from './x-data-provider-storage'
 
 describe('x-data-provider-storage', () => {
   afterEach(() => {
     eventBus.removeAllListeners()
+    dataStateDispose()
   })
 
   it('renders', async () => {
@@ -27,9 +29,9 @@ describe('x-data-provider-storage', () => {
 
   it('localStorage: is functional', async () => {
     const page = await newSpecPage({
-      components: [XApp, XDataProviderStorage],
+      components: [XData, XDataProviderStorage],
       html:
-        '<x-app><x-data-provider-storage></x-data-provider-storage></x-app>',
+        '<x-data><x-data-provider-storage></x-data-provider-storage></x-data>',
       supportsShadowDom: true,
     })
     await page.waitForChanges()

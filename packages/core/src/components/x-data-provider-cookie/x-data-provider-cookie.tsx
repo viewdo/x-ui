@@ -9,11 +9,12 @@ import {
   Prop,
   State,
 } from '@stencil/core'
-import { removeDataProvider } from '../../services/data/factory'
 import {
-  DataProviderRegistration,
+  addDataProvider,
+  removeDataProvider,
+} from '../../services/data/factory'
+import {
   DATA_COMMANDS,
-  DATA_TOPIC,
   SetData,
 } from '../../services/data/interfaces'
 import {
@@ -72,19 +73,7 @@ export class XDataProviderCookie {
     name: 'registerProvider',
   })
   public async registerProvider() {
-    const customEvent = new CustomEvent<
-      EventAction<DataProviderRegistration>
-    >('x:actions', {
-      detail: {
-        topic: DATA_TOPIC,
-        command: DATA_COMMANDS.RegisterDataProvider,
-        data: {
-          name: 'cookie',
-          provider: this.provider,
-        },
-      },
-    })
-    this.el.ownerDocument.body.dispatchEvent(customEvent)
+    addDataProvider(this.name, this.provider)
     this.actionSubscription = actionBus.on(
       this.name,
       async (action: EventAction<SetData>) => {

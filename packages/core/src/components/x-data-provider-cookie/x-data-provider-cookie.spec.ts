@@ -6,8 +6,9 @@ import {
   clearDataProviders,
   getDataProvider,
 } from '../../services/data/factory'
+import { dataStateDispose } from '../../services/data/state'
 import { actionBus, eventBus } from '../../services/events'
-import { XApp } from '../x-app/x-app'
+import { XData } from '../x-data/x-data'
 import { XDataProviderCookie } from './x-data-provider-cookie'
 
 describe('x-data-provider-cookie', () => {
@@ -15,6 +16,7 @@ describe('x-data-provider-cookie', () => {
     actionBus.removeAllListeners()
     eventBus.removeAllListeners()
     clearDataProviders()
+    dataStateDispose()
   })
 
   it('no render when hide', async () => {
@@ -45,14 +47,14 @@ describe('x-data-provider-cookie', () => {
 
   it('renders a dialog, click consent', async () => {
     const page = await newSpecPage({
-      components: [XApp, XDataProviderCookie],
+      components: [XData, XDataProviderCookie],
       html: `
-        <x-app>
+        <x-data>
           <x-data-provider-cookie>
             <button slot="accept">Accept</button>
             <button slot="reject">Reject</button>
           </x-data-provider-cookie>
-        </x-app>`,
+        </x-data>`,
     })
 
     const subject = page.body.querySelector('x-data-provider-cookie')
@@ -74,19 +76,19 @@ describe('x-data-provider-cookie', () => {
     expect(value).toBe('true')
 
     subject?.remove()
-    page.body.querySelector('x-app')!.remove()
+    page.body.querySelector('x-data')!.remove()
   })
 
   it('renders a dialog, click reject', async () => {
     const page = await newSpecPage({
-      components: [XApp, XDataProviderCookie],
+      components: [XData, XDataProviderCookie],
       html: `
-        <x-app>
+        <x-data>
           <x-data-provider-cookie>
             <button slot="accept">Accept</button>
             <button slot="reject">Reject</button>
           </x-data-provider-cookie>
-        </x-app>`,
+        </x-data>`,
       supportsShadowDom: true,
     })
 
@@ -104,6 +106,6 @@ describe('x-data-provider-cookie', () => {
     expect(provider).toBeNull()
 
     subject?.remove()
-    page.body.querySelector('x-app')!.remove()
+    page.body.querySelector('x-data')!.remove()
   })
 })

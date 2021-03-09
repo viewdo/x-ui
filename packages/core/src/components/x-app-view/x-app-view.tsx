@@ -10,7 +10,7 @@ import {
 } from '@stencil/core'
 import { debugIf, slugify } from '../../services/common'
 import { warn } from '../../services/common/logging'
-import { getRemoteContent } from '../../services/content/remote'
+import { resolveRemoteContent } from '../../services/content/remote'
 import { DATA_EVENTS } from '../../services/data/interfaces'
 import {
   replaceHtmlInElement,
@@ -267,7 +267,7 @@ export class XAppView {
       return null
     }
     try {
-      const content = await getRemoteContent(
+      const content = await resolveRemoteContent(
         window,
         this.contentSrc!,
         this.mode,
