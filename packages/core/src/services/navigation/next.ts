@@ -1,11 +1,12 @@
 import { evaluatePredicate } from '../data/expressions'
+import { dataState } from '../data/state'
 import { IViewDo, VisitStrategy } from './interfaces'
 import { hasVisited } from './visits'
 
 async function applyPredicate(viewDo: IViewDo): Promise<IViewDo> {
   let { when, url, visit = VisitStrategy.once } = viewDo
   let visited = await hasVisited(url)
-  if (when) {
+  if (dataState.enabled && when) {
     const shouldGo = await evaluatePredicate(when)
     if (shouldGo) {
       visit = VisitStrategy.once

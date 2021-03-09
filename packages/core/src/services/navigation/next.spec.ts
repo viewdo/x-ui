@@ -3,6 +3,7 @@ jest.mock('../data/evaluate.worker')
 
 import { addDataProvider } from '../data/factory'
 import { InMemoryProvider } from '../data/providers/memory'
+import { dataState } from '../data/state'
 import { actionBus, eventBus } from '../events'
 import { IViewDo, VisitStrategy } from './interfaces'
 import { resolveNext } from './next'
@@ -13,6 +14,7 @@ describe('next-resolver: find next', () => {
   let session: InMemoryProvider
 
   beforeEach(async () => {
+    dataState.enabled = true
     session = new InMemoryProvider()
     addDataProvider('session', session)
     toDos = []

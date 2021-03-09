@@ -4,7 +4,6 @@ jest.mock('../../../services/data/evaluate.worker')
 import { newSpecPage } from '@stencil/core/testing'
 import { contentStateDispose } from '../../../services/content/state'
 import { ElementsActionListener } from '../../../services/elements/actions'
-import { ElementTimer } from '../../../services/elements/timer'
 import { actionBus, eventBus } from '../../../services/events'
 import { VisitStrategy } from '../../../services/navigation/interfaces'
 import { XActionActivator } from '../../x-action-activator/x-action-activator'
@@ -12,6 +11,7 @@ import { XAction } from '../../x-action/x-action'
 import { MockRequestAnimationFrameProvider } from './mocks/frame-provider'
 import { MockRoute } from './mocks/route'
 import { ViewDoService } from './service'
+import { ElementTimer } from './timer'
 
 describe('view-do', () => {
   let subject: ViewDoService

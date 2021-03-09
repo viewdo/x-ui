@@ -10,12 +10,14 @@ import {
 } from '../../services/data/factory'
 import { DATA_EVENTS } from '../../services/data/interfaces'
 import { InMemoryProvider } from '../../services/data/providers/memory'
+import { dataState } from '../../services/data/state'
 import { actionBus, eventBus } from '../../services/events'
 import { XContentMarkdown } from './x-content-markdown'
 
 describe('x-content-markdown', () => {
   let session: InMemoryProvider
 
+  dataState.enabled = true
   beforeEach(() => {
     session = new InMemoryProvider()
     addDataProvider('session', session)

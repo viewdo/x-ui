@@ -8,13 +8,11 @@ import {
   State,
 } from '@stencil/core'
 import { warn } from '../../services/common'
-import { getRemoteContent } from '../../services/content/remote'
+import { replaceHtmlInElement } from '../../services/content/elements'
+import { resolveRemoteContent } from '../../services/content/remote'
+import { resolveChildElementXAttributes } from '../../services/data/elements'
 import { evaluatePredicate } from '../../services/data/expressions'
 import { DATA_EVENTS } from '../../services/data/interfaces'
-import {
-  replaceHtmlInElement,
-  resolveChildElementXAttributes,
-} from '../../services/elements'
 import { eventBus } from '../../services/events'
 import { RouterService, ROUTE_EVENTS } from '../../services/routing'
 
@@ -104,7 +102,7 @@ export class XContentInclude {
 
   private async resolveContentElement() {
     try {
-      const content = await getRemoteContent(
+      const content = await resolveRemoteContent(
         window,
         this.src,
         this.mode,

@@ -1,9 +1,9 @@
 import { RafCallback } from '@stencil/core/internal'
 import { ROUTE_EVENTS } from '../../services/routing/interfaces'
 import { addDataProvider } from '../data/factory'
-import { captureElementsEventOnce } from '../elements'
 import { IEventEmitter } from '../events'
 import { NavigationActionListener } from '../navigation/actions'
+import { captureElementsEventOnce } from '../navigation/elements'
 import { HistoryService } from './history'
 import {
   LocationSegments,

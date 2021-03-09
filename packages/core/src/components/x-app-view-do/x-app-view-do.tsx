@@ -9,13 +9,10 @@ import {
 } from '@stencil/core'
 import { debugIf, slugify } from '../../services/common'
 import { warn } from '../../services/common/logging'
-import { getRemoteContent } from '../../services/content/remote'
+import { replaceHtmlInElement } from '../../services/content/elements'
+import { resolveRemoteContent } from '../../services/content/remote'
+import { resolveChildElementXAttributes } from '../../services/data/elements'
 import { DATA_EVENTS } from '../../services/data/interfaces'
-import {
-  ElementTimer,
-  replaceHtmlInElement,
-  resolveChildElementXAttributes,
-} from '../../services/elements'
 import {
   ActionActivationStrategy,
   actionBus,
@@ -24,7 +21,7 @@ import {
 import { VisitStrategy } from '../../services/navigation'
 import { MatchResults, Route } from '../../services/routing'
 import { ViewDoService } from './view-do'
-
+import { ElementTimer } from './view-do/timer'
 /**
  * The \<x-app-view-do\> element represents a specialized child-route for a parent \<x-app-view\> component.
  * It represents a sub-route that has special presentation and workflow behaviors.
@@ -249,7 +246,7 @@ export class XAppViewDo {
     }
 
     try {
-      const content = await getRemoteContent(
+      const content = await resolveRemoteContent(
         window,
         this.contentSrc!,
         this.mode,

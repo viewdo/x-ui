@@ -12,7 +12,7 @@ import { RouterService as RouterService1 } from "./services/routing/router";
 import { AUDIO_COMMANDS, DiscardStrategy, LoadStrategy } from "./services/audio/interfaces";
 import { ReferenceCompleteResults } from "./services/content";
 import { CookieConsent } from "./components/x-data-provider-cookie/cookie";
-import { DataProviderRegistration, SetData } from "./services/data/interfaces";
+import { SetData } from "./services/data/interfaces";
 export namespace Components {
     interface XAction {
         /**
@@ -64,10 +64,6 @@ export namespace Components {
           * Turn on debugging to get helpful messages from the routing, data and action systems.
          */
         "debug": boolean;
-        /**
-          * The wait-time, in milliseconds to wait for un-registered data providers found in an expression. This is to accommodate a possible lag between evaluation before the first view-do 'when' predicate an the registration process.
-         */
-        "providerTimeout": number;
         /**
           * This is the root path that the actual page is, if it isn't '/', then the router needs to know where to begin creating paths.
          */
@@ -481,6 +477,12 @@ export namespace Components {
          */
         "timeout": number;
     }
+    interface XData {
+        /**
+          * The wait-time, in milliseconds to wait for un-registered data providers found in an expression. This is to accommodate a possible lag between evaluation before the first view-do 'when' predicate an the registration process.
+         */
+        "providerTimeout": number;
+    }
     interface XDataDisplay {
         /**
           * If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.
@@ -691,6 +693,12 @@ declare global {
         prototype: HTMLXContentReferenceElement;
         new (): HTMLXContentReferenceElement;
     };
+    interface HTMLXDataElement extends Components.XData, HTMLStencilElement {
+    }
+    var HTMLXDataElement: {
+        prototype: HTMLXDataElement;
+        new (): HTMLXDataElement;
+    };
     interface HTMLXDataDisplayElement extends Components.XDataDisplay, HTMLStencilElement {
     }
     var HTMLXDataDisplayElement: {
@@ -764,6 +772,7 @@ declare global {
         "x-content-include": HTMLXContentIncludeElement;
         "x-content-markdown": HTMLXContentMarkdownElement;
         "x-content-reference": HTMLXContentReferenceElement;
+        "x-data": HTMLXDataElement;
         "x-data-display": HTMLXDataDisplayElement;
         "x-data-provider-cookie": HTMLXDataProviderCookieElement;
         "x-data-provider-session": HTMLXDataProviderSessionElement;
@@ -825,10 +834,6 @@ declare namespace LocalJSX {
           * Listen for events that occurred within the **`<x-app>`** system.
          */
         "onX:events"?: (event: CustomEvent<any>) => void;
-        /**
-          * The wait-time, in milliseconds to wait for un-registered data providers found in an expression. This is to accommodate a possible lag between evaluation before the first view-do 'when' predicate an the registration process.
-         */
-        "providerTimeout"?: number;
         /**
           * This is the root path that the actual page is, if it isn't '/', then the router needs to know where to begin creating paths.
          */
@@ -1234,6 +1239,12 @@ declare namespace LocalJSX {
          */
         "timeout"?: number;
     }
+    interface XData {
+        /**
+          * The wait-time, in milliseconds to wait for un-registered data providers found in an expression. This is to accommodate a possible lag between evaluation before the first view-do 'when' predicate an the registration process.
+         */
+        "providerTimeout"?: number;
+    }
     interface XDataDisplay {
         /**
           * If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.
@@ -1353,6 +1364,7 @@ declare namespace LocalJSX {
         "x-content-include": XContentInclude;
         "x-content-markdown": XContentMarkdown;
         "x-content-reference": XContentReference;
+        "x-data": XData;
         "x-data-display": XDataDisplay;
         "x-data-provider-cookie": XDataProviderCookie;
         "x-data-provider-session": XDataProviderSession;
@@ -1386,6 +1398,7 @@ declare module "@stencil/core" {
             "x-content-include": LocalJSX.XContentInclude & JSXBase.HTMLAttributes<HTMLXContentIncludeElement>;
             "x-content-markdown": LocalJSX.XContentMarkdown & JSXBase.HTMLAttributes<HTMLXContentMarkdownElement>;
             "x-content-reference": LocalJSX.XContentReference & JSXBase.HTMLAttributes<HTMLXContentReferenceElement>;
+            "x-data": LocalJSX.XData & JSXBase.HTMLAttributes<HTMLXDataElement>;
             "x-data-display": LocalJSX.XDataDisplay & JSXBase.HTMLAttributes<HTMLXDataDisplayElement>;
             "x-data-provider-cookie": LocalJSX.XDataProviderCookie & JSXBase.HTMLAttributes<HTMLXDataProviderCookieElement>;
             "x-data-provider-session": LocalJSX.XDataProviderSession & JSXBase.HTMLAttributes<HTMLXDataProviderSessionElement>;

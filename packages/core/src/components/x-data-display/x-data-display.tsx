@@ -8,13 +8,10 @@ import {
   State,
 } from '@stencil/core'
 import { warn } from '../../services/common/logging'
+import { replaceHtmlInElement } from '../../services/content/elements'
+import { resolveChildElementXAttributes } from '../../services/data/elements'
 import { DATA_EVENTS } from '../../services/data/interfaces'
 import { resolveTokens } from '../../services/data/tokens'
-import {
-  removeAllChildNodes,
-  replaceHtmlInElement,
-  resolveChildElementXAttributes,
-} from '../../services/elements'
 import { eventBus } from '../../services/events'
 import { RouterService, ROUTE_EVENTS } from '../../services/routing'
 
@@ -94,7 +91,13 @@ export class XDataDisplay {
         warn(`x-data-display: unable to deserialize JSON: ${error}`)
       }
     }
-    removeAllChildNodes(this.el)
+    this.removeAllChildNodes(this.el)
+  }
+
+  private removeAllChildNodes(rootElement: HTMLElement) {
+    while (rootElement.firstChild !== null) {
+      rootElement.firstChild.remove()
+    }
   }
 
   async componentWillRender() {

@@ -1,17 +1,5 @@
 import { debugIf } from '../../../services/common/logging'
 import {
-  captureElementChildTimedNodes,
-  captureXBackClickEvent,
-  captureXLinkClickEvent,
-  captureXNextClickEvent,
-  ElementTimer,
-  getChildInputValidity,
-  resolveElementChildTimedNodesByTime,
-  restoreElementChildTimedNodes,
-  TimedNode,
-  TIMER_EVENTS,
-} from '../../../services/elements'
-import {
   ActionActivationStrategy,
   IEventEmitter,
 } from '../../../services/events/interfaces'
@@ -20,6 +8,17 @@ import { recordVisit } from '../../../services/navigation/visits'
 import { IRoute } from '../../../services/routing/interfaces'
 import { VideoActionListener } from '../../../services/video/actions'
 import { videoState } from '../../../services/video/state'
+import {
+  captureElementChildTimedNodes,
+  captureXBackClickEvent,
+  captureXLinkClickEvent,
+  captureXNextClickEvent,
+  getChildInputValidity,
+  resolveElementChildTimedNodesByTime,
+  restoreElementChildTimedNodes,
+} from './elements'
+import { TimedNode, TIMER_EVENTS } from './interfaces'
+import { ElementTimer } from './timer'
 
 export class ViewDoService {
   private timedNodes: TimedNode[] = []

@@ -1,5 +1,5 @@
-import { debugIf } from '../common'
-import { EventEmitter } from '../events'
+import { debugIf } from '../../../services/common'
+import { EventEmitter } from '../../../services/events'
 import { TIMER_EVENTS } from './interfaces'
 
 export class ElementTimer extends EventEmitter {

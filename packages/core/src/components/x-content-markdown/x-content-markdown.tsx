@@ -8,17 +8,15 @@ import {
   State,
 } from '@stencil/core'
 import { warn } from '../../services/common/logging'
+import { replaceHtmlInElement } from '../../services/content/elements'
 import {
-  getRemoteContent,
+  resolveRemoteContent,
   resolveSrc,
 } from '../../services/content/remote'
+import { resolveChildElementXAttributes } from '../../services/data/elements'
 import { evaluatePredicate } from '../../services/data/expressions'
 import { DATA_EVENTS } from '../../services/data/interfaces'
 import { resolveTokens } from '../../services/data/tokens'
-import {
-  replaceHtmlInElement,
-  resolveChildElementXAttributes,
-} from '../../services/elements'
 import { eventBus } from '../../services/events'
 import { RouterService, ROUTE_EVENTS } from '../../services/routing'
 import { renderMarkdown } from './markdown/remarkable.worker'
@@ -154,7 +152,7 @@ export class XContentMarkdown {
 
   private async getContentFromSrc() {
     try {
-      const content = await getRemoteContent(
+      const content = await resolveRemoteContent(
         window,
         this.src!,
         this.mode,

@@ -10,12 +10,10 @@ import {
 } from '@stencil/core'
 import { debugIf, slugify } from '../../services/common'
 import { warn } from '../../services/common/logging'
+import { replaceHtmlInElement } from '../../services/content/elements'
 import { resolveRemoteContent } from '../../services/content/remote'
+import { resolveChildElementXAttributes } from '../../services/data/elements'
 import { DATA_EVENTS } from '../../services/data/interfaces'
-import {
-  replaceHtmlInElement,
-  resolveChildElementXAttributes,
-} from '../../services/elements'
 import {
   ActionActivationStrategy,
   eventBus,
