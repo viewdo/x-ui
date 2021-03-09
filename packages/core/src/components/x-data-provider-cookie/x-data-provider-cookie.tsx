@@ -29,7 +29,7 @@ import { CookieProvider } from './cookie'
 @Component({
   tag: 'x-data-provider-cookie',
   shadow: true,
-  styles: `:host {display:block; display:contents;}`,
+  styles: `:host {display:block;}`,
 })
 export class XDataProviderCookie {
   private customProvider!: IDataProvider

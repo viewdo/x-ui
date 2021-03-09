@@ -4,12 +4,10 @@ import { createStore } from '@stencil/store'
 
 class StateModel {
   references!: string[]
-  animationInterval!: number
 }
 
 const store = createStore<StateModel>({
   references: [],
-  animationInterval: 500,
 })
 
 const { state, onChange, reset, dispose } = store
