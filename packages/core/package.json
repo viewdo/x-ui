@@ -31,27 +31,23 @@
   "scripts": {
     "--- development ---": "---------------",
     "start": "npm run watch",
-    "watch": "stencil build --docs --dev --watch --www",
+    "watch": "stencil build --docs --www --dev --watch",
     "gen": "stencil generate",
     "--- production ---": "---------------",
-    "build": "stencil build --docs --www --dist",
-    "build:watch": "stencil build --docs --www --watch",
+    "build": "stencil build --docs --dist",
+    "build:docs": "stencil build --docs --www",
     "--- test ---": "---------------",
     "test": "stencil test --spec --coverage",
-    "test:spec": "stencil test --spec",
-    "test:e2e": "stencil test --e2e",
     "test:watch": "stencil test --spec --watch"
   },
-  "dependencies": {
-    "howler": "^2.2.1"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@stencil/core": "2.4.0",
     "@stencil/sass": "1.4.1",
     "@stencil/store": "1.4.1",
     "@types/howler": "2.2.1",
     "expr-eval": "2.0.2",
-    "history": "5.0.0",
+    "howler": "^2.2.1",
     "jsonata": "1.8.4",
     "remarkable": "2.0.1"
   },

@@ -7,8 +7,6 @@ import {
 } from '../../services/elements'
 import { XContentReference } from './x-content-reference'
 
-jest.setTimeout(1000)
-
 describe('x-content-reference', () => {
   afterEach(() => {
     elementsStateReset()
@@ -28,26 +26,37 @@ describe('x-content-reference', () => {
   it('renders inline script', async () => {
     const page = await newSpecPage({
       components: [XContentReference],
-      html: `<x-content-reference script-src="https://foo.js" inline></x-content-reference>`,
+      html: `<x-content-reference script-src="https://foo.js" inline timeout="300"></x-content-reference>`,
     })
     await page.waitForChanges()
+
+    const subject = page.body.querySelector('x-content-reference')!
+    await subject.forceLoad()
+
     expect(page.root).toEqualHtml(`
-      <x-content-reference script-src="https://foo.js" inline><script src="https://foo.js"></script>
+      <x-content-reference script-src="https://foo.js" inline  timeout="300"><script src="https://foo.js"></script>
       </x-content-reference>
     `)
 
     expect(hasReference('https://foo.js')).toBeTruthy()
+
+    subject.remove()
   })
 
   it('renders inline styles', async () => {
     const page = await newSpecPage({
       components: [XContentReference],
-      html: `<x-content-reference style-src="https://foo.css" inline></x-content-reference>`,
+      html: `<x-content-reference style-src="https://foo.css" inline timeout="300"></x-content-reference>`,
     })
 
     await page.waitForChanges()
+
+    const subject = page.body.querySelector('x-content-reference')!
+    await subject.forceLoad()
+
     expect(page.root).toEqualHtml(`
-      <x-content-reference style-src="https://foo.css" inline><link href="https://foo.css" rel="stylesheet"/>
+      <x-content-reference style-src="https://foo.css" inline="" timeout="300">
+        <link href="https://foo.css" rel="stylesheet"/>
       </x-content-reference>
     `)
 
@@ -58,13 +67,16 @@ describe('x-content-reference', () => {
     const page = await newSpecPage({
       components: [XContentReference],
       html: `
-       <x-content-reference inline module script-src="https://foo.jsm"></x-content-reference>
+       <x-content-reference inline  timeout="300" module script-src="https://foo.jsm"></x-content-reference>
       `,
     })
     await page.waitForChanges()
 
+    const subject = page.body.querySelector('x-content-reference')!
+    await subject.forceLoad()
+
     expect(page.root).toEqualHtml(`
-      <x-content-reference inline="" module="" script-src="https://foo.jsm">
+      <x-content-reference inline=""  timeout="300" module="" script-src="https://foo.jsm">
         <script type="module" src="https://foo.jsm"></script>
       </x-content-reference>
     `)
@@ -76,13 +88,16 @@ describe('x-content-reference', () => {
     const page = await newSpecPage({
       components: [XContentReference],
       html: `
-       <x-content-reference inline no-module script-src="https://foo.jsm"></x-content-reference>
+       <x-content-reference inline  timeout="300" no-module script-src="https://foo.jsm"></x-content-reference>
       `,
     })
     await page.waitForChanges()
 
+    const subject = page.body.querySelector('x-content-reference')!
+    await subject.forceLoad()
+
     expect(page.root).toEqualHtml(`
-      <x-content-reference inline="" no-module="" script-src="https://foo.jsm">
+      <x-content-reference inline="" timeout="300" no-module="" script-src="https://foo.jsm">
         <script nomodule="" src="https://foo.jsm"></script>
       </x-content-reference>
     `)
@@ -94,12 +109,16 @@ describe('x-content-reference', () => {
     const page = await newSpecPage({
       components: [XContentReference],
       html: `
-      <x-content-reference style-src="https://foo.css" inline></x-content-reference>
-      <x-content-reference style-src="https://foo.css" inline></x-content-reference>`,
+      <x-content-reference style-src="https://foo.css" inline  timeout="300"></x-content-reference>
+      <x-content-reference style-src="https://foo.css" inline  timeout="300"></x-content-reference>`,
     })
     await page.waitForChanges()
+
+    const subject = page.body.querySelector('x-content-reference')!
+    await subject.forceLoad()
+
     expect(page.root).toEqualHtml(`
-      <x-content-reference style-src="https://foo.css" inline="">
+      <x-content-reference style-src="https://foo.css" inline=""  timeout="300">
         <link href="https://foo.css" rel="stylesheet">
       </x-content-reference>
     `)
