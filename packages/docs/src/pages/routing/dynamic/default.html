@@ -1,46 +1,41 @@
 <x-content-reference
   script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
-  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css"
->
+  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
 </x-content-reference>
 <x-content-reference
-  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js"
->
+  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
 </x-content-reference>
-<div class="container container-fluid mx-auto">
+
+<div class="content">
   <h1>Dynamic Routes</h1>
   <p class="lead">Data-driven, dynamic routing for HTML.</p>
-
   <h2>How it Works</h2>
-  <p>
-    This router supports segment and query-string variables and we provide a simple, declarative method for using that
-    data in your application. By using special (Node.js Express-based) notation in the
-    <a href="/components/x-app-view">
+  <p> This router supports segment and query-string variables and we provide a
+    simple, declarative method for using that data in your application. By using
+    special (Node.js Express-based) notation in the <a
+      href="/components/x-app-view">
       <b>&lt;x-app-view&gt;</b>
-    </a>
-    element's <b>URL</b> attribute, the route data becomes available in our unified
-    <a href="/data/expressions">data expression</a> system.
-  </p>
-  <p>
-    Routes can express dynamic parameters, to provide data-driven views You can even use that data in your HTML, again
-    with no code.
-  </p>
-
+    </a> element's <b>URL</b> attribute, the route data becomes available in
+    our unified <a href="/data/expressions">data expression</a> system. </p>
+  <p> Routes can express dynamic parameters, to provide data-driven views You
+    can even use that data in your HTML, again with no code. </p>
   <h3>Contrived Example</h3>
-  <p>This page's child-routes demonstrate how dynamic, data-driven routes can be used with this routing system.</p>
+  <p>This page's child-routes demonstrate how dynamic, data-driven routes can be
+    used with this routing system.</p>
 
   <div class="button-nav">
-    <a href="/routing/dynamic/item/cake" class="btn btn-secondary">
+    <a href="/routing/dynamic/item/cake"
+      class="btn btn-secondary">
       <i class="ri-cake-2-line"></i>
       Cake
     </a>
-
-    <a href="/routing/dynamic/item/wine" class="btn btn-secondary">
+    <a href="/routing/dynamic/item/wine"
+      class="btn btn-secondary">
       <i class="ri-goblet-fill"></i>
       Wine
     </a>
-
-    <x-data-display hidden x-show-when="{{storage:favorite}}">
+    <x-data-display hidden
+      x-show-when="{{storage:favorite}}">
       <template>
         <a href="/routing/dynamic/item/{{storage:favorite}}" class="btn btn-secondary">
           <i class="ri-user-heart-line"></i>
@@ -48,13 +43,13 @@
         </a>
       </template>
     </x-data-display>
-
-    <a href="/routing/dynamic/custom" x-hide-when="{{storage:favorite}}" class="btn btn-secondary">
+    <a href="/routing/dynamic/custom"
+      x-hide-when="{{storage:favorite}}"
+      class="btn btn-secondary">
       <i class="ri-discuss-line"></i>
       Custom Item
     </a>
   </div>
-
   <x-content-markdown>
     <script type="text/markdown">
       ```html
@@ -69,8 +64,9 @@
       ```
     </script>
   </x-content-markdown>
-
   <footer>
-    <a slot="start" href="/routing" class="btn btn-light"> &lt; Routing </a>
+    <a slot="start"
+      href="/routing"
+      class="btn btn-light"> &lt; Routing </a>
   </footer>
 </div>

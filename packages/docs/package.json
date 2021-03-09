@@ -4,15 +4,29 @@
   "version": "0.0.1",
   "description": "Stencil App Starter",
   "scripts": {
+    "--- development ---": "---------------",
+    "start": "stencil build --docs --dist --watch --serve",
+    "generate": "stencil generate",
+    "--- production ---": "---------------",
     "build": "stencil build",
-    "start": "stencil build --dev --docs --watch --serve",
-    "test": "stencil test --spec --e2e",
-    "test.watch": "stencil test --spec --e2e --watchAll",
-    "generate": "stencil generate"
+    "--- test ---": "---------------",
+    "test": "stencil test --spec",
+    "test.watch": "stencil test --spec --watchAll"
   },
   "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^4.0.2",
     "@stencil/core": "2.4.0",
+    "@stencil/postcss": "^2.0.0",
+    "autoprefixer": "^10.2.5",
+    "postcss": "^8.2.7",
+    "postcss-import": "^14.0.0",
+    "postcss-scss": "^3.0.5",
+    "remixicon": "^2.5.0",
+    "tailwindcss": "^2.0.3",
     "workbox-build": "4.3.1"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^5.0.0-beta2"
+  }
 }

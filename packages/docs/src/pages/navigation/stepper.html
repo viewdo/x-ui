@@ -6,7 +6,7 @@
   script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
 </x-content-reference>
 
-<div class="container container-fluid mx-auto">
+<div class="content">
   <h1>Stepper Navigation</h1>
   <p class="lead"> Guided navigation using a stepper with back/next format with
     a convention-based next route automatically determined by the router. </p>
@@ -32,7 +32,7 @@
 
         <x-app-view url="/home" page-title="Home">
           <h2>Home</h2>
-          <div slot="content">
+          <div class="content">
             <p>Click the link below to begin.</p>
 
             <a class="btn btn-primary" href="/survey" x-hide-when="{{storage:food}}">Take Survey</a>
@@ -57,7 +57,7 @@
                 </span>
               </h3>
               <x-app-view-do when="!{{storage:nickname}}" url="step-1" page-title="Step 1">
-                <div slot="content" class="form-group">
+                <div class="content" class="form-group">
                   <label class="form-label" for="name">Nick Name</label>
                   <input
                     type="text"
@@ -87,7 +87,7 @@
                 </span>
               </h3>
               <x-app-view-do when="!{{storage:show}}" url="step-2" page-title="Step 2">
-                <div slot="content">
+                <div class="content">
                   <label class="form-label" for="show">TV Show</label>
                   <input
                     type="text"
@@ -116,7 +116,7 @@
                 </span>
               </h3>
               <x-app-view-do when="!{{storage:food}}" url="step-3" page-title="Step 3">
-                <div slot="content">
+                <div class="content">
                   <label class="form-label" for="show">Food or Snack</label>
                   <input
                     type="text"
@@ -134,7 +134,7 @@
             </div>
           </div>
 
-          <div slot="content">
+          <div class="content">
             <p>Thank you for completing our survey.</p>
           </div>
         </x-app-view>

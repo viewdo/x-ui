@@ -1,17 +1,14 @@
 <x-content-reference
   script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
-  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css"
->
+  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
 </x-content-reference>
 <x-content-reference
-  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js"
->
+  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
 </x-content-reference>
-<div class="container container-fluid mx-auto">
-  <h1>Route-based Content</h1>
-  <p class="lead">This page uses route and URL
-    data within the content!</p>
 
+<div class="content">
+  <h1>Route-based Content</h1>
+  <p class="lead">This page uses route and URL data within the content!</p>
   <x-data-display>
     <template>
       <h2>Learn About '{{route:item}}'</h2>
@@ -23,16 +20,9 @@
       />
     </template>
   </x-data-display>
-
   <h2>Under the Hood</h2>
-  <p>
-    Check out how <b
-      class="brand">&lt;x-ui/&gt;</b> makes it
-    easy to use route and query-string data
-    directly in your
-    content.
-  </p>
-
+  <p> Check out how <b class="brand">&lt;x-ui/&gt;</b> makes it easy to use
+    route and query-string data directly in your content. </p>
   <x-content-markdown>
     <script type="text/markdown">
       ```html
@@ -52,10 +42,8 @@
       ```
     </script>
   </x-content-markdown>
-
   <h2>Route Definition</h2>
   <p></p>
-
   <x-content-markdown>
     <script type="text/markdown">
 
@@ -66,12 +54,9 @@
       ```
     </script>
   </x-content-markdown>
-
   <footer>
-    <a
-      slot="start"
+    <a slot="start"
       href="/routing/dynamic"
-      class="btn btn-light"
-    > &lt; Back </a>
+      class="btn btn-light"> &lt; Back </a>
   </footer>
 </div>

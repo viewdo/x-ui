@@ -1,4 +1,17 @@
-<div class="container container-fluid mx-auto">
+<x-data-provider-cookie x-cloak
+  class="container container-fluid shadow-sm p-2 mt-2">
+  <p>This site uses cookies as a data-provider for demonstration purposes. </p>
+  <p>Here's where the lawyers add all their jargon knowing you will likely not
+    read it.</p>
+  <button type="button"
+    class="btn btn-primary float-end"
+    slot="accept">Accept</button>
+  <button type="button"
+    class="btn btn-light"
+    slot="reject">Close</button>
+</x-data-provider-cookie>
+
+<div class="content">
   <h1>Introductions</h1>
   <p> The <a href="https://view.do/"
       target="_blank">view.DO</a> Experience UI components were built to make it
@@ -8,16 +21,22 @@
   <p>Tell us what to call you and it will show up in fun ways later.</p>
 
   <div class="form-floating mb-3">
-    <input type="text"
-      required
-      class="form-control"
-      onblur="localStorage.setItem('name', this.value)"
-      onchange="localStorage.setItem('name', this.value)"
-      x-value-from="{{storage:name}}" />
-    <label for="floatingInput">Nickname</label>
+    <x-action-activator target-element="#next">
+      <x-action topic="data"
+        command="set-data"
+        data-provider="storage">
+        <label for="floatingInput">Nickname</label>
+        <input type="text"
+          id="name"
+          required
+          class="form-control"
+          x-value-from="{{storage:name}}" />
+      </x-action>
+    </x-action-activator>
   </div>
   <footer>
     <button slot="end"
+      id="next"
       x-next
       class="btn btn-primary btn-lg">Continue &gt;</button>
   </footer>

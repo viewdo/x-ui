@@ -1,32 +1,36 @@
 <x-content-reference
   script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
-  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css"
->
+  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
 </x-content-reference>
 <x-content-reference
-  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js"
->
+  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
 </x-content-reference>
-<div class="container container-fluid mx-auto">
+
+<div class="content">
+
   <div class="card">
+
     <div class="card-header">
       <h2>Storage Data</h2>
     </div>
+
     <div class="card-content">
       <li>
         <label>Animal</label>
-        <input
-          type="text"
+        <input type="text"
           required
           onblur="localStorage.setItem('animal', this.value)"
           onchange="localStorage.setItem('animal', this.value)"
-          value-from="{{storage:animal}}"
-        />
+          value-from="{{storage:animal}}" />
       </li>
     </div>
   </div>
   <footer>
-    <a slot="start" x-back class="btn btn-light btn-lg"> &lt; Back </a>
-    <a slot="end" x-next class="btn btn-primary btn-lg"> Next &gt; </a>
+    <a slot="start"
+      x-back
+      class="btn btn-light btn-lg"> &lt; Back </a>
+    <a slot="end"
+      x-next
+      class="btn btn-primary btn-lg"> Next &gt; </a>
   </footer>
 </div>

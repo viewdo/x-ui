@@ -1,17 +1,19 @@
 <x-content-reference
   script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
-  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css"
->
+  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
 </x-content-reference>
 <x-content-reference
-  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js"
->
+  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
 </x-content-reference>
-<div class="container container-fluid mx-auto">
-  <x-content-markdown src="/pages/presentation/guided.md"></x-content-markdown>
 
+<div class="content">
+  <x-content-markdown src="/pages/presentation/guided.md"></x-content-markdown>
   <footer>
-    <a slot="start" x-back class="btn btn-primary btn-lg"> &lt; Back </a>
-    <a slot="end" x-next class="btn btn-primary btn-lg"> Next &gt; </a>
+    <a slot="start"
+      x-back
+      class="btn btn-primary btn-lg"> &lt; Back </a>
+    <a slot="end"
+      x-next
+      class="btn btn-primary btn-lg"> Next &gt; </a>
   </footer>
 </div>

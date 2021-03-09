@@ -5,6 +5,7 @@ import { version } from './package.json'
 const config: Config = {
   namespace: 'x-ui',
   excludeUnusedDependencies: true,
+  hashFileNames: false,
   rollupPlugins: {
     before: [
       analyzer({

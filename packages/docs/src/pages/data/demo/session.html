@@ -1,25 +1,25 @@
 <x-content-reference
   script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
-  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css"
->
+  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
 </x-content-reference>
 <x-content-reference
-  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js"
->
+  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
 </x-content-reference>
-<div class="container container-fluid mx-auto">
+
+<div class="content">
   <label class="form-library">Favorite</label>
-  <input
-    type="text"
+  <input type="text"
     required
     class="form-control"
     onblur="sessionStorage.setItem('favorite', this.value)"
     onchange="sessionStorage.setItem('favorite', this.value)"
-    value-from="{{session:favorite}}"
-  />
-
+    value-from="{{session:favorite}}" />
   <footer>
-    <a slot="start" class="btn btn-light btn-lg" x-back> &lt; Back </a>
-    <a slot="end" x-next class="btn btn-primary btn-lg"> Next &gt; </a>
+    <a slot="start"
+      class="btn btn-light btn-lg"
+      x-back> &lt; Back </a>
+    <a slot="end"
+      x-next
+      class="btn btn-primary btn-lg"> Next &gt; </a>
   </footer>
 </div>

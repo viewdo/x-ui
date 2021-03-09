@@ -4,12 +4,14 @@
 :host(.active-route) {
   display: block;
 }
-:host(.active-route) ::slotted([slot='content']) {
+:host(.active-route) ::slotted([slot=content]),
+:host(.active-route-exact) div[slot=content] {
   display: none;
 }
 :host(.active-route-exact) {
   display: block;
 }
-:host(.active-route-exact) ::slotted([slot='content']) {
+:host(.active-route-exact) ::slotted([slot=content]),
+:host(.active-route-exact) div[slot=content] {
   display: block;
 }

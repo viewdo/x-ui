@@ -55,7 +55,6 @@ describe('x-app-view-do', () => {
         <x-app-view-do hidden="" url="/go" >
           <mock:shadow-root>
             <slot></slot>
-            <slot name="content"></slot>
           </mock:shadow-root>
         </x-app-view-do>
       </x-app-view>
@@ -96,7 +95,6 @@ describe('x-app-view-do', () => {
         <x-app-view-do class="active-route active-route-exact" url="/go" >
           <mock:shadow-root>
             <slot></slot>
-            <slot name="content"></slot>
           </mock:shadow-root>
           <a x-attached-click="" x-attached-keydown="" x-next="">Next</a>
         </x-app-view-do>
@@ -227,7 +225,6 @@ describe('x-app-view-do', () => {
       <x-app-view-do hidden="" url="/go" >
         <mock:shadow-root>
           <slot></slot>
-          <slot name="content"></slot>
         </mock:shadow-root>
       </x-app-view-do>
     </x-app-view>
@@ -252,7 +249,6 @@ describe('x-app-view-do', () => {
       <x-app-view-do hidden="" url="/go" >
         <mock:shadow-root>
           <slot></slot>
-          <slot name="content"></slot>
         </mock:shadow-root>
       </x-app-view-do>
       `)
@@ -294,7 +290,6 @@ describe('x-app-view-do', () => {
           <x-app-view-do class="active-route active-route-exact" content-src="fake.html" url="/test">
             <mock:shadow-root>
               <slot></slot>
-              <slot name="content"></slot>
             </mock:shadow-root>
             <div id="remote-content-fakehtml">
               <h1>
@@ -347,7 +342,6 @@ describe('x-app-view-do', () => {
           <x-app-view-do class="active-route active-route-exact" content-src="fake.html" url="/test">
             <mock:shadow-root>
               <slot></slot>
-              <slot name="content"></slot>
             </mock:shadow-root>
           </x-app-view-do>
         </x-app-view>
@@ -396,7 +390,6 @@ describe('x-app-view-do', () => {
           <x-app-view-do class="active-route active-route-exact" content-src="fake.html" url="/test" resolve-tokens>
             <mock:shadow-root>
               <slot></slot>
-              <slot name="content"></slot>
             </mock:shadow-root>
             <div id="remote-content-fakehtml">
               <h1>
@@ -422,7 +415,6 @@ describe('x-app-view-do', () => {
           <x-app-view-do class="active-route active-route-exact" content-src="fake.html" url="/test" resolve-tokens>
             <mock:shadow-root>
               <slot></slot>
-              <slot name="content"></slot>
             </mock:shadow-root>
             <div id="remote-content-fakehtml">
               <h1>

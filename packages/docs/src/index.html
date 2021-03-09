@@ -28,27 +28,63 @@
     <meta name="theme-color"
       content="#16161d" />
     <link rel="dns-prefetch"
+      href="static.view.do" />
+    <link rel="preconnect"
       href="https://static.view.do" />
     <link rel="dns-prefetch"
-      href="https://cdnjs.cloudflare.com" />
+      href="cdn.jsdelivr.net" />
     <link rel="preconnect"
-      href="https://static.view.do" />
-    <link rel="preconnect"
-      href="https://cdnjs.cloudflare.com" />
+      href="https://cdn.jsdelivr.net" />
     <link rel="icon"
       type="image/ico"
       href="/assets/favicon.ico" />
+    <link rel="manifest"
+      href="/manifest.json" />
+    <script type="module"
+      src="/js/docs/app.esm.js"></script>
     <!-- Experience UI -->
     <script type="module"
-      src="/dist/x-ui.esm.js"></script>
-    <!-- Animate.css -->
-    <link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    <link rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
-      media="print"
-      onload="this.media='all'" />
-    <!-- Page Styles -->
+      src="/js/dist/x-ui.esm.js"></script>
+    <link rel="preload"
+      as="script"
+      crossorigin
+      href="/js/dist/x-app.entry.js">
+    <link rel="preload"
+      as="script"
+      crossorigin
+      href="/js/dist/x-app-link.entry.js">
+    <link rel="preload"
+      as="script"
+      crossorigin
+      href="/js/dist/x-app-theme.entry.js">
+    <link rel="preload"
+      as="script"
+      crossorigin
+      href="/js/dist/x-app-view.entry.js">
+    <link rel="preload"
+      as="script"
+      crossorigin
+      href="/js/dist/x-data-provider-session.entry.js">
+    <link rel="preload"
+      as="script"
+      crossorigin
+      href="/js/dist/x-data-provider-storage.entry.js">
+    <link rel="preload"
+      as="script"
+      crossorigin
+      href="/js/dist/x-app-view-not-found.entry.js">
+    <link rel="preload"
+      as="script"
+      crossorigin
+      href="/js/dist/x-content-reference.entry.js">
+    <link rel="preload"
+      as="script"
+      crossorigin
+      href="/js/dist/x-app-view-do.entry.js">
+    <link rel="preload"
+      as="script"
+      crossorigin
+      href="/js/dist/app-globals-0f993ce5.js">
     <style>
       [x-cloak],
       [hidden],
@@ -56,12 +92,11 @@
         display: none;
       }
     </style>
+    <!-- Page Styles -->
     <link rel="stylesheet"
-      href="/assets/styles.css"
-      media="print"
-      onload="this.media='all'" />
-    <link rel="manifest"
-      href="/manifest.json" />
+      href="/js/docs/app.css" />
+    <link rel="stylesheet"
+      href="/assets/styles.css" />
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async
       src="https://www.googletagmanager.com/gtag/js?id=G-SL9WMJ9XVP"></script>
@@ -77,14 +112,10 @@
 
   <body>
 
-    <x-app start-url="/home"
+    <x-app start-url="/"
+      debug
       app-title="<x-ui/> :: view.DO"
       transition="animate__animated animate__fadeIn">
-      <x-app-theme></x-app-theme>
-      <x-content-reference
-        style-src="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
-        script-src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js">
-      </x-content-reference>
       <nav x-cloak
         class="navbar">
 
@@ -183,50 +214,124 @@
           </x-app-link-->
         </div>
       </nav>
+      <x-app-view url="/"
+        exact>
+        <x-content-reference
+          style-src="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css">
+        </x-content-reference>
+        <x-content-reference
+          style-src="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css">
+        </x-content-reference>
+        <x-data-provider-session></x-data-provider-session>
+        <x-data-provider-storage></x-data-provider-storage>
 
-      <div x-hide
-        class="container container-fluid container-md mx-auto">
-
-        <div class="hero">
-          <h1>Turbo-charge your HTML</h1>
-          <h2>Modern web-application functionality without leaving the comfort
-            of HTML. </h2>
-          <p>Enable JavaScript to see more</p>
+        <div slot="content">
+          <h1 class="mt-3 mb-3">Turbo-charged HTML</h1>
+          <h2 class="mt-3 mb-3">Modern web-application functionality without
+            leaving the comfort of HTML.</h2>
+          <h3>Features:</h3>
+          <h4>
+            <i class="ri-route-line"></i> Single-Page URL Routing
+          </h4>
+          <ul>
+            <li>Declarative Routing directly in HTML (no scripting) </li>
+            <li>Variable Data Routes & Remote Data-Driven Content</li>
+            <li>Data Provider System</li>
+          </ul>
+          <h4>
+            <i class="ri-direction-line"></i> Guided Navigation
+          </h4>
+          <ul>
+            <li>Automatic Back & Forward Resolution</li>
+            <li>Sequenced Content: present, educate, inform</li>
+            <li>Sequenced Input: surveys, quiz and display results </li>
+            <li>Sequenced Video: interactive video story-telling</li>
+            <li>Expression-based View &amp; Conditions</li>
+            <li>Stateful: pick up where a user left-off</li>
+          </ul>
+          <h4>
+            <i class="ri-empathize-line"></i> Embedded Data
+          </h4>
+          <ul>
+            <li>Data Tags to render personalized data from a variety of sources
+            </li>
+            <li>Use HTML to access data from your API</li>
+            <li>Capture attention and data, with smart workflows to replace
+              boring forms.</li>
+            <li>Personalize the content for each of your visitors. </li>
+          </ul>
+          <h4>
+            <i class="ri-slideshow-line"></i> Made for Presentations
+          </h4>
+          <ul>
+            <li>Interactive Videos</li>
+            <li>Queued, Timed & Event-based Actions</li>
+            <li>Animated Transitions</li>
+            <li>Background Music & Voice-Overs</li>
+            <li>Animation Hooks</li>
+          </ul>
+          <h2>Built with Love</h2>
+          <ul>
+            <li>
+              <b>Fast:</b> Lightweight and <a
+                href="https://developers.google.com/speed/pagespeed/insights/?url=https://demo.x-ui.dev&tab=desktop"
+                rel="noreferrer"
+                target="_blank">
+                lightening fast</a>: No Framework & Lazy Loaded
+            </li>
+            <li><b>Themeable:</b> BYO UI and themes. <b
+                class="brand">&lt;x-ui/&gt;</b> stays out of the way.</li>
+            <li><b>Extensible:</b> BYO Data with a plugin system to easily
+              connect your data</li>
+            <li><b>Typed:</b> Built with TypeScript so you can enjoy completely
+              typed components</li>
+            <li><b>Portable:</b> Native web components with hooks to integrate
+              with any framework</li>
+            <li><b>Trackable:</b> Analytics & Behavior Tracking Plugins</li>
+            <li><b>Extensible:</b> The provider system makes it easy to
+              integrate with anything.</li>
+          </ul>
+          <a href="https://view.do"
+            target="_blank"
+            rel="noopener"
+            title="view.DO Homepage">
+            <img
+              id="viewdo-logo"
+              loading="lazy"
+              alt="view.DO Logo"
+              src="https://static.view.do/view-do/viewdo-logo-color.svg"
+              width="200vw"
+              height="100"
+            />
+          </a>
+          <footer>
+            <a slot="end"
+              href="/home"
+              anchor-title="Learn More">
+              <button class="btn btn-primary btn-lg">Learn More &gt;</button>
+            </a>
+          </footer>
         </div>
-      </div>
-      <x-data-provider-cookie x-cloak
-        class="container container-fluid border shadow-sm p-2 mt-2">
-
-        <div>
-          <p>This site uses cookies as a data-provider for demonstration
-            purposes.</p>
-          <p>Here's where the lawyers add all their jargon knowing you will
-            likely not read it.</p>
-        </div>
-        <button type="button"
-          class="btn btn-primary"
-          slot="accept">Accept</button>
-        <button type="button"
-          class="btn "
-          slot="reject">Decline</button>
-      </x-data-provider-cookie>
+      </x-app-view>
       <x-app-view url="/home"
-        page-title="Home"
+        resolve-tokens
         content-src="/pages/home/default.html">
-        <x-app-view-do url="name"
+        <x-app-theme></x-app-theme>
+        <x-app-view-do url="/home/name"
           page-title="Introductions"
           when="!{{storage:name}}"
           content-src="/pages/home/intro.html">
         </x-app-view-do>
-        <x-app-view-do url="welcome"
+        <x-app-view-do url="/home/welcome"
           page-title="Welcome"
           visit="always"
           content-src="/pages/home/welcome.html"
           transition="animate__animated animate__pulse">
         </x-app-view-do>
-        <x-app-view url="profile"
+        <x-app-view url="/home/profile"
           page-title="Profile"
-          content-src="/pages/home/profile.html"> </x-app-view>
+          content-src="/pages/home/profile.html">
+        </x-app-view>
       </x-app-view>
       <x-app-view url="/start"
         page-title="Get Started"
@@ -251,21 +356,6 @@
         page-title="Routing"
         content-src="/pages/routing/default.html"
         transition="animate__animated animate__fadeIn">
-        <ul x-cloak
-          class="component-list list-group btn-group-xl float-end ms-3 mt-4 d-none d-sm-block">
-          <li class="list-group-item fw-bold text-capitalize">Routing Components
-          </li>
-          <x-data-repeat items-src="/json/components.json"
-            filter="components[docsTags[text='routing']]">
-            <template>
-              <li class="list-group-item">
-                <a
-                  href="/components/{{data:tag}}?group=routing">
-                  &lt;{{data:tag}}&gt; </a>
-              </li>
-            </template>
-          </x-data-repeat>
-        </ul>
         <x-app-view url="lazy"
           page-title="Lazy Loaded Routes"
           content-src="/pages/routing/lazy.html"> </x-app-view>
@@ -305,173 +395,9 @@
           visit="optional">
         </x-app-view>
       </x-app-view>
-      <x-app-view url="/presentations"
-        page-title="Guided Routing"
-        content-src="/pages/presentations/default.html">
-        <x-app-view url="guided"
-          page-title="Guided Navigation"
-          content-src="/pages/presentations/guided.html">
-          <x-app-view url="demo"
-            page-title="Guided Demo"
-            content-src="/pages/presentations/demo/default.html">
-            <x-app-view-do url="video"
-              page-title="Guided: Intro"
-              visit="always"
-              content-src="/pages/presentations/demo/video.html">
-              <x-action-activator activate="AtTime"
-                time="9.9">
-                <x-action topic="navigation"
-                  command="go-to"
-                  data-url="video-1"> </x-action>
-              </x-action-activator>
-            </x-app-view-do>
-            <x-app-view-do url="video-1"
-              page-title="Guided: Part 1"
-              visit="always"
-              content-src="/pages/presentations/demo/video.html">
-              <x-action-activator activate="AtTime"
-                time="9.9">
-                <x-action topic="navigation"
-                  command="go-to"
-                  data-url="video-2"> </x-action>
-              </x-action-activator>
-            </x-app-view-do>
-            <x-app-view-do url="video-2"
-              page-title="Guided: Part 2"
-              visit="always"
-              content-src="/pages/presentations/demo/video.html">
-              <x-action-activator activate="AtTime"
-                time="9.9">
-                <x-action topic="navigation"
-                  command="go-to"
-                  data-url="video-3"> </x-action>
-              </x-action-activator>
-            </x-app-view-do>
-            <x-app-view-do url="video-3"
-              page-title="Guided: Part 3"
-              visit="always"
-              content-src="/pages/presentations/demo/video.html">
-            </x-app-view-do>
-            <x-app-view-do url="animation"
-              page-title="Guided: Animated HTML"
-              visit="always"
-              next-after="30"
-              content-src="/pages/presentations/demo/timed.html">
-            </x-app-view-do>
-          </x-app-view>
-          <x-app-view url="sequential"
-            page-title="Sequential Routes"
-            content-src="/pages/presentations/guided/sequential.html">
-            <x-app-view url="demo"
-              page-title="Sequential Demo"
-              content-src="/pages/presentations/demo/complete.html">
-              <x-app-view-do url="step-1"
-                page-title="Step 1"
-                visit="always"
-                content-src="/pages/presentations/demo/step1.html">
-              </x-app-view-do>
-              <x-app-view-do url="step-2"
-                page-title="Step 2"
-                visit="always"
-                content-src="/pages/presentations/demo/step2.html">
-              </x-app-view-do>
-              <x-app-view-do url="step-3"
-                page-title="Step 3"
-                visit="always"
-                content-src="/pages/presentations/demo/step3.html">
-              </x-app-view-do>
-            </x-app-view>
-          </x-app-view>
-          <x-app-view url="smart"
-            page-title="Smart Routes"
-            content-src="/pages/presentations/guided/smart.html">
-            <x-app-view url="demo"
-              page-title="Smart Demo"
-              content-src="/pages/presentations/demo/complete.html">
-              <x-app-view-do url="step-1"
-                page-title="Step 1"
-                visit="always"
-                next-after="10"
-                content-src="/pages/presentations/demo/step1.html">
-              </x-app-view-do>
-              <x-app-view-do url="step-2"
-                page-title="Step 2"
-                visit="always"
-                next-after="10"
-                content-src="/pages/presentations/demo/step2.html">
-              </x-app-view-do>
-              <x-app-view-do url="step-3"
-                page-title="Step 3"
-                visit="always"
-                next-after="10"
-                content-src="/pages/presentations/demo/step3.html">
-              </x-app-view-do>
-            </x-app-view>
-          </x-app-view>
-          <x-app-view url="timed"
-            page-title="Timed Routes"
-            content-src="/pages/presentations/guided/timed.html">
-            <x-app-view url="demo"
-              page-title="Timed Demo"
-              content-src="/pages/presentations/demo/complete.html">
-              <x-app-view-do url="step-1"
-                page-title="Step 1"
-                visit="always"
-                next-after="10"
-                content-src="/pages/presentations/demo/step1.html">
-              </x-app-view-do>
-              <x-app-view-do url="step-2"
-                page-title="Step 2"
-                visit="always"
-                next-after="10"
-                content-src="/pages/presentations/demo/step2.html">
-              </x-app-view-do>
-              <x-app-view-do url="step-3"
-                page-title="Step 3"
-                visit="always"
-                next-after="10"
-                content-src="/pages/presentations/demo/step3.html">
-              </x-app-view-do>
-            </x-app-view>
-            <x-app-view-do url="video"
-              page-title="Timed w/Video"
-              visit="optional"
-              content-src="/pages/presentations/demo/video.html">
-            </x-app-view-do>
-            <x-app-view-do url="animation"
-              page-title="Auto Next"
-              visit="optional"
-              next-after="30"
-              content-src="/pages/presentations/demo/timed.html">
-            </x-app-view-do>
-          </x-app-view>
-          <x-app-view url="conditional"
-            page-title="Conditional Routing"
-            content-src="/pages/presentations/guided/conditional.html">
-          </x-app-view>
-          <x-app-view url="tutorial"
-            page-title="Guided Navigation Tutorial"
-            content-src="/pages/presentations/guided/tutorial.html">
-          </x-app-view>
-        </x-app-view>
-      </x-app-view>
       <x-app-view url="/content"
         page-title="Content"
         content-src="/pages/content/default.html">
-        <ul x-cloak
-          class="component-list list-group btn-group-xl float-end ms-2 mt-4 d-none d-sm-block">
-          <li class="list-group-item fw-bold"> Content Components</li>
-          <x-data-repeat items-src="/json/components.json"
-            filter="components[docsTags[text='content']]">
-            <template>
-              <li class="list-group-item">
-                <a
-                  href="/components/{{data:tag}}?group=content">
-                  &lt;{{data:tag}}&gt; </a>
-              </li>
-            </template>
-          </x-data-repeat>
-        </ul>
         <x-app-view url="include"
           page-title="Remote HTML"
           content-src="/pages/content/include.html"> </x-app-view>
@@ -486,20 +412,6 @@
       <x-app-view url="/data"
         page-title="Data Binding"
         content-src="/pages/data/default.html">
-        <ul x-cloak
-          class="component-list list-group btn-group-xl float-end ms-2 mt-4 d-none d-sm-block">
-          <li class="list-group-item fw-bold">Data Components</li>
-          <x-data-repeat items-src="/json/components.json"
-            filter="components[docsTags[text='data']]">
-            <template>
-              <li class="list-group-item">
-                <a
-                  href="/components/{{data:tag}}?group=data">
-                  &lt;{{data:tag}}&gt; </a>
-              </li>
-            </template>
-          </x-data-repeat>
-        </ul>
         <x-app-view url="expressions"
           page-title="Data Expressions"
           content-src="/pages/data/expressions.html">
@@ -530,43 +442,13 @@
       <x-app-view url="/actions"
         page-title="Action"
         content-src="/pages/actions/default.html">
-        <ul x-cloak
-          class="component-list list-group btn-group-xl float-end ms-2 mt-4 d-none d-sm-block">
-          <li class="list-group-item fw-bold"> Action Components</li>
-          <x-data-repeat items-src="/json/components.json"
-            filter="components[docsTags[text='actions']]">
-            <template>
-              <li class="list-group-item">
-                <a
-                  href="/components/{{data:tag}}">
-                  &lt;{{data:tag}}&gt; </a>
-              </li>
-            </template>
-          </x-data-repeat>
-        </ul>
         <x-app-view-do url="activation/events"
           visit="optional"
           content-src="/pages/actions/events.html">
-          <x-action-activator activate="OnEnter">
-            <x-action topic="interface"
-              command="log"
-              data-message="Testing on-enter action"></x-action>
-          </x-action-activator>
-          <x-action-activator activate="OnExit">
-            <x-action topic="interface"
-              command="log"
-              data-message="Testing on-exit action"></x-action>
-          </x-action-activator>
         </x-app-view-do>
         <x-app-view-do url="activation/timed"
           visit="optional"
           content-src="/pages/actions/timed.html">
-          <x-action-activator activate="AtTime"
-            time="3">
-            <x-action topic="interface"
-              command="log"
-              data-message="3-seconds!"> </x-action>
-          </x-action-activator>
         </x-app-view-do>
         <x-app-view-do url="activation/elements"
           visit="optional"
@@ -578,11 +460,10 @@
       <x-app-view url="/audio"
         page-title="Audio Systems"
         content-src="/pages/audio/default.html">
-        <x-audio-player></x-audio-player>
         <ul x-cloak
           class="component-list list-group btn-group-xl float-end ms-2 mt-4 d-none d-sm-block">
           <li class="list-group-item fw-bold"> Audio Components</li>
-          <x-data-repeat items-src="/json/components.json"
+          <x-data-repeat items-src="/assets/components.json"
             filter="components[docsTags[text='audio']]">
             <template>
               <li class="list-group-item">
@@ -592,6 +473,8 @@
               </li>
             </template>
           </x-data-repeat>
+          <x-audio-player display>
+          </x-audio-player>
         </ul>
         <x-app-view-do url="music"
           page-title="Music"
@@ -615,73 +498,36 @@
         </x-app-view-do>
       </x-app-view>
       <x-app-view url="/components"
+        content-src="/pages/components/default.html"
         strict
         page-title="All Components">
         <x-app-view url=":component"
           exact
           page-title="Component: <{{route:component}}>"
-          content-src="/pages/components/default.html">
+          content-src="/pages/components/component.html">
         </x-app-view>
-
-        <div slot="content"
-          class="container container-fluid mx-auto">
-          <x-data-repeat items-src="/json/components.json"
-            filter="components">
-            <template lang="text">
-              <div class="card mb-4 shadow p-2">
-                <a href="/components/{{data:tag}}">
-                  <h2 class="ms-4">
-                    &lt;{{data:tag}}&gt;
-                  </h2>
-                </a>
-              </div>
-            </template>
-          </x-data-repeat>
-        </div>
       </x-app-view>
       <!-- Not Found Route -->
       <x-app-view-not-found page-title="Page not Found">
 
-        <div class="container container-fluid mx-auto">
+        <div slot="content">
           <h1>Not Found</h1>
         </div>
       </x-app-view-not-found>
-      <x-data-provider-session></x-data-provider-session>
-      <x-data-provider-storage></x-data-provider-storage>
-    </x-app>
-    <x-app-analytics id="analytics">
-      <script>
-        analytics.addEventListener( 'event', ( e ) => {
-          gtag( e.detail.key, e.detail.value )
-        } )
-        analytics.addEventListener( 'page-view', ( e ) => {
-          gtag( 'page_view', e.detail.pathname )
-        } )
-        analytics.addEventListener( 'x:analytics:view-time', ( e ) => {
-          gtag( e.detail.key, e.detail.value )
-        } )
-      </script>
-    </x-app-analytics>
-    <script>
-      if ( 'serviceWorker' in navigator ) {
-        navigator.serviceWorker
-          .getRegistration()
-          .then( registration => {
-            if ( registration?.active ) {
-              navigator.serviceWorker.addEventListener(
-                'controllerchange',
-                () => window.location.reload()
-              );
-            }
+      <x-app-analytics id="analytics">
+        <script>
+          analytics.addEventListener( 'event', ( e ) => {
+            gtag( e.detail.key, e.detail.value )
           } )
-
-        window.addEventListener( 'swUpdate', async ( e ) => {
-          const registration = await navigator.serviceWorker.getRegistration();
-          registration.waiting.postMessage( "skipWaiting" );
-        } )
-      }
-
-    </script>
+          analytics.addEventListener( 'page-view', ( e ) => {
+            gtag( 'page_view', e.detail.pathname )
+          } )
+          analytics.addEventListener( 'x:analytics:view-time', ( e ) => {
+            gtag( e.detail.key, e.detail.value )
+          } )
+        </script>
+      </x-app-analytics>
+    </x-app>
   </body>
 
 </html>

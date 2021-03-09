@@ -282,7 +282,6 @@ export class XAppViewDo {
     return (
       <Host hidden={!this.match?.isExact}>
         <slot />
-        <slot name="content" />
       </Host>
     )
   }

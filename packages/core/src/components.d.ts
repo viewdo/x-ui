@@ -11,7 +11,8 @@ import { VisitStrategy } from "./services/navigation";
 import { RouterService as RouterService1 } from "./services/routing/router";
 import { AUDIO_COMMANDS, DiscardStrategy, LoadStrategy } from "./services/audio/interfaces";
 import { ReferenceCompleteResults } from "./services/content";
-import { CookieConsent, DataProviderRegistration } from "./services/data/interfaces";
+import { CookieConsent } from "./components/x-data-provider-cookie/cookie";
+import { DataProviderRegistration, SetData } from "./services/data/interfaces";
 export namespace Components {
     interface XAction {
         /**
@@ -406,13 +407,17 @@ export namespace Components {
          */
         "classes"?: string;
         /**
-          * The data provider to store the audio-enabled state in.
+          * The data provider to store the audio state in.
          */
         "dataProvider": string;
         /**
           * The id field to add to the input-element directly.
          */
         "inputId"?: string;
+        /**
+          * Which state property this switch controls.
+         */
+        "setting": 'muted' | 'enabled';
     }
     interface XContentInclude {
         /**
@@ -508,6 +513,10 @@ export namespace Components {
         "text"?: string;
     }
     interface XDataProviderCookie {
+        /**
+          * Provider name to use in x-ui expressions.
+         */
+        "name": string;
         /**
           * Immediately register the provider.
          */
@@ -1142,13 +1151,17 @@ declare namespace LocalJSX {
          */
         "classes"?: string;
         /**
-          * The data provider to store the audio-enabled state in.
+          * The data provider to store the audio state in.
          */
         "dataProvider"?: string;
         /**
           * The id field to add to the input-element directly.
          */
         "inputId"?: string;
+        /**
+          * Which state property this switch controls.
+         */
+        "setting"?: 'muted' | 'enabled';
     }
     interface XContentInclude {
         /**
@@ -1244,6 +1257,10 @@ declare namespace LocalJSX {
         "text"?: string;
     }
     interface XDataProviderCookie {
+        /**
+          * Provider name to use in x-ui expressions.
+         */
+        "name"?: string;
         /**
           * This event is raised when the consents to cookies.
          */

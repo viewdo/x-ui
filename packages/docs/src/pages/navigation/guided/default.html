@@ -1,15 +1,15 @@
 <x-content-reference
   script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js"
-  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css"
->
+  style-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css">
 </x-content-reference>
 <x-content-reference
-  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js"
->
+  script-src="https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js">
 </x-content-reference>
-<ul x-cloak class="component-list list-group btn-group-xl float-end ms-2 mt-4 d-none d-sm-block">
+<ul x-cloak
+  class="component-list list-group btn-group-xl float-end ms-2 mt-4 d-none d-sm-block">
   <li class="list-group-item fw-bold">Guided Components</li>
-  <x-data-repeat items-src="/json/components.json" filter="components[docsTags[text='presentation']]">
+  <x-data-repeat items-src="/assets/components.json"
+    filter="components[docsTags[text='presentation']]">
     <template>
       <li class="list-group-item">
         <a href="/components/{{data:tag}}?group=presentation"> &lt;{{data:tag}}&gt; </a>
@@ -17,50 +17,51 @@
     </template>
   </x-data-repeat>
 </ul>
-<div class="container container-fluid mx-auto">
+
+<div class="content">
   <h1>Guided Navigation</h1>
-  <p class="lead">
-    Guided navigation creates a back/next format with a convention-based next route automatically determined by the
-    router.
-  </p>
+  <p class="lead"> Guided navigation creates a back/next format with a
+    convention-based next route automatically determined by the router. </p>
   <h2>How it Works</h2>
-  <p>
-    You can create smart guided navigation using simple conventions, visit-tracking and data-expressions to guide users
-    through workflows or navigation.
-  </p>
-  <a href="/navigation/guided/tutorial" class="btn btn-light float-end my-2 ms-2">
+  <p> You can create smart guided navigation using simple conventions,
+    visit-tracking and data-expressions to guide users through workflows or
+    navigation. </p>
+  <a href="/navigation/guided/tutorial"
+    class="btn btn-light float-end my-2 ms-2">
     <i class="ri-book-3-line"></i>
     Learn more.
   </a>
-  <p>By convention, routes are given an order based on how they are declared.</p>
-  <blockquote>
-    Using just static HTML, this page was able to create a rich navigation system that walks a user through content in a
-    personalized, conversational format.
-  </blockquote>
+  <p>By convention, routes are given an order based on how they are declared.
+  </p>
+  <blockquote> Using just static HTML, this page was able to create a rich
+    navigation system that walks a user through content in a personalized,
+    conversational format. </blockquote>
+
   <div class="button-nav">
-    <a href="/navigation/guided/sequential" class="btn btn-info text-white">
+    <a href="/navigation/guided/sequential"
+      class="btn btn-info text-white">
       <i class="ri-order-play-line"></i>
       Basic Sequenced
     </a>
-
-    <a href="/navigation/guided/timed" class="btn btn-info text-white">
+    <a href="/navigation/guided/timed"
+      class="btn btn-info text-white">
       <i class="ri-guide-line"></i>
       Automatic & Time-based
     </a>
-
-    <a href="/navigation/guided/smart" class="btn btn-info text-white">
+    <a href="/navigation/guided/smart"
+      class="btn btn-info text-white">
       <i class="ri-lightbulb-flash-line"></i>
       Guidance w/Tracking
     </a>
-
-    <a href="/navigation/guided/rules" class="btn btn-info text-white">
+    <a href="/navigation/guided/rules"
+      class="btn btn-info text-white">
       <i class="ri-gps-line"></i>
       Rules-Based Guidance
     </a>
   </div>
-
   <footer>
-    <a slot="start" href="/navigation">
+    <a slot="start"
+      href="/navigation">
       <button class="btn btn-light">&lt; Navigation</button>
     </a>
   </footer>

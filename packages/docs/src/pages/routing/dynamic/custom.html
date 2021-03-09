@@ -1,22 +1,24 @@
-<div class="container container-fluid mx-auto">
+<div class="content">
   <h1>Routing</h1>
   <h2>Data Routes</h2>
   <h3>Your Favorite Food</h3>
+
   <div class="form-floating mb-3">
-    <input
-      id="name"
+    <input id="name"
       type="text"
       required
       class="form-control"
       onblur="localStorage.setItem('favorite', this.value)"
       onchange="localStorage.setItem('favorite', this.value)"
-      x-value-from="{{storage:favorite}}"
-    />
+      x-value-from="{{storage:favorite}}" />
     <label for="floatingInput">Favorite Food</label>
   </div>
-
   <footer>
-    <button slot="start" x-back class="btn btn-light btn-lg">&lt; Back</button>
-    <button slot="end" x-link="/routing/dynamic" class="btn btn-primary btn-lg">Next &gt;</button>
+    <button slot="start"
+      x-back
+      class="btn btn-light btn-lg">&lt; Back</button>
+    <button slot="end"
+      x-link="/routing/dynamic"
+      class="btn btn-primary btn-lg">Next &gt;</button>
   </footer>
 </div>
