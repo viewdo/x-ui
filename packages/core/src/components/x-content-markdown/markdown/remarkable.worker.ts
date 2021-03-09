@@ -17,8 +17,8 @@ export async function renderMarkdown(
     markdown = new (self as any).remarkable.Remarkable({
       html: true,
       typographer: true,
+      break: true,
     })
   }
-
   return markdown.render(content)
 }

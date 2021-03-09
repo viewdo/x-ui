@@ -8,7 +8,10 @@ import {
   State,
 } from '@stencil/core'
 import { warn } from '../../services/common/logging'
-import { getRemoteContent } from '../../services/content/remote'
+import {
+  getRemoteContent,
+  resolveSrc,
+} from '../../services/content/remote'
 import { evaluatePredicate } from '../../services/data/expressions'
 import { DATA_EVENTS } from '../../services/data/interfaces'
 import { resolveTokens } from '../../services/data/tokens'
@@ -34,7 +37,8 @@ export class XContentMarkdown {
   private readonly contentClass = 'rendered-content'
   private dataSubscription!: () => void
   private routeSubscription!: () => void
-
+  private contentKey: string | null = null
+  private renderCache: Record<string, HTMLElement> = {}
   @Element() el!: HTMLXContentMarkdownElement
   @State() contentElement: HTMLElement | null = null
 
@@ -61,7 +65,7 @@ export class XContentMarkdown {
    * To fetch the contents change to false or remove
    * attribute.
    */
-  @Prop({ mutable: true }) deferLoad = false
+  @Prop({ mutable: true }) deferLoad: boolean = false
 
   /**
    * A data-token predicate to advise this component when
@@ -69,6 +73,11 @@ export class XContentMarkdown {
    * tokens are used in the 'src' attribute)
    */
   @Prop({ mutable: true }) when?: string
+
+  /**
+   * Force render with data & route changes.
+   */
+  @Prop() noCache: boolean = false
 
   private get router(): RouterService | null {
     return this.el.closest('x-app')?.router || null
@@ -97,11 +106,15 @@ export class XContentMarkdown {
 
   async componentWillRender() {
     let shouldRender = !this.deferLoad
-    if (this.when) shouldRender = await evaluatePredicate(this.when)
+    if (shouldRender && this.when)
+      shouldRender = await evaluatePredicate(this.when)
 
-    if (shouldRender)
+    if (shouldRender) {
+      if (this.contentElement && this.noCache == false) return
       this.contentElement = await this.resolveContentElement()
-    else this.contentElement = null
+    } else {
+      this.contentElement = null
+    }
   }
 
   private fixMarkdown(content: string) {
@@ -109,6 +122,12 @@ export class XContentMarkdown {
   }
 
   private async resolveContentElement() {
+    const key = this.src
+      ? await resolveSrc(this.src!)
+      : this.contentKey
+    if (key && !this.noCache && this.renderCache[key])
+      return this.renderCache[key]
+
     const content = this.src
       ? await this.getContentFromSrc()
       : await this.getContentFromScript()
@@ -125,13 +144,15 @@ export class XContentMarkdown {
   }
 
   private async getContentFromSrc() {
+    this.contentKey = await resolveSrc(this.src!)
     try {
-      return await getRemoteContent(
+      const content = await getRemoteContent(
         window,
         this.src!,
         this.mode,
         this.resolveTokens,
       )
+      return content
     } catch {
       warn(`x-content-markdown: unable to retrieve from ${this.src}`)
       return null
@@ -144,6 +165,8 @@ export class XContentMarkdown {
 
     let content = this.dedent(element.textContent)
     if (this.resolveTokens) content = await resolveTokens(content)
+    this.contentKey = 'script'
+
     return content
   }
 
