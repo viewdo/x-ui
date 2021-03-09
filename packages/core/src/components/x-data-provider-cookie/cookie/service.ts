@@ -1,15 +1,17 @@
 import {
   DATA_EVENTS,
+  IDataMutator,
   IDataProvider,
 } from '../../../services/data/interfaces'
-import { EventEmitter } from '../../../services/events/emitter'
+import { IEventEmitter } from '../../../services/events/interfaces'
 import { getCookie, setCookie } from './utils'
 
-export class CookieProvider implements IDataProvider {
-  changed: EventEmitter
-  constructor(private readonly document: Document) {
-    this.changed = new EventEmitter()
-  }
+export class CookieService implements IDataProvider, IDataMutator {
+  constructor(
+    private document: Document,
+    private eventBus: IEventEmitter,
+    private name: string,
+  ) {}
 
   async get(key: string): Promise<string | null> {
     return getCookie(this.document, key) || null
@@ -17,8 +19,8 @@ export class CookieProvider implements IDataProvider {
 
   async set(key: string, value: any) {
     setCookie(this.document, key, value, { sameSite: 'strict' })
-    this.changed.emit(DATA_EVENTS.DataChanged, {
-      provider: 'cookie',
+    this.eventBus.emit(DATA_EVENTS.DataChanged, {
+      provider: this.name,
     })
   }
 }

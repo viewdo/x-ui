@@ -17,11 +17,12 @@ Using the [\<x-audio-state-switch\>](/components/x-audio-state-switch) component
 
 ## Properties
 
-| Property       | Attribute       | Description                                            | Type                  | Default     |
-| -------------- | --------------- | ------------------------------------------------------ | --------------------- | ----------- |
-| `classes`      | `classes`       | Any classes to add to the input-element directly.      | `string \| undefined` | `undefined` |
-| `dataProvider` | `data-provider` | The data provider to store the audio-enabled state in. | `string`              | `'storage'` |
-| `inputId`      | `input-id`      | The id field to add to the input-element directly.     | `string \| undefined` | `undefined` |
+| Property       | Attribute       | Description                                        | Type                   | Default     |
+| -------------- | --------------- | -------------------------------------------------- | ---------------------- | ----------- |
+| `classes`      | `classes`       | Any classes to add to the input-element directly.  | `string \| undefined`  | `undefined` |
+| `dataProvider` | `data-provider` | The data provider to store the audio state in.     | `string`               | `'storage'` |
+| `inputId`      | `input-id`      | The id field to add to the input-element directly. | `string \| undefined`  | `undefined` |
+| `setting`      | `setting`       | Which state property this switch controls.         | `"enabled" \| "muted"` | `'enabled'` |
 
 
 ----------------------------------------------

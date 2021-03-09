@@ -51,3 +51,7 @@ export interface NoneSameSiteCookieAttributes {
   sameSite: 'none'
   secure: true
 }
+
+export type CookieConsent = {
+  consented: boolean
+}

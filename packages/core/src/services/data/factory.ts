@@ -17,12 +17,6 @@ export function addDataProvider(
     )
   }
 
-  if (typeof provider.set !== 'function') {
-    throw new TypeError(
-      `The provider ${name} is missing the set(key) function.`,
-    )
-  }
-
   providers[name.toLowerCase()] = provider
 
   debugIf(

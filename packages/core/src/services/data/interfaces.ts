@@ -1,11 +1,12 @@
 /* istanbul ignore file */
 
-import { EventEmitter } from '../events'
+export interface IDataMutator {
+  set(key: string, value: string): Promise<void>
+}
 
 export interface IDataProvider {
-  changed: EventEmitter
   get(key: string): Promise<string | null>
-  set(key: string, value: string): Promise<void>
+  // set(key: string, value: string): Promise<void>
   // keys(): Promise<string[]>
 }
 
@@ -37,8 +38,4 @@ export type DataProviderRegistration = {
 export type SetData = {
   provider: string
   [key: string]: string
-}
-
-export type CookieConsent = {
-  consented: boolean
 }

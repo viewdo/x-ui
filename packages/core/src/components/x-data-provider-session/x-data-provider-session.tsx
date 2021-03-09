@@ -1,7 +1,18 @@
-import { Component, Element, h, Host, Prop } from '@stencil/core'
-import { addDataProvider } from '../../services/data/factory'
-import { IDataProvider } from '../../services/data/interfaces'
-import { SessionProvider } from './session/provider'
+import { Component, Element, Prop } from '@stencil/core'
+import {
+  addDataProvider,
+  removeDataProvider,
+} from '../../services/data/factory'
+import {
+  DATA_COMMANDS,
+  SetData,
+} from '../../services/data/interfaces'
+import {
+  actionBus,
+  EventAction,
+  eventBus,
+} from '../../services/events'
+import { SessionService } from './session/service'
 
 @Component({
   tag: 'x-data-provider-session',
@@ -15,7 +26,8 @@ import { SessionProvider } from './session/provider'
  *  @system data
  */
 export class XDataProviderSession {
-  private provider!: IDataProvider
+  private provider!: SessionService
+  private actionSubscription?: () => void
   @Element() el!: HTMLXDataProviderSessionElement
 
   /**
@@ -30,14 +42,32 @@ export class XDataProviderSession {
 
   private registerProvider() {
     addDataProvider(this.name, this.provider)
+    this.actionSubscription = actionBus.on(
+      this.name,
+      async (action: EventAction<SetData>) => {
+        if (action.command == DATA_COMMANDS.SetData) {
+          const { data } = action
+          await Promise.all(
+            Object.keys(action.data).map(key =>
+              this.provider.set(key, data[key]),
+            ),
+          )
+        }
+      },
+    )
   }
 
   componentWillLoad() {
-    this.provider = new SessionProvider()
+    this.provider = new SessionService(window, eventBus, this.name)
     this.registerProvider()
   }
 
+  disconnectedCallback() {
+    removeDataProvider(this.name)
+    this.actionSubscription?.call(this)
+  }
+
   render() {
-    return <Host hidden></Host>
+    return null
   }
 }
