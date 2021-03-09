@@ -1,11 +1,14 @@
 /* istanbul ignore file */
 
+import { IEventEmitter } from '../events/interfaces'
+
 export interface IDataMutator {
   set(key: string, value: string): Promise<void>
 }
 
 export interface IDataProvider {
   get(key: string): Promise<string | null>
+  changed?: IEventEmitter | null
 }
 
 export interface IServiceProvider

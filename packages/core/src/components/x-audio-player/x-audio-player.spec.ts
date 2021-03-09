@@ -3,12 +3,11 @@ jest.mock('../../services/data/evaluate.worker')
 jest.mock('./audio/track')
 
 import { newSpecPage } from '@stencil/core/testing'
-import { audioState, audioStore } from '../../services/audio'
+import { audioState } from '../../services/audio'
+import { contentStateDispose } from '../../services/content/state'
 import { actionBus, eventBus } from '../../services/events'
 import { XContentReference } from '../x-content-reference/x-content-reference'
-import { interfaceStore } from '../x-ui/ui'
 import { XAudioPlayer } from './x-audio-player'
-
 describe('x-audio-player', () => {
   // let data: AudioInfo | any
   beforeEach(() => {
@@ -25,8 +24,7 @@ describe('x-audio-player', () => {
   afterEach(async () => {
     actionBus.removeAllListeners()
     eventBus.removeAllListeners()
-    interfaceStore.dispose()
-    audioStore.dispose()
+    contentStateDispose()
   })
 
   it('renders', async () => {
@@ -38,9 +36,9 @@ describe('x-audio-player', () => {
     await page.waitForChanges()
     expect(page.root).toEqualHtml(`
     <x-audio-player hidden="">
-    <mock:shadow-root>
-    <x-content-reference script-src="https://cdn.jsdelivr.net/npm/howler@2.2.1/dist/howler.core.min.js"></x-content-reference>
-    </mock:shadow-root>
+      <mock:shadow-root>
+      <x-content-reference script-src="https://cdn.jsdelivr.net/npm/howler@2.2.1/dist/howler.core.min.js"></x-content-reference>
+      </mock:shadow-root>
     </x-audio-player>
     `)
   })

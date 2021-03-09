@@ -559,13 +559,15 @@ export namespace Components {
          */
         "when": string;
     }
+    interface XUi {
+    }
     interface XUiTheme {
         /**
           * Change the class name that is added to the body tag when the theme is determined to be dark.
          */
         "darkClass": string;
         /**
-          * Skip adding the class to the body tag, just update the interface state.
+          * Skip adding the class to the body tag, just update the ui state.
          */
         "skipClass": boolean;
     }
@@ -725,6 +727,12 @@ declare global {
         prototype: HTMLXDataShowElement;
         new (): HTMLXDataShowElement;
     };
+    interface HTMLXUiElement extends Components.XUi, HTMLStencilElement {
+    }
+    var HTMLXUiElement: {
+        prototype: HTMLXUiElement;
+        new (): HTMLXUiElement;
+    };
     interface HTMLXUiThemeElement extends Components.XUiTheme, HTMLStencilElement {
     }
     var HTMLXUiThemeElement: {
@@ -762,6 +770,7 @@ declare global {
         "x-data-provider-storage": HTMLXDataProviderStorageElement;
         "x-data-repeat": HTMLXDataRepeatElement;
         "x-data-show": HTMLXDataShowElement;
+        "x-ui": HTMLXUiElement;
         "x-ui-theme": HTMLXUiThemeElement;
         "x-ui-theme-switch": HTMLXUiThemeSwitchElement;
     }
@@ -1303,13 +1312,15 @@ declare namespace LocalJSX {
          */
         "when": string;
     }
+    interface XUi {
+    }
     interface XUiTheme {
         /**
           * Change the class name that is added to the body tag when the theme is determined to be dark.
          */
         "darkClass"?: string;
         /**
-          * Skip adding the class to the body tag, just update the interface state.
+          * Skip adding the class to the body tag, just update the ui state.
          */
         "skipClass"?: boolean;
     }
@@ -1348,6 +1359,7 @@ declare namespace LocalJSX {
         "x-data-provider-storage": XDataProviderStorage;
         "x-data-repeat": XDataRepeat;
         "x-data-show": XDataShow;
+        "x-ui": XUi;
         "x-ui-theme": XUiTheme;
         "x-ui-theme-switch": XUiThemeSwitch;
     }
@@ -1380,6 +1392,7 @@ declare module "@stencil/core" {
             "x-data-provider-storage": LocalJSX.XDataProviderStorage & JSXBase.HTMLAttributes<HTMLXDataProviderStorageElement>;
             "x-data-repeat": LocalJSX.XDataRepeat & JSXBase.HTMLAttributes<HTMLXDataRepeatElement>;
             "x-data-show": LocalJSX.XDataShow & JSXBase.HTMLAttributes<HTMLXDataShowElement>;
+            "x-ui": LocalJSX.XUi & JSXBase.HTMLAttributes<HTMLXUiElement>;
             "x-ui-theme": LocalJSX.XUiTheme & JSXBase.HTMLAttributes<HTMLXUiThemeElement>;
             "x-ui-theme-switch": LocalJSX.XUiThemeSwitch & JSXBase.HTMLAttributes<HTMLXUiThemeSwitchElement>;
         }

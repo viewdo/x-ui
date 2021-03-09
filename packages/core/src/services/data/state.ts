@@ -1,12 +1,15 @@
 /* istanbul ignore file */
 
 import { createStore } from '@stencil/store'
+import { IDataProvider } from './interfaces'
 
 class StateModel {
+  providers!: Record<string, IDataProvider>
   providerTimeout!: number
 }
 
 const store = createStore<StateModel>({
+  providers: {},
   providerTimeout: 500,
 })
 

@@ -37,7 +37,7 @@ to gives users control of which theme should be applied.
 | Property    | Attribute    | Description                                                                                  | Type      | Default  |
 | ----------- | ------------ | -------------------------------------------------------------------------------------------- | --------- | -------- |
 | `darkClass` | `dark-class` | Change the class name that is added to the body tag when the theme is determined to be dark. | `string`  | `'dark'` |
-| `skipClass` | `skip-class` | Skip adding the class to the body tag, just update the interface state.                      | `boolean` | `false`  |
+| `skipClass` | `skip-class` | Skip adding the class to the body tag, just update the ui state.                             | `boolean` | `false`  |
 
 
 ----------------------------------------------

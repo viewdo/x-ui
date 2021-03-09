@@ -63,6 +63,7 @@ describe('x-data-provider-cookie', () => {
     expect(acceptButton).not.toBeNull()
     acceptButton.click()
 
+    await subject?.registerProvider()
     await page.waitForChanges()
 
     const provider = await getDataProvider('cookie')

@@ -12,9 +12,8 @@
   <div x-hide-when="{{storage:installed}} != 'npm'">
     <h2>Local Reference</h2>
     <x-action-activator>
-      <x-action topic="data"
+      <x-action topic="storage"
         command="set-data"
-        data-provider="storage"
         data-installed="cdn"> </x-action>
       <button class="btn btn-light btn-sm float-end">Switch to Remote</button>
     </x-action-activator>
@@ -37,9 +36,8 @@
   <div x-hide-when="{{storage:installed}} != 'cdn'">
     <h2>Remote Reference</h2>
     <x-action-activator>
-      <x-action topic="data"
+      <x-action topic="storage"
         command="set-data"
-        data-provider="storage"
         data-installed="npm"> </x-action>
       <button class="btn btn-light btn-sm float-end">Switch to Local</button>
     </x-action-activator>

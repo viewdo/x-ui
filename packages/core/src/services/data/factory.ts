@@ -2,10 +2,6 @@ import { commonState, debugIf, requireValue, sleep } from '../common'
 import { IDataProvider } from './interfaces'
 import { dataState } from './state'
 
-type DataProviders = Record<string, IDataProvider>
-
-const providers: DataProviders = {}
-
 export function addDataProvider(
   name: string,
   provider: IDataProvider,
@@ -17,7 +13,7 @@ export function addDataProvider(
     )
   }
 
-  providers[name.toLowerCase()] = provider
+  dataState.providers[name.toLowerCase()] = provider
 
   debugIf(
     commonState.debug && name !== 'data',
@@ -30,25 +26,27 @@ export async function getDataProvider(
 ): Promise<IDataProvider | null> {
   const key = name.toLowerCase()
   requireValue(name, 'provider name')
-  if (Object.keys(providers).includes(key)) return providers[key]
+  if (Object.keys(dataState.providers).includes(key))
+    return dataState.providers[key]
 
   await sleep(dataState.providerTimeout)
 
-  if (Object.keys(providers).includes(key)) return providers[key]
+  if (Object.keys(dataState.providers).includes(key))
+    return dataState.providers[key]
 
   return null
 }
 
-export function getDataProviders(): DataProviders {
-  return providers
+export function getDataProviders() {
+  return dataState.providers
 }
 
 export function removeDataProvider(name: string) {
-  delete providers[name]
+  delete dataState.providers[name]
 }
 
 export function clearDataProviders() {
-  Object.keys(providers).forEach(key => {
-    delete providers[key]
+  Object.keys(dataState.providers).forEach(key => {
+    delete dataState.providers[key]
   })
 }

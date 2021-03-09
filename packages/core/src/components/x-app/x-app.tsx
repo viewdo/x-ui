@@ -29,7 +29,6 @@ import {
   RouterService,
 } from '../../services/routing'
 import { XAppViewNotFound } from '../x-app-view-not-found/x-app-view-not-found'
-import { InterfaceActionListener } from '../x-ui/ui'
 
 /**
  * The root component is the base container for the view-engine and its
@@ -195,7 +194,6 @@ export class XApp {
     }
 
     this.addListener('data', new DataListener())
-    this.addListener('interface', new InterfaceActionListener())
     this.addListener('elements', new ElementsActionListener())
   }
 

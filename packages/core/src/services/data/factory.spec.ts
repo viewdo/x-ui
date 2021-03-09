@@ -9,6 +9,7 @@ import {
   removeDataProvider,
 } from './factory'
 import { InMemoryProvider } from './providers/memory'
+import { dataStateDispose } from './state'
 
 describe('provider-factory', () => {
   let custom: InMemoryProvider
@@ -18,6 +19,10 @@ describe('provider-factory', () => {
     addDataProvider('custom', custom)
     actionBus.removeAllListeners()
     eventBus.removeAllListeners()
+  })
+
+  afterEach(() => {
+    dataStateDispose()
   })
 
   it('getProvider: incorrect name should return null', async () => {
