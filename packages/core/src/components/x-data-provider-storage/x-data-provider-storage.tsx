@@ -1,11 +1,6 @@
 import { Component, Element, h, Host, Prop } from '@stencil/core'
-import {
-  DataProviderRegistration,
-  DATA_COMMANDS,
-  DATA_TOPIC,
-  IDataProvider,
-} from '../../services/data/interfaces'
-import { EventAction } from '../../services/events'
+import { addDataProvider } from '../../services/data/factory'
+import { IDataProvider } from '../../services/data/interfaces'
 import { StorageProvider } from './storage/provider'
 
 @Component({
@@ -34,22 +29,10 @@ export class XDataProviderStorage {
   @Prop() name: string = 'storage'
 
   private registerProvider() {
-    const customEvent = new CustomEvent<
-      EventAction<DataProviderRegistration>
-    >('x:actions', {
-      detail: {
-        topic: DATA_TOPIC,
-        command: DATA_COMMANDS.RegisterDataProvider,
-        data: {
-          name: this.name,
-          provider: this.provider,
-        },
-      },
-    })
-    this.el.ownerDocument.body.dispatchEvent(customEvent)
+    addDataProvider(this.name, this.provider)
   }
 
-  async componentWillLoad() {
+  componentWillLoad() {
     this.provider = new StorageProvider(window)
     this.registerProvider()
   }
