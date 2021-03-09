@@ -277,4 +277,4 @@ This attribute instructs [\<x-app-view-do\>](/components/x-app-view-do) to injec
 
 ----------------------------------------------
 
-view.DO : Experience Platform
+view.DO Experience Components

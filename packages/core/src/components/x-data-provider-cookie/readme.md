@@ -62,4 +62,4 @@ Type: `Promise<boolean>`
 
 ----------------------------------------------
 
-view.DO : Experience Platform
+view.DO Experience Components

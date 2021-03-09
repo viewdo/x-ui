@@ -65,4 +65,4 @@ If audio has replay set to true, re-entry to the originating state will re-activ
 
 ----------------------------------------------
 
-view.DO : Experience Platform
+view.DO Experience Components

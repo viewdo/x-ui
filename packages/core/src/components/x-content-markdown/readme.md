@@ -95,4 +95,4 @@ By default, there is no styling. The HTML is rendered to the page without styles
 
 ----------------------------------------------
 
-view.DO : Experience Platform
+view.DO Experience Components

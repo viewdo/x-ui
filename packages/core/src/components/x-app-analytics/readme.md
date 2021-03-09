@@ -60,4 +60,4 @@ Using the [\<x-app-analytics\>](/components/x-app-analytics) is simple, but does
 
 ----------------------------------------------
 
-view.DO : Experience Platform
+view.DO Experience Components

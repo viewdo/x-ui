@@ -43,4 +43,4 @@ Type: `Promise<void>`
 
 ----------------------------------------------
 
-view.DO : Experience Platform
+view.DO Experience Components

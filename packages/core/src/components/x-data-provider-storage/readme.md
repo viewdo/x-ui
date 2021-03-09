@@ -23,4 +23,4 @@ Provider Key: '**storage**'
 
 ----------------------------------------------
 
-view.DO : Experience Platform
+view.DO Experience Components

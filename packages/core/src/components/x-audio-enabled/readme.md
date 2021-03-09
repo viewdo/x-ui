@@ -26,4 +26,4 @@ Using the [\<x-audio-enabled\>](/components/x-audio-enabled) component descripti
 
 ----------------------------------------------
 
-view.DO : Experience Platform
+view.DO Experience Components

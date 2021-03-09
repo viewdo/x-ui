@@ -28,4 +28,4 @@ The element should be used in-place of an `a` tag to navigate without refreshing
 
 ----------------------------------------------
 
-view.DO : Experience Platform
+view.DO Experience Components

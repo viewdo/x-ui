@@ -27,4 +27,4 @@ Add the `<x-app-autoplay>` component to any page to allow the user to adjust the
 
 ----------------------------------------------
 
-view.DO : Experience Platform
+view.DO Experience Components

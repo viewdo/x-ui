@@ -23,4 +23,4 @@ Provider Key: '**session**'
 
 ----------------------------------------------
 
-view.DO : Experience Platform
+view.DO Experience Components

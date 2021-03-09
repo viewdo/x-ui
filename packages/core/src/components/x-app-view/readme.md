@@ -116,4 +116,4 @@ Type: `Promise<{ activators: HTMLXActionActivatorElement[]; views: HTMLXAppViewE
 
 ----------------------------------------------
 
-view.DO : Experience Platform
+view.DO Experience Components

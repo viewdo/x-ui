@@ -21,4 +21,4 @@ Add the `<x-app-theme-dark>` component to any page to allow the user to adjust t
 
 ----------------------------------------------
 
-view.DO : Experience Platform
+view.DO Experience Components

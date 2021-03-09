@@ -42,4 +42,4 @@ to gives users control of which theme should be applied.
 
 ----------------------------------------------
 
-view.DO : Experience Platform
+view.DO Experience Components

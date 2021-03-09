@@ -32,4 +32,4 @@ Using the `<x-app-view-not-found>` component .
 
 ----------------------------------------------
 
-view.DO : Experience Platform
+view.DO Experience Components

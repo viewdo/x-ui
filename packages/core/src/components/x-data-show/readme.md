@@ -22,4 +22,4 @@ This tag conditionally renders child elements based on the configured predicate 
 
 ----------------------------------------------
 
-view.DO : Experience Platform
+view.DO Experience Components

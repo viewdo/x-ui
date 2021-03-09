@@ -41,4 +41,4 @@ Or, just include it in one of the components [\<x-app-view\>](/components/x-app-
 
 ----------------------------------------------
 
-view.DO : Experience Platform
+view.DO Experience Components

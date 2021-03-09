@@ -70,4 +70,4 @@ This component supports HTML string interpolation within a child template tag. T
 
 ----------------------------------------------
 
-view.DO : Experience Platform
+view.DO Experience Components

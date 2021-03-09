@@ -111,4 +111,4 @@ Input-type elements (input, textarea and select) can specify a data expression f
 
 ----------------------------------------------
 
-view.DO : Experience Platform
+view.DO Experience Components
