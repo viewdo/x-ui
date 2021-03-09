@@ -3,12 +3,13 @@ jest.mock('./evaluate.worker')
 
 import { addDataProvider } from './factory'
 import { InMemoryProvider } from './providers/memory'
+import { dataState } from './state'
 import { resolveTokens } from './tokens'
 
 describe('resolveTokens', () => {
   let session: InMemoryProvider
   let storage: InMemoryProvider
-
+  dataState.enabled = true
   beforeEach(() => {
     session = new InMemoryProvider()
     storage = new InMemoryProvider()

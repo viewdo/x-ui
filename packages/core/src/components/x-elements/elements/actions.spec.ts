@@ -1,9 +1,9 @@
-jest.mock('../common/logging')
+jest.mock('../../../services/common/logging')
 
 import { MockWindow } from '@stencil/core/mock-doc'
 import { newSpecPage } from '@stencil/core/testing'
-import { sleep } from '../common'
-import { EventEmitter } from '../events'
+import { sleep } from '../../../services/common'
+import { EventEmitter } from '../../../services/events'
 import { ElementsActionListener } from './actions'
 import { ELEMENTS_COMMANDS, ELEMENTS_TOPIC } from './interfaces'
 

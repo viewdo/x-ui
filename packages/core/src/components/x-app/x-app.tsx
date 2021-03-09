@@ -12,12 +12,10 @@ import {
 } from '@stencil/core'
 import { commonState, debugIf, log } from '../../services/common'
 import { resolveChildElementXAttributes } from '../../services/data/elements'
-import { ElementsActionListener } from '../../services/elements/actions'
 import {
   actionBus,
   EventAction,
   eventBus,
-  IEventActionListener,
 } from '../../services/events'
 import {
   LocationSegments,
@@ -42,7 +40,6 @@ import { XAppViewNotFound } from '../x-app-view-not-found/x-app-view-not-found'
 export class XApp {
   private eventSubscription!: () => void
   private actionsSubscription!: () => void
-  private readonly listeners: IEventActionListener[] = []
 
   @Element() el!: HTMLXAppElement
   @State() location!: LocationSegments
@@ -177,14 +174,6 @@ export class XApp {
     if (notFound) {
       notFound.transition = notFound.transition || this.transition
     }
-
-    this.addListener('elements', new ElementsActionListener())
-  }
-
-  private addListener(name: string, listener: IEventActionListener) {
-    debugIf(commonState.debug, `x-app: ${name}-listener registered`)
-    listener.initialize(window, actionBus, eventBus)
-    this.listeners.push(listener)
   }
 
   async componentDidLoad() {
@@ -216,7 +205,6 @@ export class XApp {
     this.actionsSubscription?.call(this)
     this.eventSubscription?.call(this)
     this.router.destroy()
-    this.listeners.forEach(l => l.destroy())
     eventBus.removeAllListeners()
     actionBus.removeAllListeners()
   }

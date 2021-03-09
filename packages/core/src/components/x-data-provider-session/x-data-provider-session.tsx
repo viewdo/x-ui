@@ -4,14 +4,11 @@ import {
   removeDataProvider,
 } from '../../services/data/factory'
 import {
-  DATA_COMMANDS,
-  SetData,
-} from '../../services/data/interfaces'
-import {
   actionBus,
   EventAction,
   eventBus,
 } from '../../services/events'
+import { DATA_COMMANDS, SetData } from '../x-data/data/interfaces'
 import { SessionService } from './session/service'
 
 @Component({
@@ -58,7 +55,12 @@ export class XDataProviderSession {
   }
 
   componentWillLoad() {
-    this.provider = new SessionService(window, eventBus, this.name)
+    this.provider = new SessionService(
+      window,
+      eventBus,
+      this.name,
+      this.keyPrefix,
+    )
     this.registerProvider()
   }
 

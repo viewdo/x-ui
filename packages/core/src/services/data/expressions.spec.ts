@@ -9,11 +9,12 @@ import {
 import { evaluateExpression, evaluatePredicate } from './expressions'
 import { addDataProvider } from './factory'
 import { InMemoryProvider } from './providers/memory'
+import { dataState } from './state'
 
 describe('evaluateExpression', () => {
   let session: InMemoryProvider
   let storage: InMemoryProvider
-
+  dataState.enabled = true
   beforeEach(() => {
     session = new InMemoryProvider()
     storage = new InMemoryProvider()

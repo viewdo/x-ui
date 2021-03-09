@@ -2,6 +2,7 @@ jest.mock('../data/evaluate.worker')
 
 import { RafCallback, SpecPage } from '@stencil/core/internal'
 import { newSpecPage } from '@stencil/core/testing'
+import { dataState, dataStateDispose } from '../data/state'
 import { EventEmitter } from '../events/emitter'
 import { MatchResults } from './interfaces'
 import { Route } from './route'
@@ -23,8 +24,13 @@ describe('route', () => {
   }
 
   beforeEach(async () => {
+    dataState.enabled = true
     actionBus = new EventEmitter()
     eventBus = new EventEmitter()
+  })
+
+  afterEach(() => {
+    dataStateDispose()
   })
 
   it('router-service -> create-route', async () => {

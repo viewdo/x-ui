@@ -3,14 +3,27 @@ jest.mock('../../services/data/evaluate.worker')
 
 import { newSpecPage } from '@stencil/core/testing'
 import { contentStateDispose } from '../../services/content'
+import { addDataProvider } from '../../services/data/factory'
 import { DATA_EVENTS } from '../../services/data/interfaces'
+import { InMemoryProvider } from '../../services/data/providers'
+import {
+  dataState,
+  dataStateDispose,
+} from '../../services/data/state'
 import { actionBus, eventBus } from '../../services/events'
 import { ROUTE_EVENTS } from '../../services/routing'
 import remoteData from './test/data.json'
 import { XDataRepeat } from './x-data-repeat'
 
 describe('x-data-repeat', () => {
+  let provider: InMemoryProvider
+  beforeEach(() => {
+    dataState.enabled = true
+    provider = new InMemoryProvider()
+  })
+
   afterEach(() => {
+    dataStateDispose()
     actionBus.removeAllListeners()
     eventBus.removeAllListeners()
     jest.resetAllMocks()
@@ -20,10 +33,10 @@ describe('x-data-repeat', () => {
   it('renders', async () => {
     const page = await newSpecPage({
       components: [XDataRepeat],
-      html: `<x-data-repeat></x-data-repeat>`,
+      html: `<x-data-repeat defer-load></x-data-repeat>`,
     })
     expect(page.root).toEqualHtml(`
-      <x-data-repeat>
+      <x-data-repeat defer-load>
         <mock:shadow-root>
           <slot name="content"></slot>
         </mock:shadow-root>
@@ -53,6 +66,36 @@ describe('x-data-repeat', () => {
           <b>1</b>
           <b>2</b>
           <b>3</b>
+        </div>
+      </x-data-repeat>
+    `)
+    const subject = page.body.querySelector('x-data-repeat')
+    subject?.remove()
+  })
+
+  it('render inline array from tokens', async () => {
+    addDataProvider('some', provider)
+    provider.set('list', '[0, 9, 8, 7]')
+
+    const page = await newSpecPage({
+      components: [XDataRepeat],
+      html: `<x-data-repeat items="{{some:list}}">
+              <template><b>{{data:item}}</b></template>
+             </x-data-repeat>`,
+    })
+    await page.waitForChanges()
+
+    expect(page.root).toEqualHtml(`
+      <x-data-repeat items="{{some:list}}">
+        <mock:shadow-root>
+          <slot name="content"></slot>
+        </mock:shadow-root>
+        <template><b>{{data:item}}</b></template>
+        <div class="data-content">
+          <b>0</b>
+          <b>9</b>
+          <b>8</b>
+          <b>7</b>
         </div>
       </x-data-repeat>
     `)

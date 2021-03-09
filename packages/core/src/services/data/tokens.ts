@@ -1,10 +1,11 @@
-import { requireValue } from '../common'
+import { requireValue, warn } from '../common'
 import {
   addDataProvider,
   getDataProvider,
   removeDataProvider,
 } from './factory'
 import { DataItemProvider } from './providers/item'
+import { dataState } from './state'
 
 const tokenRegEx = /\{\{([\w-]*):([\w_]*)(?:\.([\w_.-]*))?(?:\?([\w_.-]*))?\}\}/gi
 
@@ -29,6 +30,10 @@ export async function resolveTokens(
   data?: any,
 ): Promise<string> {
   requireValue(textWithTokens, 'valueExpression')
+  if (!dataState.enabled) {
+    warn(`Data-services are not enabled. Tokens are not resolved.`)
+    return textWithTokens
+  }
 
   let result = textWithTokens.slice()
   if (textWithTokens === null || textWithTokens === '') {
@@ -40,7 +45,7 @@ export async function resolveTokens(
     return result
   }
 
-  if (data) {
+  if (data != undefined && data != null) {
     addDataProvider('data', new DataItemProvider(data))
   }
 
@@ -56,7 +61,8 @@ export async function resolveTokens(
 
     const provider = await getDataProvider(providerKey)
 
-    let value = (await provider?.get(dataKey)) || defaultValue
+    let value = await provider?.get(dataKey)
+    if (value == undefined) value = defaultValue
 
     if (propKey) {
       const object =
@@ -70,7 +76,7 @@ export async function resolveTokens(
         typeof node === 'object' ? JSON.stringify(node) : `${node}`
     }
 
-    let replacement = value || ''
+    let replacement = value?.toString() || ''
     if (forExpression) {
       if (value === null || value == undefined || value == '')
         replacement = 'null'

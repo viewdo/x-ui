@@ -1,6 +1,6 @@
 /* istanbul ignore file */
-
-import { EventEmitter } from '../../events'
+//  @ts-no-check
+import { EventEmitter } from '../../../../services/events/emitter'
 import { TimedNode } from '../interfaces'
 
 export class ElementTimer extends EventEmitter {
@@ -14,18 +14,11 @@ export class ElementTimer extends EventEmitter {
     private _debug: boolean,
   ) {
     super()
-
-
-
   }
 
-  beginInternalTimer() {
-  }
+  beginInternalTimer() {}
 
-  public emitTime(_time: number) {
-  }
+  public emitTime(_time: number) {}
 
-  destroy() {
-
-  }
+  destroy() {}
 }

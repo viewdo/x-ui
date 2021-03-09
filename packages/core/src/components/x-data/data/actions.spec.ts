@@ -6,6 +6,7 @@ import {
   getDataProviders,
 } from '../../../services/data/factory'
 import {
+  DATA_EVENTS,
   DATA_TOPIC,
   IDataProvider,
 } from '../../../services/data/interfaces'
@@ -15,6 +16,7 @@ import { DataListener } from './actions'
 import { DATA_COMMANDS } from './interfaces'
 
 class MockDataProvider extends InMemoryProvider {
+  changed = new EventEmitter()
   setItem(x: string, y: string) {
     this.set(x, y)
   }
@@ -90,5 +92,36 @@ describe('data-provider-listener', () => {
     const mock = await getDataProvider('mock')
     expect(mock).toBeDefined()
     expect(mock).toBe(mockDataProvider)
+
+    subject.destroy()
+  })
+
+  it('eventListener: handles provider events', async () => {
+    subject = new DataListener()
+    subject.initialize(mockWindow, actionBus, eventBus)
+
+    let result: any
+    eventBus.on(DATA_EVENTS.DataChanged, e => {
+      result = e
+    })
+
+    const event = {
+      command: DATA_COMMANDS.RegisterDataProvider,
+      data: {
+        name: 'mock',
+        provider: mockDataProvider,
+      },
+    }
+
+    actionBus.emit(DATA_TOPIC, event)
+
+    const mock = await getDataProvider('mock')
+    expect(mock).toBeDefined()
+    expect(mock).toBe(mockDataProvider)
+
+    mockDataProvider.changed?.emit('something happened!')
+
+    expect(result).toBeDefined()
+    expect(result.provider).toBe('mock')
   })
 })

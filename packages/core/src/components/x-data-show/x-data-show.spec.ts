@@ -5,6 +5,10 @@ import { newSpecPage } from '@stencil/core/testing'
 import { addDataProvider } from '../../services/data/factory'
 import { DATA_EVENTS } from '../../services/data/interfaces'
 import { InMemoryProvider } from '../../services/data/providers/memory'
+import {
+  dataState,
+  dataStateDispose,
+} from '../../services/data/state'
 import { eventBus } from '../../services/events'
 import { ROUTE_EVENTS } from '../../services/routing/interfaces'
 import { XDataShow } from './x-data-show'
@@ -13,11 +17,13 @@ describe('x-data-show', () => {
   let session: InMemoryProvider
 
   beforeEach(() => {
+    dataState.enabled = true
     session = new InMemoryProvider()
     addDataProvider('session', session)
   })
 
   afterEach(() => {
+    dataStateDispose
     eventBus.removeAllListeners()
     jest.resetAllMocks()
   })

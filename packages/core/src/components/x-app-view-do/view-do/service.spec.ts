@@ -3,11 +3,11 @@ jest.mock('../../../services/data/evaluate.worker')
 
 import { newSpecPage } from '@stencil/core/testing'
 import { contentStateDispose } from '../../../services/content/state'
-import { ElementsActionListener } from '../../../services/elements/actions'
 import { actionBus, eventBus } from '../../../services/events'
 import { VisitStrategy } from '../../../services/navigation/interfaces'
 import { XActionActivator } from '../../x-action-activator/x-action-activator'
 import { XAction } from '../../x-action/x-action'
+import { ElementsActionListener } from '../../x-elements/elements/actions'
 import { MockRequestAnimationFrameProvider } from './mocks/frame-provider'
 import { MockRoute } from './mocks/route'
 import { ViewDoService } from './service'
@@ -199,7 +199,7 @@ describe('view-do', () => {
   })
 
   it('captures x-time-in,x-in-class, x-time-out, x-out-class', async () => {
-    const listener = new ElementsActionListener()
+    // const listener = new ElementsActionListener()
     const page = await newSpecPage({
       components: [],
       html: `<div hidden
@@ -215,7 +215,7 @@ describe('view-do', () => {
 
     timer = new ElementTimer(animationFrameProvider, 10, 0)
 
-    listener.initialize(page.win, actionBus, eventBus)
+    // listener.initialize(page.win, actionBus, eventBus)
 
     subject = new ViewDoService(
       page.body,
@@ -267,7 +267,7 @@ describe('view-do', () => {
       </div>
       `)
 
-    listener.destroy()
+    // listener.destroy()
   })
 
   it('processes timed actions', async () => {

@@ -5,10 +5,13 @@ import { newSpecPage } from '@stencil/core/testing'
 import {
   clearDataProviders,
   getDataProvider,
+  removeDataProvider,
 } from '../../services/data/factory'
 import { dataStateDispose } from '../../services/data/state'
 import { actionBus, eventBus } from '../../services/events'
+import { XAction } from '../x-action/x-action'
 import { XData } from '../x-data/x-data'
+import { CookieService } from './cookie/service'
 import { XDataProviderCookie } from './x-data-provider-cookie'
 
 describe('x-data-provider-cookie', () => {
@@ -107,5 +110,74 @@ describe('x-data-provider-cookie', () => {
 
     subject?.remove()
     page.body.querySelector('x-data')!.remove()
+  })
+
+  it('responds to set-data commands', async () => {
+    const page = await newSpecPage({
+      components: [XData, XDataProviderCookie],
+      html:
+        '<x-data><x-data-provider-cookie></x-data-provider-cookie></x-data>',
+      supportsShadowDom: true,
+    })
+    await page.waitForChanges()
+
+    const subject = page.body.querySelector('x-data-provider-cookie')!
+    await subject.registerProvider()
+    const provider = (await getDataProvider(
+      'cookie',
+    )) as CookieService
+    expect(provider).toBeDefined()
+
+    const action = new XAction()
+    action.topic = 'cookie'
+    action.command = 'set-data'
+    await action.sendAction({ test: 'value' })
+
+    let result = await provider.get('test')
+    expect(result).toBe('value')
+
+    subject.remove()
+  })
+
+  it('remembers consent', async () => {
+    const page = await newSpecPage({
+      components: [XData, XDataProviderCookie],
+      html:
+        '<x-data><x-data-provider-cookie></x-data-provider-cookie></x-data>',
+      supportsShadowDom: true,
+    })
+    await page.waitForChanges()
+
+    const subject = page.body.querySelector('x-data-provider-cookie')!
+    await subject.registerProvider()
+    let provider = (await getDataProvider('cookie')) as CookieService
+    expect(provider).toBeDefined()
+
+    removeDataProvider('cookie')
+
+    const action = new XAction()
+    action.topic = 'cookie'
+    action.command = 'set-data'
+    await action.sendAction({ consent: 'true' })
+
+    page.setContent(
+      '<x-data><x-data-provider-cookie></x-data-provider-cookie></x-data>',
+    )
+
+    expect(page.root).toEqualHtml(`
+      <x-data>
+        <mock:shadow-root></mock:shadow-root>
+        <x-data-provider-cookie>
+          <mock:shadow-root></mock:shadow-root>
+        </x-data-provider-cookie>
+      </x-data>
+    `)
+
+    provider = (await getDataProvider('cookie')) as CookieService
+
+    let result = await provider.get('consent')
+    expect(result).toBe('true')
+
+    expect(provider).not.toBeNull()
   })
 })

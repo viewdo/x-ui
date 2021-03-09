@@ -9,7 +9,6 @@ import {
 import { warn } from '../../services/common/logging'
 import {
   actionBus,
-  ActionTopicType,
   EventAction,
   IActionElement,
 } from '../../services/events'
@@ -29,9 +28,8 @@ export class XAction implements IActionElement {
   /**
    * This is the topic this action-command is targeting.
    *
-   * data: []
    */
-  @Prop() topic?: ActionTopicType
+  @Prop() topic?: string
 
   /**
    * The command to execute.

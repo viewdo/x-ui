@@ -222,8 +222,6 @@
         <x-content-reference
           style-src="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css">
         </x-content-reference>
-        <x-data-provider-session></x-data-provider-session>
-        <x-data-provider-storage></x-data-provider-storage>
 
         <div slot="content">
           <h1 class="mt-3 mb-3">Turbo-charged HTML</h1>
@@ -316,10 +314,18 @@
       <x-app-view url="/home"
         resolve-tokens
         content-src="/pages/home/default.html">
+        <x-data>
+          <!-- enable data expressions-->
+          <x-data-provider-session></x-data-provider-session>
+          <x-data-provider-storage></x-data-provider-storage>
+        </x-data>
         <x-ui>
-          <!-- Enabled themes -->
+          <!-- enabled UI themes -->
+          <x-ui-theme></x-ui-theme>
         </x-ui>
-        <x-ui-theme></x-ui-theme>
+        <x-elements>
+          <!-- enable element manipulation-->
+        </x-elements>
         <x-app-view-do url="/home/name"
           page-title="Introductions"
           when="!{{storage:name}}"
