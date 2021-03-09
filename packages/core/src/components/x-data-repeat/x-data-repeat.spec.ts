@@ -2,6 +2,7 @@ jest.mock('./filter/jsonata.worker')
 jest.mock('../../services/data/evaluate.worker')
 
 import { newSpecPage } from '@stencil/core/testing'
+import { contentStateDispose } from '../../services/content'
 import { DATA_EVENTS } from '../../services/data/interfaces'
 import { actionBus, eventBus } from '../../services/events'
 import { ROUTE_EVENTS } from '../../services/routing'
@@ -13,6 +14,7 @@ describe('x-data-repeat', () => {
     actionBus.removeAllListeners()
     eventBus.removeAllListeners()
     jest.resetAllMocks()
+    contentStateDispose()
   })
 
   it('renders', async () => {
@@ -148,14 +150,14 @@ describe('x-data-repeat', () => {
         }),
       )
 
-    await page.setContent(`<x-data-repeat items-src="items.json">
+    await page.setContent(`<x-data-repeat items-src="items.json" no-cache>
         <template><b>{{data:item}}</b></template>
       </x-data-repeat>`)
 
     await page.waitForChanges()
 
     expect(page.root).toEqualHtml(`
-      <x-data-repeat items-src="items.json">
+      <x-data-repeat items-src="items.json" no-cache>
         <mock:shadow-root>
           <slot name="content"></slot>
         </mock:shadow-root>
@@ -173,7 +175,7 @@ describe('x-data-repeat', () => {
     await page.waitForChanges()
 
     expect(page.root).toEqualHtml(`
-      <x-data-repeat items-src="items.json">
+      <x-data-repeat items-src="items.json" no-cache>
         <mock:shadow-root>
           <slot name="content"></slot>
         </mock:shadow-root>

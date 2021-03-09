@@ -1,3 +1,31 @@
 :host {
   display: block;
+  width: 100%;
+  fill: var(--text-color);
+  border: 1px solid var(--text-color);
+  border-radius: 5px;
+  background-color: var(--dark);
+  padding: 0.21em;
+}
+
+.container {
+}
+.row {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.button {
+  height: 24px;
+  width: 24px;
+  cursor: pointer;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.button img {
+  filter: invert(1);
 }

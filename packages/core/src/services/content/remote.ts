@@ -1,18 +1,19 @@
 import { hasToken, resolveTokens } from '../data/tokens'
 
-const cache: Record<string, string> = {}
-
 export async function fetchContent(
   win: Window,
   src: string,
   mode: RequestMode,
 ) {
-  if (cache[src]) return cache[src]
+  // const cachedResult = contentState.cache[src]
+  // if (cachedResult) return cachedResult
   const response = await win.fetch(src, {
     mode,
   })
   if (response.status == 200 || response.ok) {
-    return (cache[src] = await response.text())
+    const content = await response.text()
+    if (content) return content // (contentState.cache[src] = content)
+    return null
   }
   throw new Error(
     `Request to ${src} was not successful: ${response.statusText}`,
@@ -25,7 +26,7 @@ export async function getRemoteContent(
   mode: RequestMode,
   tokens: boolean,
 ) {
-  const resolvedSrc = hasToken(src) ? await resolveTokens(src) : src
+  const resolvedSrc = await resolveSrc(src)
   const data = await fetchContent(win, resolvedSrc, mode)
   return data && tokens ? await resolveTokens(data) : data
 }

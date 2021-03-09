@@ -2,6 +2,7 @@ jest.mock('../../../services/common/logging')
 jest.mock('../../../services/data/evaluate.worker')
 
 import { newSpecPage } from '@stencil/core/testing'
+import { contentStateDispose } from '../../../services/content/state'
 import { ElementsActionListener } from '../../../services/elements/actions'
 import { ElementTimer } from '../../../services/elements/timer'
 import { actionBus, eventBus } from '../../../services/events'
@@ -25,6 +26,7 @@ describe('view-do', () => {
     eventBus.removeAllListeners()
     actionBus.removeAllListeners()
     subject?.cleanup()
+    contentStateDispose()
   })
 
   it('initializes with fake video', async () => {

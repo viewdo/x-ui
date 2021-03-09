@@ -1,10 +1,10 @@
-import { AudioActionListener } from '../../../services/audio/actions'
 import { AudioType } from '../../../services/audio/interfaces'
 import {
   DATA_EVENTS,
   IDataProvider,
 } from '../../../services/data/interfaces'
 import { EventEmitter } from '../../../services/events/emitter'
+import { AudioActionListener } from './actions'
 
 export class AudioDataProvider implements IDataProvider {
   changed: EventEmitter

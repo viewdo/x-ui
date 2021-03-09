@@ -3,6 +3,7 @@ jest.mock('../../services/data/evaluate.worker')
 jest.mock('./markdown/remarkable.worker')
 
 import { newSpecPage } from '@stencil/core/testing'
+import { contentStateDispose } from '../../services/content'
 import {
   addDataProvider,
   clearDataProviders,
@@ -25,6 +26,7 @@ describe('x-content-markdown', () => {
     eventBus.removeAllListeners()
     jest.resetAllMocks()
     clearDataProviders()
+    contentStateDispose()
   })
 
   it('renders', async () => {

@@ -32,6 +32,7 @@ export class XDataRepeat {
   @Element() el!: HTMLXDataRepeatElement
   @State() innerTemplate!: string
   @State() resolvedTemplate!: string
+  @State() dynamicContent: HTMLElement | null = null
   private contentKey!: string
 
   /**
@@ -57,12 +58,17 @@ export class XDataRepeat {
    * To fetch the contents change to false or remove
    * attribute.
    */
-  @Prop({ mutable: true }) deferLoad = false
+  @Prop({ mutable: true }) deferLoad: boolean = false
 
   /**
    * Turn on debug statements for load, update and render events.
    */
-  @Prop() debug = false
+  @Prop() debug: boolean = false
+
+  /**
+   * Force render with data & route changes.
+   */
+  @Prop() noCache: boolean = false
 
   private get router(): RouterService | undefined {
     return this.el.closest('x-app')?.router
@@ -107,17 +113,19 @@ export class XDataRepeat {
   async componentWillRender() {
     if (!this.innerTemplate) return
 
+    if (this.dynamicContent && !this.noCache) return
+
     const remoteContent = this.el.querySelector(`.${this.contentKey}`)
     remoteContent?.remove()
     const items = await this.resolveItems()
     const innerContent = await this.resolveHtml(items)
     if (innerContent) {
-      const content = this.el.ownerDocument.createElement('div')
-      content.className = this.contentKey!
-      content.innerHTML = innerContent
-      content.slot = 'content'
-      this.router?.captureInnerLinks(content)
-      this.el.append(content)
+      this.dynamicContent = this.el.ownerDocument.createElement('div')
+      this.dynamicContent.className = this.contentKey!
+      this.dynamicContent.innerHTML = innerContent
+      this.dynamicContent.slot = 'content'
+      this.router?.captureInnerLinks(this.dynamicContent)
+      this.el.append(this.dynamicContent)
     }
   }
 
@@ -151,7 +159,9 @@ export class XDataRepeat {
 
   private async resolveItems() {
     let items = []
-    if (this.childScript) {
+    if (this.items) {
+      items = await this.resolveItemsExpression()
+    } else if (this.childScript) {
       try {
         const text = this.childScript.textContent?.replace('\n', '')
         items = arrify(JSON.parse(text || '[]'))
@@ -163,8 +173,6 @@ export class XDataRepeat {
       }
     } else if (this.itemsSrc) {
       items = await this.fetchJson()
-    } else if (this.items) {
-      items = await this.resolveItemsExpression()
     } else {
       warnIf(
         this.debug,

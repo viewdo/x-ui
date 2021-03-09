@@ -3,30 +3,23 @@ jest.mock('../../services/data/evaluate.worker')
 jest.mock('./audio/track')
 
 import { newSpecPage } from '@stencil/core/testing'
-import {
-  AudioInfo,
-  audioState,
-  audioStore,
-  AudioType,
-  DiscardStrategy,
-  LoadStrategy,
-} from '../../services/audio'
+import { audioState, audioStore } from '../../services/audio'
 import { actionBus, eventBus } from '../../services/events'
 import { interfaceStore } from '../../services/interface'
 import { XContentReference } from '../x-content-reference/x-content-reference'
 import { XAudioPlayer } from './x-audio-player'
 
 describe('x-audio-player', () => {
-  let data: AudioInfo | any
+  // let data: AudioInfo | any
   beforeEach(() => {
-    data = {
-      src: '/fake/path.mp3',
-      trackId: 'queued-music-1',
-      type: AudioType.Music,
-      discard: DiscardStrategy.Route,
-      loop: true,
-      mode: LoadStrategy.Load,
-    }
+    // data = {
+    //   src: '/fake/path.mp3',
+    //   trackId: 'queued-music-1',
+    //   type: AudioType.Music,
+    //   discard: DiscardStrategy.Route,
+    //   loop: true,
+    //   mode: LoadStrategy.Load,
+    // }
   })
 
   afterEach(async () => {

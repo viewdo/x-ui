@@ -37,7 +37,6 @@ export class XContentMarkdown {
   private readonly contentClass = 'rendered-content'
   private dataSubscription!: () => void
   private routeSubscription!: () => void
-  private contentKey: string | null = null
   private renderCache: Record<string, HTMLElement> = {}
   @Element() el!: HTMLXContentMarkdownElement
   @State() contentElement: HTMLElement | null = null
@@ -79,6 +78,18 @@ export class XContentMarkdown {
    */
   @Prop() noCache: boolean = false
 
+  private async getContentKey() {
+    return this.src
+      ? await resolveSrc(this.src)
+      : this.childScript
+      ? 'script'
+      : null
+  }
+
+  private get canCache() {
+    return this.noCache === false && this.resolveTokens === false
+  }
+
   private get router(): RouterService | null {
     return this.el.closest('x-app')?.router || null
   }
@@ -110,7 +121,7 @@ export class XContentMarkdown {
       shouldRender = await evaluatePredicate(this.when)
 
     if (shouldRender) {
-      if (this.contentElement && this.noCache == false) return
+      if (this.contentElement && this.canCache) return
       this.contentElement = await this.resolveContentElement()
     } else {
       this.contentElement = null
@@ -122,11 +133,8 @@ export class XContentMarkdown {
   }
 
   private async resolveContentElement() {
-    const key = this.src
-      ? await resolveSrc(this.src!)
-      : this.contentKey
-    if (key && !this.noCache && this.renderCache[key])
-      return this.renderCache[key]
+    const key = await this.getContentKey()
+    if (key && this.renderCache[key]) return this.renderCache[key]
 
     const content = this.src
       ? await this.getContentFromSrc()
@@ -140,11 +148,11 @@ export class XContentMarkdown {
     await resolveChildElementXAttributes(div)
     this.router?.captureInnerLinks(div)
     this.highlight(div)
+    if (key && this.canCache) this.renderCache[key] = div
     return div
   }
 
   private async getContentFromSrc() {
-    this.contentKey = await resolveSrc(this.src!)
     try {
       const content = await getRemoteContent(
         window,
@@ -165,7 +173,6 @@ export class XContentMarkdown {
 
     let content = this.dedent(element.textContent)
     if (this.resolveTokens) content = await resolveTokens(content)
-    this.contentKey = 'script'
 
     return content
   }

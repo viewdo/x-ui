@@ -3,6 +3,10 @@ jest.mock('../../services/common/logging')
 
 import { newSpecPage } from '@stencil/core/testing'
 import {
+  contentStateDispose,
+  contentStateReset,
+} from '../../services/content'
+import {
   addDataProvider,
   clearDataProviders,
 } from '../../services/data/factory'
@@ -17,6 +21,7 @@ describe('x-content-include', () => {
   beforeEach(() => {
     session = new InMemoryProvider()
     addDataProvider('session', session)
+    contentStateReset()
   })
 
   afterEach(() => {
@@ -24,6 +29,7 @@ describe('x-content-include', () => {
     eventBus.removeAllListeners()
     jest.resetAllMocks()
     clearDataProviders()
+    contentStateDispose()
   })
 
   it('renders', async () => {

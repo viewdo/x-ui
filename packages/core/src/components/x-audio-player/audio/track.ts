@@ -28,6 +28,7 @@ export class AudioTrack implements AudioInfo {
         onend,
         onloaderror: onerror,
         onplayerror: onerror,
+        html5: true,
       })
     }
   }
@@ -72,11 +73,11 @@ export class AudioTrack implements AudioInfo {
   public track: boolean = false
   public loop: boolean = false
 
-  public get state() {
+  public state() {
     return this.sound?.state()
   }
 
-  public get playing() {
+  public playing() {
     return this.sound?.playing()
   }
 
@@ -111,10 +112,14 @@ export class AudioTrack implements AudioInfo {
     this.events.emit(AUDIO_EVENTS.Resumed, this.trackId)
   }
 
+  public volume(set: number) {
+    this.sound?.volume(set)
+  }
+
   public start() {
-    if (this.state === 'loaded') {
+    if (this.state() === 'loaded') {
       this.play()
-    } else if (this.state === 'loading') {
+    } else if (this.state() === 'loading') {
       this.events.once(AUDIO_EVENTS.Loaded, () => {
         this.play()
       })

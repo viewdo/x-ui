@@ -101,6 +101,7 @@ This component supports HTML string interpolation within a child template tag. E
 | `filter`    | `filter`     | The JSONata query to filter the json items see <https://try.jsonata.org> for more info.                       | `string \| undefined` | `undefined` |
 | `items`     | `items`      | The array-string or data expression to obtain a collection for rendering the template. {{session:cart.items}} | `string \| undefined` | `undefined` |
 | `itemsSrc`  | `items-src`  | The URL to remote JSON collection to use for the items.                                                       | `string \| undefined` | `undefined` |
+| `noCache`   | `no-cache`   | Force render with data & route changes.                                                                       | `boolean`             | `false`     |
 
 
 ----------------------------------------------

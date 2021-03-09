@@ -3,6 +3,7 @@ jest.mock('../../services/elements/timer')
 jest.mock('../../services/data/evaluate.worker')
 
 import { newSpecPage } from '@stencil/core/testing'
+import { contentStateDispose } from '../../services/content'
 import { addDataProvider } from '../../services/data/factory'
 import {
   DATA_EVENTS,
@@ -27,6 +28,7 @@ describe('x-app-view-do', () => {
   afterEach(async () => {
     await clearVisits()
     storage.changed.removeAllListeners()
+    contentStateDispose()
   })
 
   it('renders inactive', async () => {

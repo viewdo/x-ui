@@ -95,10 +95,9 @@ export class AudioActionListener {
   }
 
   public get isPlaying(): boolean {
-    if (!this.onDeck) return false
     return (
-      this.onDeck[AudioType.Music]?.playing ||
-      this.onDeck[AudioType.Sound]?.playing ||
+      this.onDeck[AudioType.Music]?.playing() ||
+      this.onDeck[AudioType.Sound]?.playing() ||
       false
     )
   }
@@ -115,28 +114,23 @@ export class AudioActionListener {
   }
 
   public pause() {
-    if (!this.isPlaying) {
-      return
-    }
-
     this.onDeck[AudioType.Music]?.pause()
     this.onDeck[AudioType.Sound]?.pause()
     this.changed.emit('changed')
   }
 
   public resume() {
-    if (this.isPlaying) {
-      return
-    }
-
     this.onDeck[AudioType.Music]?.resume()
     this.onDeck[AudioType.Sound]?.resume()
     this.changed.emit('changed')
   }
 
+  public muted: boolean = !audioState.enabled
+
   public mute(mute = this.isPlaying) {
     this.onDeck[AudioType.Music]?.mute(mute)
     this.onDeck[AudioType.Sound]?.mute(mute)
+    this.muted = mute
     this.changed.emit('changed')
   }
 
@@ -148,8 +142,14 @@ export class AudioActionListener {
     }
   }
 
-  public volume(request: AudioRequest) {
-    this.window.Howler?.volume(request.value)
+  public volume: number = this.window.Howler?.volume()
+
+  public setVolume(value: number) {
+    this.onDeck[AudioType.Music]?.volume(value)
+    this.onDeck[AudioType.Sound]?.volume(value)
+
+    this.muted = value == 0
+    this.volume = value
     this.changed.emit('changed')
   }
 
@@ -210,7 +210,8 @@ export class AudioActionListener {
       }
 
       case AUDIO_COMMANDS.Mute: {
-        this.mute()
+        const value = data as boolean
+        this.mute(value)
         break
       }
 
@@ -224,7 +225,8 @@ export class AudioActionListener {
       }
 
       case AUDIO_COMMANDS.Volume: {
-        this.volume(data as AudioRequest)
+        const { value } = data as AudioRequest
+        this.setVolume(value)
         break
       }
 
@@ -234,7 +236,6 @@ export class AudioActionListener {
 
   private createQueuedAudioFromTrack(data: AudioInfo) {
     const audio = new AudioTrack(data)
-
     audio.events.once(AUDIO_EVENTS.Ended, () => {
       this.soundEnded(audio)
     })
@@ -276,7 +277,6 @@ export class AudioActionListener {
     if (mode === LoadStrategy.Queue) {
       this.playNextTrackFromQueue(type)
     }
-    this.changed.emit('changed')
   }
 
   private routeChanged() {

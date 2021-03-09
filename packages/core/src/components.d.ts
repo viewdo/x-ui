@@ -349,6 +349,26 @@ export namespace Components {
           * The display mode for this player. The display is merely a facade to manage basic controls. No track information or duration will be displayed.
          */
         "display": boolean;
+        /**
+          * The Howler.js Script Reference
+         */
+        "howlerUrl": string;
+        /**
+          * Mute Off Icon Url
+         */
+        "muteOffIconUrl": string;
+        /**
+          * Mute ON Icon Url
+         */
+        "muteOnIconUrl": string;
+        /**
+          * Pause Icon Url
+         */
+        "pauseIconUrl": string;
+        /**
+          * Play Icon Url
+         */
+        "playIconUrl": string;
     }
     interface XAudioSoundAction {
         /**
@@ -425,6 +445,10 @@ export namespace Components {
           * Cross Origin Mode
          */
         "mode": RequestMode;
+        /**
+          * Force render with data & route changes.
+         */
+        "noCache": boolean;
         /**
           * Before rendering HTML, replace any data-tokens with their resolved values. This also commands this component to re-render it's HTML for data-changes. This can affect performance.
          */
@@ -535,6 +559,10 @@ export namespace Components {
           * @example /data.json
          */
         "itemsSrc"?: string;
+        /**
+          * Force render with data & route changes.
+         */
+        "noCache": boolean;
     }
     interface XDataShow {
         /**
@@ -1065,6 +1093,26 @@ declare namespace LocalJSX {
           * The display mode for this player. The display is merely a facade to manage basic controls. No track information or duration will be displayed.
          */
         "display"?: boolean;
+        /**
+          * The Howler.js Script Reference
+         */
+        "howlerUrl"?: string;
+        /**
+          * Mute Off Icon Url
+         */
+        "muteOffIconUrl"?: string;
+        /**
+          * Mute ON Icon Url
+         */
+        "muteOnIconUrl"?: string;
+        /**
+          * Pause Icon Url
+         */
+        "pauseIconUrl"?: string;
+        /**
+          * Play Icon Url
+         */
+        "playIconUrl"?: string;
     }
     interface XAudioSoundAction {
         /**
@@ -1133,6 +1181,10 @@ declare namespace LocalJSX {
           * Cross Origin Mode
          */
         "mode"?: RequestMode;
+        /**
+          * Force render with data & route changes.
+         */
+        "noCache"?: boolean;
         /**
           * Before rendering HTML, replace any data-tokens with their resolved values. This also commands this component to re-render it's HTML for data-changes. This can affect performance.
          */
@@ -1243,6 +1295,10 @@ declare namespace LocalJSX {
           * @example /data.json
          */
         "itemsSrc"?: string;
+        /**
+          * Force render with data & route changes.
+         */
+        "noCache"?: boolean;
     }
     interface XDataShow {
         /**

@@ -4,10 +4,12 @@ import { createStore } from '@stencil/store'
 
 class StateModel {
   references!: string[]
+  cache!: Record<string, string>
 }
 
 const store = createStore<StateModel>({
   references: [],
+  cache: {},
 })
 
 const { state, onChange, reset, dispose } = store
