@@ -8,11 +8,8 @@ import {
   State,
 } from '@stencil/core'
 import { arrify, debugIf, warnIf } from '../../services/common'
-import {
-  DATA_EVENTS,
-  hasToken,
-  resolveTokens,
-} from '../../services/data'
+import { DATA_EVENTS } from '../../services/data/interfaces'
+import { hasToken, resolveTokens } from '../../services/data/tokens'
 import { eventBus } from '../../services/events'
 import { RouterService, ROUTE_EVENTS } from '../../services/routing'
 import { filterData } from './filter/jsonata.worker'

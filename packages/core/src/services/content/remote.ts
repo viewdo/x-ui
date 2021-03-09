@@ -1,4 +1,4 @@
-import { hasToken, resolveTokens } from '../data'
+import { hasToken, resolveTokens } from '../data/tokens'
 
 export async function getRemoteContent(
   win: Window,

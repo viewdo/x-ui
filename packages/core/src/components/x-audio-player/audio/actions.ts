@@ -1,24 +1,33 @@
-import { Howler } from 'howler'
-import { debugIf } from '../common'
-import { EventAction, IEventEmitter } from '../events'
-import { ROUTE_EVENTS } from '../routing'
-import { AudioTrack } from './audio'
-import { AudioInfo } from './audio-info'
-import { AudioRequest } from './audio-request'
 import {
+  AudioInfo,
+  AudioRequest,
   AudioType,
   AUDIO_COMMANDS,
   AUDIO_EVENTS,
   AUDIO_TOPIC,
   DiscardStrategy,
   LoadStrategy,
-} from './interfaces'
-import { audioState } from './state'
-import { hasPlayed } from './tracked'
+} from '../../../services/audio/interfaces'
+import {
+  audioState,
+  onAudioStateChange,
+} from '../../../services/audio/state'
+import { hasPlayed } from '../../../services/audio/tracked'
+import { debugIf } from '../../../services/common/logging'
+import {
+  EventAction,
+  EventEmitter,
+  IEventEmitter,
+} from '../../../services/events'
+import { ROUTE_EVENTS } from '../../../services/routing'
+import { AudioTrack } from './track'
 
 export class AudioActionListener {
+  changed: IEventEmitter
+  private readonly audioStateSubscription: () => void
   private readonly actionSubscription: () => void
   private readonly eventSubscription: () => void
+
   public onDeck: Record<string, AudioTrack | null> = {
     [AudioType.Music]: null,
     [AudioType.Sound]: null,
@@ -32,11 +41,26 @@ export class AudioActionListener {
     [AudioType.Sound]: [],
   }
 
+  public enabled!: boolean
+
   constructor(
+    private readonly window: Window,
     private readonly eventBus: IEventEmitter,
     private readonly actionBus: IEventEmitter,
     private readonly debug: boolean = false,
   ) {
+    this.changed = new EventEmitter()
+
+    this.audioStateSubscription = onAudioStateChange(
+      'enabled',
+      enabled => {
+        this.enabled = enabled
+        if (enabled == false) {
+          this.window.Howler.unload()
+        }
+      },
+    )
+
     this.actionSubscription = this.actionBus.on(
       AUDIO_TOPIC,
       (ev: EventAction<any>) => {
@@ -45,6 +69,7 @@ export class AudioActionListener {
           `audio-listener: event received ${ev.topic}:${ev.command}`,
         )
         this.commandReceived(ev.command, ev.data)
+        audioState.hasAudio = this.hasAudio
       },
     )
 
@@ -61,21 +86,24 @@ export class AudioActionListener {
 
   public enable() {
     audioState.enabled = true
+    this.changed.emit('changed')
   }
 
   public disable() {
     audioState.enabled = false
+    this.changed.emit('changed')
   }
 
-  public isPlaying(): boolean {
+  public get isPlaying(): boolean {
     if (!this.onDeck) return false
     return (
-      Boolean(this.onDeck[AudioType.Music]?.playing) ||
-      Boolean(this.onDeck[AudioType.Sound]?.playing)
+      this.onDeck[AudioType.Music]?.playing ||
+      this.onDeck[AudioType.Sound]?.playing ||
+      false
     )
   }
 
-  public hasAudio(): boolean {
+  public get hasAudio(): boolean {
     return (
       this.onDeck[AudioType.Music] != null ||
       this.onDeck[AudioType.Sound] != null ||
@@ -87,37 +115,42 @@ export class AudioActionListener {
   }
 
   public pause() {
-    if (!this.isPlaying()) {
+    if (!this.isPlaying) {
       return
     }
 
     this.onDeck[AudioType.Music]?.pause()
     this.onDeck[AudioType.Sound]?.pause()
+    this.changed.emit('changed')
   }
 
   public resume() {
-    if (this.isPlaying()) {
+    if (this.isPlaying) {
       return
     }
 
     this.onDeck[AudioType.Music]?.resume()
     this.onDeck[AudioType.Sound]?.resume()
+    this.changed.emit('changed')
   }
 
-  public mute(mute = true) {
+  public mute(mute = this.isPlaying) {
     this.onDeck[AudioType.Music]?.mute(mute)
     this.onDeck[AudioType.Sound]?.mute(mute)
+    this.changed.emit('changed')
   }
 
   public seek(type: AudioType, trackId: string, seek: number) {
     const current = this.onDeck[type]
     if (current && current.trackId === trackId) {
       current.seek(seek)
+      this.changed.emit('changed')
     }
   }
 
   public volume(request: AudioRequest) {
-    Howler.volume(request.value)
+    this.window.Howler?.volume(request.value)
+    this.changed.emit('changed')
   }
 
   // Private members
@@ -177,7 +210,7 @@ export class AudioActionListener {
       }
 
       case AUDIO_COMMANDS.Mute: {
-        this.mute(this.isPlaying())
+        this.mute()
         break
       }
 
@@ -217,6 +250,7 @@ export class AudioActionListener {
         this.eventBus.emit(AUDIO_TOPIC, ...args)
       }
     })
+    this.changed.emit('changed')
 
     return audio
   }
@@ -242,10 +276,11 @@ export class AudioActionListener {
     if (mode === LoadStrategy.Queue) {
       this.playNextTrackFromQueue(type)
     }
+    this.changed.emit('changed')
   }
 
   private routeChanged() {
-    if (!this.hasAudio()) return
+    if (!this.hasAudio) return
 
     // Discard any route-based audio
     this.discardActive(AudioType.Sound, DiscardStrategy.Route)
@@ -280,6 +315,7 @@ export class AudioActionListener {
         AUDIO_EVENTS.Loaded,
         audio.trackId,
       )
+      this.changed.emit('changed')
     }
   }
 
@@ -292,6 +328,7 @@ export class AudioActionListener {
         AUDIO_EVENTS.Queued,
         audio.trackId,
       )
+      this.changed.emit('changed')
     }
 
     if (!this.onDeck[audio.type]) {
@@ -307,6 +344,7 @@ export class AudioActionListener {
         AUDIO_EVENTS.Dequeued,
         audio.trackId,
       )
+      this.changed.emit('changed')
     }
 
     return audio
@@ -321,6 +359,7 @@ export class AudioActionListener {
     this.queued[type] = this.queued[type]?.filter(i =>
       eligibleAudio(i),
     )
+    this.changed.emit('changed')
   }
 
   private discardTracksFromLoaded(
@@ -332,6 +371,7 @@ export class AudioActionListener {
     this.loaded[type] = this.loaded[type]?.filter(i =>
       eligibleAudio(i),
     )
+    this.changed.emit('changed')
   }
 
   // AudioTrack workflow
@@ -347,6 +387,7 @@ export class AudioActionListener {
         AUDIO_EVENTS.Started,
         audio.trackId,
       )
+      this.changed.emit('changed')
     }
   }
 
@@ -357,6 +398,7 @@ export class AudioActionListener {
       return
     }
     this.replaceActiveTrack(audio)
+    this.changed.emit('changed')
   }
 
   private replaceActiveTrack(nextUp: AudioTrack) {
@@ -368,10 +410,12 @@ export class AudioActionListener {
     this.discardActive(nextUp.type, DiscardStrategy.Next)
     this.onDeck[nextUp.type] = nextUp
     this.playActiveTrack(nextUp.type)
+    this.changed.emit('changed')
   }
 
   private playActiveTrack(type: AudioType) {
     this.onDeck[type]?.start()
+    this.changed.emit('changed')
   }
 
   private discardActive(type: AudioType, reason: DiscardStrategy) {
@@ -380,6 +424,7 @@ export class AudioActionListener {
       audio.stop()
       audio.destroy()
       this.onDeck[type] = null
+      this.changed.emit('changed')
     }
   }
 
@@ -387,5 +432,6 @@ export class AudioActionListener {
     this.pause()
     this.eventSubscription()
     this.actionSubscription()
+    this.audioStateSubscription()
   }
 }

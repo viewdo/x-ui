@@ -2,7 +2,7 @@ jest.mock('./filter/jsonata.worker')
 jest.mock('../../services/data/evaluate.worker')
 
 import { newSpecPage } from '@stencil/core/testing'
-import { DATA_EVENTS } from '../../services/data'
+import { DATA_EVENTS } from '../../services/data/interfaces'
 import { actionBus, eventBus } from '../../services/events'
 import { ROUTE_EVENTS } from '../../services/routing'
 import remoteData from './test/data.json'

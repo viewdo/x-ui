@@ -1,7 +1,8 @@
 /* istanbul ignore file */
 
 import { debugIf } from '../common'
-import { evaluatePredicate, hasToken, resolveTokens } from '../data'
+import { evaluatePredicate } from '../data/expressions'
+import { hasToken, resolveTokens } from '../data/tokens'
 import { TimedNode } from './interfaces'
 
 export function replaceHtmlInElement(

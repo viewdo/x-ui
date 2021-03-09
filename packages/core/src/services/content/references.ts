@@ -1,15 +1,15 @@
-import { elementsState } from './state'
+import { contentState } from './state'
 
 export function hasReference(url: string) {
-  return elementsState.references.includes(url)
+  return contentState.references.includes(url)
 }
 
 export function markReference(url: string) {
-  elementsState.references = [
-    ...new Set([...elementsState.references, url]),
+  contentState.references = [
+    ...new Set([...contentState.references, url]),
   ]
 }
 
 export function clearReferences() {
-  elementsState.references = []
+  contentState.references = []
 }

@@ -6,12 +6,22 @@ import {
   Prop,
   State,
 } from '@stencil/core'
-import { audioState } from '../../services/audio'
-import { AudioActionListener } from '../../services/audio/actions'
-import { AUDIO_TOPIC } from '../../services/audio/interfaces'
-import { debugIf, warn } from '../../services/common'
-import { actionBus, eventBus } from '../../services/events'
-import { XContentReference } from '../x-content-reference/x-content-reference'
+import { audioState } from '../../services/audio/state'
+import { debugIf, warn } from '../../services/common/logging'
+import { ReferenceCompleteResults } from '../../services/content/interfaces'
+import {
+  DataProviderRegistration,
+  DATA_COMMANDS,
+  DATA_TOPIC,
+  IDataProvider,
+} from '../../services/data/interfaces'
+import {
+  actionBus,
+  EventAction,
+  eventBus,
+} from '../../services/events'
+import { AudioActionListener } from './audio/actions'
+import { AudioDataProvider } from './audio/provider'
 
 /**
  * Use this element only once per page to enable audio features.
@@ -24,10 +34,12 @@ import { XContentReference } from '../x-content-reference/x-content-reference'
 @Component({
   tag: 'x-audio-player',
   styleUrl: 'x-audio-player.css',
-  shadow: false,
+  shadow: true,
 })
 export class XAudioPlayer {
-  private listener!: AudioActionListener
+  private listener?: AudioActionListener
+  private provider?: AudioDataProvider
+
   private listenerSubscription!: () => void
   @Element() el!: HTMLXAudioPlayerElement
   @State() hasAudio = false
@@ -38,13 +50,13 @@ export class XAudioPlayer {
    * is merely a facade to manage basic controls.
    * No track information or duration will be displayed.
    */
-  @Prop() display = false
+  @Prop() display: boolean = false
 
   /**
    * Use debug for verbose logging. Useful for figuring
    * thing out.
    */
-  @Prop() debug = false
+  @Prop() debug: boolean = false
 
   async componentWillLoad() {
     if (audioState.hasAudio) {
@@ -52,58 +64,62 @@ export class XAudioPlayer {
       return
     }
     debugIf(this.debug, 'x-audio-player: loading')
+  }
 
-    this.listener = new AudioActionListener(
-      eventBus,
-      actionBus,
-      this.debug,
-    )
+  private referenceComplete(
+    results: CustomEvent<ReferenceCompleteResults>,
+  ) {
+    if (results.detail.loaded) {
+      this.listener = new AudioActionListener(
+        window,
+        eventBus,
+        actionBus,
+        this.debug,
+      )
 
-    this.listenerSubscription = eventBus.on(AUDIO_TOPIC, () => {
-      this.hasAudio = this.listener.hasAudio()
-      this.isPlaying = this.listener.isPlaying()
+      this.listener.changed.on('changed', () => {
+        this.hasAudio = this.listener!.hasAudio
+        this.isPlaying = this.listener!.isPlaying
+      })
+
+      this.provider = new AudioDataProvider(this.listener)
+      this.registerProvider(this.provider!)
+    }
+  }
+
+  private registerProvider(provider: IDataProvider) {
+    const customEvent = new CustomEvent<
+      EventAction<DataProviderRegistration>
+    >('x:actions', {
+      detail: {
+        topic: DATA_TOPIC,
+        command: DATA_COMMANDS.RegisterDataProvider,
+        data: {
+          name: 'audio',
+          provider,
+        },
+      },
     })
-
-    audioState.hasAudio = this.listener.hasAudio()
-    this.isPlaying = this.listener.isPlaying()
+    this.el.ownerDocument.body.dispatchEvent(customEvent)
   }
 
   disconnectedCallback() {
     audioState.hasAudio = false
     this.listenerSubscription?.call(this)
+    this.provider?.destroy()
     this.listener?.destroy()
   }
 
   render() {
     debugIf(this.debug, 'x-audio-player: loaded')
 
-    if (!this.display) {
-      return <Host></Host>
-    }
-
-    // eslint-disable-next-line @stencil/render-returns-host
-    return [
-      <XContentReference
-        scriptSrc={
-          'https://cdn.jsdelivr.net/npm/howler@2.2.1/dist/howler.core.min.js'
-        }
-      ></XContentReference>,
-      <Host hidden={this.display}>
-        <i
-          hidden={!this.isPlaying}
-          onClick={() => {
-            this.listener.pause()
-          }}
-          class="ri-pause-line fs-2"
-        ></i>
-        <i
-          hidden={this.isPlaying}
-          onClick={() => {
-            this.listener.resume()
-          }}
-          class="ri-play-line fs-2"
-        ></i>
-      </Host>,
-    ]
+    return (
+      <Host hidden={!this.display}>
+        <x-content-reference
+          onReferenced={ev => this.referenceComplete(ev)}
+          script-src="https://cdn.jsdelivr.net/npm/howler@2.2.1/dist/howler.core.min.js"
+        ></x-content-reference>
+      </Host>
+    )
   }
 }

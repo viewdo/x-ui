@@ -1,7 +1,8 @@
 jest.mock('../common/logging')
 jest.mock('../data/evaluate.worker')
 
-import { addDataProvider, InMemoryProvider } from '../data'
+import { addDataProvider } from '../data/factory'
+import { InMemoryProvider } from '../data/providers/memory'
 import { actionBus, eventBus } from '../events'
 import { IViewDo, VisitStrategy } from './interfaces'
 import { resolveNext } from './next'

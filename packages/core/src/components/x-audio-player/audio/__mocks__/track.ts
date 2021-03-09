@@ -1,14 +1,14 @@
 /* istanbul ignore file */
 
-import { EventEmitter } from '../../events/emitter'
-import { AudioInfo } from '../audio-info'
+import { AudioInfo } from '../../../../services/audio/interfaces'
+import { EventEmitter } from '../../../../services/events/emitter'
 
 export class AudioTrack {
   play: () => number = () => 0
-  pause: () => any  = () => this
+  pause: () => any = () => this
   fade: () => any = () => this
   stop: () => any = () => this
-  mute: () => any =() => this
+  mute: () => any = () => this
   state: () => string = () => 'loaded'
   seek: (_time: number) => any = (_time: number) => this
   volume: (_value: number) => any = (_value: number) => this

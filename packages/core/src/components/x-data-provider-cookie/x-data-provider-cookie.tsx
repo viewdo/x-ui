@@ -15,7 +15,7 @@ import {
   DATA_COMMANDS,
   DATA_TOPIC,
   IDataProvider,
-} from '../../services/data'
+} from '../../services/data/interfaces'
 import { EventAction } from '../../services/events'
 import { CookieProvider } from './cookie'
 

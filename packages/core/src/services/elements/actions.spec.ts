@@ -6,11 +6,6 @@ import { sleep } from '../common'
 import { EventEmitter } from '../events'
 import { ElementsActionListener } from './actions'
 import { ELEMENTS_COMMANDS, ELEMENTS_TOPIC } from './interfaces'
-import {
-  clearReferences,
-  hasReference,
-  markReference,
-} from './references'
 
 describe('elements-actions:', () => {
   let actionBus: EventEmitter
@@ -24,15 +19,6 @@ describe('elements-actions:', () => {
   afterAll(() => {
     actionBus.removeAllListeners()
     eventBus.removeAllListeners()
-  })
-
-  it('references ', async () => {
-    const url = 'https://some-url.com'
-    markReference(url)
-
-    expect(hasReference(url)).toBe(true)
-
-    clearReferences()
   })
 
   it('elementToggleClass ', async () => {

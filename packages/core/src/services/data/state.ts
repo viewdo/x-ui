@@ -3,19 +3,19 @@
 import { createStore } from '@stencil/store'
 
 class StateModel {
-  references!: string[]
+  providerTimeout!: number
 }
 
 const store = createStore<StateModel>({
-  references: [],
+  providerTimeout: 500,
 })
 
 const { state, onChange, reset, dispose } = store
 
 export {
-  store as contentStore,
-  state as contentState,
-  onChange as onContentChange,
-  reset as contentStateReset,
-  dispose as contentStateDispose,
+  store as dataStore,
+  state as dataState,
+  onChange as onDataChange,
+  reset as dataStateReset,
+  dispose as dataStateDispose,
 }

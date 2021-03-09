@@ -1,4 +1,5 @@
-import { getDataProvider, IDataProvider } from '../data'
+import { getDataProvider } from '../data/factory'
+import { IDataProvider } from '../data/interfaces'
 
 const AppScrollKey = 'scrollPositions'
 export class ScrollHistory {
@@ -9,11 +10,10 @@ export class ScrollHistory {
 
     getDataProvider('session').then(provider => {
       this.provider = provider
-      if (provider) {
-        const scrollData = win.sessionStorage.getItem(AppScrollKey)
+      provider?.get(AppScrollKey).then(scrollData => {
         if (scrollData)
           this.scrollPositions = new Map(JSON.parse(scrollData))
-      }
+      })
     })
 
     if (win && 'scrollRestoration' in win.history) {

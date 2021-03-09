@@ -10,7 +10,7 @@ import {
 import { debugIf, slugify } from '../../services/common'
 import { warn } from '../../services/common/logging'
 import { getRemoteContent } from '../../services/content/remote'
-import { DATA_EVENTS } from '../../services/data'
+import { DATA_EVENTS } from '../../services/data/interfaces'
 import {
   ElementTimer,
   replaceHtmlInElement,

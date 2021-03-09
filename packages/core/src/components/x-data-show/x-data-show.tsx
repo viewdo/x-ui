@@ -7,7 +7,8 @@ import {
   Prop,
   State,
 } from '@stencil/core'
-import { DATA_EVENTS, evaluatePredicate } from '../../services/data'
+import { evaluatePredicate } from '../../services/data/expressions'
+import { DATA_EVENTS } from '../../services/data/interfaces'
 import { eventBus } from '../../services/events'
 import { ROUTE_EVENTS } from '../../services/routing'
 

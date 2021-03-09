@@ -328,7 +328,7 @@ declare class Howl {
   ): this
 }
 
-declare interface Howler {
+declare class Howler {
   mute(muted: boolean): this
   volume(): number
   volume(volume: number): this
@@ -355,6 +355,6 @@ declare interface Howler {
 }
 
 interface Window {
-  Howler: Howler
   Howl: Howl
+  Howler: Howler
 }

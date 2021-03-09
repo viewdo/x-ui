@@ -1,11 +1,15 @@
-import { Howl } from 'howler'
-import { warn } from '../common'
-import { EventEmitter } from '../events'
-import { AudioInfo } from './audio-info'
-import { AUDIO_EVENTS } from './interfaces'
-import { trackPlayed } from './tracked'
+import {
+  AudioInfo,
+  AudioType,
+  AUDIO_EVENTS,
+  DiscardStrategy,
+  LoadStrategy,
+} from '../../../services/audio/interfaces'
+import { trackPlayed } from '../../../services/audio/tracked'
+import { warn } from '../../../services/common/logging'
+import { EventEmitter } from '../../../services/events'
 
-export class AudioTrack extends AudioInfo {
+export class AudioTrack implements AudioInfo {
   private readonly sound?: Howl
   events: EventEmitter = new EventEmitter()
 
@@ -33,12 +37,9 @@ export class AudioTrack extends AudioInfo {
     private readonly baseVolume: number = 1,
     private readonly fadeSpeed: number = 2,
   ) {
-    super()
     Object.assign(this, audio)
 
-    const events = this.events
-
-    const { trackId } = audio
+    const { trackId, events } = this
 
     if (trackId == null || this.src == null) return
 
@@ -63,46 +64,54 @@ export class AudioTrack extends AudioInfo {
     }
   }
 
-  get state() {
+  public trackId!: string
+  public type!: AudioType
+  public src!: string
+  public mode!: LoadStrategy
+  public discard: DiscardStrategy = DiscardStrategy.Route
+  public track: boolean = false
+  public loop: boolean = false
+
+  public get state() {
     return this.sound?.state()
   }
 
-  get playing() {
+  public get playing() {
     return this.sound?.playing()
   }
 
-  play() {
+  public play() {
     this.sound?.volume(0)
     this.sound?.play()
     this.sound?.fade(0, this.baseVolume, this.fadeSpeed)
     this.events.emit(AUDIO_EVENTS.Played, this.trackId)
-    if (this.track) {
+    if (this.track && this.trackId) {
       trackPlayed(this.trackId)
     }
   }
 
-  stop() {
+  public stop() {
     this.sound?.fade(this.baseVolume, 0, this.fadeSpeed)
     this.sound?.stop()
     this.events.emit(AUDIO_EVENTS.Stopped, this.trackId)
   }
 
-  pause() {
+  public pause() {
     this.sound?.pause()
     this.events.emit(AUDIO_EVENTS.Paused, this.trackId)
   }
 
-  mute(mute: boolean) {
+  public mute(mute: boolean) {
     this.sound?.mute(mute)
     this.events.emit(AUDIO_EVENTS.Muted, this.trackId)
   }
 
-  resume() {
+  public resume() {
     this.sound?.play()
     this.events.emit(AUDIO_EVENTS.Resumed, this.trackId)
   }
 
-  start() {
+  public start() {
     if (this.state === 'loaded') {
       this.play()
     } else if (this.state === 'loading') {
@@ -112,11 +121,11 @@ export class AudioTrack extends AudioInfo {
     }
   }
 
-  seek(time: number) {
+  public seek(time: number) {
     this.sound?.seek(time)
   }
 
-  destroy() {
+  public destroy() {
     this.events.emit(AUDIO_EVENTS.Discarded, this.trackId)
     this.sound?.unload()
     this.events.removeAllListeners()

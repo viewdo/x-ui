@@ -1,4 +1,4 @@
-import { evaluatePredicate } from '../data'
+import { evaluatePredicate } from '../data/expressions'
 import { IViewDo, VisitStrategy } from './interfaces'
 import { hasVisited } from './visits'
 

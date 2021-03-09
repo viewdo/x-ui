@@ -1,11 +1,17 @@
 /* istanbul ignore file */
 
-import { EventEmitter } from '../../events'
-import { AudioRequest } from '../audio-request'
-import { AudioType } from '../interfaces'
+import {
+  AudioRequest,
+  AudioType,
+} from '../../../../services/audio/interfaces'
+import { EventEmitter } from '../../../../services/events'
 
 export class AudioActionListener {
-  constructor(public eventBus: EventEmitter, public actionBus: EventEmitter, public debug: boolean = false) {
+  constructor(
+    public eventBus: EventEmitter,
+    public actionBus: EventEmitter,
+    public debug: boolean = false,
+  ) {
     this.events = new EventEmitter()
   }
 

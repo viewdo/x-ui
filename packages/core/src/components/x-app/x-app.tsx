@@ -13,6 +13,7 @@ import {
 import { commonState, debugIf, log } from '../../services/common'
 import { DataListener } from '../../services/data/actions'
 import { clearDataProviders } from '../../services/data/factory'
+import { dataState } from '../../services/data/state'
 import {
   ElementsActionListener,
   resolveChildElementXAttributes,
@@ -155,7 +156,7 @@ export class XApp {
     }
 
     commonState.debug = this.debug
-    commonState.providerTimeout = this.providerTimeout
+    dataState.providerTimeout = this.providerTimeout
 
     this.actionsSubscription = actionBus.on('*', (_topic, args) => {
       this.actions.emit(args)

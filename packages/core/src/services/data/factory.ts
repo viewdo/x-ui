@@ -1,5 +1,6 @@
 import { commonState, debugIf, requireValue, sleep } from '../common'
 import { IDataProvider } from './interfaces'
+import { dataState } from './state'
 
 type DataProviders = Record<string, IDataProvider>
 
@@ -37,7 +38,7 @@ export async function getDataProvider(
   requireValue(name, 'provider name')
   if (Object.keys(providers).includes(key)) return providers[key]
 
-  await sleep(commonState.providerTimeout)
+  await sleep(dataState.providerTimeout)
 
   if (Object.keys(providers).includes(key)) return providers[key]
 

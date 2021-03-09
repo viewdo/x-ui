@@ -1,6 +1,6 @@
 jest.mock('../../services/common/logging')
 jest.mock('../../services/data/evaluate.worker')
-jest.mock('../../services/audio/audio')
+jest.mock('./audio/track')
 
 import { newSpecPage } from '@stencil/core/testing'
 import {
@@ -13,6 +13,7 @@ import {
 } from '../../services/audio'
 import { actionBus, eventBus } from '../../services/events'
 import { interfaceStore } from '../../services/interface'
+import { XContentReference } from '../x-content-reference/x-content-reference'
 import { XAudioPlayer } from './x-audio-player'
 
 describe('x-audio-player', () => {
@@ -76,7 +77,7 @@ describe('x-audio-player', () => {
 
   it('reacts to listener changes', async () => {
     const page = await newSpecPage({
-      components: [XAudioPlayer],
+      components: [XAudioPlayer, XContentReference],
       html: `<x-audio-player display></x-audio-player>`,
     })
 

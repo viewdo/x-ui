@@ -9,7 +9,8 @@ import {
 } from '@stencil/core'
 import { warn } from '../../services/common'
 import { getRemoteContent } from '../../services/content/remote'
-import { DATA_EVENTS, evaluatePredicate } from '../../services/data'
+import { evaluatePredicate } from '../../services/data/expressions'
+import { DATA_EVENTS } from '../../services/data/interfaces'
 import {
   replaceHtmlInElement,
   resolveChildElementXAttributes,

@@ -181,4 +181,4 @@ Hard discards or play-src should ease out the audio with a .5 second fade-out be
 
 ----------------------------------------------
 
-view.DO : Experience Platform
+view.DO Experience Components

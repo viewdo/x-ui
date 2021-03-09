@@ -1,15 +1,13 @@
 jest.mock('../../services/data/evaluate.worker')
 
 import { newSpecPage } from '@stencil/core/testing'
-import {
-  elementsStateReset,
-  hasReference,
-} from '../../services/elements'
+import { hasReference } from '../../services/content/references'
+import { contentStateReset } from '../../services/content/state'
 import { XContentReference } from './x-content-reference'
 
 describe('x-content-reference', () => {
   afterEach(() => {
-    elementsStateReset()
+    contentStateReset()
   })
 
   it('renders', async () => {

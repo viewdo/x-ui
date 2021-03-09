@@ -1,6 +1,20 @@
-/* istanbul ignore file */
-
 export const AUDIO_TOPIC = 'audio'
+
+export interface AudioRequest {
+  trackId?: string
+  type: AudioType
+  value: any
+}
+
+export interface AudioInfo {
+  trackId?: string
+  type: AudioType
+  src: string
+  mode: LoadStrategy
+  discard: DiscardStrategy
+  track: boolean
+  loop: boolean
+}
 
 export enum AUDIO_COMMANDS {
   Enable = 'enable',

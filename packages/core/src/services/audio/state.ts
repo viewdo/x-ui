@@ -1,4 +1,6 @@
-/* istanbul ignore file */ import { createStore } from '@stencil/store'
+/* istanbul ignore file */
+
+import { createStore } from '@stencil/store'
 
 class StateModel {
   hasAudio!: boolean

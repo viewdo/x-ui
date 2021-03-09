@@ -1,21 +1,21 @@
-jest.mock('../data/evaluate.worker')
+jest.mock('../../../services/data/evaluate.worker')
 
 import { newSpecPage, SpecPage } from '@stencil/core/testing'
-import { sleep } from '../common'
-import { EventEmitter } from '../events'
-import { ROUTE_EVENTS } from '../routing'
-import { AudioActionListener } from './actions'
-import { AudioTrack } from './audio'
-import { AudioInfo } from './audio-info'
 import {
+  AudioInfo,
   AudioType,
   AUDIO_COMMANDS,
   AUDIO_EVENTS,
   AUDIO_TOPIC,
   DiscardStrategy,
   LoadStrategy,
-} from './interfaces'
-import { clearTracked } from './tracked'
+} from '../../../services/audio/interfaces'
+import { clearTracked } from '../../../services/audio/tracked'
+import { sleep } from '../../../services/common/promises'
+import { EventEmitter } from '../../../services/events'
+import { ROUTE_EVENTS } from '../../../services/routing'
+import { AudioActionListener } from './actions'
+import { AudioTrack } from './track'
 
 describe('audio-listener:', () => {
   let audio: any = {}
@@ -24,6 +24,7 @@ describe('audio-listener:', () => {
   let eventBus: EventEmitter
   let events: Array<any[]>
   let page: SpecPage
+
   beforeAll(async () => {
     page = await newSpecPage({
       components: [],
@@ -32,7 +33,13 @@ describe('audio-listener:', () => {
     events = []
     actionBus = new EventEmitter()
     eventBus = new EventEmitter()
-    listener = new AudioActionListener(eventBus, actionBus)
+
+    page.win['Howler'] = ({
+      unload: () => this,
+      volume: 0,
+    } as unknown) as Howler
+
+    listener = new AudioActionListener(page.win, eventBus, actionBus)
 
     eventBus.on('*', (...args: any[]) => {
       events.push(...args)
@@ -89,16 +96,16 @@ describe('audio-listener:', () => {
     expect(playing).not.toBeNull()
 
     await sleep(10)
-    expect(listener.isPlaying()).toBe(true)
-    expect(listener.hasAudio()).toBe(true)
+    expect(listener.isPlaying).toBe(true)
+    expect(listener.hasAudio).toBe(true)
 
     actionBus.emit(AUDIO_TOPIC, {
       command: AUDIO_COMMANDS.Pause,
       data: {},
     })
 
-    expect(listener.isPlaying()).toBe(false)
-    expect(listener.hasAudio()).toBe(true)
+    expect(listener.isPlaying).toBe(false)
+    expect(listener.hasAudio).toBe(true)
 
     // calling pause again, should cause no harm
     actionBus.emit(AUDIO_TOPIC, {
@@ -106,16 +113,16 @@ describe('audio-listener:', () => {
       data: {},
     })
 
-    expect(listener.isPlaying()).toBe(false)
-    expect(listener.hasAudio()).toBe(true)
+    expect(listener.isPlaying).toBe(false)
+    expect(listener.hasAudio).toBe(true)
 
     actionBus.emit(AUDIO_TOPIC, {
       command: AUDIO_COMMANDS.Resume,
       data: {},
     })
 
-    expect(listener.isPlaying()).toBe(true)
-    expect(listener.hasAudio()).toBe(true)
+    expect(listener.isPlaying).toBe(true)
+    expect(listener.hasAudio).toBe(true)
 
     // Calling resume again, should have no harm
     actionBus.emit(AUDIO_TOPIC, {
@@ -123,15 +130,15 @@ describe('audio-listener:', () => {
       data: {},
     })
 
-    expect(listener.isPlaying()).toBe(true)
-    expect(listener.hasAudio()).toBe(true)
+    expect(listener.isPlaying).toBe(true)
+    expect(listener.hasAudio).toBe(true)
 
     eventBus.emit(ROUTE_EVENTS.RouteChanged, {})
 
     playing = listener.onDeck[AudioType.Music]
     expect(playing).toBeNull()
-    expect(listener.isPlaying()).toBe(false)
-    expect(listener.hasAudio()).toBe(false)
+    expect(listener.isPlaying).toBe(false)
+    expect(listener.hasAudio).toBe(false)
   })
 
   it('music: play immediately', () => {
@@ -151,8 +158,8 @@ describe('audio-listener:', () => {
     let playing = listener.onDeck[AudioType.Music]
     expect(playing).not.toBeNull()
     expect(playing?.state).toBe('playing')
-    expect(listener.isPlaying()).toBe(true)
-    expect(listener.hasAudio()).toBe(true)
+    expect(listener.isPlaying).toBe(true)
+    expect(listener.hasAudio).toBe(true)
 
     actionBus.emit(AUDIO_TOPIC, {
       topic: AUDIO_TOPIC,
@@ -169,8 +176,8 @@ describe('audio-listener:', () => {
     playing = listener.onDeck[AudioType.Music]
     expect(playing).not.toBeNull()
     expect(playing!.state).toBe('playing')
-    expect(listener.isPlaying()).toBe(true)
-    expect(listener.hasAudio()).toBe(true)
+    expect(listener.isPlaying).toBe(true)
+    expect(listener.hasAudio).toBe(true)
 
     expect(playing?.src).toBe('/fake/path2.mp3')
   })
@@ -200,31 +207,31 @@ describe('audio-listener:', () => {
       },
     })
 
-    expect(listener.isPlaying()).toBe(true)
-    expect(listener.hasAudio()).toBe(true)
+    expect(listener.isPlaying).toBe(true)
+    expect(listener.hasAudio).toBe(true)
 
     actionBus.emit(AUDIO_TOPIC, {
       command: AUDIO_COMMANDS.Pause,
       data: {},
     })
 
-    expect(listener.isPlaying()).toBe(false)
-    expect(listener.hasAudio()).toBe(true)
+    expect(listener.isPlaying).toBe(false)
+    expect(listener.hasAudio).toBe(true)
 
     actionBus.emit(AUDIO_TOPIC, {
       command: AUDIO_COMMANDS.Resume,
       data: {},
     })
 
-    expect(listener.isPlaying()).toBe(true)
-    expect(listener.hasAudio()).toBe(true)
+    expect(listener.isPlaying).toBe(true)
+    expect(listener.hasAudio).toBe(true)
 
     eventBus.emit(ROUTE_EVENTS.RouteChanged, {})
 
     playing = listener.onDeck[AudioType.Music]
     expect(playing).toBeNull()
-    expect(listener.isPlaying()).toBe(false)
-    expect(listener.hasAudio()).toBe(false)
+    expect(listener.isPlaying).toBe(false)
+    expect(listener.hasAudio).toBe(false)
   })
 
   it('music: play, seek, mute and set volume', () => {
@@ -243,8 +250,8 @@ describe('audio-listener:', () => {
     let playing = listener.onDeck[AudioType.Music]
     expect(playing).not.toBeNull()
     expect(playing!.state).toBe('playing')
-    expect(listener.isPlaying()).toBe(true)
-    expect(listener.hasAudio()).toBe(true)
+    expect(listener.isPlaying).toBe(true)
+    expect(listener.hasAudio).toBe(true)
     expect(playing?.src).toBe('/fake/path2.mp3')
 
     actionBus.emit(AUDIO_TOPIC, {
@@ -280,7 +287,7 @@ describe('audio-listener:', () => {
       },
     })
 
-    expect(listener.isPlaying()).toBe(true)
+    expect(listener.isPlaying).toBe(true)
 
     actionBus.emit(AUDIO_TOPIC, {
       topic: AUDIO_TOPIC,
@@ -290,7 +297,7 @@ describe('audio-listener:', () => {
       },
     })
 
-    expect(listener.isPlaying()).toBe(false)
+    expect(listener.isPlaying).toBe(false)
   })
 
   it('sound: ends and is marked to not play again', () => {
@@ -310,8 +317,8 @@ describe('audio-listener:', () => {
     let playing = listener.onDeck[AudioType.Sound]
     expect(playing).not.toBeNull()
     expect(playing!.state).toBe('playing')
-    expect(listener.isPlaying()).toBe(true)
-    expect(listener.hasAudio()).toBe(true)
+    expect(listener.isPlaying).toBe(true)
+    expect(listener.hasAudio).toBe(true)
     expect(playing?.src).toBe('/fake/path2.mp3')
 
     playing?.events.emit(AUDIO_EVENTS.Ended, 'play-1')

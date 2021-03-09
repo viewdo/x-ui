@@ -8,7 +8,8 @@ import {
   State,
 } from '@stencil/core'
 import { warn } from '../../services/common/logging'
-import { DATA_EVENTS, resolveTokens } from '../../services/data'
+import { DATA_EVENTS } from '../../services/data/interfaces'
+import { resolveTokens } from '../../services/data/tokens'
 import {
   removeAllChildNodes,
   replaceHtmlInElement,

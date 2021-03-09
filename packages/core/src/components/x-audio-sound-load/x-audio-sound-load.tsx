@@ -4,7 +4,7 @@ import {
   AUDIO_TOPIC,
   DiscardStrategy,
   LoadStrategy,
-} from '../../services/audio'
+} from '../../services/audio/interfaces'
 import { actionBus } from '../../services/events'
 
 /**

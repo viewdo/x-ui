@@ -9,9 +9,9 @@ import { ActionActivationStrategy, ActionTopicType, EventAction } from "./servic
 import { RouterService } from "./services/routing";
 import { VisitStrategy } from "./services/navigation";
 import { RouterService as RouterService1 } from "./services/routing/router";
-import { DiscardStrategy, LoadStrategy } from "./services/audio";
-import { AUDIO_COMMANDS } from "./services/audio/interfaces";
-import { CookieConsent, DataProviderRegistration } from "./services/data";
+import { AUDIO_COMMANDS, DiscardStrategy, LoadStrategy } from "./services/audio/interfaces";
+import { ReferenceCompleteResults } from "./services/content";
+import { CookieConsent, DataProviderRegistration } from "./services/data/interfaces";
 export namespace Components {
     interface XAction {
         /**
@@ -55,10 +55,6 @@ export namespace Components {
         "time"?: number;
     }
     interface XApp {
-        /**
-          * The interval, in milliseconds to use with the element-timer (used in place for a video) when timing animations in  x-app-view-do elements.
-         */
-        "animationInterval": number;
         /**
           * This is the application / site title. If the views or dos have titles, this is added as a suffix.
          */
@@ -448,6 +444,10 @@ export namespace Components {
          */
         "deferLoad": boolean;
         /**
+          * Force the 'load' event of the script or link element. This is meant for testing.
+         */
+        "forceLoad": () => Promise<void>;
+        /**
           * When inline the link/script tags are rendered in-place rather than added to the head.
          */
         "inline": boolean;
@@ -467,6 +467,10 @@ export namespace Components {
           * The css file to reference
          */
         "styleSrc"?: string;
+        /**
+          * Timeout (in milliseconds) to wait for the references to load.
+         */
+        "timeout": number;
     }
     interface XDataDisplay {
         /**
@@ -759,10 +763,6 @@ declare namespace LocalJSX {
         "time"?: number;
     }
     interface XApp {
-        /**
-          * The interval, in milliseconds to use with the element-timer (used in place for a video) when timing animations in  x-app-view-do elements.
-         */
-        "animationInterval"?: number;
         /**
           * This is the application / site title. If the views or dos have titles, this is added as a suffix.
          */
@@ -1158,11 +1158,15 @@ declare namespace LocalJSX {
         /**
           * Import the script file as a module.
          */
-        "module": boolean;
+        "module"?: boolean;
         /**
           * Declare the script only for use when modules aren't supported
          */
         "noModule"?: boolean;
+        /**
+          * This event is fired when the script and style elements are loaded or timed out. The value for each style and script will be true or false, for loaded or timedout, respectively.
+         */
+        "onReferenced"?: (event: CustomEvent<ReferenceCompleteResults>) => void;
         /**
           * The script file to reference.
          */
@@ -1171,6 +1175,10 @@ declare namespace LocalJSX {
           * The css file to reference
          */
         "styleSrc"?: string;
+        /**
+          * Timeout (in milliseconds) to wait for the references to load.
+         */
+        "timeout"?: number;
     }
     interface XDataDisplay {
         /**

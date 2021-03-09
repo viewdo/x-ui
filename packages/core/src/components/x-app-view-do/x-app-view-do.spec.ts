@@ -3,12 +3,12 @@ jest.mock('../../services/elements/timer')
 jest.mock('../../services/data/evaluate.worker')
 
 import { newSpecPage } from '@stencil/core/testing'
+import { addDataProvider } from '../../services/data/factory'
 import {
-  addDataProvider,
   DATA_EVENTS,
   IDataProvider,
-  InMemoryProvider,
-} from '../../services/data'
+} from '../../services/data/interfaces'
+import { InMemoryProvider } from '../../services/data/providers/memory'
 import { actionBus, eventBus } from '../../services/events'
 import { clearVisits } from '../../services/navigation'
 import { XAppView } from '../x-app-view/x-app-view'
