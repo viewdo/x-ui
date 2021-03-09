@@ -272,20 +272,6 @@ export namespace Components {
          */
         "transition"?: string;
     }
-    interface XAudioEnabled {
-        /**
-          * Any classes to add to the input-element directly.
-         */
-        "classes"?: string;
-        /**
-          * The data provider to store the audio-enabled state in.
-         */
-        "dataProvider": string;
-        /**
-          * The id field to add to the input-element directly.
-         */
-        "inputId"?: string;
-    }
     interface XAudioMusicAction {
         /**
           * The command to execute.
@@ -413,6 +399,20 @@ export namespace Components {
           * The identifier for this music track
          */
         "trackId": string;
+    }
+    interface XAudioStateSwitch {
+        /**
+          * Any classes to add to the input-element directly.
+         */
+        "classes"?: string;
+        /**
+          * The data provider to store the audio-enabled state in.
+         */
+        "dataProvider": string;
+        /**
+          * The id field to add to the input-element directly.
+         */
+        "inputId"?: string;
     }
     interface XContentInclude {
         /**
@@ -638,12 +638,6 @@ declare global {
         prototype: HTMLXAppViewNotFoundElement;
         new (): HTMLXAppViewNotFoundElement;
     };
-    interface HTMLXAudioEnabledElement extends Components.XAudioEnabled, HTMLStencilElement {
-    }
-    var HTMLXAudioEnabledElement: {
-        prototype: HTMLXAudioEnabledElement;
-        new (): HTMLXAudioEnabledElement;
-    };
     interface HTMLXAudioMusicActionElement extends Components.XAudioMusicAction, HTMLStencilElement {
     }
     var HTMLXAudioMusicActionElement: {
@@ -673,6 +667,12 @@ declare global {
     var HTMLXAudioSoundLoadElement: {
         prototype: HTMLXAudioSoundLoadElement;
         new (): HTMLXAudioSoundLoadElement;
+    };
+    interface HTMLXAudioStateSwitchElement extends Components.XAudioStateSwitch, HTMLStencilElement {
+    }
+    var HTMLXAudioStateSwitchElement: {
+        prototype: HTMLXAudioStateSwitchElement;
+        new (): HTMLXAudioStateSwitchElement;
     };
     interface HTMLXContentIncludeElement extends Components.XContentInclude, HTMLStencilElement {
     }
@@ -740,12 +740,12 @@ declare global {
         "x-app-view": HTMLXAppViewElement;
         "x-app-view-do": HTMLXAppViewDoElement;
         "x-app-view-not-found": HTMLXAppViewNotFoundElement;
-        "x-audio-enabled": HTMLXAudioEnabledElement;
         "x-audio-music-action": HTMLXAudioMusicActionElement;
         "x-audio-music-load": HTMLXAudioMusicLoadElement;
         "x-audio-player": HTMLXAudioPlayerElement;
         "x-audio-sound-action": HTMLXAudioSoundActionElement;
         "x-audio-sound-load": HTMLXAudioSoundLoadElement;
+        "x-audio-state-switch": HTMLXAudioStateSwitchElement;
         "x-content-include": HTMLXContentIncludeElement;
         "x-content-markdown": HTMLXContentMarkdownElement;
         "x-content-reference": HTMLXContentReferenceElement;
@@ -1024,20 +1024,6 @@ declare namespace LocalJSX {
          */
         "transition"?: string;
     }
-    interface XAudioEnabled {
-        /**
-          * Any classes to add to the input-element directly.
-         */
-        "classes"?: string;
-        /**
-          * The data provider to store the audio-enabled state in.
-         */
-        "dataProvider"?: string;
-        /**
-          * The id field to add to the input-element directly.
-         */
-        "inputId"?: string;
-    }
     interface XAudioMusicAction {
         /**
           * The command to execute.
@@ -1149,6 +1135,20 @@ declare namespace LocalJSX {
           * The identifier for this music track
          */
         "trackId": string;
+    }
+    interface XAudioStateSwitch {
+        /**
+          * Any classes to add to the input-element directly.
+         */
+        "classes"?: string;
+        /**
+          * The data provider to store the audio-enabled state in.
+         */
+        "dataProvider"?: string;
+        /**
+          * The id field to add to the input-element directly.
+         */
+        "inputId"?: string;
     }
     interface XContentInclude {
         /**
@@ -1318,12 +1318,12 @@ declare namespace LocalJSX {
         "x-app-view": XAppView;
         "x-app-view-do": XAppViewDo;
         "x-app-view-not-found": XAppViewNotFound;
-        "x-audio-enabled": XAudioEnabled;
         "x-audio-music-action": XAudioMusicAction;
         "x-audio-music-load": XAudioMusicLoad;
         "x-audio-player": XAudioPlayer;
         "x-audio-sound-action": XAudioSoundAction;
         "x-audio-sound-load": XAudioSoundLoad;
+        "x-audio-state-switch": XAudioStateSwitch;
         "x-content-include": XContentInclude;
         "x-content-markdown": XContentMarkdown;
         "x-content-reference": XContentReference;
@@ -1350,12 +1350,12 @@ declare module "@stencil/core" {
             "x-app-view": LocalJSX.XAppView & JSXBase.HTMLAttributes<HTMLXAppViewElement>;
             "x-app-view-do": LocalJSX.XAppViewDo & JSXBase.HTMLAttributes<HTMLXAppViewDoElement>;
             "x-app-view-not-found": LocalJSX.XAppViewNotFound & JSXBase.HTMLAttributes<HTMLXAppViewNotFoundElement>;
-            "x-audio-enabled": LocalJSX.XAudioEnabled & JSXBase.HTMLAttributes<HTMLXAudioEnabledElement>;
             "x-audio-music-action": LocalJSX.XAudioMusicAction & JSXBase.HTMLAttributes<HTMLXAudioMusicActionElement>;
             "x-audio-music-load": LocalJSX.XAudioMusicLoad & JSXBase.HTMLAttributes<HTMLXAudioMusicLoadElement>;
             "x-audio-player": LocalJSX.XAudioPlayer & JSXBase.HTMLAttributes<HTMLXAudioPlayerElement>;
             "x-audio-sound-action": LocalJSX.XAudioSoundAction & JSXBase.HTMLAttributes<HTMLXAudioSoundActionElement>;
             "x-audio-sound-load": LocalJSX.XAudioSoundLoad & JSXBase.HTMLAttributes<HTMLXAudioSoundLoadElement>;
+            "x-audio-state-switch": LocalJSX.XAudioStateSwitch & JSXBase.HTMLAttributes<HTMLXAudioStateSwitchElement>;
             "x-content-include": LocalJSX.XContentInclude & JSXBase.HTMLAttributes<HTMLXContentIncludeElement>;
             "x-content-markdown": LocalJSX.XContentMarkdown & JSXBase.HTMLAttributes<HTMLXContentMarkdownElement>;
             "x-content-reference": LocalJSX.XContentReference & JSXBase.HTMLAttributes<HTMLXContentReferenceElement>;

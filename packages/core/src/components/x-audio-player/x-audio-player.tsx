@@ -95,6 +95,9 @@ export class XAudioPlayer {
       warn('x-audio-player: duplicate players have no effect')
       return
     }
+    if (!audioState.enabled) {
+      warn(`x-audio-player: Audio is disabled`)
+    }
     debugIf(this.debug, 'x-audio-player: loading')
   }
 
@@ -162,6 +165,8 @@ export class XAudioPlayer {
 
   render() {
     debugIf(this.debug, 'x-audio-player: loaded')
+
+    if (!audioState.enabled) return <Host hidden></Host>
 
     return (
       <Host hidden={!this.display}>

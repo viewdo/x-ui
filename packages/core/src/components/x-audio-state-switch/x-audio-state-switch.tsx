@@ -16,15 +16,24 @@ import { eventBus } from '../../services/events'
  * @system presentation
  */
 @Component({
-  tag: 'x-audio-enabled',
+  tag: 'x-audio-state-switch',
   shadow: false,
 })
 export class XAudioEnabled {
-  private enabledKey = 'audio'
   private checkbox?: HTMLInputElement
   private muteSubscription!: () => void
   private storage: IDataProvider | null = null
-  @State() enabled!: boolean
+
+  private get stateKey() {
+    return `audio-${this.setting}`
+  }
+
+  @State() value!: boolean
+
+  /**
+   * Which state property this switch controls.
+   */
+  @Prop() setting: 'muted' | 'enabled' = 'enabled'
 
   /**
    * Any classes to add to the input-element directly.
@@ -37,31 +46,34 @@ export class XAudioEnabled {
   @Prop() inputId?: string
 
   /**
-   * The data provider to store the audio-enabled state in.
+   * The data provider to store the audio state in.
    */
   @Prop() dataProvider: string = 'storage'
 
   async componentWillLoad() {
-    this.enabled = audioState.enabled
+    this.value = audioState[this.setting]
 
     this.storage = await getDataProvider(this.dataProvider)
 
     if (this.storage) {
-      const enabled = await this.storage?.get(this.enabledKey)
-      if (enabled != null) {
-        audioState.enabled = enabled == 'true'
+      const value = await this.storage?.get(this.stateKey)
+      if (value != null) {
+        audioState[this.setting] = value == 'true'
       }
     }
 
-    this.muteSubscription = onAudioStateChange('enabled', async m => {
-      this.enabled = m
-      await this.storage?.set(this.enabledKey, m.toString())
-      eventBus.emit(AUDIO_TOPIC, AUDIO_EVENTS.SoundChanged, m)
-    })
+    this.muteSubscription = onAudioStateChange(
+      this.setting,
+      async m => {
+        this.value = m
+        await this.storage?.set(this.stateKey, m.toString())
+        eventBus.emit(AUDIO_TOPIC, AUDIO_EVENTS.SoundChanged, m)
+      },
+    )
   }
 
   private toggle() {
-    audioState.enabled = this.checkbox?.checked || false
+    audioState[this.setting] = this.checkbox?.checked || false
   }
 
   disconnectedCallback() {
@@ -79,7 +91,7 @@ export class XAudioEnabled {
             this.checkbox = e
           }}
           onChange={() => this.toggle()}
-          checked={this.enabled}
+          checked={this.value}
         ></input>
       </Host>
     )

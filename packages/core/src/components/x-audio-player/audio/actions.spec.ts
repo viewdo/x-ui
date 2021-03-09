@@ -36,7 +36,7 @@ describe('audio-listener:', () => {
 
     page.win['Howler'] = ({
       unload: () => this,
-      volume: 0,
+      volume: () => 0,
     } as unknown) as Howler
 
     listener = new AudioActionListener(page.win, eventBus, actionBus)
@@ -157,7 +157,7 @@ describe('audio-listener:', () => {
     // when queued, and nothing is playing, the audio
     let playing = listener.onDeck[AudioType.Music]
     expect(playing).not.toBeNull()
-    expect(playing?.state).toBe('playing')
+    expect(playing?.state()).toBe('playing')
     expect(listener.isPlaying).toBe(true)
     expect(listener.hasAudio).toBe(true)
 
@@ -175,7 +175,7 @@ describe('audio-listener:', () => {
 
     playing = listener.onDeck[AudioType.Music]
     expect(playing).not.toBeNull()
-    expect(playing!.state).toBe('playing')
+    expect(playing!.state()).toBe('playing')
     expect(listener.isPlaying).toBe(true)
     expect(listener.hasAudio).toBe(true)
 
@@ -249,7 +249,7 @@ describe('audio-listener:', () => {
 
     let playing = listener.onDeck[AudioType.Music]
     expect(playing).not.toBeNull()
-    expect(playing!.state).toBe('playing')
+    expect(playing!.state()).toBe('playing')
     expect(listener.isPlaying).toBe(true)
     expect(listener.hasAudio).toBe(true)
     expect(playing?.src).toBe('/fake/path2.mp3')
@@ -264,7 +264,7 @@ describe('audio-listener:', () => {
       },
     })
 
-    expect(playing!.state).toBe('playing:100')
+    expect(playing!.state()).toBe('playing:100')
 
     // bad seek
     actionBus.emit(AUDIO_TOPIC, {
@@ -277,7 +277,7 @@ describe('audio-listener:', () => {
       },
     })
 
-    expect(playing!.state).toBe('playing:100')
+    expect(playing!.state()).toBe('playing:100')
 
     actionBus.emit(AUDIO_TOPIC, {
       topic: AUDIO_TOPIC,
@@ -316,7 +316,7 @@ describe('audio-listener:', () => {
 
     let playing = listener.onDeck[AudioType.Sound]
     expect(playing).not.toBeNull()
-    expect(playing!.state).toBe('playing')
+    expect(playing!.state()).toBe('playing')
     expect(listener.isPlaying).toBe(true)
     expect(listener.hasAudio).toBe(true)
     expect(playing?.src).toBe('/fake/path2.mp3')

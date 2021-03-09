@@ -37,7 +37,10 @@ describe('x-audio-player', () => {
 
     await page.waitForChanges()
     expect(page.root).toEqualHtml(`
-    <x-audio-player>
+    <x-audio-player hidden="">
+    <mock:shadow-root>
+    <x-content-reference script-src="https://cdn.jsdelivr.net/npm/howler@2.2.1/dist/howler.core.min.js"></x-content-reference>
+    </mock:shadow-root>
     </x-audio-player>
     `)
   })
@@ -45,11 +48,15 @@ describe('x-audio-player', () => {
   it('reacts to audioState changes', async () => {
     const page = await newSpecPage({
       components: [XAudioPlayer],
-      html: `<x-audio-player></x-audio-player>`,
+      html: `<x-audio-player>
+      </x-audio-player>`,
     })
 
     expect(page.root).toEqualHtml(`
-    <x-audio-player>
+    <x-audio-player hidden="">
+      <mock:shadow-root>
+        <x-content-reference script-src="https://cdn.jsdelivr.net/npm/howler@2.2.1/dist/howler.core.min.js"></x-content-reference>
+      </mock:shadow-root>
     </x-audio-player>
     `)
 

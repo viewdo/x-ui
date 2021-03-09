@@ -36,7 +36,7 @@ const config: Config = {
         },
         {
           src: '../dist/collection/components.json',
-          dest: 'data/components.json',
+          dest: 'assets/components.json',
         },
       ],
     },
@@ -65,12 +65,8 @@ const config: Config = {
   ],
 }
 
-if (config.buildDist == true) {
+if (config.buildDist) {
   config.rollupPlugins!.after = []
-}
-
-if (config.devMode == false) {
-  config.hashFileNames = true
 }
 
 export { config }

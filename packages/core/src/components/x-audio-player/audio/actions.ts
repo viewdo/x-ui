@@ -51,6 +51,9 @@ export class AudioActionListener {
   ) {
     this.changed = new EventEmitter()
 
+    if (this.window.Howler?.volume())
+      this.volume = this.window.Howler!.volume()
+
     this.audioStateSubscription = onAudioStateChange(
       'enabled',
       enabled => {
@@ -142,7 +145,7 @@ export class AudioActionListener {
     }
   }
 
-  public volume: number = this.window.Howler?.volume()
+  public volume: number = 0
 
   public setVolume(value: number) {
     this.onDeck[AudioType.Music]?.volume(value)
