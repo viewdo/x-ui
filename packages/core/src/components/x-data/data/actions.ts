@@ -1,16 +1,18 @@
-import { commonState, debugIf } from '../common'
+import { commonState, debugIf } from '../../../services/common'
+import { addDataProvider } from '../../../services/data/factory'
+import {
+  DATA_EVENTS,
+  DATA_TOPIC,
+  IDataProvider,
+} from '../../../services/data/interfaces'
 import {
   EventAction,
   IEventActionListener,
   IEventEmitter,
-} from '../events'
-import { addDataProvider } from './factory'
+} from '../../../services/events'
 import {
   DataProviderRegistration,
   DATA_COMMANDS,
-  DATA_EVENTS,
-  DATA_TOPIC,
-  IDataProvider,
   SetData,
 } from './interfaces'
 

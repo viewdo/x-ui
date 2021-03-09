@@ -89,16 +89,15 @@ Input-type elements (input, textarea and select) can specify a data expression f
 
 ## Properties
 
-| Property              | Attribute           | Description                                                                                                                                                                                                                     | Type                  | Default     |
-| --------------------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ----------- |
-| `appTitle`            | `app-title`         | This is the application / site title. If the views or dos have titles, this is added as a suffix.                                                                                                                               | `string \| undefined` | `undefined` |
-| `debug`               | `debug`             | Turn on debugging to get helpful messages from the routing, data and action systems.                                                                                                                                            | `boolean`             | `false`     |
-| `providerTimeout`     | `provider-timeout`  | The wait-time, in milliseconds to wait for un-registered data providers found in an expression. This is to accommodate a possible lag between evaluation before the first view-do 'when' predicate an the registration process. | `number`              | `500`       |
-| `root`                | `root`              | This is the root path that the actual page is, if it isn't '/', then the router needs to know where to begin creating paths.                                                                                                    | `string`              | `'/'`       |
-| `router` _(required)_ | --                  | This is the router service instantiated with this component.                                                                                                                                                                    | `RouterService`       | `undefined` |
-| `scrollTopOffset`     | `scroll-top-offset` | Header height or offset for scroll-top on this and all views.                                                                                                                                                                   | `number \| undefined` | `undefined` |
-| `startUrl`            | `start-url`         | This is the start path a user should land on when they first land on this app.                                                                                                                                                  | `string`              | `'/'`       |
-| `transition`          | `transition`        | Navigation transition between routes. This is a CSS animation class.                                                                                                                                                            | `string \| undefined` | `undefined` |
+| Property              | Attribute           | Description                                                                                                                  | Type                  | Default     |
+| --------------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------- | --------------------- | ----------- |
+| `appTitle`            | `app-title`         | This is the application / site title. If the views or dos have titles, this is added as a suffix.                            | `string \| undefined` | `undefined` |
+| `debug`               | `debug`             | Turn on debugging to get helpful messages from the routing, data and action systems.                                         | `boolean`             | `false`     |
+| `root`                | `root`              | This is the root path that the actual page is, if it isn't '/', then the router needs to know where to begin creating paths. | `string`              | `'/'`       |
+| `router` _(required)_ | --                  | This is the router service instantiated with this component.                                                                 | `RouterService`       | `undefined` |
+| `scrollTopOffset`     | `scroll-top-offset` | Header height or offset for scroll-top on this and all views.                                                                | `number \| undefined` | `undefined` |
+| `startUrl`            | `start-url`         | This is the start path a user should land on when they first land on this app.                                               | `string`              | `'/'`       |
+| `transition`          | `transition`        | Navigation transition between routes. This is a CSS animation class.                                                         | `string \| undefined` | `undefined` |
 
 
 ## Events

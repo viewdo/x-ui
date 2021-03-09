@@ -1,4 +1,5 @@
 import { getDataProvider } from '../data/factory'
+import { IServiceProvider } from '../data/interfaces'
 import { InMemoryProvider } from '../data/providers/memory'
 import { VisitStrategy } from './interfaces'
 import { navigationState } from './state'
@@ -26,7 +27,8 @@ export async function getSessionVisits() {
 }
 
 export async function setSessionVisits(visits: string[]) {
-  var provider = (await getDataProvider('session')) || sessionFallback
+  const provider = ((await getDataProvider('session')) ||
+    sessionFallback) as IServiceProvider
   if (provider) {
     await provider.set(visitKey, stringifyVisits(visits))
   }
@@ -45,9 +47,9 @@ export async function getStoredVisits() {
 }
 
 export async function setStoredVisits(visits: string[]) {
-  var provider =
-    (await getDataProvider(navigationState.storageProvider)) ||
-    storageFallback
+  var provider = ((await getDataProvider(
+    navigationState.storageProvider,
+  )) || storageFallback) as IServiceProvider
   if (provider) {
     await provider.set(visitKey, stringifyVisits(visits))
   }

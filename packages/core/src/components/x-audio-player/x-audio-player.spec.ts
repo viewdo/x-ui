@@ -3,10 +3,10 @@ jest.mock('../../services/data/evaluate.worker')
 jest.mock('./audio/track')
 
 import { newSpecPage } from '@stencil/core/testing'
-import { audioState } from '../../services/audio'
 import { contentStateDispose } from '../../services/content/state'
 import { actionBus, eventBus } from '../../services/events'
 import { XContentReference } from '../x-content-reference/x-content-reference'
+import { audioState, audioStateDispose } from './audio/state'
 import { XAudioPlayer } from './x-audio-player'
 describe('x-audio-player', () => {
   // let data: AudioInfo | any
@@ -25,6 +25,7 @@ describe('x-audio-player', () => {
     actionBus.removeAllListeners()
     eventBus.removeAllListeners()
     contentStateDispose()
+    audioStateDispose()
   })
 
   it('renders', async () => {

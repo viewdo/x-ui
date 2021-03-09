@@ -1,6 +1,10 @@
 jest.mock('../../../services/data/evaluate.worker')
 
 import { newSpecPage, SpecPage } from '@stencil/core/testing'
+import { sleep } from '../../../services/common/promises'
+import { EventEmitter } from '../../../services/events'
+import { ROUTE_EVENTS } from '../../../services/routing'
+import { AudioActionListener } from './actions'
 import {
   AudioInfo,
   AudioType,
@@ -9,13 +13,9 @@ import {
   AUDIO_TOPIC,
   DiscardStrategy,
   LoadStrategy,
-} from '../../../services/audio/interfaces'
-import { clearTracked } from '../../../services/audio/tracked'
-import { sleep } from '../../../services/common/promises'
-import { EventEmitter } from '../../../services/events'
-import { ROUTE_EVENTS } from '../../../services/routing'
-import { AudioActionListener } from './actions'
+} from './interfaces'
 import { AudioTrack } from './track'
+import { clearTracked } from './tracked'
 
 describe('audio-listener:', () => {
   let audio: any = {}

@@ -1,13 +1,15 @@
 import { Component, h, Host, Prop, State } from '@stencil/core'
+import { getDataProvider } from '../../services/data/factory'
+import { IServiceProvider } from '../../services/data/interfaces'
+import { eventBus } from '../../services/events'
 import {
-  audioState,
   AUDIO_EVENTS,
   AUDIO_TOPIC,
+} from '../x-audio-player/audio/interfaces'
+import {
+  audioState,
   onAudioStateChange,
-} from '../../services/audio'
-import { getDataProvider } from '../../services/data/factory'
-import { IDataProvider } from '../../services/data/interfaces'
-import { eventBus } from '../../services/events'
+} from '../x-audio-player/audio/state'
 
 /**
  * This component exposes a checkbox to enable or disable global audio for background sounds and video.
@@ -22,7 +24,7 @@ import { eventBus } from '../../services/events'
 export class XAudioEnabled {
   private checkbox?: HTMLInputElement
   private muteSubscription!: () => void
-  private storage: IDataProvider | null = null
+  private storage: IServiceProvider | null = null
 
   private get stateKey() {
     return `audio-${this.setting}`
@@ -53,7 +55,9 @@ export class XAudioEnabled {
   async componentWillLoad() {
     this.value = audioState[this.setting]
 
-    this.storage = await getDataProvider(this.dataProvider)
+    this.storage = (await getDataProvider(
+      this.dataProvider,
+    )) as IServiceProvider
 
     if (this.storage) {
       const value = await this.storage?.get(this.stateKey)

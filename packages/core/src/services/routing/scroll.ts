@@ -1,15 +1,15 @@
 import { getDataProvider } from '../data/factory'
-import { IDataProvider } from '../data/interfaces'
+import { IServiceProvider } from '../data/interfaces'
 
 const AppScrollKey = 'scrollPositions'
 export class ScrollHistory {
   scrollPositions: Map<string, [number, number]>
-  provider?: IDataProvider | null
+  provider?: IServiceProvider | null
   constructor(private win: Window) {
     this.scrollPositions = new Map<string, [number, number]>()
 
     getDataProvider('session').then(provider => {
-      this.provider = provider
+      this.provider = provider as IServiceProvider
       provider?.get(AppScrollKey).then(scrollData => {
         if (scrollData)
           this.scrollPositions = new Map(JSON.parse(scrollData))
@@ -29,7 +29,9 @@ export class ScrollHistory {
       this.scrollPositions.forEach((v, k) => {
         arrayData.push([k, v])
       })
-      this.provider.set(AppScrollKey, JSON.stringify(arrayData))
+      this.provider
+        .set(AppScrollKey, JSON.stringify(arrayData))
+        .then(() => {})
     }
   }
 

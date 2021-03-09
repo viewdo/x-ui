@@ -1,5 +1,5 @@
+import { resolveChildElementXAttributes } from '../data/elements'
 import { hasToken, resolveTokens } from '../data/tokens'
-import { resolveChildElementXAttributes } from '../elements/functions'
 import { ActionActivationStrategy, IEventEmitter } from '../events'
 import {
   IRoute,

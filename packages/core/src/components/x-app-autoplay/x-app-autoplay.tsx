@@ -1,6 +1,6 @@
 import { Component, h, Host, Prop, State } from '@stencil/core'
 import { getDataProvider } from '../../services/data/factory'
-import { IDataProvider } from '../../services/data/interfaces'
+import { IServiceProvider } from '../../services/data/interfaces'
 import { eventBus } from '../../services/events'
 import {
   onVideoChange,
@@ -24,7 +24,7 @@ export class XAppAutoplay {
   private enabledKey = 'autoplay'
   private checkbox?: HTMLInputElement
   private videoSubscription!: () => void
-  private storage: IDataProvider | null = null
+  private storage: IServiceProvider | null = null
   @State() autoPlay = true
 
   /**
@@ -45,7 +45,10 @@ export class XAppAutoplay {
   async componentWillLoad() {
     this.autoPlay = videoState.autoplay
 
-    this.storage = await getDataProvider(this.dataProvider)
+    this.storage = (await getDataProvider(
+      this.dataProvider,
+    )) as IServiceProvider
+
     if (this.storage) {
       const autoplay = await this.storage.get(this.enabledKey)
       videoState.autoplay = autoplay !== 'false'

@@ -11,10 +11,8 @@ import {
   writeTask,
 } from '@stencil/core'
 import { commonState, debugIf, log } from '../../services/common'
-import {
-  ElementsActionListener,
-  resolveChildElementXAttributes,
-} from '../../services/elements'
+import { resolveChildElementXAttributes } from '../../services/data/elements'
+import { ElementsActionListener } from '../../services/elements/actions'
 import {
   actionBus,
   EventAction,

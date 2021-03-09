@@ -1,5 +1,5 @@
 jest.mock('../../services/common/logging')
-jest.mock('../../services/elements/timer')
+jest.mock('./view-do/timer')
 jest.mock('../../services/data/evaluate.worker')
 
 import { newSpecPage } from '@stencil/core/testing'
@@ -7,6 +7,7 @@ import { contentStateDispose } from '../../services/content'
 import { addDataProvider } from '../../services/data/factory'
 import { DATA_EVENTS } from '../../services/data/interfaces'
 import { InMemoryProvider } from '../../services/data/providers/memory'
+import { dataState } from '../../services/data/state'
 import { actionBus, eventBus } from '../../services/events'
 import { clearVisits } from '../../services/navigation'
 import { XAppView } from '../x-app-view/x-app-view'
@@ -15,6 +16,7 @@ import { XAppViewDo } from './x-app-view-do'
 
 describe('x-app-view-do', () => {
   let storage: InMemoryProvider
+  dataState.enabled = true
   beforeEach(async () => {
     actionBus.removeAllListeners()
     eventBus.removeAllListeners()

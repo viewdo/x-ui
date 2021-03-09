@@ -1,13 +1,16 @@
 jest.mock('../../services/data/evaluate.worker')
 
 import { newSpecPage } from '@stencil/core/testing'
-import { audioState, audioStateDispose } from '../../services/audio'
 import {
   addDataProvider,
   clearDataProviders,
 } from '../../services/data/factory'
 import { IDataProvider } from '../../services/data/interfaces'
 import { InMemoryProvider } from '../../services/data/providers/memory'
+import {
+  audioState,
+  audioStateDispose,
+} from '../x-audio-player/audio/state'
 import { XAudioEnabled } from './x-audio-state-switch'
 
 describe('x-audio-state-switch', () => {

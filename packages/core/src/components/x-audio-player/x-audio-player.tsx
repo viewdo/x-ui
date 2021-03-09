@@ -6,12 +6,9 @@ import {
   Prop,
   State,
 } from '@stencil/core'
-import { audioState } from '../../services/audio/state'
 import { debugIf, warn } from '../../services/common/logging'
 import { ReferenceCompleteResults } from '../../services/content/interfaces'
 import {
-  DataProviderRegistration,
-  DATA_COMMANDS,
   DATA_TOPIC,
   IDataProvider,
 } from '../../services/data/interfaces'
@@ -20,8 +17,13 @@ import {
   EventAction,
   eventBus,
 } from '../../services/events'
+import {
+  DataProviderRegistration,
+  DATA_COMMANDS,
+} from '../x-data/data/interfaces'
 import { AudioActionListener } from './audio/actions'
 import { AudioDataProvider } from './audio/provider'
+import { audioState } from './audio/state'
 
 /**
  * Use this element only once per page to enable audio features.

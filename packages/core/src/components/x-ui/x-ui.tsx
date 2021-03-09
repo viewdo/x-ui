@@ -9,8 +9,8 @@ import { UIActionListener } from './ui/actions'
   shadow: true,
 })
 export class XUI {
-  private listener: UIActionListener
-  async componentWillLoad() {
+  private listener!: UIActionListener
+  componentWillLoad() {
     debugIf(
       commonState.debug,
       `x-ui: services enabled. UI listener registered`,
@@ -21,5 +21,9 @@ export class XUI {
 
   render() {
     return null
+  }
+
+  disconnectedCallback() {
+    this.listener.destroy()
   }
 }

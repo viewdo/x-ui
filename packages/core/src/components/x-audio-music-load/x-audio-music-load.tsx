@@ -1,11 +1,11 @@
 import { Component, Element, h, Host, Prop } from '@stencil/core'
+import { actionBus } from '../../services/events'
 import {
   AudioType,
   AUDIO_TOPIC,
   DiscardStrategy,
   LoadStrategy,
-} from '../../services/audio/interfaces'
-import { actionBus } from '../../services/events'
+} from '../x-audio-player/audio/interfaces'
 
 /**
  * This component declares audio used within this \<x-app-view-do\> route.

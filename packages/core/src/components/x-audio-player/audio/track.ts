@@ -1,13 +1,13 @@
+import { warn } from '../../../services/common/logging'
+import { EventEmitter, IEventEmitter } from '../../../services/events'
 import {
   AudioInfo,
   AudioType,
   AUDIO_EVENTS,
   DiscardStrategy,
   LoadStrategy,
-} from '../../../services/audio/interfaces'
-import { trackPlayed } from '../../../services/audio/tracked'
-import { warn } from '../../../services/common/logging'
-import { EventEmitter, IEventEmitter } from '../../../services/events'
+} from './interfaces'
+import { trackPlayed } from './tracked'
 
 export class AudioTrack implements AudioInfo {
   private readonly sound?: Howl

@@ -1,7 +1,7 @@
-jest.mock('../data/evaluate.worker')
+jest.mock('../../../services/data/evaluate.worker')
 
-import { MockRequestAnimationFrameProvider } from '../../components/x-app-view-do/view-do/mocks/frame-provider'
 import { TIMER_EVENTS } from './interfaces'
+import { MockRequestAnimationFrameProvider } from './mocks/frame-provider'
 import { ElementTimer } from './timer'
 
 describe('element-timer:', () => {

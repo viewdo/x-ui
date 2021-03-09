@@ -1,3 +1,10 @@
+import { debugIf } from '../../../services/common/logging'
+import {
+  EventAction,
+  EventEmitter,
+  IEventEmitter,
+} from '../../../services/events'
+import { ROUTE_EVENTS } from '../../../services/routing'
 import {
   AudioInfo,
   AudioRequest,
@@ -7,20 +14,10 @@ import {
   AUDIO_TOPIC,
   DiscardStrategy,
   LoadStrategy,
-} from '../../../services/audio/interfaces'
-import {
-  audioState,
-  onAudioStateChange,
-} from '../../../services/audio/state'
-import { hasPlayed } from '../../../services/audio/tracked'
-import { debugIf } from '../../../services/common/logging'
-import {
-  EventAction,
-  EventEmitter,
-  IEventEmitter,
-} from '../../../services/events'
-import { ROUTE_EVENTS } from '../../../services/routing'
+} from './interfaces'
+import { audioState, onAudioStateChange } from './state'
 import { AudioTrack } from './track'
+import { hasPlayed } from './tracked'
 
 export class AudioActionListener {
   changed: IEventEmitter

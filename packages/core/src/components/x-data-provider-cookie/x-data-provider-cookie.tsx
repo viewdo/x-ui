@@ -14,15 +14,13 @@ import {
   removeDataProvider,
 } from '../../services/data/factory'
 import {
-  DATA_COMMANDS,
-  SetData,
-} from '../../services/data/interfaces'
-import {
   actionBus,
   EventAction,
   eventBus,
 } from '../../services/events'
-import { CookieConsent, CookieService } from './cookie'
+import { DATA_COMMANDS, SetData } from '../x-data/data/interfaces'
+import { CookieConsent } from './cookie/interfaces'
+import { CookieService } from './cookie/service'
 
 /**
  * This component enables the *Cookie Data Provider*,

@@ -1,9 +1,9 @@
 import { Component, h, Host, Prop } from '@stencil/core'
 import { debugIf } from '../../services/common/logging'
 import { commonState } from '../../services/common/state'
-import { DataListener } from '../../services/data/actions'
 import { clearDataProviders } from '../../services/data/factory'
 import { dataState } from '../../services/data/state'
+import { DataListener } from './data/actions'
 
 @Component({
   tag: 'x-data',

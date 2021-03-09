@@ -6,17 +6,17 @@ import {
   Method,
   Prop,
 } from '@stencil/core'
-import {
-  AudioType,
-  AUDIO_COMMANDS,
-  AUDIO_TOPIC,
-} from '../../services/audio/interfaces'
 import { warn } from '../../services/common/logging'
 import {
   actionBus,
   EventAction,
   IActionElement,
 } from '../../services/events'
+import {
+  AudioType,
+  AUDIO_COMMANDS,
+  AUDIO_TOPIC,
+} from '../x-audio-player/audio/interfaces'
 
 /**
  * This element represents an action to be fired. This
