@@ -7,37 +7,18 @@ import {
 } from '../../../services/audio/interfaces'
 import { trackPlayed } from '../../../services/audio/tracked'
 import { warn } from '../../../services/common/logging'
-import { EventEmitter } from '../../../services/events'
+import { EventEmitter, IEventEmitter } from '../../../services/events'
 
 export class AudioTrack implements AudioInfo {
   private readonly sound?: Howl
-  events: EventEmitter = new EventEmitter()
-
-  static createSound = (
-    audio: AudioInfo,
-    onload?: () => void,
-    onend?: () => void,
-    onerror?: (id: number, error: any) => void,
-  ) => {
-    const { loop, src, type } = audio
-    if (src && type) {
-      return new Howl({
-        src,
-        loop: type === 'music' ? loop : false,
-        onload,
-        onend,
-        onloaderror: onerror,
-        onplayerror: onerror,
-        html5: true,
-      })
-    }
-  }
+  events!: IEventEmitter
 
   constructor(
     audio: AudioInfo,
     private readonly baseVolume: number = 1,
     private readonly fadeSpeed: number = 2,
   ) {
+    this.events = new EventEmitter()
     Object.assign(this, audio)
 
     const { trackId, events } = this
@@ -134,5 +115,25 @@ export class AudioTrack implements AudioInfo {
     this.events.emit(AUDIO_EVENTS.Discarded, this.trackId)
     this.sound?.unload()
     this.events.removeAllListeners()
+  }
+
+  static createSound = (
+    audio: AudioInfo,
+    onload?: () => void,
+    onend?: () => void,
+    onerror?: (id: number, error: any) => void,
+  ) => {
+    const { loop, src, type } = audio
+    if (src && type) {
+      return new Howl({
+        src,
+        loop: type === 'music' ? loop : false,
+        onload,
+        onend,
+        onloaderror: onerror,
+        onplayerror: onerror,
+        html5: true,
+      })
+    }
   }
 }

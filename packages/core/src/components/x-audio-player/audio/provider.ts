@@ -44,13 +44,13 @@ export class AudioDataProvider implements IDataProvider {
           : null
 
       // Sound files
-      case 'loadedSound':
+      case 'loadedSounds':
         return this.audioListener.loaded[AudioType.Sound]
           ? JSON.stringify(this.audioListener.loaded[AudioType.Sound])
           : null
-      case 'queuedMusic':
-        return this.audioListener.queued[AudioType.Music]
-          ? JSON.stringify(this.audioListener.queued[AudioType.Music])
+      case 'queuedSounds':
+        return this.audioListener.queued[AudioType.Sound]
+          ? JSON.stringify(this.audioListener.queued[AudioType.Sound])
           : null
       case 'currentSound':
         return this.audioListener.onDeck[AudioType.Sound]
