@@ -1,4 +1,4 @@
 {
   "extends": "../../tsconfig.json",
-  "include": ["src", "types/jsx.d.ts", "./components/x-audio-player/howler.d.ts"]
+  "include": ["src", "types/jsx.d.ts", "./components/x-audio/howler.d.ts"]
 }

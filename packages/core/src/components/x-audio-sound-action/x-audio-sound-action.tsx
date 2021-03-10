@@ -16,7 +16,7 @@ import {
   AudioType,
   AUDIO_COMMANDS,
   AUDIO_TOPIC,
-} from '../x-audio-player/audio/interfaces'
+} from '../x-audio/audio/interfaces'
 
 /**
  * This element represents an action to be fired. This
@@ -24,7 +24,6 @@ import {
  * needed for audio-based actions, for music.
  *
  * @system audio
- * @system presentation
  */
 @Component({
   tag: 'x-audio-sound-action',

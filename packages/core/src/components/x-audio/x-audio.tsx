@@ -31,17 +31,16 @@ import { audioState } from './audio/state'
  * <https://cdn.jsdelivr.net/npm/howler@2.2.1/dist/howler.core.min.js>
  *
  * @system audio
- * @system presentation
  */
 @Component({
-  tag: 'x-audio-player',
-  styleUrl: 'x-audio-player.css',
+  tag: 'x-audio',
+  styleUrl: 'x-audio.css',
   shadow: true,
 })
 export class XAudioPlayer {
   private provider?: AudioDataProvider
   private listenerSubscription!: () => void
-  @Element() el!: HTMLXAudioPlayerElement
+  @Element() el!: HTMLXAudioElement
   private volumeInput!: HTMLInputElement
   @State() listener?: AudioActionListener
   @State() muted: boolean = false
@@ -94,13 +93,13 @@ export class XAudioPlayer {
 
   async componentWillLoad() {
     if (audioState.hasAudio) {
-      warn('x-audio-player: duplicate players have no effect')
+      warn('x-audio: duplicate players have no effect')
       return
     }
     if (!audioState.enabled) {
-      warn(`x-audio-player: Audio is disabled`)
+      warn(`x-audio: Audio is disabled`)
     }
-    debugIf(this.debug, 'x-audio-player: loading')
+    debugIf(this.debug, 'x-audio: loading')
   }
 
   private referenceComplete(
@@ -166,7 +165,7 @@ export class XAudioPlayer {
   }
 
   render() {
-    debugIf(this.debug, 'x-audio-player: loaded')
+    debugIf(this.debug, 'x-audio: loaded')
 
     if (!audioState.enabled) return <Host hidden></Host>
 

@@ -12,10 +12,7 @@ import {
   EventAction,
   IActionElement,
 } from '../../services/events'
-import {
-  AudioType,
-  AUDIO_TOPIC,
-} from '../x-audio-player/audio/interfaces'
+import { AudioType, AUDIO_TOPIC } from '../x-audio/audio/interfaces'
 
 /**
  * This element represents an action to be fired. This
@@ -23,7 +20,6 @@ import {
  * needed for audio-based actions, for music.
  *
  * @system audio
- * @system presentation
  */
 @Component({
   tag: 'x-audio-music-action',

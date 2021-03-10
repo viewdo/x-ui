@@ -7,8 +7,8 @@ import { contentStateDispose } from '../../services/content/state'
 import { actionBus, eventBus } from '../../services/events'
 import { XContentReference } from '../x-content-reference/x-content-reference'
 import { audioState, audioStateDispose } from './audio/state'
-import { XAudioPlayer } from './x-audio-player'
-describe('x-audio-player', () => {
+import { XAudioPlayer } from './x-audio'
+describe('x-audio', () => {
   // let data: AudioInfo | any
   beforeEach(() => {
     // data = {
@@ -31,32 +31,32 @@ describe('x-audio-player', () => {
   it('renders', async () => {
     const page = await newSpecPage({
       components: [XAudioPlayer],
-      html: `<x-audio-player></x-audio-player>`,
+      html: `<x-audio></x-audio>`,
     })
 
     await page.waitForChanges()
     expect(page.root).toEqualHtml(`
-    <x-audio-player hidden="">
+    <x-audio hidden="">
       <mock:shadow-root>
       <x-content-reference script-src="https://cdn.jsdelivr.net/npm/howler@2.2.1/dist/howler.core.min.js"></x-content-reference>
       </mock:shadow-root>
-    </x-audio-player>
+    </x-audio>
     `)
   })
 
   it('reacts to audioState changes', async () => {
     const page = await newSpecPage({
       components: [XAudioPlayer],
-      html: `<x-audio-player>
-      </x-audio-player>`,
+      html: `<x-audio>
+      </x-audio>`,
     })
 
     expect(page.root).toEqualHtml(`
-    <x-audio-player hidden="">
+    <x-audio hidden="">
       <mock:shadow-root>
         <x-content-reference script-src="https://cdn.jsdelivr.net/npm/howler@2.2.1/dist/howler.core.min.js"></x-content-reference>
       </mock:shadow-root>
-    </x-audio-player>
+    </x-audio>
     `)
 
     audioState.hasAudio = false
@@ -77,12 +77,12 @@ describe('x-audio-player', () => {
   it('reacts to listener changes', async () => {
     const page = await newSpecPage({
       components: [XAudioPlayer, XContentReference],
-      html: `<x-audio-player display></x-audio-player>`,
+      html: `<x-audio display></x-audio>`,
     })
 
     await page.waitForChanges()
 
-    page.body.querySelector('x-audio-player')?.remove()
+    page.body.querySelector('x-audio')?.remove()
 
     await page.waitForChanges()
   })

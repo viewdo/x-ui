@@ -5,7 +5,7 @@ import {
   AUDIO_TOPIC,
   DiscardStrategy,
   LoadStrategy,
-} from '../x-audio-player/audio/interfaces'
+} from '../x-audio/audio/interfaces'
 
 /**
  * This component declares audio used within this \<x-app-view-do\> route.
@@ -16,7 +16,6 @@ import {
  * The player manages them according to their settings.
  *
  * @system audio
- * @system presentation
  */
 @Component({
   tag: 'x-audio-music-load',

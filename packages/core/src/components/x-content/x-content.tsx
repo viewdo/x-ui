@@ -20,19 +20,18 @@ import { RouterService, ROUTE_EVENTS } from '../../services/routing'
  * This component fetches remote HTML and renders it safely and directly
  * into the page when when and where you tell it too, as soon as it renders.
  *
- * @system core
  * @system content
  */
 @Component({
-  tag: 'x-content-include',
+  tag: 'x-content',
   shadow: false,
 })
-export class XContentInclude {
+export class XContent {
   private readonly contentClass = 'remote-content'
   private dataSubscription!: () => void
   private routeSubscription!: () => void
 
-  @Element() el!: HTMLXContentIncludeElement
+  @Element() el!: HTMLXContentElement
 
   @State() contentElement: HTMLElement | null = null
 
@@ -117,7 +116,7 @@ export class XContentInclude {
       this.router?.captureInnerLinks(div)
       return div
     } catch {
-      warn(`x-content-include: unable to retrieve from ${this.src}`)
+      warn(`x-content: unable to retrieve from ${this.src}`)
       return null
     }
   }

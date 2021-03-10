@@ -2,7 +2,7 @@ import { Component, h, Host, Prop, State } from '@stencil/core'
 import { onUIChange, uiState } from '../x-ui/ui'
 
 /**
- * The `<x-ui-theme-switch>` component displays a checkbox to control the
+ * This component displays a checkbox to control the
  * dark-theme setting applied to the ui.
  *
  * Default: user-preference

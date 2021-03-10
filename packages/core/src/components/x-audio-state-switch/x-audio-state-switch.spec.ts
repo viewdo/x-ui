@@ -7,10 +7,7 @@ import {
 } from '../../services/data/factory'
 import { IDataProvider } from '../../services/data/interfaces'
 import { InMemoryProvider } from '../../services/data/providers/memory'
-import {
-  audioState,
-  audioStateDispose,
-} from '../x-audio-player/audio/state'
+import { audioState, audioStateDispose } from '../x-audio/audio/state'
 import { XAudioEnabled } from './x-audio-state-switch'
 
 describe('x-audio-state-switch', () => {

@@ -14,7 +14,6 @@ import {
  * next page, when a video ends. Default: enabled
  *
  * @system presentation
- * @system media
  */
 @Component({
   tag: 'x-app-autoplay',

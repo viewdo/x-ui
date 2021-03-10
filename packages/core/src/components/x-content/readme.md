@@ -1,11 +1,11 @@
-# X-CONTENT-INCLUDE
+# X-CONTENT
 
 This component fetches remote HTML and renders it safely and directly into the page when when and where you tell it too, as soon as it renders.
 
 ## Usage
 
 ```html
-<x-content-include src="<url-to-html>"> </x-content-include>
+<x-content src="<url-to-html>"> </x-content>
 ```
 
 ### Delayed Rendering
@@ -13,7 +13,7 @@ This component fetches remote HTML and renders it safely and directly into the p
 When using this component, you may want to delay the fetch until the content is needed. The **defer-load** attribute will prevent the HTML from being fetched until that attribute is removed.
 
 ```html
-<x-content-include id="include" src="<url-to-html>" defer-load> </x-content-include>
+<x-content id="include" src="<url-to-html>" defer-load> </x-content>
 ```
 
 You can remove the attribute programmatically to force the fetch:

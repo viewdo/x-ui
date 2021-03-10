@@ -19,7 +19,6 @@ import { ROUTE_EVENTS } from '../../services/routing'
  * expressions documentation.
  *
  *  @system data
- *  @system content
  */
 @Component({
   tag: 'x-data-show',

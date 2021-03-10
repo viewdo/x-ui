@@ -9,21 +9,20 @@ Only properties of type `boolean`, `string` or `number` are reflected as an
 The presence of a boolean attribute indicate the value of its property is `true`. Its absence indicates that the value of the property is `false`. The value of boolean attributes is ignored, only their presence or absence is relevant.
 
 ```html
-<x-content-include></x-content-include>
+<x-content></x-content>
 <!-- "defer-load" is false -->
 <!-- -->
-<x-content-include defer-load></x-content-include>
+<x-content defer-load></x-content>
 <!-- "defer-load" is true -->
 <!-- -->
-<x-content-include defer-load="true"></x-content-include>
+<x-content defer-load="true"></x-content>
 <!-- "defer-load" is true -->
 <!-- -->
-<x-content-include defer-load="foo"></x-content-include>
+<x-content defer-load="foo"></x-content>
 <!-- "defer-load" is true -->
 <!-- -->
-<x-content-include defer-load="false"></x-content-include>
+<x-content defer-load="false"></x-content>
 <!-- !! "defer-load" is true -->
-
 ```
 
 ## Code Completion

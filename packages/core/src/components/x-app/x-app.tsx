@@ -30,7 +30,6 @@ import { XAppViewNotFound } from '../x-app-view-not-found/x-app-view-not-found'
  * components placed within any global-html.
  *
  * @system routing
- * @system interface
  */
 @Component({
   tag: 'x-app',

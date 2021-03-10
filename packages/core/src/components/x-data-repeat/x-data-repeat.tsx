@@ -20,7 +20,6 @@ import { filterData } from './filter/jsonata.worker'
  * data provider as well as the item in the array.
  *
  * @system data
- * @system content
  */
 @Component({
   tag: 'x-data-repeat',

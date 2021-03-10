@@ -5,11 +5,11 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { ActionActivationStrategy, ActionTopicType, EventAction } from "./services/events";
+import { ActionActivationStrategy, EventAction } from "./services/events";
 import { RouterService } from "./services/routing";
 import { VisitStrategy } from "./services/navigation";
 import { RouterService as RouterService1 } from "./services/routing/router";
-import { AUDIO_COMMANDS, DiscardStrategy, LoadStrategy } from "./components/x-audio-player/audio/interfaces";
+import { AUDIO_COMMANDS, DiscardStrategy, LoadStrategy } from "./components/x-audio/audio/interfaces";
 import { ReferenceCompleteResults } from "./services/content";
 import { CookieConsent } from "./components/x-data-provider-cookie/cookie/interfaces";
 import { SetData } from "./components/x-data/data/interfaces";
@@ -28,9 +28,9 @@ export namespace Components {
          */
         "sendAction": (data?: Record<string, any> | undefined) => Promise<void>;
         /**
-          * This is the topic this action-command is targeting.  data: []
+          * This is the topic this action-command is targeting.
          */
-        "topic"?: ActionTopicType;
+        "topic"?: string;
     }
     interface XActionActivator {
         /**
@@ -249,6 +249,36 @@ export namespace Components {
          */
         "transition"?: string;
     }
+    interface XAudio {
+        /**
+          * Use debug for verbose logging. Useful for figuring thing out.
+         */
+        "debug": boolean;
+        /**
+          * The display mode for this player. The display is merely a facade to manage basic controls. No track information or duration will be displayed.
+         */
+        "display": boolean;
+        /**
+          * The Howler.js Script Reference
+         */
+        "howlerUrl": string;
+        /**
+          * Mute Off Icon Url
+         */
+        "muteOffIconUrl": string;
+        /**
+          * Mute ON Icon Url
+         */
+        "muteOnIconUrl": string;
+        /**
+          * Pause Icon Url
+         */
+        "pauseIconUrl": string;
+        /**
+          * Play Icon Url
+         */
+        "playIconUrl": string;
+    }
     interface XAudioMusicAction {
         /**
           * The command to execute.
@@ -302,36 +332,6 @@ export namespace Components {
           * The identifier for this music track
          */
         "trackId": string;
-    }
-    interface XAudioPlayer {
-        /**
-          * Use debug for verbose logging. Useful for figuring thing out.
-         */
-        "debug": boolean;
-        /**
-          * The display mode for this player. The display is merely a facade to manage basic controls. No track information or duration will be displayed.
-         */
-        "display": boolean;
-        /**
-          * The Howler.js Script Reference
-         */
-        "howlerUrl": string;
-        /**
-          * Mute Off Icon Url
-         */
-        "muteOffIconUrl": string;
-        /**
-          * Mute ON Icon Url
-         */
-        "muteOnIconUrl": string;
-        /**
-          * Pause Icon Url
-         */
-        "pauseIconUrl": string;
-        /**
-          * Play Icon Url
-         */
-        "playIconUrl": string;
     }
     interface XAudioSoundAction {
         /**
@@ -395,7 +395,7 @@ export namespace Components {
          */
         "setting": 'muted' | 'enabled';
     }
-    interface XContentInclude {
+    interface XContent {
         /**
           * If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.
          */
@@ -480,6 +480,7 @@ export namespace Components {
     interface XData {
         /**
           * The wait-time, in milliseconds to wait for un-registered data providers found in an expression. This is to accommodate a possible lag between evaluation before the first view-do 'when' predicate an the registration process.
+          * @system data
          */
         "providerTimeout": number;
     }
@@ -641,6 +642,12 @@ declare global {
         prototype: HTMLXAppViewNotFoundElement;
         new (): HTMLXAppViewNotFoundElement;
     };
+    interface HTMLXAudioElement extends Components.XAudio, HTMLStencilElement {
+    }
+    var HTMLXAudioElement: {
+        prototype: HTMLXAudioElement;
+        new (): HTMLXAudioElement;
+    };
     interface HTMLXAudioMusicActionElement extends Components.XAudioMusicAction, HTMLStencilElement {
     }
     var HTMLXAudioMusicActionElement: {
@@ -652,12 +659,6 @@ declare global {
     var HTMLXAudioMusicLoadElement: {
         prototype: HTMLXAudioMusicLoadElement;
         new (): HTMLXAudioMusicLoadElement;
-    };
-    interface HTMLXAudioPlayerElement extends Components.XAudioPlayer, HTMLStencilElement {
-    }
-    var HTMLXAudioPlayerElement: {
-        prototype: HTMLXAudioPlayerElement;
-        new (): HTMLXAudioPlayerElement;
     };
     interface HTMLXAudioSoundActionElement extends Components.XAudioSoundAction, HTMLStencilElement {
     }
@@ -677,11 +678,11 @@ declare global {
         prototype: HTMLXAudioStateSwitchElement;
         new (): HTMLXAudioStateSwitchElement;
     };
-    interface HTMLXContentIncludeElement extends Components.XContentInclude, HTMLStencilElement {
+    interface HTMLXContentElement extends Components.XContent, HTMLStencilElement {
     }
-    var HTMLXContentIncludeElement: {
-        prototype: HTMLXContentIncludeElement;
-        new (): HTMLXContentIncludeElement;
+    var HTMLXContentElement: {
+        prototype: HTMLXContentElement;
+        new (): HTMLXContentElement;
     };
     interface HTMLXContentMarkdownElement extends Components.XContentMarkdown, HTMLStencilElement {
     }
@@ -771,13 +772,13 @@ declare global {
         "x-app-view": HTMLXAppViewElement;
         "x-app-view-do": HTMLXAppViewDoElement;
         "x-app-view-not-found": HTMLXAppViewNotFoundElement;
+        "x-audio": HTMLXAudioElement;
         "x-audio-music-action": HTMLXAudioMusicActionElement;
         "x-audio-music-load": HTMLXAudioMusicLoadElement;
-        "x-audio-player": HTMLXAudioPlayerElement;
         "x-audio-sound-action": HTMLXAudioSoundActionElement;
         "x-audio-sound-load": HTMLXAudioSoundLoadElement;
         "x-audio-state-switch": HTMLXAudioStateSwitchElement;
-        "x-content-include": HTMLXContentIncludeElement;
+        "x-content": HTMLXContentElement;
         "x-content-markdown": HTMLXContentMarkdownElement;
         "x-content-reference": HTMLXContentReferenceElement;
         "x-data": HTMLXDataElement;
@@ -800,9 +801,9 @@ declare namespace LocalJSX {
          */
         "command"?: string;
         /**
-          * This is the topic this action-command is targeting.  data: []
+          * This is the topic this action-command is targeting.
          */
-        "topic"?: ActionTopicType;
+        "topic"?: string;
     }
     interface XActionActivator {
         /**
@@ -1036,6 +1037,36 @@ declare namespace LocalJSX {
          */
         "transition"?: string;
     }
+    interface XAudio {
+        /**
+          * Use debug for verbose logging. Useful for figuring thing out.
+         */
+        "debug"?: boolean;
+        /**
+          * The display mode for this player. The display is merely a facade to manage basic controls. No track information or duration will be displayed.
+         */
+        "display"?: boolean;
+        /**
+          * The Howler.js Script Reference
+         */
+        "howlerUrl"?: string;
+        /**
+          * Mute Off Icon Url
+         */
+        "muteOffIconUrl"?: string;
+        /**
+          * Mute ON Icon Url
+         */
+        "muteOnIconUrl"?: string;
+        /**
+          * Pause Icon Url
+         */
+        "pauseIconUrl"?: string;
+        /**
+          * Play Icon Url
+         */
+        "playIconUrl"?: string;
+    }
     interface XAudioMusicAction {
         /**
           * The command to execute.
@@ -1081,36 +1112,6 @@ declare namespace LocalJSX {
           * The identifier for this music track
          */
         "trackId": string;
-    }
-    interface XAudioPlayer {
-        /**
-          * Use debug for verbose logging. Useful for figuring thing out.
-         */
-        "debug"?: boolean;
-        /**
-          * The display mode for this player. The display is merely a facade to manage basic controls. No track information or duration will be displayed.
-         */
-        "display"?: boolean;
-        /**
-          * The Howler.js Script Reference
-         */
-        "howlerUrl"?: string;
-        /**
-          * Mute Off Icon Url
-         */
-        "muteOffIconUrl"?: string;
-        /**
-          * Mute ON Icon Url
-         */
-        "muteOnIconUrl"?: string;
-        /**
-          * Pause Icon Url
-         */
-        "pauseIconUrl"?: string;
-        /**
-          * Play Icon Url
-         */
-        "playIconUrl"?: string;
     }
     interface XAudioSoundAction {
         /**
@@ -1166,7 +1167,7 @@ declare namespace LocalJSX {
          */
         "setting"?: 'muted' | 'enabled';
     }
-    interface XContentInclude {
+    interface XContent {
         /**
           * If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.
          */
@@ -1251,6 +1252,7 @@ declare namespace LocalJSX {
     interface XData {
         /**
           * The wait-time, in milliseconds to wait for un-registered data providers found in an expression. This is to accommodate a possible lag between evaluation before the first view-do 'when' predicate an the registration process.
+          * @system data
          */
         "providerTimeout"?: number;
     }
@@ -1366,13 +1368,13 @@ declare namespace LocalJSX {
         "x-app-view": XAppView;
         "x-app-view-do": XAppViewDo;
         "x-app-view-not-found": XAppViewNotFound;
+        "x-audio": XAudio;
         "x-audio-music-action": XAudioMusicAction;
         "x-audio-music-load": XAudioMusicLoad;
-        "x-audio-player": XAudioPlayer;
         "x-audio-sound-action": XAudioSoundAction;
         "x-audio-sound-load": XAudioSoundLoad;
         "x-audio-state-switch": XAudioStateSwitch;
-        "x-content-include": XContentInclude;
+        "x-content": XContent;
         "x-content-markdown": XContentMarkdown;
         "x-content-reference": XContentReference;
         "x-data": XData;
@@ -1401,13 +1403,13 @@ declare module "@stencil/core" {
             "x-app-view": LocalJSX.XAppView & JSXBase.HTMLAttributes<HTMLXAppViewElement>;
             "x-app-view-do": LocalJSX.XAppViewDo & JSXBase.HTMLAttributes<HTMLXAppViewDoElement>;
             "x-app-view-not-found": LocalJSX.XAppViewNotFound & JSXBase.HTMLAttributes<HTMLXAppViewNotFoundElement>;
+            "x-audio": LocalJSX.XAudio & JSXBase.HTMLAttributes<HTMLXAudioElement>;
             "x-audio-music-action": LocalJSX.XAudioMusicAction & JSXBase.HTMLAttributes<HTMLXAudioMusicActionElement>;
             "x-audio-music-load": LocalJSX.XAudioMusicLoad & JSXBase.HTMLAttributes<HTMLXAudioMusicLoadElement>;
-            "x-audio-player": LocalJSX.XAudioPlayer & JSXBase.HTMLAttributes<HTMLXAudioPlayerElement>;
             "x-audio-sound-action": LocalJSX.XAudioSoundAction & JSXBase.HTMLAttributes<HTMLXAudioSoundActionElement>;
             "x-audio-sound-load": LocalJSX.XAudioSoundLoad & JSXBase.HTMLAttributes<HTMLXAudioSoundLoadElement>;
             "x-audio-state-switch": LocalJSX.XAudioStateSwitch & JSXBase.HTMLAttributes<HTMLXAudioStateSwitchElement>;
-            "x-content-include": LocalJSX.XContentInclude & JSXBase.HTMLAttributes<HTMLXContentIncludeElement>;
+            "x-content": LocalJSX.XContent & JSXBase.HTMLAttributes<HTMLXContentElement>;
             "x-content-markdown": LocalJSX.XContentMarkdown & JSXBase.HTMLAttributes<HTMLXContentMarkdownElement>;
             "x-content-reference": LocalJSX.XContentReference & JSXBase.HTMLAttributes<HTMLXContentReferenceElement>;
             "x-data": LocalJSX.XData & JSXBase.HTMLAttributes<HTMLXDataElement>;

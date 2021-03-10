@@ -22,7 +22,7 @@ import {
  *
  * This is helpful for displaying active routes in menus, bread-crumbs and tabs.
  *
- * @system navigation
+ * @system routing
  */
 @Component({
   tag: 'x-app-link',

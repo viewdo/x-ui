@@ -58,10 +58,10 @@ For more complex data shapes, you can define the data parameters as JSON in a ch
 
 ## Properties
 
-| Property  | Attribute | Description                                                   | Type                                                                                                                                                                                                      | Default     |
-| --------- | --------- | ------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `command` | `command` | The command to execute.                                       | `string \| undefined`                                                                                                                                                                                     | `undefined` |
-| `topic`   | `topic`   | This is the topic this action-command is targeting.  data: [] | `ActionTopicType.analytics \| ActionTopicType.audio \| ActionTopicType.data \| ActionTopicType.elements \| ActionTopicType.interface \| ActionTopicType.navigation \| ActionTopicType.video \| undefined` | `undefined` |
+| Property  | Attribute | Description                                         | Type                  | Default     |
+| --------- | --------- | --------------------------------------------------- | --------------------- | ----------- |
+| `command` | `command` | The command to execute.                             | `string \| undefined` | `undefined` |
+| `topic`   | `topic`   | This is the topic this action-command is targeting. | `string \| undefined` | `undefined` |
 
 
 ## Methods

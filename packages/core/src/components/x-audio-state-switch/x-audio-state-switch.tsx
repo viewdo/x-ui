@@ -5,11 +5,11 @@ import { eventBus } from '../../services/events'
 import {
   AUDIO_EVENTS,
   AUDIO_TOPIC,
-} from '../x-audio-player/audio/interfaces'
+} from '../x-audio/audio/interfaces'
 import {
   audioState,
   onAudioStateChange,
-} from '../x-audio-player/audio/state'
+} from '../x-audio/audio/state'
 
 /**
  * This component exposes a checkbox to enable or disable global audio for background sounds and video.

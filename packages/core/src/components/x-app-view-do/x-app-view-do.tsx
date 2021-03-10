@@ -20,10 +20,10 @@ import {
 } from '../../services/events'
 import { VisitStrategy } from '../../services/navigation'
 import { MatchResults, Route } from '../../services/routing'
-import { ViewDoService } from './view-do'
-import { ElementTimer } from './view-do/timer'
+import { ViewDoService } from './media'
+import { ElementTimer } from './media/timer'
 /**
- * The \<x-app-view-do\> element represents a specialized child-route for a parent \<x-app-view\> component.
+ * This element represents a specialized child-route for a parent \<x-app-view\> component.
  * It represents a sub-route that has special presentation and workflow behaviors.
  *
  * They are used to create presentation, wizards, input workflows, or step by step instructions or
@@ -31,7 +31,6 @@ import { ElementTimer } from './view-do/timer'
  * audio, video and timed actions.
  *
  *  @system routing
- *  @system presentation
  */
 @Component({
   tag: 'x-app-view-do',

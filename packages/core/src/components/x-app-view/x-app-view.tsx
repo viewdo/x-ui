@@ -31,11 +31,6 @@ import {
  * This provides the declarative mechanism
  * for in-page content/component routing by URL.
  *
- * It is a chid component of the \<x-app\>  element.
- *
- *
- *  @system core
- *  @system routing
  *  @system presentation
  */
 @Component({

@@ -5,6 +5,11 @@ import { clearDataProviders } from '../../services/data/factory'
 import { dataState } from '../../services/data/state'
 import { DataListener } from './data/actions'
 
+/**
+ * This component enables the Data Provider system. It hosts
+ * the action-listener that registers providers.  Add this tag
+ * to that page to enable token-replacement.
+ */
 @Component({
   tag: 'x-data',
   shadow: true,
@@ -18,6 +23,7 @@ export class XData {
    * This is to accommodate a possible lag between
    * evaluation before the first view-do 'when' predicate
    * an the registration process.
+   * @system data
    */
   @Prop() providerTimeout: number = 500
 

@@ -1,4 +1,4 @@
-# X-AUDIO-PLAYER
+# X-AUDIO
 
 This component is responsible for playing audio requested via the [action](/actions) bus. Internally it holds two players, one for music and another for sounds.
 
@@ -11,12 +11,12 @@ This player can be configured to display in full or minimal mode. When displayed
 ## Usage
 
 ```html
-<x-audio-player display debug> </x-audio-player>
+<x-audio display debug> </x-audio>
 ```
 
 While it can be placed anywhere, only ONE player is allowed within an HTML document. Loading a second element will have no effect.
 
-Once in-place, the [\<x-audio-player\>](/components/x-audio-player) listens on the **audio** topic for commands.
+Once in-place, the [\<x-audio\>](/components/x-audio) listens on the **audio** topic for commands.
 
 > Note: This component subscribes to route-change notifications - as some audio clips are meant to end when the route changes.
 
@@ -26,9 +26,14 @@ To operate the player, it is easiest to just use the `<x-audio-load-*>` componen
 
 ```html
 <x-app-view-do>
-  <x-audio-sound-load track-id="<unique-id>" src="<url>"> </x-audio-sound-load>
+  <x-audio-sound-load track-id="<unique-id>" src="<url>">
+  </x-audio-sound-load>
   <x-action-activator ...>
-    <x-audio-sound-action command="<command>" track-id="<id>" value="<value>"></x-audio-sound-action>
+    <x-audio-sound-action
+      command="<command>"
+      track-id="<id>"
+      value="<value>"
+    ></x-audio-sound-action>
   </x-action-activator>
 </x-app-view-do>
 ```
@@ -155,10 +160,10 @@ If audio is set to loop with no deactivation, any new configuration will end it.
 
 Each audio track-request defines when it should be stopped and removed from the queue. This allows for music music to plays between routes. By default, a route-change will empty the queue of any unplayed audio.
 
-* **route**: When the route changes (default for unmarked)
-* **video**: When a video plays
-* **next**: Play/queue until route or another audio is queued.
-* **none**: Play until a new track is played (default for music)
+- **route**: When the route changes (default for unmarked)
+- **video**: When a video plays
+- **next**: Play/queue until route or another audio is queued.
+- **none**: Play until a new track is played (default for music)
 
 ### Track
 
