@@ -21,7 +21,6 @@ import { RouterService, ROUTE_EVENTS } from '../../services/routing'
  * replaced with the values provided by the provider.
  *
  * @system data
- * @system content
  */
 @Component({
   tag: 'x-data-display',

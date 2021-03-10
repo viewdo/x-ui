@@ -113,7 +113,6 @@
   <body>
 
     <x-app start-url="/"
-      debug
       app-title="<x-ui/> :: view.DO"
       transition="animate__animated animate__fadeIn">
       <nav x-cloak
@@ -314,18 +313,6 @@
       <x-app-view url="/home"
         resolve-tokens
         content-src="/pages/home/default.html">
-        <x-data>
-          <!-- enable data expressions-->
-          <x-data-provider-session></x-data-provider-session>
-          <x-data-provider-storage></x-data-provider-storage>
-        </x-data>
-        <x-ui>
-          <!-- enabled UI themes -->
-          <x-ui-theme></x-ui-theme>
-        </x-ui>
-        <x-elements>
-          <!-- enable element manipulation-->
-        </x-elements>
         <x-app-view-do url="/home/name"
           page-title="Introductions"
           when="!{{storage:name}}"
@@ -605,6 +592,18 @@
           } )
         </script>
       </x-app-analytics>
+      <x-data>
+        <!-- enable data expressions-->
+        <x-data-provider-session></x-data-provider-session>
+        <x-data-provider-storage></x-data-provider-storage>
+      </x-data>
+      <x-ui>
+        <!-- enabled UI themes -->
+        <x-ui-theme></x-ui-theme>
+      </x-ui>
+      <x-elements>
+        <!-- enable element manipulation-->
+      </x-elements>
     </x-app>
   </body>
 

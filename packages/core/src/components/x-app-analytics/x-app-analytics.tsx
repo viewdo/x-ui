@@ -57,6 +57,10 @@ export class XAppAnalytics {
     this.listener.handleViewTime = e => this.viewTime.emit(e)
   }
 
+  render() {
+    return null
+  }
+
   disconnectedCallback() {
     this.listener.destroy()
   }
