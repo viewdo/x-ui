@@ -1,8 +1,8 @@
 jest.mock('../../../services/data/evaluate.worker')
 
 import { newSpecPage, SpecPage } from '@stencil/core/testing'
+import { EventEmitter } from '../../../services/common'
 import { sleep } from '../../../services/common/promises'
-import { EventEmitter } from '../../../services/events'
 import { ROUTE_EVENTS } from '../../../services/routing'
 import { AudioActionListener } from './actions'
 import {

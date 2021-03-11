@@ -6,17 +6,17 @@ import {
   Prop,
   State,
 } from '@stencil/core'
+import {
+  actionBus,
+  EventAction,
+  eventBus,
+} from '../../services/actions'
 import { debugIf, warn } from '../../services/common/logging'
 import { ReferenceCompleteResults } from '../../services/content/interfaces'
 import {
   DATA_TOPIC,
   IDataProvider,
 } from '../../services/data/interfaces'
-import {
-  actionBus,
-  EventAction,
-  eventBus,
-} from '../../services/events'
 import {
   DataProviderRegistration,
   DATA_COMMANDS,

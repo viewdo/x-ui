@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-import { EventEmitter } from '../../../../services/events'
+import { EventEmitter } from '../../../../services/common'
 import { AudioRequest, AudioType } from '../interfaces'
 
 export class AudioActionListener {

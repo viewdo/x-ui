@@ -1,6 +1,6 @@
 import { newSpecPage, SpecPage } from '@stencil/core/testing'
+import { EventEmitter } from '../common/emitter'
 import { sleep } from '../common/promises'
-import { EventEmitter } from '../events/emitter'
 import { VideoActionListener } from './actions'
 import { VIDEO_COMMANDS, VIDEO_TOPIC } from './interfaces'
 import { videoState } from './state'

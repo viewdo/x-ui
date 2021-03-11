@@ -1,5 +1,5 @@
+import { EventEmitter } from '../common/emitter'
 import { IDataProvider } from '../data/interfaces'
-import { EventEmitter } from '../events/emitter'
 
 export class RoutingDataProvider implements IDataProvider {
   changed: EventEmitter

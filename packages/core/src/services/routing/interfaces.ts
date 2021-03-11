@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 
+import { ActionActivationStrategy } from '../actions'
 import { LocationSegments } from '../common'
-import { ActionActivationStrategy } from '../events'
 import { Path } from './utils'
 
 export { LocationSegments }

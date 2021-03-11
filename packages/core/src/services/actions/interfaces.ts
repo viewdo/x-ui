@@ -1,13 +1,5 @@
-import { IEvents, Listener } from '../common/interfaces'
+import { IEventEmitter } from '../common/interfaces'
 /* istanbul ignore file */
-
-export interface IEventEmitter {
-  on(event: string, listener: Listener): () => void
-  removeListener(event: string, listener: Listener): void
-  removeAllListeners(): void
-  emit(event: string, ...args: any[]): void
-  once(event: string, listener: Listener): () => void
-}
 
 export interface IEventActionListener {
   initialize(
@@ -37,5 +29,3 @@ export const EVENTS_DOM_EVENT = 'x:events'
 export interface IActionElement {
   getAction(): Promise<EventAction<any> | null>
 }
-
-export { Listener, IEvents }

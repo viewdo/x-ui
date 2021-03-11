@@ -1,8 +1,6 @@
+import { ActionActivationStrategy } from '../../../services/actions/interfaces'
+import { IEventEmitter } from '../../../services/common/interfaces'
 import { debugIf } from '../../../services/common/logging'
-import {
-  ActionActivationStrategy,
-  IEventEmitter,
-} from '../../../services/events/interfaces'
 import { VisitStrategy } from '../../../services/navigation/interfaces'
 import { recordVisit } from '../../../services/navigation/visits'
 import { IRoute } from '../../../services/routing/interfaces'

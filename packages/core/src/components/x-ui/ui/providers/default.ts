@@ -1,6 +1,6 @@
 import { MockWindow } from '@stencil/core/mock-doc'
+import { IEventEmitter } from '../../../../services/common'
 import { log, warn } from '../../../../services/common/logging'
-import { IEventEmitter } from '../../../../services/events'
 import { UI_EVENTS } from '../interfaces'
 import { onUIChange, uiState } from '../state'
 

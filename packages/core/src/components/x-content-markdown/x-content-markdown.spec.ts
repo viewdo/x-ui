@@ -3,6 +3,7 @@ jest.mock('../../services/data/evaluate.worker')
 jest.mock('./markdown/remarkable.worker')
 
 import { newSpecPage } from '@stencil/core/testing'
+import { actionBus, eventBus } from '../../services/actions'
 import { contentStateDispose } from '../../services/content'
 import {
   addDataProvider,
@@ -11,7 +12,6 @@ import {
 import { DATA_EVENTS } from '../../services/data/interfaces'
 import { InMemoryProvider } from '../../services/data/providers/memory'
 import { dataState } from '../../services/data/state'
-import { actionBus, eventBus } from '../../services/events'
 import { XContentMarkdown } from './x-content-markdown'
 
 describe('x-content-markdown', () => {

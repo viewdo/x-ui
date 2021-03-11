@@ -7,7 +7,13 @@ This element defines how and when a group of Actions, defined with the [\<x-acti
 This element should only ever contain child [\<x-action\>](/components/x-action) tags. The attributes tells the parent The parent tag defines how and when the child actions are submitted through the [actions system](/actions).
 
 ```html
-<x-action-activator activate="<activation-strategy>" ... supporting attributes ...>
+<x-action-activator
+  activate="<activation-strategy>"
+  ...
+  supporting
+  attributes
+  ...
+>
   <x-action ...></x-action>
   <x-action ...></x-action>
   <x-action ...></x-action>
@@ -65,7 +71,12 @@ The **AtTime** activation-strategy only work when this element is a child of [\<
 The **OnElementEvent** activation-strategy can be used anywhere within the **\<x-app\>** container. The child actions will fire when the target element raises the target event.
 
 ```html
-<x-action-activator activate="OnElementEvent" target-element="#submit" target-event="click" multiple>
+<x-action-activator
+  activate="OnElementEvent"
+  target-element="#submit"
+  target-event="click"
+  multiple
+>
   <x-action ...></x-action>
   <x-action ...></x-action>
   <x-action ...></x-action>

@@ -10,14 +10,14 @@ import {
   State,
 } from '@stencil/core'
 import {
-  addDataProvider,
-  removeDataProvider,
-} from '../../services/data/factory'
-import {
   actionBus,
   EventAction,
   eventBus,
-} from '../../services/events'
+} from '../../services/actions'
+import {
+  addDataProvider,
+  removeDataProvider,
+} from '../../services/data/factory'
 import { DATA_COMMANDS, SetData } from '../x-data/data/interfaces'
 import { CookieConsent } from './cookie/interfaces'
 import { CookieService } from './cookie/service'

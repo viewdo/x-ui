@@ -2,7 +2,7 @@ jest.mock('../data/evaluate.worker')
 
 import { RafCallback } from '@stencil/core'
 import { newSpecPage } from '@stencil/core/testing'
-import { EventEmitter } from '../events'
+import { EventEmitter } from '../common/emitter'
 import { RouterService } from './router'
 
 describe('router', () => {

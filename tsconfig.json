@@ -18,5 +18,5 @@
     "strict": true,
     "typeRoots": ["node_modules/@types"]
   },
-  "exclude": ["**/__mocks__", "node_modules", "**/.worker.ts","**/mocks"]
+  "exclude": ["**/__mocks__", "node_modules", "**/*.worker.ts","**/mocks"]
 }

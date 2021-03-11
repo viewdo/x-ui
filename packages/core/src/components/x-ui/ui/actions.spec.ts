@@ -4,7 +4,7 @@ global.console.dir = jest.fn()
 global.console.table = jest.fn()
 
 import { newSpecPage } from '@stencil/core/testing'
-import { EventEmitter } from '../../../services/events/emitter'
+import { EventEmitter } from '../../../services/common/emitter'
 import { UIActionListener } from './actions'
 import { clearUIProvider, getUIProvider } from './factory'
 import { UI_COMMANDS, UI_TOPIC } from './interfaces'

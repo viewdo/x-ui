@@ -1,7 +1,7 @@
 jest.mock('../../../services/data/evaluate.worker')
 jest.mock('../../../services/common/logging')
 
-import { EventEmitter } from '../../../services/events'
+import { EventEmitter } from '../../../services/common'
 import { ROUTE_EVENTS } from '../../../services/routing'
 import { AnalyticsActionListener } from './actions'
 import {

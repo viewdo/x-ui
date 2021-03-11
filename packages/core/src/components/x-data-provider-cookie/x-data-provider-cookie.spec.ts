@@ -2,13 +2,13 @@ jest.mock('../../services/common/logging')
 jest.mock('../../services/data/evaluate.worker')
 
 import { newSpecPage } from '@stencil/core/testing'
+import { actionBus, eventBus } from '../../services/actions'
 import {
   clearDataProviders,
   getDataProvider,
   removeDataProvider,
 } from '../../services/data/factory'
 import { dataStateDispose } from '../../services/data/state'
-import { actionBus, eventBus } from '../../services/events'
 import { XAction } from '../x-action/x-action'
 import { XData } from '../x-data/x-data'
 import { CookieService } from './cookie/service'

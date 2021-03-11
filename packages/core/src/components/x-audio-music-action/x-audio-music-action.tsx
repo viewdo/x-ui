@@ -6,12 +6,12 @@ import {
   Method,
   Prop,
 } from '@stencil/core'
-import { warn } from '../../services/common'
 import {
   actionBus,
   EventAction,
   IActionElement,
-} from '../../services/events'
+} from '../../services/actions'
+import { warn } from '../../services/common'
 import { AudioType, AUDIO_TOPIC } from '../x-audio/audio/interfaces'
 
 /**

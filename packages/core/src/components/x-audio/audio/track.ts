@@ -1,5 +1,5 @@
+import { EventEmitter, IEventEmitter } from '../../../services/common'
 import { warn } from '../../../services/common/logging'
-import { EventEmitter, IEventEmitter } from '../../../services/events'
 import {
   AudioInfo,
   AudioType,

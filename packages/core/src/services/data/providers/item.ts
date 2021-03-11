@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-import { EventEmitter } from '../../events'
+import { EventEmitter } from '../../common/emitter'
 import { DATA_EVENTS, IDataProvider } from '../interfaces'
 
 export class DataItemProvider implements IDataProvider {

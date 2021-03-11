@@ -6,7 +6,7 @@ import {
   Prop,
   State,
 } from '@stencil/core'
-import { eventBus } from '../../services/events'
+import { eventBus } from '../../services/actions'
 import { ROUTE_EVENTS } from '../../services/routing'
 import { RouterService } from '../../services/routing/router'
 

@@ -1,5 +1,6 @@
+import { EventAction } from '../actions/interfaces'
 import { commonState, debugIf } from '../common'
-import { EventAction, IEventEmitter } from '../events'
+import { IEventEmitter } from '../common/interfaces'
 import {
   LocationSegments,
   RouterService,

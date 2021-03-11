@@ -1,30 +1,43 @@
-# x-data
+# X-DATA
+
+The `<x-data>` component enables the data system. Once enabled, [data expressions](/data/expressions) can be used to inject data int the [content](/content/data) or used for [guided navigation](/navigation/guided).
+
+Data-providers are used to resolve values in the data-expressions. See [Data Providers](/data/providers) for more information.
 
 <!-- Auto Generated Below -->
 
 
 ## Usage
 
-### Actions
+### Add-session
 
-# Data Action Listener
-
-The Data Action Listener listens for action commands to request updates from the
-given data-providers.
-
-Topic: `data`
+Enable the data provider system and add storage data as a provider.
 
 ```html
-<x-action-activator activate="...">
-  <x-action topic="data" command="<command>"></x-action>
-</x-action-activator>
+<x-data>
+  <x-data-provider-session></x-data-provider-session>
+</x-data>
 ```
 
-## Commands
 
-### `register-provider`
+### Add-storage
 
-Register a new data-provider. See [Data Providers](/data/providers) for more information.
+Enable the data provider system and add storage data as a provider.
+
+```html
+<x-data>
+  <x-data-provider-storage></x-data-provider-storage>
+</x-data>
+```
+
+
+### Basic
+
+Enable the data provider system.
+
+```html
+<x-data> </x-data>
+```
 
 
 

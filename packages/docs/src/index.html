@@ -115,7 +115,7 @@
     <x-app start-url="/"
       app-title="<x-ui/> :: view.DO"
       transition="animate__animated animate__fadeIn">
-      <nav x-cloak
+      <header x-cloak
         class="navbar">
 
         <div class="container container-fluid">
@@ -150,7 +150,7 @@
             </a>
           </div>
         </div>
-      </nav>
+      </header>
       <nav class="navbar-nav bg-dark sticky-top">
 
         <div class="container container-fluid d-flex flex-row">
@@ -313,18 +313,18 @@
       <x-app-view url="/home"
         resolve-tokens
         content-src="/pages/home/default.html">
-        <x-app-view-do url="/home/name"
+        <x-app-view-do url="name"
           page-title="Introductions"
           when="!{{storage:name}}"
           content-src="/pages/home/intro.html">
         </x-app-view-do>
-        <x-app-view-do url="/home/welcome"
+        <x-app-view-do url="welcome"
           page-title="Welcome"
           visit="always"
           content-src="/pages/home/welcome.html"
           transition="animate__animated animate__pulse">
         </x-app-view-do>
-        <x-app-view url="/home/profile"
+        <x-app-view url="profile"
           page-title="Profile"
           content-src="/pages/home/profile.html">
         </x-app-view>
@@ -563,11 +563,22 @@
         </x-app-view-do>
       </x-app-view>
       <x-app-view url="/components"
+        page-title="All Components"
         content-src="/pages/components/default.html"
-        strict
-        page-title="All Components">
-        <x-app-view url=":component"
-          exact
+        transition="animate__animated animate__fadeIn">
+        <x-data-repeat items-src="/assets/components.json"
+          filter="components"
+          class="d-none d-sm-block mt-2 float-start">
+          <template>
+            <x-app-link href="/components/{{data:tag}}"
+              class="d-block">
+              &lt;{{data:tag}}&gt;
+            </x-app-link>
+          </template>
+        </x-data-repeat>
+        <x-app-view exact
+          class="float-start"
+          url=":component"
           page-title="Component: <{{route:component}}>"
           content-src="/pages/components/component.html">
         </x-app-view>
@@ -605,6 +616,25 @@
         <!-- enable element manipulation-->
       </x-elements>
     </x-app>
+    <script>
+      async function init() {
+        if ( 'serviceWorker' in navigator ) {
+          const registration = await navigator.serviceWorker.getRegistration()
+          if ( registration && registration.active ) {
+            navigator.serviceWorker.addEventListener(
+              'controllerchange',
+              () => window.location.reload(),
+            )
+          }
+          window.addEventListener( 'swUpdate', () => {
+            if ( registration && registration.waiting ) {
+              registration.postMessage( 'skipWaiting' )
+            }
+          } )
+        }
+      }
+      init();
+    </script>
   </body>
 
 </html>

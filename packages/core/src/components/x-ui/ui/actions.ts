@@ -1,14 +1,14 @@
 import { MockWindow } from '@stencil/core/mock-doc'
 import {
-  commonState,
-  debugIf,
-  kebabToCamelCase,
-} from '../../../services/common'
-import {
   EventAction,
   IEventActionListener,
+} from '../../../services/actions'
+import {
+  commonState,
+  debugIf,
   IEventEmitter,
-} from '../../../services/events'
+  kebabToCamelCase,
+} from '../../../services/common'
 import { getUIProvider, setUIProvider } from './factory'
 import { UI_COMMANDS, UI_TOPIC } from './interfaces'
 import { DefaultUIProvider } from './providers/default'

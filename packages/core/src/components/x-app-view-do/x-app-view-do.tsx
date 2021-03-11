@@ -7,17 +7,17 @@ import {
   Prop,
   State,
 } from '@stencil/core'
+import {
+  ActionActivationStrategy,
+  actionBus,
+  eventBus,
+} from '../../services/actions'
 import { debugIf, slugify } from '../../services/common'
 import { warn } from '../../services/common/logging'
 import { replaceHtmlInElement } from '../../services/content/elements'
 import { resolveRemoteContent } from '../../services/content/remote'
 import { resolveChildElementXAttributes } from '../../services/data/elements'
 import { DATA_EVENTS } from '../../services/data/interfaces'
-import {
-  ActionActivationStrategy,
-  actionBus,
-  eventBus,
-} from '../../services/events'
 import { VisitStrategy } from '../../services/navigation'
 import { MatchResults, Route } from '../../services/routing'
 import { ViewDoService } from './media'
@@ -41,10 +41,6 @@ export class XAppViewDo {
   private dataSubscription!: () => void
   private route!: Route
   private service?: ViewDoService
-
-  // private videoListener?: VideoActionListener
-  // private elementTimer?: ElementTimer
-
   @Element() el!: HTMLXAppViewDoElement
   @State() match: MatchResults | null = null
   @State() contentElement: HTMLElement | null = null
@@ -106,7 +102,8 @@ export class XAppViewDo {
   @Prop() nextAfter = 0
 
   /**
-   * Remote URL for this Route's content.
+   * Remote URL for HTML content. Content from this
+   * URL will be assigned the 'content' slot.
    */
   @Prop() contentSrc?: string
 
@@ -132,9 +129,8 @@ export class XAppViewDo {
   @Prop() debug = false
 
   /**
-   * Provide the element selector for the
-   * providing media object that can provide
-   * time and end events. Default is video
+   * Provide the element selector for the media object that can provide
+   * time-updates and media-end events.
    */
   @Prop() videoTarget: string = 'video'
 
@@ -278,6 +274,7 @@ export class XAppViewDo {
     return (
       <Host hidden={!this.match?.isExact}>
         <slot />
+        <slot name="content" />
       </Host>
     )
   }

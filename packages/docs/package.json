@@ -5,7 +5,8 @@
   "description": "Stencil App Starter",
   "scripts": {
     "--- development ---": "---------------",
-    "start": "stencil build --docs --dist --watch --serve",
+    "start": "stencil build --dev --watch --serve",
+    "start:sw": "stencil build --dist --watch --serve",
     "generate": "stencil generate",
     "--- production ---": "---------------",
     "build": "stencil build",

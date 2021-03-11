@@ -1,5 +1,6 @@
 jest.mock('../../../services/common/logging')
 
+import { EventEmitter } from '../../../services/common'
 import {
   clearDataProviders,
   getDataProvider,
@@ -11,7 +12,6 @@ import {
   IDataProvider,
 } from '../../../services/data/interfaces'
 import { InMemoryProvider } from '../../../services/data/providers/memory'
-import { EventEmitter } from '../../../services/events'
 import { DataListener } from './actions'
 import { DATA_COMMANDS } from './interfaces'
 

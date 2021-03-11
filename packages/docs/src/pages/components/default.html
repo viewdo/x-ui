@@ -1,15 +1,10 @@
-<div class="content"
-  class="container container-fluid mx-auto">
-  <x-data-repeat items-src="/assets/components.json"
-    filter="components">
-    <template lang="text">
-      <div class="card mb-4 shadow p-2">
-        <a href="/components/{{data:tag}}">
-          <h2 class="ms-4">
-            &lt;{{data:tag}}&gt;
-          </h2>
-        </a>
-      </div>
-    </template>
-  </x-data-repeat>
-</div>
+<h1>All Components</h1>
+<x-data-repeat items-src="/assets/components.json"
+  filter="components">
+  <template>
+    <x-app-link href="/components/{{data:tag}}"
+      class="d-block p-2 border border-1 mb-2">
+      &lt;{{data:tag}}&gt;
+    </x-app-link>
+  </template>
+</x-data-repeat>

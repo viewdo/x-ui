@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-import { IEventEmitter } from '../events/interfaces'
+import { IEventEmitter } from '../common/interfaces'
 
 export interface IDataMutator {
   set(key: string, value: string): Promise<void>

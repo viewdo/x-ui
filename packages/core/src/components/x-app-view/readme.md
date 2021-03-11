@@ -96,6 +96,7 @@ Input-type elements (input, textarea and select) can specify a data expression f
 | `resolveTokens`       | `resolve-tokens`    | Before rendering remote HTML, replace any data-tokens with their resolved values. This also commands this component to re-render it's HTML for data-changes. This can affect performance.  IMPORTANT: ONLY WORKS ON REMOTE HTML | `boolean`                                            | `false`     |
 | `router` _(required)_ | --                  | The router-service instance  (internal)                                                                                                                                                                                         | `RouterService`                                      | `undefined` |
 | `scrollTopOffset`     | `scroll-top-offset` | Header height or offset for scroll-top on this view.                                                                                                                                                                            | `number`                                             | `0`         |
+| `src`                 | `src`               | Remote URL for this route's HTML. HTML from this URL will be not be assigned to any slot.  You can add slot='content' to any containers within this HTML if you have a mix of HTML for this exact-route and its children.       | `string \| undefined`                                | `undefined` |
 | `transition`          | `transition`        | Navigation transition between routes. This is a CSS animation class.                                                                                                                                                            | `string \| undefined`                                | `undefined` |
 | `url` _(required)_    | `url`               | The url for this route, including the parent's routes.                                                                                                                                                                          | `string`                                             | `undefined` |
 
@@ -112,6 +113,14 @@ primarily meant for testing.
 Type: `Promise<{ activators: HTMLXActionActivatorElement[]; views: HTMLXAppViewElement[]; dos: HTMLXAppViewDoElement[]; }>`
 
 
+
+
+## Slots
+
+| Slot        | Description                                                                                                                                                       |
+| ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `"content"` | The content route is rendered only when the route           matches EXACTLY. Note: This HTML is removed when the           route changes.                         |
+| `"default"` | The default slot is rendered when this route is           activated, visible by default to all routes matching           the route URL (typically, child routes). |
 
 
 ----------------------------------------------

@@ -1,6 +1,7 @@
+import { ActionActivationStrategy } from '../actions/interfaces'
+import { IEventEmitter } from '../common/interfaces'
 import { resolveChildElementXAttributes } from '../data/elements'
 import { hasToken, resolveTokens } from '../data/tokens'
-import { ActionActivationStrategy, IEventEmitter } from '../events'
 import {
   IRoute,
   MatchResults,

@@ -2,7 +2,7 @@ jest.mock('../../services/common/logging')
 jest.mock('../../services/data/evaluate.worker')
 
 import { newSpecPage } from '@stencil/core/testing'
-import { actionBus, eventBus } from '../../services/events'
+import { actionBus, eventBus } from '../../services/actions'
 import { XApp } from './x-app'
 
 describe('x-app', () => {

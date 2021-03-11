@@ -1,7 +1,7 @@
 import { Component } from '@stencil/core'
+import { actionBus, eventBus } from '../../services/actions'
 import { debugIf } from '../../services/common/logging'
 import { commonState } from '../../services/common/state'
-import { actionBus, eventBus } from '../../services/events'
 import { UIActionListener } from './ui/actions'
 
 /**

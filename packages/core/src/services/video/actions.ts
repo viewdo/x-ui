@@ -1,5 +1,5 @@
-import { debugIf } from '../common'
-import { EventAction, IEventEmitter } from '../events'
+import { EventAction } from '../actions/interfaces'
+import { debugIf, IEventEmitter } from '../common'
 import {
   VIDEO_COMMANDS,
   VIDEO_EVENTS,

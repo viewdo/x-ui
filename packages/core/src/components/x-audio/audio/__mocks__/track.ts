@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 
 import { AudioInfo } from '../../../../services/audio/interfaces'
-import { EventEmitter } from '../../../../services/events/emitter'
+import { EventEmitter } from '../../../../services/common/emitter'
 
 export class AudioTrack {
   play: () => number = () => 0

@@ -8,16 +8,16 @@ import {
   Prop,
   State,
 } from '@stencil/core'
+import {
+  ActionActivationStrategy,
+  eventBus,
+} from '../../services/actions'
 import { debugIf, slugify } from '../../services/common'
 import { warn } from '../../services/common/logging'
 import { replaceHtmlInElement } from '../../services/content/elements'
 import { resolveRemoteContent } from '../../services/content/remote'
 import { resolveChildElementXAttributes } from '../../services/data/elements'
 import { DATA_EVENTS } from '../../services/data/interfaces'
-import {
-  ActionActivationStrategy,
-  eventBus,
-} from '../../services/events'
 import { markVisit, resolveNext } from '../../services/navigation'
 import {
   MatchResults,
@@ -31,7 +31,16 @@ import {
  * This provides the declarative mechanism
  * for in-page content/component routing by URL.
  *
- *  @system presentation
+ * @slot default - The default slot is rendered when this route is
+ *                 activated, visible by default to all routes matching
+ *                 the route URL (typically, child routes).
+ *
+ * @slot content - The content route is rendered only when the route
+ *                 matches EXACTLY. Note: This HTML is removed when the
+ *                 route changes.
+ *
+ *
+ * @system presentation
  */
 @Component({
   tag: 'x-app-view',
@@ -83,6 +92,16 @@ export class XAppView {
    * when it is exact.
    */
   @Prop() exact: boolean = false
+
+  /**
+   * Remote URL for this route's HTML. HTML from this
+   * URL will be not be assigned to any slot.
+   *
+   * You can add slot='content' to any containers
+   * within this HTML if you have a mix of HTML for
+   * this exact-route and its children.
+   */
+  @Prop() src?: string
 
   /**
    * Remote URL for this Route's content.
@@ -232,6 +251,7 @@ export class XAppView {
   async componentWillRender() {
     debugIf(this.debug, `x-app-view: ${this.url} will render`)
 
+    // exact-match
     if (this.match?.isExact) {
       debugIf(this.debug, `x-app-view: ${this.url} route is matched `)
       const viewDos = this.childViewDos.map(el => {
