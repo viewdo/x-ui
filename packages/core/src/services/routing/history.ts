@@ -1,5 +1,9 @@
-import { warnIf } from '../common'
-import { EventEmitter, IEventEmitter, Listener } from '../events'
+import {
+  EventEmitter,
+  IEventEmitter,
+  Listener,
+  warnIf,
+} from '../common'
 import { LocationSegments } from './interfaces'
 import { ScrollHistory } from './scroll'
 import {

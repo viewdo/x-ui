@@ -30,7 +30,7 @@ const config: Config = {
       buildDir: 'js/docs',
       empty: false,
       serviceWorker: {
-        globPatterns: ['src/**/*.{js,css,json,html,md.png,svg}'],
+        globPatterns: ['**/*.{js,css,json,html,md.png,svg}'],
         swSrc: 'src/sw.ts',
       },
       indexHtml: 'index.html',

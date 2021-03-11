@@ -1,7 +1,7 @@
 jest.mock('../../services/common/logging')
 
 import { newSpecPage } from '@stencil/core/testing'
-import { actionBus, EventAction } from '../../services/events'
+import { actionBus, EventAction } from '../../services/actions'
 import { XAction } from './x-action'
 
 describe('x-action', () => {
@@ -82,7 +82,7 @@ describe('x-action', () => {
 
   it('x-action: sendAction', async () => {
     let msg: EventAction<any> | null = null
-    actionBus.on('navigation', a => {
+    actionBus.on('navigation', (a: any) => {
       msg = a
     })
     const page = await newSpecPage({

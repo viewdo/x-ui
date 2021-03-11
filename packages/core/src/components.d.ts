@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { ActionActivationStrategy, EventAction } from "./services/events";
+import { ActionActivationStrategy, EventAction } from "./services/actions";
 import { RouterService } from "./services/routing";
 import { VisitStrategy } from "./services/navigation";
 import { RouterService as RouterService1 } from "./services/routing/router";
@@ -161,6 +161,10 @@ export namespace Components {
          */
         "scrollTopOffset": number;
         /**
+          * Remote URL for this route's HTML. HTML from this URL will be not be assigned to any slot.  You can add slot='content' to any containers within this HTML if you have a mix of HTML for this exact-route and its children.
+         */
+        "src"?: string;
+        /**
           * Navigation transition between routes. This is a CSS animation class.
          */
         "transition"?: string;
@@ -171,7 +175,7 @@ export namespace Components {
     }
     interface XAppViewDo {
         /**
-          * Remote URL for this Route's content.
+          * Remote URL for HTML content. Content from this URL will be assigned the 'content' slot.
          */
         "contentSrc"?: string;
         /**
@@ -215,7 +219,7 @@ export namespace Components {
          */
         "videoEndEvent": string;
         /**
-          * Provide the element selector for the providing media object that can provide time and end events. Default is video
+          * Provide the element selector for the media object that can provide time-updates and media-end events.
          */
         "videoTarget": string;
         /**
@@ -949,6 +953,10 @@ declare namespace LocalJSX {
          */
         "scrollTopOffset"?: number;
         /**
+          * Remote URL for this route's HTML. HTML from this URL will be not be assigned to any slot.  You can add slot='content' to any containers within this HTML if you have a mix of HTML for this exact-route and its children.
+         */
+        "src"?: string;
+        /**
           * Navigation transition between routes. This is a CSS animation class.
          */
         "transition"?: string;
@@ -959,7 +967,7 @@ declare namespace LocalJSX {
     }
     interface XAppViewDo {
         /**
-          * Remote URL for this Route's content.
+          * Remote URL for HTML content. Content from this URL will be assigned the 'content' slot.
          */
         "contentSrc"?: string;
         /**
@@ -1003,7 +1011,7 @@ declare namespace LocalJSX {
          */
         "videoEndEvent"?: string;
         /**
-          * Provide the element selector for the providing media object that can provide time and end events. Default is video
+          * Provide the element selector for the media object that can provide time-updates and media-end events.
          */
         "videoTarget"?: string;
         /**

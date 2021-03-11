@@ -1,7 +1,7 @@
 import { RafCallback } from '@stencil/core/internal'
 import { ROUTE_EVENTS } from '../../services/routing/interfaces'
+import { IEventEmitter } from '../common/interfaces'
 import { addDataProvider } from '../data/factory'
-import { IEventEmitter } from '../events'
 import { NavigationActionListener } from '../navigation/actions'
 import { captureElementsEventOnce } from '../navigation/elements'
 import { HistoryService } from './history'

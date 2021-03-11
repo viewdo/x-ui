@@ -7,6 +7,7 @@ import {
   Prop,
   State,
 } from '@stencil/core'
+import { eventBus } from '../../services/actions'
 import { warn } from '../../services/common/logging'
 import { replaceHtmlInElement } from '../../services/content/elements'
 import {
@@ -17,7 +18,6 @@ import { resolveChildElementXAttributes } from '../../services/data/elements'
 import { evaluatePredicate } from '../../services/data/expressions'
 import { DATA_EVENTS } from '../../services/data/interfaces'
 import { resolveTokens } from '../../services/data/tokens'
-import { eventBus } from '../../services/events'
 import { RouterService, ROUTE_EVENTS } from '../../services/routing'
 import { renderMarkdown } from './markdown/remarkable.worker'
 

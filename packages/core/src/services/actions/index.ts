@@ -1,6 +1,4 @@
-import { EventEmitter } from './emitter'
-
-export * from './emitter'
+import { EventEmitter } from '../common/emitter'
 export * from './interfaces'
 export { actionBus, eventBus }
 

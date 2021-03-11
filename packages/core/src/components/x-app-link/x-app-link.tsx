@@ -7,8 +7,8 @@ import {
   Prop,
   State,
 } from '@stencil/core'
+import { eventBus } from '../../services/actions'
 import { debugIf } from '../../services/common'
-import { eventBus } from '../../services/events'
 import {
   MatchResults,
   RouterService,

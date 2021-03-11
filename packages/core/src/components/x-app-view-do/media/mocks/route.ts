@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-import { ActionActivationStrategy } from '../../../../services/events'
+import { ActionActivationStrategy } from '../../../../services/actions'
 import {
   IRoute,
   MatchResults,

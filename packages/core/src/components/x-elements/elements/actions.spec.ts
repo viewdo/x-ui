@@ -2,8 +2,7 @@ jest.mock('../../../services/common/logging')
 
 import { MockWindow } from '@stencil/core/mock-doc'
 import { newSpecPage } from '@stencil/core/testing'
-import { sleep } from '../../../services/common'
-import { EventEmitter } from '../../../services/events'
+import { EventEmitter, sleep } from '../../../services/common'
 import { ElementsActionListener } from './actions'
 import { ELEMENTS_COMMANDS, ELEMENTS_TOPIC } from './interfaces'
 

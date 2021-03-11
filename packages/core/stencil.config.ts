@@ -7,7 +7,7 @@ const config: Config = {
   excludeUnusedDependencies: true,
   hashFileNames: false,
   rollupPlugins: {
-    before: [
+    after: [
       analyzer({
         summaryOnly: true,
       }),
@@ -66,7 +66,7 @@ const config: Config = {
   ],
 }
 
-if (config.buildDist) {
+if (config.devMode) {
   config.rollupPlugins!.after = []
 }
 

@@ -12,6 +12,7 @@
     "arrify",
     "automerge",
     "browserslist",
+    "cview",
     "delimeters",
     "doctoc",
     "editorconfig",
@@ -57,7 +58,7 @@
     "webm",
     "youtube"
   ],
-  "liveServer.settings.port": 5501,
+  "liveServer.settings.port": 5000,
   "editor.codeActionsOnSave": {
     "source.fixAll.markdownlint": true,
     "source.organizeImports": true,
@@ -140,5 +141,22 @@
     "expect(${MethodCallResult}).to.be.not.undefined;",
     "});",
     ""
-  ]
+  ],
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#1f6fd0",
+    "activityBar.activeBorder": "#ee90bb",
+    "activityBar.background": "#1f6fd0",
+    "activityBar.foreground": "#e7e7e7",
+    "activityBar.inactiveForeground": "#e7e7e799",
+    "activityBarBadge.background": "#ee90bb",
+    "activityBarBadge.foreground": "#15202b",
+    "statusBar.background": "#1857a4",
+    "statusBar.foreground": "#e7e7e7",
+    "statusBarItem.hoverBackground": "#1f6fd0",
+    "titleBar.activeBackground": "#1857a4",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.inactiveBackground": "#1857a499",
+    "titleBar.inactiveForeground": "#e7e7e799"
+  },
+  "peacock.remoteColor": "#1857a4",
 }

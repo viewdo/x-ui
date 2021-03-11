@@ -6,12 +6,12 @@ import {
   Method,
   Prop,
 } from '@stencil/core'
-import { warn } from '../../services/common/logging'
 import {
   actionBus,
   EventAction,
   IActionElement,
-} from '../../services/events'
+} from '../../services/actions'
+import { warn } from '../../services/common/logging'
 
 /**
  * This element just holds data to express the actionEvent to fire. This element

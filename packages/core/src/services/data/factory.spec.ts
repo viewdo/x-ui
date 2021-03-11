@@ -1,7 +1,7 @@
 jest.mock('../common/logging')
 jest.mock('../data/evaluate.worker')
 
-import { actionBus, eventBus } from '../events'
+import { actionBus, eventBus } from '../actions'
 import {
   addDataProvider,
   clearDataProviders,

@@ -1,9 +1,6 @@
+import { EventAction } from '../../../services/actions/interfaces'
+import { EventEmitter, IEventEmitter } from '../../../services/common'
 import { debugIf } from '../../../services/common/logging'
-import {
-  EventAction,
-  EventEmitter,
-  IEventEmitter,
-} from '../../../services/events'
 import { ROUTE_EVENTS } from '../../../services/routing'
 import {
   AudioInfo,

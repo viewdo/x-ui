@@ -15,4 +15,4 @@ Topic: `data`
 
 ### `register-provider`
 
-Register a new data-provider. See [Data Providers](/data/providers) for more information.
+This action registers a custom data-provider.

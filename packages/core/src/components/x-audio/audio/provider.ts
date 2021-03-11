@@ -1,8 +1,8 @@
+import { EventEmitter } from '../../../services/common/emitter'
 import {
   DATA_EVENTS,
   IDataProvider,
 } from '../../../services/data/interfaces'
-import { EventEmitter } from '../../../services/events/emitter'
 import { AudioActionListener } from './actions'
 import { AudioType } from './interfaces'
 

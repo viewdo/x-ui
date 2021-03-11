@@ -4,10 +4,9 @@
     purposes.</p>
   <x-action-activator activate="OnElementEvent"
     target-element="#name"
-    target-event="change">
-    <x-action topic="data"
-      command="set-data"
-      data='{"provider": "storage"}'> </x-action>
+    target-event="blur">
+    <x-action topic="storage"
+      command="set-data"> </x-action>
 
     <div class="form-floating mb-3">
       <input type="text"

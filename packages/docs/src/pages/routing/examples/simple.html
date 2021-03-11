@@ -33,7 +33,7 @@
     </style>
     <!-- Experience UI -->
     <script type="module"
-      src="/dist/x-ui.esm.js"></script>
+      src="/js/dist/x-ui.esm.js"></script>
     <!--
           HIYA! Right-click to save this file locally.  Uncomment the script
           reference below, and remove the one above.
@@ -48,16 +48,16 @@
       root="/pages/routing/examples/simple.html#">
       <nav class="nav d-flex flex-row">
         <x-app-link class="nav-link"
-          href="/home"
+          href="home"
           exact
           active-class="active"> Home </x-app-link>
         <x-app-link class="nav-link"
-          href="/about"
+          href="about"
           active-class="active"> About </x-app-link>
       </nav>
 
       <div class="container">
-        <x-app-view url="/home"
+        <x-app-view url="home"
           page-title="Home">
           <h1>Home</h1>
           <hr />
@@ -67,7 +67,7 @@
             <p>Now you have a basic content router.</p>
           </div>
         </x-app-view>
-        <x-app-view url="/about"
+        <x-app-view url="about"
           page-title="About"
           x-cloak>
           <h1>About</h1>

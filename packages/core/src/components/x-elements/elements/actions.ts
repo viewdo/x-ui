@@ -1,10 +1,11 @@
 import { MockWindow } from '@stencil/core/mock-doc'
-import { commonState, debugIf } from '../../../services/common'
 import {
   EventAction,
   IEventActionListener,
-  IEventEmitter,
-} from '../../../services/events'
+} from '../../../services/actions'
+import { IEventEmitter } from '../../../services/common/interfaces'
+import { debugIf } from '../../../services/common/logging'
+import { commonState } from '../../../services/common/state'
 import { ELEMENTS_COMMANDS, ELEMENTS_TOPIC } from './interfaces'
 
 export class ElementsActionListener implements IEventActionListener {

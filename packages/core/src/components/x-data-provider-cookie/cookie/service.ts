@@ -1,9 +1,9 @@
+import { IEventEmitter } from '../../../services/common/interfaces'
 import {
   DATA_EVENTS,
   IDataMutator,
   IDataProvider,
 } from '../../../services/data/interfaces'
-import { IEventEmitter } from '../../../services/events/interfaces'
 import { getCookie, setCookie } from './utils'
 
 export class CookieService implements IDataProvider, IDataMutator {

@@ -5,7 +5,7 @@ import {
   actionBus,
   EventAction,
   eventBus,
-} from '../../services/events'
+} from '../../services/actions'
 import { XAction } from '../x-action/x-action'
 import { XActionActivator } from './x-action-activator'
 

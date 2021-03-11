@@ -7,13 +7,13 @@ import {
   Prop,
   State,
 } from '@stencil/core'
-import { debugIf, warn } from '../../services/common'
 import {
   ActionActivationStrategy,
   actionBus,
   EventAction,
   IActionElement,
-} from '../../services/events'
+} from '../../services/actions'
+import { debugIf, warn } from '../../services/common'
 
 /**
  * This element defines how and when a group of child Actions are

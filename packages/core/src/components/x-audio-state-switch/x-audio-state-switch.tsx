@@ -1,7 +1,7 @@
 import { Component, h, Host, Prop, State } from '@stencil/core'
+import { eventBus } from '../../services/actions'
 import { getDataProvider } from '../../services/data/factory'
 import { IServiceProvider } from '../../services/data/interfaces'
-import { eventBus } from '../../services/events'
 import {
   AUDIO_EVENTS,
   AUDIO_TOPIC,

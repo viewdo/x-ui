@@ -2,6 +2,7 @@ jest.mock('../../services/data/evaluate.worker')
 jest.mock('../../services/common/logging')
 
 import { newSpecPage } from '@stencil/core/testing'
+import { actionBus, eventBus } from '../../services/actions'
 import {
   contentStateDispose,
   contentStateReset,
@@ -12,25 +13,31 @@ import {
 } from '../../services/data/factory'
 import { DATA_EVENTS } from '../../services/data/interfaces'
 import { InMemoryProvider } from '../../services/data/providers/memory'
-import { dataState } from '../../services/data/state'
-import { actionBus, eventBus } from '../../services/events'
+import {
+  dataState,
+  dataStateDispose,
+  dataStateReset,
+} from '../../services/data/state'
 import { XContent } from './x-content'
 
 describe('x-content', () => {
   let session: InMemoryProvider
-  dataState.enabled = true
+
   beforeEach(() => {
+    jest.resetAllMocks()
     session = new InMemoryProvider()
     addDataProvider('session', session)
     contentStateReset()
+    dataStateReset()
+    dataState.enabled = true
   })
 
   afterEach(() => {
     actionBus.removeAllListeners()
     eventBus.removeAllListeners()
-    jest.resetAllMocks()
     clearDataProviders()
     contentStateDispose()
+    dataStateDispose()
   })
 
   it('renders', async () => {
@@ -152,8 +159,8 @@ describe('x-content', () => {
        </x-content>
     `)
 
-    const html = page.body.querySelector('x-content')
-    html?.removeAttribute('defer-load')
+    const subject = page.body.querySelector('x-content')
+    subject?.removeAttribute('defer-load')
 
     await page.waitForChanges()
 
@@ -167,7 +174,7 @@ describe('x-content', () => {
       </x-content>
     `)
 
-    html?.remove()
+    subject?.remove()
   })
 
   it('renders html conditionally', async () => {
@@ -193,8 +200,8 @@ describe('x-content', () => {
       </x-content>
     `)
 
-    const html = page.body.querySelector('x-content')
-    html?.setAttribute('when', 'true')
+    const subject = page.body.querySelector('x-content')
+    subject?.setAttribute('when', 'true')
 
     await page.waitForChanges()
 
@@ -208,7 +215,7 @@ describe('x-content', () => {
       </x-content>
     `)
 
-    html?.remove()
+    subject?.remove()
   })
 
   it('renders html conditionally, from data expression', async () => {
@@ -216,7 +223,7 @@ describe('x-content', () => {
       components: [XContent],
     })
 
-    page.win.fetch = jest.fn().mockImplementation(() =>
+    page.win.fetch = jest.fn().mockImplementationOnce(() =>
       Promise.resolve({
         ok: true,
         text: () => Promise.resolve(`<h1>HI WORLD!</h1> `),

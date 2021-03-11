@@ -2,7 +2,8 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "jsx": "preserve",
-    "jsxFactory": "h"
+    "jsxFactory": "h",
+    "rootDir": "src"
   },
   "include": ["src", "types/jsx.d.ts"]
 }

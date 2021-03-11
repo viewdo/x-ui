@@ -3,8 +3,8 @@ jest.mock('../../services/data/evaluate.worker')
 jest.mock('./audio/track')
 
 import { newSpecPage } from '@stencil/core/testing'
+import { actionBus, eventBus } from '../../services/actions'
 import { contentStateDispose } from '../../services/content/state'
-import { actionBus, eventBus } from '../../services/events'
 import { XContentReference } from '../x-content-reference/x-content-reference'
 import { audioState, audioStateDispose } from './audio/state'
 import { XAudioPlayer } from './x-audio'

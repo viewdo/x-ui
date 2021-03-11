@@ -2,6 +2,7 @@ jest.mock('../../services/common/logging')
 jest.mock('../../services/data/evaluate.worker')
 
 import { newSpecPage } from '@stencil/core/testing'
+import { eventBus } from '../../services/actions'
 import { addDataProvider } from '../../services/data/factory'
 import { DATA_EVENTS } from '../../services/data/interfaces'
 import { InMemoryProvider } from '../../services/data/providers/memory'
@@ -9,7 +10,6 @@ import {
   dataState,
   dataStateDispose,
 } from '../../services/data/state'
-import { eventBus } from '../../services/events'
 import { XDataDisplay } from './x-data-display'
 
 describe('x-data-display', () => {

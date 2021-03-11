@@ -3,11 +3,11 @@ jest.mock('../../../services/common/logging')
 
 import { MockWindow } from '@stencil/core/mock-doc'
 import { commonState } from '../../../services/common'
+import { EventEmitter } from '../../../services/common/emitter'
 import { addDataProvider } from '../../../services/data/factory'
 import { IDataProvider } from '../../../services/data/interfaces'
 import { dataState } from '../../../services/data/state'
 import { resolveTokens } from '../../../services/data/tokens'
-import { EventEmitter } from '../../../services/events/emitter'
 import { AudioActionListener } from './actions'
 import { AudioDataProvider } from './provider'
 

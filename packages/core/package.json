@@ -16,29 +16,29 @@
     "url": "https://github.com/viewdo/x-ui/issues",
     "email": "tech@view.do"
   },
-  "main": "dist/x-ui.cjs.js",
-  "module": "dist/custom-elements/index.js",
-  "es2015": "dist/esm/index.js",
-  "es2017": "dist/esm/index.js",
-  "types": "dist/types/components.d.ts",
-  "loader": "dist/loader",
-  "collection": "dist/collection/collection-manifest.json",
-  "collection:main": "dist/collection/index.js",
-  "unpkg": "dist/x-ui/x-ui.esm.js",
+  "main": "./dist/x-ui.cjs.js",
+  "module": "./dist/custom-elements/index.js",
+  "es2015": "./dist/esm/index.js",
+  "es2017": "./dist/esm/index.js",
+  "types": "./dist/types/components.d.ts",
+  "loader": "./dist/loader",
+  "collection": "./dist/collection/collection-manifest.json",
+  "collection:main": "./dist/collection/index.js",
+  "unpkg": "./dist/x-ui/x-ui.esm.js",
   "files": [
     "dist/"
   ],
   "scripts": {
     "--- development ---": "---------------",
     "start": "npm run watch",
-    "watch": "stencil build --docs --www --watch",
+    "watch": "stencil build --dev --docs --www --watch",
     "gen": "stencil generate",
     "--- production ---": "---------------",
     "build": "stencil build --docs --dist",
     "build:docs": "stencil build --docs --www",
     "--- test ---": "---------------",
     "test": "stencil test --spec --coverage",
-    "test:watch": "stencil test --spec --watch"
+    "test:watch": "stencil test --dev --spec --watch"
   },
   "dependencies": {},
   "devDependencies": {

@@ -2,8 +2,8 @@ jest.mock('../../../services/common/logging')
 jest.mock('../../../services/data/evaluate.worker')
 
 import { newSpecPage } from '@stencil/core/testing'
+import { actionBus, eventBus } from '../../../services/actions'
 import { contentStateDispose } from '../../../services/content/state'
-import { actionBus, eventBus } from '../../../services/events'
 import { VisitStrategy } from '../../../services/navigation/interfaces'
 import { XActionActivator } from '../../x-action-activator/x-action-activator'
 import { XAction } from '../../x-action/x-action'

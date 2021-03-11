@@ -1,5 +1,9 @@
-import { commonState, debugIf } from '../../../services/common'
-import { EventAction, IEventEmitter } from '../../../services/events'
+import { EventAction } from '../../../services/actions/interfaces'
+import {
+  commonState,
+  debugIf,
+  IEventEmitter,
+} from '../../../services/common'
 import {
   LocationSegments,
   ROUTE_EVENTS,

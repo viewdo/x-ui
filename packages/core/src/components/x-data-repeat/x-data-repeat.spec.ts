@@ -2,6 +2,7 @@ jest.mock('./filter/jsonata.worker')
 jest.mock('../../services/data/evaluate.worker')
 
 import { newSpecPage } from '@stencil/core/testing'
+import { actionBus, eventBus } from '../../services/actions'
 import { contentStateDispose } from '../../services/content'
 import { addDataProvider } from '../../services/data/factory'
 import { DATA_EVENTS } from '../../services/data/interfaces'
@@ -10,7 +11,6 @@ import {
   dataState,
   dataStateDispose,
 } from '../../services/data/state'
-import { actionBus, eventBus } from '../../services/events'
 import { ROUTE_EVENTS } from '../../services/routing'
 import remoteData from './test/data.json'
 import { XDataRepeat } from './x-data-repeat'

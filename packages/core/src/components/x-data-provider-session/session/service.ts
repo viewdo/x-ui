@@ -1,9 +1,9 @@
+import { IEventEmitter } from '../../../services/common'
 import {
   DATA_EVENTS,
   IDataMutator,
   IDataProvider,
 } from '../../../services/data/interfaces'
-import { IEventEmitter } from '../../../services/events'
 
 export class SessionService implements IDataProvider, IDataMutator {
   private readonly sessionStorage!: Storage

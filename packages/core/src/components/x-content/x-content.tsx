@@ -7,13 +7,13 @@ import {
   Prop,
   State,
 } from '@stencil/core'
+import { eventBus } from '../../services/actions'
 import { warn } from '../../services/common'
 import { replaceHtmlInElement } from '../../services/content/elements'
 import { resolveRemoteContent } from '../../services/content/remote'
 import { resolveChildElementXAttributes } from '../../services/data/elements'
 import { evaluatePredicate } from '../../services/data/expressions'
 import { DATA_EVENTS } from '../../services/data/interfaces'
-import { eventBus } from '../../services/events'
 import { RouterService, ROUTE_EVENTS } from '../../services/routing'
 
 /**
