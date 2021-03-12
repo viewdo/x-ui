@@ -23,9 +23,9 @@ describe('x-app-view', () => {
         <x-app-view url='/'>
         </x-app-view>
        </x-app>`,
-      autoApplyChanges: true,
     })
 
+    await page.waitForChanges()
     expect(page.root).toEqualHtml(`
       <x-app>
         <x-app-view class="active-route active-route-exact" url="/">
@@ -185,8 +185,9 @@ describe('x-app-view', () => {
       </x-app-view>
     </x-app>
     `,
-      autoApplyChanges: true,
     })
+
+    await page.waitForChanges()
 
     const views = page.body.querySelectorAll('x-app-view')
 
