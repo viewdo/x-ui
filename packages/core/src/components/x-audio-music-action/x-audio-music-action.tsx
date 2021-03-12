@@ -11,7 +11,6 @@ import {
   EventAction,
   IActionElement,
 } from '../../services/actions'
-import { warn } from '../../services/common'
 import { AudioType, AUDIO_TOPIC } from '../x-audio/audio/interfaces'
 
 /**
@@ -77,19 +76,7 @@ export class XAudioMusicAction implements IActionElement {
     }
   }
 
-  private get parent(): HTMLXActionActivatorElement {
-    return this.el.closest('x-action-activator')!
-  }
-
-  componentWillLoad() {
-    if (this.parent === undefined) {
-      warn(
-        'The x-audio-music-action component must be wrapped with an x-action-activator component to work.',
-      )
-    }
-  }
-
   render() {
-    return <Host hidden></Host>
+    return <Host></Host>
   }
 }

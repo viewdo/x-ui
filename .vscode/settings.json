@@ -58,7 +58,7 @@
     "webm",
     "youtube"
   ],
-  "liveServer.settings.port": 5000,
+  "liveServer.settings.port": 5001,
   "editor.codeActionsOnSave": {
     "source.fixAll.markdownlint": true,
     "source.organizeImports": true,

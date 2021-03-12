@@ -1,5 +1,12 @@
-import { Component, Element, h, Host, Prop } from '@stencil/core'
-import { actionBus } from '../../services/actions'
+import {
+  Component,
+  Element,
+  h,
+  Host,
+  Method,
+  Prop,
+} from '@stencil/core'
+import { actionBus, EventAction } from '../../services/actions'
 import {
   AudioType,
   AUDIO_TOPIC,
@@ -51,7 +58,18 @@ export class XAudioSoundLoad {
    */
   @Prop() track = false
 
-  private getAction() {
+  /**
+   * If set, disables auto-rendering of this instance.
+   * To fetch the contents change to false or remove
+   * attribute.
+   */
+  @Prop({ mutable: true }) deferLoad = false
+
+  /**
+   * Get the underlying actionEvent instance.
+   */
+  @Method()
+  public async getAction(): Promise<EventAction<any> | null> {
     return {
       topic: AUDIO_TOPIC,
       command: this.mode || LoadStrategy.Load,
@@ -67,11 +85,24 @@ export class XAudioSoundLoad {
     }
   }
 
-  componentDidLoad() {
+  /**
+   * Send this action to the the action messaging system.
+   */
+  @Method()
+  async sendAction(data?: Record<string, any>) {
+    const action = await this.getAction()
+    if (action) {
+      if (data) Object.assign(action.data, data)
+      actionBus.emit(action.topic, action)
+    }
+  }
+
+  componentWillRender() {
+    if (this.deferLoad) return
     actionBus.emit(AUDIO_TOPIC, this.getAction())
   }
 
   render() {
-    return <Host hidden></Host>
+    return <Host></Host>
   }
 }

@@ -1,6 +1,6 @@
-# view.DO Experience UI
+# view.DO Elements
 
-![Pre-Release](https://via.placeholder.com/728x50/2d8dc9/FFFFFF?text=PREVIEW+RELEASE:ALPHA+0.2)
+![Pre-Release](https://via.placeholder.com/728x50/2d8dc9/FFFFFF?text=PREVIEW+RELEASE:ALPHA+0.3)
 
 ![MIT](https://badgen.net/github/license/viewdo/x-ui?icon=github)
 ![size](https://badgen.net/badgesize/normal/file-url/unpkg.com/@viewdo/x-ui/dist/x-ui/x-ui.esm.js?icon=sourcegraph&color=blue)
@@ -14,17 +14,60 @@
 [![jsdelivr](https://badgen.net/badge/jsdelivr/CDN?icon=jsdelivr&color=blue)](https://cdn.jsdelivr.net/npm/@viewdo/x-ui/+esm)
 [![unpkgd](https://badgen.net/badge/unpkg/CDN)](https://unpkg.com/browse/@viewdo/x-ui)
 
-## Experience UI is a suite of custom HTML elements that turns a static HTML file into single-page web-experiences
+These elements encapsulate application functionality using HTML-like elements. This approach keeps the semantics of a web application declarative and 'semi-mono-linguistic'.
 
-### HTML-Only Applications
+> The goal of this project is to empower the next generation of personalized, interactive web-experiences with less friction and less semantic-diversion.
 
-Add features once only possible with JavaScript and complex frameworks to static HTML. These utility components (elements) allow HTML to perform heroic tasks, like remote content, re-usable partials, URL routing (within a single page!), smooth refresh-less navigation between pages, animated transitions, guided navigation, workflows, data-binding, dynamic content, declarative actions and more!
+## Application Functionality, Expressed in HTML
 
-All with no complex build or generation process, and most of the time, no scripting.
+Declarative applications are more deterministic and easier to understand for more levels of expertise. These components are segmented into option sub-systems to only require what you need:
 
-### Installation
+### Actions: Declarative Functions \<x-action-\*\>
 
-Throw this reference tag into your HTML page's head so the browser can figure out how to interpret our elements -- and that's it.
+- Declared Reactive Actions
+- Async Functions
+
+### Routing \<x-app-view\*\>
+
+- URL/Hash-based Routing (within a single page!)
+- Fast, SPA-like navigation between pages
+- Guided navigation, wizards & workflows
+
+### Navigation: \<x-app-view-do\>
+
+- Guided Navigation
+- Media-Timed Actions
+- Interactive Video
+- Reactive Audio
+
+### Data: Expression Evaluation & Binding \<x-data-\*\>
+
+- Data-Template Rendering
+- Data-driven Rule Evaluation for Navigation
+
+### Content: Dynamic Content Rendering \<x-content-\*\>
+
+- Deferred Content
+- Markdown Rendering
+- Remote HTML
+
+### UI: Interface Management \<x-ui-\*\>
+
+- Theme Management
+- UI Component Integrations
+
+### Elements: DOM Manipulation \<x-elements\>
+
+- HTML Manipulation w/ Declared Actions
+- "JQuery as an Async Tag"
+
+## Installation
+
+Add a single script-reference tag into your HTML page's head so the browser can figure out how to interpret our elements -- and that's it.
+
+> This is a pre-release project and is subject to breaking-changes and incomplete features. Thank you for trying it out!
+
+### CDN
 
 ```html
 <head>
@@ -37,40 +80,60 @@ Throw this reference tag into your HTML page's head so the browser can figure ou
 </head>
 ```
 
-Now you can use any of the application components we built to make your pages function like an application.
+NPM
 
-### No Scripting Skills Needed
+```bash
+npm i @viewdo/x-ui
+```
 
-Expressing functionality declaratively has been the vision for most frameworks for years now. Frameworks like Blazor and React edge closer towards that goal, but much of the setup and decisions around tooling is complex on its own. This can be a huge barrier for many that just want to make a website.
+```html
+<head>
+  ...
+  <script
+    type="module"
+    src="~/node_modules/@viewdo/x-ui/dist/x-ui/x-ui.esm.js"
+  ></script>
+  ....
+</head>
+```
 
-Declarative semantics are more approachable for non-developers. In fact, it is designers who push the limits of the web, creating designs developers never thought possible with just CSS and HTML.
+### Learn More
 
-> These components strive to enable creators from diverse backgrounds and skill-sets to create robust experiences, using the semantics they already understand.
-
-Functionality is easier to express _and_ understand when it's format is declarative. Conversely, scripting languages like JavaScript are imperative by nature and take more time to grok and more systems to learn.
-
-If you like it, give it a star on GitHub:
-
-[![github](https://badgen.net/badge/github/★?icon=github&color=blue)](https://github.com/viewdo/x-ui)
-
-If you hate it, or just want to send feedback use the discussion in github or send me a direct message:
-
-[![Twitter](https://badgen.net/badge/tweet/me?icon=twitter&color=blue)](https://twitter.com/logrythmik)
-[![Gitter](https://badgen.net/badge/chat/with%20me%20on%20gitter?icon=gitter)](https://gitter.im/viewdo/x-ui)
-
-> DISCLAIMER: This is a prerelease project and is subject to breaking changes and incomplete features.
-
-## Learn More
-
-The best way to see what these components can do for your HTML is taking a look at the documentation/demo pages. The site is built using these components as a single HTML file with partials pulled in as-needed.
+The best way to see what these elements can do for your HTML is to take a look at the documentation/demo. The site is built using these elements as a single HTML file with partials pulled in, as-needed.
 
 [![Take a Tour](https://badgen.net/badge/@viewdo/x-ui:%20demo?color=blue)](https://demo.x-ui.dev)
 
+## Contact
+
+If you like the idea, join us! Or give it a star.
+
+[![github](https://badgen.net/badge/github/★?icon=github&color=blue)](https://github.com/viewdo/x-ui)
+
+If you have requests, ideas or feedback, join the discussion on Gitter:
+
+[![Gitter](https://badgen.net/badge/chat/with%20me%20on%20gitter?icon=gitter)](https://gitter.im/viewdo/x-ui)
+
+Reach out to me personally:
+
+[![Twitter](https://badgen.net/badge/tweet/me?icon=twitter&color=blue)](https://twitter.com/logrythmik)
+
+## Contributions
+
 ### Built on the shoulders of giants!
 
-Thank you to the Ionic team and their fabulous [**Stencil.js** SDK](https://stenciljs.com) for the best way to build lightening fast, native web-components. Also, shout-out to the creators and contributors to all open-source efforts, but especially to the libraries we love and used:
+Thank you to the Ionic team and their fabulous [**Stencil.js** SDK](https://stenciljs.com) for the best way to build lightening fast, native elements.
 
-- **howler.js**: [howler-js](https://github.com/goldfire/howler.js) best audio library for managing audio files
+Also, thank you to the creators and contributors to all open-source efforts, but especially to the libraries we love and use in our plugin components:
+
+#### Data [x-data]
+
 - **SilentMatt**: [expression evaluator](https://github.com/silentmatt/expr-eval) for a declarative expression parser
 - **JSONata**: [JSONata](https://jsonata.org/) another declarative approach for solving problems, this uses expressions to query JSON.
+
+#### Audio [x-audio]
+
+- **howler.js**: [howler-js](https://github.com/goldfire/howler.js) best audio library for managing audio files
+
+#### Markdown [x-content-markdown]
+
 - **remarkable**: [remarkable](https://jonschlinkert.github.io/remarkable/demo/) Ridiculously fast markdown to HTML processing.

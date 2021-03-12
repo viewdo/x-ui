@@ -11,7 +11,6 @@ import {
   EventAction,
   IActionElement,
 } from '../../services/actions'
-import { warn } from '../../services/common/logging'
 import {
   AudioType,
   AUDIO_COMMANDS,
@@ -75,19 +74,7 @@ export class XAudioSoundAction implements IActionElement {
     }
   }
 
-  private get parent(): HTMLXActionActivatorElement {
-    return this.el.closest('x-action-activator')!
-  }
-
-  componentWillLoad() {
-    if (this.parent === undefined) {
-      warn(
-        'The x-audio-sound-action component must be wrapped with an x-action-activator component to work.',
-      )
-    }
-  }
-
   render() {
-    return <Host hidden></Host>
+    return <Host></Host>
   }
 }
