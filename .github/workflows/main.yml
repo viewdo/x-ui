@@ -79,19 +79,19 @@ jobs:
         with:
           node-version: 14.5.0
       - run: yarn
-      - run: yarn build
-      - run: XUI_VERSION=$(npm version patch) >> $GITHUB_ENV
+      - run: yarn build:docs
+      - run: VERSION=$(npm version patch) >> $GITHUB_ENV
         working-directory: packages/core
       #- run: npm publish
       #  working-directory: packages/core
       #  env:
       #    NODE_AUTH_TOKEN: ${{secrets.NPM_PUBLISH}}
-      - name: Bump version and push tag
-        id: tag_version
-        uses: mathieudutour/github-tag-action@v5.3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          custom_tag: ${{ env.XUI_VERSION }}
+      # - name: Bump version and push tag
+      #   id: tag_version
+      #   uses: mathieudutour/github-tag-action@v5.3
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     custom_tag: ${{ env.XUI_VERSION }}
       #- name: Push to Docker Hub
       #  uses: docker/build-push-action@v2
       #  with:
@@ -99,14 +99,14 @@ jobs:
       #    password: ${{ secrets.DOCKER_PASSWORD }}
       #    repository: viewdo/x-ui-docs
       #    tag_with_ref: true
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ steps.tag_version.outputs.new_tag }}
-          release_name: Release ${{ steps.tag_version.outputs.new_tag }}
-          body: ${{ steps.tag_version.outputs.changelog }}
-          prerelease: true
-          draft: true
+      #- name: Create Release
+      #  id: create_release
+      #  uses: actions/create-release@v1
+      #  env:
+      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #  with:
+      #    tag_name: ${{ steps.tag_version.outputs.new_tag }}
+      #    release_name: Release ${{ steps.tag_version.outputs.new_tag }}
+      #    body: ${{ steps.tag_version.outputs.changelog }}
+      #    prerelease: true
+      #    draft: true

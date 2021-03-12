@@ -17,29 +17,6 @@ const config: Config = {
     {
       type: 'dist',
       esmLoaderPath: 'loader',
-      empty: true,
-    },
-    {
-      type: 'www',
-      dir: '../../docs',
-      buildDir: 'js/dist',
-      empty: false,
-      copy: [
-        {
-          src: 'components/**/*.{md,html}',
-          dest: 'pages',
-          keepDirStructure: true,
-        },
-        {
-          src: 'services/**/*.{md,html}',
-          dest: 'pages',
-          keepDirStructure: true,
-        },
-        {
-          src: '../dist/collection/components.json',
-          dest: 'assets/components.json',
-        },
-      ],
     },
     {
       type: 'dist-custom-elements-bundle',
@@ -64,10 +41,6 @@ const config: Config = {
       file: 'dist/collection/components.json',
     },
   ],
-}
-
-if (config.devMode) {
-  config.rollupPlugins!.after = []
 }
 
 export { config }

@@ -56,13 +56,37 @@ If audio has replay set to true, re-entry to the originating state will re-activ
 
 ## Properties
 
-| Property               | Attribute  | Description                                                                                                 | Type                                                                    | Default                 |
-| ---------------------- | ---------- | ----------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------- |
-| `discard`              | `discard`  | The discard strategy the player should use for this file.                                                   | `DiscardStrategy.Next \| DiscardStrategy.None \| DiscardStrategy.Route` | `DiscardStrategy.Route` |
-| `mode`                 | `mode`     | This is the topic this action-command is targeting.                                                         | `LoadStrategy.Load \| LoadStrategy.Play \| LoadStrategy.Queue`          | `LoadStrategy.Load`     |
-| `src` _(required)_     | `src`      | The path to the audio-file.                                                                                 | `string`                                                                | `undefined`             |
-| `track`                | `track`    | Set this attribute to have the audio file tracked in session effectively preventing it from playing again.. | `boolean`                                                               | `false`                 |
-| `trackId` _(required)_ | `track-id` | The identifier for this music track                                                                         | `string`                                                                | `undefined`             |
+| Property               | Attribute    | Description                                                                                                  | Type                                                                    | Default                 |
+| ---------------------- | ------------ | ------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------- | ----------------------- |
+| `deferLoad`            | `defer-load` | If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute. | `boolean`                                                               | `false`                 |
+| `discard`              | `discard`    | The discard strategy the player should use for this file.                                                    | `DiscardStrategy.Next \| DiscardStrategy.None \| DiscardStrategy.Route` | `DiscardStrategy.Route` |
+| `mode`                 | `mode`       | This is the topic this action-command is targeting.                                                          | `LoadStrategy.Load \| LoadStrategy.Play \| LoadStrategy.Queue`          | `LoadStrategy.Load`     |
+| `src` _(required)_     | `src`        | The path to the audio-file.                                                                                  | `string`                                                                | `undefined`             |
+| `track`                | `track`      | Set this attribute to have the audio file tracked in session effectively preventing it from playing again..  | `boolean`                                                               | `false`                 |
+| `trackId` _(required)_ | `track-id`   | The identifier for this music track                                                                          | `string`                                                                | `undefined`             |
+
+
+## Methods
+
+### `getAction() => Promise<EventAction<any> | null>`
+
+Get the underlying actionEvent instance.
+
+#### Returns
+
+Type: `Promise<EventAction<any> | null>`
+
+
+
+### `sendAction(data?: Record<string, any> | undefined) => Promise<void>`
+
+Send this action to the the action messaging system.
+
+#### Returns
+
+Type: `Promise<void>`
+
+
 
 
 ----------------------------------------------

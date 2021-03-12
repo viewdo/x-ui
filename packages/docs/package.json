@@ -7,12 +7,9 @@
     "--- development ---": "---------------",
     "start": "stencil build --dev --watch --serve",
     "start:sw": "stencil build --dist --watch --serve",
-    "generate": "stencil generate",
+    "new": "stencil generate",
     "--- production ---": "---------------",
-    "build": "stencil build",
-    "--- test ---": "---------------",
-    "test": "stencil test --spec",
-    "test.watch": "stencil test --spec --watchAll"
+    "build": "stencil build --www"
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^4.0.2",

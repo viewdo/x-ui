@@ -9,6 +9,7 @@ describe('x-app', () => {
   afterEach(() => {
     actionBus.removeAllListeners()
     eventBus.removeAllListeners()
+    jest.resetAllMocks()
   })
 
   it('renders and displays cloaked content', async () => {

@@ -312,9 +312,17 @@ export namespace Components {
     }
     interface XAudioMusicLoad {
         /**
+          * If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.
+         */
+        "deferLoad": boolean;
+        /**
           * The discard strategy the player should use for this file.
          */
         "discard": DiscardStrategy;
+        /**
+          * Get the underlying actionEvent instance.
+         */
+        "getAction": () => Promise<EventAction<any> | null>;
         /**
           * Set this to true to have the audio file loop.
          */
@@ -323,6 +331,10 @@ export namespace Components {
           * This is the topic this action-command is targeting.
          */
         "mode": LoadStrategy;
+        /**
+          * Send this action to the the action messaging system.
+         */
+        "sendAction": (data?: Record<string, any> | undefined) => Promise<void>;
         /**
           * The path to the audio-file.
           * @required
@@ -361,13 +373,25 @@ export namespace Components {
     }
     interface XAudioSoundLoad {
         /**
+          * If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.
+         */
+        "deferLoad": boolean;
+        /**
           * The discard strategy the player should use for this file.
          */
         "discard": DiscardStrategy;
         /**
+          * Get the underlying actionEvent instance.
+         */
+        "getAction": () => Promise<EventAction<any> | null>;
+        /**
           * This is the topic this action-command is targeting.
          */
         "mode": LoadStrategy;
+        /**
+          * Send this action to the the action messaging system.
+         */
+        "sendAction": (data?: Record<string, any> | undefined) => Promise<void>;
         /**
           * The path to the audio-file.
          */
@@ -1096,6 +1120,10 @@ declare namespace LocalJSX {
     }
     interface XAudioMusicLoad {
         /**
+          * If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.
+         */
+        "deferLoad"?: boolean;
+        /**
           * The discard strategy the player should use for this file.
          */
         "discard"?: DiscardStrategy;
@@ -1136,6 +1164,10 @@ declare namespace LocalJSX {
         "value"?: string | boolean | number;
     }
     interface XAudioSoundLoad {
+        /**
+          * If set, disables auto-rendering of this instance. To fetch the contents change to false or remove attribute.
+         */
+        "deferLoad"?: boolean;
         /**
           * The discard strategy the player should use for this file.
          */

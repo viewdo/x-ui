@@ -30,12 +30,11 @@
   ],
   "scripts": {
     "--- development ---": "---------------",
-    "start": "npm run watch",
-    "watch": "stencil build --dev --docs --www --watch",
-    "gen": "stencil generate",
+    "watch": "stencil build -c stencil.config.docs.ts --watch",
+    "new": "stencil generate",
     "--- production ---": "---------------",
-    "build": "stencil build --docs --dist",
-    "build:docs": "stencil build --docs --www",
+    "build": "stencil build",
+    "build:docs": "stencil build -c stencil.config.docs.ts",
     "--- test ---": "---------------",
     "test": "stencil test --spec --coverage",
     "test:watch": "stencil test --dev --spec --watch"
