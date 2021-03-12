@@ -12,6 +12,7 @@
     "arrify",
     "automerge",
     "browserslist",
+    "commitlint",
     "cview",
     "delimeters",
     "doctoc",
@@ -37,9 +38,12 @@
     "onloaderror",
     "onplayerror",
     "paren",
+    "pinst",
     "playsinline",
     "plusplus",
     "ponicode",
+    "popperjs",
+    "postpublish",
     "preconnect",
     "predeploy",
     "prepages",
@@ -160,4 +164,5 @@
     "titleBar.inactiveForeground": "#e7e7e799"
   },
   "peacock.remoteColor": "#1857a4",
+  "liveServer.settings.root": "./packages/core/coverage",
 }
