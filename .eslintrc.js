@@ -1,6 +1,7 @@
 module.exports = {
   parserOptions: {
-    project: "./tsconfig.json"
+    project: "./tsconfig.json",
+    ecmaVersion: 2017
   },
   extends: [
     "plugin:@stencil/recommended"
