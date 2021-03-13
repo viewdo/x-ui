@@ -1,6 +1,6 @@
 {
   "name": "@viewdo/x-ui",
-  "version": "0.2.1",
+  "version": "0.3.1",
   "description": "view.DO <x-ui/>",
   "author": "view.DO Tech <tech@view.do> (https://view.do)",
   "homepage": "https://x-ui.dev",
@@ -39,7 +39,6 @@
     "test": "stencil test --spec --coverage",
     "test:watch": "stencil test --dev --spec --watch"
   },
-  "dependencies": {},
   "devDependencies": {
     "@stencil/core": "2.4.0",
     "@stencil/sass": "1.4.1",
