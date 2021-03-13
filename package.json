@@ -41,7 +41,7 @@
     "ws:docs": "yarn workspace docs",
     ":auto ---": "------------",
     "prepare": "husky install",
-    "prepublishOnly": "pinst --disable",
+    "prepublishOnly": "pinst --disable && cp README.md ./packages/core",
     "postpublish": "pinst --enable"
   },
   "devDependencies": {
