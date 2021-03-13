@@ -42,7 +42,7 @@
     ":auto ---": "------------",
     "prepare": "husky install",
     "prepublishOnly": "pinst --disable && cp README.md ./packages/core",
-    "postpublish": "pinst --enable"
+    "postpublish": "pinst --enable && rm ./packages/core/README.md"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "12.0.1",
