@@ -37,9 +37,7 @@ describe('x-audio', () => {
     await page.waitForChanges()
     expect(page.root).toEqualHtml(`
     <x-audio hidden="">
-      <mock:shadow-root>
       <x-content-reference script-src="https://cdn.jsdelivr.net/npm/howler@2.2.1/dist/howler.core.min.js"></x-content-reference>
-      </mock:shadow-root>
     </x-audio>
     `)
   })
@@ -53,9 +51,7 @@ describe('x-audio', () => {
 
     expect(page.root).toEqualHtml(`
     <x-audio hidden="">
-      <mock:shadow-root>
         <x-content-reference script-src="https://cdn.jsdelivr.net/npm/howler@2.2.1/dist/howler.core.min.js"></x-content-reference>
-      </mock:shadow-root>
     </x-audio>
     `)
 
