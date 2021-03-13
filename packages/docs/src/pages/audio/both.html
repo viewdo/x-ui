@@ -63,13 +63,13 @@
       <b>&lt;x-audio-sound-action&gt;</b>
     </a> elements with their command and track-id. </p>
   <p>
-    <x-action-activator activate="OnElementEvent">
+    <x-action-activator activate="on-element-event">
       <x-audio-sound-action command="start"
         track-id="cheer"></x-audio-sound-action>
       <button class="btn btn-info text-white">
         <i class="ri-play-circle-line"></i> Play Sound </button>
     </x-action-activator>
-    <x-action-activator activate="OnElementEvent">
+    <x-action-activator activate="on-element-event">
       <x-audio-music-action command="start"
         track-id="music"> </x-audio-music-action>
       <button type="button"
@@ -92,11 +92,11 @@
     <x-content-markdown>
       <script type="text/markdown">
         ```html
-        <x-action-activator activate="OnElementEvent">
+        <x-action-activator activate="on-element-event">
           <x-audio-sound-action command="start" track-id="cheer"> </x-audio-sound-action>
           <button class="btn btn-info text-white">Play Sound</button>
         </x-action-activator>
-        <x-action-activator activate="OnElementEvent">
+        <x-action-activator activate="on-element-event">
           <x-audio-music-action command="start" track-id="music"> </x-audio-music-action>
           <button type="button" class="btn btn-info text-white">Play Music</button>
         </x-action-activator>

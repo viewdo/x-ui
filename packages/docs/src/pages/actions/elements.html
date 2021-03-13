@@ -38,7 +38,7 @@
   <h3>Wrapped Input</h3>
   <p>Action argument data can come from inputs, by wrapping the inputs inside
     the activator tag.</p>
-  <x-action-activator activate="OnElementEvent"
+  <x-action-activator activate="on-element-event"
     target-element="#send">
     <x-action topic="interface"
       command="log"> </x-action>
@@ -58,7 +58,7 @@
   <x-content-markdown>
     <script type="text/markdown">
       ```html
-      <x-action-activator activate="OnElementEvent" target-element="#send">
+      <x-action-activator activate="on-element-event" target-element="#send">
         <x-action topic="interface" command="log"> </x-action>
         <div class="input-group">
           <input id="message" value="I am message you can change!" class="form-control" />
@@ -73,7 +73,7 @@
   <h3>Wrapped Form</h3>
   <p>An action's data can be entirely derived from a form collection of inputs.
   </p>
-  <x-action-activator activate="OnElementEvent"
+  <x-action-activator activate="on-element-event"
     target-element="#send3">
     <x-action topic="interface"
       command="log"> </x-action>
@@ -106,7 +106,7 @@
   <x-content-markdown>
     <script type="text/markdown">
       ```html
-      <x-action-activator activate="OnElementEvent" target-element="#send3">
+      <x-action-activator activate="on-element-event" target-element="#send3">
         <x-action topic="interface" command="log"> </x-action>
         <div class="form-group mt-1">
           <label for="email">Email</label>
@@ -132,7 +132,7 @@
   <h3>Unwrapped Activator</h3>
   <p>This example shows an action that is activated by a button somewhere else
     on the page.</p>
-  <x-action-activator activate="OnElementEvent"
+  <x-action-activator activate="on-element-event"
     target-element="#button4"
     target-event="click">
     <x-action topic="interface"
@@ -144,7 +144,7 @@
   <x-content-markdown>
     <script type="text/markdown">
       ```html
-      <x-action-activator activate="OnElementEvent" target-element="#button4" target-event="click">
+      <x-action-activator activate="on-element-event" target-element="#button4" target-event="click">
         <x-action topic="interface" command="log" data-message="You clicked an unwrapped button."> </x-action>
       </x-action-activator>
       <button class="btn btn-info text-white" id="button4">Not Wrapped</button>
@@ -154,7 +154,7 @@
   <h3>Unwrapped Activator, Wrapped Data</h3>
   <p>This example shows an action that is activated by a button somewhere else
     on the page.</p>
-  <x-action-activator activate="OnElementEvent"
+  <x-action-activator activate="on-element-event"
     target-element="#button5"
     target-event="click">
     <x-action topic="interface"
@@ -173,7 +173,7 @@
   <x-content-markdown>
     <script type="text/markdown">
       ```html
-      <x-action-activator activate="OnElementEvent" target-element="#button5" target-event="click">
+      <x-action-activator activate="on-element-event" target-element="#button5" target-event="click">
         <x-action topic="interface" command="log" data-message="You clicked an unwrapped button."> </x-action>
         <x-action topic="interface" command="dir" data-inline="An inline value">
           <input type="hidden" name="input" value="A hidden input value" />

@@ -6,7 +6,8 @@ This component converts markdown text to HTML. It can render from an inline-temp
 
 ```html
 <!-- Simply set the `src` attribute and win -->
-<x-content-markdown src='https://example.com/markdown.md'>
+<x-content-markdown 
+  src='https://example.com/markdown.md'>
 </x-content-markdown>
 ```
 
@@ -31,7 +32,7 @@ This component can optionally render data-tokens directly without the need for t
 ```html
 <!-- Do not set the `src` attribute -->
 <x-content-markdown resolve-tokens>
-  <!-- Write your markdown inside a `<script type='text/markdown'>` tag -->
+  <!-- Write your markdown -->
   <script type='text/markdown'>
     # **This** is a value from session: {{session:name}}
   </script>
@@ -43,7 +44,11 @@ This component can optionally render data-tokens directly without the need for t
 When using this component, you may want to delay the fetch until the content is needed. The **defer-load** attribute will prevent the HTML from being fetched until that attribute is removed.
 
 ```html
-<x-content-markdown id='markdown' src='<url-to-html>' defer-load> </x-content-markdown>
+<x-content-markdown 
+  id='markdown' 
+  src='<url-to-html>' 
+  defer-load> 
+</x-content-markdown>
 ```
 
 You can remove the attribute programmatically to force the fetch:
@@ -57,27 +62,8 @@ Or, just include it in one of the components [\<x-app-view\>](/components/x-app-
 
 ## Styling
 
-By default, there is no styling. The HTML is rendered to the page without styles. For basic styles, you can include the Marked.js css file in the head:
+By default, there is no styling. The HTML is rendered to the page without styles. For basic styles, you can include the Marked.js css file in the head
 
-```html
-<head>
-  <link
-    rel='stylesheet'
-    href='https://cdn.jsdelivr.net/gh/sindresorhus/github-markdown-css@4/github-markdown.min.css'
-  />
-</head>
-```
-
-### Code Styling
-
-```html
-<head>
-  <script src='https://cdn.jsdelivr.net/gh/PrismJS/prism@1/prism.min.js' data-manual=''></script>
-  <script src='https://cdn.jsdelivr.net/gh/PrismJS/prism@1/plugins/autoloader/prism-autoloader.min.js'></script>
-
-  <link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/PrismJS/prism@1/themes/prism.min.css' />
-</head>
-```
 
 <!-- Auto Generated Below -->
 

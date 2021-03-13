@@ -1,4 +1,4 @@
-# x-ui-theme
+# X-UI-THEME
 
 The `<x-ui-theme>` component checks for the preferred light/dark theme preference of the
 user and sets the interface state: theme, accordingly.
@@ -14,19 +14,29 @@ to gives users control of which theme should be applied.
 ### Standard
 
 ```html
-<x-ui-theme></x-ui-theme>
+<x-ui>
+  <x-ui-theme>    
+  </x-ui-theme>
+</x-ui>
 ```
 
 ### No Changes
 
 ```html
-<x-ui-theme skip-class></x-ui-theme>
+<x-ui>
+  <x-ui-theme skip-class>    
+  </x-ui-theme>
+</x-ui>
 ```
 
 ### Custom Dark Class
 
 ```html
-<x-ui-theme dark-class='midnight'></x-ui-theme>
+<x-ui>
+  <x-ui-theme 
+    dark-class='midnight'>
+  </x-ui-theme>
+</x-ui>
 ```
 
 <!-- Auto Generated Below -->

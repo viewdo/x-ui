@@ -112,7 +112,8 @@ export class XAppView {
    * Cross Origin Mode if the content is pulled from
    * a remote location
    */
-  @Prop() mode: RequestMode = 'cors'
+  @Prop() mode: 'cors' | 'navigate' | 'no-cors' | 'same-origin' =
+    'cors'
 
   /**
    * Before rendering remote HTML, replace any data-tokens with their

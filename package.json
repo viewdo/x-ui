@@ -32,7 +32,7 @@
     "build": "run-s core:build",
     "build:docs": "run-s core:build core:build:docs docs:build",
     ":docker ---": "---------------",
-    "docker": "run-s build docker:build docker:push",
+    "docker": "run-s build:docs docker:build docker:push",
     "docker:build": "docker build -t viewdo/x-ui-docs .",
     "docker:run": "docker run --name x-ui-docs --rm -p 8181:80 viewdo/x-ui-docs",
     "docker:push": "docker push viewdo/x-ui-docs",

@@ -31,7 +31,8 @@ const config: Config = {
       empty: false,
       serviceWorker: {
         globPatterns: ['**/*.{js,css,json,html,md.png,svg}'],
-        swSrc: 'src/sw.ts',
+        swSrc: 'src/service-worker.ts',
+        swDest: 'sw.js',
       },
       indexHtml: 'index.html',
       copy: [

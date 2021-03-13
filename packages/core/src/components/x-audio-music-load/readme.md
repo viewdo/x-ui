@@ -21,13 +21,22 @@ This component declares audio used within this [\<x-app-view-do\>](/components/x
 
 ```html
 <x-app-view-do>
-  <x-audio-music-load track-id='<unique-id>' src='<url>'></x-audio-music-load>
+  <x-audio-music-load 
+    track-id='<unique-id>' 
+    src='<url>'>
+  </x-audio-music-load>
 </x-app-view-do>
 ```
 
 ```html
 <x-app-view-do>
-  <x-audio load='queue' id='<unique-id>' src='<url>' discard='none' loop></x-audio>
+  <x-audio-music-load
+    mode='queue' 
+    id='<unique-id>' 
+    src='<url>' 
+    discard='none' 
+    loop>
+  </x-audio-music-load>
 </x-app-view-do>
 ```
 

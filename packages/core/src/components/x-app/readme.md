@@ -5,7 +5,10 @@ The root component is the base container for the view-engine and its child compo
 ## Usage
 
 ```html
-<x-app app-title='view.DO Web Components' scroll-top-offset='0' transition='fade-in' start-url='/home' root='' debug>
+<x-app app-title='view.DO Web Components' 
+  scroll-top-offset='0' 
+  transition='fade-in' 
+  start-url='/home' root='' debug>
   ...
   <x-app-view ...></x-app-view>
   <x-app-view ...></x-app-view>

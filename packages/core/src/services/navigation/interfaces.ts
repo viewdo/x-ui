@@ -28,7 +28,7 @@ export enum VisitStrategy {
 }
 
 export interface IViewDo {
-  visit?: VisitStrategy
+  visit?: VisitStrategy | string
   when?: string
   visited?: boolean
   url: string

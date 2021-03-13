@@ -8,8 +8,16 @@ The View component is a child component for the `<x -app>` component for adding 
 
 ```html
 <x-app>
-  <x-app-view url='/' page-title='Home' transition='fade-in'> ... </x-app-view>
-  <x-app-view url='/about' page-title='About Us' scroll-top-offset='20'> ... </x-app-view>
+  <x-app-view url='/' 
+    page-title='Home' 
+    transition='fade-in'> 
+    ... 
+  </x-app-view>
+  <x-app-view url='/about' 
+    page-title='About Us' 
+    scroll-top-offset='20'> 
+    ... 
+  </x-app-view>
 </x-app>
 ```
 
@@ -28,9 +36,13 @@ Views can hold any HTML, including View components. This implicitly creates chil
 
 ```html
 <x-app>
-  <x-app-view url='/'> ... </x-app-view>
+  <x-app-view url='/'> 
+  ... 
+  </x-app-view>
   <x-app-view url='/about'>
-    <x-app-view url='/location'> ... </x-app-view>
+    <x-app-view url='/location'>
+    ... 
+    </x-app-view>
   </x-app-view>
 </x-app>
 ```
@@ -43,43 +55,7 @@ The contained HTML is parsed before rendering and special handling is given if a
 
 At that point, the inner HTML content is finally revealed. Using this convention, you can declaratively create a workflow of pages that must be visited to reach a destination.
 
-### Child Attribute Detection & Resolution
 
-The following attributes are queried to resolve certain data-values or show/hide conditions for all child elements.
-
-#### Hide When: [x-hide-when]
-
-For each child element with this attribute, the value of the attribute is evaluated for a predicate – and if TRUE, the element is hidden. This evaluation occurs whenever data-changes.
-
-```html
-<any x-hide-when='predicate' />
-```
-
-#### Show When: [x-show-when]
-
-For each child element with this attribute, the value of the attribute is evaluated for a predicate – and if FALSE, the element is shown. This evaluation occurs whenever data-changes.
-
-```html
-<any x-show-when='predicate' hidden />
-```
-
-> To initially hide the element, be sure to include the ‘hidden’ attribute.
-
-#### Conditioned Classes: [x-class-when] && [x-class]
-
-This pair of attributes conditionally toggle the class specified in the `x-class` attribute using the `x-class-where` expression.
-
-```html
-<any x-class='class' x-class-when='predicate'></any>
-```
-
-#### Value From: [x-value-from]
-
-Input-type elements (input, textarea and select) can specify a data expression for its value. This informs the route container to update this value when it changes.
-
-```html
-<any x-class='class' x-class-when='predicate'></any>
-```
 
 <!-- Auto Generated Below -->
 

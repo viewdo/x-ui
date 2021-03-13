@@ -7,7 +7,9 @@ Topic: `ui`
 
 ```html
 <x-action-activator activate="...">
-  <x-action topic="ui" command="<command>" data-(key)="(value)">
+  <x-action topic="ui" 
+    command="<command>" 
+    data-(key)="(value)">
   </x-action>
 </x-action-activator>
 ```
@@ -25,7 +27,9 @@ Arguments:
 
 ```html
 <x-action-activator activate="...">
-  <x-action topic="ui" command="set-theme" data-theme="dark">
+  <x-action topic="ui" 
+    command="set-theme" 
+    data-theme="dark">
   </x-action>
 </x-action-activator>
 ```
@@ -43,7 +47,9 @@ Arguments:
 
 ```html
 <x-action-activator activate="...">
-  <x-action topic="ui" command="set-theme" data-theme="dark">
+  <x-action topic="ui" 
+    command="set-theme" 
+    data-theme="dark">
   </x-action>
 </x-action-activator>
 ```

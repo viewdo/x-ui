@@ -35,7 +35,8 @@ import { audioState } from './audio/state'
 @Component({
   tag: 'x-audio',
   styleUrl: 'x-audio.css',
-  shadow: true,
+  shadow: false,
+  scoped: true,
 })
 export class XAudioPlayer {
   private provider?: AudioDataProvider
@@ -51,8 +52,7 @@ export class XAudioPlayer {
   /**
    * The Howler.js Script Reference
    */
-  @Prop() howlerUrl: string =
-    'https://cdn.jsdelivr.net/npm/howler@2.2.1/dist/howler.core.min.js'
+  @Prop() howlerVersion: string = '2.2.1'
 
   /**
    * The display mode for this player. The display
@@ -70,26 +70,22 @@ export class XAudioPlayer {
   /**
    * Mute Off Icon Url
    */
-  @Prop() muteOffIconUrl: string =
-    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath fill='none'  d='M0 0h24v24H0z'/%3E%3Cpath d='M10 7.22L6.603 10H3v4h3.603L10 16.78V7.22zM5.889 16H2a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1h3.889l5.294-4.332a.5.5 0 0 1 .817.387v15.89a.5.5 0 0 1-.817.387L5.89 16zm14.525-4l3.536 3.536-1.414 1.414L19 13.414l-3.536 3.536-1.414-1.414L17.586 12 14.05 8.464l1.414-1.414L19 10.586l3.536-3.536 1.414 1.414L20.414 12z'/%3E%3C/svg%3E"
+  @Prop() muteOffIconClass: string = 'mute-off-img'
 
   /**
    * Mute ON Icon Url
    */
-  @Prop() muteOnIconUrl: string =
-    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath fill='none'  d='M0 0h24v24H0z'/%3E%3Cpath d='M10 7.22L6.603 10H3v4h3.603L10 16.78V7.22zM5.889 16H2a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1h3.889l5.294-4.332a.5.5 0 0 1 .817.387v15.89a.5.5 0 0 1-.817.387L5.89 16zm13.517 4.134l-1.416-1.416A8.978 8.978 0 0 0 21 12a8.982 8.982 0 0 0-3.304-6.968l1.42-1.42A10.976 10.976 0 0 1 23 12c0 3.223-1.386 6.122-3.594 8.134zm-3.543-3.543l-1.422-1.422A3.993 3.993 0 0 0 16 12c0-1.43-.75-2.685-1.88-3.392l1.439-1.439A5.991 5.991 0 0 1 18 12c0 1.842-.83 3.49-2.137 4.591z'/%3E%3C/svg%3E"
+  @Prop() muteOnIconClass: string = 'mute-on-img'
 
   /**
    * Play Icon Url
    */
-  @Prop() playIconUrl: string =
-    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath fill='none'  d='M0 0h24v24H0z'/%3E%3Cpath d='M16.394 12L10 7.737v8.526L16.394 12zm2.982.416L8.777 19.482A.5.5 0 0 1 8 19.066V4.934a.5.5 0 0 1 .777-.416l10.599 7.066a.5.5 0 0 1 0 .832z'/%3E%3C/svg%3E"
+  @Prop() playIconClass: string = 'play-img'
 
   /**
    * Pause Icon Url
    */
-  @Prop() pauseIconUrl: string =
-    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath fill='none'  d='M0 0h24v24H0z'/%3E%3Cpath d='M6 5h2v14H6V5zm10 0h2v14h-2V5z'/%3E%3C/svg%3E"
+  @Prop() pauseIconClass: string = 'pause-img'
 
   async componentWillLoad() {
     if (audioState.hasAudio) {
@@ -173,7 +169,7 @@ export class XAudioPlayer {
       <Host hidden={!this.display}>
         <x-content-reference
           onReferenced={ev => this.referenceComplete(ev)}
-          script-src={this.howlerUrl}
+          script-src={`https://cdn.jsdelivr.net/npm/howler@${this.howlerVersion}/dist/howler.core.min.js`}
         ></x-content-reference>
         {this.listener ? (
           <div class="row">
@@ -185,7 +181,7 @@ export class XAudioPlayer {
                   this.setMute(false)
                 }}
               >
-                <img src={this.muteOffIconUrl} />
+                <img class={this.muteOffIconClass} />
               </div>
             ) : (
               <div
@@ -195,7 +191,7 @@ export class XAudioPlayer {
                   this.setMute(true)
                 }}
               >
-                <img src={this.muteOnIconUrl} />
+                <img class={this.muteOnIconClass} />
               </div>
             )}
 
@@ -222,7 +218,7 @@ export class XAudioPlayer {
                     this.pause()
                   }}
                 >
-                  <img src={this.pauseIconUrl} />
+                  <img class={this.pauseIconClass} />
                 </div>
               ) : (
                 <div
@@ -232,7 +228,7 @@ export class XAudioPlayer {
                     this.resume()
                   }}
                 >
-                  <img src={this.playIconUrl} />
+                  <img class={this.playIconClass} />
                 </div>
               )}
             </div>

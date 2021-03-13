@@ -33,7 +33,7 @@
     "watch": "stencil build -c stencil.config.docs.ts --watch",
     "new": "stencil generate",
     "--- production ---": "---------------",
-    "build": "stencil build",
+    "build": "stencil build --docs-readme",
     "build:docs": "stencil build -c stencil.config.docs.ts",
     "--- test ---": "---------------",
     "test": "stencil test --spec --coverage",

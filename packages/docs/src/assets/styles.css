@@ -24,12 +24,10 @@ body {
   --primary-bg: hsl(256, 21%, 31%);
   --content-max-width: 950px;
 
-  font-family: 'Segoe UI', Helvetica, Arial, sans-serif,
-    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  font-family: 'Blinker', sans-serif;
   background-color: var(--background-color);
 
   color: var(--text-color);
-  text-shadow: 0 0 0.5px var(--dark);
   max-width: 100vw;
   overflow-x: hidden;
   overflow-y: scroll;
@@ -89,9 +87,8 @@ nav button:focus {
 header .navbar-brand a,
 header .navbar-brand a:any-link {
   color: white;
-  font-family: 'Nunito', sans-serif, 'Ubuntu Mono', monospace;
   font-size: 4rem;
-  font-weight: 500;
+  font-weight: 400;
   margin: 0;
 }
 nav .navbar-brand a:hover {
@@ -103,10 +100,6 @@ nav.bg-dark i {
   color: white;
 }
 
-.brand {
-  font-family: 'Nunito', sans-serif;
-  font-family: 'Ubuntu Mono', monospace;
-}
 b.brand {
   color: var(--primary);
 }
@@ -160,7 +153,6 @@ a.link-active * {
 /* ELEMENTS ------ */
 
 h1 {
-  font-family: 'Nunito', sans-serif, 'Ubuntu Mono';
   font-size: 2rem;
 }
 
@@ -291,18 +283,26 @@ x-app-link.text-white a:any-link {
 
 x-app > x-app-view,
 x-app > x-app-view-not-found {
-  width: auto;
   max-width: var(--content-max-width);
   padding: var(--bs-gutter-x, 0.75rem);
   margin-right: auto !important;
   margin-left: auto !important;
 }
 
+.components {
+  width: auto;
+  max-width: var(--content-max-width);
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  flex-basis: auto;
+}
+
 x-content-markdown pre {
   clear: both;
   margin-top: 1rem;
-  overflow: scroll;
-  width: 100%;
+  overflow-x: auto;
+  max-width: 100%;
 }
 x-content-markdown h3 code {
   font-size: larger;
@@ -331,6 +331,14 @@ x-app-view.active-route + x-app-view {
 .component-list {
   position: sticky;
   z-index: 5;
+}
+.list-group-item.fw-bold {
+  background-color: var(--primary);
+  background-image: linear-gradient(
+    to right,
+    var(--nav-bg),
+    var(--primary)
+  );
 }
 
 footer {
@@ -378,6 +386,14 @@ footer [slot='start'] {
 }
 .btn-secondary:hover {
   background-color: var(--secondary);
+}
+
+.btn-info {
+  border-color: white;
+  background-color: var(--info);
+}
+.btn-info:hover {
+  background-color: var(--info);
 }
 
 a.btn-primary:any-link {

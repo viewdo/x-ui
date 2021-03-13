@@ -1,4 +1,4 @@
-# x-ui-theme-switch
+# X-UI-THEME-SWITCH
 
 The `<x-ui-theme-switch>` component displays a checkbox to control the dark-theme setting applied to the interface.
 

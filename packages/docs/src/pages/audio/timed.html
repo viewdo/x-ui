@@ -7,7 +7,7 @@
 </x-content-reference>
 <x-audio-sound-load track-id="buzzer"
   src="/assets/buzzer.wav"> </x-audio-sound-load>
-<x-action-activator activate="AtTime"
+<x-action-activator activate="at-time"
   time="5">
   <x-audio-sound-action command="start"
     track-id="buzzer"> </x-audio-sound-action>
@@ -69,7 +69,7 @@
     <x-content-markdown>
       <script type="text/markdown">
         ```html
-        <x-action-activator activate="AtTime" time="5">
+        <x-action-activator activate="at-time" time="5">
           <x-audio-sound-action command="start" track-id="buzzer"> </x-audio-sound-action>
         </x-action-activator>
         ```

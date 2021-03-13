@@ -4,7 +4,6 @@ This element holds the data that **is** the Action submitted through [Actions](/
 
 > This element does not activate these actions automatically. They need to be activated through script, or by wrapping them in an [\<x-action-activator\>](/components/x-action-activator) tag.
 
-## Usage
 
 ```html
 <x-action topic='<topic>'
@@ -12,6 +11,19 @@ This element holds the data that **is** the Action submitted through [Actions](/
   data-(key)='value'>
 </x-action>
 ```
+
+
+
+
+
+
+
+<!-- Auto Generated Below -->
+
+
+## Usage
+
+### Attrbute
 
 ### Attribute Data
 
@@ -26,6 +38,9 @@ For most action-argument data, it is easies to specify them as key-value pairs u
 
 > NOTE: If a listener declares an argument using 'camelCase', it should be converted to 'kebab-case' in HTML, (words separated by dashes, all lowercase). It will be converted to 'camelCase' automatically when activated.
 
+
+### Input
+
 ### Nested Input Data
 
 For most data, it is easy to specify key-value pairs using the `data-*` attributes within the `x-action` tag.
@@ -38,6 +53,9 @@ For most data, it is easy to specify key-value pairs using the `data-*` attribut
     value='Hello World'>
 </x-action>
 ```
+
+
+### Json
 
 #### JSON Data
 
@@ -53,7 +71,6 @@ For more complex data shapes, you can define the data parameters as JSON in a ch
 </x-action>
 ```
 
-<!-- Auto Generated Below -->
 
 
 ## Properties

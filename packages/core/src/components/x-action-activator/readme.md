@@ -58,7 +58,8 @@ The **AtTime** activation-strategy only work when this element is a child of [\<
 
 ```html
 <x-app-view-do ...>
-  <x-action-activator activate='AtTime' time='3'>
+  <x-action-activator activate='AtTime' 
+    time='3'>
     <x-action ...></x-action>
     <x-action ...></x-action>
     <x-action ...></x-action>
@@ -106,11 +107,11 @@ The default activation is OnElementEvent and the default event is click. Also, i
 
 | Property        | Attribute        | Description                                                                                                                                                                                                       | Type                                                         | Default              |
 | --------------- | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ | -------------------- |
-| `activate`      | `activate`       | The activation strategy to use for the contained actions.                                                                                                                                                         | `'at-time'` or `'on-element-event'` or `'on-enter'` or `'on-exit'` | `'on-element-event'` |
+| `activate`      | `activate`       | The activation strategy to use for the contained actions.                                                                                                                                                         | `"at-time" \| "on-element-event" \| "on-enter" \| "on-exit"` | `'on-element-event'` |
 | `debug`         | `debug`          | Turn on debug statements for load, update and render events.                                                                                                                                                      | `boolean`                                                    | `false`              |
-| `targetElement` | `target-element` | The element to watch for events when using the OnElementEvent activation strategy. This element uses the HTML Element querySelector function to find the element.  For use with activate='on-element-event' Only! | `string` or `undefined`                                        | `undefined`          |
+| `targetElement` | `target-element` | The element to watch for events when using the OnElementEvent activation strategy. This element uses the HTML Element querySelector function to find the element.  For use with activate="on-element-event" Only! | `string \| undefined`                                        | `undefined`          |
 | `targetEvent`   | `target-event`   | This is the name of the event to listen to on the target element.                                                                                                                                                 | `string`                                                     | `'click'`            |
-| `time`          | `time`           | The time, in seconds at which the contained actions should be submitted.  For use with activate='at-time' Only!                                                                                                   | `number` or `undefined`                                        | `undefined`          |
+| `time`          | `time`           | The time, in seconds at which the contained actions should be submitted.  For use with activate="at-time" Only!                                                                                                   | `number \| undefined`                                        | `undefined`          |
 
 
 ## Methods

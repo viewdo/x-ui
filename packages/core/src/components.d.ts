@@ -7,7 +7,6 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { EventAction } from "./services/actions";
 import { RouterService } from "./services/routing";
-import { VisitStrategy } from "./services/navigation";
 import { RouterService as RouterService1 } from "./services/routing/router";
 import { AUDIO_COMMANDS, DiscardStrategy, LoadStrategy } from "./components/x-audio/audio/interfaces";
 import { ReferenceCompleteResults } from "./services/content";
@@ -146,7 +145,7 @@ export namespace Components {
         /**
           * Cross Origin Mode if the content is pulled from a remote location
          */
-        "mode": RequestMode;
+        "mode": 'cors' | 'navigate' | 'no-cors' | 'same-origin';
         /**
           * The title for this view. This is prefixed before the app title configured in x-app
          */
@@ -192,7 +191,7 @@ export namespace Components {
         /**
           * Cross Origin Mode if the content is pulled from a remote location
          */
-        "mode": RequestMode;
+        "mode": 'cors' | 'navigate' | 'no-cors' | 'same-origin';
         /**
           * When this value exists, the page will automatically progress when the duration in seconds has passed.
          */
@@ -232,7 +231,7 @@ export namespace Components {
         /**
           * The visit strategy for this do. once: persist the visit and never force it again always: do not persist, but don't don't show again in-session optional: do not force this view-do ever. It will be available by URL
          */
-        "visit": VisitStrategy;
+        "visit": 'once' | 'always' | 'optional';
         /**
           * If present, the expression must evaluate to true for this route to be sequenced by the parent view. The existence of this value overrides the visit strategy
          */
@@ -268,23 +267,23 @@ export namespace Components {
         /**
           * The Howler.js Script Reference
          */
-        "howlerUrl": string;
+        "howlerVersion": string;
         /**
           * Mute Off Icon Url
          */
-        "muteOffIconUrl": string;
+        "muteOffIconClass": string;
         /**
           * Mute ON Icon Url
          */
-        "muteOnIconUrl": string;
+        "muteOnIconClass": string;
         /**
           * Pause Icon Url
          */
-        "pauseIconUrl": string;
+        "pauseIconClass": string;
         /**
           * Play Icon Url
          */
-        "playIconUrl": string;
+        "playIconClass": string;
     }
     interface XAudioMusicAction {
         /**
@@ -434,7 +433,7 @@ export namespace Components {
         /**
           * Cross Origin Mode
          */
-        "mode": RequestMode;
+        "mode": 'cors' | 'navigate' | 'no-cors' | 'same-origin';
         /**
           * Before rendering HTML, replace any data-tokens with their resolved values. This also commands this component to re-render it's HTML for data-changes. This can affect performance.
          */
@@ -965,7 +964,7 @@ declare namespace LocalJSX {
         /**
           * Cross Origin Mode if the content is pulled from a remote location
          */
-        "mode"?: RequestMode;
+        "mode"?: 'cors' | 'navigate' | 'no-cors' | 'same-origin';
         /**
           * The title for this view. This is prefixed before the app title configured in x-app
          */
@@ -1011,7 +1010,7 @@ declare namespace LocalJSX {
         /**
           * Cross Origin Mode if the content is pulled from a remote location
          */
-        "mode"?: RequestMode;
+        "mode"?: 'cors' | 'navigate' | 'no-cors' | 'same-origin';
         /**
           * When this value exists, the page will automatically progress when the duration in seconds has passed.
          */
@@ -1051,7 +1050,7 @@ declare namespace LocalJSX {
         /**
           * The visit strategy for this do. once: persist the visit and never force it again always: do not persist, but don't don't show again in-session optional: do not force this view-do ever. It will be available by URL
          */
-        "visit"?: VisitStrategy;
+        "visit"?: 'once' | 'always' | 'optional';
         /**
           * If present, the expression must evaluate to true for this route to be sequenced by the parent view. The existence of this value overrides the visit strategy
          */
@@ -1087,23 +1086,23 @@ declare namespace LocalJSX {
         /**
           * The Howler.js Script Reference
          */
-        "howlerUrl"?: string;
+        "howlerVersion"?: string;
         /**
           * Mute Off Icon Url
          */
-        "muteOffIconUrl"?: string;
+        "muteOffIconClass"?: string;
         /**
           * Mute ON Icon Url
          */
-        "muteOnIconUrl"?: string;
+        "muteOnIconClass"?: string;
         /**
           * Pause Icon Url
          */
-        "pauseIconUrl"?: string;
+        "pauseIconClass"?: string;
         /**
           * Play Icon Url
          */
-        "playIconUrl"?: string;
+        "playIconClass"?: string;
     }
     interface XAudioMusicAction {
         /**
@@ -1221,7 +1220,7 @@ declare namespace LocalJSX {
         /**
           * Cross Origin Mode
          */
-        "mode"?: RequestMode;
+        "mode"?: 'cors' | 'navigate' | 'no-cors' | 'same-origin';
         /**
           * Before rendering HTML, replace any data-tokens with their resolved values. This also commands this component to re-render it's HTML for data-changes. This can affect performance.
          */

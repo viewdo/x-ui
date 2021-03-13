@@ -43,7 +43,8 @@ export class XContent {
   /**
    * Cross Origin Mode
    */
-  @Prop() mode: RequestMode = 'cors'
+  @Prop() mode: 'cors' | 'navigate' | 'no-cors' | 'same-origin' =
+    'cors'
 
   /**
    * Before rendering HTML, replace any data-tokens with their

@@ -6,7 +6,12 @@ This component declares audio used within this [\<x-app-view-do\>](/components/x
 
 ```html
 <x-app-view-do>
-  <x-audio-sound-load mode='queue|play|load' track-id='<unique-id>' src='<url>' discard='route|next|none' track>
+  <x-audio-sound-load 
+    mode='queue|play|load' 
+    track-id='<unique-id>' 
+    src='<url>' 
+    discard='route|next|none' 
+    track>
   </x-audio-sound-load>
 </x-app-view-do>
 ```
@@ -15,7 +20,10 @@ This component declares audio used within this [\<x-app-view-do\>](/components/x
 
 ```html
 <x-app-view-do>
-  <x-audio-sound-load track-id='<unique-id>' src='<url>'></x-audio-sound-load>
+  <x-audio-sound-load 
+    track-id='<unique-id>' 
+    src='<url>'>
+  </x-audio-sound-load>
 </x-app-view-do>
 ```
 
@@ -27,9 +35,17 @@ The following demonstrates how to load a track, and wait 10 seconds until it pla
 
 ```html
 <x-app-view-do>
-  <x-audio-sound-load track-id='audio1' src='<url>'> </x-audio-sound-load>
-  <x-action-activator activate='AtTime' time='10'>
-    <x-audio-sound-action command='start' track-id='audio1'> </x-audio-sound-action>
+  <x-audio-sound-load 
+    track-id='audio1' 
+    src='<url>'>
+  </x-audio-sound-load>
+  <x-action-activator 
+    activate='AtTime' 
+    time='10'>
+    <x-audio-sound-action 
+      command='start' 
+      track-id='audio1'>
+    </x-audio-sound-action>
   </x-action-activator>
 </x-app-view-do>
 ```

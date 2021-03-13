@@ -11,7 +11,9 @@ Browser Storage: **storage**
 The storage provider is registered using a component **[\<x-data-provider-storage\>](/components/x-data-provider-storage)**.
 
 ```html
-<x-data-provider-storage prefix="x" name="storage">
+<x-data-provider-storage 
+  prefix="x" 
+  name="storage">
 </x-data-provider-storage>
 ```
 

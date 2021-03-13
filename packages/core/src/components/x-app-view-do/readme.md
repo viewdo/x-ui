@@ -50,7 +50,9 @@ The following are some examples to demonstrate how you can combine the settings 
 This route will be activated once for each new visit to the page. (Visit 'once' is the default behavior, so it can be omitted.)
 
 ```html
-<x-app-view-do url='/accept-terms' page-title='Consent' visit='once'>
+<x-app-view-do url='/accept-terms' 
+  page-title='Consent' 
+  visit='once'>
   ...
 </x-app-view-do>
 ```
@@ -81,7 +83,7 @@ This route will be activated if a value for 'consent' was not found in local-sto
 <x-app-view-do
   url='/accept-terms'
   page-title='Consent'
-  when='{{storage:consent}} == null'
+  when='{{storage:consent}}'
 >
   ...
 </x-app-view-do>
@@ -112,25 +114,25 @@ This route will be activated only through navigation. This is helpful for opt-in
 #### Presentation Features
 
 - Supports [video](/video) support:
-  - Video Timer becomes basis for Timed Actions
-  - Auto-Play w/Global Setting
-  - Auto-Next available on Video End
-  - Video Supports Global Audio Preferences
+  * Video Timer becomes basis for Timed Actions
+  * Auto-Play w/Global Setting
+  * Auto-Next available on Video End
+  * Video Supports Global Audio Preferences
 - Supports [audio](/audio) support:
-  - Time & Event-based Sounds \* Voice Over
-  - Background Music
-  - Voice-overs
+  * Time & Event-based Sounds \* Voice Over
+  * Background Music
+  * Voice-overs
 - Supports [actions](/actions):
-  - At route entrance
-  - At a given time
-  - At a given user interaction
-  - Before route exit
+  * At route entrance
+  * At a given time
+  * At a given user interaction
+  * Before route exit
 - Built-in timer & and optional duration:
-  - Synced to video (respecting scrub, pause, etc)
-  - Based on time elapsed since entrance
-  - Hide and show elements at certain times
-  - Time-based animation class toggling
-  - Time-based navigation or when the video ends.
+  * Synced to video (respecting scrub, pause, etc)
+  * Based on time elapsed since entrance
+  * Hide and show elements at certain times
+  * Time-based animation class toggling
+  * Time-based navigation or when the video ends.
 - Automatic visibility resolution for child elements using special attributes.
 - Automatic next and back handlers for child elements using special attributes.
 - Automatic time/percentage value insertion for child elements using special attributes.
@@ -139,140 +141,30 @@ This route will be activated only through navigation. This is helpful for opt-in
 
 This evaluation has to take place before the route is activated as the underlying data can change in the previous Do components. If the component is deemed unnecessary (the predicate returns false), the component marks itself ‘complete’ and returns control to the parent view, without revealing its contents.
 
-### Child Attribute Detection & Resolution
 
-The following attributes are queried to resolve certain data-values or show/hide conditions for all child elements.
-
-#### Special Next & Back Attributes
-
-To make guided-navigation easy, you can add attributes to set-up event-handlers for next & back.
-
-#### [x-next]
-
-```html
-<any x-next />
-or
-<any x-next='route' />
-```
-
-#### [x-back]
-
-```html
-<any x-back />
-```
-
-#### [x-hide-when]
-
-For each child element with this attribute, the value of the attribute is evaluated for a predicate – and if TRUE, the element is hidden. This evaluation occurs whenever data-changes.
-
-```html
-<any x-hide-when='predicate' />
-```
-
-#### [x-show-when]
-
-For each child element with this attribute, the value of the attribute is evaluated for a predicate – and if FALSE, the element is shown. This evaluation occurs whenever data-changes.
-
-```html
-<any x-show-when='predicate' hidden />
-```
-
-> To initially hide the element, be sure to include the ‘hidden’ attribute.
-
-#### Conditioned Classes: [x-class-when] && [x-class]
-
-This pair of attributes conditionally toggle the class specified in the `x-class` attribute using the `x-class-where` expression.
-
-```html
-<any x-class='class' x-class-when='predicate'></any>
-```
-
-#### Value From: [x-value-from]
-
-Input-type elements (input, textarea and select) can specify a data expression for its value. This informs the route container to update this value when it changes.
-
-```html
-<any x-class='class' x-class-when='predicate'></any>
-```
-
-### Time-Presentation Child Attribute Resolution
-
-The [\<x-app-view-do\>](/components/x-app-view-do) element is always keeping track of time once its route is active. As such, you can create timed-based actions using special attributes placed on any child element.
-
-> ℹ️) If a video element is detected, its time is used, allowing pause & play.
-
-#### [x-in-time] & [x-in-class]
-
-This attribute removes the 'hidden' attribute if present at the specified time in seconds.
-
-```html
-<any hidden x-in-time='1' />
-```
-
-> To initially hide the element, be sure to include the ‘hidden’ attribute.
-
-When used with x-in-class, this attribute adds the specified class and removes the 'hidden' attribute if present at the specified time in seconds.
-
-```html
-<any hidden x-in-time='1' x-in-class='fade-in' />
-```
-
-#### [x-out-time] & [x-out-class]
-
-This attribute adds the 'hidden' attribute if no x-out-class attribute is present at the specified time in seconds.
-
-```html
-<any x-out-time='1' />
-```
-
-> ℹ️) To initially hide the element, be sure to include the ‘hidden’ attribute.
-
-When used with x-out-class, this attribute adds the specified class and removes the 'hidden' attribute if present at the specified time out seconds.
-
-```html
-<any x-out-time='1' x-out-class='fade-out' />
-```
-
-#### Time To: [x-time-to]
-
-This attribute instructs [\<x-app-view-do\>](/components/x-app-view-do) to inject the current time to the named attributes. In this example's case 'value' will be updated.
-
-```html
-<any value='' x-time-to='value' />
-
-<input x-time-to='value' />
-```
-
-#### Time Percentage To: [x-percentage-to]
-
-This attribute instructs [\<x-app-view-do\>](/components/x-app-view-do) to inject the current time percentage (based on the **next-after** attribute or the video-duration) to the named attributes. In this example's case 'value' will be updated.
-
-```html
-<any value='' x-percentage-to='value' />
-```
 
 <!-- Auto Generated Below -->
 
 
 ## Properties
 
-| Property           | Attribute           | Description                                                                                                                                                                                                                     | Type                                                                   | Default              |
-| ------------------ | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | -------------------- |
-| `contentSrc`       | `content-src`       | Remote URL for HTML content. Content from this URL will be assigned the 'content' slot.                                                                                                                                         | `string \| undefined`                                                  | `undefined`          |
-| `debug`            | `debug`             | To debug timed elements, set this value to true.                                                                                                                                                                                | `boolean`                                                              | `false`              |
-| `exact`            | `exact`             | The url for this route should only be matched when it is exact.                                                                                                                                                                 | `boolean`                                                              | `true`               |
-| `mode`             | `mode`              | Cross Origin Mode if the content is pulled from a remote location                                                                                                                                                               | `"cors" \| "navigate" \| "no-cors" \| "same-origin"`                   | `'cors'`             |
-| `nextAfter`        | `next-after`        | When this value exists, the page will automatically progress when the duration in seconds has passed.                                                                                                                           | `number`                                                               | `0`                  |
-| `pageTitle`        | `page-title`        | The title for this view. This is prefixed before the app title configured in x-app                                                                                                                                              | `string`                                                               | `''`                 |
-| `resolveTokens`    | `resolve-tokens`    | Before rendering remote HTML, replace any data-tokens with their resolved values. This also commands this component to re-render it's HTML for data-changes. This can affect performance.  IMPORTANT: ONLY WORKS ON REMOTE HTML | `boolean`                                                              | `false`              |
-| `scrollTopOffset`  | `scroll-top-offset` | Header height or offset for scroll-top on this view.                                                                                                                                                                            | `number \| undefined`                                                  | `undefined`          |
-| `transition`       | `transition`        | Navigation transition between routes. This is a CSS animation class.                                                                                                                                                            | `string \| undefined`                                                  | `undefined`          |
-| `url` _(required)_ | `url`               | The url for this route, including the parent's routes.                                                                                                                                                                          | `string`                                                               | `undefined`          |
-| `videoEndEvent`    | `video-end-event`   | Provider the end event name. Default is ended                                                                                                                                                                                   | `string`                                                               | `'ended'`            |
-| `videoTarget`      | `video-target`      | Provide the element selector for the media object that can provide time-updates and media-end events.                                                                                                                           | `string`                                                               | `'video'`            |
-| `videoTimeEvent`   | `video-time-event`  | Provide the time-event name. Default is timeupdate                                                                                                                                                                              | `string`                                                               | `'timeupdate'`       |
-| `visit`            | `visit`             | The visit strategy for this do. once: persist the visit and never force it again always: do not persist, but don't don't show again in-session optional: do not force this view-do ever. It will be available by URL            | `VisitStrategy.always \| VisitStrategy.once \| VisitStrategy.optional` | `VisitStrategy.once` |
-| `when`             | `when`              | If present, the expression must evaluate to true for this route to be sequenced by the parent view. The existence of this value overrides the visit strategy                                                                    | `string \| undefined`                                                  | `undefined`          |
+| Property           | Attribute           | Description                                                                                                                                                                                                                     | Type                                                 | Default        |
+| ------------------ | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- | -------------- |
+| `contentSrc`       | `content-src`       | Remote URL for HTML content. Content from this URL will be assigned the 'content' slot.                                                                                                                                         | `string \| undefined`                                | `undefined`    |
+| `debug`            | `debug`             | To debug timed elements, set this value to true.                                                                                                                                                                                | `boolean`                                            | `false`        |
+| `exact`            | `exact`             | The url for this route should only be matched when it is exact.                                                                                                                                                                 | `boolean`                                            | `true`         |
+| `mode`             | `mode`              | Cross Origin Mode if the content is pulled from a remote location                                                                                                                                                               | `"cors" \| "navigate" \| "no-cors" \| "same-origin"` | `'cors'`       |
+| `nextAfter`        | `next-after`        | When this value exists, the page will automatically progress when the duration in seconds has passed.                                                                                                                           | `number`                                             | `0`            |
+| `pageTitle`        | `page-title`        | The title for this view. This is prefixed before the app title configured in x-app                                                                                                                                              | `string`                                             | `''`           |
+| `resolveTokens`    | `resolve-tokens`    | Before rendering remote HTML, replace any data-tokens with their resolved values. This also commands this component to re-render it's HTML for data-changes. This can affect performance.  IMPORTANT: ONLY WORKS ON REMOTE HTML | `boolean`                                            | `false`        |
+| `scrollTopOffset`  | `scroll-top-offset` | Header height or offset for scroll-top on this view.                                                                                                                                                                            | `number \| undefined`                                | `undefined`    |
+| `transition`       | `transition`        | Navigation transition between routes. This is a CSS animation class.                                                                                                                                                            | `string \| undefined`                                | `undefined`    |
+| `url` _(required)_ | `url`               | The url for this route, including the parent's routes.                                                                                                                                                                          | `string`                                             | `undefined`    |
+| `videoEndEvent`    | `video-end-event`   | Provider the end event name. Default is ended                                                                                                                                                                                   | `string`                                             | `'ended'`      |
+| `videoTarget`      | `video-target`      | Provide the element selector for the media object that can provide time-updates and media-end events.                                                                                                                           | `string`                                             | `'video'`      |
+| `videoTimeEvent`   | `video-time-event`  | Provide the time-event name. Default is timeupdate                                                                                                                                                                              | `string`                                             | `'timeupdate'` |
+| `visit`            | `visit`             | The visit strategy for this do. once: persist the visit and never force it again always: do not persist, but don't don't show again in-session optional: do not force this view-do ever. It will be available by URL            | `"always" \| "once" \| "optional"`                   | `'once'`       |
+| `when`             | `when`              | If present, the expression must evaluate to true for this route to be sequenced by the parent view. The existence of this value overrides the visit strategy                                                                    | `string \| undefined`                                | `undefined`    |
 
 
 ----------------------------------------------

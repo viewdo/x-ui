@@ -18,7 +18,7 @@ import { replaceHtmlInElement } from '../../services/content/elements'
 import { resolveRemoteContent } from '../../services/content/remote'
 import { resolveChildElementXAttributes } from '../../services/data/elements'
 import { DATA_EVENTS } from '../../services/data/interfaces'
-import { VisitStrategy } from '../../services/navigation'
+import { VisitStrategy } from '../../services/navigation/interfaces'
 import { MatchResults, Route } from '../../services/routing'
 import { ViewDoService } from './media'
 import { ElementTimer } from './media/timer'
@@ -84,7 +84,7 @@ export class XAppViewDo {
    * always: do not persist, but don't don't show again in-session
    * optional: do not force this view-do ever. It will be available by URL
    */
-  @Prop() visit: VisitStrategy = VisitStrategy.once
+  @Prop() visit: 'once' | 'always' | 'optional' = 'once'
 
   /**
    * If present, the expression must
@@ -111,7 +111,8 @@ export class XAppViewDo {
    * Cross Origin Mode if the content is pulled from
    * a remote location
    */
-  @Prop() mode: RequestMode = 'cors'
+  @Prop() mode: 'cors' | 'navigate' | 'no-cors' | 'same-origin' =
+    'cors'
 
   /**
    * Before rendering remote HTML, replace any data-tokens with their
@@ -216,7 +217,7 @@ export class XAppViewDo {
         ),
         this.route,
         this.url,
-        this.visit,
+        this.visit as VisitStrategy,
         actionBus,
         eventBus,
         this.videoTarget,

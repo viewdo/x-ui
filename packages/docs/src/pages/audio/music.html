@@ -49,21 +49,21 @@
       <b>&lt;x-audio-music-action&gt;</b>
     </a> components. </p>
   <p>
-    <x-action-activator activate="OnElementEvent">
+    <x-action-activator activate="on-element-event">
       <x-audio-music-action command="pause"
         track-id="music"> </x-audio-music-action>
       <button type="button"
         class="btn btn-info text-white">
         <i class="ri-pause-circle-line"></i> Pause </button>
     </x-action-activator>
-    <x-action-activator activate="OnElementEvent">
+    <x-action-activator activate="on-element-event">
       <x-audio-music-action command="resume"
         track-id="music"> </x-audio-music-action>
       <button type="button"
         class="btn btn-info text-white">
         <i class="ri-play-circle-line"></i> Play </button>
     </x-action-activator>
-    <x-action-activator activate="OnElementEvent">
+    <x-action-activator activate="on-element-event">
       <x-audio-music-action command="seek"
         track-id="music"
         value="60"> </x-audio-music-action>
@@ -88,7 +88,7 @@
       <script type="text/markdown">
         ```html
         <x-action-activator
-          activate="OnElementEvent"
+          activate="on-element-event"
          >
           <x-audio-music-action
             command="pause"
@@ -97,7 +97,7 @@
           <button type="button" class="btn btn-info text-white">Pause</button>
         </x-action-activator>
         <x-action-activator
-          activate="OnElementEvent"
+          activate="on-element-event"
          >
           <x-audio-music-action
             command="resume"
@@ -106,7 +106,7 @@
           <button type="button" class="btn btn-info text-white">Play</button>
         </x-action-activator>
         <x-action-activator
-          activate="OnElementEvent"
+          activate="on-element-event"
          >
           <x-audio-music-action
             command="seek"
