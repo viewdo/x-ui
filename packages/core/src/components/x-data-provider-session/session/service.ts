@@ -21,6 +21,8 @@ export class SessionService implements IDataProvider, IDataMutator {
   }
 
   async set(key: string, value: any): Promise<void> {
+    const existing = await this.get(key)
+    if (existing == value) return
     this.sessionStorage?.setItem(this.prefix + key, value)
     this.eventBus.emit(DATA_EVENTS.DataChanged, {
       provider: this.name,

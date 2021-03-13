@@ -18,6 +18,8 @@ export class CookieService implements IDataProvider, IDataMutator {
   }
 
   async set(key: string, value: any) {
+    const existing = await this.get(key)
+    if (existing == value) return
     setCookie(this.document, key, value, { sameSite: 'strict' })
     this.eventBus.emit(DATA_EVENTS.DataChanged, {
       provider: this.name,
