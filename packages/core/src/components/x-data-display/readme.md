@@ -5,7 +5,7 @@ Render data directly into HTML using declarative expressions. This element rende
 ## Usage
 
 ```html
-<x-data-display text="{{expression}}"> </x-data-display>
+<x-data-display text='{{expression}}'> </x-data-display>
 ```
 
 The expression can be any string or an expression with tokens from a registered provider.

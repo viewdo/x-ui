@@ -5,7 +5,7 @@ This tag conditionally renders child elements based on the configured predicate 
 ## Usage
 
 ```html
-<x-data-show when="<expression>">
+<x-data-show when='<expression>'>
 ... contents ...
 </x-data-show>
 ```

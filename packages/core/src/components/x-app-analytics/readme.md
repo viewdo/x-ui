@@ -14,7 +14,7 @@ Using the [\<x-app-analytics\>](/components/x-app-analytics) is simple, but does
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script
     async
-    src="https://www.googletagmanager.com/gtag/js?id=G-ZZZ"
+    src='https://www.googletagmanager.com/gtag/js?id=G-ZZZ'
   ></script>
   <script>
     window.dataLayer = window.dataLayer || []
@@ -27,7 +27,7 @@ Using the [\<x-app-analytics\>](/components/x-app-analytics) is simple, but does
 </head>
 <body>
   ...
-  <x-app-analytics id="analytics">
+  <x-app-analytics id='analytics'>
     <script>
       analytics.addEventListener('events', e => {
         console.log(`event: ${JSON.stringify(e.detail)}`)

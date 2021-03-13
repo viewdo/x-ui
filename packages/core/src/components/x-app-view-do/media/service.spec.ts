@@ -276,7 +276,7 @@ describe('view-do', () => {
       components: [XActionActivator, XAction],
       html: `<div>
               <p hidden>Show me!</p>
-              <x-action-activator activate="AtTime" time="1">
+              <x-action-activator activate="at-time" time="1">
                 <x-action topic="elements" command="remove-attribute"
                   data-selector="p"
                   data-attribute="hidden">
@@ -310,7 +310,7 @@ describe('view-do', () => {
     expect(page.body.innerHTML).toEqualHtml(
       `<div>
         <p>Show me!</p>
-        <x-action-activator activate="AtTime" time="1">
+        <x-action-activator activate="at-time" time="1">
           <!---->
           <x-action topic="elements" command="remove-attribute"
             data-selector="p"

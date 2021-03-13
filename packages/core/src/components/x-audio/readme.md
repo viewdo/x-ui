@@ -26,13 +26,13 @@ To operate the player, it is easiest to just use the `<x-audio-load-*>` componen
 
 ```html
 <x-app-view-do>
-  <x-audio-sound-load track-id="<unique-id>" src="<url>">
+  <x-audio-sound-load track-id='<unique-id>' src='<url>'>
   </x-audio-sound-load>
   <x-action-activator ...>
     <x-audio-sound-action
-      command="<command>"
-      track-id="<id>"
-      value="<value>"
+      command='<command>'
+      track-id='<id>'
+      value='<value>'
     ></x-audio-sound-action>
   </x-action-activator>
 </x-app-view-do>
@@ -48,7 +48,7 @@ This command instructs the player to immediately play the given pre-loaded track
 
 ```json
 {
-  "id": "<id>"
+  'id': '<id>'
 }
 ```
 
@@ -68,7 +68,7 @@ This command instructs the player to set its own 'muted' property to the value i
 
 ```json
 {
-  "mute": true | false
+  'mute': true | false
 }
 ```
 
@@ -80,7 +80,7 @@ Set the audio player volume at a level 0 to 100.
 
 ```json
 {
-  "id": "<id>"
+  'id': '<id>'
 }
 ```
 
@@ -92,8 +92,8 @@ Set the audio track to to the given time in seconds, but only if the **id** matc
 
 ```json
 {
-  "id": "<id>",
-  "time": <time>
+  'id': '<id>',
+  'time': <time>
 }
 ```
 
@@ -107,12 +107,12 @@ This command instructs the player to immediately play this audio clip. If a trac
 
 ```json
 {
-  "id": "<id>",
-  "type": "music|sound",
-  "src": "<file>",
-  "discard": "<discard-strategy>",
-  "loop": false,
-  "track": false
+  'id': '<id>',
+  'type': 'music|sound',
+  'src': '<file>',
+  'discard': '<discard-strategy>',
+  'loop': false,
+  'track': false
 }
 ```
 
@@ -124,12 +124,12 @@ This is the primary method for loading audio-tracks to the player. It instructs 
 
 ```json
 {
-  "id": "<id>",
-  "type": "music|sound",
-  "src": "<file>",
-  "discard": "<discard-strategy>",
-  "loop": false,
-  "track": false
+  'id': '<id>',
+  'type': 'music|sound',
+  'src': '<file>',
+  'discard': '<discard-strategy>',
+  'loop': false,
+  'track': false
 }
 ```
 
@@ -141,12 +141,12 @@ This command instructs the player to pre-load the file with the browser but do n
 
 ```json
 {
-  "id": "<id>",
-  "type": "music|sound",
-  "src": "<file>",
-  "discard": "<deactivation-strategy>",
-  "loop": false,
-  "track": false
+  'id': '<id>',
+  'type': 'music|sound',
+  'src': '<file>',
+  'discard': '<deactivation-strategy>',
+  'loop': false,
+  'track': false
 }
 ```
 
@@ -174,78 +174,6 @@ If audio has tracking set to true, the player will store the track id in session
 Hard discards or play-src should ease out the audio with a .5 second fade-out before playing the next clip.
 
 <!-- Auto Generated Below -->
-
-
-## Usage
-
-### Actions
-
-# Audio Action Listener
-
-The Audio Action Listener listens for action commands to control audio during presentations.
-
-TOPIC: `audio`
-
-```html
-<x-action-activator activate="...">
-  <x-action topic="" command="<command>" data-(key)="(value)">
-  </x-action>
-</x-action-activator>
-```
-
-## Commands
-
-### `enable`
-
-This command enables audio for all music, sound and video.
-
-```html
-<x-action-activator activate="...">
-  <x-action topic="audio" command="enable"></x-action>
-</x-action-activator>
-```
-
-### `disable`
-
-This command disables audio for all music, sound and video.
-
-```html
-<x-action-activator activate="...">
-  <x-action topic="audio" command="set-data" data-(key)="(value)">
-  </x-action>
-</x-action-activator>
-```
-
----
-
-Audio components have special action tags, to help shape the resulting action message.
-
----
-
-### `load`
-
-This command enables audio for all music, sound and video.
-
-Arguments:
-
-- **key** [required]\
-  The input key to the experience input to update.
-
-- **value** [required]\
-  The value to set.
-
-```html
-<x-action-activator activate="...">
-  <x-action topic="audio" command="set-data" data-(key)="(value)">
-  </x-action>
-</x-action-activator>
-```
-
-
-### Provider
-
-
-
 
 
 ## Properties

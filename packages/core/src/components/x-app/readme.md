@@ -5,7 +5,7 @@ The root component is the base container for the view-engine and its child compo
 ## Usage
 
 ```html
-<x-app app-title="view.DO Web Components" scroll-top-offset="0" transition="fade-in" start-url="/home" root="" debug>
+<x-app app-title='view.DO Web Components' scroll-top-offset='0' transition='fade-in' start-url='/home' root='' debug>
   ...
   <x-app-view ...></x-app-view>
   <x-app-view ...></x-app-view>
@@ -36,7 +36,7 @@ For each child element with this attribute, the value of the attribute is remove
 attribute is target in css for `display:none`.
 
 ```html
-<any x-hide-when="predicate" />
+<any x-hide-when='predicate' />
 ```
 
 #### Hide: [x-hide]
@@ -47,7 +47,7 @@ attribute is also a target in css for `display:none`. This
 is used to hide content once the components have loaded.
 
 ```html
-<any x-hide-when="predicate" />
+<any x-hide-when='predicate' />
 ```
 
 #### Hide When: [x-hide-when]
@@ -55,7 +55,7 @@ is used to hide content once the components have loaded.
 For each child element with this attribute, the value of the attribute is evaluated for a predicate – and if TRUE, the element is hidden. This evaluation occurs whenever data-changes.
 
 ```html
-<any x-hide-when="predicate" />
+<any x-hide-when='predicate' />
 ```
 
 #### Show When: [x-show-when]
@@ -63,7 +63,7 @@ For each child element with this attribute, the value of the attribute is evalua
 For each child element with this attribute, the value of the attribute is evaluated for a predicate – and if FALSE, the element is shown. This evaluation occurs whenever data-changes.
 
 ```html
-<any x-show-when="predicate" hidden />
+<any x-show-when='predicate' hidden />
 ```
 
 > To initially hide the element, be sure to include the ‘hidden’ attribute.
@@ -73,7 +73,7 @@ For each child element with this attribute, the value of the attribute is evalua
 This pair of attributes conditionally toggle the class specified in the `x-class` attribute using the `x-class-where` expression.
 
 ```html
-<any x-class="class" x-class-when="predicate"></any>
+<any x-class='class' x-class-when='predicate'></any>
 ```
 
 #### Value From: [x-value-from]
@@ -81,7 +81,7 @@ This pair of attributes conditionally toggle the class specified in the `x-class
 Input-type elements (input, textarea and select) can specify a data expression for its value. This informs the route container to update this value when it changes.
 
 ```html
-<any x-class="class" x-class-when="predicate"></any>
+<any x-class='class' x-class-when='predicate'></any>
 ```
 
 <!-- Auto Generated Below -->

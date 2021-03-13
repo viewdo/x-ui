@@ -26,7 +26,7 @@ to gives users control of which theme should be applied.
 ### Custom Dark Class
 
 ```html
-<x-ui-theme dark-class="midnight"></x-ui-theme>
+<x-ui-theme dark-class='midnight'></x-ui-theme>
 ```
 
 <!-- Auto Generated Below -->

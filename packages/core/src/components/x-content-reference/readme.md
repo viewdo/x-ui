@@ -8,8 +8,8 @@ If inline is present, the source would be nested inside this element, otherwise 
 
 ```html
 <x-content-reference
-  script-src="<url>"
-  style-src="<url>">
+  script-src='<url>'
+  style-src='<url>'>
 </x-content-reference>
 ```
 
@@ -21,7 +21,7 @@ If inline is present, the source would be nested inside this element, otherwise 
 <html>
   <head></head>
   <body>
-    <x-content-reference style-src="assets/styles.css" />
+    <x-content-reference style-src='assets/styles.css' />
   </body>
 </html>
 ```
@@ -31,10 +31,10 @@ If inline is present, the source would be nested inside this element, otherwise 
 ```html
 <html>
   <head>
-    <link rel="stylesheet" href="assets/styles.css" />
+    <link rel='stylesheet' href='assets/styles.css' />
   </head>
   <body>
-    <x-content-reference style-src="assets/styles.css" />
+    <x-content-reference style-src='assets/styles.css' />
   </body>
 </html>
 ```
@@ -45,7 +45,7 @@ If inline is present, the source would be nested inside this element, otherwise 
 <html>
   <head></head>
   <body>
-    <x-content-reference style-src="assets/styles.css" inline />
+    <x-content-reference style-src='assets/styles.css' inline />
   </body>
 </html>
 ```
@@ -56,8 +56,8 @@ If inline is present, the source would be nested inside this element, otherwise 
 <html>
   <head></head>
   <body>
-    <x-content-reference style-src="assets/styles.css">
-      <link rel="stylesheet" href="assets/styles.css" />
+    <x-content-reference style-src='assets/styles.css'>
+      <link rel='stylesheet' href='assets/styles.css' />
     </x-content-reference>
   </body>
 </html>
@@ -69,11 +69,11 @@ If inline is present, the source would be nested inside this element, otherwise 
 <html>
   <head></head>
   <body>
-    <x-app-view url="/home">
-      <x-content-reference script-src="lib/script.js" />
+    <x-app-view url='/home'>
+      <x-content-reference script-src='lib/script.js' />
     </x-app-view>
-    <x-app-view url="/page-1">
-      <x-content-reference script-src="lib/script.js" />
+    <x-app-view url='/page-1'>
+      <x-content-reference script-src='lib/script.js' />
     </x-app-view>
   </body>
 </html>
@@ -84,14 +84,14 @@ If inline is present, the source would be nested inside this element, otherwise 
 ```html
 <html>
   <head>
-    <script src="lib/script.js"></script>
+    <script src='lib/script.js'></script>
   </head>
   <body>
-    <x-app-view url="/home">
-      <x-content-reference script-src="lib/script.js" />
+    <x-app-view url='/home'>
+      <x-content-reference script-src='lib/script.js' />
     </x-app-view>
-    <x-app-view url="/page-1">
-      <x-content-reference script-src="lib/script.js" />
+    <x-app-view url='/page-1'>
+      <x-content-reference script-src='lib/script.js' />
     </x-app-view>
   </body>
 </html>

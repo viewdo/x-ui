@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { ActionActivationStrategy, EventAction } from "./services/actions";
+import { EventAction } from "./services/actions";
 import { RouterService } from "./services/routing";
 import { VisitStrategy } from "./services/navigation";
 import { RouterService as RouterService1 } from "./services/routing/router";
@@ -34,16 +34,19 @@ export namespace Components {
     }
     interface XActionActivator {
         /**
-          * The activation strategy to use for the contained actions. Values: 'OnElementEvent'|'OnEnter'|'AtTime'|'OnExit'
+          * The activation strategy to use for the contained actions.
          */
-        "activate": ActionActivationStrategy;
+        "activate": | 'on-element-event'
+    | 'on-enter'
+    | 'at-time'
+    | 'on-exit';
         "activateActions": () => Promise<void>;
         /**
           * Turn on debug statements for load, update and render events.
          */
         "debug": boolean;
         /**
-          * The element to watch for events when using the OnElementEvent activation strategy. This element uses the HTML Element querySelector function to find the element.  For use with activate="OnElementEvent" Only!
+          * The element to watch for events when using the OnElementEvent activation strategy. This element uses the HTML Element querySelector function to find the element.  For use with activate="on-element-event" Only!
          */
         "targetElement"?: string;
         /**
@@ -51,7 +54,7 @@ export namespace Components {
          */
         "targetEvent": string;
         /**
-          * The time, in seconds at which the contained actions should be submitted.  For use with activate="AtTime" Only!
+          * The time, in seconds at which the contained actions should be submitted.  For use with activate="at-time" Only!
          */
         "time"?: number;
     }
@@ -453,7 +456,7 @@ export namespace Components {
         /**
           * Cross Origin Mode
          */
-        "mode": RequestMode;
+        "mode": 'cors' | 'navigate' | 'no-cors' | 'same-origin';
         /**
           * Force render with data & route changes.
          */
@@ -835,15 +838,18 @@ declare namespace LocalJSX {
     }
     interface XActionActivator {
         /**
-          * The activation strategy to use for the contained actions. Values: 'OnElementEvent'|'OnEnter'|'AtTime'|'OnExit'
+          * The activation strategy to use for the contained actions.
          */
-        "activate"?: ActionActivationStrategy;
+        "activate"?: | 'on-element-event'
+    | 'on-enter'
+    | 'at-time'
+    | 'on-exit';
         /**
           * Turn on debug statements for load, update and render events.
          */
         "debug"?: boolean;
         /**
-          * The element to watch for events when using the OnElementEvent activation strategy. This element uses the HTML Element querySelector function to find the element.  For use with activate="OnElementEvent" Only!
+          * The element to watch for events when using the OnElementEvent activation strategy. This element uses the HTML Element querySelector function to find the element.  For use with activate="on-element-event" Only!
          */
         "targetElement"?: string;
         /**
@@ -851,7 +857,7 @@ declare namespace LocalJSX {
          */
         "targetEvent"?: string;
         /**
-          * The time, in seconds at which the contained actions should be submitted.  For use with activate="AtTime" Only!
+          * The time, in seconds at which the contained actions should be submitted.  For use with activate="at-time" Only!
          */
         "time"?: number;
     }
@@ -1237,7 +1243,7 @@ declare namespace LocalJSX {
         /**
           * Cross Origin Mode
          */
-        "mode"?: RequestMode;
+        "mode"?: 'cors' | 'navigate' | 'no-cors' | 'same-origin';
         /**
           * Force render with data & route changes.
          */

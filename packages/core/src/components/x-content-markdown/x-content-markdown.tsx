@@ -47,7 +47,8 @@ export class XContentMarkdown {
   /**
    * Cross Origin Mode
    */
-  @Prop() mode: RequestMode = 'cors'
+  @Prop() mode: 'cors' | 'navigate' | 'no-cors' | 'same-origin' =
+    'cors'
 
   /**
    * Before rendering HTML, replace any data-tokens with their
@@ -126,10 +127,6 @@ export class XContentMarkdown {
     }
   }
 
-  private fixMarkdown(content: string) {
-    return content.split('\\|').join('or')
-  }
-
   private async resolveContentElement() {
     const key = await this.getContentKey()
     if (key && this.renderCache[key]) return this.renderCache[key]
@@ -140,8 +137,7 @@ export class XContentMarkdown {
     if (content == null) return null
 
     const div = document.createElement('div')
-    div.innerHTML =
-      (await renderMarkdown(this.fixMarkdown(content))) || ''
+    div.innerHTML = (await renderMarkdown(content)) || ''
     div.className = this.contentClass
     await resolveChildElementXAttributes(div)
     this.router?.captureInnerLinks(div)

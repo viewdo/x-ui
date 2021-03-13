@@ -5,11 +5,11 @@ The element should be used in-place of an `a` tag to navigate without refreshing
 ## Usage
 
 ```html
-<x-app-link href="/route"> ... </x-app-link>
+<x-app-link href='/route'> ... </x-app-link>
 ```
 
 ```html
-<x-app-link href="/route" active-class="my-active-class"> ... </x-app-link>
+<x-app-link href='/route' active-class='my-active-class'> ... </x-app-link>
 ```
 
 <!-- Auto Generated Below -->

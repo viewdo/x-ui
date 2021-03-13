@@ -32,17 +32,19 @@ export class XActionActivator {
 
   /**
    * The activation strategy to use for the contained actions.
-   * Values: 'OnElementEvent'|'OnEnter'|'AtTime'|'OnExit'
    */
-  @Prop() activate: ActionActivationStrategy =
-    ActionActivationStrategy.OnElementEvent
+  @Prop() activate:
+    | 'on-element-event'
+    | 'on-enter'
+    | 'at-time'
+    | 'on-exit' = 'on-element-event'
 
   /**
    * The element to watch for events when using the OnElementEvent
    * activation strategy. This element uses the HTML Element querySelector
    * function to find the element.
    *
-   * For use with activate="OnElementEvent" Only!
+   * For use with activate="on-element-event" Only!
    */
   @Prop() targetElement?: string
 
@@ -54,7 +56,7 @@ export class XActionActivator {
   /**
    * The time, in seconds at which the contained actions should be submitted.
    *
-   * For use with activate="AtTime" Only!
+   * For use with activate="at-time" Only!
    */
   @Prop() time?: number
 

@@ -13,15 +13,15 @@ Much like its parent, [\<x-app-view\>](/components/x-app-view), basic routing in
 ```html
 <x-app-view ...>
   <x-app-view-do
-    url="<sub-path>"
-    page-title="<route title>"
-    display="page|modal|full"
-    visit="always|once|optional"
-    when="<expression predicate>"
-    content-src="<remote html"
-    transition="<animation-enter>"
-    scroll-top-offset=""
-    next-after="<seconds before next>"
+    url='<sub-path>'
+    page-title='<route title>'
+    display='page|modal|full'
+    visit='always|once|optional'
+    when='<expression predicate>'
+    content-src='<remote html'
+    transition='<animation-enter>'
+    scroll-top-offset=''
+    next-after='<seconds before next>'
   >
     ...
   </x-app-view-do>
@@ -50,7 +50,7 @@ The following are some examples to demonstrate how you can combine the settings 
 This route will be activated once for each new visit to the page. (Visit 'once' is the default behavior, so it can be omitted.)
 
 ```html
-<x-app-view-do url="/accept-terms" page-title="Consent" visit="once">
+<x-app-view-do url='/accept-terms' page-title='Consent' visit='once'>
   ...
 </x-app-view-do>
 ```
@@ -63,9 +63,9 @@ This route will be activated once for each new session visit to the page.
 
 ```html
 <x-app-view-do
-  url="/accept-terms"
-  page-title="Consent"
-  visit="always"
+  url='/accept-terms'
+  page-title='Consent'
+  visit='always'
 >
   ...
 </x-app-view-do>
@@ -79,9 +79,9 @@ This route will be activated if a value for 'consent' was not found in local-sto
 
 ```html
 <x-app-view-do
-  url="/accept-terms"
-  page-title="Consent"
-  when="{{storage:consent}} == null"
+  url='/accept-terms'
+  page-title='Consent'
+  when='{{storage:consent}} == null'
 >
   ...
 </x-app-view-do>
@@ -99,9 +99,9 @@ This route will be activated only through navigation. This is helpful for opt-in
 
 ```html
 <x-app-view-do
-  url="/learn-more"
-  page-title="Watch a video"
-  visit="optional"
+  url='/learn-more'
+  page-title='Watch a video'
+  visit='optional'
 >
   ...
 </x-app-view-do>
@@ -152,7 +152,7 @@ To make guided-navigation easy, you can add attributes to set-up event-handlers 
 ```html
 <any x-next />
 or
-<any x-next="route" />
+<any x-next='route' />
 ```
 
 #### [x-back]
@@ -166,7 +166,7 @@ or
 For each child element with this attribute, the value of the attribute is evaluated for a predicate – and if TRUE, the element is hidden. This evaluation occurs whenever data-changes.
 
 ```html
-<any x-hide-when="predicate" />
+<any x-hide-when='predicate' />
 ```
 
 #### [x-show-when]
@@ -174,7 +174,7 @@ For each child element with this attribute, the value of the attribute is evalua
 For each child element with this attribute, the value of the attribute is evaluated for a predicate – and if FALSE, the element is shown. This evaluation occurs whenever data-changes.
 
 ```html
-<any x-show-when="predicate" hidden />
+<any x-show-when='predicate' hidden />
 ```
 
 > To initially hide the element, be sure to include the ‘hidden’ attribute.
@@ -184,7 +184,7 @@ For each child element with this attribute, the value of the attribute is evalua
 This pair of attributes conditionally toggle the class specified in the `x-class` attribute using the `x-class-where` expression.
 
 ```html
-<any x-class="class" x-class-when="predicate"></any>
+<any x-class='class' x-class-when='predicate'></any>
 ```
 
 #### Value From: [x-value-from]
@@ -192,7 +192,7 @@ This pair of attributes conditionally toggle the class specified in the `x-class
 Input-type elements (input, textarea and select) can specify a data expression for its value. This informs the route container to update this value when it changes.
 
 ```html
-<any x-class="class" x-class-when="predicate"></any>
+<any x-class='class' x-class-when='predicate'></any>
 ```
 
 ### Time-Presentation Child Attribute Resolution
@@ -206,7 +206,7 @@ The [\<x-app-view-do\>](/components/x-app-view-do) element is always keeping tra
 This attribute removes the 'hidden' attribute if present at the specified time in seconds.
 
 ```html
-<any hidden x-in-time="1" />
+<any hidden x-in-time='1' />
 ```
 
 > To initially hide the element, be sure to include the ‘hidden’ attribute.
@@ -214,7 +214,7 @@ This attribute removes the 'hidden' attribute if present at the specified time i
 When used with x-in-class, this attribute adds the specified class and removes the 'hidden' attribute if present at the specified time in seconds.
 
 ```html
-<any hidden x-in-time="1" x-in-class="fade-in" />
+<any hidden x-in-time='1' x-in-class='fade-in' />
 ```
 
 #### [x-out-time] & [x-out-class]
@@ -222,7 +222,7 @@ When used with x-in-class, this attribute adds the specified class and removes t
 This attribute adds the 'hidden' attribute if no x-out-class attribute is present at the specified time in seconds.
 
 ```html
-<any x-out-time="1" />
+<any x-out-time='1' />
 ```
 
 > ℹ️) To initially hide the element, be sure to include the ‘hidden’ attribute.
@@ -230,7 +230,7 @@ This attribute adds the 'hidden' attribute if no x-out-class attribute is presen
 When used with x-out-class, this attribute adds the specified class and removes the 'hidden' attribute if present at the specified time out seconds.
 
 ```html
-<any x-out-time="1" x-out-class="fade-out" />
+<any x-out-time='1' x-out-class='fade-out' />
 ```
 
 #### Time To: [x-time-to]
@@ -238,9 +238,9 @@ When used with x-out-class, this attribute adds the specified class and removes 
 This attribute instructs [\<x-app-view-do\>](/components/x-app-view-do) to inject the current time to the named attributes. In this example's case 'value' will be updated.
 
 ```html
-<any value="" x-time-to="value" />
+<any value='' x-time-to='value' />
 
-<input x-time-to="value" />
+<input x-time-to='value' />
 ```
 
 #### Time Percentage To: [x-percentage-to]
@@ -248,7 +248,7 @@ This attribute instructs [\<x-app-view-do\>](/components/x-app-view-do) to injec
 This attribute instructs [\<x-app-view-do\>](/components/x-app-view-do) to inject the current time percentage (based on the **next-after** attribute or the video-duration) to the named attributes. In this example's case 'value' will be updated.
 
 ```html
-<any value="" x-percentage-to="value" />
+<any value='' x-percentage-to='value' />
 ```
 
 <!-- Auto Generated Below -->

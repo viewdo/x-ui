@@ -168,17 +168,17 @@ describe('x-app-view', () => {
       <x-app-view url="/">
         <x-app-view url="lev-1">
           <x-app-view url="lev-2">
-            <x-action-activator activate="OnEnter">
+            <x-action-activator activate="on-enter">
               <x-action topic="test" command="doit" data-data="level-3">
               </x-action>
             </x-action-activator>
           </x-app-view>
-          <x-action-activator activate="OnEnter">
+          <x-action-activator activate="on-enter">
             <x-action topic="test" command="doit" data-data="level-2">
           </x-action>
         </x-action-activator>
         </x-app-view>
-        <x-action-activator activate="OnEnter">
+        <x-action-activator activate="on-enter">
           <x-action topic="test" command="doit" data-data="level-1">
           </x-action>
         </x-action-activator>

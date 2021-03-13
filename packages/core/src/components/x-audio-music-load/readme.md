@@ -7,10 +7,10 @@ This component declares audio used within this [\<x-app-view-do\>](/components/x
 ```html
 <x-app-view-do>
   <x-audio-music-load
-    mode="play|load"
-    track-id="<unique-id>"
-    src="<url>"
-    discard="route|video|next|none"
+    mode='play|load'
+    track-id='<unique-id>'
+    src='<url>'
+    discard='route|video|next|none'
     loop
     track
   ></x-audio-music-load>
@@ -21,13 +21,13 @@ This component declares audio used within this [\<x-app-view-do\>](/components/x
 
 ```html
 <x-app-view-do>
-  <x-audio-music-load track-id="<unique-id>" src="<url>"></x-audio-music-load>
+  <x-audio-music-load track-id='<unique-id>' src='<url>'></x-audio-music-load>
 </x-app-view-do>
 ```
 
 ```html
 <x-app-view-do>
-  <x-audio load="queue" id="<unique-id>" src="<url>" discard="none" loop></x-audio>
+  <x-audio load='queue' id='<unique-id>' src='<url>' discard='none' loop></x-audio>
 </x-app-view-do>
 ```
 

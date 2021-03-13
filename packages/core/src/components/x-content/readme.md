@@ -5,7 +5,7 @@ This component fetches remote HTML and renders it safely and directly into the p
 ## Usage
 
 ```html
-<x-content src="<url-to-html>"> </x-content>
+<x-content src='<url-to-html>'> </x-content>
 ```
 
 ### Delayed Rendering
@@ -13,13 +13,13 @@ This component fetches remote HTML and renders it safely and directly into the p
 When using this component, you may want to delay the fetch until the content is needed. The **defer-load** attribute will prevent the HTML from being fetched until that attribute is removed.
 
 ```html
-<x-content id="include" src="<url-to-html>" defer-load> </x-content>
+<x-content id='include' src='<url-to-html>' defer-load> </x-content>
 ```
 
 You can remove the attribute programmatically to force the fetch:
 
 ```javascript
-const include = document.querySelector("#include);
+const include = document.querySelector('#include);
 include.removeAttribute('defer-load');
 ```
 

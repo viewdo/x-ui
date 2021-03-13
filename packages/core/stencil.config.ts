@@ -1,10 +1,13 @@
 import { Config } from '@stencil/core'
+import { JsonDocs } from '@stencil/core/internal/stencil-public-docs'
+import fs from 'fs'
 import analyzer from 'rollup-plugin-analyzer'
 import { version } from './package.json'
 
 const config: Config = {
   namespace: 'x-ui',
   excludeUnusedDependencies: true,
+  preamble: '',
   hashFileNames: false,
   rollupPlugins: {
     after: [
@@ -32,8 +35,25 @@ const config: Config = {
     },
     {
       type: 'docs-custom',
-      generator: (docs: any) => {
-        docs = Object.assign(docs, { version })
+      generator: (docs: JsonDocs) => {
+        Object.assign(docs, { version })
+        docs.components.forEach(comp => {
+          if (comp.readmePath) {
+            let fileContents = fs.readFileSync(
+              comp.readmePath,
+              'utf8',
+            )
+            fileContents = fileContents.replace(
+              /\s*\\\|\s*/gi,
+              '` or `',
+            )
+            //fileContents = fileContents.split('"').join(`'`)
+            fs.writeFileSync(
+              comp.readmePath,
+              fileContents.split('"').join(`'`),
+            )
+          }
+        })
       },
     },
     {

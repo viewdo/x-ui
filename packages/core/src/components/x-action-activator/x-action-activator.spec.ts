@@ -34,7 +34,7 @@ describe('x-action-activator', () => {
   it('captures child actions', async () => {
     const page = await newSpecPage({
       components: [XActionActivator, XAction],
-      html: `<x-action-activator activate="OnEnter">
+      html: `<x-action-activator activate="on-enter">
                <x-action topic="test" command="pass"></x-action
              </x-action-activator>`,
     })
@@ -55,7 +55,7 @@ describe('x-action-activator', () => {
   it('captures child element event', async () => {
     const page = await newSpecPage({
       components: [XActionActivator, XAction],
-      html: `<x-action-activator activate="OnElementEvent" target-element="button" target-event="click" >
+      html: `<x-action-activator activate="on-element-event" target-element="button" target-event="click" >
                <button type="button">Click Me</button>
                <x-action topic="test" command="pass"></x-action>
              </x-action-activator>`,
@@ -87,7 +87,7 @@ describe('x-action-activator', () => {
   it('captures child input values', async () => {
     const page = await newSpecPage({
       components: [XActionActivator, XAction],
-      html: `<x-action-activator activate="OnElementEvent" target-element="button" >
+      html: `<x-action-activator activate="on-element-event" target-element="button" >
                <x-action topic="test" command="pass"></x-action>
                <input type="text" name="text" value="Tom" />
                <input type="hidden" name="hidden" value="fed-ex" />
@@ -124,7 +124,7 @@ describe('x-action-activator', () => {
   it('captures child element event no selector', async () => {
     const page = await newSpecPage({
       components: [XActionActivator, XAction],
-      html: `<x-action-activator activate="OnElementEvent" >
+      html: `<x-action-activator activate="on-element-event" >
                <input type="button">Click Me </input>
                <x-action topic="test" command="pass"></x-action>
              </x-action-activator>`,

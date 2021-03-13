@@ -11,10 +11,10 @@ export interface IEventActionListener {
 }
 
 export enum ActionActivationStrategy {
-  OnEnter = 'OnEnter',
-  OnExit = 'OnExit',
-  AtTime = 'AtTime',
-  OnElementEvent = 'OnElementEvent',
+  OnEnter = 'on-enter',
+  OnExit = 'on-exit',
+  AtTime = 'at-time',
+  OnElementEvent = 'on-element-event',
 }
 
 export interface EventAction<T> {

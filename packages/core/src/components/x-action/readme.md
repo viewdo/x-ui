@@ -7,9 +7,9 @@ This element holds the data that **is** the Action submitted through [Actions](/
 ## Usage
 
 ```html
-<x-action topic="<topic>"
-  command="<command>"
-  data-(key)="value">
+<x-action topic='<topic>'
+  command='<command>'
+  data-(key)='value'>
 </x-action>
 ```
 
@@ -18,9 +18,9 @@ This element holds the data that **is** the Action submitted through [Actions](/
 For most action-argument data, it is easies to specify them as key-value pairs using the `data-*` attributes within the `x-action` tag. The name of the argument should be prefixed with `data-`. A
 
 ```html
-<x-action topic="<topic>"
-  command="<command>"
-  data-(key)="value">
+<x-action topic='<topic>'
+  command='<command>'
+  data-(key)='value'>
 </x-action>
 ```
 
@@ -31,11 +31,11 @@ For most action-argument data, it is easies to specify them as key-value pairs u
 For most data, it is easy to specify key-value pairs using the `data-*` attributes within the `x-action` tag.
 
 ```html
-<x-action topic="<topic>"
-  command="<command>">
-  <input type="hidden"
-    name="arg1"
-    value="Hello World">
+<x-action topic='<topic>'
+  command='<command>'>
+  <input type='hidden'
+    name='arg1'
+    value='Hello World'>
 </x-action>
 ```
 
@@ -44,10 +44,10 @@ For most data, it is easy to specify key-value pairs using the `data-*` attribut
 For more complex data shapes, you can define the data parameters as JSON in a child script tag.
 
 ```html
-<x-action topic="<topic>" command="<command>">
-  <script type="application/json">
+<x-action topic='<topic>' command='<command>'>
+  <script type='application/json'>
     {
-      "arg1": "Hello world!"
+      'arg1': 'Hello world!'
     }
   </script>
 </x-action>

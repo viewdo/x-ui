@@ -5,7 +5,7 @@ This tag renders a template for each item in the configured array. The item temp
 ## Usage
 
 ```html
-<x-data-repeat items="{{expression}}">
+<x-data-repeat items='{{expression}}'>
   <template>
     <div>{{data}}</div>
   </template>
@@ -21,7 +21,7 @@ This component supports a three ways to express the collection or where it comes
 #### Items from Attribute (Simple Array)
 
 ```html
-<x-data-repeat items="['one','two','three']">
+<x-data-repeat items='['one','two','three']'>
   <template>
     <div>{{data:item}}</div>
   </template>
@@ -31,7 +31,7 @@ This component supports a three ways to express the collection or where it comes
 #### Items from Attribute (Provider Array)
 
 ```html
-<x-data-repeat items="{storage:cart-items}">
+<x-data-repeat items='{storage:cart-items}'>
   <template>
     <div>{{data:productName}}</div>
   </template>
@@ -42,14 +42,14 @@ This component supports a three ways to express the collection or where it comes
 
 ```html
 <x-data-repeat>
-  <script type="application/json">
+  <script type='application/json'>
     [
-      { "color": "blue", "name": "Bob" },
-      { "color": "red", "name": "Sally" }
+      { 'color': 'blue', 'name': 'Bob' },
+      { 'color': 'red', 'name': 'Sally' }
     ]
   </script>
   <template>
-    <div style="color: {{data:color}};">{{data:name}}</div>
+    <div style='color: {{data:color}};'>{{data:name}}</div>
   </template>
 </x-data-repeat>
 ```
@@ -57,9 +57,9 @@ This component supports a three ways to express the collection or where it comes
 #### Items from Remote URL (Remote Array)
 
 ```html
-<x-data-repeat items-src="/data/items.json">
+<x-data-repeat items-src='/data/items.json'>
   <template>
-    <div style="color: {{data:color}};">{{data:name}}</div>
+    <div style='color: {{data:color}};'>{{data:name}}</div>
   </template>
 </x-data-repeat>
 ```
