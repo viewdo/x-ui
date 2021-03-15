@@ -21,11 +21,11 @@
     "postcss-scss": "3.0.5",
     "remixicon": "2.5.0",
     "tailwindcss": "2.0.3",
-    "workbox-build": "6.1.1"
+    "workbox-build": "6.1.2"
   },
   "license": "MIT",
   "dependencies": {
     "bootstrap": "5.0.0-beta2",
-    "workbox-window": "6.1.1"
+    "workbox-window": "6.1.2"
   }
 }
